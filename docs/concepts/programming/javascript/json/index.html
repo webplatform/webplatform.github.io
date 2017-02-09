@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>json · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Lightweight data interchange format that is useful for serializing data into a string." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/json/">json</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>json</h1>
+<h2>Summary</h2>
+<p>Lightweight data interchange format that is useful for serializing data into a string.</p>
+<p><strong>JSON (JavaScript Object Notation)</strong> is designed to be a lightweight data interchange format. As its name implies, its syntax is based on a subset of the JavaScript programming language. However, it also shares some conventions with other languages, and is generally language-independent. JSON is useful for serializing data into a string, though it only can hold certain data types. All types are either data structures or values, and JSON inherits JavaScript’s weak typing by allowing the use of different types in those structures.</p>
+<h2>Syntax</h2>
+<p>JSON supports a number of data types common to many programming languages, but are inherited from JavaScript:</p>
+<ul>
+<li>Objects are unordered sets of name/value pairs. Names are strings, and are separated from their corresponding values with a colon (<code>:</code>). Each name/value pair is separated by a comma (<code>,</code>). Objects are enclosed by curly braces: <code>{</code> and <code>}</code>.</li>
+<li>Arrays are ordered sets of any values, separated with commas. Arrays are enclosed by square brackets: <code>[</code> and <code>]</code>.</li>
+<li>Strings store arbitrary text data. They are enclosed with double-quotes (<code>&quot;</code>) and can hold most Unicode characters. Some characters, however, must be escaped with a backslash (<code>\</code>).</li>
+<li>Numbers are double-precision floating-point, like those in JavaScript, excluding the octal and hexadecimal formats.</li>
+<li>Booleans are either <code>true</code> or <code>false</code>.</li>
+<li>Null is <code>null</code> and represents an empty value.</li>
+</ul>
+<p>Arbitrary whitespace is also allowed outside of values for formatting purposes.</p>
+<h3>Example Object</h3>
+<pre><code> {name: &quot;Robert&quot;, prefix: &quot;Mr&quot;, age: 23, programmer: true}
+</code></pre>
+<h2>Using JSON</h2>
+<h3>JavaScript</h3>
+<p>Being a subset of JavaScript itself, JSON is widely used by JS developers. Modern implementations of JavaScript include the global <code>JSON</code> object. It contains two methods: <code>parse</code> for parsing JSON strings, and <code>stringify</code> for converting a JS object into JSON. This object can also be polyfilled for older browsers that don’t support it.</p>
+<p>However, you should never parse JSON by calling the <code>eval</code> function. This works because JSON is almost always valid JavaScript, but using <code>eval</code> opens up several security risks by possibly allowing arbitrary code execution. If you do use it, make sure to properly sanitize its input first.</p>
+<h3>Example Usage</h3>
+<pre><code>  //This is a JavaScript object with 4 key.value pairs
+  var obj = {name: &quot;John Doe&quot;, prefix: &quot;Mr&quot;, age: 23, programmer: true};
+
+  //We serialize the object like so.
+  var objSerialized = JSON.stringify(obj);
+
+  //objSerialized now looks like: '{&quot;name&quot;:&quot;Robert&quot;,&quot;prefix&quot;:&quot;Mr&quot;,&quot;age&quot;:23,&quot;programmer&quot;:true}'
+  //We can now de-serialize the string using the JSON.parse method.
+
+  var objDeserialized = JSON.parse(objSerialized);
+
+  //We can now use this object to access the values.
+  alert(objDeserialized.prefix + &quot; &quot; + objDeserialized.name); //Mr John Doe
+</code></pre>
+<h3>Other languages</h3>
+<p>JSON parsers also exist for other languages. However, because not all of them share the same data types as JavaScript, some extra conversion may be required. <a href="http://www.json.org/">JSON.org</a> has a listing of parsers in other languages.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.json.org/">JSON.org</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JSON">Mozilla Developer Network</a></li>
+<li><a href="http://en.wikipedia.org/wiki/JSON">Wikipedia</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

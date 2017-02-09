@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>:lang(c) · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="The :lang(c) pseudo selector applies to documents that specifies the lang attribute to an HTML element. This allows to style based on which language (and/or dialect) a given section is written into." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/selectors/">selectors</a></li><li><a href="/docs/css/selectors/pseudo-classes/">pseudo-classes</a></li><li><a href="/docs/css/selectors/pseudo-classes/:lang(c)/">:lang(c)</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>:lang(c)</h1>
+<h2>Summary</h2>
+<p>The :lang© pseudo selector applies to documents that specifies the lang attribute to an HTML element. This allows to style based on which language (and/or dialect) a given section is written into.</p>
+<p>If the document language specifies how the human language of an element is determined, it is possible to write selectors that represent an element based on its language. For example, in HTML [<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#HTML401">HTML401</a>], the language is determined by a combination of the <code>lang</code> attribute and possibly information from the <code>meta</code> elements or the protocol (such as HTTP headers). XML uses an attribute called <code>xml:lang</code>, and there may be other document language-specific methods for determining the language.</p>
+<p>The pseudo-class <code>:lang(C)</code> represents an element that is in language <code>C</code>. Whether an element is represented by a <code>:lang()</code> selector is based solely on the element’s language value (normalized to BCP 47 syntax if necessary) being equal to the identifier <code>C</code>, or beginning with the identifier <code>C</code> immediately followed by &quot;<code>-</code>&quot; (U+002D). The matching of <code>C</code> against the element’s language value is performed case-insensitively. The identifier C does not have to be a valid language name.</p>
+<p><code>C</code> must be a valid CSS <a href="http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier">identifier</a> [<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#CSS21">CSS21</a>] and must not be empty. (Otherwise, the selector is invalid.)</p>
+<blockquote>
+<p><strong>Note:</strong> It is [<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#lang-pseudo">recommended</a>] that documents and protocols indicate language using codes from BCP 47 [<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#BCP47">BCP47</a>] or its successor, and by means of &quot;<code>xml:lang</code>&quot; attributes in the case of XML-based documents [<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#XML10">XML10</a>]. See &quot;<a href="http://www.w3.org/International/questions/qa-lang-2or3.htmlFAQ:">Two-letter or three-letter language codes.</a>&quot;</p>
+</blockquote>
+<p>The value of <em>C</em> should be a language code that is indicated by <a href="http://www.ietf.org/rfc/rfc3066.txt">RFC3066: Tags for the Identification of Languages</a>.</p>
+<p>If <em>C</em> is empty or invalid, the selector will have no effect.</p>
+<h3>Syntax</h3>
+<pre><code> selector:lang(C) { /* ... */ }
+</code></pre>
+<h3>Parameters</h3>
+<dl>
+<dt><em>selector</em></dt>
+<dd>A CSS simple selector<br>
+<em>C</em>
+</dd>
+<dd>Language code as specified in <a href="http://www.ietf.org/rfc/rfc3066.txt">RFC3066: Tags for the Identification of Languages</a>
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following code example uses the <strong>:lang©</strong> pseudo-class to apply a color to any <strong>p</strong> elements that are explicitly given a language value of “en” (or a hyphen-separated subset thereof). The first paragraph gets “en-us” (a subset of “en”) and thus turns green.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"X-UA-Compatible"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"IE=8"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>:lang pseudo-class<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>&gt;</span><span class="css">
+  <span class="hljs-tag">p</span><span class="hljs-pseudo">:lang(en)</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> green</span></span>;
+  }</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">body</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>:lang(C) Sample<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- This paragraph gets "en-us" (a subset of "en") and thus turns green. --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-us"</span>&gt;</span>This paragraph's language is set to "en-us", so it's green.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- This paragraph has no language value and thus does not turn green. --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This paragraph has no language attribute, so it doesn't turn green.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- This paragraph is actually a div; therefore, even though its language value
+        is "en-us", it does not turn green. --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-us"</span>&gt;</span>This div's language is set to "en-us", but this page's :lang
+        pseudo-class only applies to paragraphs, so it doesn't turn green.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>How to declare a full HTML document body language</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This text is written in english, but <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">fr</span>&gt;</span>cette section ci est écrite en français<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p>The two following selectors represent an HTML document that is in Belgian French or German. The two next selectors represent q quotations in an arbitrary element in Belgian French or German.</p>
+<pre><code class="css"><span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(fr-be)</span>
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(de)</span>
+  <span class="hljs-pseudo">:lang(fr-be)</span> &gt; <span class="hljs-tag">q</span>
+  <span class="hljs-pseudo">:lang(de)</span> &gt; <span class="hljs-tag">q</span>
+</code></pre>
+<p>Match all of the listed language codes (and any corresponding hyphen-separated substrings of language codes) that are known to have text orientation from <strong>right to left</strong> (see the “rtl” value at the <em>direction</em> property).</p>
+<pre><code class="css"><span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(ar)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(dv)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(fa)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(he)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(ku-Arab)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(pa-Arab)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(prs)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(ps)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(sd-Arab)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(syr)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(ug)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(ur)</span>,
+  <span class="hljs-tag">html</span><span class="hljs-pseudo">:lang(qps-plocm)</span> <span class="hljs-rules">{
+     <span class="hljs-rule"><span class="hljs-attribute">direction</span>:<span class="hljs-value"> rtl</span></span>;
+  }</span>
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/CSS2/selector.html#lang">CSS 2.1</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Pseudo-Classes</h4>
+<ul>
+<li><p><a href="/CSS/Selectors/pseudo-classes/:target">:target pseudo-class selector</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:-ms-input-placeholder">:-ms-input-placeholder</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:checked">:checked</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:disabled">:disabled</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:empty">:empty</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:enabled">:enabled</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:first-child">:first-child</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:first-of-type">:first-of-type</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:focus">:focus</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:in-range">:in-range</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:indeterminate">:indeterminate</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:invalid">:invalid</a></p></li>
+<li><p><strong>:lang©</strong></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:last-of-type">:last-of-type</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-child(n)">:nth-child(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-last-child(n)">:nth-last-child(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-last-of-type(n)">:nth-last-of-type(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-of-type(n)">:nth-of-type(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:only-child">:only-child</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:only-of-type">:only-of-type</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:optional">:optional</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:required">:required</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:root">:root</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:target">:target</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:valid">:valid</a></p></li>
+</ul>
+<h4>Selectors</h4>
+<ul>
+<li><p><a href="/docs/css/selectors_api/querySelectorAll">querySelectorAll</a></p></li>
+<li><p><a href="/docs/css/selectors/ID">ID</a></p></li>
+<li><p><a href="/docs/css/selectors/Namespaced">Namespaced</a></p></li>
+<li><p><a href="/docs/css/selectors/Universal">Universal</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/equality">equality</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/existence">Attribute selector</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/hyphen">hyphen</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/prefix">prefix</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/substring">substring</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/suffix">suffix</a></p></li>
+<li><p><a href="/docs/css/selectors/attributes/whitespace">whitespace</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:-ms-input-placeholder">:-ms-input-placeholder</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:checked">:checked</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:disabled">:disabled</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:empty">:empty</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:enabled">:enabled</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:first-child">:first-child</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:first-of-type">:first-of-type</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:focus">:focus</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:in-range">:in-range</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:indeterminate">:indeterminate</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:invalid">:invalid</a></p></li>
+<li><p><strong>:lang©</strong></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:last-of-type">:last-of-type</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-child(n)">:nth-child(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-last-child(n)">:nth-last-child(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-last-of-type(n)">:nth-last-of-type(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:nth-of-type(n)">:nth-of-type(n)</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:only-child">:only-child</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:only-of-type">:only-of-type</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:optional">:optional</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:required">:required</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:root">:root</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:target">:target</a></p></li>
+<li><p><a href="/docs/css/selectors/pseudo-classes/:valid">:valid</a></p></li>
+<li><p><a href="/w/index.php?title=selection&amp;action=edit&amp;redlink=1">::selection</a></p></li>
+<li><p><a href="/docs/css/selectors/type">type</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li>Language code as specified in <a href="http://www.ietf.org/rfc/rfc3066.txt">RFC3066: Tags for the Identification of Languages</a></li>
+<li><a href="http://www.w3.org/International/techniques/authoring-html#langstyle">Styling by language</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Styling lists and links · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="In this article we provide a basic treatment of how to style HTML lists and links using CSS." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/Styling_lists and links/">Styling lists and links</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Styling lists and links</h1>
+<h2>Summary</h2>
+<p>In this article we provide a basic treatment of how to style HTML lists and links using CSS.</p>
+<h2>Introduction</h2>
+<p>Many web page elements can be forgiving in terms of design — if they aren’t “just right” it doesn’t matter too much. With lists and links it’s a different story; if you don’t get them right, you can cause some serious problems for people trying to use your website.</p>
+<p>Links in particular have some key style requirements and user expectations. Poorly styled links can ruin the user experience on a website, as people have to stop and think about where to click. In the worst case, a user might not even be able to tell which items on the page are actually links!</p>
+<p>In this article we’ll look at the core skills you need to create robust list and link styles. We’ll also discuss some ways to avoid key pitfalls of these elements and produce a final result that will work across different browsers, and be accessible to users with disabilities.</p>
+<h2>Styling Lists</h2>
+<p>First, we’ll go through the basics of styling lists with CSS, and then move on to look at some more advanced techniques.</p>
+<h3>Basic bullets and numbers</h3>
+<p>The fundamental thing to consider when creating a list style is what form of bullet or numbering you want to use. You might also choose to remove the bullets or numbers completely. As you learned in the <a href="/docs/guides/html_lists">HTML Lists</a> article, there are many options available, set using the CSS <code>list-style-type</code> property.</p>
+<p>For example, to set all unordered lists on your site to use square bullets, use this CSS:</p>
+<pre><code>ul li {
+  list-style-type: square;
+}
+</code></pre>
+<p>That will produce something like:</p>
+<p><img src="//static.webplatform.org/6/66/square-b.gif" alt="Screenshot of a list with square bullets"></p>
+<p><em>Figure 1: Unordered list with square bullets.</em></p>
+<p>Some common list types:</p>
+<p><img src="//static.webplatform.org/f/fe/referenc.gif" alt="Screenshot of some common list types."></p>
+<p><em>Figure 2: Common list types.</em></p>
+<p>Note that the bullets and numbers will be rendered using the <code>color</code> which is set for or inherited by their <code>li</code>. If you need the bullet to be a different colour from the text, you must use an image instead, or work around the issue using other elements within the list items (this may be easy if all the items are links, for example).</p>
+<h3>Custom bullets using images</h3>
+<p>The standard set of unordered list bullets is adequate for basic content; however, it is a common design request to replace them with a custom image.</p>
+<p>The CSS specification does include the <code>list-style-image</code> property for adding a custom list image. While this property works for basic image bullets, it has limited positioning options, and in some circumstances doesn’t work at all in Internet Explorer. So it has become a far more common practice to set a background image on the list items to serve as graphical bullets.</p>
+<p>Imagine you have an unordered list of RSS feeds and you want to change the bullet to the standard orange RSS icon. We’ll give the list the class “rss” to differentiate it from other lists:</p>
+<pre><code>&lt;ul class=&quot;rss&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;http://example.com/rss.xml&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://example.com/rss.xml&quot;&gt;Sport&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://example.com/rss.xml&quot;&gt;Weather&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://example.com/rss.xml&quot;&gt;Business&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://example.com/rss.xml&quot;&gt;Entertainment&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://example.com/rss.xml&quot;&gt;Funny News&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>First we’ll set the list to have no <code>list-style-type</code> (removing the default bullets) and remove the margin and padding. Then, we add a background image (the RSS icon) to each list item, some left padding to move the text to the right so it doesn’t overlap the image, and some bottom padding to space out the list items:</p>
+<pre><code>.rss {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.rss li {
+  background: #fff url(&quot;icon-rssfeed.gif&quot;) 0 3px no-repeat;
+  padding: 0 0 5px 15px;
+}
+</code></pre>
+<p>This produces a list with the RSS image instead of bullets:</p>
+<p><img src="//static.webplatform.org/d/dc/image-bu.gif" alt="Screenshot of a list with the bullets replaced with images"></p>
+<p><em>Figure 3: The list with RSS image bullets.</em></p>
+<p>Here, we positioned the background image using pixels for a precise placement. Depending on the design you are creating, you might also use <code>%</code>, <code>em</code>s, or keywords. Just be careful when your design features content that might cause a list item to wrap over several lines — if you set the background to vertical <code>center</code> or <code>50%</code> it can look quite strange:</p>
+<p><img src="//static.webplatform.org/4/45/image-bv.gif" alt="Screenshot showing the way the vertically-centred bullet will sit in the middle of the text, instead of being centred to the first line of text."></p>
+<p><em>Figure 4: A demonstration of vertically-centred bullet images on a multi-line list item.</em></p>
+<p>But by setting the image to align at the top of the list item, you maintain the default bullet behaviour, where the bullet sits on the first line of text:</p>
+<p><img src="//static.webplatform.org/9/96/image-bw.gif" alt="Screenshot of top-positioned bullet images."></p>
+<p><em>Figure 5: A demonstration of top-aligned bullet images on a multi-line list item.</em></p>
+<h3>List margins and padding</h3>
+<p>Clever use of margins and padding can make lists look much more polished and professional, but these techniques differ among different types of lists. In this section we’ll look at how to apply sensible margins and padding to the two most common list types.</p>
+<h4>Unordered lists</h4>
+<p>The default style for lists left-indents them, relative to surrounding paragraphs:</p>
+<p><img src="//static.webplatform.org/a/ad/list-ind.gif" alt="Screenshot of default list styles with a larger left indent than paragraphs."></p>
+<p><em>Figure 6: Default styled lists are indented on the left.</em></p>
+<p>If you want unordered list items to sit at the same left-align point as the rest of your content, you must set some styles to control the indentation. Different browsers require different settings; some need the margin removed while others need the padding removed. The safe way to reset for all browsers is to set both to 0:</p>
+<pre><code>ul {
+  margin: 0;
+  padding: 0;
+}
+</code></pre>
+<p>However, this may not have the expected effect; while it does cause the text to sit flush left, the bullets will still sit outside the text:</p>
+<p><img src="//static.webplatform.org/5/51/list-ine.gif" alt="Screenshot of bullets sitting outside the text."></p>
+<p><em>Figure 7: Bullets are positioned to the left of the text.</em></p>
+<p>So, to align the bullets to the left you can now set a margin on the list items:</p>
+<pre><code>ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+ul li {
+  margin-left: 1em;
+}
+</code></pre>
+<p>At this point you may still find a pixel-level difference between browsers, but the effect is basically as consistent as possible:</p>
+<p><img src="//static.webplatform.org/3/38/list-inf.gif" alt="Screenshot of bullets left-aligned closely with paragraphs."></p>
+<p><em>Figure 8: Bullets positioned together with the surrounding paragraphs.</em></p>
+<h4>Ordered lists</h4>
+<p>Now let’s consider the same issue for ordered lists. They are trickier because the numeric markers are aligned according to the list item with the largest number. For example, if you have 10 list items, all the numbers will be positioned to allow for the two-digit “10” item:</p>
+<p><img src="//static.webplatform.org/2/2c/ol-inden.gif" alt="Screenshot of ten-item list, with the markers indented to allow for the 10."></p>
+<p><em>Figure 9: The numeric markers for items 1-9 have preceding padding so they right-align with item 10.</em></p>
+<p>There really isn’t a convenient way to make an ordered list consistently left-aligned to the same position as the surrounding text, unless you set the list to <code>list-style-type: decimal-leading-zero;</code> which, while functional, isn’t very attractive:</p>
+<p><img src="//static.webplatform.org/b/bf/ol-indeo.gif" alt="Screenshot of leading zeros allowing numbers to left-align consistently."></p>
+<p><em>Figure 10: The leading zeros fill in the space for items 1-9.</em></p>
+<p>It is more common to simply live with the difference in spacing. It does, however, mean that the markers of your ordered and unordered lists can’t easily and consistently be left-aligned. You can only line up the text of your lists:</p>
+<pre><code>ul, ol {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+li {
+  margin-left: 2em;
+}
+</code></pre>
+<p>You need <em>at least</em> 2em of left margin to accomodate both ordered and unordered lists. Note the way the text of the items lines up in these two lists:</p>
+<p><img src="//static.webplatform.org/c/ce/list-ing.gif" alt="Screenshot of lists set to have text consistently left-aligned."></p>
+<p><em>Figure 11: The text lines up in both ordered and unordered lists.</em></p>
+<h4>So, what to do?</h4>
+<p>You basically have three choices:</p>
+<ol>
+<li>Live with the default positioning of lists and their markers</li>
+<li>Explicitly line up the text of your lists</li>
+<li>Set a different style for <code>ul</code> and <code>ol</code></li>
+</ol>
+<p>There is no “right” or “wrong” approach, and it is quite common to simply leave things to the default settings for lists in general content.</p>
+<h3>Using list-style-position</h3>
+<p>If you want the text of multi-line list items to wrap below the list marker (not recommended), you must set the <code>list-style-position</code> property to <code>inside</code>, which produces this result:</p>
+<p><img src="//static.webplatform.org/c/c8/inside-l.gif" alt="Screenshot of unordered list with text wrapping below bullets."></p>
+<p><em>Figure 12: List position “inside” causes the text to wrap below the marker instead of in line with the indented text.</em></p>
+<p>For obvious reasons, this is not an especially popular style. By default, <code>list-style-position</code> is set to <code>outside</code>, which produces the results discussed earlier.</p>
+<h3>What about definition lists?</h3>
+<p>In general, definition lists don’t require a huge amount of attention, except to set a <code>dt</code> style (commonly bold text) and to control the indentation of the definitions:</p>
+<pre><code>dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-left: 2em;
+}
+</code></pre>
+<p>This sets up a clear and easy style for definition lists:</p>
+<p><img src="//static.webplatform.org/4/4d/definiti.gif" alt="Screenshot of a definition list with bold terms and indented definitions."></p>
+<p><em>Figure 13: A simply-styled definition list.</em></p>
+<p>Although definition lists can be rearranged with floats and positioning, they are quirky; generally, it’s better to keep things simple.</p>
+<h3>Nested lists</h3>
+<p>In the <a href="/docs/guides/html_lists">HTML Lists</a> article you learned about nested lists. When you create CSS for lists you should take care to maintain clear design cues that show the relationship between a nested list and its parent (the list item that contains it). By far the most common way to do this is by indenting the nested list items; it is, in fact, the default setting across browsers.</p>
+<p>If you set up your own list indentation, your base setting will simply be multiplied. For example, consider this CSS:</p>
+<pre><code>ul, ol {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+li {
+  margin-left: 2em;
+}
+</code></pre>
+<p>Each subsequent child list item in the chain inherits the <code>margin</code> value from its parent list item, in addition to having another 2em of its own added on top. So a top level list item (one that doesn’t have a list item as a parent) will have a left margin of 2em, then a child list item of the first list item will inherit 2em from its parent, and then have another 2em added on to it, for a total of 4em, and so on.</p>
+<h3>Horizontal lists</h3>
+<p>One of the most common changes required when working with lists is to produce a horizontal list — that is, to make the items appear next to each other instead of one after the other. This is a common trick for site navigation. Let’s begin with a standard vertical list:</p>
+<p><img src="//static.webplatform.org/5/5d/simple-n.gif" alt="Screenshot of a simple list with bullets"></p>
+<p><em>Figure 14: A simple list.</em></p>
+<p>Now let’s convert this to a horizontal list:</p>
+<p><img src="//static.webplatform.org/b/b4/simple-o.gif" alt="Screenshot of a list with the items appearing next to each other"></p>
+<p><em>Figure 15: A simple horizontal list.</em></p>
+<p>To achieve this, we must do three things to our list:</p>
+<ol>
+<li>Remove the <code>margin</code> and <code>padding</code> from the <code>&lt;ul&gt;</code></li>
+<li>Set the list items to <code>display: inline;</code></li>
+<li>Give the list items some spacing to the right, to avoid having them run together</li>
+</ol>
+<p>In the example, the list has the ID &quot;mainmenu&quot;, so we’ll use that as a contextual selector to make sure we only change the list we intend to change. The CSS is:</p>
+<pre><code>#mainmenu {
+  margin: 0;
+  padding: 0;
+}
+
+#mainmenu li {
+  display: inline;
+  padding: 0 1em 0 0;
+}
+</code></pre>
+<p>In this simple example, setting the list items to <code>display: inline;</code> is enough; however, <code>float: left;</code> can also achieve a similar look.</p>
+<h3>Faux columns</h3>
+<p>Earlier, we created a list of RSS feeds with graphical bullets. Now let’s imagine that list has been placed in a sidebar on your site. You want the list to appear in two columns, with a border around the whole group:</p>
+<p><img src="//static.webplatform.org/1/16/columns-.gif" alt="Screenshot of a list in two columns."></p>
+<p><em>Figure 16: A list of feeds in two columns, with an RSS icon for each bullet.</em></p>
+<p>Let’s assume the basic list is inside a <code>&lt;div&gt;</code>, which sets the width and border. The basic list would look something like this:</p>
+<p><img src="//static.webplatform.org/b/be/columns0.gif" alt="Screenshot of basic list"></p>
+<p><em>Figure 17: The unstyled list inside the border.</em></p>
+<p>To achieve the faux columns effect, add the RSS icon as demonstrated earlier; then, add a 5px margin to the top, right, and left:</p>
+<pre><code>.rss {
+  margin: 5px 5px 0 5px;
+  padding: 0;
+}
+
+.rss li {
+  list-style-type: none;
+  background: #fff url(&quot;icon-rssfeed.gif&quot;) 0 3px no-repeat;
+  padding: 0 0 5px 15px;
+  display:-moz-inline-box;
+}
+</code></pre>
+<p>Note that <code>display:-moz-inline-box;</code> is added to get the example to display correctly in Firefox 2.</p>
+<p>We don’t need to add a bottom margin, as the last list item’s padding will cover that:</p>
+<p><img src="//static.webplatform.org/6/68/columns1.gif" alt="Screenshot of list with the correct spacing and icon."></p>
+<p><em>Figure 18: Halfway there; we now have correct spacing and icon bullets.</em></p>
+<p>Now we set the list items to <code>display: inline-block;</code>, and set their width to <code>40%</code> and right margin to <code>2%</code> (we could also use pixel widths). We also must explicitly set the <code>&lt;ul&gt;</code> to <code>100%</code> width to ensure that the list wraps and sizes correctly:</p>
+<pre><code>.rss {
+  margin: 5px 5px 0 5px;
+  padding: 0;
+  width: 100%;
+}
+
+.rss li {
+  display: inline-block;
+  width: 40%;
+  margin: 0 2% 0 0;
+  list-style-type: none;
+  background: #fff url(&quot;icon-rssfeed.gif&quot;) 0 3px no-repeat;
+  padding: 0 0 5px 15px;
+  display:-moz-inline-box;
+}
+</code></pre>
+<p>The <code>inline-block</code> display setting positions an element inline, but allows it to have a width and height. In most browsers this will be enough to create the column effect, but for Internet Explorer you must also float the list items to the left. To accomplish this, let’s use a conditional style for all versions up to IE7:</p>
+<pre><code>&lt;!--[if lte IE 7]&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    .rss li {
+      float: left;
+    }
+  &lt;/style&gt;
+&lt;![endif]--&gt;
+</code></pre>
+<p>We now have the desired two column effect:</p>
+<p><img src="//static.webplatform.org/1/16/columns-.gif" alt="Screenshot of a list in two columns."></p>
+<p><em>Figure 19: The completed list.</em></p>
+<h4>Legacy browsers</h4>
+<p>If you are required to produce this design for older browsers that don’t support inline-block, then you must float the list items to the left and use a clearing fix like the one described in the article <a href="http://www.positioniseverything.net/easyclearing.html">Clearing a float container without source markup</a>. Thankfully most modern browsers have now made <code>inline-block</code> a valid display property, so unless you have a very large browser share for older browsers you should be able to use the <code>inline-block</code> method.</p>
+<h3>Lists conclusion</h3>
+<p>We’ve now covered a core set of styling choices and methods for lists. You can build on these examples and combine them to create a large number of designs. Because lists are very commonly combined with links, let’s look at them next.</p>
+<h2>Styling Links</h2>
+<p>Styling links can be a bit of an art form. There are many different requirements at play and it can be hard to accommodate them all, while still creating an aesthetically pleasing result. That said, it is quite possible so long as you keep some simple rules in mind:</p>
+<ul>
+<li>understand the different link states</li>
+<li>do not stray too far from user expectations</li>
+<li>use colours carefully</li>
+</ul>
+<p>If you follow these rules you can produce links that are clear and easy to use.</p>
+<h3>Understanding link states</h3>
+<p>Let’s begin with <em>link states</em>. There are five states: unvisited/default, visited, focus, hover, and active.</p>
+<dl>
+<dt>unvisited</dt>
+<dd>The default state of a link when it has not been activated or visited previously.<br>
+visited
+</dd>
+<dd>The state of a link the user has already visited.<br>
+focus
+</dd>
+<dd>Applies while the link has focus — for example, while a keyboard user’s cursor is on that link. Note: IE does not currently support the focus state, and just uses <code>active</code> in place of <code>focus</code>.<br>
+hover
+</dd>
+<dd>Applies while a user is “hovering” over the link with a pointer like a mouse, but has not yet clicked the link.<br>
+active
+</dd>
+<dd>Applies while the user activates the link — literally <em>during</em> the time they are clicking it. In some browsers this style also applies when the link has been opened in another window or tab.
+</dd>
+</dl>
+<p>You should always specify CSS for each state, because they all convey information to the user about the fact they are interacting with a link. If in doubt about <code>focus</code>, <code>hover</code>, and <code>active</code> you can style <code>focus</code> and <code>hover</code> identically, as their functions are similar enough that the same link style should not cause confusion. You can then add some simple variation for <code>active</code>, such as setting the text to italics. In a pinch you can style all three the same way.</p>
+<p>Note that these states are not all mutually exclusive. Although it is not really possible for a link to be unvisited and visited at the same time, it is perfectly possible for a link to be hovered, active, and visited at the same time.</p>
+<h3>How browser evolution set user expectations</h3>
+<p>To better understand some common user expectations about links, it helps to know a little web history.</p>
+<p>You may hear people refer to the “Netscape defaults” for links. This harkens back to the very early days of the web, when browsers set the colours for content and authors didn’t have much control over the rendering of their pages. Text was black, the background was grey, and all links were underlined; unvisited links were blue, visited links were purple, and active links were red. And that was about it:</p>
+<p><img src="//static.webplatform.org/d/de/links-mo.gif" alt="Screenshot of the Mosaic/Navigator startup page, explaining hyperlinks."></p>
+<p><em>Figure 20: A screenshot of Mosaic/Navigator.</em></p>
+<p>While this did get a bit monotonous, it was at least consistent, and <strong>it set the baseline for user expectations</strong>. To this day users interpret underlined text as a hyperlink. They may not expect all links to have underlines, but they expect all underlines to be links. It is best not to clash with that expectation.</p>
+<p>Some sites still use blue and purple links, and those link colours are still the default for unstyled content in most browsers. While you can always go retro and stick with this colour set, users are generally comfortable with other options — within certain boundaries.</p>
+<h3>User expectations</h3>
+<p>There are some general rules for user expectations regarding links:</p>
+<ul>
+<li>Users expect links to <strong>look different</strong> from other text which is not a link</li>
+<li>Users expect links to <strong>react</strong> when they hover or focus on the link</li>
+<li>Users expect links to <strong>change</strong> after they have visited that link</li>
+<li>Users expect <strong>consistency</strong> in link styles of the same functionality so they know what to click</li>
+<li>Users expect <strong>underlined text to be a link</strong>, so don’t use underlines for anything else</li>
+</ul>
+<p>You should always follow these basic rules, as they will help your users quickly identify and use links. You do not want to create styles that make users stop and think, “which bits are the links?”</p>
+<p>These expectations translate to some simple coding rules:</p>
+<ul>
+<li>set styles for all link states</li>
+<li>only use underlining for links</li>
+</ul>
+<h3>Use colour carefully</h3>
+<p>When you are styling links, be careful not to rely entirely on colour to distinguish between link states. Not everyone sees colour in the same way, so you should combine colour with styles (such as different underlines, icons, or reversed colours) for differentiation.</p>
+<p>You should also check that your colour choices have enough contrast—this is easy using tools like the <a href="http://www.paciellogroup.com/resources/contrast-analyser.html">Colour Contrast Analyser (for both PC and Mac)</a> or the <a href="http://www.paciellogroup.com/resources/wat-about.html">Web Accessibility Toolbar for Opera</a> (both from the Paciello Group).</p>
+<p>The Colour Contrast Analyser allows you to use a colour picker to select the foreground and background colours on screen, and then receive a simple evaluation of their contrast:</p>
+<p><img src="//static.webplatform.org/7/78/cca-in-u.gif" alt="The CCA tool showing a test of heading colour."></p>
+<p><em>Figure 21: Screenshot of the Colour Contrast Analyser in use.</em></p>
+<p>If all four results show a pass, the colour combination is okay. Remember to check all link states; you may need to enter some of them manually in the “hex” field to check focus, hover, and active.</p>
+<h3>Getting down to business: the CSS</h3>
+<p>Now that you understand some ground rules for links, let’s get into some code. This section details all the CSS you’ll need to sucessfully style links.</p>
+<h4>Styling link states in the right order</h4>
+<p>First, be aware that if you do not place your links styles in the right order in your stylesheet, the settings will override each other and the link states won’t work. Your link styles must <strong>always</strong> be in the following order:</p>
+<ol>
+<li><code>link</code></li>
+<li><code>visited</code></li>
+<li><code>focus</code></li>
+<li><code>hover</code></li>
+<li><code>active</code></li>
+</ol>
+<p>A common mnemonic for remembering this is &quot;Lord Vader’s Former Handle, Anakin&quot;. (If you’re not a Star Wars fan, I’m afraid you’ll just have to remember it the hard way!) Also popular, however, is the mnemonic &quot;LoVe Fears HAte&quot;.</p>
+<p>The different link states are styled using their “pseudo classes” — <code>:link</code>, <code>:visited</code>, <code>:focus</code>, <code>:hover</code>, and <code>:active</code> — which you append to the link element selector <code>a</code>. So your starting CSS should look like this:</p>
+<pre><code>a:link {}
+a:visited {}
+a:focus {}
+a:hover {}
+a:active {}
+</code></pre>
+<p>If you want to set a CSS rule for all links in all states, you can style <code>a</code> directly, before styling the pseudo-classes. Just remember to place the generic rule first, to preserve the order:</p>
+<pre><code>a {}
+a:link {}
+a:visited {}
+a:focus {}
+a:hover {}
+a:active {}
+</code></pre>
+<p>This is useful if you are planning to replace the default underline with a bottom border, which is a common way to gain better visual control of the style.</p>
+<h4>Controlling defaults</h4>
+<p>By default, most browsers set all links to have an underline and focus state links to have an outline:</p>
+<p><img src="//static.webplatform.org/f/ff/browser-.gif" alt="The default focus style for Opera 9, Firefox 2 and IE7"></p>
+<p><em>Figure 22: Left to right: the default focus styles for Opera 9, Firefox 2, and IE7.</em></p>
+<p>If you are replacing these styles with something else, you can change or disable these defaults.</p>
+<h5>Underlining</h5>
+<p>Underlining is set using the <code>text-decoration</code> property:</p>
+<pre><code>a {
+  text-decoration: underline;
+}
+</code></pre>
+<p>You can disable the underline by setting the property to <code>none</code>:</p>
+<pre><code>a {
+  text-decoration: none;
+}
+</code></pre>
+<p>Even if you are preserving the underline style, you may find it easier to disable <code>text-decoration</code> and use <code>border-bottom</code> instead to set a faux underline. We will go through this in the example below.</p>
+<h5>Outline</h5>
+<p>The focus outline is controlled by the <code>outline</code> property. Outline is much the same as border, but it does not take up space or cause the page to re-flow when it appears (note that it is not supported in IE7 and below). The easiest way to control all four sides of an outline is with the shorthand property:</p>
+<pre><code>a:focus {
+  outline: thick solid #000;
+}
+</code></pre>
+<p>This example would produce:</p>
+<p><img src="//static.webplatform.org/a/a4/thick-so.gif" alt="A link with a thick black border."></p>
+<p><em>Figure 23: Example rendering of a thick black outline.</em></p>
+<p>If you are in doubt about what to do with the outline, just leave it to the browser default.</p>
+<h3>Recreating the Netscape defaults</h3>
+<p>As an easy example of link styles, let’s recreate the old Netscape defaults of blue, purple, and red. We’ll keep the underline, but extend the active state to use italics. We’ll also increase the text size for the sake of the example, and set the page to use a white background:</p>
+<pre><code>body {
+  background: #fff;
+  color: #000;
+  font-size: 2em;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:link {
+  color: #0000CC;
+}
+
+a:visited {
+  color: #6D006D;
+}
+
+a:focus {
+  color: #CC0000;
+}
+
+a:hover {
+  color: #CC0000;
+}
+
+a:active {
+  color: #CC0000;
+  font-style: italic;
+}
+</code></pre>
+<p>This should produce:</p>
+<p><img src="//static.webplatform.org/9/92/lvfha-un.gif" alt="Example rendering of the styles set above"></p>
+<p><em>Figure 24: recreating the Netscape defaults.</em></p>
+<h4>Faux underlines using border-bottom</h4>
+<p>Many designers have observed that the default link underline is a bit thick, and cuts through descenders of lowercase type — that is, the line goes through the bottom of the letters g, j, p, q, and y:</p>
+<p><img src="//static.webplatform.org/d/d5/pygmy-un.gif" alt="The word pygmy showing the underline cutting through the text"></p>
+<p><em>Figure 25: The underline cuts through lowercase type descenders.</em></p>
+<p>You might instead like the underline to be thinner and to not touch the text. To carry out this common effect, we’ll use a border instead of an underline:</p>
+<p><img src="//static.webplatform.org/2/22/pygmy-bo.gif" alt="The word pygmy showing a faux underline border, which does not cut through the text"></p>
+<p><em>Figure 26: Using a border instead of an underline gives nicer results.</em></p>
+<p>First, disable the underline for all link states, then set a bottom-border to match the link colour for each state:</p>
+<pre><code>body {
+  background: #fff;
+  color: #000;
+  font-size: 2em;
+  line-height: 2em;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+  color: #00c;
+  border-bottom: 1px solid #00c;
+}
+
+a:visited {
+  color: #6D006D;
+  border-bottom: 1px solid #6D006D;
+}
+
+a:focus {
+  color: #c00;
+  border-bottom: 1px solid #c00;
+}
+
+a:hover {
+  color: #c00;
+  border-bottom: 1px solid #c00;
+}
+
+a:active {
+  color: #c00;
+  border-bottom: 1px solid #c00;
+  font-style: italic;
+}
+</code></pre>
+<p>This should produce:</p>
+<p><img src="//static.webplatform.org/8/8d/lvfha-bo.gif" alt="Example rendering of the styles set above"></p>
+<p><em>Figure 27: The faux-underline in action.</em></p>
+<p>If you use this faux border method, be careful that you have sufficient <code>line-height</code> set to avoid the underline clashing with the next row of text.</p>
+<h4>Styles that don’t rely on colour</h4>
+<p>Because the example so far relies purely on colour to distinguish four of the five link states, we should take the next step and make the bottom borders unique for visited, focus, and hover. Let’s give visited links a dotted border, and hovered and focused links a dashed border:</p>
+<pre><code>body {
+  background: #fff;
+  color: #000;
+  font-size: 2em;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+  color: #00c;
+  border-bottom: 1px solid #00c;
+}
+
+a:visited {
+  color: #6D006D;
+  border-bottom: 1px dotted #6D006D;
+}
+
+a:focus {
+  color: #c00;
+  border-bottom: 1px dashed #c00;
+}
+
+a:hover {
+  color: #c00;
+  border-bottom: 1px dashed #c00;
+}
+
+a:active {
+  color: #c00;
+  border-bottom: 1px solid #c00;
+  font-style: italic;
+}
+</code></pre>
+<p>This should produce:</p>
+<p><img src="//static.webplatform.org/4/4a/lvfha-mu.gif" alt="Example rendering showing how the borders differentiate the different link states"></p>
+<p><em>Figure 28: Changing the border style for each link state.</em></p>
+<p>Accepting focus and hover as equivalent styled states, this method means the link states are now distinguished by more than just colour. Even if you were to view these links in black and white, you could identify the different link states:</p>
+<p><img src="//static.webplatform.org/1/13/lvfha-mv.gif" alt="The same example all in black, to emphasise the border differences"></p>
+<p><em>Figure 29: The link states are now distinguishable even in black and white.</em></p>
+<h3>Icons on links</h3>
+<p>Some sites use icons and symbols to add information about their links. For example, some sites use an arrow to indicate that a link goes to an external site, or they use a tick (check mark) to show that the link has been visited.</p>
+<p>These effects are simple to achieve with background images:</p>
+<p><img src="//static.webplatform.org/4/46/links-wi.gif" alt="Example rendering of links with icons"></p>
+<p><em>Figure 30: An example of links with distinguishing icons.</em></p>
+<p>To add an arrow icon to external links you could add the class “external” to the link tag:</p>
+<pre><code>&lt;a href=&quot;http://example.com/&quot; class=&quot;external&quot;&gt;external link&lt;/a&gt;
+</code></pre>
+<p>Then in your stylesheet, set a background image for that class — remembering to add padding to accommodate the image:</p>
+<pre><code>a.external {
+  background: #fff url(&quot;icon-external.gif&quot;) center right no-repeat;
+  padding-right: 30px;
+}
+</code></pre>
+<p>This example would apply the icon to all instances of external links, in all states. If you want to restrict the icon just to <em>unvisited</em> external links, you can combine classes and the link state pseudo-classes in your selector:</p>
+<pre><code>a.external:link {
+  background: #fff url(&quot;icon-external.gif&quot;) center right no-repeat;
+  padding-right: 30px;
+}
+</code></pre>
+<p>Combining classes and states opens up a wide range of creative possibilities for your links. Remember to check your colours; your only limitation from this point is creativity.</p>
+<h2>Conclusion</h2>
+<p>A good grasp of styling lists and links is essential for web developers, as they are used everywhere, and are routinely combined to create site navigation. While a clear link style is critical for the ease of use of any site, bad link styles can be seriously confusing for everyone and may even make a site unusable for some people. Use good judgement in your styles, don’t violate user expectations and, above all, be consistent.</p>
+<h2>See also</h2>
+<h2>Exercise questions</h2>
+<ul>
+<li>How do you choose between basic list styles, for example square bullets or Roman Numerals on an ordered list?</li>
+<li>What is an image sprite and why would you use one?</li>
+<li>Why is colour contrast important and how do you make sure your link colours are using suitable colours?</li>
+<li>What is the correct order for setting styles on the different link states?</li>
+</ul>
+<h2>Further reading</h2>
+<ul>
+<li><a href="http://www.wcagsamurai.org/errata/errata.html">WCAG Samurai Errata for WCAG 1.0</a>, with specific reference to <a href="http://www.wcagsamurai.org/errata/errata.html#GL2">Guideline 2. Don’t rely on colour alone</a>.</li>
+<li><a href="http://joeclark.org/book/sashay/serialization/Chapter09.html">Type and Colour (a chapter from Building Accessible Websites, by Joe Clark)</a></li>
+<li><a href="http://juicystudio.com/article/highlighting-links.php">Juicy Studio: Highlighting Links</a></li>
+<li><a href="http://www.maxdesign.com.au/presentation/external/">Max Design—Simple, accessible external links</a></li>
+<li><a href="http://www.paciellogroup.com/resources/contrast-analyser.html">Resource Center—Contrast Analyser 2.0 (Paciello Group)</a></li>
+<li><a href="http://alistapart.com/articles/sprites">A List Apart: CSS Sprites: Image Slicing’s Kiss of Death</a></li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/32-styling-lists-and-links/">32: Styling lists and links</a>, written by <a href="http://www.w3.org/wiki/User:Bbuchana">Ben Buchanan</a>. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

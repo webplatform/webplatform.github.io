@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using CSS background images · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article covers CSS backgrounds in detail: background color, image, repeat, attachment, and position. Near the end, it also looks at advanced techniques such as CSS sprites." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/using_css background images/">using css background images</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using CSS background images</h1>
+<h2>Summary</h2>
+<p>This article covers CSS backgrounds in detail: background color, image, repeat, attachment, and position. Near the end, it also looks at advanced techniques such as CSS sprites.</p>
+<h2>Introduction</h2>
+<p>Admit it! Since the first article in the <a href="http://www.w3.org/wiki/Web_Standards_Curriculum">Web Standards Curriculum</a>, you’ve been excited to learn how to make your site look fierce and fabulous. Maybe you even skipped ahead to this section?</p>
+<p>Background images are all about making your site look stunning, but you might be surprised how closely they build upon the fundamental concepts you have already learned.</p>
+<p>As you previously learned from an earlier article in this series, one of the most important changes that comes with CSS is the ability to separate <em>presentation</em>, or the way things look, from <em>semantics</em>, or what things mean. The CSS background image is among the most important tools you have at your disposal, because it lets you apply decorative images to particular parts of your HTML without adding any extra weight to your HTML. Previously, authors (like you!) were forced to fill their code with <code>img</code> tags to achieve the same effect.</p>
+<p>CSS and in particular the <code>background</code> property keep your HTML free from presentational clutter. Redesigns and other transitions, in the life of sites built with modern methods, can then be completed much more efficiently. You can update your entire site by changing only the style sheet, rather than recoding every HTML page. Depending on the size of your site, this can be a substantial time savings.</p>
+<p>In this article, you will learn the basics of how CSS background images work. You will see how to apply a background image via CSS, adjust its placement, tile it vertically or horizontally and combine background images using <a href="http://www.alistapart.com/articles/sprites/">CSS Sprites</a> to improve <a href="http://developer.yahoo.com/performance/index.html">site performance</a>.</p>
+<h2>How does it work?</h2>
+<p>The CSS for backgrounds is split into several different properties. Using these properties, such as <code>position</code> and <code>color</code>, you can begin to control the look and feel of your page. In this article, you will go through CSS background images in detail, building an alert message as an example, step by step.</p>
+<p>First, review the different properties you can use.</p>
+<h3>Background Properties</h3>
+<table>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr class="header">
+<th align="left">Property</th>
+<th align="left">Definition</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>background-color</code></td>
+<td align="left">Sets the background color of the HTML element.</td>
+<td align="left"><p>There are several ways to indicate <code>background-color</code>, including RGB values and keywords. Most people use hexadecimal notation, a pound/hash symbol (#) followed by six characters. The first pair indicates the red levels, and the second and third indicate the green and blue levels respectively—<code>#RRGGBB</code>.</p>
+<p>Many color picker tools will help you find the hexadecimal notation of a given color. Pure red, for example would be #FF0000.</p>
+<p><img src="//static.webplatform.org/f/fb/color_pi.jpg" alt="Photoshop color picker displays the hex value of your color" /></p>
+<p>Valid values include a <code>colour</code> value, <code>transparent</code>, or <code>inherit</code>.</p></td>
+</tr>
+<tr class="even">
+<td align="left"><code>image</code></td>
+<td align="left">Indicates the path<em>or URL</em> of the background image.</td>
+<td align="left"><p>Set the <code>background-image</code> by showing the browser where to find the image, using the URL. For example; <code>url(alert.png)</code>. Note that the path is prefaced with they keyword <code>url</code> and wrapped in parenthesis. This syntax is important to the browser understanding that you mean to indicate a location. If your url contains special characters or white space, you may have to use apostrophes or quotations around the url inside of the parentheses.</p>
+<p>Valid values include a <code>URL</code>, <code>none</code>, or <code>inherit</code>.</p></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>repeat</code></td>
+<td align="left">Indicates in which direction the background image should be tiled.</td>
+<td align="left"><p><br /> Images can be tiled vertically, horizontally, or both, to fill the entire width or height of an HTML element. Use <code>background-repeat</code> to instruct the browser to repeat a background image.</p>
+<p>Valid values include <code>repeat</code>, <code>repeat-x</code>, <code>repeat-y</code>, and <code>no-repeat</code>.</p>
+<p><br /></p></td>
+</tr>
+<tr class="even">
+<td align="left"><code>attachment</code></td>
+<td align="left">Sets the behavior of the background image when the user scrolls.</td>
+<td align="left"><p>Images can either scroll with their content, or stay fixed in place in the view screen. Valid values include <code>scroll</code>, <code>fixed</code>, and <code>inherit</code>.</p></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>position</code></td>
+<td align="left">Tells the browser where to position the background image.</td>
+<td align="left"><p>Images can be displayed anywhere within the borders of the HTML element on which they are applied. Use <code>background-position</code> to precisely place your images for visual effect and layering.</p>
+<p>There are many useful ways to indicate background position, keywords, and numeric values. Keywords (such as <code>top</code> and <code>bottom</code>) are very useful and easy to read. Pixel values are very precise, but they do not adapt to changing heights and widths. Negative pixel values are useful when using CSS sprites, as you will see later.</p>
+<p>When percentages and pixels are used, the starting point is always the top left corner of the HTML element, although the way image positioning works with pixels and percentages is rather different. Pixels always move the image a set number of pixels towards the bottom and right of the containing box (or towards the top and left if they are negative values), regardless of the size of the image and the containing box. Percentages, on the other hand, move the image a percentage of the difference between the containing box size, and the image size. If the image and the containing box are the same size, percentages will not move the image at all.</p>
+<p>Valid values include <code>length</code> (generally in pixels), <code>percentage</code> (of the width of the element), and the keywords <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>, and <code>center</code>. Note that center can be used to indicate both vertical and horizontal center. Note also that you can mix percentages and pixels in rules, but not keywords and pixels or keywords and percentages.</p></td>
+</tr>
+<tr class="even">
+<td align="left"><code>background</code></td>
+<td align="left">The shorthand property that can be used to describe all the other properties in one line.</td>
+<td align="left"><p>Shorthand properties are very nifty indeed. Most developers use them to keep the CSS as lean as possible and group related properties. You can write a general rule using shorthand, and then override it as needed with specific properties.</p>
+<p>The properties should always be indicated in the same order, to allow browsers to easily interpret the intended styles:</p>
+<ol>
+<li><code>color</code></li>
+<li><code>url</code></li>
+<li><code>repeat</code></li>
+<li><code>attachment (very rarely used; may be omitted)</code></li>
+<li><code>horizontal-position</code></li>
+<li><code>vertical-position</code></li>
+</ol>
+<p>An example of this shorthand with all the properties used (except <code>attachment</code>) is as follows:</p>
+<p><code>background: green url(logo.gif) no-repeat left top;</code></p></td>
+</tr>
+</tbody>
+</table>
+<h2>Building an alert message</h2>
+<p>Now that you understand the basic syntax involved, you can walk through the process of building up a complete alert box example, which demonstrates all the aspects of working with background images.</p>
+<h3>The design</h3>
+<p>Imagine a graphic designer has provided a visual mock-up of the alert message you want to create for your website. The alert has a light orange background color, to make it stand out from the surrounding paragraphs. It also has an alert icon ten pixels from the top left corner.</p>
+<p>Note that the mockup has one line of text, but it might contain more in the future. One of the most important skills of the web developer is to anticipate how a design will evolve. Part of respecting the artistic vision for a site is thinking about consistency from launch to redesign. So the alert message could contain more than one line of text, or even multiple paragraphs, lists, or other HTML elements. Strive to be as element agnostic as possible. This will increase the likelihood of code reuse, and will enable you to set up the site to be as fast and efficient as it can be. The mockup looks like Figure 1.</p>
+<p><img src="//static.webplatform.org/a/a1/alert_fi.jpg" alt="Final mock up"></p>
+<p>Figure 1: The graphic designer’s mockup of the alert box.</p>
+<p>The designer has also provided the icon we are meant to use, as shown in Figure 2.</p>
+<p><img src="//static.webplatform.org/9/9c/alert000.png" alt="Alert icon"></p>
+<p>Figure 2: The alert icon.</p>
+<h3>The code</h3>
+<p>Based on what you have learned about CSS backgrounds in the first part of this article, you may already be envisioning how to build this alert message. I encourage you to try building it now, and then compare your work against the example below.</p>
+<p>After building your alert box, follow the step by step instructions below. Each screenshot links to code examples, so you can check out the source file at each stage. Experiment with the code, by increasing or decreasing values, and try out alternatives. You may also want to follow along, writing each new line of code in a tool such as Opera Dragonfly or Firefox Firebug, so you can immediately see the results of each step.</p>
+<h4>Creating the CSS hook, or selector.</h4>
+<p>First you need to create a class <code>alert</code>, that enable you to hook up the CSS code. Create new CSS and HTML skeleton files, link the CSS style sheet to the HTML file, and add the following code to each:</p>
+<p>Copy the following CSS and paste it into the style sheet:</p>
+<pre><code class="css">.alert { ... }
+</code></pre>
+<p>Copy the following HTML and paste it into the HTML document:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"alert"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>Alert!<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> The text of our alert message goes here.
+<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>The code above styles the alert with a <code>class</code>, rather than an <code>id</code>, because that enables the possiblity for <em>more than one alert</em> in the page. For example, you may add alerts to a form element with several potential errors. The goal is to make your CSS as flexible as possible and constrain things to correspond to the design when building the HTML content.</p>
+<p>At this point, you have a solid foundation in place, but the alert still looks like an ordinary paragraph because you have not yet added any styles. You will add some rules to style it next.</p>
+<p>Note: I have intentionally chosen <em>not</em> to limit the class <code>alert</code> to paragraphs; alert boxes could easily contain other elements as well. You should leave as much flexibility as you can within your CSS.</p>
+<h4>Adding the background color</h4>
+<p>You already learned about using background color in text treatments in <a href="http://www.w3.org/wiki/Text_styling_with_CSS"><em>Text styling with CSS</em></a>. The same principles apply to any HTML element and can be combined with background images to create visual effects. If the background color has neither been set nor inherited, it is, by default, transparent.</p>
+<p>As shown below, you can add the light orange background color to the alert box to make it stand out from the text around it. It is important not to make the background color too dark, because you need to keep a reasonable level of <a href="http://www.w3.org/TR/2006/WD-WCAG20-20060427/guidelines.html#visual-audio-contrast">contrast between the text and the background color</a>. Add the following property inside the CSS rule:</p>
+<pre><code class="css"><span class="hljs-class">.alert</span><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFCC</span></span></span>;
+}</span>
+</code></pre>
+<p>The alert box now looks similar to Figure 3.</p>
+<p><img src="//static.webplatform.org/8/86/2_color0.gif" alt="Code"></p>
+<p>Figure 3: An alert box with background color added.</p>
+<h4>Applying the background image</h4>
+<p>Next, you can add the background image to the alert. The path to the background image needs to be wrapped in <code>url()</code>, as shown in the code below. Add the highlighted line to the CSS rule:</p>
+<pre><code class="css"><span class="hljs-class">.alert</span><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFCC</span></span></span>;
+
+  <span class="hljs-comment">/* Add the background image */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(alert.png)</span></span>;
+}</span>
+</code></pre>
+<p>The alert box now looks like Figure 4.</p>
+<p><img src="//static.webplatform.org/d/de/3_image0.gif" alt="Code with background image"></p>
+<p>Figure 4: The background image has been added, but the tiling looks wrong.</p>
+<p>Remember that each background property has a default value—if you have not specified a value, the default will be applied. Notice that the image is tiling over the entire alert, much like mosaic tiles on a kitchen floor. What is the takeaway? Background images are set to repeat both horizontally and vertically by default. Repeating backgrounds are particularly useful for gradients and patterns that fill the screen or a particular HTML element, but that effect is <em>not</em> desired in this case.</p>
+<h4>Controlling background repeat</h4>
+<p><img src="//static.webplatform.org/d/d6/repeat00.jpg" alt="Repeat horizontally and vertically"></p>
+<p>Figure 5: Much like the background image, these tiles repeat both horizontally and vertically.</p>
+<p>Reading specifications can certainly be intimidating, but the specification is a really good place to figure out how CSS is <em>supposed to work</em> before you delve into the myriad browser differences. Read the <a href="http://www.w3.org/TR/CSS21/colors.html">colors and backgrounds portion of the W3C Specification</a> and try to find the keyword to use when you do not want a background image to be repeated. This strategy is used in the example below:</p>
+<p>Note that there is a section for each background property including <a href="http://www.w3.org/TR/CSS21/colors.html#propdef-background-repeat">background-repeat</a>. Under <strong>Value</strong>, all of the possible choices are displayed, including; <code>repeat</code>, <code>repeat-x</code>, <code>repeat-y</code>, <code>no-repeat</code>, and <code>inherit</code>. By default (<strong>initial</strong>) background images are set to repeat. No direction is specified, which means that that the image will tile both horizontally and vertically. You have likely guessed that <strong><code>no-repeat</code></strong> is the value to set to prevent the image from tiling in either direction. Add the following highlighted line below to the CSS rule:</p>
+<pre><code class="css"><span class="hljs-class">.alert</span><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFCC</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(alert.png)</span></span>;
+
+  <span class="hljs-comment">/* Set the background repeat */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">background-repeat</span>:<span class="hljs-value"> no-repeat</span></span>;
+}</span>
+</code></pre>
+<p>The alert box now looks like Figure 6.</p>
+<p><img src="//static.webplatform.org/5/5a/4_repeat.gif" alt="Code for Step 4 background repeat"></p>
+<p>Figure 6: The alert box, with a single copy of the background image (with no tiling).</p>
+<p>Additionally, you can choose to repeat in both directions (like kitchen tiles) or in either direction. Gradients often repeat horizontally or vertically (see Figure 7). You do not need to know the size of the HTML element; you simply cut a slice from your gradient and set it to repeat in the direction you want; either x for horizontal, or y for vertical. Patterns often repeat in both directions and icons usually do not repeat. You will explore <code>background-repeat</code> further in a later example.</p>
+<p><img src="//static.webplatform.org/1/1e/repeat-x.jpg" alt="repeat-x example"></p>
+<p>Figure 7: The greenish yellow tiles in this example repeat only horizontally.</p>
+<p>Next, take a look at a practical example from my website. Review Figure 8.</p>
+<p><img src="//static.webplatform.org/7/7a/site_bac.jpg" alt="A tiny image is tiled horizontally to create a three color design across the top of my website."></p>
+<p>Figure 8: A repeating example from my website.</p>
+<p>The CSS I used to add this decorative effect is relatively simple. I made the background repeat horizontally using <code>repeat-x</code>:</p>
+<pre><code class="css">  <span class="hljs-tag">body</span> <span class="hljs-rules">{
+    <span class="hljs-comment">/* set to repeat-x */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">background-repeat</span>:<span class="hljs-value"> repeat-x</span></span>;
+  }</span>
+</code></pre>
+<h4>Attachment</h4>
+<p>The <code>attachment</code> attribute allows you to specify how the background behaves when the user scrolls down the page. The default behavior is <code>scroll</code>, which causes the background image to scroll along with the content.</p>
+<p>On the other hand, setting <code>background-attachment</code> to <code>fixed</code> causes the element to be stuck to the browser window, so it stays in the same place when the content inside the element it is attached to is scrolled. This creates some odd effects, which will only be apparent when you scroll over the attached HTML element. The W3C uses it to mark the status of their specifications. For example, the <a href="http://www.w3.org/TR/CSS21/colors.html#propdef-background-repeat">“W3C Candidate Recommendation” image at top left</a>. Scroll down the page and note that the image stays top left. It is attached to the <code>body</code> element, so it is always visible.</p>
+<p>This step will have no effect on our display, because browsers set background images to scroll by default, but add it to the code anyway, to learn how the property is used. Add the highlighted line to the CSS rule:</p>
+<pre><code class="css"><span class="hljs-class">.alert</span><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFCC</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(alert.png)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-repeat</span>:<span class="hljs-value"> no-repeat</span></span>;
+
+  <span class="hljs-comment">/* add background-attachment */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">background-attachment</span>:<span class="hljs-value"> scroll</span></span>;
+}</span>
+</code></pre>
+<p>As shown in Figure 9, the visual display of the alert box is not much different than it was before.</p>
+<p><img src="//static.webplatform.org/3/38/5_attach.gif" alt="Code for background attachment"></p>
+<p>Figure 9: The display has not changed.</p>
+<h4>Positioning the image</h4>
+<p>Positioning is the fine tuning that enables you to place background images exactly where desired, both horizontally and vertically, within the HTML element. This property takes keyword and number values such as<code>top</code>, <code>center</code>, <code>right</code>, <code>100%</code>, <code>-10%</code>, <code>50px</code> and <code>-30em</code>.</p>
+<p>Figure 10 shows the values you might use to place your background images in different positions.</p>
+<p><img src="//static.webplatform.org/d/da/backgrou.gif" alt="Examples of possible background positions"></p>
+<p>Figure 10: Various examples of background position using keywords, percentages, and pixels.</p>
+<p>The code below positions the background image. The goal is to position it in the top left corner, but not touching the sides, so you need to offset it by 10 pixels from both the top and left. This is accomplished by adding the following highlighted line to the CSS rule:</p>
+<pre><code class="css"><span class="hljs-class">.alert</span><span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFCC</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(alert.png)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-repeat</span>:<span class="hljs-value"> no-repeat</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-attachment</span>:<span class="hljs-value"> scroll</span></span>;
+
+  <span class="hljs-comment">/* Add the background position */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">background-position</span>:<span class="hljs-value"> <span class="hljs-number">10px</span> <span class="hljs-number">10px</span></span></span>;
+}</span>
+</code></pre>
+<p>The first value is the horizontal offset, the second is the vertical. In this case the values are the same. After making these changes, your alert box should look like Figure 11.</p>
+<p><img src="//static.webplatform.org/f/f1/6_positi.gif" alt="Code with background position"></p>
+<p>Figure 11: Using CSS positioning to set the location of the background image.</p>
+<p>Tip: Choose either keywords or number values, but do not combine them. Older browsers may ignore your declaration if you use both at once. Using <code>right</code> and <code>bottom</code> will achieve the same effect as using <code>100%</code> horizontally or vertically, respectively.</p>
+<h4>Using shorthand to pull the whole thing together like a pro</h4>
+<p>As you have learned, certain CSS properties can be grouped together. Background and all of its sub-properties can be grouped in CSS rules. The CSS code described so far can be rewritten in a shortened form, as follows:</p>
+<pre><code class="css">  <span class="hljs-class">.alert</span><span class="hljs-rules">{
+    <span class="hljs-comment">/* change to the shorthand form */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFCC</span> <span class="hljs-function">url</span>(alert.png) no-repeat scroll <span class="hljs-number">10px</span> <span class="hljs-number">10px</span></span></span>;
+  }</span>
+</code></pre>
+<p>Tip: When grouping sub-properties of <code>background</code>, always put the properties in the following order. This is important for both cross-browser compatibility and style sheet organization and maintenance:</p>
+<ol>
+<li><code>color</code></li>
+<li><code>image</code></li>
+<li><code>repeat</code></li>
+<li><code>attachment</code></li>
+<li><code>horizontal</code> position</li>
+<li><code>vertical</code> position</li>
+</ol>
+<p>Try replacing the old CSS code in your document with the shorthand shown above. After updating it, the example should look exactly the same (see Figure 12).</p>
+<p><img src="//static.webplatform.org/e/e3/7_finish.gif" alt="Finished product"></p>
+<p>Figure 12: The shorthand works like a charm!</p>
+<h3>Experimenting with the code</h3>
+<p>The best way to remember all the nuances of CSS is to test the options yourself. Try changing some of the properties in the example, and see how different values affects the display. Set the <code>background-position</code> to <code>100% 100%</code>, and notice that it provides the same result as using the <code>right</code> and <code>bottom</code> keywords. What about if you change it to <code>-5px 0</code>? Why do you think part of the image is hidden?</p>
+<h3>Testing for quality</h3>
+<p>Testing is extremely important to providing a good user experience. Just because the site looks good on your machine with your specific configuration does not mean that it will look good in every browser. Follow these basic minimum steps when testing your alert box:</p>
+<ul>
+<li>Increase or decrease the amount of text inside the alert.</li>
+<li>Increase the text size in your browser at least two levels. Determine if it is better to use ems to position our image. Test what happens when you increase the text size.</li>
+<li>Apply the <code>class</code> alert to other elements such as <code>div</code>, <code>p</code>, <code>ul</code>, <code>strong</code>, or <code>em</code>. How can you change the code to make the class agnostic?</li>
+<li>Include several paragraphs and a list inside an alert <code>div</code>. Does the code still work?</li>
+<li>Verify the alert visually in the <a href="http://www.bbc.co.uk/guidelines/futuremedia/technical/browser_support.shtml#support_table">Grade 1 browsers</a> (also known as A-grade browsers). My advice is to write the code for good browsers and then adapt it for Internet Explorer–once the code works.</li>
+</ul>
+<p>Rigorous testing is part of learning to write CSS. The more careful you are while learning, the faster you will be able to code.</p>
+<h2>Sprites</h2>
+<p>Users want it all. They want your site to be glamorous, interactive, and also fast. However, including large quantities of CSS background images can slow your site down considerably. The more HTTP requests you make, the slower your site will be (an HTTP request occurs whenever your computer is accessing a website and needs to ask the server to send it another asset in the site design, such as a CSS file or image… each additional request means a longer loading time for the site).</p>
+<p>To get around this limitation, you can combine related icons into a single image, known as <a href="http://www.alistapart.com/articles/sprites">CSS Sprites</a>. The <code>background-position</code> property allows you to then place the image in the appropriate positions so the icons display through the <em>window</em> of the HTML element that the CSS sprites are attached to.</p>
+<p>In Figure 13, notice that to display the earth icon through the HTML window, you can place the image using <code>left top</code>. To move the position of the image so the alert icon is displayed, the background position needs to be changed to <code>-80px 0</code>. The negative horizontal value pulls the image to the left.</p>
+<p><img src="//static.webplatform.org/7/7a/sprite_6.gif" alt="Only the part of the background image which is inside the HTML element is visible"></p>
+<p>Figure 13: Use CSS Sprites to reduce HTTP requests.</p>
+<p>Note: If you set negative background positions, Safari will repeat your image, even if you’ve specified <code>no-repeat</code>. This is a consideration as you start working with background images to create more complicated layouts.</p>
+<h3>A complex sprite and background image example</h3>
+<p>Next, take a look at how you can leverage CSS sprites. Suppose a friendly designer sent us an new mockup. This one illustrates a list of links on the landing page of a blog. It points to the bloggers’ LinkedIn profile, RSS feed, Flickr photos, and bookmarks. As you evaluate each link, notice that there is a gradient starting in the center as white and transitioning to gray at the top and bottom of the link. And to further complicate things, the designer asked if we could make each link plain white with no curve when visitors hover over the link, as shown in Figure 14.</p>
+<p><img src="//static.webplatform.org/b/b5/List0000.gif" alt="List mockup"></p>
+<p>Figure 14: The new design mockup.</p>
+<p>The logos could be included using <code>img</code> elements in the markup. However, using CSS sprites is a much better solution. The sprites load faster because only one image must load (not four), and it declutters your HTML, by reducing the amount of markup needed.</p>
+<h4>Creating the sprite</h4>
+<p>The first step involves cutting out the four logos and creating the sprite set, as shown in Figure 15.</p>
+<p><img src="//static.webplatform.org/4/4b/sprite_l.gif" alt="Logos sprite"></p>
+<p>Figure 15: The sprite set.</p>
+<p>You also need to cut out a 1 pixel wide slice of the gradient. For the sake of visibility, I have cut out a slightly larger slice, but in a real-world site project you only need a one pixel image (see Figure 16).</p>
+<p><img src="//static.webplatform.org/6/66/sprite_g.jpg" alt="Gradient background"></p>
+<p>Figure 16: The slice used for the gradient background.</p>
+<p>The HTML that creates the list is an unordered list containing links. Note the empty <code>span</code> elements inside the links. It is very important not to have fixed <code>height</code> and <code>width</code> on elements that contain text. After all, you have no idea how large the text will be. What happens if the site is translated to German? You can use these extra spans to display the logos. As an alternative, you may decide that you do not want to have extraneous non-semantic markup cluttering up your HTML. In this case, you will need to use a larger sprite and leave white space between the icons. Keep in mind that this strategy is slower for users on slow connections, especially those using mobile phones to view the site. The code for the list is shown below. Copy it and then paste it into an HTML document:</p>
+<pre><code class="html">  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"navigation"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"resume"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Resume<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"rss"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>RSS Feed<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"photos"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Photos<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"links"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span>Links<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+</code></pre>
+<p>Add the following CSS to a new CSS file, and link it to the HTML document:</p>
+<pre><code class="css"><span class="hljs-class">.navigation</span>, <span class="hljs-class">.navigation</span> <span class="hljs-tag">li</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"><span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"><span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-class">.navigation</span> <span class="hljs-tag">li</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border-top</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid white</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">list-style-type</span>:<span class="hljs-value">none</span></span>;
+}</span>
+
+<span class="hljs-class">.navigation</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#E2E2E2</span> <span class="hljs-function">url</span>(sprite_gradient_bkg.jpg) repeat-x left center</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"><span class="hljs-number">20px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value">block </span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> Arial, Helvetica, sans-serif</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#333</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"><span class="hljs-number">18px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value">none</span></span>;
+}</span>
+
+<span class="hljs-comment">/* hover effects */</span>
+
+<span class="hljs-class">.navigation</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span><span class="hljs-pseudo">:hover</span>, <span class="hljs-class">.navigation</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span><span class="hljs-pseudo">:focus</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> transparent none</span></span>;
+}</span>
+</code></pre>
+<p>The CSS utilizes both background images. First, take a look at the gradient background image. There are three interesting things to notice:</p>
+<ol>
+<li>The image repeats horizontally (<code>repeat-x</code>.) This tiling enables you to make such a small image spread across the entire list.</li>
+<li>The image is centered vertically. You want the round bit of the image to appear in the middle of the list item, so you should use a background position of <code>left center</code>.</li>
+<li>In the CSS, I’ve applied a background color that is the same gray as the gray in the gradient image. This ensures, if the element grows, it will not look broken. For more information about this kind of technique, I recommend reading <a href="http://www.simplebits.com/publications/bulletproof/">Bulletproof Web Design</a> by Dan Cederholm.</li>
+</ol>
+<p>The last line means that the element should not display a background color or image when the visitor hovers their cursor over it, or focuses on the element using the keyboard. You may be wondering why I applied the background properties to the link rather than the list item. The answer is that Internet Explorer 6 and earlier do not support pseudo classes like <code>hover</code> on elements other than links. I’ve made the adjustment in the code to accommodate this constraint.</p>
+<p>Next you can create the CSS for the little logos. As usual, you can start by defining the most general case for all <code>span</code> elements within your navigation module. It is here that you define the image to be used by all spans, the repeat setting, and the background position (each is different, so you can use the first one). You can use shorthand for this rule. Note that CSS comments divide the sections of our code into manageable chunks. Add the following code to the bottom of the CSS file:</p>
+<pre><code class="css"><span class="hljs-comment">/* general case */</span>
+
+<span class="hljs-class">.navigation</span> <span class="hljs-tag">span</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-function">url</span>(sprite_logo.gif) no-repeat left top</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"><span class="hljs-number">15px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">15px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"><span class="hljs-number">20px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value">-moz-inline-box</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value">inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> middle</span></span>;
+}</span>
+</code></pre>
+<p>With the basic formatting completed, you can now define the exceptions, or <em>what is different</em> about each specific logo. In this case, the only CSS that changes is the <code>background-position</code>. Each respective list item needs to have the image moved 15 pixels more to the left, because each of the logo images are 15 pixels wide. Add the following to the bottom of the CSS file:</p>
+<pre><code class="css"><span class="hljs-comment">/* exceptions */</span>
+
+<span class="hljs-id">#rss</span> <span class="hljs-tag">span</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-position</span>:<span class="hljs-value"> -<span class="hljs-number">15px</span> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-id">#photos</span> <span class="hljs-tag">span</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-position</span>:<span class="hljs-value"> -<span class="hljs-number">30px</span> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-id">#links</span> <span class="hljs-tag">span</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-position</span>:<span class="hljs-value"> -<span class="hljs-number">45px</span> <span class="hljs-number">0</span></span></span>;
+}</span>
+</code></pre>
+<p>This example might seem intimidating at first. Keep your focus on the background images. In this case, using a negative pixel value pulls the background image left, so that the relevant part of the image is displayed. Positive values move the background image down and right, while negative values pull the image up and to the left.</p>
+<p>Experiment with the background position values in the <a href="http://dev.opera.com/articles/view/31-css-background-images/sprite.html">finished example</a>, to better understand how to adjust sprite positioning.</p>
+<h2>Usage</h2>
+<pre><code> on 02/10/2014 arond 1500 central std time:
+</code></pre>
+<p>hoffmant99 made minor changes to make sprite example work, though the student(reader of this page) needs to be aware that the file names don’t match. This can be fixed locally, change the name from “sprite_logo” to “sprite_l” and&quot; sprite_gradient_bkg.jpg&quot; to sprite_g.jpg&quot;.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://developer.yahoo.com/performance/rules.html#num_http">Performance and HTTP requests on YDN</a></li>
+<li><a href="http://www.w3.org/TR/REC-CSS2/colors.html">CSS2 Specification—Colors and Backgrounds</a></li>
+<li><a href="http://www.alistapart.com/articles/sprites">CSS Sprites—Image Slicing’s Kiss of Death</a></li>
+<li><a href="http://www.simplebits.com/publications/bulletproof/">Bulletproof Web Design</a>—My favourite book</li>
+</ul>
+<h3>Image credits</h3>
+<ul>
+<li><a href="http://www.flickr.com/photos/dimsumdarren/1342305614/">The Tiles</a>, by DimsumDarren</li>
+<li><a href="http://www.flickr.com/photos/emdot/6099842/">little glass tiles</a>, by emdot</li>
+</ul>
+<h3>Exercise Questions</h3>
+<ul>
+<li><p>A paragraph is 40px by 180px and your background image is 60px by 200px. Will you see the entire image or only part of it? Why?</p></li>
+<li><p>You want an image to be positioned in the bottom left corner of the <code>blockquote</code> element—please fill in the correct values.</p>
+<pre><code>blockquote{background: yellow url(quote.png) no-repeat scroll ____ ____ ;}
+</code></pre></li>
+<li><p>Say you wanted each <code>h2</code> in your document with a <code>class</code> of “question” to have a gradient pattern applied. Would you use <code>repeat-x</code>, <code>repeat-y</code>, <code>no-repeat</code>, or <code>repeat</code> to achieve something similar to the example below? Why?</p></li>
+</ul>
+<p><img src="//static.webplatform.org/2/24/exercise_example.gif" alt="logos sprite"></p>
+<ul>
+<li>What would be the background position of the example in question number 3? How could you creatively use a background colour to be sure the background could expand to any height? Why is this important?</li>
+<li>What shorthand can you use to remove all background properties?</li>
+<li>What is the purpose of CSS sprites?</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

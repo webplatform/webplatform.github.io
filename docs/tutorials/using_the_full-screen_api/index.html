@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using the full-screen API · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to using the full-screen API." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/using_the full-screen api/">using the full-screen api</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using the full-screen API</h1>
+<p><strong>By <a href="/User:Dgash">Dave Gash</a></strong><br>
+Originally published October 12, 2012</p>
+<h2>Summary</h2>
+<p>An introduction to using the full-screen API.</p>
+<h2>Introduction</h2>
+<p>In some browser applications, such as games, and with some elements, such as videos, it is advantageous to present the content using not just the interior browser window space but the full available screen space, without borders or other chrome elements. This might be desired to increase clarity, reduce distraction, or improve comprehension of the content.</p>
+<p>The full-screen API provides a programmatic method for presenting web content using the user’s entire monitor and lets you direct the browser to make an element—and its children, if any—occupy all of the available space.</p>
+<h3>Visual comparison</h3>
+<p>The screen captures below show a web page containing a video element in normal and full-screen modes.</p>
+<p><em>Web page (cropped) with video element in normal mode</em> <img src="//static.webplatform.org/a/a4/fs01-normal.png" alt="fs01-normal.png"></p>
+<p><em>Web page (reduced) with video element in full-screen mode</em> <img src="//static.webplatform.org/6/6b/fs02-full.png" alt="fs02-full.png"></p>
+<h2>Use</h2>
+<p>Beginning with a web page rendered normally in a standard browser window, the developer can enable elements on the page to change the display to full-screen. Once in full-screen mode, the mode may be exited either programmatically or through user interaction.</p>
+<p>Two methods control the entry to and exit from full-screen mode, <code>requestFullscreen()</code> and <code>exitFullscreen()</code>, respectively. The first method is applied to the element, the second to the document object as shown below.</p>
+<h3>Entering full-screen mode</h3>
+<p>Consider a <code>&lt;video&gt;</code> element as illustrated above. The element we wish to control has an ID so that it can be addressed programmatically. Also, in this case, the element contains the <code>controls</code> attribute to allow user control of playback, volume, etc., and two different <code>&lt;source&gt;</code> child elements as a fallback against a given browser not recognizing one or the other.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">video</span> <span class="hljs-attribute">controls</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"myvid"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myvideo.webm"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">source</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myvideo.mp4"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">source</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">video</span>&gt;</span>
+</code></pre>
+<p>The following script might be used to put the video element into full-screen mode.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> elem = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"myvid"</span>);
+elem.requestFullscreen();
+</code></pre>
+<p>The video element will now render in full-screen mode, waiting for either a programmatic or user action to manipulate it or to exit full-screen mode.</p>
+<h3>Exiting full-screen mode</h3>
+<p>While full-screen mode can be exited via standard user actions such as pressing <strong>Esc</strong> or <strong>F11</strong>, you can also exit the mode programmatically. For example, the following code creates a button whose onclick event exits full-screen mode.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Exit full-screen mode"</span>
+  <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"document.exitFullscreen()"</span>/&gt;</span>
+</code></pre>
+<p>In addition, certain other user actions such as navigating to another web page, changing tabs in a browser, or switching to another application (e.g., with <strong>alt-Tab</strong>) will also force an exit from full-screen mode.</p>
+<h3>Notification events</h3>
+<p>When full-screen mode is successfully entered or exited, the document containing the element receives a <code>fullscreenchange</code> event. The event itself provides no information about the state of the mode (i.e., whether it is on or off), but the document’s <code>fullscreenElement</code> property can be tested to determine the mode. A non-null value indicates that full-screen is on, as shown below.</p>
+<pre><code class="js"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.fullscreenElement != <span class="hljs-literal">null</span>) {
+  <span class="hljs-comment">// full-screen is on</span>
+}
+<span class="hljs-keyword">else</span> {
+  <span class="hljs-comment">// full-screen is off</span>
+}
+</code></pre>
+<h3>Failures</h3>
+<p>Attempts to enter full-screen mode may not succeed for various reasons. For example, <code>&lt;iframe&gt;</code>s may have to explicity allow full-screen activity, or certain kinds of content such as windowed plug-ins may prevent full-screen activation. In addition, attempting to invoke full-screen mode on a parent or descendant element of an element that <em>does</em> allow full-screen mode will fail.</p>
+<p>In these cases, the element that requested the full-screen mode will recieve a <code>fullscreenerror</code> event, which can be trapped in script and handled appropriately.</p>
+<h2>Live example</h2>
+<p>See a <a href="https://developer.mozilla.org/samples/domref/fullscreen.html">live example of the full-screen API</a>. Once on the page, play the video and then press <strong>Enter</strong> to toggle between full-screen and normal modes.</p>
+<h2>Code sample</h2>
+<p>In this code sample, based on the live example, a video is presented in a web page. As above, the <strong>Enter</strong> key allows the user to toggle between full-screen and normal mode.</p>
+<h3>Watching for the Enter key</h3>
+<p>When the page loads, an event listener is added to detect the <strong>Enter</strong> key.</p>
+<pre><code class="js"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"keydown"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-keyword">if</span> (e.keyCode == <span class="hljs-number">13</span>) {
+    toggleFullScreen();
+  }
+}, <span class="hljs-literal">false</span>);
+</code></pre>
+<p>If an <strong>Enter</strong> keypress is detected, the listener calls a toggle function; if not, it returns <code>false</code> and does nothing.</p>
+<h3>Toggling full-screen mode</h3>
+<p>When an <strong>Enter</strong> keypress is detected, the toggle function either enters full-screen mode if it is not active or exits full-screen mode if it is active. Prior to entry, a <code>videoElement</code> variable has been set containing the ID of the video element to be toggled.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleFullScreen</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.fullscreenElement == <span class="hljs-literal">null</span> &amp;&amp;) {
+    <span class="hljs-keyword">if</span> (videoElement.requestFullscreen) {
+      videoElement.requestFullscreen();
+    }
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.exitFullscreen) {
+      <span class="hljs-built_in">document</span>.exitFullscreen();
+    }
+  }
+}
+</code></pre>
+<p>This function begins by testing the document’s <code>fullscreenElement</code> property.</p>
+<p>If the <code>fullscreenElement</code> property is null, then the document <em>is not</em> in full screen mode. The nested <code>if</code> then determines whether the element supports the <code>requestFullscreen</code> method and, if so, invokes it on the element. If the element does not support the method, the script does nothing.</p>
+<p>If the <code>fullscreenElement</code> property is not null, then the document <em>is</em> in full screen mode. The nested <code>if</code> then determines whether the document supports the <code>exitFullscreen</code> method and, if so, invokes it on the document. If the document does not support the method, the script does nothing.</p>
+<h2>Support</h2>
+<p>This API currently has only partial support in modern browsers. See the compatibility tables in the relevant methods and properties below for the latest information.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="/docs/dom/Element/requestFullscreen">requestFullscreen</a></li>
+<li><a href="/docs/dom/Document/exitFullscreen">exitFullscreen</a></li>
+<li><a href="/docs/dom/Document/fullscreenElement">fullscreenElement</a></li>
+<li><a href="/docs/dom/Document/fullscreenEnabled">fullscreenEnabled</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

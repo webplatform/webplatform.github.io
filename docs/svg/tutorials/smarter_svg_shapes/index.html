@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG basic shapes and text · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This guide introduces SVG&#x27;s basic graphic elements, from simple lines and shapes to complex polygons and freehand paths. It also shows how to place lines of text and wrap it around curved paths." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/tutorials/">tutorials</a></li><li><a href="/svg/tutorials/smarter_svg shapes/">smarter svg shapes</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG basic shapes and text</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>This guide introduces SVG’s basic graphic elements, from simple lines and shapes to complex polygons and freehand paths. It also shows how to place lines of text and wrap it around curved paths.</p>
+<h2>Simple shapes</h2>
+<p>Various SVG elements produce basic shapes, and their attributes specify their dimensions.</p>
+<p>Rectangles are defined by their <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> attributes, while <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a> and <a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a> offsets position the upper-left corner of the <a href="/docs/svg/elements/rect"><strong>rect</strong></a> relative to its parent:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"240"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"160"</span>/&gt;</span>
+</code></pre>
+<p>Circles are positioned by the <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a> and <a href="/w/index.php?title=svg/attributes/cy&amp;action=edit&amp;redlink=1"><strong>cy</strong></a> center point, and the radius (<a href="/w/index.php?title=svg/attributes/r&amp;action=edit&amp;redlink=1"><strong>r</strong></a>) specifies the size:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"100"</span>/&gt;</span>
+</code></pre>
+<p>Ellipses are positioned like circles, but require two <a href="/w/index.php?title=svg/attributes/rx&amp;action=edit&amp;redlink=1"><strong>rx</strong></a> and <a href="/w/index.php?title=svg/attributes/ry&amp;action=edit&amp;redlink=1"><strong>ry</strong></a> radius attributes for each axis:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">ellipse</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"40"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"60"</span> <span class="hljs-attribute">rx</span>=<span class="hljs-value">"40"</span> <span class="hljs-attribute">ry</span>=<span class="hljs-value">"20"</span>/&gt;</span>
+</code></pre>
+<p>When applied to <a href="/docs/svg/elements/rect"><strong>rect</strong></a> elements, <a href="/w/index.php?title=svg/attributes/rx&amp;action=edit&amp;redlink=1"><strong>rx</strong></a> and <a href="/w/index.php?title=svg/attributes/ry&amp;action=edit&amp;redlink=1"><strong>ry</strong></a> attributes produce rounded corners:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"160"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"240"</span> <span class="hljs-attribute">rx</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">ry</span>=<span class="hljs-value">"20"</span>/&gt;</span>
+</code></pre>
+<p>This is how these examples appear:</p>
+<p><img src="//static.webplatform.org/7/74/svg_shapes.png" alt="svg shapes.png"></p>
+<h2>Fill and stroke properties</h2>
+<p>By default, shapes are filled black. The <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> and <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> properties specify the color of the background and the edge of the shape.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"pink"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"160"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"240"</span>/&gt;</span>
+</code></pre>
+<p>You can assign these as attributes on SVG elements, but they are really CSS properties. For the sake of clarity and best practice, this guide expresses SVG properties as CSS selectors:</p>
+<pre><code class="css"> <span class="hljs-tag">rect</span> <span class="hljs-rules">{
+     <span class="hljs-rule"><span class="hljs-attribute">fill   </span>:<span class="hljs-value"> pink</span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">stroke </span>:<span class="hljs-value"> red</span></span>;
+ }</span>
+</code></pre>
+<p>Properties specified via CSS override those specified as attributes, so this local CSS that colors the <a href="/docs/svg/elements/rect"><strong>rect</strong></a> green overrides the local attribute that colors it red:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"pink"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"fill:lightgreen;stroke:green"</span>
+    <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"160"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"240"</span>/&gt;</span>
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/properties/stroke-width&amp;action=edit&amp;redlink=1"><strong>stroke-width</strong></a> is centered over the edge of the shape, so increasing its pixel value bleeds the <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> color both inside and outside the shape:</p>
+<pre><code class="css"> <span class="hljs-tag">rect</span> <span class="hljs-rules">{
+     <span class="hljs-rule"><span class="hljs-attribute">fill         </span>:<span class="hljs-value"> pink</span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">stroke       </span>:<span class="hljs-value"> red</span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">stroke-width </span>:<span class="hljs-value"> <span class="hljs-number">6</span></span></span>;
+ }</span>
+</code></pre>
+<p>To apply transparencies, you can set the <a href="/w/index.php?title=svg/properties/fill-opacity&amp;action=edit&amp;redlink=1"><strong>fill-opacity</strong></a> and <a href="/w/index.php?title=svg/properties/stroke-opacity&amp;action=edit&amp;redlink=1"><strong>stroke-opacity</strong></a> properties.</p>
+<pre><code class="css"> <span class="hljs-tag">rect</span> <span class="hljs-rules">{
+     <span class="hljs-rule"><span class="hljs-attribute">stroke-width   </span>:<span class="hljs-value"> <span class="hljs-number">10</span></span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">stroke         </span>:<span class="hljs-value"> red</span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">stroke-opacity </span>:<span class="hljs-value"> <span class="hljs-number">0.5</span></span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">fill           </span>:<span class="hljs-value"> red</span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">fill-opacity   </span>:<span class="hljs-value"> <span class="hljs-number">0.25</span></span></span>;
+ }</span>
+</code></pre>
+<p><img src="//static.webplatform.org/4/44/svg_opacity.png" alt="svg opacity.png"></p>
+<p>Alternately, you can use <a href="/docs/css/data_types/color"><strong>rgba()</strong> and <strong>hsla()</strong></a> CSS colors to to incorpoarate opacity as part of <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> and <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> property values. The following has the same effect as the example above:</p>
+<pre><code class="css"> <span class="hljs-tag">rect</span> <span class="hljs-rules">{
+     <span class="hljs-rule"><span class="hljs-attribute">stroke-width </span>:<span class="hljs-value"> <span class="hljs-number">10</span></span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">stroke       </span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">100%</span>,<span class="hljs-number">0%</span>,<span class="hljs-number">0%</span>,<span class="hljs-number">0.5</span>)</span></span>;
+     <span class="hljs-rule"><span class="hljs-attribute">fill         </span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">100%</span>,<span class="hljs-number">0%</span>,<span class="hljs-number">0%</span>,<span class="hljs-number">0.25</span>)</span></span>;
+ }</span>
+</code></pre>
+<h2>Lines and polygons</h2>
+<p>To draw a straight line, specify its start and end coordinates as <strong>x1</strong>, <strong>y1</strong>, <strong>x2</strong>, and <strong>y2</strong>:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">line</span> <span class="hljs-attribute">x1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">x2</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y2</span>=<span class="hljs-value">"100"</span>/&gt;</span>
+</code></pre>
+<p>A <a href="/docs/svg/elements/polyline"><strong>polyline</strong></a> consists of a series of <em>x</em>/<em>y</em> coordinates specified within the <a href="/w/index.php?title=svg/attributes/points&amp;action=edit&amp;redlink=1"><strong>points</strong></a> attribute, with items separated by either commas or whitespace. This draws an arrow:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">polyline</span> <span class="hljs-attribute">points</span>=<span class="hljs-value">"100,225 100,115 130,115 70,15 70,15 10,115 40,115 40,225"</span>/&gt;</span>
+</code></pre>
+<p>A <a href="/docs/svg/elements/polygon"><strong>polygon</strong></a> is the same as a <a href="/docs/svg/elements/polyline"><strong>polyline</strong></a>, but the final coordinate is joined with the first:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">polygon</span> <span class="hljs-attribute">points</span>=<span class="hljs-value">"100,225 100,115 130,115 70,15 70,15 10,115 40,115 40,225"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/a/a4/svg_linepath.png" alt="svg linepath.png"></p>
+<h2>More stroke properties</h2>
+<p>Additional properties provide greater control over how the ends or joints of line segments appear. The <a href="/w/index.php?title=svg/properties/stroke-linecap&amp;action=edit&amp;redlink=1"><strong>stroke-linecap</strong></a> property determines the appearance of the end of a stroke, or dashes within a stroke. Options appear as follows, with both <strong>round</strong> and <strong>square</strong> extending past the end of the line depending on the <a href="/w/index.php?title=svg/properties/stroke-width&amp;action=edit&amp;redlink=1"><strong>stroke-width</strong></a>::</p>
+<p><img src="//static.webplatform.org/c/c1/svg_linecap_round.png" alt="svg linecap round.png"></p>
+<pre><code>stroke-linecap: round;
+</code></pre>
+<p><img src="//static.webplatform.org/c/c1/svg_linecap_square.png" alt="svg linecap square.png"></p>
+<pre><code>stroke-linecap: square;
+</code></pre>
+<p><img src="//static.webplatform.org/d/da/svg_linecap_butt.png" alt="svg linecap butt.png"></p>
+<pre><code>stroke-linecap: butt;
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/properties/stroke-linejoin&amp;action=edit&amp;redlink=1"><strong>stroke-linejoin</strong></a> property affects how joined segments appear, and becomes more apparent for narrower angles as the <a href="/w/index.php?title=svg/properties/stroke-width&amp;action=edit&amp;redlink=1"><strong>stroke-width</strong></a> increases:</p>
+<p><img src="//static.webplatform.org/d/d7/svg_linejoin_round.png" alt="svg linejoin round.png"></p>
+<pre><code>stroke-linejoin: round;
+</code></pre>
+<p><img src="//static.webplatform.org/1/16/svg_linejoin_bevel.png" alt="svg linejoin bevel.png"></p>
+<pre><code>stroke-linejoin: bevel;
+</code></pre>
+<p><img src="//static.webplatform.org/b/b1/svg_linejoin_miter.png" alt="svg linejoin miter.png"></p>
+<pre><code>stroke-linejoin: miter;
+</code></pre>
+<p>Setting <a href="/w/index.php?title=svg/properties/stroke-linejoin&amp;action=edit&amp;redlink=1"><strong>stroke-linejoin</strong></a> to <strong>bevel</strong> diagonally shaves the points from angles, and setting it to <strong>miter</strong> allows them to protrude. The <a href="/w/index.php?title=svg/properties/stroke-miterlimit&amp;action=edit&amp;redlink=1"><strong>stroke-miterlimit</strong></a> property limits how much of the angle is allowed to protrude, expressed relative to the <a href="/w/index.php?title=svg/properties/stroke-width&amp;action=edit&amp;redlink=1"><strong>stroke-width</strong></a>. This example only bevels those angles that protrude twice the width:</p>
+<p><img src="//static.webplatform.org/4/42/svg_linejoin_miterlimit.png" alt="svg linejoin miterlimit.png"></p>
+<pre><code>polygon {
+  stroke-linejoin   : miter;
+  stroke-miterlimit : 2;
+  stroke-width      : 10;
+}
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/properties/stroke-dasharray&amp;action=edit&amp;redlink=1"><strong>stroke-dasharray</strong></a> property allows you define arbitrary dash patterns as a comma-separated list of pixel values. A value of <em>20,10,10,10</em> draws a dash 20 pixels long, followed by a gap of 10 pixels before the following 10-pixel dash, another gap, followed the same pattern repeated to the end of the shape:</p>
+<p><img src="//static.webplatform.org/1/17/svg_stroke_dasharray.png" alt="svg stroke dasharray.png"></p>
+<pre><code>stroke-dasharray: 20,10,10,10;
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/properties/stroke-dashoffset&amp;action=edit&amp;redlink=1"><strong>stroke-dashoffset</strong></a> property allows you to shift the number of pixels at which the dash pattern begins.</p>
+<h2>Simple paths</h2>
+<p>Paths are complex shapes that may feature discontinuous series of lines and curves. The <a href="/docs/svg/elements/path"><strong>path</strong></a> element’s <a href="/w/index.php?title=svg/attributes/d&amp;action=edit&amp;redlink=1"><strong>d</strong></a> (definition) attribute specifies a sequence of commands referencing pairs of <em>x</em>/<em>y</em> coordinates within the drawing area.</p>
+<p>The following <a href="http://letmespellitoutforyou.com/samples/svg_path.html">interactive path-building utility</a> allows you to create your own path definitions using all the commands detailed below, and see them reflected in SVG code. Choose the command you want, then click within the drawing area to provide each command with a set of coordinates:</p>
+<p><img src="//static.webplatform.org/thumb/d/dc/svg_path.png/600px-svg_path.png" alt="svg path.png"></p>
+<p>The simplest path commands drop a pen at one coordinate and draw a line to another. In this example, the <strong>M</strong> (move) command places the drawing point at the <em>100,225</em> coordinate. The <strong>L</strong> (line) command draws a line to <em>100,115</em>, and subsequent <strong>L</strong> commands draw the same arrow-shaped polygon shown above, starting from its bottom-left corner and drawing in a clockwise direction:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 100,225 L 100,115 L 130,115 L 70,15 L 10,115 L 40,115 L 40,225 z"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/a/a4/svg_linepath.png" alt="svg linepath.png"></p>
+<p>The <strong>z</strong> command at the end draws a final line to the most recent <strong>M</strong> coordinate to close off the box. At any point along the path, you may use <strong>M</strong> to place the drawing point elsewhere to create discontinuous segments known as <em>subpaths</em>, which may appear to be separate objects.</p>
+<p>Coordinates and commands can be separated by any combination of commas or whitespace characters. (To clarify these examples, commas separate each <em>x,y</em> pair.)</p>
+<p>The uppercase <strong>M</strong> and <strong>L</strong> commands above specify absolute coordinates. For all uppercase commands described here, there are alternative lowercase commands that specify coordinates in terms relative to the previously defined coordinate. Starting from the default <em>0,0</em> origin point, the following path defines the same shape as the one above using <strong>m</strong> and <strong>l</strong> commands:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"m 100,225 l 0,-110 l 30,0 l -60,-100 l -60,100 l 30,0 l 0,110 z"</span> /&gt;</span>
+</code></pre>
+<p>The <strong>H</strong> and <strong>V</strong> commands, and their <strong>h</strong> and <strong>v</strong> alternatives, draw a horizontal or vertical line to the specified coordinate.</p>
+<h2>Curved paths</h2>
+<p>Unlike polygons, paths can incorporate curves. Bézier curves require additional <em>control point</em> coordinates that do not render but that influence the shape of the curve.</p>
+<p>The <strong>Q</strong> and <strong>q</strong> commands define a <em>quadratic</em> Bézier curve using one control point coordinate followed by another coordinate where the curve segment ends. The <strong>C</strong> and <strong>c</strong> commands use two intervening control points to define a more complex <em>cubic</em> Bézier curve. These examples show where each control point falls:</p>
+<p><img src="//static.webplatform.org/8/89/svg_quadratic.png" alt="svg quadratic.png"></p>
+<pre><code class="xml">  <span class="hljs-comment">&lt;!-- quadratic --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,100 Q 180,20 300,130"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/1/1d/svg_cubic.png" alt="svg cubic.png"></p>
+<pre><code class="xml">  <span class="hljs-comment">&lt;!-- cubic --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,120 C 130,50 250,150 280,100"</span>/&gt;</span>
+</code></pre>
+<p>Adding additional sets of controls points has the same effect as adding additional <strong>Q</strong>/<strong>q</strong>/<strong>C</strong>/<strong>c</strong> commands. The following definition pairs produce the same sequence of quadratic and cubic curves, but the second line leaves out the redundant command:</p>
+<p><img src="//static.webplatform.org/f/f6/svg_quadratic_poly.png" alt="svg quadratic poly.png"></p>
+<pre><code class="xml">  <span class="hljs-comment">&lt;!-- quadratic, chained --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,100 Q 180,20 300,130 Q 320,20 400,50"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,100 Q 180,20 300,130   320,20 400,50"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/f/f8/svg_cubic_poly.png" alt="svg cubic poly.png"></p>
+<pre><code class="xml">  <span class="hljs-comment">&lt;!-- cubic, chained --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,120 C 130,50 250,150 280,100 C 250,50 450,50 400,100"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,120 C 130,50 250,150 280,100   250,50 450,50 400,100"</span>/&gt;</span>
+</code></pre>
+<p>In both of these examples, the curve segments join abruptly at an angle. The <strong>T</strong> and <strong>t</strong> commands are designed to produce quadratic curves that transition smoothly from the previous curve. They work by extrapolating a control point from the previous control point on the other side of the previous destination point, effectively mirroring it to produce waves. The following two path definitions produce the same sequence of curves. The first uses the <strong>T</strong> command to extrapolate the extra control point (marked red), while the second uses a second <strong>Q</strong> command to explicitly define it. Both specify the same destination point:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,100 Q 180,20 300,130 T         400,50"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,100 Q 180,20 300,130 Q 420,240 400,50"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/1/1f/svg_quadratic_smooth.png" alt="svg quadratic smooth.png"></p>
+<p>The <strong>S</strong> and <strong>s</strong> commands perform the same kind of mirroring to produce smooth cubic Bézier curves suitable for freehand drawing. Since Bézier curves are defined by two control points, the first supplied coordinate specifies the second control point, and the second coordinate specifies the end point. The following two path definitions produce the same sequence of curves, the second substituting the <strong>C</strong> command to explicitly define the extra control point, again marked red:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,120 C 130,50 250,150 280,100 S        450,50 400,100"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,120 C 130,50 250,150 280,100 C 310,50 450,50 400,100"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/d/d0/svg_cubic_smooth.png" alt="svg cubic smooth.png"></p>
+<p>The <strong>A</strong> and <strong>a</strong> commands specify an <em>elliptical arc</em>, using syntax specifying a surprisingly great deal of information:</p>
+<ul>
+<li><p>A pair of radius measurements defining the ellipse’s size and shape, equivalent to the <a href="/docs/svg/elements/ellipse"><strong>ellipse</strong></a> element’s <a href="/w/index.php?title=svg/attributes/rx&amp;action=edit&amp;redlink=1"><strong>rx</strong></a> and <a href="/w/index.php?title=svg/attributes/ry&amp;action=edit&amp;redlink=1"><strong>ry</strong></a> attributes.</p></li>
+<li><p>A measurement indicating the degree to which the ellipse is rotated.</p></li>
+<li><p>A <em>large-arc</em> flag (<em>0</em> or <em>1</em>) indicating whether to travel to the destination point via the longer arc that exceeds 180°.</p></li>
+<li><p>To distinguish between the two possible arcs that mirror each other along the line to the destination point, a <em>sweep-arc</em> flag (<em>0</em> or <em>1</em>) specifies whether to prefer whichever renders in a clockwise direction.</p></li>
+<li><p>A final set of coordinates indicates the ellipse’s end point.</p></li>
+</ul>
+<p>If the ellipse’s radii is insufficient or if its rotation makes it impossible to get to the final end point, the ellipse does not render.</p>
+<p>Elliptical arcs are great for drawing parts of clouds and thought balloons:</p>
+<p><img src="//static.webplatform.org/thumb/8/8b/svg_arc.png/300px-svg_arc.png" alt="svg arc.png"></p>
+<p>Experiment with the <a href="http://letmespellitoutforyou.com/samples/svg_path.html">interactive path builder</a> by choosing the <strong>A</strong> command and clicking to create new end points. The values of the arc radius, rotation, large-arc, and sweep-arc controls affect the appearance of the last elliptical arc in the path, and apply to newly created arcs.</p>
+<p>This summarizes path syntax, with coordinate pairs required for control and destination points:</p>
+<ul>
+<li><strong>M</strong>/<strong>m</strong> <em>destination</em>: jumps to <em>destination</em> point</li>
+<li><strong>L</strong>/<strong>l</strong> <em>destination</em>: draws straight line to <em>destination</em> point</li>
+<li><strong>Q</strong>/<strong>q</strong> <em>control</em> <em>destination</em>: draws quadratic Bézier curve to <em>destination</em> point, shaped by <em>control</em> point</li>
+<li><strong>T</strong>/<strong>t</strong> <em>destination</em>: draws quadratic curve to <em>destination</em> point, influenced by virtual control point mirroring most recent control point</li>
+<li><strong>C</strong>/<strong>c</strong> <em>control1</em> <em>control2</em> <em>destination</em>: draws a cubic Bézier curve to <em>destination</em> point, shaped by two control points</li>
+<li><strong>S</strong>/<strong>s</strong> <em>control2</em> <em>destination</em>: draws a cubic Bézier curve to <em>destination</em> point, shaped by a virtual control point mirroring the most recent control point, and by a second explicit <em>control2</em> point</li>
+<li><strong>A</strong>/<strong>a</strong> <em>radiusX</em>,<em>radiusY</em> <em>rotationAngle</em> <em>large-arc-flag</em> <em>sweep-arc-flag</em> <em>destination</em>: draws an elliptical arc to <em>destination</em>, if possible, with overall ellipse shaped by <em>radiusX</em>,<em>radiusY</em> and rotated by <em>rotationAngle</em>. The <em>large-arc-flag</em> prefers the widest-angle arc path, and <em>sweep-arc-flag</em> specifies the ellipse whose arc path travels clockwise to get to the destination point.</li>
+</ul>
+<h2>Fill rules</h2>
+<p>Whenever lines within paths cross each other, and when subpath shapes appear as islands within other shapes, it is not immediately obvious how such paths might be filled. By default, the <a href="/w/index.php?title=svg/properties/fill-rule&amp;action=edit&amp;redlink=1"><strong>fill-rule</strong></a> property is set to <strong>nonzero</strong>, which errs on the side of filling regions based on the direction of each stroke, which as the example below shows, may not always be intuitive. Setting it to <strong>evenodd</strong> prevents regions bordering each other from sharing the same fill value.</p>
+<p><img src="//static.webplatform.org/0/01/svg_fillrule_nonzero.png" alt="svg fillrule nonzero.png"></p>
+<pre><code>fill-rule: nonzero;
+</code></pre>
+<p><img src="//static.webplatform.org/b/be/svg_fillrule_evenodd.png" alt="svg fillrule evenodd.png"></p>
+<pre><code>fill-rule: evenodd;
+</code></pre>
+<p>Note that while these arrows appear to be separate graphics, they are actually sub-paths. The <a href="/w/index.php?title=svg/properties/fill-rule&amp;action=edit&amp;redlink=1"><strong>fill-rule</strong></a> property only applies in this case.</p>
+<h2>Markers</h2>
+<p>You can attach arrowheads or other graphic objects to paths, lines, polylines, and polygon segments. A <a href="/docs/svg/elements/marker"><strong>marker</strong></a> element encapsulates a graphic, and various properties reference it. Here is a typical arrowhead, for convenience placed within a <a href="/docs/svg/elements/defs"><strong>defs</strong></a> region as a common definition:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">marker</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"arrowhead"</span> <span class="hljs-attribute">markerWidth</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">markerHeight</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">orient</span>=<span class="hljs-value">"auto"</span> <span class="hljs-attribute">refX</span>=<span class="hljs-value">"2"</span> <span class="hljs-attribute">refY</span>=<span class="hljs-value">"5"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">polygon</span> <span class="hljs-attribute">points</span>=<span class="hljs-value">"0,0 10,5 0,10"</span>/&gt;</span>    <span class="hljs-comment">&lt;!-- triangle pointing right --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">marker</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+</code></pre>
+<p>The <a href="/docs/svg/elements/marker"><strong>marker</strong></a> element does not render unless it is associated with a path or other line element using various marker-related properties. This example places the arrowhead at the end of the last path segment:</p>
+<pre><code class="css"> <span class="hljs-tag">path</span><span class="hljs-class">.pointer</span> <span class="hljs-rules">{
+     <span class="hljs-rule"><span class="hljs-attribute">marker-end</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-hexcolor">#a</span>rrowhead)</span></span>;
+ }</span>
+</code></pre>
+<p>Alternately, the <a href="/w/index.php?title=svg/properties/marker-start&amp;action=edit&amp;redlink=1"><strong>marker-start</strong></a> property places the marker at the path’s starting point. Setting <a href="/w/index.php?title=svg/properties/marker-mid&amp;action=edit&amp;redlink=1"><strong>marker-mid</strong></a> places the marker at each segment point within the path, including where subpaths terminate. The <a href="/w/index.php?title=svg/properties/marker&amp;action=edit&amp;redlink=1"><strong>marker</strong></a> property places the graphic at <em>all</em> these points:</p>
+<p><img src="//static.webplatform.org/f/fd/svg_marker_start.png" alt="svg marker start.png"></p>
+<pre><code>marker-start
+</code></pre>
+<p><img src="//static.webplatform.org/d/d0/svg_marker_end.png" alt="svg marker end.png"></p>
+<pre><code>marker-end
+</code></pre>
+<p><img src="//static.webplatform.org/e/e5/svg_marker_mid.png" alt="svg marker mid.png"></p>
+<pre><code>marker-mid
+</code></pre>
+<p><img src="//static.webplatform.org/c/c7/svg_marker.png" alt="svg marker.png"></p>
+<pre><code>marker
+</code></pre>
+<p>Several <a href="/docs/svg/elements/marker"><strong>marker</strong></a> element attributes are necessary to place the arrowhead correctly over the path. By default, the top left corner of the marker graphic is placed over the path or line. Since the graphic is a 10-pixel square in this case, the <strong>refY</strong> attribute moves the point at which it intersects the line down by 5 pixels, in order to center it vertically.</p>
+<p>The marker graphic also does not rotate by default to match where the path or line is pointing. Setting <a href="/w/index.php?title=svg/attributes/orient&amp;action=edit&amp;redlink=1"><strong>orient</strong></a> to <strong>auto</strong> aligns the graphic’s horizontal <em>x</em> axis. You can also set <a href="/w/index.php?title=svg/attributes/orient&amp;action=edit&amp;redlink=1"><strong>orient</strong></a> to specific degree values. Note in the <a href="/w/index.php?title=svg/properties/marker-start&amp;action=edit&amp;redlink=1"><strong>marker-start</strong></a> example above that the initial marker may not be oriented as intended, because it’s not associated with an existing line.</p>
+<h2>Text</h2>
+<p>Text behaves much like any other SVG graphic. You can mix text with other graphics, but you can’t automatically break lines into blocks of text as in HTML, so you have to set each line independently. Use each <a href="/docs/svg/elements/text"><strong>text</strong></a> element’s <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a> and <a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a> attributes to position its baseline:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span>&gt;</span>The quick brown fox<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"80"</span>&gt;</span>jumped over the lazy dog.<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/3/31/svg_text.png/400px-svg_text.png" alt="svg text.png"></p>
+<p>You can apply standard CSS font properties, along with the <a href="/w/index.php?title=css/properties/text-anchor&amp;action=edit&amp;redlink=1"><strong>text-anchor</strong></a> property to center the text from the specified coordinates. You can also control apply <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> and <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> properties just like any other shape:</p>
+<pre><code class="css"><span class="hljs-tag">text</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">font-family  </span>:<span class="hljs-value"> Tahoma, sans-serif</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size    </span>:<span class="hljs-value"> smaller</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-weight  </span>:<span class="hljs-value"> bold</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">text-anchor  </span>:<span class="hljs-value"> middle</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">fill         </span>:<span class="hljs-value"> red</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke       </span>:<span class="hljs-value"> <span class="hljs-hexcolor">#777</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-width </span>:<span class="hljs-value"> <span class="hljs-number">0.5</span></span></span>;
+}</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/c/ca/svg_textFormatted.png/400px-svg_textFormatted.png" alt="svg textFormatted.png"></p>
+<p>Use the <a href="/docs/svg/elements/tspan"><strong>tspan</strong></a> element to mark and style inline font changes:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span>&gt;</span>The quick brown fox<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"80"</span>&gt;</span>
+  jumped
+     <span class="hljs-tag">&lt;<span class="hljs-title">tspan</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"emphasis"</span>&gt;</span>over<span class="hljs-tag">&lt;/<span class="hljs-title">tspan</span>&gt;</span>
+  the lazy dog.
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<pre><code class="css"><span class="hljs-class">.emphasis</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">font-style      </span>:<span class="hljs-value"> italic</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">text-decoration </span>:<span class="hljs-value"> underline</span></span>;
+}</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/d6/svg_textSpan.png/400px-svg_textSpan.png" alt="svg textSpan.png"></p>
+<p>This example uses the <a href="/w/index.php?title=svg/attributes/dy&amp;action=edit&amp;redlink=1"><strong>dy</strong></a> attribute to move text upward to a superscript position and then back down to its original baseline, and <a href="/w/index.php?title=svg/attributes/rotate&amp;action=edit&amp;redlink=1"><strong>rotate</strong></a> to spin each character of text. (Applying <a href="/w/index.php?title=svg/attributes/dx&amp;action=edit&amp;redlink=1"><strong>dx</strong></a> likewise would displace text horizontally.)</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span>&gt;</span>The quick brown fox<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"80"</span>&gt;</span>
+  jumped
+  <span class="hljs-tag">&lt;<span class="hljs-title">tspan</span> <span class="hljs-attribute">rotate</span>=<span class="hljs-value">"-20"</span> <span class="hljs-attribute">dy</span>=<span class="hljs-value">"-5"</span>&gt;</span>over<span class="hljs-tag">&lt;/<span class="hljs-title">tspan</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">tspan</span> <span class="hljs-attribute">dy</span>=<span class="hljs-value">"5"</span>&gt;</span>the lazy dog.<span class="hljs-tag">&lt;/<span class="hljs-title">tspan</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/1/15/svg_textRotate.png/400px-svg_textRotate.png" alt="svg textRotate.png"></p>
+<p>SVG also allows you to place text along the curve of a path. The <a href="/docs/svg/elements/textPath"><strong>textPath</strong></a> element diverts any nested text to render along the path it references:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"curve"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 100,300 A 1,1 0 0 1 500,300"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"textContent"</span>&gt;</span>The quick brown fox jumped over the lazy dog.<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">textPath</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#curve"</span> <span class="hljs-attribute">startOffset</span>=<span class="hljs-value">"20%"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tref</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#textContent"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">textPath</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/elements/tref&amp;action=edit&amp;redlink=1"><strong>tref</strong></a> element allows you to separately pull in text from a referenced <a href="/docs/svg/elements/text"><strong>text</strong></a> element.</p>
+<p>The <a href="/docs/svg/elements/textPath"><strong>textPath</strong></a>'s <a href="/w/index.php?title=svg/attributes/startOffset&amp;action=edit&amp;redlink=1"><strong>startOffset</strong></a> pushes text from the start of the path, disappearing as the path ends. Below the text appears before and after applying the offset:</p>
+<p><img src="//static.webplatform.org/thumb/b/b5/svg_textPath.png/400px-svg_textPath.png" alt="svg textPath.png"></p>
+<p><img src="//static.webplatform.org/thumb/9/93/svg_textPathOffset.png/400px-svg_textPathOffset.png" alt="svg textPathOffset.png"></p>
+<p>See <a href="/docs/tutorials/svg_fonts">SVG Fonts</a> for information on SVG’s support for creating font glyphs.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

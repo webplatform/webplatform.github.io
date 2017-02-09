@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Mobile Viewport and Orientation · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Here you&#x27;ll learn how the mobile viewport works, and
+    how it affects what appears on the screen when tipping the handset.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/mobile_viewport/">mobile viewport</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>The Mobile Viewport and Orientation</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>Here you’ll learn how the mobile viewport works, and how it affects what appears on the screen when tipping the handset.</p>
+<p>Applying a <em>viewport</em> is the first and most important step to make web pages presentable on mobile browsers.</p>
+<p>Touch-based smartphone browsers are capable of presenting web pages designed for desktop browsers, but that experience needs improvement. When loading full-sized pages, mobile browsers display the entire page at reduced magnification. Users must double-tap or pinch the screen to magnify individual columns of content. Even then, text targeted for full-sized browsers often features long line lengths that make it more difficult to read on smaller mobile screens. This shows how a typical web page layout displays on a mobile screen:</p>
+<p><img src="//static.webplatform.org/0/0a/viewport_fail.png" alt="viewport fail.png"></p>
+<p>Users are obliged to go through several steps before text becomes legible, in this case including tipping the handset to increase the column’s magnification. When users reach the end of the column, they often experience difficulty re-orienting themselves within the page. In this case, even the image doesn’t appear within the screen, because it is placed in a different column within the layout.</p>
+<p>The fixed rectangular area within which touch-based smartphone browsers display larger web pages is called the <em>viewport</em>. Applying a viewport <strong>meta</strong> tag allows you to control how mobile browsers render content within this rectangle, and whether users can magnify the page.</p>
+<p>The following shows a sample screen layout <em>without</em> a viewport. (For the sake of illustration, it displays a flexibly positioned text element that adapts to the full width of the screen, along with a fixed-size background image.) The initially loaded page is zoomed out much too far to be legible, while zooming in makes content extending off the right edge of the screen difficult to access:</p>
+<p><img src="//static.webplatform.org/b/b7/view_off.png" alt="view off.png"></p>
+<p>This reflects the browser’s default assumption that content should extend 980 pixels wide. Mobile browsers must make that assumption in order to render pages that are <em>not</em> optimized for display on mobile screens.</p>
+<p>To override the browser’s default behavior, place this line within the HTML’s <strong>head</strong> region:</p>
+<pre><code>&lt;meta name='viewport' content='width=device-width' /&gt;
+</code></pre>
+<p>Here’s how the screen layout looks after you apply the viewport:</p>
+<p><img src="//static.webplatform.org/f/f3/view_on.png" alt="view on.png"></p>
+<p>Setting the viewport <strong>width</strong> to <strong>device-width</strong> recalculates flexible CSS measurements (such as the <a href="/docs/css/properties/width"><strong>width:100%</strong> CSS property</a>) within the width of the handset’s screen rather than the default page width. Tipping the handset maintains the overall width of the content within the wider window.</p>
+<p>On most touch-based mobile browsers, the <strong>device-width</strong> is 320 pixels. Make sure images and other fixed-dimension elements are sized accordingly. The screen height varies significantly among handsets, and may even vary on the same handset when running full-screen web applications that suppress the browser’s native screen controls.</p>
+<p>Applying a viewport has no effect on desktop browsers. It is interpreted only once when the page loads, and cannot be modified thereafter.</p>
+<p>Viewports can also specify a fixed-pixel width, but this is <em>not</em> a good practice:</p>
+<pre><code>&lt;meta name='viewport' content='width=320' /&gt;
+</code></pre>
+<p>Specifying the number of pixels effectively means the page won’t appear properly on wider tablet devices whose browsers also support the viewport meta tag. It is unsustainable overall as differently sized devices become available. Use <strong>device-width</strong> to cover all devices, then use <a href="/docs/tutorials/media_queries">CSS media queries</a> to flexibly adapt layouts to suit different screen sizes. Overall, it is better to specify flexible measurements such as percentages or <em>em</em> units than fixed-pixel measurements.</p>
+<h2>Control over panning</h2>
+<p>The <strong>width=device-width</strong> viewport shown above forces content to scroll downward, though it can still extend past the left and right edges, and may even be positioned outside the visible screen. By default, horizontal panning is disabled when the content fits within the viewport.</p>
+<p>Use CSS’s <strong>translate()</strong> transform function if you want to stage hidden interface elements off the edge of the screen. <a href="/docs/tutorials/css_transforms">CSS transforms</a> produce a more superficial visual effect that doesn’t modify the overall dimensions of content within the page.</p>
+<p>If you use absolute positioning, for example by setting a layout element’s <a href="/docs/css/properties/left"><strong>left</strong></a> property past 100% of the page width, it makes the overall content wider, and makes the otherwise hidden content accessible by panning to the right, probably not what you want. However, the browser may not allow you to scroll to elements positioned outside the left edge, for example with <strong>left:-150%</strong>.</p>
+<p>In the less likely event that you want to disable <em>vertical</em> scrolling, you may simply make sure there is not so much content on each page that it would overflow the screen. Screen layouts may also explicitly disable vertical scrolling, but they do so by making any overflowing content inaccessible. This viewport-enabled example presents a full-screen <strong>section</strong> element whose dimensions align with each edge of the screen:</p>
+<pre><code>&lt;head&gt;
+&lt;meta name='viewport' content='width=device-width' /&gt;
+&lt;style&gt;
+section {
+    position: absolute; top:0; bottom:0; left:0; right:0;
+    overflow: hidden;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;section&gt;
+  ...
+  &lt;/section&gt;
+&lt;/body&gt;
+</code></pre>
+<p>Even if content overflows the screen without being hidden, setting the following CSS renders it inaccessible:</p>
+<pre><code>body { overflow: hidden }
+</code></pre>
+<p>Increasingly, mobile browsers allow users to navigate scrollable content boxes that appear within a page, but these should be used with care, if at all. Users may become confused when the scrolling gestures they expect to scroll the entire page instead scrolls within a narrow region of that page. Once the scrolling box reaches the bottom or top, further scrolling applies to the entire page, and the transition between the two scroll behaviors can be distracting. In mobile design, it is better to nest lengthy blocks of optional content with accordion togglers. (The HTML5 <a href="/docs/html/elements/details"><strong>details</strong></a> and <a href="/w/index.php?title=html/elements/summary&amp;action=edit&amp;redlink=1"><strong>summary</strong></a> elements provide this toggling feature, but as of this writing are not yet widely available among mobile browsers.)</p>
+<p><strong>Note:</strong> Setting the little-used <strong>height=device-height</strong> property may also resize content to fit the viewable screen, but unlike the behavior of <strong>width</strong> does not disable vertical panning to force content to flow to the right, at least not reliably across various mobile browsers.</p>
+<h2>Control over zooming</h2>
+<p>Once content is well-adapted and properly fit for presentation on mobile browsers, there may no longer be any need to use zoom controls to access different portions of the page. To disable the browser’s default double-tap and pinch-zoom gestures and ensure that content appears at the proper magnification level, apply this viewport:</p>
+<pre><code>&lt;meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' /&gt;
+</code></pre>
+<p>(Use commas to delimit viewport properties, not semicolons as some mobile browsers also allow.)</p>
+<p>As an alternative to disabling scaling, you can apply decimal <strong>minimum-scale</strong> and <strong>maximum-scale</strong> values to control the potential <em>range</em> of magnification. As of this writing, Chrome for Android does not directly support <strong>user-scalable</strong>, but setting the zoom range at a single value has the same effect:</p>
+<pre><code>&lt;meta name='viewport' content='width=device-width,
+    initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'/&gt;
+</code></pre>
+<p>See below for details on how these scaling options and related CSS affects the appearance of landscape-oriented content.</p>
+<p>The <strong>user-scalable</strong> property only affects access to the overall page. Touch-enabled web content within that page (such as map interfaces) may still respond independently to pinch-zoom and drag-scroll gestures.</p>
+<h2>Tipping the handset</h2>
+<p>When you view browser pages or web apps and tip the device from portrait to landscape orientation, the browser re-orients content accordingly. Web pages and web apps can modify their appearance when the device is tipped in 90° increments, as opposed to more detailed gestures that can only be captured with the <a href="/docs/tutorials/device_orientation"><em>device orientation</em> API</a>.</p>
+<p>The <strong>orientation</strong> <a href="/docs/tutorials/media_queries">CSS media query</a> allows you to assign different interface features depending on <strong>portrait</strong> or <strong>landscape</strong> orientation. In this case, landscaped pages use a two-column layout:</p>
+<pre><code>@media all and (orientation: landscape) {
+    article {
+        -webkit-column-count : 2;
+        column-count         : 2;
+    }
+    h1 {
+        -webkit-column-span  : all;
+        column-span          : all;
+    }
+}
+</code></pre>
+<p>The result can be seen in this example, by resizing the browser window so that it is alternately taller or wider:</p>
+<p><img src="//static.webplatform.org/0/0a/orient.png" alt="orient.png"></p>
+<p>Be careful, though, when presenting a much different landscape interface. Changes to column layout may disorient users who expect much the same layout as in portrait orientation.</p>
+<p>JavaScript can respond similarly to <a href="/w/index.php?title=dom/events/orientationchange&amp;action=edit&amp;redlink=1"><strong>orientationchange</strong></a> events that fire on the window, checking the state of the <strong>window.orientation</strong> property for <strong>portrait</strong> or <strong>landscape</strong> values:</p>
+<pre><code>window.addEventListener('orientationchange', function(e){
+    var isUpright = (window.orientation == 'portrait');
+});
+</code></pre>
+<p>When you apply a <strong>width:device-width</strong> mobile viewport, flexible layout elements conform to the width of the device’s window. Ordinarily, tipping the device to landscape orientation magnifies the content, keeping the overall width constant. To illustrate the range of available options, this example shows a flexible layout against a fixed-size background element. In landscape view, the page zooms in:</p>
+<p><img src="//static.webplatform.org/f/f3/view_on.png" alt="view on.png"></p>
+<p>To disable magnification and force flexible elements to expand to the wider screen, set the <strong>user-scalable=no</strong> viewport property:</p>
+<pre><code>&lt;meta name='viewport' content='width=device-width, user-scalable=no'/&gt;
+</code></pre>
+<p>Doing so disables pinch and double-tap gestures that otherwise allow users to magnify content. The following shows how the same page appears with scaling disabled. The layout element changes dimensions, but the background element shows that the magnification remains constant:</p>
+<p><img src="//static.webplatform.org/e/ee/view_on_noscale.png" alt="view on noscale.png"></p>
+<p>Notice, however, that the text size is still magnified independently of the page. To prevent the text size from changing, disable the <a href="/w/index.php?title=css/properties/text-size-adjust&amp;action=edit&amp;redlink=1"><strong>text-size-adjust</strong></a> CSS property. This fixes the entire page:</p>
+<pre><code>html {
+    -webkit-text-size-adjust : none;
+    text-size-adjust         : none;
+}
+</code></pre>
+<p>Here is the resulting page, with text appearing at the same size:</p>
+<p><img src="//static.webplatform.org/7/71/view_on_noscale_noadjust.png" alt="view on noscale noadjust.png"></p>
+<p>Be careful not to apply the CSS above to a desktop-oriented interface. Doing so interferes with the browser’s zoom feature, which is <em>not</em> controlled by mobile viewport settings. In that case, when users zoom in, the dimensions of screen elements change, but the size of the text does not. If you are deploying a hybrid mobile interface adapted for desktop or tablet browsers, use <a href="/docs/tutorials/media_queries">media queries</a> to narrow the scope of the above CSS:</p>
+<pre><code>@media only screen and (max-device-width: 400px) {
+    html {
+        -webkit-text-size-adjust : none;
+        text-size-adjust         : none;
+    }
+    /* adapt the rest of the mobile interface here */
+}
+</code></pre>
+<p>If you are targeting a website for presentation on both mobile and desktop browsers, <a href="/docs/tutorials/media_queries">media queries</a> are an indispensable tool that you should master.</p>
+<h2>Compatibility</h2>
+<p>The viewport meta tag is supported not only by the iPhone for which it was originally developed, but by Android, Fennec, and comparable smartphone browsers. While not a formal standard, it is now being folded into CSS as the <a href="/docs/css/atrules/@viewport"><strong>@viewport</strong></a> rule, which as of this writing is not yet widely supported on mobile browsers.</p>
+<p>Some mobile browsers support the <strong>target-densitydpi</strong> property, but that is being phased out and not supported by the <a href="/docs/css/atrules/@viewport"><strong>@viewport</strong></a> standard. On some mobile browsers it sizes images and other fixed-pixel elements to fit the device pixel grid, rather than the abstract grid of <em>CSS pixels</em> that standardizes measurements regardless of each device’s actual pixel density. (See <a href="/docs/tutorials/media_queries">media queries</a> for information on CSS pixels.) Applying this viewport makes the background image appear <em>much</em> smaller as in the following example:</p>
+<pre><code>&lt;meta name='viewport' content='width=device-width, target-densitydpi=device-dpi' /&gt;
+</code></pre>
+<p><img src="//static.webplatform.org/a/af/view_on_dpi_p.png" alt="view on dpi p.png"></p>
+<p>Since pixel densities vary widely among handsets, there are very few cases outside of repeating background patterns in which <strong>target-densitydpi</strong> would be appropriate. It may affect other content in unexpected ways, and so should be avoided.</p>
+<h2>Review</h2>
+<p>Here is the most widely applicable viewport:</p>
+<pre><code>&lt;meta name='viewport' content='width=device-width, user-scalable=no,
+    initial-scale=1, maximum-scale=1, minimum-scale=1'/&gt;
+</code></pre>
+<p>Here is most all of what you need to know about viewports:</p>
+<ul>
+<li><p>For cross-device compatibility, use flexible layout elements that adapt to available dimensions.</p></li>
+<li><p>Set the viewport’s <strong>width=device-width</strong> to fit this content to the screen dimensions.</p></li>
+<li><p>Set the viewport’s <strong>user-scalable=no</strong> to disable zooming, and widen flexible content in landscape view.</p></li>
+<li><p>Set the <strong>text-size-adjust:none</strong> CSS property to keep text from zooming in landscape view. Do <em>not</em> apply this to desktop interfaces.</p></li>
+<li><p>Optionally, use <strong>orientation</strong> media queries to alter landscaped layouts, and <strong>orientationchange</strong> handlers to respond in other ways when tipping the handset.</p></li>
+<li><p>Use <a href="/docs/tutorials/media_queries">media queries</a> if you want your web page to be viewable on desktop, mobile, and tablet browsers.</p></li>
+</ul>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li>Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Mobile/Viewport_meta_tag">Using the viewport meta tag to control layout on mobile browsers</a></li>
+<li>Safari Developer Library: <a href="http://developer.apple.com/library/safari/#documentation/appleapplications/reference/safariwebcontent/UsingtheViewport/UsingtheViewport.html#//apple_ref/doc/uid/TP40006509-SW1">Configuring the Viewport</a></li>
+<li>dev.opera: <a href="http://dev.opera.com/articles/view/an-introduction-to-meta-viewport-and-viewport/">An introduction to meta viewport and @viewport</a></li>
+<li>quirksmode: A tale of two viewports, parts <a href="http://www.quirksmode.org/mobile/viewports.html">one (desktop)</a> and <a href="http://www.quirksmode.org/mobile/viewports2.html">two (mobile)</a></li>
+<li>W3C Editor’s Draft: <a href="http://dev.w3.org/csswg/css-device-adapt/">CSS Device Adaptation</a></li>
+<li><a href="http://generatedcontent.org/post/21279324555/viewportunits">Viewport Units</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

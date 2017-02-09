@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Error · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Contains information about errors." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Error/">Error</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Error</h1>
+<h2>Summary</h2>
+<p>Contains information about errors.</p>
+<h2>Syntax</h2>
+<pre><code>errorObj = new Error()
+
+errorObj = new Error([ number ])
+
+errorObj = new Error([ number [, description ]])
+</code></pre>
+<dl>
+<dt><strong>errorObj</strong></dt>
+<dd>Required. The variable name to which the Error object is assigned.
+</dd>
+<dt><strong>number</strong></dt>
+<dd>Optional. Numeric value assigned to an error. Zero if omitted.
+</dd>
+<dt><strong>description</strong></dt>
+<dd>Optional. Brief string that describes an error. Empty string if omitted.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the Error object.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkInput</span>(<span class="hljs-params">x</span>) </span>{
+     <span class="hljs-keyword">try</span>
+     {
+         <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(<span class="hljs-built_in">parseInt</span>(x))) {
+             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Input is not a number."</span>);
+         }
+     }
+     <span class="hljs-keyword">catch</span>(e)
+     {
+         <span class="hljs-built_in">document</span>.write(e.description);
+     }
+ }
+</code></pre>
+<p>The following example illustrates the use of the implicitly created Error object.</p>
+<pre><code class="js"><span class="hljs-keyword">try</span>
+    {
+    <span class="hljs-comment">// Cause an error.</span>
+    x = y;
+    }
+ <span class="hljs-keyword">catch</span>(e)
+    {
+       <span class="hljs-built_in">document</span>.write(e);
+       <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"&lt;br /&gt;"</span>);
+
+       <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"Number: "</span>);
+       <span class="hljs-built_in">document</span>.write (e.number &amp; <span class="hljs-number">0xFFFF</span>);
+       <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"&lt;br /&gt;"</span>);
+
+       <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"Facility Code: "</span>);
+       <span class="hljs-built_in">document</span>.write(e.number&gt;&gt;<span class="hljs-number">16</span> &amp; <span class="hljs-number">0x1FFF</span>);
+       <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"&lt;br /&gt;"</span>);
+
+       <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"Description: "</span>);
+       <span class="hljs-built_in">document</span>.write (e.description);
+    }
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// ReferenceError: 'y' is undefined</span>
+ <span class="hljs-comment">// Facility Code: 10</span>
+ <span class="hljs-comment">// Number: 5009</span>
+ <span class="hljs-comment">// Description: 'y' is undefined</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>Whenever a run-time error occurs, an instance of the Error object is created to describe the error. This instance has two intrinsic properties that contain the description of the error ( <strong>description</strong> property) and the error number ( <strong>number</strong> property).</p>
+<p>An error number is a 32-bit value. The upper 16-bit word is the facility code, while the lower word is the actual error code.</p>
+<p>Error objects can also be explicitly created, using the syntax shown above, or thrown using the throw statement. In both cases, you can add any properties you choose to expand the capability of the Error object.</p>
+<p>Typically, the local variable that is created in a <strong>try…catch</strong> statement refers to the implicitly created Error object. As a result, you can use the error number and description in any way you choose.</p>
+<h2>Methods</h2>
+<p><a href="/docs/javascript/Error/toString">toString Method (Error)</a> | <a href="/docs/javascript/Date/valueOf">valueOf Method (Date)</a></p>
+<h2>Properties</h2>
+<p><a href="/docs/javascript/Error/constructor">constructor Property (Error)</a> | <a href="/docs/javascript/Error/description">number Property</a> | <a href="/docs/javascript/Error/prototype">prototype Property (Error)</a> | <a href="/javascript/Error/stack">stack Property (Error)</a> | <a href="/javascript/Error/stackTraceLimit">stackTraceLimit Property (Error)</a></p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/operators/new">new Operator</a></li>
+<li><a href="/docs/javascript/statements/throw">throw Statement</a></li>
+<li><a href="/docs/javascript/statements/try_catch_finally">try…catch…finally Statement</a></li>
+<li><a href="/docs/javascript/statements/var">var Statement</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

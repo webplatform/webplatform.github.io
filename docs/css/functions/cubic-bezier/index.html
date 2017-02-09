@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>cubic-bezier · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An animation timing function that describes a progression of movement as a cubic-bezier curve." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/functions/">functions</a></li><li><a href="/docs/css/functions/cubic-bezier/">cubic-bezier</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>cubic-bezier</h1>
+<h2>Summary</h2>
+<p>An animation timing function that describes a progression of movement as a cubic-bezier curve.</p>
+<p>The function describes a cubic bezier curve starting at 0,0 and ending at 1,1. It accepts four arguments (x1, y1, x2, y2) that specify coordinates for the two control points that affect the shape of the curve. The following shows standard timing keyword values along with their functional equivalents. The <em>x</em> axis represents the elapsed time of the animation, and <em>y</em> represents the progression of movement, so the more the curve points upwards, the faster the animation moves at that point:</p>
+<p><strong>linear</strong><br>
+<strong>cubic-bezier(0.0, 0.0, 1.0, 1.0)</strong> <img src="//static.webplatform.org/thumb/8/8e/transitF_linear.png/230px-transitF_linear.png" alt="transitF linear.png"></p>
+<p><strong>ease</strong><br>
+<strong>cubic-bezier(0.25, 0.1, 0.25, 1.0)</strong> <img src="//static.webplatform.org/thumb/7/73/transitF_ease.png/230px-transitF_ease.png" alt="transitF ease.png"></p>
+<p><strong>ease-in-out</strong><br>
+<strong>cubic-bezier(0.42, 0, 0.58, 1.0)</strong> <img src="//static.webplatform.org/thumb/6/67/transitF_easeinout.png/230px-transitF_easeinout.png" alt="transitF easeinout.png"></p>
+<p><strong>ease-in</strong><br>
+<strong>cubic-bezier(0.42, 0, 1.0, 1.0)</strong> <img src="//static.webplatform.org/thumb/6/64/transitF_easein.png/230px-transitF_easein.png" alt="transitF easein.png"></p>
+<p><strong>ease-out</strong><br>
+<strong>cubic-bezier(0, 0, 0.58, 1.0)</strong> <img src="//static.webplatform.org/thumb/0/00/transitF_easeout.png/230px-transitF_easeout.png" alt="transitF easeout.png"></p>
+<p>For properties unrelated to opacity and color, the function accepts <em>y</em> coordinates outside the standard range between 0 and 1. This allows for “elastic” effects in which positions or dimensions may cross over themselves during the course of the progression. The first example below bounces past its start and end points, while the second oscillates more dramatically:</p>
+<p><strong>cubic-bezier(0.25, -0.5, 0.75, 1.5)</strong> <img src="//static.webplatform.org/thumb/2/2d/transitF_cubicBounce.png/230px-transitF_cubicBounce.png" alt="transitF cubicBounce.png"></p>
+<p><strong>cubic-bezier(0.5, 2, 0.5, -1)</strong> <img src="//static.webplatform.org/thumb/2/2d/transitF_cubicWave.png/230px-transitF_cubicWave.png" alt="transitF cubicWave.png"></p>
+<h2>Examples</h2>
+<p>A dramatically oscillating timing function whose <em>y</em> values lie far outside the 0-1 range:</p>
+<pre><code class="css"><span class="hljs-tag">transition-timing-function</span>: <span class="hljs-tag">cubic-bezier</span>(0<span class="hljs-class">.5</span>,3<span class="hljs-class">.0</span>,0<span class="hljs-class">.5</span>,<span class="hljs-tag">-2</span><span class="hljs-class">.0</span>);
+</code></pre>
+<p>Modify the timing function for a sequence of two transitions</p>
+<pre><code>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/transit_timing.html">View live example</a></p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Animation</h4>
+<ul>
+<li><p><a href="/docs/apis/web_animations">Web Animations API</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationEffect/clone">clone</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationNode">AnimationNode</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationNode/timing">timing</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayer/currentTime">currentTime</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayer/reverse">reverse</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayer/source">source</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayerEvent">AnimationPlayerEvent</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationTimeline/currentTime">currentTime</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationTimeline/play">play</a></p></li>
+<li><p><a href="/docs/css/atrules/@keyframes">@keyframes</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule">CSSKeyframeRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule/keyText">keyText</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule/style">style</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule">CSSKeyframesRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/cssRules">cssRules</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/deleteRule">deleteRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/findRule">findRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/insertRule">insertRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/name">name</a></p></li>
+<li><p><strong>cubic-bezier</strong></p></li>
+<li><p><a href="/docs/css/properties/animations">Animations</a></p></li>
+<li><p><a href="/docs/css/properties/transition">transition</a></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+<h4>Transitions</h4>
+<ul>
+<li><p><strong>cubic-bezier</strong></p></li>
+<li><p><a href="/docs/css/properties/transition">transition</a></p></li>
+<li><p><a href="/docs/css/properties/transition-delay">transition-delay</a></p></li>
+<li><p><a href="/docs/css/properties/transition-duration">transition-duration</a></p></li>
+<li><p><a href="/docs/css/properties/transition-property">transition-property</a></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

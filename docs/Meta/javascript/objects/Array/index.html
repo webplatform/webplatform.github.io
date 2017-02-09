@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Array · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/Meta:javascript/">Meta:javascript</a></li><li><a href="/Meta:javascript/objects/">objects</a></li><li><a href="/Meta:javascript/objects/Array/">Array</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Array</h1>
+<p><strong>Merge Candidate</strong>: This page is a candidate for merge with the following pages: [<a href="/docs/javascript/objects/Array">[1]</a>]</p>
+<h2>Note</h2>
+<p>This article seems to be identical clone of MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>. But I decided to edit it for readability. All links in the article are external.</p>
+<p>Properties, Examples and Compatibility remain to be edited.</p>
+<h2>Summary</h2>
+<p>The JavaScript Array global object is a constructor for arrays, which are high-level, list-like objects.</p>
+<h2>Syntax</h2>
+<ul>
+<li><p>[element0, element1, …, elementN]</p></li>
+<li><p>new Array(<em>element0</em>, <em>element1</em>, …, <em>elementN</em>)</p></li>
+<li><p>new Array(<em>arrayLength</em>)</p></li>
+</ul>
+<dl>
+<dt>element0, element1, …, elementN</dt>
+<dd>A JavaScript array is initialized with the given elements, except in the case where a single argument is passed to the Array constructor and that argument is a number. (See below.) Note that this special case only applies to JavaScript arrays created with the Array constructor, not with array literals created with the bracket syntax.<br>
+arrayLength
+</dd>
+<dd>If the only argument passed to the Array constructor is an integer between 0 and 2^32^-1 ( 2 to the power of 32 - 1 inclusive), a new, empty JavaScript array and its length is set to that number. If the argument is any other number, a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError">RangeError</a> exception is thrown.
+</dd>
+</dl>
+<h2>Description</h2>
+<p>Arrays are list-like objects that come with a several built-in methods to perform traversal and mutation operations. Neither the size of a JavaScript array nor the types of its elements are fixed. Since an array’s size can grow or shrink at any time, JavaScript arrays are not guaranteed to be dense. In general, these are convenient characteristics; but if these features are not desirable for your particular use case, you might consider using WebGL typed arrays.</p>
+<p>Note that <a href="http://www.andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/">you shouldn’t use an array as an associative array</a>. You can use plain <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">objects</a> instead, although doing so comes with its own caveats. See the post <a href="http://www.less-broken.com/blog/2010/12/lightweight-javascript-dictionaries.html">Lightweight JavaScript dictionaries with arbitrary keys</a> as an example.</p>
+<h2>Accessing array elements</h2>
+<p>JavaScript arrays are zero-indexed; the first element of an array is actually at index 0, and the last element is at the index equal to the value of the array’s <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/length">length</a> property minus 1.</p>
+<pre><code>var arr = [<span class="hljs-string">"this is the first element"</span>, <span class="hljs-string">"this is the second element"</span>];
+console.<span class="hljs-built_in">log</span>(arr[<span class="hljs-number">0</span>]);              <span class="hljs-comment">// prints "this is the first element"</span>
+console.<span class="hljs-built_in">log</span>(arr[<span class="hljs-number">1</span>]);              <span class="hljs-comment">// prints "this is the second element"</span>
+console.<span class="hljs-built_in">log</span>(arr[arr.length - <span class="hljs-number">1</span>]); <span class="hljs-comment">// prints "this is the second element"</span>
+</code></pre>
+<p>Array elements are just object properties, in the way that [toString|/en-US/docs/toString] is a property. However, note that trying to access the first element of an array as follows will throw a syntax error:</p>
+<pre><code>console.<span class="hljs-built_in">log</span>(arr<span class="hljs-number">.0</span>);
+</code></pre>
+<p>Note that there is nothing unique about JavaScript arrays and their properties that causes this. JavaScript properties that begin with a digit cannot be referenced with dot notation. They must be accessed using bracket notation. For example, if you had an object with a property &quot;3d&quot;, it too would have to be referenced using bracket notation, not dot notation. This similarity is exhibited in the following two code samples:</p>
+<pre><code>var years = [<span class="hljs-number">1950</span>, <span class="hljs-number">1960</span>, <span class="hljs-number">1970</span>, <span class="hljs-number">1980</span>, <span class="hljs-number">1990</span>, <span class="hljs-number">2000</span>, <span class="hljs-number">2010</span>];
+<span class="hljs-keyword">try</span> {
+  console.<span class="hljs-built_in">log</span>(years<span class="hljs-number">.0</span>);
+}
+<span class="hljs-keyword">catch</span> (ex) {
+  console.<span class="hljs-built_in">log</span>(<span class="hljs-string">"Using bracket notation"</span>);
+  console.<span class="hljs-built_in">log</span>(years[<span class="hljs-number">0</span>]);
+}
+</code></pre>
+<pre><code><span class="hljs-keyword">try</span> {
+  renderer<span class="hljs-number">.3</span>d.setTexture(model, <span class="hljs-string">"character.png"</span>);
+}
+<span class="hljs-keyword">catch</span> (ex) {
+  console.<span class="hljs-built_in">log</span>(<span class="hljs-string">"Using bracket notation"</span>);
+  renderer[<span class="hljs-string">"3d"</span>].setTexture(model, <span class="hljs-string">"character.png"</span>);
+}
+</code></pre>
+<p>Note that in the 3d example, “3d” had to be quoted. It’s possible to quote the JavaScript array indexes as well (e.g., years[“2”] instead of years[2]), although it’s not necessary. The 2 in years[2] eventually gets coerced into a string by the JavaScript engine, anyway, through an implicit toString conversion. It is for this reason that “2” and “02” would refer to two different slots on the years object and the following example logs true:</p>
+<pre><code><span class="hljs-atom">console</span>.<span class="hljs-atom">log</span>(<span class="hljs-atom">years</span>[<span class="hljs-string">"2"</span>] != <span class="hljs-atom">years</span>[<span class="hljs-string">"02"</span>]);
+</code></pre>
+<h3>Relationship between <em>length</em> and numerical properties</h3>
+<p>A JavaScript array’s <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/length">length</a> property and numerical properties are connected. Several of the built-in array methods (e.g., <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/join">join</a>, <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/slice">slice</a>, <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/indexOf">indexOf</a>, etc.) take into account the value of an array’s length property when they’re called. Other methods (e.g., <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/push">push</a>, <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/splice">splice</a>, etc.) also result in updates to an array’s length property.</p>
+<pre><code><span class="hljs-keyword">var</span> fruits = [];
+fruits.push(<span class="hljs-string">"banana"</span>, <span class="hljs-string">"apple"</span>, <span class="hljs-string">"peach"</span>);
+<span class="hljs-built_in">console</span>.log(fruits.length); <span class="hljs-comment">// 3</span>
+</code></pre>
+<p>When setting a property on a JavaScript array when the property is a valid array index and that index is outside the current bounds of the array, the array will grow to a size large enough to accommodate an element at that index, and the engine will update the array’s <em>length</em> property accordingly:</p>
+<pre><code>fruits[<span class="hljs-number">3</span>] = <span class="hljs-string">"mango"</span>;
+console.<span class="hljs-built_in">log</span>(fruits[<span class="hljs-number">3</span>]);
+console.<span class="hljs-built_in">log</span>(fruits.length); <span class="hljs-comment">// 4</span>
+</code></pre>
+<p>Setting the <em>length</em> property, directly, also results in special behavior.</p>
+<pre><code>fruits.length = 10;
+console.log(fruits<span class="hljs-function">)</span>;        // The<span class="hljs-instruction"> array </span>gets padded with undefined
+console.log(fruits.length<span class="hljs-function">)</span>; // 10
+</code></pre>
+<p>This is explained further on the <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/length">length</a> page.</p>
+<h3>Creating an array using the result of a match</h3>
+<p>The result of a match between a regular expression and a string can create a JavaScript array. This array has properties and elements that provide information about the match. An array is the return value of RegExp.exec, String.match, and String.replace. To help explain these properties and elements, look at the following example and then refer to the table below:</p>
+<pre><code><span class="hljs-comment">// Match one d followed by one or more b's followed by one d</span>
+<span class="hljs-comment">// Remember matched b's and the following d</span>
+<span class="hljs-comment">// Ignore case</span>
+<span class="hljs-variable"><span class="hljs-keyword">var</span> myRe</span> = /d(b+)(d)/i;
+<span class="hljs-variable"><span class="hljs-keyword">var</span> myArray</span> = myRe.exec(<span class="hljs-string">"cdbBdbsbz"</span>);
+</code></pre>
+<p>The properties and elements returned from this match are as follows:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property/Element</th><th style="text-align:left">Description</th><th style="text-align:left">Example</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">input</td><td style="text-align:left">A read-only property that reflects the original string against which the regular expression was matched.</td><td style="text-align:left">cdbBdbsbz</td></tr>
+<tr><td style="text-align:left">index</td><td style="text-align:left">A read-only property that is the zero-based index of the match in the string.</td><td style="text-align:left">1</td></tr>
+<tr><td style="text-align:left">[0]</td><td style="text-align:left">A read-only element that specifies the last matched characters.</td><td style="text-align:left">dbBd</td></tr>
+<tr><td style="text-align:left">[1], …[n]</td><td style="text-align:left">Read-only elements that specify the parenthesized substring matches, if included in the regular expression. The number of possible parenthesized substrings is unlimited.</td><td style="text-align:left">[1]: bB\\ [2]: d</td></tr>
+</tbody>
+</table>
+<h2>Properties</h2>
+<p><a href="/w/index.php?title=Template:Js_see_prototype(%22Array%22,_%22Properties%22)&amp;action=edit&amp;redlink=1">Template:Js see prototype(&quot;Array&quot;, “Properties”)</a></p>
+<dl>
+<dt>[prototype|/en-US/docs/JavaScript/Reference/Global_Objects/Array/prototype]</dt>
+<dd>Allows the addition of properties to all objects.
+</dd>
+</dl>
+<!-- -->
+<pre><code>Template:jsOverrides(&quot;Function&quot;, &quot;Properties&quot;, &quot;prototype&quot;)
+</code></pre>
+<h2>Methods</h2>
+<pre><code>Template:Js see prototype(&quot;Array&quot;, &quot;Methods&quot;)
+</code></pre>
+<dl>
+<dt>[isArray|/en-US/docs/JavaScript/Reference/Global_Objects/Array/isArray] <a href="/w/index.php?title=Template:js_minversion_inline(%221.8.5%22)&amp;action=edit&amp;redlink=1">Template:js minversion inline(“1.8.5”)</a></dt>
+<dd>Return true if a variable is an array, if not false.
+</dd>
+</dl>
+<h2>Array instances</h2>
+<p>Array instances inherit from [Array.prototype|/en-US/docs/JavaScript/Reference/Global_Objects/Array/prototype]. As with all constructors, you can change the constructor’s prototype object to make changes to all JavaScript Array instances.</p>
+<h3>Properties</h3>
+<pre><code>Template:page('en-US/docs/JavaScript/Reference/Global Objects/Array/prototype', 'Properties')
+</code></pre>
+<h3>Methods</h3>
+<h4>Mutator methods</h4>
+<pre><code>Template:page('en-US/docs/JavaScript/Reference/Global Objects/Array/prototype', 'Mutator methods')
+</code></pre>
+<h4>Accessor methods</h4>
+<pre><code>Template:page('en-US/docs/JavaScript/Reference/Global Objects/Array/prototype', 'Accessor methods')
+</code></pre>
+<h4>Iteration methods</h4>
+<pre><code>Template:page('en-US/docs/JavaScript/Reference/Global Objects/Array/prototype', 'Iteration methods')
+</code></pre>
+<h2>Array generic methods</h2>
+<p>Sometimes you would like to apply array methods to strings or other array-like objects (such as function [arguments|<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/arguments">https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/arguments</a>]). By doing this, you treat a string as an array of characters (or otherwise treat a non-array as an array). For example, in order to check that every character in the variable str is a letter, you would write:</p>
+<pre><code>function isLetter(<span class="hljs-property">character</span>) {
+<span class="hljs-command">  return</span> (<span class="hljs-property">character</span> &gt;= <span class="hljs-string">"a"</span> &amp;&amp; <span class="hljs-property">character</span> &lt;= <span class="hljs-string">"z"</span>);
+}
+
+<span class="hljs-keyword">if</span> (Array.prototype.<span class="hljs-keyword">every</span>.call(str, isLetter))
+  alert(<span class="hljs-string">"The string '"</span> + str + <span class="hljs-string">"' contains only letters!"</span>);
+</code></pre>
+<p>This notation is rather wasteful and JavaScript 1.6 introduced a generic shorthand:</p>
+<pre><code>if <span class="hljs-list">(<span class="hljs-keyword">Array</span>.every<span class="hljs-list">(<span class="hljs-keyword">isLetter</span>, str)</span>)</span>
+  alert<span class="hljs-list">(<span class="hljs-string">"The string '"</span> + str + <span class="hljs-string">"' contains only letters!"</span>)</span><span class="hljs-comment">;</span>
+</code></pre>
+<p>[Generics|<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String#String_generic_methods">https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String#String_generic_methods</a>] are also available on [String|<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String">https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String</a>].</p>
+<p>These are currently not part of ECMAScript standards (though the ES6 [Array.from()|<a href="https://github.com/monolithed/ECMAScript-6">https://github.com/monolithed/ECMAScript-6</a>] can be used to achieve this). The following is a shim to allow its use in all browsers:</p>
+<pre><code><span class="hljs-comment">/*globals define*/</span>
+<span class="hljs-comment">// Assumes Array extras already present (one may use shims for these as well)</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-pi">  'use strict'</span>;
+
+  <span class="hljs-keyword">var</span> i,
+    <span class="hljs-comment">// We could also build the array of methods with the following, but the</span>
+    <span class="hljs-comment">//   getOwnPropertyNames() method is non-shimable:</span>
+    <span class="hljs-comment">// Object.getOwnPropertyNames(Array).filter(function (methodName) {return typeof Array[methodName] === 'function'});</span>
+    methods = [
+        <span class="hljs-string">'join'</span>, <span class="hljs-string">'reverse'</span>, <span class="hljs-string">'sort'</span>, <span class="hljs-string">'push'</span>, <span class="hljs-string">'pop'</span>, <span class="hljs-string">'shift'</span>, <span class="hljs-string">'unshift'</span>,
+        <span class="hljs-string">'splice'</span>, <span class="hljs-string">'concat'</span>, <span class="hljs-string">'slice'</span>, <span class="hljs-string">'indexOf'</span>, <span class="hljs-string">'lastIndexOf'</span>,
+        <span class="hljs-string">'forEach'</span>, <span class="hljs-string">'map'</span>, <span class="hljs-string">'reduce'</span>, <span class="hljs-string">'reduceRight'</span>, <span class="hljs-string">'filter'</span>,
+        <span class="hljs-string">'some'</span>, <span class="hljs-string">'every'</span>, <span class="hljs-string">'isArray'</span>
+    ],
+    methodCount = methods.length,
+    assignArrayGeneric = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">methodName</span>) </span>{
+      <span class="hljs-keyword">var</span> method = <span class="hljs-built_in">Array</span>.prototype[methodName];
+      <span class="hljs-built_in">Array</span>[methodName] = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">arg1</span>) </span>{
+        <span class="hljs-keyword">return</span> method.apply(arg1, <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>));
+      };
+    };
+
+  <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; methodCount; i++) {
+    assignArrayGeneric(methods[i]);
+  }
+}());
+</code></pre>
+<h2>Examples</h2>
+<h2>Example: Creating an array</h2>
+<p>The following example creates an array, msgArray, with a length of 0, then assigns values to msgArray[0] and msgArray[99], changing the length of the array to 100.</p>
+<pre><code>var msgArray = <span class="hljs-keyword">new</span> Array();
+msgArray[<span class="hljs-number">0</span>] = <span class="hljs-string">"Hello"</span>;
+msgArray[<span class="hljs-number">99</span>] = <span class="hljs-string">"world"</span>;
+
+<span class="hljs-keyword">if</span> (msgArray.length == <span class="hljs-number">100</span>)
+   print(<span class="hljs-string">"The length is 100."</span>);
+</code></pre>
+<h3>Example: Creating a two-dimensional array</h3>
+<p>The following creates chess board as a two dimensional array of strings. The first move is made by copying the ‘p’ in 6,4 to 4,4. The old position 6,4 is made blank.</p>
+<pre><code>var board =
+[ [<span class="hljs-string">'R'</span>,<span class="hljs-string">'N'</span>,<span class="hljs-string">'B'</span>,<span class="hljs-string">'Q'</span>,<span class="hljs-string">'K'</span>,<span class="hljs-string">'B'</span>,<span class="hljs-string">'N'</span>,<span class="hljs-string">'R'</span>],
+  [<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>,<span class="hljs-string">'P'</span>],
+  [<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>],
+  [<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>],
+  [<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>],
+  [<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>,<span class="hljs-string">' '</span>],
+  [<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>,<span class="hljs-string">'p'</span>],
+  [<span class="hljs-string">'r'</span>,<span class="hljs-string">'n'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'q'</span>,<span class="hljs-string">'k'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'n'</span>,<span class="hljs-string">'r'</span>]];
+<span class="hljs-keyword">print</span>(board.<span class="hljs-keyword">join</span>(<span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\n\n'</span>);
+
+<span class="hljs-comment">// Move King's Pawn forward 2</span>
+board[<span class="hljs-number">4</span>][<span class="hljs-number">4</span>] = board[<span class="hljs-number">6</span>][<span class="hljs-number">4</span>];
+board[<span class="hljs-number">6</span>][<span class="hljs-number">4</span>] = <span class="hljs-string">' '</span>;
+<span class="hljs-keyword">print</span>(board.<span class="hljs-keyword">join</span>(<span class="hljs-string">'\n'</span>));
+</code></pre>
+<p>Here is the output:</p>
+<p>R,N,B,Q,K,B,N,R P,P,P,P,P,P,P,P</p>
+<pre><code>, , , , , , ,
+, , , , , , ,
+, , , , , , ,
+, , , , , , ,
+</code></pre>
+<p>p,p,p,p,p,p,p,p r,n,b,q,k,b,n,r</p>
+<p>R,N,B,Q,K,B,N,R P,P,P,P,P,P,P,P</p>
+<pre><code>, , , , , , ,
+, , , , , , ,
+, , , ,p, , ,
+, , , , , , ,
+</code></pre>
+<p>p,p,p,p, ,p,p,p r,n,b,q,k,b,n,r</p>
+<h2>Browser compatibility</h2>
+<p><a href="/w/index.php?title=Template:CompatibilityTable&amp;action=edit&amp;redlink=1">Template:CompatibilityTable</a></p>
+<p>FeatureChromeFirefox (Gecko)Internet ExplorerOperaSafari (WebKit)Basic support<a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a>FeatureAndroidFirefox Mobile (Gecko)IE PhoneOpera MobileSafari MobileBasic support<a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a><a href="/w/index.php?title=Template:CompatVersionUnknown&amp;action=edit&amp;redlink=1">Template:CompatVersionUnknown</a></p>
+<h2>See also</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Working_with_Objects#Indexing_object_properties">“Indexing object properties” in JavaScript Guide: “Working with objects”</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Array_comprehensions">New in JavaScript 1.7: Array comprehensions</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.6#Array_extras">New in JavaScript 1.6: Array extras</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript_typed_arrays">Draft: Typed Arrays</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

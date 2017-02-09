@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RegExp · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An intrinsic global object that stores information about the results of regular expression pattern matches." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/RegExp/">RegExp</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>RegExp</h1>
+<h2>Summary</h2>
+<p>An intrinsic global object that stores information about the results of regular expression pattern matches.</p>
+<h2>Syntax</h2>
+<pre><code>RegExp.property
+</code></pre>
+<h2>Examples</h2>
+<p>The following example performs a regular expression search. It displays matches and submatches from the global <code>RegExp</code> object, and from the array that is returned by the <code>exec</code> method.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> newLine = <span class="hljs-string">"&lt;br /&gt;"</span>;
+
+ <span class="hljs-keyword">var</span> re = <span class="hljs-regexp">/(\w+)@(\w+)\.(\w+)/g</span>
+ <span class="hljs-keyword">var</span> src = <span class="hljs-string">"Please send mail to george@contoso.com and someone@example.com. Thanks!"</span>
+
+ <span class="hljs-keyword">var</span> result;
+ <span class="hljs-keyword">var</span> s = <span class="hljs-string">""</span>;
+
+ <span class="hljs-comment">// Get the first match.</span>
+ result = re.exec(src);
+
+ <span class="hljs-keyword">while</span> (result != <span class="hljs-literal">null</span>) {
+     <span class="hljs-comment">// Show the entire match.</span>
+     s += newLine;
+
+     <span class="hljs-comment">// Show the match and submatches from the RegExp global object.</span>
+     s += <span class="hljs-string">"RegExp.lastMatch: "</span> + <span class="hljs-built_in">RegExp</span>.lastMatch + newLine;
+     s += <span class="hljs-string">"RegExp.: "</span> + <span class="hljs-built_in">RegExp</span>. + newLine;
+     s += <span class="hljs-string">"RegExp.: "</span> + <span class="hljs-built_in">RegExp</span>. + newLine;
+     s += <span class="hljs-string">"RegExp.: "</span> + <span class="hljs-built_in">RegExp</span>. + newLine;
+
+     <span class="hljs-comment">// Show the match and submatches from the array that is returned</span>
+     <span class="hljs-comment">// by the exec method.</span>
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>; index &lt; result.length; index++) {
+         s +=  index + <span class="hljs-string">": "</span>;
+         s += result[index];
+         s += newLine;
+     }
+
+     <span class="hljs-comment">// Get the next match.</span>
+     result = re.exec(src);
+ }
+ <span class="hljs-built_in">document</span>.write(s);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">//  RegExp.lastMatch: george@contoso.com</span>
+ <span class="hljs-comment">//  RegExp.: george</span>
+ <span class="hljs-comment">//  RegExp.: contoso</span>
+ <span class="hljs-comment">//  RegExp.: com</span>
+ <span class="hljs-comment">//  0: george@contoso.com</span>
+ <span class="hljs-comment">//  1: george</span>
+ <span class="hljs-comment">//  2: contoso</span>
+ <span class="hljs-comment">//  3: com</span>
+
+ <span class="hljs-comment">//  RegExp.lastMatch: someone@example.com</span>
+ <span class="hljs-comment">//  RegExp.: someone</span>
+ <span class="hljs-comment">//  RegExp.: example</span>
+ <span class="hljs-comment">//  RegExp.: com</span>
+ <span class="hljs-comment">//  0: someone@example.com</span>
+ <span class="hljs-comment">//  1: someone</span>
+ <span class="hljs-comment">//  2: example</span>
+ <span class="hljs-comment">//  3: com</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The required property argument can be any one of the <code>RegExp</code> object properties.</p>
+<p>The <code>RegExp</code> object cannot be created directly, but is always available for use. Until a successful regular expression search has been completed, the initial values of the various properties of the <code>RegExp</code> object are as follows:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Shorthand</th><th style="text-align:left">Initial Value</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/index">index</a></td><td style="text-align:left">-1</td><td style="text-align:left">(none)</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/input">input</a></td><td style="text-align:left">$_</td><td style="text-align:left">Empty string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/lastIndex">lastIndex</a></td><td style="text-align:left">-1</td><td style="text-align:left">(none)</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/lastMatch">lastMatch</a></td><td style="text-align:left">$&amp;</td><td style="text-align:left">Empty string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/lastParen">lastParen</a></td><td style="text-align:left">$+</td><td style="text-align:left">Empty string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/leftContext">leftContext</a></td><td style="text-align:left">$`</td><td style="text-align:left">Empty string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/rightContext">rightContext</a></td><td style="text-align:left">$’</td><td style="text-align:left">Empty string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/1_9_Properties">$1 - $9</a></td><td style="text-align:left">$1 - $9</td><td style="text-align:left">Empty string.</td></tr>
+</tbody>
+</table>
+<p>Its properties have undefined as their value until a successful regular expression search has been completed.</p>
+<p>The global <code>RegExp</code> object should not be confused with the <strong>Regular Expression</strong> object. Even though they sound like the same thing, they are separate and distinct. The properties of the global <code>RegExp</code> object contain continually updated information about each match as it occurs, while the properties of the <strong>Regular Expression</strong> object contain only information about the matches that occur with that instance of the <strong>Regular Expression</strong>.</p>
+<h2>Properties</h2>
+<p>||<br>
+|<a href="/docs/javascript/RegExp/global">global</a>|Returns a Boolean value indicating the state of the global flag ( g ) used with a regular expression.|<br>
+|<a href="/docs/javascript/RegExp/ignoreCase">ignoreCase</a>|Returns a Boolean value indicating the state of the ignoreCase flag ( i ) used with a regular expression.|<br>
+|<a href="/docs/javascript/RegExp/multiline">multiline</a>|Returns a Boolean value indicating the state of the multiline flag ( m ) used with a regular expression.|<br>
+|<a href="/docs/javascript/RegExp/source">source</a>|Returns a copy of the text of the regular expression pattern.|<br>
+|<a href="/docs/javascript/RegExp/sticky">sticky</a>|Returns a Boolean value indicating the state of the sticky flag ( y ) used with a regular expression.|<br>
+|<a href="/docs/javascript/RegExp/unicode">unicode</a>|Returns a Boolean value indicating the state of the Unicode flag (u) used with a regular expression.|</p>
+<h2>Methods</h2>
+<p>||<br>
+|<a href="/docs/javascript/RegExp/compile">compile</a>|Compiles a regular expression into an internal format for faster execution.|<br>
+|<a href="/docs/javascript/RegExp/exec">exec</a>|Executes a search on a string using a regular expression pattern, and returns an array containing the results of that search.|<br>
+|<a href="/docs/javascript/RegExp/test">test</a>|Returns a Boolean value that indicates whether or not a pattern exists in a searched string.|</p>
+<h2>Properties</h2>
+<p>The following table lists the properties of the <strong>RegExp</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Summary</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/global">global</a></td><td style="text-align:left">Returns a Boolean value indicating the state of the global flag ( <strong>g</strong> ) used with a regular expression. Default is <strong>false</strong>. Read-only.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/ignoreCase">ignoreCase</a></td><td style="text-align:left">Returns a Boolean value indicating the state of the ignoreCase flag ( <strong>i</strong> ) used with a regular expression. Default is <strong>false</strong>. Read-only.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/multiline">multiline</a></td><td style="text-align:left">Returns a Boolean value indicating the state of the multiline flag ( <strong>m</strong> ) used with a regular expression. Default is <strong>false</strong>. Read-only.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/source">source</a></td><td style="text-align:left">Returns a copy of the text of the regular expression pattern. Read-only. The rgExp argument is a <strong>Regular expression</strong> object. It can be a variable name or a literal.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/sticky">sticky</a></td><td style="text-align:left">Returns a Boolean value indicating the state of the sticky flag ( <strong>y</strong> ) used with a regular expression. Default is <code>false</code>. Read-only.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/unicode">unicode</a></td><td style="text-align:left">Returns a Boolean value indicating the state of the Unicode flag (<code>u</code>) used with a regular expression. Default is <code>false</code>. Read-only.</td></tr>
+</tbody>
+</table>
+<h2>Functions</h2>
+<p>The following table lists the functions of the <strong>RegExp</strong> object.</p>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>RegExp</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Summary</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/compile">compile</a></td><td style="text-align:left">Compiles a regular expression into an internal format for faster execution.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/exec">exec</a></td><td style="text-align:left">Executes a search on a string using a regular expression pattern, and returns an array containing the results of that search.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/RegExp/test">test</a></td><td style="text-align:left">Returns a Boolean value that indicates whether or not a pattern exists in a searched string.</td></tr>
+</tbody>
+</table>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/regular_expression">Regular Expression Object</a></li>
+<li><a href="/docs/javascript/String">String Object</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/9dthzd08(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

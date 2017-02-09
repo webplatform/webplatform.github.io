@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript Values · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="This chapter discusses values that JavaScript recognizes and describes the fundamental building blocks of JavaScript expressions: variables, constants, and literals." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/values/">values</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>JavaScript Values</h1>
+<h2>Summary</h2>
+<p>This chapter discusses values that JavaScript recognizes and describes the fundamental building blocks of JavaScript expressions: variables, constants, and literals.</p>
+<h2>Values</h2>
+<p>JavaScript recognizes the following <strong>primitive</strong> types of values:</p>
+<ul>
+<li><a href="/w/index.php?title=concepts/programming/javascript/values/js/data-types/number&amp;action=edit&amp;redlink=1">Numbers</a>, such as 42 or 3.14159</li>
+<li><a href="/w/index.php?title=concepts/programming/javascript/values/js/data-types/boolean&amp;action=edit&amp;redlink=1">Logical (Boolean)</a> values, either <code>true</code> or <code>false</code></li>
+<li><a href="/w/index.php?title=concepts/programming/javascript/values/js/data-types/string&amp;action=edit&amp;redlink=1">Strings</a>, such as “Howdy!”</li>
+<li><code>null</code>, a special keyword denoting a null value. Because JavaScript is case-sensitive, <code>null</code> is not the same as <code>Null</code>, <code>NULL</code>, or any other variant</li>
+<li><code>undefined</code>, a top-level property whose value is undefined.</li>
+</ul>
+<p>This relatively small set of types of values, or <em>data types</em>, enables you to perform useful functions with your applications. There is no explicit distinction between integer and real-valued numbers. Nor is there an explicit date data type in JavaScript. However, you can use the <code>Date</code> object and its methods to handle dates.</p>
+<p><a href="/w/index.php?title=concepts/programming/javascript/values/js/objects/Object&amp;action=edit&amp;redlink=1">Objects</a> and <a href="/w/index.php?title=concepts/programming/javascript/values/js/objects/Function&amp;action=edit&amp;redlink=1">functions</a> are the other fundamental elements in the language. You can think of objects as named containers for values, and functions as procedures that your application can perform.</p>
+<h3>Data type conversion</h3>
+<p>JavaScript is a dynamically typed language. That means you do not have to specify the data type of a variable when you declare it, and data types are converted automatically as needed during script execution. So, for example, you could define a variable as follows:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> answer = <span class="hljs-number">42</span>;
+</code></pre>
+<p>And later, you could assign the same variable a string value, for example:</p>
+<pre><code class="js">answer = <span class="hljs-string">"Thanks for all the fish..."</span>;
+</code></pre>
+<p>Because JavaScript is dynamically typed, this assignment does not cause an error message.</p>
+<p>In expressions involving numeric and string values with the + operator, JavaScript converts numeric values to strings. For example, consider the following expressions:</p>
+<pre><code class="js"><span class="hljs-string">"The answer is "</span> + <span class="hljs-number">42</span>; <span class="hljs-comment">//is "The answer is 42"</span>
+<span class="hljs-number">42</span> + <span class="hljs-string">" is the answer"</span>; <span class="hljs-comment">//is "42 is the answer"</span>
+</code></pre>
+<p>In statements involving other operators, JavaScript does not convert numeric values to strings. For example:</p>
+<pre><code class="js"><span class="hljs-string">"37"</span> - <span class="hljs-number">7</span>; <span class="hljs-comment">//is 30</span>
+<span class="hljs-string">"37"</span> + <span class="hljs-number">7</span>; <span class="hljs-comment">//is "377"</span>
+</code></pre>
+<h3>Converting strings to numbers</h3>
+<p>In the case that a value representing a number is in memory as a string, there are methods for conversion.</p>
+<h4><code>parseInt()</code> and <code>parseFloat()</code></h4>
+<p>See: <code>parseInt()</code> and <code>parseFloat()</code> pages.</p>
+<p><code>parseInt</code> will only return whole numbers, so its use is diminished for decimals. Additionally, a best practice for <code>parseInt</code> is to always include the radix parameter. That’s because of strings with leading zeroes (like <code>parseInt('016')</code>) which may, by some interpreters, be treated as octal numbers by default.</p>
+<h4>Plus operator</h4>
+<p>An alternative method of retrieving a number from a string is with the <code>+</code> operator.</p>
+<pre><code class="js"><span class="hljs-string">"1.1"</span> + <span class="hljs-string">"1.1"</span>; <span class="hljs-comment">//is "1.11.1"</span>
+(+<span class="hljs-string">"1.1"</span>) + (+<span class="hljs-string">"1.1"</span>); <span class="hljs-comment">//is 2.2 -- Note: the parentheses are added for clarity, not required.</span>
+</code></pre>
+<p>The pitfall here is when trying to convert a string <code>'1 some'</code> to a number using plus operator result in a <code>NaN</code> while <code>parseInt</code> is working correctly.</p>
+<h2>Variables</h2>
+<p>You use variables as symbolic names for values in your application. The names of variables, called <em>identifiers</em>, conform to certain rules.</p>
+<p>A JavaScript identifier must start with a letter, underscore (_), or dollar sign ($); subsequent characters can also be digits (0-9). Because JavaScript is case sensitive, letters include the characters “A” through “Z” (uppercase) and the characters “a” through “z” (lowercase).</p>
+<p>Starting with JavaScript 1.5, you can use ISO 8859-1 or Unicode letters such as å and ü in identifiers. You can also use the \uXXXX <a href="#Unicode_escape_sequences">Unicode escape sequences</a> as characters in identifiers.</p>
+<p>Some examples of legal names are <code>Number_hits</code>, <code>temp99</code>, and <code>_name</code>.</p>
+<h3>Declaring variables</h3>
+<p>You can declare a variable in two ways:</p>
+<ul>
+<li>With the keyword <a href="/w/index.php?title=concepts/programming/javascript/values/js/statements/var&amp;action=edit&amp;redlink=1">var</a>. For example, <code>var x = 42</code>. This syntax can be used to declare both <a href="#Variable_Scope">local and global</a> variables.</li>
+<li>By simply assigning it a value. For example, <code>x = 42</code>. This always declares a <a href="#Global_Variables">global variable</a> and generates a strict JavaScript warning. You shouldn’t use this variant.</li>
+</ul>
+<h3>Evaluating variables</h3>
+<p>A variable declared using the <code>var</code> statement with no initial value specified has the value <code>undefined</code>.</p>
+<p>An attempt to access an undeclared variable will result in a <code>ReferenceError</code> exception being thrown:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a;
+<span class="hljs-string">"The value of a is "</span> + a; <span class="hljs-comment">//is "The value of a is undefined"</span>
+<span class="hljs-string">"The value of b is "</span> + b; <span class="hljs-comment">//ReferenceError: b is not defined</span>
+</code></pre>
+<p>You can use <code>undefined</code> to determine whether a variable has a value. In the following code, the variable <code>input</code> is not assigned a value, and the <code>if</code> statement evaluates to <code>true</code>.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> input;
+<span class="hljs-keyword">if</span>(input === <span class="hljs-literal">undefined</span>){
+  doThis();
+} <span class="hljs-keyword">else</span> {
+  doThat();
+}
+</code></pre>
+<p><span class="comment">The following is related to “Variables” section as potential values in assignment.</span></p>
+<p>The <code>undefined</code> value behaves as <code>false</code> when used in a boolean context. For example, the following code executes the function <code>myFunction</code> because the <code>myArray</code> element is not defined:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>();
+<span class="hljs-keyword">if</span> (!myArray[<span class="hljs-number">0</span>]) myFunction();
+</code></pre>
+<p>The <code>undefined</code> value converts to <code>NaN</code> when used in numeric context.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a;
+a + <span class="hljs-number">2</span>; <span class="hljs-comment">//is NaN</span>
+</code></pre>
+<p>When you evaluate a null variable, the null value behaves as 0 in numeric contexts and as false in boolean contexts. For example:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> n = <span class="hljs-literal">null</span>;
+n * <span class="hljs-number">32</span>; <span class="hljs-comment">//is 0</span>
+</code></pre>
+<h3>Variable scope</h3>
+<p>When you declare a variable outside of any function, it is called a <em>global</em> variable, because it is available to any other code in the current document. When you declare a variable within a function, it is called a <em>local</em> variable, because it is available only within that function.</p>
+<p>JavaScript does not have <a href="/w/index.php?title=concepts/programming/javascript/values/js/guide/Statements&amp;action=edit&amp;redlink=1">block statement</a> scope; rather, it will be local to the code that the block resides within. For example the following code will log <code>5</code>, because the scope of <code>x</code> is the function (or global context) within which <code>x</code> is declared, not the block, which in this case is an <code>if</code> statement.</p>
+<pre><code class="js"><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {
+  <span class="hljs-keyword">var</span> x = <span class="hljs-number">5</span>;
+}
+x; <span class="hljs-comment">//is 5</span>
+</code></pre>
+<p>Another unusual thing about variables in JavaScript is that you can refer to a variable declared later, without getting an exception. This concept is known as hoisting; variables in JavaScript are in a sense “hoisted” or lifted to the top of their containing function (a/k/a the current lexical scope). However, variables that aren’t assigned yet will have a value of <code>undefined</code>.</p>
+<pre><code class="js"><span class="hljs-comment">/**
+ * Example 1
+ */</span>
+(x === <span class="hljs-literal">undefined</span>); <span class="hljs-comment">//is true</span>
+<span class="hljs-keyword">var</span> x = <span class="hljs-number">3</span>;
+
+<span class="hljs-comment">/**
+ * Example 2
+ */</span>
+<span class="hljs-keyword">var</span> myvar = <span class="hljs-string">"my value"</span>;
+
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  myvar; <span class="hljs-comment">//is undefined</span>
+  <span class="hljs-keyword">var</span> myvar = <span class="hljs-string">"local value"</span>;
+})();
+
+myvar; <span class="hljs-comment">//is "my value"</span>
+</code></pre>
+<p>Example 2, above, will be interpreted similarly to:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myvar = <span class="hljs-string">"my value"</span>;
+
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> myvar;
+  myvar; <span class="hljs-comment">//is undefined</span>
+  myvar = <span class="hljs-string">"local value"</span>;
+})();
+</code></pre>
+<p>Because of hoisting, all <code>var</code> statements in a function should be placed as near to the top of the function as possible. This best practice increases the clarity of the code.</p>
+<h3>Global variables</h3>
+<p><span class="comment">Need links to pages discussing scope chains and the global object</span> Global variables are in fact properties of the <em>global object</em>. In web pages the global object is <code>window</code>, so you can set and access global variables using the <code>window.variable</code> syntax.</p>
+<p>Consequently, you can access global variables declared in one window or frame from another window or frame by specifying the window or frame name. For example, if a variable called <code>phoneNumber</code> is declared in a <code>FRAMESET</code> document, you can refer to this variable from a child frame as <code>parent.phoneNumber</code>.</p>
+<h2>Literals</h2>
+<p>You use literals to represent values in JavaScript. These are fixed values, not variables, that you <em>literally</em> provide in your script. This section describes the following types of literals:</p>
+<ul>
+<li><a href="#Array_literals">Array literals</a></li>
+<li><a href="#Boolean_literals">Boolean literals</a></li>
+<li><a href="#Floating-point_literals">Floating-point literals</a></li>
+<li><a href="#Integers.22">Integers</a></li>
+<li><a href="#Object_literals">Object literals</a></li>
+<li><a href="#String_literals">String literals</a></li>
+</ul>
+<h3>Array literals</h3>
+<p>An array literal is a list of zero or more expressions, each of which represents an array element, enclosed in square brackets ([]). When you create an array using an array literal, it is initialized with the specified values as its elements, and its length is set to the number of arguments specified.</p>
+<p>The following example creates the <code>coffees</code> array with three elements and a length of three:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> coffees = [<span class="hljs-string">"French Roast"</span>, <span class="hljs-string">"Colombian"</span>, <span class="hljs-string">"Kona"</span>];
+</code></pre>
+<p><strong>Note</strong> An array literal is a type of object initializer. See <a href="/w/index.php?title=concepts/programming/javascript/values/js/guide/About_objects&amp;action=edit&amp;redlink=1">Using Object Initializers</a>.</p>
+<p>If an array is created using a literal in a top-level script, JavaScript interprets the array each time it evaluates the expression containing the array literal. In addition, a literal used in a function is created each time the function is called.</p>
+<p>Array literals are also <code>Array</code> objects. See <a href="/w/index.php?title=concepts/programming/javascript/values/js/guide/About_predefined_core_objects&amp;action=edit&amp;redlink=1">Array Object</a> for details on <code>Array</code> objects.</p>
+<h4>Extra commas in array literals</h4>
+<p>You do not have to specify all elements in an array literal. If you put two commas in a row, the array is created with <code>undefined</code> for the unspecified elements. The following example creates the <code>fish</code> array:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> fish = [<span class="hljs-string">"Lion"</span>, , <span class="hljs-string">"Angel"</span>];
+</code></pre>
+<p>This array has two elements with values and one empty element (<code>fish[0]</code> is &quot;Lion&quot;, <code>fish[1]</code> is <code>undefined</code>, and <code>fish[2]</code> is “Angel”).</p>
+<p>If you include a trailing comma at the end of the list of elements, the comma is ignored. In the following example, the length of the array is three. There is no <code>myList[3]</code>. All other commas in the list indicate a new element. (<strong>Note</strong> trailing commas can create errors in older browser versions and it is a best practice to remove them)</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myList = [<span class="hljs-string">'home'</span>, , <span class="hljs-string">'school'</span>, ]; <span class="hljs-comment">//same as ['home', undefined, 'school'] -- Avoid trailing commas.</span>
+</code></pre>
+<p>In the following example, the length of the array is four, and <code>myList[0]</code> and <code>myList[2]</code> are missing.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myList = [ , <span class="hljs-string">'home'</span>, , <span class="hljs-string">'school'</span>]; <span class="hljs-comment">//same as [undefined, 'home', undefined, 'school']</span>
+</code></pre>
+<p>In the following example, the length of the array is four, and <code>myList[1]</code> and <code>myList[3]</code> are missing. Only the last comma is ignored.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myList = [<span class="hljs-string">'home'</span>, , <span class="hljs-string">'school'</span>, , ]; <span class="hljs-comment">//same as ['home', undefined, 'school', undefined]</span>
+</code></pre>
+<p>Understanding the behavior of extra commas is important to understanding JavaScript as a language; however, when writing your own code: explicitly declaring the missing elements as <code>undefined</code> will increase your code’s clarity and maintainability.</p>
+<h3>Boolean literals</h3>
+<p>The Boolean type has two literal values: <code>true</code> and <code>false</code>.</p>
+<p>Do not confuse the primitive Boolean values <code>true</code> and <code>false</code> with the true and false values of the Boolean object. The Boolean object is a wrapper around the primitive Boolean data type. See <a href="/w/index.php?title=concepts/programming/javascript/values/js/guide/About_predefined_Core_Objects&amp;action=edit&amp;redlink=1">Boolean Object</a> for more information.</p>
+<h3>Integers</h3>
+<p>Integers can be expressed in decimal (base 10), hexadecimal (base 16), and octal (base 8).</p>
+<ul>
+<li>Decimal integer literal consists of a sequence of digits without a leading 0 (zero).</li>
+<li>Leading 0 (zero) on an integer literal indicates it is in octal. Octal integers can include only the digits 0-7.</li>
+<li>Leading 0x (or 0X) indicates hexadecimal. Hexadecimal integers can include digits (0-9) and the letters a-f and A-F.</li>
+</ul>
+<p>Octal integer literals are deprecated and have been removed from the ECMA-262, Edition 3 standard (in <em>strict mode</em>). JavaScript 1.5 still supports them for backward compatibility.</p>
+<p>Some examples of integer literals are:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">117</span>, c = -<span class="hljs-number">345</span>; <span class="hljs-comment">//decimal, base 10</span>
+<span class="hljs-keyword">var</span> d = <span class="hljs-number">015</span>, e = <span class="hljs-number">0001</span>, f = -<span class="hljs-number">077</span> <span class="hljs-comment">//octal, base 8 -- deprecated!</span>
+<span class="hljs-keyword">var</span> g = <span class="hljs-number">0x1123</span>, h = <span class="hljs-number">0x00111</span>, i = -<span class="hljs-number">0xF1A7</span> <span class="hljs-comment">//hexadecimal, "hex" or base 16</span>
+</code></pre>
+<h3>Floating-point literals</h3>
+<p>A floating-point literal can have the following parts:</p>
+<ul>
+<li>A decimal integer which can be signed (preceded by “+” or &quot;-&quot;),</li>
+<li>A decimal point (“.”),</li>
+<li>A fraction (another decimal number),</li>
+<li>An exponent.</li>
+</ul>
+<p>The exponent part is an “e” or “E” followed by an integer, which can be signed (preceded by “+” or &quot;-&quot;). A floating-point literal must have at least one digit and either a decimal point or “e” (or “E”).</p>
+<p>Some examples of floating-point literals are 3.1415, -3.1E12, .1e12, and 2E-12.</p>
+<p>More succinctly, the syntax is:</p>
+<pre><code>[digits][.digits][(E|e)[(+|-)]digits]
+</code></pre>
+<p>For example:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = <span class="hljs-number">3.14</span>,
+    b = <span class="hljs-number">2345.789</span>,
+    c = <span class="hljs-number">.3333333333333333333</span>,
+    d = -<span class="hljs-number">1.23e2</span>;
+</code></pre>
+<h3>Object literals</h3>
+<p>An object literal is a list of zero or more pairs of property names and associated values of an object, enclosed in curly braces ({}). You should not use an object literal at the beginning of a statement. This will lead to an error or not behave as you expect, because the { will be interpreted as the beginning of a block.</p>
+<p>The following is an example of an object literal. The first element of the <code>car</code> object defines a property, <code>myCar</code>; the second element, the <code>getCar</code> property, invokes a function <code>(CarTypes(&quot;Honda&quot;));</code> the third element, the <code>special</code> property, uses an existing variable (<code>Sales</code>).</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> Sales = <span class="hljs-string">"Toyota"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CarTypes</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">return</span> (name == <span class="hljs-string">"Honda"</span>) ?
+    name :
+    <span class="hljs-string">"Sorry, we don't sell "</span> + name + <span class="hljs-string">"."</span> ;
+}
+
+<span class="hljs-keyword">var</span> car = { myCar: <span class="hljs-string">"Saturn"</span>, getCar: CarTypes(<span class="hljs-string">"Honda"</span>), special: Sales };
+
+<span class="hljs-built_in">console</span>.log(car.myCar);   <span class="hljs-comment">// Saturn</span>
+<span class="hljs-built_in">console</span>.log(car.getCar);  <span class="hljs-comment">// Honda</span>
+<span class="hljs-built_in">console</span>.log(car.special); <span class="hljs-comment">// Toyota</span>
+</code></pre>
+<p><span class="comment">Needs clean-up!</span></p>
+<p>Additionally, you can use a numeric or string literal for the name of a property or nest an object inside another. The following example uses these options.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> car = { manyCars: {a: <span class="hljs-string">"Saab"</span>, <span class="hljs-string">"b"</span>: <span class="hljs-string">"Jeep"</span>}, <span class="hljs-number">7</span>: <span class="hljs-string">"Mazda"</span> };
+
+<span class="hljs-built_in">console</span>.log(car.manyCars.b); <span class="hljs-comment">// Jeep</span>
+<span class="hljs-built_in">console</span>.log(car[<span class="hljs-number">7</span>]); <span class="hljs-comment">// Mazda</span>
+</code></pre>
+<p>Please note:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> foo = {a: <span class="hljs-string">"alpha"</span>, <span class="hljs-number">2</span>: <span class="hljs-string">"two"</span>};
+foo.a; <span class="hljs-comment">//is "alpha"</span>
+foo[<span class="hljs-number">2</span>]; <span class="hljs-comment">//is "two"</span>
+foo<span class="hljs-number">.2</span>; <span class="hljs-comment">//SyntaxError: Unexpected number</span>
+foo[a]; <span class="hljs-comment">//ReferenceError: a is not defined</span>
+foo[<span class="hljs-string">"a"</span>]); <span class="hljs-comment">//is "alpha"</span>
+foo[<span class="hljs-string">"2"</span>]; <span class="hljs-comment">//is two</span>
+</code></pre>
+<h3>String literals</h3>
+<p>A string literal is zero or more characters enclosed in double (<code>&quot;</code>) or single (<code>'</code>) quotation marks. A string must be delimited by quotation marks of the same type; that is, either both single quotation marks or both double quotation marks. The following are examples of string literals:</p>
+<ul>
+<li><code>&quot;foo&quot;</code></li>
+<li><code>'bar'</code></li>
+<li><code>&quot;1234&quot;</code></li>
+<li><code>&quot;one line \n another line&quot;</code></li>
+<li><code>&quot;John's cat&quot;</code></li>
+</ul>
+<p>You can call any of the methods of the String object on a string literal value—JavaScript automatically converts the string literal to a temporary String object, calls the method, then discards the temporary String object. You can also use the <code>String.length</code> property with a string literal:</p>
+<pre><code class="js">(<span class="hljs-string">"John's cat"</span>).length
+</code></pre>
+<p>You should use string literals unless you specifically need to use a String object. See <a href="/w/index.php?title=concepts/programming/javascript/values/js/guide/About_predefined_Core_Objects&amp;action=edit&amp;redlink=1">String Object</a> for details on <code>String</code> objects.</p>
+<h4>Using special characters in strings</h4>
+<p>In addition to ordinary characters, you can also include special characters in strings, as shown in the following example.</p>
+<pre><code class="js"><span class="hljs-string">"one line \n another line"</span>;
+</code></pre>
+<p>The following table lists the special characters that you can use in JavaScript strings.</p>
+<table class="standard-table">
+<caption style="text-align: left;">
+Table 2.1 JavaScript special characters
+</caption>
+\<thead\>
+<tr>
+<th scope="col">
+Character
+</th>
+<th scope="col">
+Meaning
+</th>
+</tr>
+\</thead\> \<tbody\>
+<tr>
+<td>
+`\b`
+</td>
+<td>
+Backspace
+</td>
+</tr>
+<tr>
+<td>
+`\f`
+</td>
+<td>
+Form feed
+</td>
+</tr>
+<tr>
+<td>
+`\n`
+</td>
+<td>
+New line
+</td>
+</tr>
+<tr>
+<td>
+`\r`
+</td>
+<td>
+Carriage return
+</td>
+</tr>
+<tr>
+<td>
+`\t`
+</td>
+<td>
+Tab
+</td>
+</tr>
+<tr>
+<td>
+`\v`
+</td>
+<td>
+Vertical tab
+</td>
+</tr>
+<tr>
+<td>
+`\'`
+</td>
+<td>
+Apostrophe or single quote
+</td>
+</tr>
+<tr>
+<td>
+`\"`
+</td>
+<td>
+Double quote
+</td>
+</tr>
+<tr>
+<td>
+`\\`
+</td>
+<td>
+Backslash character (\\).
+</td>
+</tr>
+<tr>
+<td>
+`\XXX`
+</td>
+<td>
+The character with the Latin-1 encoding specified by up to three octal digits *XXX* between 0 and 377. For example, \\251 is the octal sequence for the copyright symbol.
+</td>
+</tr>
+<tr>
+<td>
+`\xXX`
+</td>
+<td>
+The character with the Latin-1 encoding specified by the two hexadecimal digits *XX* between 00 and FF. For example, \\xA9 is the hexadecimal sequence for the copyright symbol.
+</td>
+</tr>
+<tr>
+<td>
+`\uXXXX`
+</td>
+<td>
+The Unicode character specified by the four hexadecimal digits *XXXX*. For example, \\u00A9 is the Unicode sequence for the copyright symbol. See [Unicode escape sequences](#Unicode_escape_sequences).
+</td>
+</tr>
+\</tbody\>
+</table>
+#### Escaping characters
+<p>For characters not listed in Table 2.1, a preceding backslash is ignored, but this usage is deprecated and should be avoided.</p>
+<p>You can insert a quotation mark inside a string by preceding it with a backslash. This is known as <em>escaping</em> the quotation mark. For example:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> quote = <span class="hljs-string">"He read \"The Cremation of Sam McGee\" by R.W. Service."</span>;
+<span class="hljs-built_in">document</span>.write(quote);
+</code></pre>
+<p>The result of this would be:</p>
+<pre><code>He read &quot;The Cremation of Sam McGee&quot; by R.W. Service.
+</code></pre>
+<p>To include a literal backslash inside a string, you must escape the backslash character. For example, to assign the file path <code>c:\temp</code> to a string, use the following:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> home = <span class="hljs-string">"c:\\temp"</span>;
+</code></pre>
+<p>You can also escape line breaks by preceding them with backslash. The backslash and line break are both removed from the value of the string.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> str = <span class="hljs-string">"this string \
+is broken \
+across multiple\
+lines."</span>;
+str; <span class="hljs-comment">//is "this string is broken across multiplelines."</span>
+</code></pre>
+<p>Care should be used with multi-line strings because a trailing space will cause them to fail. For instance:</p>
+<pre><code class="js">/**
+Even though it appears no different than the previous example, the following
+will throw an error because there is a space character after the \ after "mutiple"
+**/
+var str = "this string \
+is broken \
+across multiple \ //Error: unexpected token
+lines.";
+</code></pre>
+<p>Although JavaScript does not have “heredoc” syntax, you can get close by adding a linebreak escape and an escaped linebreak at the end of each line:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> poem =
+<span class="hljs-string">"Roses are red,\n\
+Violets are blue.\n\
+Comments are green,\n\
+Numeric literals are also red."</span>
+</code></pre>
+<h2>Unicode</h2>
+<p>Unicode is a universal character-coding standard for the interchange and display of principal written languages. It covers the languages of the Americas, Europe, Middle East, Africa, India, Asia, and Pacifica, as well as historic scripts and technical symbols. Unicode allows for the exchange, processing, and display of multilingual texts, as well as the use of common technical and mathematical symbols. It hopes to resolve internationalization problems of multilingual computing, such as different national character standards. Not all modern or archaic scripts, however, are currently supported.</p>
+<p>The Unicode character set can be used for all known encoding. Unicode is modeled after the ASCII (American Standard Code for Information Interchange) character set. It uses a numerical value and name for each character. The character encoding specifies the identity of the character and its numeric value (code position), as well as the representation of this value in bits. The 16-bit numeric value (code value) is defined by a hexadecimal number and a prefix U, for example, U+0041 represents A. The unique name for this value is LATIN CAPITAL LETTER A.</p>
+<p><strong>Unicode is not supported in versions of JavaScript prior to 1.3.</strong></p>
+<h3>Unicode compatibility with ASCII and ISO</h3>
+<p>Unicode is fully compatible with the International Standard ISO/IEC 10646-1; 1993, which is a subset of ISO 10646.</p>
+<p>Several encoding standards (including UTF-8, UTF-16 and ISO UCS-2) are used to physically represent Unicode as actual bits.</p>
+<p>The UTF-8 encoding of Unicode is compatible with ASCII characters and is supported by many programs. The first 128 Unicode characters correspond to the ASCII characters and have the same byte value. The Unicode characters U+0020 through U+007E are equivalent to the ASCII characters 0x20 through 0x7E. Unlike ASCII, which supports the Latin alphabet and uses a 7-bit character set, UTF-8 uses between one and four octets for each character (“octet” meaning a byte, or 8 bits.) This allows for several million characters. An alternative encoding standard, UTF-16, uses two octets to represent Unicode characters. An escape sequence allows UTF-16 to represent the whole Unicode range by using four octets. The ISO UCS-2 (Universal Character Set) uses two octets.</p>
+<p>JavaScript and Navigator support for UTF-8/Unicode means you can use non-Latin, international, and localized characters, plus special technical symbols in JavaScript programs. Unicode provides a standard way to encode multilingual text. Since the UTF-8 encoding of Unicode is compatible with ASCII, programs can use ASCII characters. You can use non-ASCII Unicode characters in the comments, string literals, identifiers, and regular expressions of JavaScript.</p>
+<h3>Unicode escape sequences</h3>
+<p>You can use the Unicode escape sequence in string literals, regular expressions, and identifiers. The escape sequence consists of six ASCII characters: \u and a four-digit hexadecimal number. For example, \u00A9 represents the copyright symbol. Every Unicode escape sequence in JavaScript is interpreted as one character.</p>
+<p>The following code returns the copyright symbol and the string &quot;Netscape Communications&quot;.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> x = <span class="hljs-string">"\u00A9 Netscape Communications"</span>;
+</code></pre>
+<p>The following table lists frequently used special characters and their Unicode value.</p>
+<table class="standard-table">
+<caption style="text-align: left;">
+Table 2.2 Unicode values for special characters
+</caption>
+\<thead\>
+<tr>
+<th scope="col">
+Category
+</th>
+<th scope="col">
+Unicode value
+</th>
+<th scope="col">
+Name
+</th>
+<th scope="col">
+Format name
+</th>
+</tr>
+\</thead\> \<tbody\>
+<tr>
+<td rowspan="4">
+White space values
+</td>
+<td>
+\\u0009
+</td>
+<td>
+Tab
+</td>
+<td>
+\<TAB\>
+</td>
+</tr>
+<tr>
+<td>
+\\u000B
+</td>
+<td>
+Vertical Tab
+</td>
+<td>
+\<VT\>
+</td>
+</tr>
+<tr>
+<td>
+\\u000C
+</td>
+<td>
+Form Feed
+</td>
+<td>
+\<FF\>
+</td>
+</tr>
+<tr>
+<td>
+\\u0020
+</td>
+<td>
+Space
+</td>
+<td>
+\<SP\>
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Line terminator values
+</td>
+<td>
+\\u000A
+</td>
+<td>
+Line Feed
+</td>
+<td>
+\<LF\>
+</td>
+</tr>
+<tr>
+<td>
+\\u000D
+</td>
+<td>
+Carriage Return
+</td>
+<td>
+\<CR\>
+</td>
+</tr>
+<tr>
+<td rowspan="5">
+Additional Unicode escape sequence values
+</td>
+<td>
+\\u0008
+</td>
+<td>
+Backspace
+</td>
+<td>
+\<BS\>
+</td>
+</tr>
+<tr>
+<td>
+\\u0009
+</td>
+<td>
+Horizontal Tab
+</td>
+<td>
+\<HT\>
+</td>
+</tr>
+<tr>
+<td>
+\\u0022
+</td>
+<td>
+Double Quote
+</td>
+<td>
+"
+</td>
+</tr>
+<tr>
+<td>
+\\u0027
+</td>
+<td>
+Single Quote
+</td>
+<td>
+'
+</td>
+</tr>
+<tr>
+<td>
+\\u005C
+</td>
+<td>
+Backslash
+</td>
+<td>
+\\
+</td>
+</tr>
+\</tbody\>
+</table>
+The JavaScript use of the Unicode escape sequence is different from Java. In JavaScript, the escape sequence is never interpreted as a special character first. For example, a line terminator escape sequence inside a string does not terminate the string before it is interpreted by the function. JavaScript ignores any escape sequence if it is used in comments. In Java, if an escape sequence is used in a single comment line, it is interpreted as an Unicode character. For a string literal, the Java compiler interprets the escape sequences first. For example, if a line terminator escape character (e.g., \\u000A) is used in Java, it terminates the string literal. In Java, this leads to an error, because line terminators are not allowed in string literals. You must use \\n for a line feed in a string literal. In JavaScript, the escape sequence works the same way as \\n.
+<h3>Unicode characters in JavaScript files</h3>
+<p>Earlier versions of Gecko assumed the Latin-1 character encoding for JavaScript files loaded from XUL. Starting with Gecko 1.8, the character encoding is inferred from the XUL file’s encoding. Please see [https:/developer.mozilla.org/en-US/docs/International_characters_in_XUL_JavaScript International characters in XUL JavaScript] for more information.</p>
+<h3>Displaying characters with Unicode</h3>
+<p>You can use Unicode to display the characters in different languages or technical symbols. For characters to be displayed properly, a client such as Mozilla Firefox or Netscape needs to support Unicode. Moreover, an appropriate Unicode font must be available to the client, and the client platform must support Unicode. Often, Unicode fonts do not display all the Unicode characters. Some platforms, such as Windows 95, provide partial support for Unicode.</p>
+<p>To receive non-ASCII character input, the client needs to send the input as Unicode. Using a standard enhanced keyboard, the client cannot easily input the additional characters supported by Unicode. Sometimes, the only way to input Unicode characters is by using Unicode escape sequences.</p>
+<p>For more information on Unicode, see the <a href="http://www.unicode.org/">Unicode Home Page</a> and The Unicode Standard, Version 2.0, published by Addison-Wesley, 1996.</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="http://0xcc.net/jsescape/">Text Escaping and Unescaping in JavaScript</a> – an utility to convert characters in JavaScript unicode values</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Values,_variables,_and_literals$">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

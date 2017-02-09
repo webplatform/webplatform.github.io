@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using Multiple Backgrounds · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article focuses on an interesting CSS feature — how to use multiple backgrounds with CSS3." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/using_css multiple background/">using css multiple background</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using Multiple Backgrounds</h1>
+<p><strong>By <a href="http://html5insight.com/">Konstantin Kichinsky</a></strong><br>
+Originally published 27 February 2012</p>
+<h2>Summary</h2>
+<p>This article focuses on an interesting CSS feature — how to use multiple backgrounds with CSS3.</p>
+<h2>Backgrounds composition</h2>
+<p>There are many reasons why you may need to create a composition of multiple images to build you background. These are some of the most important:</p>
+<ul>
+<li>to reduce the bandwidth usage if the sum of sizes of separate images is less than the size of an image with merged layers (especially if your image contains repeating patterns), and</li>
+<li>to provide a way for independent manipulations on different layers (for example if you are going to implement some parallax effect).</li>
+</ul>
+<p>There are other reasonable cases that call for background composition.</p>
+<h3>Classic approach</h3>
+<p>So we need to build a multi-layered background by placing some images on top of others. How this problem is usually solved? It is really easy: just create a container (like a div element) for each of the images you have and add a background for it using a CSS rule. Next you insert one container into another or place them in a row and apply corresponding positioning CSS rules.</p>
+<p>Here is a simple sample:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sample1"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sea"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"mermaid"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"fishing"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"fish"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>The “fishing” class is inside of the “mermaid” class only for demo purposes.</p>
+<p>And here we have some CSS styles:</p>
+<pre><code class="html">.sample1 .sea, .sample1 .mermaid, .sample1 .fishing {
+    height:300px;
+    width:480px;
+    position: relative;
+}
+
+.sample1 .sea {
+    background: url(media/sea.png) repeat-x top left;
+}
+
+.sample1 .mermaid {
+    background: url(media/mermaid.svg) repeat-x bottom left;
+}
+
+.sample1 .fish {
+    background: url(media/fish.svg) no-repeat;
+    height:70px;
+    width:100px;
+    left: 30px;
+    top: 90px;
+    position: absolute;
+}
+
+.sample1 .fishing {
+    background: url(media/fishing.svg) no-repeat top right 10px;
+}
+</code></pre>
+<p>This is the result:</p>
+<p><img src="//static.webplatform.org/3/3c/CSSMB_Pic1.png" alt="Example 1"></p>
+<p>In this sample there are three nested divs with background and one more neighbor “fish”-div. You may imagine that the fish can be animated using javascript or CSS3 transitions or animations.</p>
+<p>Note, for the “fishing” class we used the new background positioning syntax, also defined in CSS3.</p>
+<p>Let’s continue. Is it possible to simplify this composition? This is when the multiple backgrounds come to the scene.</p>
+<h3>Multiple backgrounds</h3>
+<p>This feature allows you to add more than one background at once and to the same element. Here is how it looks like:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sample2"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sea"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"fish"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>And styles:</p>
+<pre><code class="html">.sample2 .sea {
+    height:300px;
+    width:480px;
+    position: relative;
+    background-image:  url("media/fishing.svg"), url("media/mermaid.svg"), url("media/sea.png");
+    background-position: top right 10px, bottom left, top left;
+    background-repeat: no-repeat, repeat-x, repeat-x ;
+}
+
+.sample2 .fish {
+    background: url("media/fish.svg") no-repeat;
+    height:70px;
+    width:100px;
+    left: 30px;
+    top: 90px;
+    position: absolute;
+}
+</code></pre>
+<p>To define multiple backgrounds you should use the <a href="/docs/css/properties/background-image">background-image</a> property by enumerating your images comma-separated. You may also use other rules to set a position, repeating mode, and other attributes to each of the images — just write up them also using a comma-separated list for the corresponding rule. Note the order of images: they are listed left to right starting with the uppermost one and ending with the lowest one.</p>
+<p>The result is 100% identical:</p>
+<p><img src="//static.webplatform.org/9/9e/CSSMB_Pic2.png" alt="Example 2"></p>
+<h3>In one rule</h3>
+<p>If you don’t need your fish to swim in an independent block, the whole background can be written in one simple rule:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sample3"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"sea"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Styles:</p>
+<pre><code class="html">.sample3 .sea {
+    height:300px;
+    width:480px;
+    position: relative;
+    background-image:  url("media/fishing.svg"), url("media/mermaid.svg"), url("media/fish.svg"), url("media/sea.png");
+    background-position: top right 10px, bottom left,  30px 90px, top left;
+    background-repeat: no-repeat, repeat-x ;
+}
+</code></pre>
+<p>The result is equal to the two images above, we just got there in a different way.</p>
+<p>Let’s look at the styles one more time, especially on the background-repeat rule. According to the spec if a part of the list is omitted UA (browser) should repeat present list to fill the rest.</p>
+<p>In our case it equal to the following definition:</p>
+<pre><code class="html">background-repeat: no-repeat, repeat-x, no-repeat, repeat-x;
+</code></pre>
+<h3>Shorter version</h3>
+<p>If you remember the <a href="http://www.w3.org/TR/CSS21/">CSS 2.1</a> it is possible to describe a background image in a one short “background”-rule. What about multiple backgrounds? Actually you also can use the “background”-rule for multiple backgrounds:</p>
+<pre><code class="html">.sample4 .sea {
+    height:300px;
+    width:480px;
+    position: relative;
+    background: url("media/fishing.svg") top right 10px no-repeat,
+                url("media/mermaid.svg") bottom left repeat-x,
+                url("media/fish.svg") 30px 90px no-repeat,
+                url("media/sea.png") repeat-x;
+            }
+</code></pre>
+<p>But note that you can’t easily omit arguments unless the values are equal to the default ones. Also if you would like to define the color of background you should do it in the latest layer.</p>
+<h3>Dynamic images</h3>
+<p>Here is what we already know: if you background is mostly static — it may depend on the container size (i.e. if you are using % length so that some layers will shift on resizing window) — than the magic of multiple backgrounds seems to be useful as it really simplifies the page structure. But what if you need to animate some of the layers using javascript (move, rotate and so on)?</p>
+<p>How can we make our multiple backgrounds more dynamic? Internally the browser parses every “background” rule into separate “background-*” rules for each of the attributes. It is very useful if you need to change only one of the attributes. For example you can use <a href="/docs/css/properties/background-position">background-position</a> property to shift your images, but there are some penalties while dealing with multiple backgrounds: if you are going to move only one layer you still need to rewrite this rule for all layers.</p>
+<p>To animate our sea background we can use the following js-code:</p>
+<pre><code class="html">$(document).ready(function() {
+    var sea = $(".sample5 .sea")[0];
+    var fishesX = 30;
+    var fishesY = 90;
+    var fishX = 0;
+    var fishY = 0;
+    var mermaidX = 0;
+    var t = 0;
+
+    function animationLoop() {
+        fishesY = 90 + Math.floor(30 * Math.sin(t++ / 180.0));
+        if(--fishesX <span class="hljs-tag">&lt; <span class="hljs-attribute">0</span>) <span class="hljs-attribute">fishesX</span> = <span class="hljs-attribute">480</span>;
+        <span class="hljs-attribute">mermaidX</span> += <span class="hljs-attribute">0.5</span>;
+        <span class="hljs-attribute">if</span>(<span class="hljs-attribute">mermaidX</span> &gt;</span> 480) mermaidX = 0;
+        fishY = -10 + (10 * Math.cos(t * 0.091));
+        fishX = 10 + (5 * Math.sin(t * 0.07));
+
+        sea.style.backgroundPosition = "top " + fishY + "px right " + fishX + "px, " + mermaidX + "px bottom," + fishesX + "px " + fishesY + "px, top left";
+
+        window.requestAnimFrame(animationLoop);
+    }
+    animationLoop();
+});
+</code></pre>
+<p>where</p>
+<pre><code class="html">window.requestAnimFrame = (function() {
+    return
+        window.requestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        (function(callback) { window.setTimeout(callback, 1000 / 60); });
+})();
+</code></pre>
+<p>Result: <a href="http://youtu.be/dqDDT4rHQEE">Video of the resulting animation</a></p>
+<p><img src="//static.webplatform.org/7/71/CSSMB_Pic3.png" alt="Example 5"></p>
+<p>You may also use CSS3 Transitions or Animations but it is a good topic for separate discussion.</p>
+<h3>Parallax and interactivity</h3>
+<p>Finally using similar technics you can easily add some parallax effects or other interaction effects for you background:</p>
+<p><a href="http://www.youtube.com/embed/AzHb82fjpR8?rel=0">Video showing parallax interactivity</a></p>
+<p>Multiple backgrounds are useful in such scenarios and while we are talking only about backgrounds, not the content, using them is definitely a good way to not pollute the html-code with complex unnecessary elements. But as I said there are some penalties if you need to build a complex and dynamic background: you cannot access a separate layer by id, class or any other parameter. You should remember the order of layers in your code and to change an attribute for just one layer you will need to build a string describing this attribute for all the layers you have. To update one layer you need to update the whole composition:</p>
+<pre><code class="html">sea.style.backgroundPosition = "top " + fishY + "px right " + fishX + "px, " + mermaidX + "px bottom," + fishesX + "px " + fishesY + "px, top left";
+</code></pre>
+<p>I’m sure it is possible to build a nice and useful js-library which will virtualize all these layers and provide easy way to change attributes for a separate layer keeping clean your html-code and the DOM.</p>
+<h3>Compatibility</h3>
+<p>All modern browsers including <a href="http://msdn.microsoft.com/en-us/ie">IE10 and 9</a> support multiple backgrounds. You may also use some tools like <a href="http://modernizr.com/">Modernizr</a> to provide some level of compatibility for older browsers, i.e. by providing alternate background. As Chris Coyier wrote in his <a href="http://css-tricks.com/stacking-order-of-multiple-backgrounds/">article on the stacking order of multiple backgrounds</a> you can use the following approach:</p>
+<pre><code class="html">.multiplebgs body {
+   /* Awesome multiple BG declarations that transcend reality and impress chicks */
+}
+.no-multiplebgs body {
+  /* laaaaaame fallback */
+}
+</code></pre>
+<p>If you are confused with using javascript to provide backward compatibility for the new CSS3 rules you can just define background property twice (but this approach may result unnecessary downloads in modern browsers depending on how they process such rules):</p>
+<pre><code class="html">/* multiple bg fallback */
+background: #000 url(...) ...;
+/* Awesome multiple BG declarations that transcend reality and impress chicks */
+background url(...), url(...), url(...), #000 url(...);
+</code></pre>
+<p>And finally if you wish to know it: yes you can use multiple backgrounds in you Windows 8 metro style apps built with html and javascript. p.s. Check also this phenomenal <a href="http://designfestival.com/the-cicada-principle-and-why-it-matters-to-web-designers/">article about the Cicada Principle</a> by Alex Walker.</p>
+<p>Note CSS properties discussed in this article are defined in the <a href="http://www.w3.org/TR/css3-background/">CSS3 Backgrounds and Borders module</a>.</p>
+<p>About the Author Konstantin Kichinsky is a developer evangelist focusing on HTML5 and CSS3 web development at Microsoft. Tweet him @kichinsky or read his <a href="http://html5insight.com/">blog</a>.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

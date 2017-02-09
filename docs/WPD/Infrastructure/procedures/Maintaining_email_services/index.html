@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Maintaining email services · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email services/">Maintaining email services</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Maintaining email services</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><strong>Maintaining email services</strong></li>
+</ul>
+<p>Every VM relies on a node to send email for them. The node who’s sole responsibility is to relay emails has “email” in its name, you can read more about that in <a href="/docs/WPD/Infrastructure/architecture/VM_roles#mail">the <em>Infrastructure/architecture</em> section about the <strong>“mail” VM role</strong></a>.</p>
+<p>We are using two email servers (“MTA”):</p>
+<dl>
+<dt>Exim</dt>
+<dd>On <em>every</em> VMs, except the <em>mail</em> node<br>
+Postfix
+</dd>
+<dd><strong>Only</strong> on the <em>mail</em> node
+</dd>
+</dl>
+<h2>Postfix</h2>
+<p>@TODO</p>
+<h3>Useful commands</h3>
+<dl>
+<dt>mailq</dt>
+<dd>List messages in queue, bounces, frozen, deferred, etc along with an identifier<br>
+postqueue -p
+</dd>
+<dd>same as <em>mailq</em> but specific to Postfix<br>
+postcat -q FOO
+</dd>
+<dd>Display an email, use in conjunction with <em>mailq</em> to get “FOO” identifier<br>
+postfix check
+</dd>
+<dd>Runs basic installation checks<br>
+postconf
+</dd>
+<dd>List all currently loaded configurations from <em>main.cf</em><br>
+postmap -q ‘root’ hash:/etc/postfix/virtual &amp;&amp; echo OK || echo ‘No match found’
+</dd>
+<dd>Test if an email alias (e.g. root@webplatform.org) works (e.g. `root@webplatform.org` to send to `team-webplatform-foo@w3.org`)
+</dd>
+</dl>
+<h4>Purge messages according to a known pattern</h4>
+<p>Not something to do liberally, only to known email messages patterns that you know are obsolete.</p>
+<p>A good time to use such command would be after a work session on a flapping service and all messages you see in the queue are byproduct of the issue you just fixed.</p>
+<pre><code> postqueue -p | grep ubuntu@webplatform.org | awk '{print $1}' | tr -d '*' | while read mid ; do postsuper -d $mid ; done
+</code></pre>
+<h3>Useful links</h3>
+<ul>
+<li><a href="https://rtcamp.com/tutorials/mail/postfix-queue/">RTCamp tutorial on Postfix queue</a></li>
+<li><a href="http://tecadmin.net/setup-catch-all-email-account-in-postfix/">Setup catch-all accounts in Postfix</a> (useful for <em>webplatformstaging.org</em>)</li>
+<li><a href="http://www.postfix.org/postfix-manuals.html">Postfix documentation</a>
+<ul>
+<li><a href="http://www.postfix.org/OVERVIEW.html"><strong>Overview</strong></a> — a <em>MUST READ</em>, summarizes well how Postfix is designed</li>
+<li><a href="http://www.postfix.org/local.8.html">Local delivery</a></li>
+<li><a href="http://www.postfix.org/FILTER_README.html">Filter</a></li>
+</ul></li>
+</ul>
+<h3>TODO: Read and evaluate</h3>
+<ul>
+<li><a href="http://www.akadia.com/services/postfix_mta.html">http://www.akadia.com/services/postfix_mta.html</a></li>
+<li><a href="http://rimuhosting.com/support/settingupemail.jsp?mta=postfix&amp;t=users">http://rimuhosting.com/support/settingupemail.jsp?mta=postfix&amp;t=users</a></li>
+<li><a href="http://stackoverflow.com/questions/979320/postfix-virtual-parent-domain-matches-subdomains-i-dont-want-it/980382#980382">http://stackoverflow.com/questions/979320/postfix-virtual-parent-domain-matches-subdomains-i-dont-want-it/980382#980382</a></li>
+<li><a href="http://www.rwahyudi.com/linux/postfix-for-dev-setup-%E2%80%93-catch-all-email-and-forward-it-to-a-specific-address/">http://www.rwahyudi.com/linux/postfix-for-dev-setup-%E2%80%93-catch-all-email-and-forward-it-to-a-specific-address/</a></li>
+<li><a href="http://www.linuxquestions.org/questions/linux-server-73/email-forwarding-in-postfix-mail-server-4175414855/">http://www.linuxquestions.org/questions/linux-server-73/email-forwarding-in-postfix-mail-server-4175414855/</a></li>
+</ul>
+<h2>Exim</h2>
+<p>@TODO</p>
+<dl>
+<dt>mailq</dt>
+<dd>List the mail queue<br>
+exim -Mvb FOO
+</dd>
+<dd>Read email body of email with id <em>FOO</em><br>
+exim -Mvh FOO
+</dd>
+<dd>Read email header<br>
+exim -Mrm FOO
+</dd>
+<dd>Delete email from queue<br>
+exim -q
+</dd>
+<dd>Reprocess the queue<br>
+exim -qf
+</dd>
+<dd>Reprocess the queue that has frozen messages
+</dd>
+</dl>
+<h4>Purge messages according to a known pattern</h4>
+<p>Not something to do liberally, but can be handy.</p>
+<pre><code> exiqgrep -i | xargs exim -Mrm
+</code></pre>
+<h3>Useful links</h3>
+<ul>
+<li><a href="https://github.com/Exim/exim/wiki">Wiki pages on the Exim GitHub project</a></li>
+<li><a href="http://www.electrictoolbox.com/exim-delete-message/">http://www.electrictoolbox.com/exim-delete-message/</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

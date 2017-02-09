@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS cross-fade() function · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="The CSS cross-fade() function can be used to blend two images at a defined transparency." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/functions/">functions</a></li><li><a href="/docs/css/functions/cross-fade/">cross-fade</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>CSS cross-fade() function</h1>
+<h2>Summary</h2>
+<p>The CSS cross-fade() function can be used to blend two images at a defined transparency.</p>
+<h2>Introduction</h2>
+<p>The ability to overlay one image with another and see them both in semi-transparency is a fairly common technique in web pages. This effect is generally accomplished by carefully positioning two images in the same space, one on top of the other, and then tweaking their opacity. The effect can be further enhanced by using JavaScript to manipulate the positions and/or the opacity.</p>
+<p>That approach is of course not optimal, and requires considerable finesse in the CSS coding as well as some scripting ability. A straightforward CSS-only solution to image combination would be both easier to understand and simpler to code.</p>
+<p><a href="http://www.w3.org/TR/2012/WD-css4-images-20120911/#cross-fade-function">Part of the “CSS Image Values and Replaced Content Module Level 4” specification</a> introduces this feature into CSS.</p>
+<h2>Use</h2>
+<p>The <code>cross-fade()</code> function takes three parameters: the two images to be combined and the percentage of combination. The percentage may be thought of as a transparency value for the “bottom” image, although technically neither image is really on top of the other, they are merely rendered together.</p>
+<p>The <code>cross-fade()</code> function can be used in CSS anywhere that an ordinary image reference can be used. The syntax is straightforward:</p>
+<pre><code class="html">cross-fade(<span class="hljs-tag">&lt;<span class="hljs-title">percentage</span>&gt;</span>? <span class="hljs-tag">&lt;<span class="hljs-title">image</span>&gt;</span> [, <span class="hljs-tag">&lt;<span class="hljs-title">image</span>&gt;</span> | <span class="hljs-tag">&lt;<span class="hljs-title">color</span>&gt;</span> ]?)
+</code></pre>
+<p>The percent value must be coded without quotes, must contain the “%” symbol, and its value must be between 0% and 100%.</p>
+<h2>Examples</h2>
+<p>For the following examples, we will use two images, each sized at 200px by 200px. The first, white.png, is a white-filled box with a 5-pixel blue border. The second, black.png, is a black-filled box with a 5-pixel red border. Thus, cross-fading the two images at different percentages should yield boxes of varying grays with borders of varying magentas. Here are the original images:</p>
+<p><img src="//static.webplatform.org/3/32/white.png" alt="white filled box with 5-pixels blue border"></p>
+<p><img src="//static.webplatform.org/d/d2/black.png" alt="black-filled box with a 5-pixel red border"></p>
+<h3>A 50% cross-fade</h3>
+<p>First, let’s set up an empty <code>&lt;div&gt;</code> to contain the images.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:200px; height:200px;"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>We could, of course, give the <code>&lt;div&gt;</code> a background image.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:200px; height:200px; background-image:url('white.png');"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>But that’s kind of boring, so let’s replace the simple background image with a cross-faded image pair.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:200px; height:200px; background-image:cross-fade(50% url(white.png), url(black.png));"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>The 50% cross-fade renders as an evenly-merged black/white (gray) box with an evenly-merged blue/red (magenta) border.</p>
+<p><img src="//static.webplatform.org/3/38/fifty.png" alt="evenly-merged black/white (gray) box with an evenly-merged blue/red (magenta) border"></p>
+<h3>Other cross-fade percentages</h3>
+<p>Here are the code samples and their results for the same two images, cross-faded first at 25% and then at 75%. (Obviously, a 0% fade effectively yields only the first image, while a 100% fade yields only the second.) Note that the visual results are exactly what you would intuitively expect based on the original colors.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:200px; height:200px; background-image:cross-fade(25% url(white.png), url(black.png));"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/3/36/twentyfive.png" alt="A 25% cross-fade"></p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:200px; height:200px; background-image:cross-fade(75% url(white.png), url(black.png));"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/5/56/seventyfive.png" alt="A 75% cross-fade"></p>
+<h2>Simplifying the code</h2>
+<p>Clearly, that’s a lot of code to put on individual HTML elements, especially if the effect is repeated in the page. It’s far more elegant—and efficient—to abstract the cross-fade function into a single CSS style and then apply it to whatever elements require it. Here, we use an independent selector to define a class with the appropriate size and the appropriate cross-faded background image, and then simply use the class later in the document.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+<span class="hljs-class">.cfade</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"><span class="hljs-function">cross-fade</span>(<span class="hljs-number">50%</span> <span class="hljs-function">url</span>(white.png), <span class="hljs-function">url</span>(black.png))</span></span>; <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"><span class="hljs-number">200px</span></span></span>; <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"><span class="hljs-number">200px</span></span></span>; }</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+
+. . .
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cfade"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>It should be noted that, once defined, our <em>.cfade</em> class is not restricted to <code>&lt;div&gt;</code>s; we can apply it to any page element and achieve the same effect.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cfade"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Nor is the cross-fade effect limited to <em>empty</em> elements. Consider the following code and its result.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"cfade"</span>&gt;</span>Four score and seven years ago our fathers brought forth upon this continent a new nation...<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p><em>A 50% cross-fade with text</em> <img src="//static.webplatform.org/3/37/fiftytext.png" alt="fiftytext.png"></p>
+<p>I didn’t say it was pretty, just that it was possible!</p>
+<h2>A final example</h2>
+<p>Here, then, is a more practical (and attractive) example. Let’s start with a beautiful full moon.</p>
+<p><em>Full moon</em> <img src="//static.webplatform.org/0/0b/fullmoon.jpg" alt="fullmoon.jpg"></p>
+<p>Then let’s choose a bold wolf silhouette for an overlay.</p>
+<p><em>Wolf silhouette</em> <img src="//static.webplatform.org/6/6d/wolf.png" alt="wolf.png"></p>
+<p>Now we’ll write the code to cross-fade them (directly on the <code>&lt;div&gt;</code> for simplicity). Note that while the images are the same size, they are of different types, one jpg and one png.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-image:cross-fade(50% url('fullmoon.jpg'), url('wolf.png')); width:600px; height:600px;"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>The result is a classic (if somewhat kitschy) wolf-on-moon combo.</p>
+<p><em>Wolf on moon</em> <img src="//static.webplatform.org/b/b2/wolfmoon.png" alt="wolfmoon.png"></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css4-images/#cross-fade-function">CSS Image Values and Replaced Content Module Level 4</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

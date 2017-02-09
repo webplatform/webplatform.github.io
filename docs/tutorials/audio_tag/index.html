@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Implementing the HTML5 audio tag · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="A quick guide to implementing the audio tag in HTML." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/audio_tag/">audio tag</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Implementing the HTML5 audio tag</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#ernestd">Ernest Delgado</a></strong><br>
+Originally published Feb. 5, 2010</p>
+<h2>Summary</h2>
+<p>A quick guide to implementing the audio tag in HTML.</p>
+<h2>Step 1: Wrap your Flash object with the audio tag</h2>
+<p>Those browsers that don’t recognize the audio tag will load the Flash content instead.</p>
+<pre><code> &lt;audio&gt;
+
+    &lt;object class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot;
+            data=&quot;player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+      &lt;param name=&quot;movie&quot; value=&quot;player_mp3_mini.swf&quot; /&gt;
+      &lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+      &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=test.mp3&quot; /&gt;
+      &lt;embed href=&quot;player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot;
+             height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot;
+             type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=test.mp3&quot;&gt;
+      &lt;/embed&gt;
+    &lt;/object&gt;
+
+&lt;/audio&gt;
+</code></pre>
+<h2>Step 2: Add the source reference</h2>
+<p>We can add as many “source” lines and formats as we want. If the browser doesn’t support one specific format it will fallback to the next one and so forth.</p>
+<pre><code> &lt;audio&gt; &lt;source src=&quot;test.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+  &lt;source src=&quot;test.ogg&quot; type=&quot;audio/ogg&quot; /&gt;
+
+  &lt;object class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot;
+          data=&quot;player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;player_mp3_mini.swf&quot; /&gt;
+    &lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+    &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=test.mp3&quot; /&gt;
+    &lt;embed href=&quot;player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot;
+           height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot;
+           type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=test.mp3&quot;&gt;
+    &lt;/embed&gt;
+  &lt;/object&gt;
+
+&lt;/audio&gt;
+</code></pre>
+<h2>Step 3: Add fallback to Flash</h2>
+<p>To be safe, we need to add the fallback to a Flash audio player, in case the browser doesn’t support any of the formats we specified. For instance, Firefox 3.5 only supports the audio tag with <em>Ogg</em> format, but we might only have the <em>mp3</em> file available.</p>
+<p><em>Note:</em> There are also tools and <a href="http://audio.online-convert.com/convert-to-ogg">online converters</a> you can use if you want to create ogg files from your mp3 and add support for ogg too.</p>
+<pre><code>&lt;audio&gt; &lt;source src=&quot;test.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+
+  &lt;object class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot;
+          data=&quot;player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;player_mp3_mini.swf&quot; /&gt;
+    &lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+    &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=test.mp3&quot; /&gt;
+    &lt;embed href=&quot;player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot;
+           height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot;
+           type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=test.mp3&quot;&gt;
+    &lt;/embed&gt;
+  &lt;/object&gt;
+
+&lt;/audio&gt;
+
+&lt;div id=&quot;player_fallback&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;application/javascript&quot;&gt;
+  if (document.createElement('audio').canPlayType) {
+    if (!document.createElement('audio').canPlayType('audio/mpeg')) {
+      swfobject.embedSWF(
+        &quot;player_mp3_mini.swf&quot;,
+        &quot;player_fallback&quot;,
+        &quot;200&quot;,
+        &quot;20&quot;,
+        &quot;9.0.0&quot;,
+        &quot;&quot;,
+        {&quot;mp3&quot;:&quot;test.mp3&quot;},
+        {&quot;bgcolor&quot;:&quot;#085c68&quot;});
+    }
+  }
+&lt;/script&gt;
+</code></pre>
+<p>To make it easier, we are using the <a href="http://code.google.com/p/swfobject/">SWFObject</a> library to insert the Flash player via JavaScript. To include the library you can simply use the <a href="http://code.google.com/apis/ajaxlibs/">Google AJAX Libraries API</a> inserting these two lines in your header:</p>
+<pre><code>&lt;script src=&quot;http://www.google.com/jsapi&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;application/javascript&quot;&gt;google.load(&quot;swfobject&quot;, &quot;2.2&quot;);&lt;/script&gt;
+</code></pre>
+<h2>Step 4: Add the default controls to show the player</h2>
+<p>These controls are not customizable (see examples at the end). Since these default controls will show up regardless of the supported format we will need to handle its visibility with the conditional we previously created.</p>
+<pre><code>&lt;audio id=&quot;audio_with_controls&quot; controls=&quot;controls&quot;&gt; &lt;source src=&quot;test.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+
+  &lt;object class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot;
+          data=&quot;player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;player_mp3_mini.swf&quot; /&gt;
+    &lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+    &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=test.mp3&quot; /&gt;
+    &lt;embed href=&quot;player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot;
+           height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot;
+           type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=test.mp3&quot;&gt;
+    &lt;/embed&gt;
+  &lt;/object&gt;
+
+&lt;/audio&gt;
+
+&lt;div id=&quot;player_fallback&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;application/javascript&quot;&gt;
+  if (document.createElement('audio').canPlayType) {
+    if (!document.createElement('audio').canPlayType('audio/mpeg')) {
+      ... SWFObject script line here ...
+      document.getElementsById('audio_with_controls').style.display = 'none';
+    }
+  }
+&lt;/script&gt;
+</code></pre>
+<p>Alternatively, you can create your own player using JavaScript and CSS.</p>
+<pre><code>&lt;audio id=&quot;audio&quot;&gt; &lt;source src=&quot;test.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+
+  &lt;object class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot;
+          data=&quot;player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;player_mp3_mini.swf&quot; /&gt;
+    &lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+    &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=test.mp3&quot; /&gt;
+    &lt;embed href=&quot;player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot;
+           height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot;
+           type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=test.mp3&quot;&gt;
+    &lt;/embed&gt;
+  &lt;/object&gt;
+
+&lt;/audio&gt;
+
+&lt;div id=&quot;player_fallback&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;player&quot; style=&quot;display: none&quot;&gt;
+  &lt;button onClick=&quot;document.getElementById('audio').play()&quot;&gt;Play&lt;/button&gt;
+  &lt;button onClick=&quot;document.getElementById('audio').pause()&quot;&gt;Pause&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;application/javascript&quot;&gt;
+  if (document.createElement('audio').canPlayType) {
+    if (!document.createElement('audio').canPlayType('audio/mpeg')) {
+      ... SWFObject script lines here ...
+    } else { // HTML5 audio + mp3 support
+      document.getElementById('player').style.display = 'block';
+    }
+  }
+&lt;/script&gt;
+</code></pre>
+<h2>Example</h2>
+<p>The following example will fallback to the Flash player in those browsers that don’t support the audio tag nor can play mp3 in it.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+      h3 {
+        font-family: 'Droid Sans', Arial, sans-serif;
+        font-size: 14px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h3 id=&quot;toc-player-default&quot;&gt;Player with default controls&lt;/h3&gt;
+      &lt;audio id=&quot;audio_with_controls&quot; controls=&quot;controls&quot;&gt;
+        &lt;source src=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+        &lt;source src=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/test.ogg&quot; type=&quot;audio/ogg&quot; /&gt;
+        &lt;object class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot; data=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+          &lt;param name=&quot;movie&quot; value=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot; /&gt;
+          &lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+          &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot; /&gt;
+          &lt;embed href=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot; height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot; type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot; /&gt;
+        &lt;/object&gt;
+      &lt;/audio&gt;
+    &lt;div id=&quot;default_player_fallback&quot;&gt;&lt;/div&gt;
+
+    &lt;h3 id=&quot;toc-player-custom&quot;&gt;Player with customized controls&lt;/h3&gt;
+    &lt;audio id=&quot;audio&quot;&gt;
+      &lt;source src=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+      &lt;source src=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/test.ogg&quot; type=&quot;audio/ogg&quot; /&gt;
+      &lt;object id=&quot;flash_obj&quot; class=&quot;playerpreview&quot; type=&quot;application/x-shockwave-flash&quot; data=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot; width=&quot;200&quot; height=&quot;20&quot;&gt;
+        &lt;param name=&quot;movie&quot; value=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot; /&gt;&lt;param name=&quot;bgcolor&quot; value=&quot;#085c68&quot; /&gt;
+        &lt;param name=&quot;FlashVars&quot; value=&quot;mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot; /&gt;
+        &lt;embed href=&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot; bgcolor=&quot;#085c68&quot; width=&quot;200&quot; height=&quot;20&quot; name=&quot;movie&quot; align=&quot;&quot; type=&quot;application/x-shockwave-flash&quot; flashvars=&quot;mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot; /&gt;
+      &lt;/object&gt;
+    &lt;/audio&gt;
+    &lt;div id=&quot;custom_player_fallback&quot;&gt;&lt;/div&gt;
+    &lt;div id=&quot;player&quot; style=&quot;display: none&quot;&gt;
+      &lt;button onClick=&quot;document.getElementById('audio').play()&quot;&gt;Play&lt;/button&gt;
+      &lt;button onClick=&quot;document.getElementById('audio').pause()&quot;&gt;Pause&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;script type=&quot;application/javascript&quot;&gt;
+      if (document.createElement('audio').canPlayType) {
+        if (!document.createElement('audio').canPlayType('audio/mpeg') &amp;&amp;
+            !document.createElement('audio').canPlayType('audio/ogg')) {
+          swfobject.embedSWF(&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot;,
+                             &quot;default_player_fallback&quot;, &quot;200&quot;, &quot;20&quot;, &quot;9.0.0&quot;, &quot;&quot;,
+                             {&quot;mp3&quot;:&quot;http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot;},
+                             {&quot;bgcolor&quot;:&quot;#085c68&quot;}
+                            );
+          swfobject.embedSWF(&quot;http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf&quot;,
+                             &quot;custom_player_fallback&quot;, &quot;200&quot;, &quot;20&quot;, &quot;9.0.0&quot;, &quot;&quot;,
+                             {&quot;mp3&quot;:&quot;http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3&quot;},
+                             {&quot;bgcolor&quot;:&quot;#085c68&quot;}
+                            );
+          document.getElementById('audio_with_controls').style.display = 'none';
+        } else {
+          // HTML5 audio + mp3 support
+          document.getElementById('player').style.display = 'block';
+        }
+      }
+    &lt;/script&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;​​
+</code></pre>
+<p>You can play with this code and see it in action in the <a href="http://playground.html5rocks.com/?mode=frame&amp;hu=180&amp;hl=180#audio_tag_with_fallback_to_flash">HTML5Rocks! Playground</a>.</p>
+<p>If you don’t want to start your customized player from the scratch you can take a <a href="http://www.jezra.net/code_examples/html5_audio/">basic one</a> and style it from there.</p>
+<p>You are all set!</p>
+<p>Flash MP3 player is from <a href="http://flash-mp3-player.net/">neolao productions</a>. MP3 sample is <strong>Modal Blues</strong> by <a href="http://freemusicarchive.org/music/Rushus/">Rushus</a> and is licensed under a <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</a>.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/audio/quick/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

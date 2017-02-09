@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Styling SVG with CSS · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article covers the basics of styling SVG content with CSS." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/styling_svg with css/">styling svg with css</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Styling SVG with CSS</h1>
+<h2>Summary</h2>
+<p>This article covers the basics of styling SVG content with CSS.</p>
+<h3>Information: SVG</h3>
+<p><em>SVG</em> (Scalable Vector Graphics) is an XML-based language for creating graphics. It can be used for static images, and also for animations and user interfaces.</p>
+<p>Like other XML-based languages, SVG supports CSS stylesheets so that you can separate the style of a graphic from its content.</p>
+<p>Also, stylesheets that you use with other document markup languages can specify the URL of an SVG graphic where an image is required. For example, a stylesheet that you use with an HTML document can specify the URL of an SVG graphic in the value of a <code>background</code> property.</p>
+<p>More details</p>
+<p>At the time of writing (mid 2011), most modern browsers have basic support for SVG, including Internet Explorer 9 or later. Some SVG features are supported only partially or not at all on some browsers. See the <a href="http://caniuse.com/#search=svg">SVG tables on caniuse.com</a> for an overview of SVG support, or the compatibility info in the <a href="http://www.w3.org/wiki/HTML/Elements/svg">SVG element reference</a> for support of specific items.</p>
+<p>You can add SVG support to other versions by installing a plugin such as the one provided by <a href="http://www.adobe.com">Adobe</a>.</p>
+<h3>Action: An SVG demonstration</h3>
+<ol>
+<li><p>Make a new SVG document as a plain text file, <code>doc8.svg</code>. Copy and paste the content from here, making sure that you scroll to get all of it:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+
+&lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;style8.css&quot;?&gt;
+
+&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot;
+  &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;
+
+&lt;svg width=&quot;600px&quot; height=&quot;600px&quot; viewBox=&quot;-300 -300 600 600&quot;
+  xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;
+  xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
+
+&lt;title&gt;SVG demonstration&lt;/title&gt;
+&lt;desc&gt;Mozilla CSS Getting Started - SVG demonstration&lt;/desc&gt;
+
+&lt;defs&gt;
+  &lt;g id=&quot;segment&quot; class=&quot;segment&quot;&gt;
+    &lt;path class=&quot;segment-fill&quot; d=&quot;M0,0 v-200 a40,40 0 0,0 -62,10 z&quot;/&gt;
+    &lt;path class=&quot;segment-edge&quot; d=&quot;M0,-200 a40,40 0 0,0 -62,10&quot;/&gt;
+    &lt;/g&gt;
+  &lt;g id=&quot;quadrant&quot;&gt;
+    &lt;use xlink:href=&quot;#segment&quot;/&gt;
+    &lt;use xlink:href=&quot;#segment&quot; transform=&quot;rotate(18)&quot;/&gt;
+    &lt;use xlink:href=&quot;#segment&quot; transform=&quot;rotate(36)&quot;/&gt;
+    &lt;use xlink:href=&quot;#segment&quot; transform=&quot;rotate(54)&quot;/&gt;
+    &lt;use xlink:href=&quot;#segment&quot; transform=&quot;rotate(72)&quot;/&gt;
+    &lt;/g&gt;
+  &lt;g id=&quot;petals&quot;&gt;
+    &lt;use xlink:href=&quot;#quadrant&quot;/&gt;
+    &lt;use xlink:href=&quot;#quadrant&quot; transform=&quot;rotate(90)&quot;/&gt;
+    &lt;use xlink:href=&quot;#quadrant&quot; transform=&quot;rotate(180)&quot;/&gt;
+    &lt;use xlink:href=&quot;#quadrant&quot; transform=&quot;rotate(270)&quot;/&gt;
+    &lt;/g&gt;
+  &lt;radialGradient id=&quot;fade&quot; cx=&quot;0&quot; cy=&quot;0&quot; r=&quot;200&quot;
+      gradientUnits=&quot;userSpaceOnUse&quot;&gt;
+    &lt;stop id=&quot;fade-stop-1&quot; offset=&quot;33%&quot;/&gt;
+    &lt;stop id=&quot;fade-stop-2&quot; offset=&quot;95%&quot;/&gt;
+    &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+
+&lt;text id=&quot;heading&quot; x=&quot;-280&quot; y=&quot;-270&quot;&gt;
+  SVG demonstration&lt;/text&gt;
+&lt;text  id=&quot;caption&quot; x=&quot;-280&quot; y=&quot;-250&quot;&gt;
+  Move your mouse pointer over the flower.&lt;/text&gt;
+
+&lt;g id=&quot;flower&quot;&gt;
+  &lt;circle id=&quot;overlay&quot; cx=&quot;0&quot; cy=&quot;0&quot; r=&quot;200&quot;
+    stroke=&quot;none&quot; fill=&quot;url(#fade)&quot;/&gt;
+  &lt;use id=&quot;outer-petals&quot; xlink:href=&quot;#petals&quot;/&gt;
+  &lt;use id=&quot;inner-petals&quot; xlink:href=&quot;#petals&quot;
+    transform=&quot;rotate(9) scale(0.33)&quot;/&gt;
+  &lt;/g&gt;
+
+&lt;/svg&gt;
+</code></pre></li>
+<li><p>Make a new CSS file, <code>style8.css</code>. Copy and paste the content from here, making sure that you scroll to get all of it:</p>
+<pre><code>/*** SVG demonstration ***/
+
+/* page */
+svg {
+  background-color: beige;
+  }
+
+#heading {
+  font-size: 24px;
+  font-weight: bold;
+  }
+
+#caption {
+  font-size: 12px;
+  }
+
+/* flower */
+#flower:hover {
+  cursor: crosshair;
+  }
+
+/* gradient */
+#fade-stop-1 {
+  stop-color: blue;
+  }
+
+#fade-stop-2 {
+  stop-color: white;
+  }
+
+/* outer petals */
+#outer-petals {
+  opacity: .75;
+  }
+
+#outer-petals .segment-fill {
+  fill: azure;
+  stroke: lightsteelblue;
+  stroke-width: 1;
+  }
+
+#outer-petals .segment-edge {
+  fill: none;
+  stroke: deepskyblue;
+  stroke-width: 3;
+  }
+
+#outer-petals .segment:hover &gt; .segment-fill {
+  fill: plum;
+  stroke: none;
+  }
+
+#outer-petals .segment:hover &gt; .segment-edge {
+  stroke: slateblue;
+  }
+
+/* inner petals */
+#inner-petals .segment-fill {
+  fill: yellow;
+  stroke: yellowgreen;
+  stroke-width: 1;
+  }
+
+#inner-petals .segment-edge {
+  fill: none;
+  stroke: yellowgreen;
+  stroke-width: 9;
+  }
+
+#inner-petals .segment:hover &gt; .segment-fill {
+  fill: darkseagreen;
+  stroke: none;
+  }
+
+#inner-petals .segment:hover &gt; .segment-edge {
+  stroke: green;
+}
+</code></pre></li>
+<li><p>Open <code>doc8.svg</code> in your SVG-enabled browser. Put your mouse pointer over the graphic and move it about the inner and outer petals to see the effect.</p></li>
+</ol>
+<p><img src="//static.webplatform.org/4/42/svgflower1.png" alt="svgflower1.png"></p>
+<p><em>Figure 1. The SVG flower before mouseover.</em></p>
+<p><img src="//static.webplatform.org/6/68/svgflower2.png" alt="svgflower2.png"></p>
+<p><em>Figure 2. The SVG flower with mouseover on an outer petal.</em></p>
+<p><img src="//static.webplatform.org/f/f7/svgflower3.png" alt="svgflower3.png"></p>
+<p><em>Figure 3. The SVG flower with mouseover on an inner petal.</em></p>
+<p>Notes:</p>
+<ul>
+<li>The SVG document links the styesheet in the usual way.</li>
+<li>SVG has its own CSS properties and values. Some of them are similar to CSS properties for HTML.</li>
+</ul>
+<h2>See also</h2>
+<h2>Exercise question</h2>
+<p>Change the stylesheet so that the inner petals all turn pink when the mouse pointer is over any one of them, without changing the way the outer petals work.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/SVG_and_CSS">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

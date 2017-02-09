@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>beforeactivate · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Event/">Event</a></li><li><a href="/dom/Event/beforeactivate/">beforeactivate</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>beforeactivate</h1>
+<h2>Overview Table</h2>
+<table class="wikitable">
+<tr>
+<th>
+Synchronous
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Bubbles
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Target
+</th>
+<td>
+dom/Element
+</td>
+</tr>
+<tr>
+<th>
+Cancelable
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Default action
+</th>
+<td>
+ ?
+</td>
+</tr>
+</table>
+## Notes
+<h3>Remarks</h3>
+<p>Each document may have up to one active element. Set the active element with the <a href="/w/index.php?title=dom/methods/setActive&amp;action=edit&amp;redlink=1"><strong>setActive</strong></a> or <a href="/w/index.php?title=dom/methods/focus&amp;action=edit&amp;redlink=1"><strong>focus</strong></a> methods. Using the <strong>setActive</strong> method has no effect on document focus. Using the <strong>focus</strong> method on an individual element causes the element to gain focus and become the active element. Using the <a href="/w/index.php?title=dom/methods/focus&amp;action=edit&amp;redlink=1"><strong>focus</strong></a> method on a document that does not have the focus moves the document to the front of the display. Additionally, the document’s active element gains focus. For a given display, only one element has focus at any given time. Striking a key directly affects only the element with focus. Events fired by that keystroke may be scripted to affect other documents and child elements. With Microsoft Internet Explorer 5.5 and later, focus on a <a href="/docs/dom/Document"><strong>Document</strong></a>, and the <a href="/w/index.php?title=dom/properties/activeElement&amp;action=edit&amp;redlink=1"><strong>active element</strong></a> of a <strong>document</strong> can be managed separately. With Microsoft Internet Explorer 6 and later, use the <strong>onbeforeactivate</strong> event to cancel setting an element as active. Canceling an element’s <strong>onbeforeactivate</strong> event has three different behaviors, depending on the action which fired the event.</p>
+<ul>
+<li>When fired by a user clicking on the element, canceling will force the <a href="/w/index.php?title=dom/methods/focus&amp;action=edit&amp;redlink=1"><strong>focus</strong></a> on the parent element and bubble up the chain until it hits a focusable element.</li>
+<li>When fired by a user tabbing through the document, canceling will force the <a href="/w/index.php?title=dom/methods/focus&amp;action=edit&amp;redlink=1"><strong>focus</strong></a> on the next element in the taborder. Shift-tab will force the <strong>focus</strong> on the previous element in the taborder.</li>
+<li>When fired programmatically by the <a href="/w/index.php?title=dom/methods/focus&amp;action=edit&amp;redlink=1"><strong>focus</strong></a> or the document.<a href="/w/index.php?title=dom/methods/setActive&amp;action=edit&amp;redlink=1"><strong>setActive</strong></a> methods, canceling will have no effect.</li>
+</ul>
+<p><strong>Note</strong>  The <strong>onbeforeactivate</strong> event cannot be canceled when fired programmatically. Change activation from the <strong>event</strong>.<a href="/w/index.php?title=dom/properties/fromElement2&amp;action=edit&amp;redlink=1"><strong>fromElement</strong></a> to the <strong>event</strong>.<strong>srcElement</strong>. To invoke this event, do one of the following:</p>
+<ul>
+<li>Click an element, other than the <a href="/w/index.php?title=dom/properties/activeElement&amp;action=edit&amp;redlink=1"><strong>active</strong></a> element of the document.</li>
+<li>Use the keyboard to move focus from the active element to another element.</li>
+<li>Invoke the <a href="/w/index.php?title=dom/methods/setActive&amp;action=edit&amp;redlink=1"><strong>setActive</strong></a> method on an element, when the element is not the active element.</li>
+<li>Invoke the <a href="/w/index.php?title=dom/methods/focus&amp;action=edit&amp;redlink=1"><strong>focus</strong></a> method on an element, when the element is not the active element.</li>
+</ul>
+<p>The <em>pEvtObj</em> parameter is required for the following interfaces:</p>
+<ul>
+<li><strong>HTMLFrameSiteEvents2</strong></li>
+<li><strong>HTMLElementEvents</strong></li>
+<li><strong>HTMLElementEvents2</strong></li>
+<li><strong>HTMLLinkElementEvents</strong></li>
+<li><strong>HTMLLinkElementEvents2</strong></li>
+<li><strong>HTMLFormElementEvents</strong></li>
+<li><strong>HTMLFormElementEvents2</strong></li>
+<li><strong>HTMLImgEvents</strong></li>
+<li><strong>HTMLImgEvents2</strong></li>
+<li><strong>HTMLTextContainerEvents</strong></li>
+<li><strong>HTMLTextContainerEvents2</strong></li>
+<li><strong>HTMLAnchorEvents2</strong></li>
+<li><strong>HTMLLabelEvents</strong></li>
+<li><strong>HTMLLabelEvents2</strong></li>
+<li><strong>HTMLSelectElementEvents</strong></li>
+<li><strong>HTMLSelectElementEvents2</strong></li>
+<li><strong>HTMLInputTextElementEvents</strong></li>
+<li><strong>HTMLInputTextElementEvents2</strong></li>
+<li><strong>HTMLOptionButtonElementEvents</strong></li>
+<li><strong>HTMLOptionButtonElementEvents2</strong></li>
+<li><strong>HTMLButtonElementEvents</strong></li>
+<li><strong>HTMLButtonElementEvents2</strong></li>
+<li><strong>HTMLMarqueeElementEvents</strong></li>
+<li><strong>HTMLMarqueeElementEvents2</strong></li>
+<li><strong>HTMLControlElementEvents</strong></li>
+<li><strong>HTMLControlElementEvents2</strong></li>
+<li><strong>HTMLMapEvents</strong></li>
+<li><strong>HTMLMapEvents2</strong></li>
+<li><strong>HTMLAreaEvents</strong></li>
+<li><strong>HTMLAreaEvents2</strong></li>
+<li><strong>HTMLTableEvents</strong></li>
+<li><strong>HTMLTableEvents2</strong></li>
+<li><strong>HTMLScriptEvents</strong></li>
+<li><strong>HTMLScriptEvents2</strong></li>
+<li><strong>HTMLStyleElementEvents</strong></li>
+<li><strong>HTMLStyleElementEvents2</strong></li>
+<li><strong>HTMLInputFileElementEvents</strong></li>
+<li><strong>HTMLInputFileElementEvents2</strong></li>
+<li><strong>HTMLInputImageEvents</strong></li>
+<li><strong>HTMLInputImageEvents2</strong></li>
+<li><strong>HTMLDocumentEvents</strong></li>
+</ul>
+<h3>Syntax</h3>
+<h3>Standards information</h3>
+<p>There are no standards that apply here.</p>
+<h3>Event handler parameters</h3>
+<dl>
+<dt><em>pEvtObj</em> [in]</dt>
+<dd>Type: ****IHTMLEventObj****
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li>a<a href="/docs/html/elements/a">a</a></li>
+<li><code>address</code></li>
+<li><code>applet</code></li>
+<li><code>area</code></li>
+<li><code>b</code></li>
+<li><code>bdo</code></li>
+<li><code>big</code></li>
+<li><code>blockQuote</code></li>
+<li><code>body</code></li>
+<li><code>button</code></li>
+<li><code>caption</code></li>
+<li><code>center</code></li>
+<li><code>cite</code></li>
+<li><code>code</code></li>
+<li><code>custom</code></li>
+<li><code>dd</code></li>
+<li><code>dfn</code></li>
+<li><code>dir</code></li>
+<li><code>div</code></li>
+<li><code>dl</code></li>
+<li>Document<a href="/docs/dom/Document">Document</a></li>
+<li><code>dt</code></li>
+<li><code>em</code></li>
+<li><code>embed</code></li>
+<li><code>fieldSet</code></li>
+<li><code>font</code></li>
+<li><code>form</code></li>
+<li><code>hn</code></li>
+<li><code>hr</code></li>
+<li><code>i</code></li>
+<li><code>img</code></li>
+<li><code>input type=button</code></li>
+<li><code>input type=checkbox</code></li>
+<li><code>input type=file</code></li>
+<li><code>input type=image</code></li>
+<li><code>input type=reset</code></li>
+<li><code>input type=password</code></li>
+<li><code>input type=radio</code></li>
+<li><code>input type=submit</code></li>
+<li><code>input type=text</code></li>
+<li><code>kbd</code></li>
+<li><code>label</code></li>
+<li><code>legend</code></li>
+<li><code>li</code></li>
+<li><code>listing</code></li>
+<li><code>map</code></li>
+<li><code>marquee</code></li>
+<li><code>menu</code></li>
+<li>nextID<a href="/docs/html/elements/nextID">nextID</a></li>
+<li><code>noBR</code></li>
+<li><code>ol</code></li>
+<li><code>p</code></li>
+<li><code>plainText</code></li>
+<li><code>pre</code></li>
+<li><code>rt</code></li>
+<li><code>ruby</code></li>
+<li><code>s</code></li>
+<li><code>samp</code></li>
+<li><code>select</code></li>
+<li><code>small</code></li>
+<li><code>span</code></li>
+<li><code>strike</code></li>
+<li><code>strong</code></li>
+<li><code>sub</code></li>
+<li><code>sup</code></li>
+<li>table<a href="/docs/html/elements/table">table</a></li>
+<li><code>tBody</code></li>
+<li><code>td</code></li>
+<li><code>textArea</code></li>
+<li><code>tFoot</code></li>
+<li><code>th</code></li>
+<li><code>tHead</code></li>
+<li><code>tr</code></li>
+<li><code>tt</code></li>
+<li><code>u</code></li>
+<li><code>ul</code></li>
+<li><code>var</code></li>
+<li><code>xmp</code></li>
+<li><code>Reference</code></li>
+<li>onactivate<a href="/w/index.php?title=dom/events/activate&amp;action=edit&amp;redlink=1">onactivate</a></li>
+<li>onbeforedeactivate<a href="/w/index.php?title=dom/events/beforedeactivate&amp;action=edit&amp;redlink=1">onbeforedeactivate</a></li>
+<li>ondeactivate<a href="/w/index.php?title=dom/events/deactivate&amp;action=edit&amp;redlink=1">ondeactivate</a></li>
+<li>onfocusin<a href="/w/index.php?title=dom/events/focusin&amp;action=edit&amp;redlink=1">onfocusin</a></li>
+<li>onfocusout<a href="/w/index.php?title=dom/events/focusout&amp;action=edit&amp;redlink=1">onfocusout</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

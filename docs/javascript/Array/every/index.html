@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>every · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Determines whether all the members of an array satisfy the specified test." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Array/">Array</a></li><li><a href="/docs/javascript/Array/every/">every</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>every</h1>
+<h2>Summary</h2>
+<p>Determines whether all the members of an array satisfy the specified test.</p>
+<h2>Syntax</h2>
+<pre><code>every( callbackfn [, thisArg ])
+</code></pre>
+<dl>
+<dt><strong>callbackfn</strong></dt>
+<dd>Required. A function that accepts up to three arguments. The <strong>every</strong> method calls the callbackfn function for each element in array1 until the callbackfn returns false , or until the end of the array.
+</dd>
+<dt><strong>thisArg</strong></dt>
+<dd>Optional. An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>true if the callbackfn function returns true for all array elements; otherwise, false. If the array is has no elements, the <strong>every</strong> method returns true.</p>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the <strong>every</strong> method.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the callback function.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CheckIfEven</span>(<span class="hljs-params">value, index, ar</span>) </span>{
+     <span class="hljs-built_in">document</span>.write(value + <span class="hljs-string">" "</span>);
+
+     <span class="hljs-keyword">if</span> (value % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+     <span class="hljs-keyword">else</span>
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+ }
+
+ <span class="hljs-comment">// Create an array.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>];
+
+ <span class="hljs-comment">// Check whether the callback function returns true for all of the</span>
+ <span class="hljs-comment">// array values.</span>
+ <span class="hljs-keyword">if</span> (numbers.every(CheckIfEven))
+     <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"All are even."</span>);
+ <span class="hljs-keyword">else</span>
+     <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Some are not even."</span>);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// 2 4 5 Some are not even.</span>
+</code></pre>
+<p>The following example illustrates the use of the thisArg argument, which specifies an object to which the this keyword can refer.</p>
+<pre><code class="js"><span class="hljs-comment">// Create a function that returns true if the value is</span>
+ <span class="hljs-comment">// numeric and within range.</span>
+ <span class="hljs-keyword">var</span> checkNumericRange = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>{
+     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'number'</span>)
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     <span class="hljs-keyword">else</span>
+         <span class="hljs-keyword">return</span> value &gt;= <span class="hljs-keyword">this</span>.minimum &amp;&amp; value &lt;= <span class="hljs-keyword">this</span>.maximum;
+ }
+
+ <span class="hljs-comment">// Create an array of numbers.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">19</span>];
+
+ <span class="hljs-comment">// Check whether the callback function returns true for</span>
+ <span class="hljs-comment">// all of the array values.</span>
+ <span class="hljs-comment">// The obj argument enables use of the this value</span>
+ <span class="hljs-comment">// within the callback function.</span>
+
+ <span class="hljs-keyword">var</span> obj = { minimum: <span class="hljs-number">10</span>, maximum: <span class="hljs-number">20</span> }
+
+ <span class="hljs-keyword">if</span> (numbers.every(checkNumericRange, obj))
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"All are within range."</span>);
+ <span class="hljs-keyword">else</span>
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"Some are not within range."</span>);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">//   All are within range.</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The <strong>every</strong> method calls the callbackfn function one time for each array element, in ascending index order, until the callbackfn function returns false. If an element that causes callbackfn to return false is found, the <strong>every</strong> method immediately returns false. Otherwise, the every method returns true.</p>
+<p>The callback function is not called for missing elements of the array.</p>
+<p>In addition to array objects, the <strong>every</strong> method can be used by any object that has a length property and that has numerically indexed property names.</p>
+<p><strong>Note</strong> – You can use the <a href="/docs/javascript/Array/some">some Method (Array)</a> to check whether the callback function returns true for any element of an array.</p>
+<p>The syntax of the callback function is as follows:</p>
+<p><code>function callbackfn(value, index, array1)</code></p>
+<p>You can declare the callback function with up to three parameters.</p>
+<p>The following table lists the callback function parameters.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Callback parameter</th><th style="text-align:left">Definition</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">value</td><td style="text-align:left">The value of the array element.</td></tr>
+<tr><td style="text-align:left">index</td><td style="text-align:left">The numeric index of the array element.</td></tr>
+<tr><td style="text-align:left">array1</td><td style="text-align:left">The array object that contains the element.</td></tr>
+</tbody>
+</table>
+<p>The array object can be modified by the callback function.</p>
+<p>The following table describes the results of modifying the array object after the <strong>every</strong> method starts.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Condition after the <strong>every</strong> method starts</th><th style="text-align:left">Element passed to callback function?</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Element is added beyond the original length of the array.</td><td style="text-align:left">No.</td></tr>
+<tr><td style="text-align:left">Element is added to fill in a missing element of the array.</td><td style="text-align:left">Yes, if that index has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is changed.</td><td style="text-align:left">Yes, if that element has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is deleted from the array.</td><td style="text-align:left">No, unless that element has already been passed to the callback function.</td></tr>
+</tbody>
+</table>
+<h2>Exceptions</h2>
+<p>If the callbackfn argument is not a function object, a <strong>TypeError</strong> exception is thrown.</p>
+<h2>See also</h2>
+<h3>Specification</h3>
+<p>[15.4.4.16 Array.prototype.every ( callbackfn <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.16"> , thisArg</a> )]</p>
+<p>ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff679981(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

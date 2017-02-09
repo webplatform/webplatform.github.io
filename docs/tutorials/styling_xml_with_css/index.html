@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Styling XML data with CSS · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article shows how you can use CSS to style XML data." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/styling_xml with css/">styling xml with css</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Styling XML data with CSS</h1>
+<h2>Summary</h2>
+<p>This article shows how you can use CSS to style XML data.</p>
+<h3>Information: XML data</h3>
+<p><strong>XML</strong> (eXtensible Markup Language) is a general-purpose language for any kind of structured data.</p>
+<p>By default, your Mozilla browser displays XML in a format very similar to the original data in the XML file. You see the actual tags that define the data’s structure.</p>
+<p>But by linking a CSS stylesheet with the XML document, you can define other ways to display it. To do this, your stylesheet uses rules that map tags in the XML document to the display types used by HTML.</p>
+<h4>Example</h4>
+<p>For example, you have data in an XML document uses <code>&lt;INFO&gt;</code> tags. You want the document’s INFO elements to be displayed like HTML paragraphs.</p>
+<p>In the document’s stylesheet, you specify how the <code>&lt;INFO&gt;</code> elements are to be displayed:</p>
+<pre><code><span class="hljs-tag">INFO</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">1em</span> <span class="hljs-number">0</span></span></span>;
+}</span>
+</code></pre>
+<p>The most common values for the <code>display</code> property are:</p>
+<p>||<br>
+|<code>block</code>|Displayed like HTML’s DIV (for headings, paragraphs)|<br>
+|<code>inline</code>|Displayed like HTML’s SPAN (for emphasis within text)|</p>
+<p>Add your own style rules that specify the font, spacing and other details in the same way as for HTML. Other values of <code>display</code> display the element like a list item, or like a component of a table.</p>
+<p>For the full list of display types, see <a href="/docs/css/properties/display">the display property</a>. Using CSS alone, the structure of the display must be the same as the structure of the document. Other technologies can modify the structure of the display—for example, XBL can add content, and JavaScript can modify the DOM.</p>
+<h3>Action: An XML demonstration</h3>
+<ol>
+<li><p>Make a new XML file, <code>doc9.xml</code>. Copy and paste the content from here, making sure that you scroll to get all of it:</p>
+<pre><code><span class="hljs-pi">&lt;?xml version="1.0"?&gt;</span>
+<span class="hljs-comment">&lt;!-- XML demonstration --&gt;</span>
+
+<span class="hljs-pi">&lt;?xml-stylesheet type="text/css" href="style9.css"?&gt;</span>
+
+<span class="hljs-doctype">&lt;!DOCTYPE planet&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">planet</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ocean</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">name</span>&gt;</span>Arctic<span class="hljs-tag">&lt;/<span class="hljs-title">name</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span>&gt;</span>13,000<span class="hljs-tag">&lt;/<span class="hljs-title">area</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">depth</span>&gt;</span>1,200<span class="hljs-tag">&lt;/<span class="hljs-title">depth</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ocean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ocean</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">name</span>&gt;</span>Atlantic<span class="hljs-tag">&lt;/<span class="hljs-title">name</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span>&gt;</span>87,000<span class="hljs-tag">&lt;/<span class="hljs-title">area</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">depth</span>&gt;</span>3,900<span class="hljs-tag">&lt;/<span class="hljs-title">depth</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ocean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ocean</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">name</span>&gt;</span>Pacific<span class="hljs-tag">&lt;/<span class="hljs-title">name</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span>&gt;</span>180,000<span class="hljs-tag">&lt;/<span class="hljs-title">area</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">depth</span>&gt;</span>4,000<span class="hljs-tag">&lt;/<span class="hljs-title">depth</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ocean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ocean</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">name</span>&gt;</span>Indian<span class="hljs-tag">&lt;/<span class="hljs-title">name</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span>&gt;</span>75,000<span class="hljs-tag">&lt;/<span class="hljs-title">area</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">depth</span>&gt;</span>3,900<span class="hljs-tag">&lt;/<span class="hljs-title">depth</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ocean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ocean</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">name</span>&gt;</span>Southern<span class="hljs-tag">&lt;/<span class="hljs-title">name</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span>&gt;</span>20,000<span class="hljs-tag">&lt;/<span class="hljs-title">area</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">depth</span>&gt;</span>4,500<span class="hljs-tag">&lt;/<span class="hljs-title">depth</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ocean</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">planet</span>&gt;</span>
+</code></pre></li>
+<li><p>Make a new CSS file, <code>style9.css</code>. Copy and paste the content from here, making sure that you scroll to get all of it:</p>
+<pre><code><span class="hljs-comment">/*** XML demonstration ***/</span>
+
+<span class="hljs-tag">planet</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">8em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">200%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">"Oceans"</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> -.<span class="hljs-number">75em</span> <span class="hljs-number">0px</span> .<span class="hljs-number">25em</span> -.<span class="hljs-number">25em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> .<span class="hljs-number">1em</span> .<span class="hljs-number">25em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#cdf</span></span></span>;
+  }</span>
+
+<span class="hljs-tag">planet</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">2em</span> <span class="hljs-number">1em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">4px</span> solid <span class="hljs-hexcolor">#cdf</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0px</span> <span class="hljs-number">1em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> white</span></span>;
+  }</span>
+
+<span class="hljs-tag">ocean</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-bottom</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+  }</span>
+
+<span class="hljs-tag">name</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">150%</span></span></span>;
+  }</span>
+
+<span class="hljs-tag">area</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  }</span>
+
+<span class="hljs-tag">area</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">"Area: "</span></span></span>;
+  }</span>
+
+<span class="hljs-tag">area</span><span class="hljs-pseudo">:after</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">" million km\B2"</span></span></span>;
+  }</span>
+
+<span class="hljs-tag">depth</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  }</span>
+
+<span class="hljs-tag">depth</span><span class="hljs-pseudo">:before</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">"Mean depth: "</span></span></span>;
+  }</span>
+
+<span class="hljs-tag">depth</span><span class="hljs-pseudo">:after</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">" m"</span></span></span>;
+}</span>
+</code></pre></li>
+<li><p>Open the document in your browser:</p></li>
+</ol>
+<ul>
+<li>The superscript 2 (in “million km²”) a Unicode character, coded as <code>\B2</code> in the CSS file.</li>
+<li>The heading, &quot;Oceans&quot;, has a negative top margin, moving it up so it is displayed on top of the border.</li>
+</ul>
+<h2>See also</h2>
+<h2>Exercise question</h2>
+<p>Change the stylesheet so that it displays the document as a table.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/XML_data">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

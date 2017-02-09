@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebSockets concepts · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="A WebSocket is a persistent, low-latency, lightweight and two-way communication channel between the server and the browser." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/protocols/">protocols</a></li><li><a href="/concepts/protocols/websocket/">websocket</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WebSockets concepts</h1>
+<h2>Summary</h2>
+<p>A WebSocket is a persistent, low-latency, lightweight and two-way communication channel between the server and the browser.</p>
+<h2>What is a WebSocket?</h2>
+<p>The web we know today is built on top of HTTP, which is by design a stateless, one-off request/response-based protocol to reduce server load. But web applications have become more interactive thanks to <a href="/docs/apis/xhr/XMLHttpRequest">XMLHttpRequest</a>, giving rise to multiplayer games, online chat applications and more. These new types of applications require low-latency and two-way communication between the server and the browser. Hence WebSockets: a secure socket implementation that is a persistent, two-way, lightweight communication channel, on top of existing HTTP. The protocol allows cross-origin requests by means of <a href="/docs/tutorials/using_cors">CORS</a>.</p>
+<h2>Getting Started</h2>
+<p>To create a WebSocket connection, you need to call the <code>WebSocket</code> constructor with the URL to the WebSocket service:</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> connection = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">'ws://html5rocks.websocket.org/echo'</span>);
+    <span class="hljs-comment">// Just creating the object is enough to get connected.</span>
+</code></pre>
+<p>Although WebSockets are built on top of HTTP, they require different handling due to the major depart from the one-off nature of HTTP. This is why WebSocket URL’s have a different protocol: <code>ws</code> instead of <code>http</code> and <code>wss</code> instead of <code>https</code>. They also require a special handshake triggered by the <a href="http://en.wikipedia.org/wiki/HTTP/1.1_Upgrade_header">| HTTP Upgrade Header</a> which sometimes get stripped by certain proxies, causing the connection to fail.</p>
+<p>WebSocket objects provide <code>onmessage</code> event to get the messages from the socket asynchronously and a non-blocking <code>send</code> method:</p>
+<pre><code class="js"><span class="hljs-comment">// Log messages from the server</span>
+connection.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Server says: '</span> + e.data);
+};
+
+<span class="hljs-comment">// Send message to the server</span>
+connection.send(<span class="hljs-string">'Hello there!'</span>);
+</code></pre>
+<p>A WebSocket is not usable until connected and the object provides three more events to get notified about these state changes and provides a <code>readyState</code> property that reflects its current state:</p>
+<pre><code class="js">connection.onopen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'WS connection established.'</span>);
+  <span class="hljs-comment">// This means it is connected now.</span>
+  <span class="hljs-built_in">console</span>.log(connection.readyState); <span class="hljs-comment">// 1 - OPEN (from 0)</span>
+};
+
+<span class="hljs-comment">// Log errors</span>
+connection.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'WebSocket connection failed:'</span> + error);
+  <span class="hljs-comment">// This means the connection failed.</span>
+  <span class="hljs-built_in">console</span>.log(connection.readyState); <span class="hljs-comment">// 3 - CLOSED (probably from 0)</span>
+};
+
+connection.onclose = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'WS connection closed.'</span>);
+  <span class="hljs-comment">// This means the connection closed.</span>
+  <span class="hljs-built_in">console</span>.log(connection.readyState); <span class="hljs-comment">// 3 - CLOSED</span>
+};
+</code></pre>
+<h2>Data Types and Extensions</h2>
+<p>WebSockets support sending binary messages, too. To send binary data, one can use either <code>Blob</code> or <code>ArrayBuffer</code> object. Instead of calling the <code>send</code> method with string, you can simply pass an <code>ArrayBuffer</code> or a <code>Blob</code>.</p>
+<pre><code class="js">  <span class="hljs-comment">// Sending file as Blob</span>
+  <span class="hljs-keyword">var</span> file = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input[type="file"]'</span>).files[<span class="hljs-number">0</span>];
+  connection.send(file);
+</code></pre>
+<p>To receive binary data, the <code>binaryType</code> attribute of the WebSocket object should be set to either <code>'blob'</code> or <code>'arraybuffer'</code>.</p>
+<pre><code class="js">  <span class="hljs-comment">// Setting binaryType to accept received binary as either 'blob' or 'arraybuffer'</span>
+  connection.binaryType = <span class="hljs-string">'arraybuffer'</span>;
+  connection.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+      <span class="hljs-built_in">console</span>.log(e.data.byteLength); <span class="hljs-comment">// ArrayBuffer object if binary</span>
+  };
+</code></pre>
+<p>Extensions are also possible for the protocol such as &quot;per frame compression&quot;. These are handled automatically between the browser and the server though so the only thing exposed on the object is the list of extensions that are in use.</p>
+<pre><code class="js"><span class="hljs-comment">// Determining accepted extensions</span>
+<span class="hljs-built_in">console</span>.log(connection.extensions);
+</code></pre>
+<h2>Notes</h2>
+<p>WebSockets is a relatively low level API that especially aims to be a two-way communication channel so it is most appropriate to use in applications that explicitly require two-way real-time communication, such as multiplayer games, chat, real-time text editors, etc. If one needs to get real-time updates from a server but does not need to send anything back such as getting stock information in real-time, <a href="/docs/tutorials/eventsource_basics">EventSource (Server-Sent Events)</a> should be considered.</p>
+<h2>Usage</h2>
+<pre><code> * Online multiplayer games
+</code></pre>
+<ul>
+<li>Chat applications</li>
+<li>Online collaborative applications</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks!.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

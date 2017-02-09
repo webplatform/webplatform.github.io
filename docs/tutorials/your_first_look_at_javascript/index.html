@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your first look at JavaScript · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Now it is time to get your hands dirty. This article provides a basic introduction to coding with JavaScript." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/your_first look at javascript/">your first look at javascript</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Your first look at JavaScript</h1>
+<h2>Summary</h2>
+<p>Now it is time to get your hands dirty. This article provides a basic introduction to coding with JavaScript.</p>
+<h2>Introduction</h2>
+<p>In this article of the <a href="http://www.w3.org/wiki/Web_Standards_Curriculum">Web Standards Curriculum</a>, we will cover the basics of JavaScript — how and where to use it, what problems to avoid, and general basics to get you started on your journey towards becoming a top-notch JavaScript developer.</p>
+<h2>What is JavaScript and how do you execute it?</h2>
+<p>JavaScript is a text-based language that does not need any conversion before being executed. Other languages like <a href="http://dev.opera.com/articles/view/38-programming-the-real-basics/#interpreted">Java and C++ need to be compiled to be executable</a> but JavaScript is executed instantly by a type of program that interprets the code called a parser (pretty much all web browsers contain a JavaScript parser).</p>
+<p>To execute JavaScript in a browser you have two options — either put it inside a <code>script</code> element anywhere inside an HTML document, or put it inside an external JavaScript file (with a .js extension) and then reference that file inside the HTML document using an empty <code>script</code> element with a <code>src</code> attribute. We will look at both of these methods inside this section.</p>
+<p>JavaScript does not have to stay inside browsers. To run JavaScript in console environment, please check out <a href="https://developer.mozilla.org/en-US/docs/Rhino/Download_Rhino">Mozilla Rhino</a>; to run JavaScript in server environment, please check <a href="http://nodejs.org/">node.js</a>.</p>
+<h3>Including your JavaScript inside your HTML document</h3>
+<p>The most basic inclusion of JavaScript inside your HTML page would look something like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
+  <span class="hljs-keyword">var</span> x = <span class="hljs-number">3</span>;
+  alert(<span class="hljs-string">'hello there, I am JavaScript - x is '</span> + x);
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>You could put this anywhere inside your document and it would execute, but some places are definitely better than others — see the <a href="http://www.w3.org/wiki/Your_first_look_at_JavaScript#Where_to_put_JavaScript">Where to put JavaScript</a> section for guidance on this.</p>
+<p>As there might be several different types of script available to use on web pages in the future, it makes sense to add the name of the script you are using as a MIME type:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+  <span class="hljs-keyword">var</span> x = <span class="hljs-number">3</span>;
+  alert(<span class="hljs-string">'hello there, I am JavaScript - x is '</span> + x);
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p><strong>Note:</strong> You will find script examples on the web that have a <code>language=&quot;javascript&quot;</code> attribute. This is not part of any standard and is utterly useless; delete this where you can. This is a throwback to the bad old days, when VBScript was also in popular use on web pages. VBScript usage died however, as it only works in IE.</p>
+<p>In the past there was a need to comment out JavaScript with an HTML comment to prevent browsers from showing the code as HTML. As this only applies to very old browsers you do not need to bother with that any longer. However, if you are using strict XHTML as your DOCTYPE, you need to enclose any JavaScript in a CDATA block to make it validate (do not worry about why - it is not really important at this stage in your learning):</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="handlebars"><span class="xml">
+/* <span class="hljs-cdata">&lt;![CDATA[ */
+  var x = 3;
+  alert('hello there, I am JavaScript - x is ' + x);
+/* ]]&gt;</span> */
+</span></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>However, for strict XHTML documents, it is much more sensible not to embed any JavaScript but instead keep it in an external document.</p>
+<h3>Linking to an external JavaScript file</h3>
+<p>In order to link to an external JavaScript (either on the same server or anywhere on the internet) all you have to do is to add a <code>src</code> attribute to your script element:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myscript.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Upon meeting this element in a page, browsers will then load the file <code>myscript.js</code> and execute it. Any content inside the <code>script</code> element itself will be skipped when you provide a <code>src</code> attribute. The following example will load the file <code>myscript.js</code> and execute the code in it, but will not execute the alert inside the <code>script</code> element at all.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myscript.js"</span>&gt;</span><span class="actionscript">
+  alert(<span class="hljs-string">'I am pointless as I will not be executed'</span>);
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Keeping your code in an external JavaScript file makes a lot of sense:</p>
+<ul>
+<li>You can apply the same JavaScript functionality to several HTML documents and still keep maintenance easy: if there is a desired change in functionality all you need to do is change one single file.</li>
+<li>Your JavaScript will be cached by browsers. Caching means that browsers will take a copy of your JavaScript and store it on the computer of the visitors surfing on your site. The next time this user loads the same script it will not be taken from your server but from their own computers — thus loading much faster.</li>
+<li>You can easily find your script if you need to modify it, avoiding the need to scan through long HTML documents to find the place to fix a problem.</li>
+<li>Fixing errors becomes easier as a debugging tool or error console will tell you which file contains the error and reliably report the line number.</li>
+</ul>
+<p>You can add as many JavaScript files as you want to a document, but there are several considerations to make before going down that route.</p>
+<h2>JavaScript and browser performance</h2>
+<p>Cutting up a lot of JavaScript into different files, each dealing with one task at a time, is a great idea to keep your functionality easy to maintain and allow for quick bug-fixing. For example, you could have several script blocks like these:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"config.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"base.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"effects.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"validation.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"widgets.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>However, the development benefits of this are diminished by the effect this has on the performance of your document. This differs slightly from browser to browser but the worst-case scenario (which is sadly enough still the second most-used browser) does the following:</p>
+<ul>
+<li>Every time the browser encounters a <code>script</code> element, it will pause rendering (displaying) the document.</li>
+<li>It will then load the JavaScript file defined in the <code>src</code> attribute (if you use a script on another server you also have to wait until the browser finds that server).</li>
+<li>It then will execute the script before it goes on to accessing the next one.</li>
+</ul>
+<p>All of this means that the display of your web site is slowed down until all of these steps happen for all the scripts you include. This can become annoying for your visitors.</p>
+<p>One way around this is to use a backend script to create a single file from all the files you use. That way you have the benefit of keeping maintenance easy while simultaneously cutting down on delays to your web page display. There are several scripts like this on the web — one of them is written in PHP and <a href="http://www.ejeliot.com/blog/73">available from Ed Eliot</a>.</p>
+<p>The delay in display also defines where you want to put your JavaScript in the document.</p>
+<h2>Where to put JavaScript</h2>
+<p>Technically you can put JavaScript anywhere in your document. The decision you have to make is to weigh performance against making it easy for developers to find your scripts and ensuring that your JavaScript enhancements work immediately for your visitors.</p>
+<p>The classic best practice for placing scripts was in the <code>head</code> of the document:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myscripts.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- lots of HTML here --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>This has the benefit of being a predictable location of scripts — developers know where to find them. It also has the benefit of ensuring that all JavaScript has been loaded and executed before the document is displayed.</p>
+<p>The drawbacks are that your scripts delay the display of the document and that the script does not have access to the HTML in the document. You therefore need to delay the execution of any scripts that change the HTML of the document until the document has finished loading. This can be done with an <a href="http://www.onlinetools.org/articles/unobtrusivejavascript/chapter4.html">onload handler</a> or one of the various <a href="http://dean.edwards.name/weblog/category/dom/onload/">DOMready</a> or <a href="http://developer.yahoo.com/yui/examples/event/event-timing.html">contentAvailable</a> solutions out there on the web — none of which are bullet-proof and most of which rely on browser-specific hacks.</p>
+<p>Performance specialists have started to advocate placing your JavaScript at the end of the <code>body</code> instead:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- lots of HTML here --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myscripts.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>This benefits your JavaScript by not delaying the display of the HTML and also means that any HTML you want to alter with JavaScript is already available.</p>
+<p>You might confuse developers who maintain your code because this practice is not common yet. Another — more problematic — drawback is that the HTML becomes available before your JavaScript is loaded. While this is exactly what you want to achieve, it also means that visitors will start interacting with your interface before you get the chance to change it. Say for example you want to validate a form with JavaScript before it is submitted to the server — the form might get submitted before the script has been loaded. If you write your script as a mere enhancement (rather than relying on it) that is not a problem though — just an annoyance.</p>
+<p>It is up to you to choose what fits the purpose of your website; you could even choose to do a mixture of both — put the scripts with very important functionality in the <code>head</code>, and call them in conjunction with the “nice-to-have” scripts at the end of the document.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myimportantscripts.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- lots of HTML here --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"myscripts.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Whatever you do, make sure that the order of your scripts is right, as browsers will load and parse them one after the other. This also brings us to another thing to consider when using JavaScript.</p>
+<h2>JavaScript security and the lack thereof</h2>
+<p>We cannot stress this enough. JavaScript is a wonderful language and can help you to build highly responsive and beautifully interactive web sites and applications, but where it falls down terribly is security. In short, there is no security model in JavaScript and you should not protect, encrypt, secure, or store anything vital or secret with it.</p>
+<p>Every script on the page has the same rights — all of them can access each other, read out variables, access functions, and also override each other. If you have a function called <code>init()</code> in your first included script, and another one in your last included script, the original one will be overridden. We will come back to this problem in the <a href="http://dev.opera.com/articles/view/javascript-best-practices/">best practices article</a> of this course.</p>
+<p>All of this would not be much of an issue if you never used other people’s scripts. However, seeing that most online advertising and statistics-tracking is done with JavaScript this will not be the case — you will use third party scripts all the time.</p>
+<p>Scripts can also read cookies; using the <code>prototype</code> of a function you can override any native JavaScript function. Lastly, JavaScript can easily be turned off so you can forget about JavaScript protection being a good security measure.</p>
+<p>JavaScript is always readily available for reading and analyzing by other developers. Of course you can pack (remove all unnecessary whitespace) and obfuscate (use random variable and function names) your scripts, but even those can be reverse-engineered; in this case the only person you stop from using your code easily is yourself. The availability of the source code and the ability to read and analyze it is possibility the main factor for the success of JavaScript - for years we learned by peeking at other people’s solutions. Nowadays this is luckily over as there are good books and tutorials available.</p>
+<p>Whereas packing and obfuscation are useless as security measures, they are often done on medium and large scripts before the code is put live on the web as part of the publication process. This helps to cut down on the amount of bandwidth required to serve the site to its users. Saving a few bytes here and there may not seem significant on your blog about kittens, but it can add up to massive savings when you are dealing with a site with usage figures like those of google.com.</p>
+<h2>Techniques to avoid</h2>
+<p>The biggest problem with learning JavaScript is that there is a massive amount of outdated and possibly dangerous information out there. This is especially frustrating as a lot of this information is very well presented and gives a lot of beginners a “quick win” feeling of knowing JavaScript by copying and pasting some ready-made code.</p>
+<p>As the environment JavaScript is being applied to is very much unknown (users can have any setup) and we do not know what decisions led to code we find on the web being created in a particular way, we should not point fingers at solutions. However, the following ideas are a thing of the past and you should only use them as a very last resort if you need them to support really old, bad browsers:</p>
+<ul>
+<li><code>document.write()</code> — you can write out content to the document using <code>document.write()</code> but there are several issues with this: you mix HTML and scripting and you need to add a script node exactly where you want the content to appear, which slows down your page. It is a very cool way of easily showing (for example in a tutorial or when testing/debugging your code) what the result of some piece of code is, but it is a bad example to show people, as you should never have to use it in live code.</li>
+<li><code>&lt;noscript&gt;&lt;/noscript&gt;</code> — as its name implies, the <code>noscript</code> element is the opposite to the <code>script</code> element. The content inside it will be shown to users that have JavaScript disabled. The main reason to use <code>noscript</code> is to provide alternative content for users who do not have JavaScript available in their browser. Users that have no JavaScript don’t do that to make your life harder — they might do it because of a security policy, or because the browser they are using does not support JavaScript. But what you can provide inside <code>noscript</code> is limited, and you should not use it. Provide a note instead, telling users to enable JavaScript in their browser — for some users this is not possible.</li>
+<li><code>&lt;a href=&quot;javascript:doStuff()&quot;&gt;…&lt;/a&gt;</code> — this was a very common way to invoke JavaScript functionality, most of the time when a button was not an option (you cannot style buttons in older browsers). The problem is that this is not a valid link as <code>javascript</code> is not an internet protocol (like <code>ftp://</code> or <code>http://</code>). If JavaScript is turned off the link still appears and gives the user false hope that something is going to happen.</li>
+<li><code>document.layers</code> and <code>document.all</code> — both of these solutions were the DOM equivalents in old browsers (Netscape 4.x and Internet Explorer 4 respectively) and unless you need to support those (sorry if you have to) this is unnecessary code.</li>
+</ul>
+<h2>See also</h2>
+<h3>Exercise Questions</h3>
+<ul>
+<li>What does the following link do and what problems can that cause?</li>
+</ul>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"javascript: open('tac.pdf')"</span>&gt;</span>Read our Terms and Conditions<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre>
+<ul>
+<li>Providing parameters for scripts is a powerful way of making them reusable. It is very important to keep the option to provide compact and easy to use parameters. What are the downsides of the following solution (which provides parameters that are compact and easy to use)?</li>
+</ul>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"badge.js"</span>&gt;</span><span class="actionscript"> <span class="hljs-keyword">var</span> color = <span class="hljs-string">'blue'</span>; <span class="hljs-keyword">var</span> background = <span class="hljs-string">'yellow'</span>; <span class="hljs-keyword">var</span> width = <span class="hljs-number">400</span>; </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<ul>
+<li>What is the issue with so called “global variables”, and how can they be avoided?</li>
+<li>Where in the document would you put a large script that is nice to have but not vital to the functionality of the site? Why?</li>
+<li>What is the problem with executing scripts like this:</li>
+</ul>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

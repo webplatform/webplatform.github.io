@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>画像の表示 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="この文書では、&amp;lt;img&amp;gt; タグを使って、HTMLドキュメントでの画像の利用について紹介します。" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/images_in html/">images in html</a></li><li><a href="/guides/images_in html/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>画像の表示</h1>
+<h2>Summary</h2>
+<p>この文書では、&lt;img&gt; タグを使って、HTMLドキュメントでの画像の利用について紹介します。</p>
+<h2>はじめに</h2>
+<p>この文書では、webのデザインを「快い」ものにすることを論じます。それは画像です。視覚障害を持った方でもサイトの情報を得られるように、利用しやすい方法でwebドキュメントの中に画像を追加するやり方を学んでいきます。情報を伝えるためにインライン画像をいつどのように使うのか、ページレイアウトをレベルアップするために、背景の画像をどうするのかも学んでいきます。</p>
+<h2>絵は千の言葉にとどまらない — それとも?</h2>
+<p>webサイトにはたくさんの画像を使いたくなります。画像は、訪問者にサイトの雰囲気を感じさせるとても良い手段ですし、図は目が見える学習者に複雑な情報を理解しやすくさせます。</p>
+<p>webでの画像の欠点は、誰しもが画像を見られる訳ではないということです。ブラウザが初めて画像をサポートしたころを振り返ると、webの接続は遅く、オンラインでいるのに1分ごとにお金をたくさん使っていました。サイトの訪問者の多くは、画像表示を切ってダウンロードするコストを抑えつつ、webサーフィンを速くしていました。最近はこういうことはあまり見られませんが、それでも他にまだ考慮する問題があります。</p>
+<ul>
+<li>モバイルデバイスでサーフィンしている方は、今でも画像を切っているかもしれません。理由はスクリーンが小さいことやデータのダウンロードのコストです。</li>
+<li>サイトへの訪問者に、画像が正しく見えなかったり、全く見えなかったりする、視覚障害がある方がいるかもしれません。</li>
+<li>異文化圏から来た訪問者がいるかもしれません。彼らは使用しているアイコンや図表を理解できません。</li>
+<li>検索エンジンはテキストだけをインデックスします — 画像は分析しないので、画像にある情報は見つけられず、インデックスされません(少なくとも今のところは。最新の画像のインデックス化についての情報がさらに必要なら、試しに「画像のインデックス化」や「画像による検索」を検索してみてください)。</li>
+</ul>
+<p>つまりとても大切なことは、よく考えて画像を選び、適切に使用することです。もっと大切なのは、画像を見られないユーザーのために、必ず代わりの手段を用意することです。</p>
+<h2>コンテンツの画像と背景の画像</h2>
+<p>ドキュメントに画像を追加する主な方法は2つあります。<code>&lt;img&gt;</code> 要素を使ったコンテンツの画像とCSSを使って要素に当てはめた背景の画像です。どちらの方法を使うかは、みなさんの意図次第です。</p>
+<ul>
+<li>画像が著者の写真やデータグラフといった、ドキュメントのコンテンツにとって極めて重要なものなら、<code>&lt;img&gt;</code> 要素として、画像の代わりとしてふさわしいテキストとともに追加してください。</li>
+<li>画像がまさに見た目を配慮した目的で置かれているなら、CSSの背景画像を使用してください。この画像には画像の代わりとなるテキストは付けないでください(目が見えない方に対して「きらめく緑の角丸」という説明が何の役に立つ?)。そして、CSSで画像をデザインするやり方はいくつもあります。</li>
+</ul>
+<h2><code>&lt;img&gt;</code> 要素とその属性</h2>
+<p>画像を <code>&lt;img&gt;</code> 要素を使って、HTMLドキュメントに追加するのはとても簡単です。画像を表示したい場所を<code>src</code> (source) 属性の値として指定します。これでOKです。下記のHTMLドキュメントは、ブラウザでbalconyview.jpgを表示します(HTMLファイルと同じフォルダーから画像を読み込む)。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>このコードをブラウザで実行すると、結果はこのようになるでしょう。</p>
+<p><img src="//static.webplatform.org/8/83/images-f.jpg" alt="the image displayed in a browser"></p>
+<p><em>Figure 1: ブラウザで表示される画像</em></p>
+<p>注意点： <code>&lt;img&gt;</code> 要素は、いわゆる <em>空タグ</em> です。つまり終了タグが不要です(<code>&lt;/img&gt;</code> のように)。HTML5では、内側のスラッシュで閉じることも必要ありません(&lt;img src=&quot;balconyview.jpg&quot;/&gt; のように)。しかし、webページの作成者の多くは、他との釣り合いからそうしています。</p>
+<h3>alt属性で画像の代わりになるテキストを用意する</h3>
+<p>画像を正しく表示しても、 <code>&lt;img&gt;</code> 要素が <code>alt</code> 属性を持っていなければ、HTMLとしては正しくありません。 この属性には、何らかの理由で画像が利用できない時に表示するテキストが入っています。画像が利用できない訳は、見つからない、ロードに失敗、ユーザーエージェント(普通はブラウザ)が画像をサポートしていない、といったものでしょう。さらに、視覚障害を持った方は支援技術を用いてwebページを読み上げています。この技術は、<code>alt</code> 属性のコンテンツを探しだし、画像を説明します。したがって、画像の内容を説明するためには、代わりとなるテキストを適切に書くことが重要です。アクセシビリティと検索エンジンの最適化のためにも、画像の <code>alt</code> 属性に、代わりとなるテキストを入れてください。</p>
+<p>メモ書き：webページとその作成者の多くが、「altタグ」という用語を使っています。これは事実上正しくありません。そういった名前のタグ(もしくは要素)は存在しません。<code>alt</code> は <code>&lt;img&gt;</code> 要素の属性であって、タグではないことをお忘れなく。</p>
+<p>したがって、画像を誰にでも理解できるようにするには、必ず代わりとなるテキストをこの例のように正しく付けなければいけません。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3><code>title</code> 属性を使って「あればそれに越したことはない」情報を追加する</h3>
+<p><code>alt</code> 属性には、画像が利用できない時に表示されるべきテキストを入れます。<code>alt</code> 属性内の情報は、画像がうまくロードされた時には表示されてはいけません。Internet Explorer はこの点が間違っていて、マウスポインタを画像に重ねるとツールチップとして表示します <sup><a href="#cite_note-1">[1]</a></sup>。残念ながら、作成者の多くはこれがデフォルトだと見なして、画像についての追加情報を <code>alt</code> 属性に入れてしまっています。こうはしないでください。画像についての追加情報を加えたいなら、代わりに <code>title</code> 属性を使ってください。</p>
+<p>たいていのブラウザは、<code>&lt;img&gt;</code> 要素の <code>title</code> 属性の値をマウスカーソルが重なった時に、ツールチップとして表示します(Figure 2参照)。これで訪問者はさらに画像について知りやすくなりますが、訪問者すべてがマウスを使うという前提はとれません。 <code>title</code> 属性はとても役に立ちますが、極めて重要な情報を示す確かな手段ではありません。それよりむしろ、画像の雰囲気や文脈での意味といった、本質的ではない情報を示すのに適した方法です。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image with alternative text and title<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>
+  <span class="hljs-attribute">title</span>=<span class="hljs-value">"What I see when I look out of my window; the castle was one reason to move there."</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>このコードは、このようになります。</p>
+<p><img src="//static.webplatform.org/7/7c/images-g.jpg" alt="title attribute contents shown as a tool tip"></p>
+<p><em>Figure 2: <code>title</code> 属性は、多くのブラウザでツールチップとして表示される</em></p>
+<h3><code>longdesc</code> を使って、複雑な画像の代わりを用意する <sup><a href="#cite_note-2">[2]</a></sup></h3>
+<p>図表や図形のように、画像がとても複雑な場合、<code>longdesc</code> 属性を使ってかなり長い説明を提供できます。そうすることで、スクリーンリーダーを使っている方や画像を切ってブラウジングしている方も、画像が伝える情報を利用できるようになります。</p>
+<p>この属性には、同じ情報が含まれているHTMLドキュメントを指すURLが入ります。 例えば、一揃いのデータを表す図表があるとすると、<code>&lt;longdesc&gt;</code> を使って、同じ情報があるページへリンクすることができます。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image with longdesc<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"chart.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"450"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"150"</span>
+  <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Chart showing the fruit consumption amongst under 15 year olds.
+  Most children ate Pineapples, followed by Pears"</span>
+  <span class="hljs-attribute">longdesc</span>=<span class="hljs-value">"fruitconsumption.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>データファイルの「fruitconsumption.html」には、図表と同じデータを表すテーブルが入っています。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Fruit consumption<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">table</span> <span class="hljs-attribute">summary</span>=<span class="hljs-value">"Fruit Consumption of under 15 year olds, March 2007"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">caption</span>&gt;</span>Fruit Consumption<span class="hljs-tag">&lt;/<span class="hljs-title">caption</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">thead</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Fruit<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Amount<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">thead</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">tbody</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Apples<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>10<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Oranges<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>58<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pineapples<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>95<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Bananas<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>30<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Raisins<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pears<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>63<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">tbody</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"inlineimagelongdesc.html"</span>&gt;</span>Back to article<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>並んで表示した2つの異なるデータは、このようになります。</p>
+<p><img src="//static.webplatform.org/f/f5/images-h.jpg" alt="A document next to its longdesc output"></p>
+<p><em>Figure 3: <code>longdesc</code> 属性を使って、画像にリンクした複雑なデータをともなったドキュメント</em></p>
+<p>注目して欲しいのは、画像に結びついた長い説明のファイルが存在するということを、見て分かる手掛かりがないことです。しかし、たいていの支援技術は、代わりとなるものが利用できることをユーザーに教えるでしょう。<code>longdesc</code> が無意味だと考える方もいるので、通常のリンク経由でリンクされた代替のページを用意してください。これがふさわしい場合も時にはあるかもしれません。なので、すべてのユーザーが情報に時間を割く方法を選べることが、効果的な場合がよくあります。しかし、デフォルトではテキストリンクを見せたくないケースもあるでしょう。</p>
+<h3>幅と高さを指定して大きさを決めることで、画像を速く表示する</h3>
+<p>ユーザーエージェントが <code>&lt;img&gt;</code> 要素をHTML中に見つけると、<code>src</code> 属性が指す画像をロードし始めます。 デフォルトでは画像の大きさは分かりませんので、すべてのテキストをひとまとめに表示し、画像が最終的にロードされて表示された時に、その周りに配置されます。こうなるとページのローディングが遅くなり、ページの訪問者にとって(控えめに言っても)見栄えが悪くなります。 これを防ぐには、 <code>width</code> と <code>height</code> 属性を使って画像の大きさを与え、画像をロードする前に画像用に正確なスペースを確保するようブラウザに伝えます。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image with dimensions<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>
+  <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"186"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>これは、画像が実際にロードされその場所に収まるまで、その画像と同じサイズのプレースホルダーを表示します。その結果、ページが見栄え悪く稚拙に変更されるのは避けられます。<strong>必ず</strong> 画像には <code>width</code> と <code>height</code> 属性を入れてください。</p>
+<p>この属性を使えば、画像のリサイズも可能ですが(上記の例の属性値を半分にしてみてください)、うまいやり方ではありません。それはブラウザすべてで、画像をリサイズする質が滑らかではないからです。特に画像をリサイズし、サムネイルを表示する場合に不具合があります。サムネイルの目的が、実際の画像サイズよりも小さいというだけでなく、ファイルサイズもそうだからです。5KBも送れば十分な小さな画像を見るのに、300KBの写真をロードしたい人はいません。</p>
+<h2>HTML5の &lt;figure&gt; を使って、画像をきちんと入れる</h2>
+<p>HTMLの画像に付きまとう問題の1つに、画像を入れる要素に何を選んだらよいのか、というものがあります。結局デフォルトで画像はインライン要素になります。この要素は前後で改行を強制しません。これはテキストの隣に小さなアイコンを置きたい場合には都合がよいのですが、ページに画像を行に渡って置きたい場合の方が多いのではないでしょうか。この使い方で表示するには、画像を単独の <em>figure</em> に入れます。</p>
+<p>HTML4でこれを実現する最も一般的な方法は、画像を <code>&lt;p&gt;</code> か <code>&lt;div&gt;</code> 内に置くことです。しかし、どちらも最良の手段ではありません — 画像は段落ではありませんし、ブロック要素では意味がどうとでもとれます。HTML5の考案者はこれに気付き、問題を解決する新しい要素を導入しました。それが <code>&lt;figure&gt;</code> です。図を入れるよう特化して策定された要素で、画像が1つや2つもしくはマルチメディア要素の組み合わせ、テキスト、その他コンテンツが対象となります。例を見ていきましょう。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Figure element with figcaption example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+    <span class="hljs-tag">figure</span>,<span class="hljs-tag">figcaption</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+    }</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'figure'</span>);
+    <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'figcaption'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses,
+      trees and a castle"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"186"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span>The view from outside my window.<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>HTML5の &lt;figcaption&gt; を使って、キャプションを正しく</h2>
+<p>HTML5に追加されたもう1つの新しい要素は、図のキャプションです。これまでは、<code>&lt;p&gt;</code> や別のまったく適切とは言えない要素を使って実装していましたが、現在は <code>&lt;figcaption&gt;</code> 要素があります。<code>&lt;figure&gt;</code> 内にネストさせます。「これはこの図の内容に関するキャプション」であることを示します。例は下記の通りです。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+  ...
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>
+      <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"186"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span>The view from outside my window.<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+
+  ...
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>注意して欲しいのは、図のキャプションが <code>alt</code> 属性や <code>title</code> 属性の内容を必ずしも置き換えるものではないということです。キャプションが画像のすべてを正確に説明しているのか、それとも <code>title</code> 属性が示すような補足的な情報なのかによります。この場合は、<code>alt</code> 属性も必要です。とうのは、目が見えるユーザーはそれを見ることで画像にあるものが見えるからです。The <code>alt</code> 属性は、見えないユーザーに対して画像の内容が何であるかを、正確に伝える手助けをしてくれます。一方キャプションは、文脈に沿った情報を加えます。</p>
+<h2>CSSを用いた背景の画像</h2>
+<p>ブラウザがCSSをサポートし始めた時、webデザインが何倍も楽しくなったといっても過言ではありません。HTMLをハックして、テーブルのセルを使ってページに項目を配置したり、ノーブレークスペース( )を使って配置を強制したり、スペーサーGIF(透過な1x1ピクセルのGIF画像で余白を作るために伸縮される)を使ったりするかわりに、CSSでパディング・余白・大きさ・位置決めができます。そして、コンテンツの構造の気苦労をHTMLから取り除きます。</p>
+<p>CSSを使うことで、とても融通が利く方法で背景の画像も使えるようになります。好きな方法でテキストの背景や周囲に画像を置くことができます。また、規則的なパターンで画像を繰り返して、背景を作成することもできます。終わりにする前に、CSSの画像について手短に取り上げます。</p>
+<h3>CSSで背景を使用する方法</h3>
+<p>CSSで画像を背景として利用するのは、とても簡単です。下記のCSSコードを見る前にこの色々な例を見て、CSSにおいて背景の画像で可能な様々なことを知ってください。</p>
+<p><img src="//static.webplatform.org/e/ea/images-f.gif" alt="CSSの背景の例"></p>
+<p><em>Figure 4: CSSを使った背景</em></p>
+<p>ボックスは実際には <code>&lt;h2&gt;</code> 要素で整形されています。CSSにパディングとボーダーを設定し、 背景の画像用にスペースを確保しています。最初の例のCSSはこうなります。</p>
+<pre><code class="css"><span class="hljs-tag">background-image</span><span class="hljs-pseudo">:url(ball</span><span class="hljs-class">.gif</span>);
+</code></pre>
+<p><code>background-image</code> プロパティを画像に加え、丸括弧内にURLを指定し、入れたい画像を指定します。 デフォルトでは、背景の画像は水平・垂直方向両方で繰り返され、最初の例のように項目すべてのスペースを埋めます。 しかし、 <code>background-repeat</code> プロパティを使えば、様々な繰り返しを仕組めます。</p>
+<ul>
+<li>Don’t repeat the image at all: <code>background-repeat:no-repeat;</code></li>
+<li>Only repeat the image horizontally: <code>background-repeat:repeat-x;</code></li>
+<li>Only repeat the image vertically: <code>background-repeat:repeat-y;</code></li>
+<li>画像の繰り返しはなし：<code>background-repeat:no-repeat;</code></li>
+<li>水平方向にだけ画像を繰り返す：<code>background-repeat:repeat-x;</code></li>
+<li>垂直方向にだけ画像を繰り返す：<code>background-repeat:no-repeat;</code></li>
+</ul>
+<p>デフォルトでは、背景の画像は(繰り返さなければ)、要素の左上に配置されるでしょう。 しかし、<code>background-position</code> を使えば、背景の画像をあちこちに動かせます。最も簡単に使用できる値は、垂直に調整するなら <code>top</code> と <code>center</code> 、<code>bottom</code>、水平に調整するなら <code>left</code> と <code>center</code>、 <code>right</code> です。例えば、画像を右下に配置するなら <code>background-position:right bottom;</code> を使い、画像を右側の垂直方向の中央にするなら <code>background-position:right center;</code> を使ってください。</p>
+<p>背景の画像の繰り返しと配置を操作し、合わせて効果的な画像を使うことで、CSSがなかった時では不可能だった見事な効果をあげられます。そして、独立したCSSファイルに背景の設定を置いておくことで、ほんの数行コードを変更すれば、サイト全体の見た目をとても簡単に変更することができます。</p>
+<h2>結論</h2>
+<p>HTMLの画像は、非テキスト情報を提供するためのパワフルで柔軟な手段で、他のコンテンツの価値を向上させ、ページの見ための魅力を高めます。実証済みの手法と新しいHTML5の要素と属性を組み合わせることで、webページが確実に便利で面白く使いやすくなるようにできます。</p>
+<h2>See also</h2>
+<h3>練習問題</h3>
+<ul>
+<li>1280x786ピクセル大の画像があったとして、それを40x30ピクセルのサムネイルで表示したいとしたら、HTMLでそれができるか? またそうすることが良策か?</li>
+<li><code>longdesc</code> は何をする属性か? またブラウザはどう表示するか?</li>
+<li><code>valign</code> と <code>align</code> 属性は何をする属性か?またデフォルトではどう繰り返されるか?</li>
+<li>要素の内で、CSSの背景の画像はデフォルトではどこに配置されるか? またデフォルトではどう繰り返されるか?</li>
+</ul>
+<ol>
+<li><span class="mw-cite-backlink"><a href="#cite_ref-1">↑</a></span> <span class="reference-text">訳注：Internet Explorer 8からは、ツールチップを表示しません。詳しくは、 [<a href="https://msdn.microsoft.com/en-us/library/cc288472.aspx#access">「What’s New in Internet Explorer 8」の「Accessibility and ARIA」</a>] を参照してください。</span></li>
+<li><span class="mw-cite-backlink"><a href="#cite_ref-2">↑</a></span> <span class="reference-text"> 訳注： <code>longdesc</code> 属性は、ブラウザやスクリーンリーダーで実装があまり進んでいないようです。詳しくは [<a href="http://waic.jp/docs/jis2010-as-understanding/201406/H45.html">アクセシビリティ・サポーテッド（AS）情報：H45</a>] を参照してください。</span></li>
+</ol>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

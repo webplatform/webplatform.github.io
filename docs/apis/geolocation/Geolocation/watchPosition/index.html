@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>watchPosition · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="Returns a long value that uniquely identifies a watch operation and then asynchronously starts the watch operation." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/geolocation/">geolocation</a></li><li><a href="/apis/geolocation/Geolocation/">Geolocation</a></li><li><a href="/apis/geolocation/Geolocation/watchPosition/">watchPosition</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>watchPosition</h1>
+<h2>Summary</h2>
+<p>Returns a long value that uniquely identifies a watch operation and then asynchronously starts the watch operation.</p>
+<p>Method of <a href="/docs/apis/geolocation/Geolocation">apis/geolocation/Geolocation</a><a href="/docs/apis/geolocation/Geolocation">apis/geolocation/Geolocation</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> object = Geolocation.watchPosition(successCallback, errorCallback, options);
+</code></pre>
+<h2>Parameters</h2>
+<h3>successCallback</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<p>The function to call when geographic position is successfully obtained. The function specified by the <em>successCallback</em> parameter takes one <em>position</em> parameter.</p>
+<h3>errorCallback</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<p>(Optional)</p>
+<p>The function to call when the attempt to obtain geographic position fails. The function specified by the <em>errorCallback</em> parameter takes one <em>positionError</em> parameter. To use the <em>options</em> parameter without using the <em>errorCallback</em> parameter, specify a <strong>null</strong> value for the <em>errorCallback</em> parameter.</p>
+<h3>options</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<p>(Optional)</p>
+<p>JSON encoding</p>
+<h2>Return Value</h2>
+<p>Returns an object of type unsigned longunsigned long</p>
+<p>Type: <strong>HRESULT</strong></p>
+<p>If this method succeeds, it returns <strong>S_OK</strong>. Otherwise, it returns an <strong>HRESULT</strong> error code.</p>
+<h2>Examples</h2>
+<p>Obtains users position and position changes for 120s.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> watchID;
+<span class="hljs-keyword">var</span> geoLoc;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showLocation</span>(<span class="hljs-params">position</span>)
+</span>{
+alert(<span class="hljs-string">'latitude: '</span>+position.coords.latitude+<span class="hljs-string">' AND longitude: '</span>+position.coords.longitude);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">errorHandler</span>(<span class="hljs-params">err</span>) </span>{
+  <span class="hljs-keyword">if</span>(err.code == <span class="hljs-number">1</span>) {
+    alert(<span class="hljs-string">"Error: Access is denied!"</span>);
+  }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( err.code == <span class="hljs-number">2</span>) {
+    alert(<span class="hljs-string">"Error: Position is unavailable!"</span>);
+  }
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getLocationUpdate</span>(<span class="hljs-params"></span>)</span>{
+
+   <span class="hljs-keyword">if</span>(navigator.geolocation){
+      <span class="hljs-comment">// timeout at 120000 milliseconds (120 seconds)</span>
+      <span class="hljs-keyword">var</span> options = {timeout:<span class="hljs-number">120000</span>};
+      geoLoc = navigator.geolocation;
+      watchID = geoLoc.watchPosition(showLocation,
+                                     errorHandler,
+                                     options);
+   }<span class="hljs-keyword">else</span>{
+      alert(<span class="hljs-string">"Sorry, browser does not support geolocation!"</span>);
+   }
+}
+getLocationUpdate();
+</code></pre>
+<h2>Notes</h2>
+<p>The function begins acquiring the geographic position and returns immediately. When the position is successfully obtained, the callback function provided in the <em>successCallback</em> parameter is called. The parameter to the <em>successCallback</em> function is a <strong>position</strong> object that contains the data on the current geographic location. If the attempt to obtain the user’s location fails, the callback function that can be provided as an optional second parameter is called. The error parameter to the <em>errorCallback</em> function is a <strong>positionError</strong> object that contains an error code indicating the reason for failure.</p>
+<p><strong>Note:</strong>  The first time a document calls the <strong>watchPosition</strong> function, the client requests permission to access the geographic location of the browser, unless the user has previously chosen to always allow or always deny permission for the website to determine location. If the user denies permission, the function declared by the <em>errorCallback</em> is called and the code attribute of the error parameter of that function is set to PositionError.PERMISSION_DENIED. Support for the attributes of the <em>options</em> parameter depends on the location provider available to the device running the client. There is no guarantee that changing the properties of these attributes will affect the results reported by the location provider. Windows Internet Explorer 9. This property is supported only for webpages displayed in IE9 Standards mode. For more information, please see Defining Document Compatibility.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://dev.w3.org/geo/api/spec-source.html">W3C Geolocation Specification</a></dt>
+<dd>W3C Editor’s Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Using_geolocation">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

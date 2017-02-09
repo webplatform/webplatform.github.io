@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML tables · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article  offers an introduction to HTML tables, including basic coding techniques and CSS styling." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/html_tables/">html tables</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML tables</h1>
+<h2>Summary</h2>
+<p>This article offers an introduction to HTML tables, including basic coding techniques and CSS styling.</p>
+<h2>Introduction</h2>
+<p>Ack! — how do you use web standards to organize reams of data? The very idea of using tons of nested elements to get all your data into nice little rows and boxes might put your brain into panic mode, but there is a solution — HTML tables to the rescue!</p>
+<p>In web design, tables are a good way to organize data into a tabular form. You see them all the time on websites, whether they are giving a summary or comparison of political election results, sports statistics, price comparisons, size charts, or other data.</p>
+<p>Back in the Jurassic Age of the Internet, before CSS was popularized as a method of separating HTML presentation from structure, tables were used as a way to lay out web pages — to create columns, boxes, and general areas in which to arrange the page content. This is, of course, the wrong way to go about it; using tables for page layout results in bloated, messy pages with tons of nested tables that produce larger file sizes, are hard to code initially, and nearly impossible to maintain later. Today, you should only use tables for presenting tabular data, and use CSS to control page layout.</p>
+<p>From an information design standpoint, tables always perform one of two functions: they either reflect the structure of organized data, or they impart structure to unorganized data. If an HTML table doesn’t do one of those jobs, it probably shouldn’t be a table.</p>
+<h2>The most basic table</h2>
+<p>Let’s start with the semantic HTML code required to render a basic table. This example compares recent volcanic eruptions in the Pacific region of North America:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Volcano Name<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Location<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Last Major Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Type of Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Mt. Lassen<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>California<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1914-17<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Explosive Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Mt. Hood<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Oregon<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1790s<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pyroclastic flows and Mudflows<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Mt .St. Helens<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Washington<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1980<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Explosive Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+</code></pre>
+<p>Bearing in mind that browser and rendering environment defaults (such as those in Web Platform Docs pages!) may significantly affect visual table styling, the above table might render like this:</p>
+<p>||<br>
+|Volcano Name|Location|Last Major Eruption|Type of Eruption|<br>
+|Mt. Lassen|California|1914-17|Explosive Eruption|<br>
+|Mt. Hood|Oregon|1790s|Pyroclastic flows and Mudflows|<br>
+|Mt .St. Helens|Washington|1980|Explosive Eruption|</p>
+<p>Let’s start by breaking down the HTML markup used in the above code:</p>
+<ul>
+<li><code>&lt;table&gt;&lt;/table&gt;</code>: The <code>&lt;table&gt;</code> wrapper element tells the browser that the content is a table.</li>
+<li><code>&lt;tr&gt;&lt;/tr&gt;</code>: The <code>&lt;tr&gt;</code> element establishes a table row. This allows the browser to organize any content between the <code>&lt;tr&gt;</code> and <code>&lt;/tr&gt;</code> tags in a horizontal fashion; that is, in rows.</li>
+<li><code>&lt;td&gt;&lt;/td&gt;</code>: The <code>&lt;td&gt;</code> element defines the table data cell or each individual “box” for content within the row. Only use as many <code>&lt;td&gt;</code> table cells as needed for actual data. Don’t use empty <code>&lt;td&gt;</code> cells for white space or padding — use CSS instead. This is not only a good way to separate presentation from structure, but keeping the HTML clean and simple makes the table easier to understand for people with visual impairments who are using screen readers.</li>
+</ul>
+<p>Note that there is no “table column” (<code>&lt;tc&gt;</code>) element in the sample code; in fact, there is no such element in HTML. Columns are a logical construct, not a physical one. We seem to see columns in a properly constructed table, but they aren’t actually coded, they are merely implied by the alignment of the data cells.</p>
+<p>The basic table elements must be nested as follows:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>content<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>content<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>content<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+</code></pre>
+<p>To order them in any other way will cause the browser to spit up the equivalent of an Internet hair ball and render the table oddly, if at all.</p>
+<h2>Adding some more features</h2>
+<p>Now that the basic table is in place, we can add some slightly more complex table features. First, we’ll add a caption and table headers to help improve the data, both in terms of semantics and legibility for screen readers. The updated table markup looks like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">caption</span>&gt;</span>Recent Major Volcanic Eruptions in the Pacific Northwest<span class="hljs-tag">&lt;/<span class="hljs-title">caption</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">th</span>&gt;</span>Volcano Name<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">th</span>&gt;</span>Location<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">th</span>&gt;</span>Last Major Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">th</span>&gt;</span>Type of Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Mt. Lassen<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>California<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1914-17<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Explosive Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Mt. Hood<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Oregon<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1790s<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pyroclastic flows and Mudflows<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Mt. St. Helens<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Washington<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1980<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Explosive Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+</code></pre>
+<p>This code is (which is to say, &quot;might be&quot;, again depending on environment) rendered as:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Volcano Name</th><th style="text-align:left">Location</th><th style="text-align:left">Last Major Eruption</th><th style="text-align:left">Type of Eruption</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Mt. Lassen</td><td style="text-align:left">California</td><td style="text-align:left">1914-17</td><td style="text-align:left">Explosive Eruption</td></tr>
+<tr><td style="text-align:left">Mt. Hood</td><td style="text-align:left">Oregon</td><td style="text-align:left">1790s</td><td style="text-align:left">Pyroclastic flows and Mudflows</td></tr>
+<tr><td style="text-align:left">Mt. St. Helens</td><td style="text-align:left">Washington</td><td style="text-align:left">1980</td><td style="text-align:left">Explosive Eruption</td></tr>
+</tbody>
+</table>
+<p>The new elements used here are:</p>
+<ul>
+<li><code>&lt;caption&gt;&lt;/caption&gt;</code>: The <code>&lt;caption&gt;</code> element allows you to give the table data a caption. Most browsers will center the caption and render it the same width as the table by default.</li>
+<li><code>&lt;th&gt;&lt;/th&gt;</code>: The <code>&lt;th&gt;</code> element defines the content as table headings for each table section, which can be a column, a row, or a group of cells. This is useful not just to help semantically describe the function of the content, but it also helps render it more accurately in a variety of browsers and devices. The <code>&lt;th&gt;</code> element is used in a row just like a <code>&lt;td&gt;</code>, and browsers typically render its content bold and centered in the data cell.</li>
+</ul>
+<h2>Structuring the table further</h2>
+<p>As a final step in structuring our table, we will define table header and table body sections, add a footer, and define the scope of row and column headings. We will also add a <code>summary</code> attribute to describe the table contents. The final markup looks like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">table</span> <span class="hljs-attribute">summary</span>=<span class="hljs-value">"a summary of recent major volcanic eruptions in the Pacific Northwest"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">caption</span>&gt;</span>Recent Major Volcanic Eruptions in the Pacific Northwest<span class="hljs-tag">&lt;/<span class="hljs-title">caption</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">thead</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Volcano Name<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Location<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Last Major Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Type of Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">thead</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tfoot</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">colspan</span>=<span class="hljs-value">"4"</span>&gt;</span>Compiled in 2008 by Ms Jen<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tfoot</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tbody</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"row"</span>&gt;</span>Mt. Lassen<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>California<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1914-17<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Explosive Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"row"</span>&gt;</span>Mt. Hood<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Oregon<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1790s<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pyroclastic flows and Mudflows<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"row"</span>&gt;</span>Mt. St. Helens<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Washington<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>1980<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Explosive Eruption<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">tbody</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+</code></pre>
+<p>This table code renders (again, “might render”) like this:</p>
+<table border="1">
+<caption>
+Recent Major Volcanic Eruptions in the Pacific Northwest
+</caption>
+<tr>
+<th>
+Volcano Name
+</th>
+<th>
+Location
+</th>
+<th>
+Last Major Eruption
+</th>
+<th>
+Type of Eruption
+</th>
+</tr>
+<tr>
+<th>
+Mt. Lassen
+</th>
+<td>
+California
+</td>
+<td>
+1914-17
+</td>
+<td>
+Explosive Eruption
+</td>
+</tr>
+<tr>
+<th>
+Mt. Hood
+</th>
+<td>
+Oregon
+</td>
+<td>
+1790s
+</td>
+<td>
+Pyroclastic flows and Mudflows
+</td>
+</tr>
+<tr>
+<th>
+Mt. St. Helens
+</th>
+<td>
+Washington
+</td>
+<td>
+1980
+</td>
+<td>
+Explosive Eruption
+</td>
+</tr>
+<tr>
+<td>
+Compiled in 2008 by Ms Jen
+</td>
+</tr>
+</table>
+The new elements and attributes are as follows:
+<ul>
+<li>The <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> and <code>&lt;tfoot&gt;</code> elements: These define the table’s header, body, and footer, respectively. Unless you are coding a really complex table with many columns and rows of data, using these may be overkill. In a complex table, however, they can add useful structure for the developers, and also for browsers and other devices.</li>
+<li>The <code>colspan</code> and <code>rowspan</code> attributes: The <code>colspan</code> attribute creates a table cell that spans more than one column. Here, we wanted the footer table cell to span the whole width of the table, so we told it to span four columns across a row. Alternately, you can add a table cell <code>rowspan</code> attribute that will allow the table cell to span a number of rows down a column, for example <code>&lt;td rowspan=&quot;3&quot;&gt;</code>.</li>
+<li>The <code>summary</code> attribute: This attribute is used to define a summary of the table contents, primarily for use by screenreaders (you won’t see it in the rendered version of the table above). Note that in the older W3C recommendations, WCAG 1.0 and HTML 4.0, you can use the <code>summary</code> attribute as detailed above. In newer drafts of the specs, however, the <code>summary</code> attribute is not mentioned. Whether to still use the <code>summary</code> attribute seems undecided, so for now let’s say that it is safe to still use it. After all, it doesn’t cause anything to break, and it confers accessibility advantages.</li>
+<li>The <code>scope</code> attribute: You may also have noticed the <code>scope</code> attributes in the <code>th</code> tags, and the fact that we have defined the volcano names as headings as well, inside the data rows! The <code>scope</code> attribute can be used in the <code>th</code> element to tell screen readers that the <code>th</code> content is the title for a column or a row.</li>
+</ul>
+<h2>CSS to the rescue: a better looking table</h2>
+<p>The above elements and attributes are all that is necessary to code a good data table. Now that the HTML structure is in place, let’s look at some simple CSS to make the table look a bit nicer:</p>
+<pre><code class="css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#ffffff</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> <span class="hljs-number">1.4em</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> tahoma, arial, sans-serif</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">62.5%</span></span></span>;
+}</span>
+
+<span class="hljs-tag">table</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">80%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFFFFF</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#333333</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border-collapse</span>:<span class="hljs-value"> collapse</span></span>;
+}</span>
+
+<span class="hljs-tag">td</span>, <span class="hljs-tag">th</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">border-bottom</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#333333</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">6px</span> <span class="hljs-number">16px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> left</span></span>;
+}</span>
+
+<span class="hljs-tag">th</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#EEEEEE</span></span></span>;
+}</span>
+
+<span class="hljs-tag">caption</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#E0E0E0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#333333</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border-bottom</span>:<span class="hljs-value"> none</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">6px</span> <span class="hljs-number">16px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+}</span>
+</code></pre>
+<p>When applied to our final table markup, the table looks like this (we used an image here so our markup wouldn’t be affected by the rendering environment):</p>
+<p><img src="//static.webplatform.org/1/14/table300.png" alt="the final table example"></p>
+<p><em>Figure 1: A more visually appealing table.</em></p>
+<p>Ahh, much better. You can choose to style the table any way you want, but the above sample provides a baseline to work with. For now let’s briefly break down what each section of this CSS is doing:</p>
+<ul>
+<li><code>&lt;body&gt;</code>: In the above CSS, we have added properties to set the margin (to zero in this case), padding to give a little room, background colour (white), font size, and font family, as well as the line height to also give a little breathing room. Try altering the property values in the CSS to see how things change.</li>
+<li><code>&lt;table&gt;</code>: Borders have been added using the CSS <code>border</code> property. To make this work correctly, we also had to set the <code>border-collapse</code> property to <code>collapse</code>, to reset the border values in the table and allow the <code>border-bottom</code> to be a straight rule line across the whole row rather than being broken up at the end of each table cell. A <code>width</code> of 80% was chosen for this example (this makes the table extend across 80% of the screen width).</li>
+<li><code>&lt;th&gt;</code> and <code>&lt;td&gt;</code>: In the above CSS, we set <code>text-align</code> to be <code>left</code>, but you could set it to <code>center</code> or other values if you like. We also gave both the <code>&lt;th&gt;</code> and <code>&lt;td&gt;</code> a bit of padding to open up the rows and allow for greater readability. In the case of the <code>&lt;th&gt;</code> selector, we used another color to differentiate the headings from the rest of the table.</li>
+<li><code>&lt;caption&gt;</code>: In the example we gave the caption a border (with no bottom border, as the border in the table already provides it), a different background colour, and bold type to set the caption apart from the table header row.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>In this article we have presented all you need to know to create basic HTML data tables. Let’s leave this article with some pertinent thoughts:</p>
+<ul>
+<li>It is important that tables are correctly coded to be readable by a variety web browsers, mobile, accessible, and other devices. Table HTML is best kept to a minimum, and you should use CSS to style the tables.</li>
+<li>Tables can be made accessible to mobile devices and users that use screen reading software by keeping the code clean, using attributes such as <code>scope</code> and <code>summary</code> as well as the <code>&lt;caption&gt;</code> element to help announce clearly and semantically what the sections are for. Also important for accessibility is to not use empty table cells for spacing; use CSS instead.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

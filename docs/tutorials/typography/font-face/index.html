@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Overview of web fonts using @font-face · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to webfonts and @font-face. Part of the  Typography tutorials section." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/typography/">typography</a></li><li><a href="/tutorials/typography/font-face/">font-face</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Overview of web fonts using @font-face</h1>
+<p><strong>By Paul Irish</strong><br>
+Originally published published Aug. 2, 2010</p>
+<h2>Summary</h2>
+<p>An introduction to webfonts and @font-face. Part of the Typography tutorials section.</p>
+<h2>Introduction</h2>
+<p>The @font-face feature from CSS3 allows us to use custom typefaces on the web in an accessible, manipulable, and scalable way. “But,” you might ask, “why would we use @font-face if we have Cufon, sIFR, and using text in images?”</p>
+<p>A few benefits of leveraging @font-face for custom fonts:</p>
+<ul>
+<li>Full searchability by Find (ctrl-F)</li>
+<li>Accessibility to assistive technologies like screen readers</li>
+<li>Text is translatable through in-browser translation or translation services</li>
+<li>CSS has full ability to tweak the typographical display via <code>line-height</code>, <code>letter-spacing</code>, <code>text-shadow</code>, <code>text-align</code>, and selectors like <code>::first-letter</code> and <code>::first-line</code></li>
+</ul>
+<p>View the <a href="http://code.google.com/webfonts/preview">Font Previewer</a> for a taste of how flexible webfonts are <img src="//static.webplatform.org/8/8b/ff-previewer.jpg" alt="ff-previewer.jpg"></p>
+<h2>@font-face at its essence</h2>
+<p>At its most basic, we declare a new custom remote font to be used like so:</p>
+<pre><code> @font-face {
+   font-family: 'Tagesschrift';
+   src: url('tagesschrift.ttf');
+ }
+</code></pre>
+<p>Then put it to use:</p>
+<pre><code> h1, h2, h3 { font-family: 'Tagesschrift', 'Georgia', serif; }
+</code></pre>
+<p>In this @font-face declaration we’re using the <code>font-family</code> property to explicitly name the font. It can be anything, regardless of what the font is actually called; <code>font-family: 'SuperDuperComicSans';</code> would work just fine, though perhaps not for your reputation. In the <code>src</code> property, we point to where the browser can find the font asset. Depending on the browser, some valid font types are eot, ttf, otf, svg, or a <a href="http://en.wikipedia.org/wiki/Data_URI_scheme">data URI</a> embedding the entire font data inline.</p>
+<p>Of course, nothing is ever as simple as it should be. The initial limitation of the above code was that it did not serve an EOT to IE 6-8. The <a href="http://paulirish.com/2009/bulletproof-font-face-implementation-syntax/">bulletproof @font-face syntax</a> proposed a way of solving this; a robust version follows.</p>
+<pre><code> @font-face {
+   font-family: 'Tagesschrift';
+   src: url('tagesschrift.eot'); /* IE 5-8 */
+   src: local('☺'),             /* sneakily trick IE */
+         url('tagesschrift.woff') format('woff'),    /* FF 3.6, Chrome 5, IE9 */
+         url('tagesschrift.ttf') format('truetype'), /* Opera, Safari */
+         url('tagesschrift.svg#font') format('svg'); /* iOS */
+ }
+</code></pre>
+<p>Inducing a headache yet? If you’d rather just get this off the ground quickly, head to the <a href="http://www.fontsquirrel.com/fontface/generator">Font Squirrel generator</a>, a tool that simplifies the whole process for you, taking your font and preparing its variants and CSS for you. It’s indispensable for putting webfonts into practice today.</p>
+<p>The <a href="http://www.fontsquirrel.com/fontface/generator">Font Squirrel generator</a> <img src="//static.webplatform.org/a/a8/ff-squirrel.png" alt="ff-squirrel.png"></p>
+<h3>Mobile support?</h3>
+<p>Some mobile operating systems support SVG webfonts and some don’t. But regardless, should your mobile users get this enhanced typographic experience? I’d recommend no. The predominant reason is due to how WebKit handles text that is awaiting a custom font via @font-face: the text is invisible. So on a low-bandwidth mobile connection, your users will see no text at all until the ~50k of font data has loaded. The Webkit team is pursuing a solution of turning on a fallback font after a few seconds have expired, but until that has landed, I wouldn’t consider it fair to subject your users to such roadblocks between them and your content.</p>
+<h2>Webfont services</h2>
+<p>A number of services wrap the @font-face feature in an easy API, often letting you add a single CSS or script line to your HTML and some configuration and you’re all done. Many like <a href="http://www.extensis.com/en/WebINK/">WebInk</a>, <a href="http://typekit.com/">Typekit</a>, and <a href="http://www.fontslive.com/">Fontslive</a> will allow you to use the fonts (sometimes up to a bandwidth cap) for a monthly fee. Using these services is very convenient for the casual developer, handing off some of the complications of serving a cross-browser solution to the service.</p>
+<p>The <a href="http://code.google.com/apis/webfonts/">Google Font API</a> lets you use a small, curated set of freely licensed fonts by just linking to a stylesheet and letting Google handle the cross-browser and performance concerns. It’s the fastest way to get off the ground and running with webfonts.</p>
+<h2>Finding professional typefaces for @font-face</h2>
+<p>A common surprise to designers is that just because you purchase a font license (to use in your graphic design, for example), that doesn’t mean you can use it in @font-face. Licenses for @font-face (or web embedding) are typically sold separately. Read the agreement carefully, and feel free to contact the font foundry if you have questions.</p>
+<p><a href="http://fontspring.com">Fontspring</a> is a font boutique, selling hundreds of quality professional fonts, all of them cleared for use with @font-face. <a href="http://fontshop.com">FontShop</a> and other foundries have begun selling @font-face licenses directly, though currently only targeting WOFF and EOT, which leave out a sizable (but shrinking) portion of the browser market. Many foundries are adding webfont licenses to their catalog, but if you can’t find one for your chosen typeface, get in touch with them to ask about it.</p>
+<h2>Dealing with FOUT</h2>
+<p>The <a href="http://paulirish.com/2009/fighting-the-font-face-fout/">Flash of Unstyled Text</a> is a phenomenon in Firefox and Opera that few web designers are fond of. When you apply a custom typeface via @font-face, there is a brief moment when loading the page where the specified font hasn’t been downloaded and applied yet, and so the next font in the <code>font-family</code> stack is used. This causes a flash of a different (typically less good looking) font, before it gets upgraded.</p>
+<p>The Flash of Unstyled Text happening to the <a href="http://slides.html5rocks.com">HTML5 Slide deck</a> <img src="//static.webplatform.org/b/be/ff-fout.jpg" alt="ff-fout.jpg"></p>
+<p>Accompanying the Google Font API is the <a href="http://code.google.com/apis/webfonts/docs/webfont_loader.html">WebFont Loader</a>, a JavaScript library aiming to provide a number of event hooks giving you a lot of control over the loading. Let’s take a look at how you can get other browsers to mimic WebKit’s behavior of hiding the fallback text while the @font-face font loads.</p>
+<pre><code> &lt;script src=&quot;//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js&quot;&gt;&lt;/script&gt;
+ &lt;script&gt;
+ WebFont.load({
+   custom: {
+     families: ['Tagesschrift'],
+     urls: ['http://paulirish.com/tagesschrift.css']
+   }
+ });
+ &lt;/script&gt;
+
+ /* we want Tagesschrift to apply to all H2s */
+ .wf-loading h2 {
+   visibility: hidden;
+ }
+ .wf-active h2, .wf-inactive h2 {
+   visibility: visible;
+   font-family: 'Tagesschrift', 'Georgia', serif;
+ }
+</code></pre>
+<p>If JavaScript is disabled the text will remain visible the whole time, and if the font errors somehow, it’ll fall back to a basic serif safely. Consider this a stop-gap measure for now; most webfont experts suggest hiding the fallback text for 2-5 seconds, then revealing it. Low-bandwidth and mobile devices benefit greatly by this timeout. Understandably, Mozilla is looking to rectify this soon.</p>
+<p>A more lightweight but less effective solution is the <code>font-size-adjust</code> property, currently only supported in Firefox. It gives you an opportunity to normalize the <a href="http://en.wikipedia.org/wiki/X-height">x-height</a> across a font-stack, reducing the amount of visible change in the FOUT. In fact, the <a href="http://www.fontsquirrel.com/fontface/generator">Font Squirrel generator</a> just added a feature where it tells you the x-height ratio of the fonts you upload, so you can accurately set the <code>font-size-adjust</code> value.</p>
+<h2>Summary</h2>
+<p>Webfonts deliver quite a bit of freedom to designers, and with upcoming features like <a href="http://hacks.mozilla.org/2009/10/font-control-for-designers/">discretionary ligatures and stylistic alternates</a>, they will have a lot more flexibility. For now, you can feel confident implementing this part of CSS3, as it covers 98% of deployed browsers. Enjoy!</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/webfonts/quick/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>getClientRects · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="A collection of ClientRect objects, one for each CSS border box associated with the element. Each ClientRect object contains read-only left, top, right, and bottom properties describing the border box, relative to the top-left of the viewport. For tables with captions, the caption is included even though it is outside the border box of the table." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/HTMLElement/">HTMLElement</a></li><li><a href="/dom/HTMLElement/getClientRects/">getClientRects</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>getClientRects</h1>
+<h2>Summary</h2>
+<p>A collection of ClientRect objects, one for each CSS border box associated with the element. Each ClientRect object contains read-only left, top, right, and bottom properties describing the border box, relative to the top-left of the viewport. For tables with captions, the caption is included even though it is outside the border box of the table.</p>
+<p>Method of <a href="/docs/dom/HTMLElement">dom/HTMLElement</a><a href="/docs/dom/HTMLElement">dom/HTMLElement</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> rectList = element.getClientRects();
+</code></pre>
+<h2>Return Value</h2>
+<p>Returns an object of type ClientRectListClientRectList</p>
+<p>A <strong>ClientRectList</strong> collection, that contains <strong>ClientRect</strong> objects with the following properties -</p>
+<pre><code> top: Number
+ left: Number
+ right: Number
+ bottom: Number
+ height: Number
+ width: Number
+</code></pre>
+<h2>Examples</h2>
+<p>This example uses the <strong>getClientRects</strong> and <a href="/docs/dom/HTMLElement/getBoundingClientRect"><strong>getBoundingClientRect</strong></a> methods to highlight text lines in an object.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
+<span class="hljs-keyword">var</span> rcts;
+<span class="hljs-keyword">var</span> keyCount=<span class="hljs-number">0</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Highlight</span><span class="hljs-params">(obj)</span> </span>{
+    rcts = obj.getClientRects();
+    rctLength= rcts.length;
+    <span class="hljs-keyword">if</span> (keyCount &gt; rctLength-<span class="hljs-number">1</span>) {
+        idBeige.style.display=<span class="hljs-string">"none"</span>;
+        keyCount = <span class="hljs-number">0</span>
+    }
+    <span class="hljs-comment">// set the rendering properties for the yellow DIV</span>
+    cdRight = rcts[keyCount].right + idBody.scrollLeft;
+    cdLeft = rcts[keyCount].left + idBody.scrollLeft;
+    cdTop = rcts[keyCount].top + idBody.scrollTop;
+    cdBottom = rcts[keyCount].bottom + idBody.scrollTop;
+    idYellow.style.top = cdTop;
+    idYellow.style.width = (cdRight-cdLeft) - <span class="hljs-number">5</span>;
+    idYellow.style.display = <span class="hljs-string">'inline'</span>;
+    <span class="hljs-comment">// set the rendering properties for the beige DIV</span>
+    bndRight = obj.getBoundingClientRect().right +
+        idBody.scrollLeft;
+    bndLeft = obj.getBoundingClientRect().left +
+        idBody.scrollLeft;
+    bndTop = obj.getBoundingClientRect().top +
+        idBody.scrollTop;
+    idBeige.style.top = bndTop;
+    idBeige.style.width = (bndRight-bndLeft) - <span class="hljs-number">5</span>;
+    idBeige.style.height = cdTop - bndTop;
+    <span class="hljs-keyword">if</span> (keyCount&gt;<span class="hljs-number">0</span>){
+        idBeige.style.display = <span class="hljs-string">'inline'</span>;
+    }
+    keyCount++;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"idBody"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oID_1"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"Highlight(this)"</span>
+    <span class="hljs-attribute">onkeydown</span>=<span class="hljs-value">"Highlight(this)"</span>&gt;</span>
+A large block of text should go here. Click this
+block of text multiple times to see each line
+highlight with every click of the mouse button.
+Once each line has been highlighted, the process
+begins again starting with the first line.
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position:absolute; left:5; top:400;
+z-index:-1; background-color:yellow; display:none"</span>
+<span class="hljs-attribute">ID</span>=<span class="hljs-value">"idYellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position:absolute; left:5; top:400;
+z-index:-1; background-color:beige; display:none"</span>
+<span class="hljs-attribute">ID</span>=<span class="hljs-value">"idBeige"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/rectselection.htm">View live example</a></p>
+<p>This example uses the <a href="/docs/css/cssom/ClientRect"><strong>ClientRect</strong></a> collection with the <strong>getClientRects</strong> and <a href="/docs/dom/HTMLElement/getBoundingClientRect"><strong>getBoundingClientRect</strong></a> methods to determine the position of the text rectangle within an element. In each line, the left-justified text does not extend to the right margin of the box that contains the text. Using the collection, you can determine the coordinates of the rectangle that surrounds only the content in each line. The example code reads these rectangle coordinates and instructs the ball to move over the text only, and not to the end of the line.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> timid = -<span class="hljs-number">1</span>;
+<span class="hljs-keyword">var</span> timoID_2 = -<span class="hljs-number">1</span>;
+<span class="hljs-keyword">var</span> nLine;
+<span class="hljs-keyword">var</span> nPosInLine;
+<span class="hljs-keyword">var</span> oRcts;
+<span class="hljs-keyword">var</span> nDivLen;
+<span class="hljs-keyword">var</span> nEraser;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoadDone</span>(<span class="hljs-params"></span>) </span>{
+    oTextRange = <span class="hljs-built_in">document</span>.body.createTextRange();
+    <span class="hljs-comment">// Get bounding rect of the range</span>
+    oRcts = oTextRange.getClientRects();
+    nLine = <span class="hljs-number">0</span>;
+    oBndRct = obj.getBoundingClientRect();
+    nDivLen = oBndRct.right - oBndRct.left + <span class="hljs-number">1</span>;
+    MoveTo();
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MoveTo</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (nLine &gt;= oRcts.length) {
+        nLine = <span class="hljs-number">0</span>;
+    }
+    obj.style.top = oRcts[nLine].top;
+    nPosInLine = oRcts[nLine].left;
+    nEraser = <span class="hljs-number">0</span>;
+    timoID_2 = setInterval(<span class="hljs-string">"MoveToInLine()"</span>,<span class="hljs-number">60</span>);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MoveToInLine</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (nPosInLine &gt;= oRcts[nLine].right - nDivLen) {
+        clearInterval(timoID_2);
+        timoID_2 = -<span class="hljs-number">1</span>;
+        obj.style.left = oRcts[nLine].right - nDivLen;
+        nLine++;
+        timid = setTimeout(<span class="hljs-string">"MoveTo()"</span>, <span class="hljs-number">100</span>);
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">if</span> (nEraser == <span class="hljs-number">0</span>) {
+        nEraser = <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">else</span> {
+        nEraser = <span class="hljs-number">0</span>;
+    }
+    im.src = <span class="hljs-string">"/workshop/graphics/dot.png"</span>;
+    obj.style.left = nPosInLine;
+    nPosInLine += <span class="hljs-number">3</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">End</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span>(timid != -<span class="hljs-number">1</span>) {
+        clearInterval(timid);
+        timid = -<span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">if</span>(timoID_2 != -<span class="hljs-number">1</span>) {
+        clearInterval(timoID_2);
+        timoID_2 = -<span class="hljs-number">1</span>;
+    }
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"bodyid"</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"LoadDone()"</span>
+    <span class="hljs-attribute">onresize</span>=<span class="hljs-value">"End();LoadDone();"</span> <span class="hljs-attribute">onunload</span>=<span class="hljs-value">"End()"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"text-align:center"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>The quick brown fox jumps over the lazy dog.<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"obj"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position:absolute"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"im"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/workshop/graphics/dot.png"</span>
+    <span class="hljs-attribute">border</span>=<span class="hljs-value">0</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">16</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">16</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/rectdemo.htm">View live example</a></p>
+<h2>Notes</h2>
+<ul>
+<li>Before being in the process of standardization, it was intended that this method would return a TextRectangle object for each line of text in an element. However, the CSSOM working draft specifies that it returns a ClientRect for each border box. For an inline element, the two definitions are the same. But for a block element, the CSSOM version returns only a single rectangle.</li>
+<li>The amount of scrolling that has been done of the viewport area (or any other scrollable element) is taken into account when computing the rectangles.</li>
+<li>The returned rectangles do not include the bounds of any child elements that might happen to overflow.</li>
+<li>For HTML AREA elements, SVG elements that do not render anything themselves, display:none elements, and generally any elements that are not directly rendered, an empty list is returned.</li>
+<li>Rectangles are returned even for CSS boxes that have empty border-boxes. The left, top, right and bottom coordinates can still be meaningful.</li>
+<li>Fractional pixel offsets are possible.</li>
+</ul>
+<h3>Compatibility notes</h3>
+<p>Internet Explorer 8 and below - <strong>getClientRect</strong> returns a proprietary <code>TextRectangle</code> object. While it is similar to <a href="/docs/css/cssom/ClientRect">ClientRect</a>, it does not have <code>height</code> or <code>width</code> properties and furthermore cannot have any additional properties (including <code>height</code> and <code>width</code>) added to it.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/cssom-view/#dom-range-getclientrects">CSSOM View Module</a></dt>
+<dd>Working Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/DOM/element.getClientRects">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

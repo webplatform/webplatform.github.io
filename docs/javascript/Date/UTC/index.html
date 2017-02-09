@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UTC · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Returns the number of milliseconds between midnight, January 1, 1970 Universal Coordinated Time (UTC) (or GMT) and the specified date." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Date/">Date</a></li><li><a href="/docs/javascript/Date/UTC/">UTC</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>UTC</h1>
+<h2>Summary</h2>
+<p>Returns the number of milliseconds between midnight, January 1, 1970 Universal Coordinated Time (UTC) (or GMT) and the specified date.</p>
+<h2>Syntax</h2>
+<pre><code>Date.UTC( year , month , day [ , hours [, minutes [, seconds [, ms ]]]])
+</code></pre>
+<dl>
+<dt><strong>year</strong></dt>
+<dd>Required. The full year designation is required for cross-century date accuracy. If year is between 0 and 99 is used, then year is assumed to be 1900 + year.
+</dd>
+<dt><strong>month</strong></dt>
+<dd>Required. The month as an integer between 0 and 11 (January to December).
+</dd>
+<dt><strong>day</strong></dt>
+<dd>Required. The date as an integer between 1 and 31.
+</dd>
+<dt><strong>hours</strong></dt>
+<dd>Optional. Must be supplied if minutes is supplied. An integer from 0 to 23 (midnight to 11pm) that specifies the hour.
+</dd>
+<dt><strong>minutes</strong></dt>
+<dd>Optional. Must be supplied if seconds is supplied. An integer from 0 to 59 that specifies the minutes.
+</dd>
+<dt><strong>seconds</strong></dt>
+<dd>Optional. Must be supplied if milliseconds is supplied. An integer from 0 to 59 that specifies the seconds.
+</dd>
+<dt><strong>ms</strong></dt>
+<dd>Optional. An integer from 0 to 999 that specifies the milliseconds.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the <strong>Date.UTC</strong> function.</p>
+<pre><code class="js"><span class="hljs-comment">// Determine the milliseconds per day.</span>
+  <span class="hljs-keyword">var</span> MinMilli = <span class="hljs-number">1000</span> * <span class="hljs-number">60</span>;
+ <span class="hljs-keyword">var</span> HrMilli = MinMilli * <span class="hljs-number">60</span>;
+ <span class="hljs-keyword">var</span> DyMilli = HrMilli * <span class="hljs-number">24</span>;
+
+ <span class="hljs-keyword">var</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">"June 1, 1990"</span>);
+ <span class="hljs-keyword">var</span> year = date.getFullYear();
+ <span class="hljs-keyword">var</span> month = date.getMonth();
+ <span class="hljs-keyword">var</span> day = date.getDay();
+
+ <span class="hljs-keyword">var</span> newDay = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">"January 16, 2020"</span>);
+ <span class="hljs-keyword">var</span> yeartoday = newDay.getUTCFullYear();
+ <span class="hljs-keyword">var</span> monthtoday = newDay.getUTCMonth();
+ <span class="hljs-keyword">var</span> dayofmonthtoday = newDay.getUTCDate();
+
+ <span class="hljs-comment">// Get the milliseconds since 1/1/1970 UTC.</span>
+ <span class="hljs-keyword">var</span> t1 = <span class="hljs-built_in">Date</span>.UTC(year, month - <span class="hljs-number">1</span>, day)
+ <span class="hljs-keyword">var</span> t2 = <span class="hljs-built_in">Date</span>.UTC(yeartoday, monthtoday, dayofmonthtoday);
+
+ <span class="hljs-comment">// Determine the difference in days.</span>
+ <span class="hljs-keyword">var</span> days = (t2 - t1) / DyMilli;
+
+ <span class="hljs-built_in">document</span>.write(days);
+ <span class="hljs-comment">// Output: 10848</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The <strong>Date.UTC</strong> function returns the number of milliseconds between midnight, January 1, 1970 UTC and the supplied date. This return value can be used in the <strong>setTime</strong> method and in the Date object constructor. If the value of an argument is greater than its range, or is a negative number, other stored values are modified accordingly. For example, if you specify 150 seconds, JavaScript redefines that number as two minutes and 30 seconds.</p>
+<p>The difference between the <strong>Date.UTC</strong> function and the Date object constructor that accepts a date is that the <strong>Date.UTC</strong> function assumes UTC, and the Date object constructor assumes local time.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/Date/setTime">setTime Method (Date)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/wz6stk2z(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

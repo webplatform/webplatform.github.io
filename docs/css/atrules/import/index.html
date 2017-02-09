@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>@import · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="Imports an external style sheet." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/atrules/">atrules</a></li><li><a href="/docs/css/atrules/@import/">@import</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>@import</h1>
+<h2>Summary</h2>
+<p>Imports an external style sheet.</p>
+<h2>Examples</h2>
+<p>The following example uses the <strong>@import</strong> rule to import a style sheet. For the example to work, you must replace <code>URL</code> in the example code with the address of a style sheet.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">STYLE</span> <span class="hljs-attribute">TYPE</span>=<span class="hljs-value">"text/css"</span>&gt;</span><span class="css">
+    <span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-function">url</span>(<span class="hljs-string">"URL"</span>)</span>;
+    <span class="hljs-tag">P</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value">blue</span></span></span>}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">STYLE</span>&gt;</span>
+</code></pre>
+<p>The following example, without <code>url()</code>, has the same effect as the previous example.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">STYLE</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>&gt;</span><span class="css">
+    <span class="hljs-at_rule">@<span class="hljs-keyword">import</span> <span class="hljs-string">"URL"</span></span>;
+    <span class="hljs-tag">P</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value">blue</span></span></span>}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">STYLE</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The rule has no default value. The semicolon in the syntax is required; if omitted, the style sheet is not imported properly and an error message is generated. &quot;url()&quot; is optional because there is always a URL following “@import.” The <strong>@import</strong> rule, like the <strong>link</strong> element, links an external style sheet to a document. This helps the Web author establish a consistent “look” across multiple HTML pages. Whereas the <strong>link</strong> element specifies the name of the style sheet to import using its <a href="/docs/html/attributes/href"><strong>href</strong></a> attribute, the <strong>@import</strong> rule specifies the style sheet definition inside a <strong>link</strong> element or a <strong>style</strong> element. In the scripting model, this means the <a href="/docs/css/cssom/styleSheet/owningElement"><strong>owningElement</strong></a> property of the style sheet defined through the <strong>@import</strong> rule is either a <strong>style</strong> or a <strong>link</strong> object. The <strong>@import</strong> rule should occur at the start of a style sheet, before any declarations. You can place <strong>@import</strong> rule statements anywhere within the style sheet definition, but the rules contained within the <strong>@import</strong> rule style sheet are applied to the document before any other rules defined for the containing style sheet. This rule order affects expected rendering. Rules in the style sheet override rules in the imported style sheet.</p>
+<h3>Syntax</h3>
+<p>@import</p>
+<h3>Parameters</h3>
+<dl>
+<dt><em>sUrl</em></dt>
+<dd>String that specifies the URL that references a cascading style sheet.
+</dd>
+</dl>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-cascade/">CSS Cascading and Inheritance Level 3</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/CSS2/cascade.html#at-import">CSS 2.1, section 6.3</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>CSS Layout</h4>
+<ul>
+<li><p><a href="/docs/concepts/mobile_web/responsive_design">Responsive Web Design</a></p></li>
+<li><p><strong>@import</strong></p></li>
+<li><p><a href="/docs/css/properties/align-self">align-self</a></p></li>
+<li><p><a href="/docs/css/properties/background">background</a></p></li>
+<li><p><a href="/docs/css/properties/box-decoration-break">box-decoration-break</a></p></li>
+<li><p><a href="/docs/css/properties/box-flex">box-flex</a></p></li>
+<li><p><a href="/docs/css/properties/box-lines">box-lines</a></p></li>
+<li><p><a href="/docs/css/properties/box-orient">box-orient</a></p></li>
+<li><p><a href="/docs/css/properties/box-pack">box-pack</a></p></li>
+<li><p><a href="/docs/css/properties/box-shadow">box-shadow</a></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/flex-align">flex-align</a></p></li>
+<li><p><a href="/docs/css/properties/flex-item-align">flex-item-align</a></p></li>
+<li><p><a href="/docs/css/properties/flex-line-pack">flex-line-pack</a></p></li>
+<li><p><a href="/docs/css/properties/grid-auto-rows">grid-auto-rows</a></p></li>
+<li><p><a href="/docs/css/properties/grid-definition-columns">grid-definition-columns</a></p></li>
+<li><p><a href="/docs/css/properties/grid-definition-rows">grid-definition-rows</a></p></li>
+<li><p><a href="/docs/css/properties/height">height</a></p></li>
+<li><p><a href="/docs/css/properties/max-width">max-width</a></p></li>
+<li><p><a href="/docs/css/properties/user-modify">user-modify</a></p></li>
+<li><p><a href="/docs/svg/attributes/baseline-shift">baseline-shift</a></p></li>
+</ul>
+<h4>Syntax</h4>
+<ul>
+<li><p><a href="/docs/css/atrules/@charset">@charset</a></p></li>
+<li><p><a href="/docs/css/atrules/@font-face">@font-face</a></p></li>
+<li><p><strong>@import</strong></p></li>
+<li><p><a href="/docs/css/atrules/@keyframes">@keyframes</a></p></li>
+<li><p><a href="/docs/css/atrules/@namespace">@namespace</a></p></li>
+<li><p><a href="/docs/css/atrules/@page">@page</a></p></li>
+<li><p><a href="/docs/css/atrules/@supports">@supports</a></p></li>
+<li><p><a href="/docs/css/reference">CSS reference</a></p></li>
+<li><p><a href="/docs/css/reference/alphabetical">Alphabetical list of CSS reference</a></p></li>
+<li><p><a href="/docs/css/syntax/!important">!important</a></p></li>
+</ul>
+<h3>Related pages</h3>
+<ul>
+<li>imports<a href="/docs/css/cssom/imports">imports</a></li>
+<li>:link<a href="/docs/css/selectors/pseudo-classes/:link">:link</a></li>
+<li>style<a href="/docs/css/cssom/style">style</a></li>
+<li>styleSheet<a href="/docs/css/cssom/styleSheet">styleSheet</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

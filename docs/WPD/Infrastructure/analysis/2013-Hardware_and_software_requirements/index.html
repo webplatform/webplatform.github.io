@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hardware and software requirements · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/analysis/">analysis</a></li><li><a href="/docs/WPD/Infrastructure/analysis/2013-Hardware_and software requirements/">2013-Hardware and software requirements</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Hardware and software requirements</h1>
+<p>Summarizing server requirements described in length in <a href="/docs/WPD/Infrastructure/analysis/2013-Usage_and_future_state">WPD/Infrastructure/analysis/2013-Usage and future state</a> and the execution plan is described in <a href="/docs/WPD/Infrastructure/analysis/2013-Migrating_to_a_new_cloud_provider">WPD/Infrastructure/analysis/2013-Migrating to a new cloud provider</a>.</p>
+<h2>Summary</h2>
+<p>We are using OpenStack hosted Virtual Machines (VM) as our main computing environment. Our VMs are configured using <a href="http://saltstack.com">Salt Stack</a> to manage instance states and various aspects of OpenStack. Salt is similar to Puppet by managing machine state, but it also enables remote execution and can communicate with OpenStack services.</p>
+<p>We require many servers to host our services (memcache, MySQL, NGINX, Varnish, Apache, etc). HTTP requests to these servers are managed by our caching layer, which is provided by <a href="http://fastly.com">Fastly</a>; this provides a caching and CDN service and improves site performance. In the future, we plan to optimize the infrastructure, and implement <em>continuous deployment</em>.</p>
+<p>In terms of hosting and server infrastructure, we want to have more than one hosting provider, to enable redundancy and multiple site replication, and to showcase the power of OpenStack. In the short term, we need only a single major host.</p>
+<h2>Requirements</h2>
+<h3>General</h3>
+<ul>
+<li>Open Stack service environment</li>
+<li>Access to Nova API</li>
+<li>Open to other managed PaaS service, if available. (e.g. managed <em>MySQL</em> or <em>Memcached</em> server)</li>
+<li>See also in <a href="#Current_migration">#Current migration</a> and <a href="#Future">#Future</a></li>
+</ul>
+<h3>Production environment</h3>
+<p>These are our minimum requirements for the live site:</p>
+<ul>
+<li>31 vCPU, 102 Gb vRAM, flavors:
+<ul>
+<li>8x 2 vCPU, 8Gb vRAM (MediaWiki server, slave DB server)</li>
+<li>1x 4 vCPU, 16Gb vRAM (DB)</li>
+<li>4x 2 vCPU, 4Gb vRAM</li>
+<li>3x 1 vCPU, 2Gb vRAM</li>
+</ul></li>
+<li>11 IPv4 Public IP addresses</li>
+</ul>
+<h3>Staging and testing environments</h3>
+<p>In addition to the production environment, we want to have a testing and staging deployment running full time.</p>
+<p>These environments have the same requirements as the production environment, deployed in a separate network, but do not need guaranteed uptime.</p>
+<h2>Our Infrastructure</h2>
+<p>Every machine is managed by a set of states and pillars and admins manages the complete infrastructure through the Salt master.</p>
+<p>This is the current breakdown of machines per service type. Our plan is to eventually slim down the quantity of machines and merge some services together.</p>
+<h3>Distribution by type</h3>
+<h4>Infrastructure servers</h4>
+<ul>
+<li>Salt master (1 VM, Public IP)</li>
+<li>NOC nodes (2 VMs, 1 Public IP)</li>
+<li>Memcache (2 VMs)</li>
+<li>MySQL (2 VMs)</li>
+<li>Storage (2 VMs)</li>
+<li>Backup (1 VM)</li>
+</ul>
+<h4>Frontend servers</h4>
+<p>HTTP servers hosting web application, most of them are behind <a href="http://fastly.com">Fastly</a>, using Varnish (see <a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">WPD/Infrastructure/procedures/Maintaining Varnish or Fastly configuration</a>).</p>
+<ul>
+<li>Analytics (2 VMs, Public IP, <em>not behind</em> Fastly)</li>
+<li>Blog (1 VM, Public IP)</li>
+<li>App server (5 VMs, Public IP)</li>
+<li>Project management web app (1 VM, Public IP)</li>
+</ul>
+<h2>Changes</h2>
+<h3>Current migration</h3>
+<p>What we would appreciate to have in a new environment.</p>
+<ul>
+<li>Storage facility/mount-points
+<ul>
+<li>Note: We are currently using a set of VMs with Gluster FS</li>
+</ul></li>
+<li>Routing to allow downloading from the Internet for the internal only machines</li>
+<li>Images of Ubuntu server 10.04.4 LTS and 12.04 LTS</li>
+</ul>
+<h3>Future</h3>
+<p>Upcoming, and nice to have for the current migration:</p>
+<ul>
+<li>Internal DNS
+<ul>
+<li>Note: We currently spreading a <em>hosts</em> file with Salt stack</li>
+</ul></li>
+<li>Private network to communicate with all the instances
+<ul>
+<li>VPN between sites (iWeb site and Dreamhost site)</li>
+</ul></li>
+<li>Object storage service (Swift/Ceph or similar; not in use, but planned)
+<ul>
+<li>Note: our server setup is using Gluster FS and we are considering switching to use OpenStack’s Swift/Ceph to store our static assets.</li>
+</ul></li>
+</ul>
+<h3>Next year</h3>
+<ul>
+<li>MySQL cluster to be upgraded, multiple site replication</li>
+<li>Implementing continuous deployment, configuring states on a local development machine using Vagrant/VirtualBox, test deployment script in staging/test, then deploy in production.</li>
+<li>Log management analysis tool to help us audit system symptoms</li>
+<li>We plan to leverage <a href="http://en.wikipedia.org/wiki/Edge_Side_Includes">ESI</a> (“Edge Side Include”) for some aspects of the site content.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

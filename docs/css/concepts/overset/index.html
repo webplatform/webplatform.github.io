@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>overset content · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Refers to a situation in which the final region of a region chain is unable to fully display remaining content of a named flow." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/concepts/">concepts</a></li><li><a href="/docs/css/concepts/overset/">overset</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>overset content</h1>
+<h2>Summary</h2>
+<p>Refers to a situation in which the final region of a region chain is unable to fully display remaining content of a named flow.</p>
+<p>The <em>CSS Regions</em> feature allows content to flow dynamically through a series of presentational block elements, known as <a href="/docs/css/concepts/region"><em>regions</em></a>, allowing for complex magazine-style layouts. This <a href="/docs/css/concepts/region_chain"><em>region chain</em></a> may not have enough room to accommodate all the content. In that case, illustrated below as <em>Scenario #2</em>, the final region is in an <strong><em>overset</em></strong> state, as is the <a href="/docs/css/concepts/named_flow"><em>named flow</em></a> that contains all the content.</p>
+<p>Depending on its <a href="/docs/css/properties/region-fragment"><strong>region-fragment</strong></a> property, the final <a href="/docs/css/concepts/region">region’s</a> content may appear as a <a href="/docs/css/concepts/fragment"><em>fragment</em></a>, breaking cleanly as if there were subsequent regions in the chain into which content could flow. Otherwise it may simply <em>overflow</em> the final element: either clipping, spilling, or scrolling past the element’s dimensions as specified by the region’s <a href="/docs/css/properties/overflow"><strong>overflow</strong></a> property.</p>
+<p>There are two ways to programatically detect overset state:</p>
+<ul>
+<li><p>From the content side, if the <a href="/docs/css/concepts/named_flow">named flow’s</a> <a href="/docs/apis/css-regions/NamedFlow/overset"><strong>overset</strong></a> property is <strong>true</strong>, it means that it doesn’t fully display within the <a href="/docs/css/concepts/region_chain">region chain</a>, or that it has not been placed within any <a href="/docs/css/concepts/region">regions</a>.</p></li>
+<li><p>On the presentation side, if the final region element’s <a href="/docs/apis/css-regions/Region/regionOverset"><strong>regionOverset</strong></a> property is <strong>overset</strong>, some of its content can flow into another region if available.</p></li>
+</ul>
+<p>For an overview of CSS Regions, see <a href="/docs/tutorials/css-regions">Using CSS Regions to flow content through a layout</a>.</p>
+<h2>Examples</h2>
+<p>The following example defines a set of content and a region chain into which to present it. Resulting layout scenarios are illustrated in subsequent examples:</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+<span class="hljs-tag">article</span><span class="hljs-class">.content</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">flow-into</span>:<span class="hljs-value"> main</span></span>;}</span>
+<span class="hljs-tag">section</span><span class="hljs-class">.layout</span> &gt; <span class="hljs-tag">div</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">flow-from</span>:<span class="hljs-value"> main</span></span>; }</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- CONTENT --&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"content"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  ...
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Final Content<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- LAYOUT --&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #1<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #2<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #3<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #4<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+</pre>
+<p><em>Scenario #1:</em> If the region provides enough area, the final content element appears within the final region. The final <strong>div</strong> element’s <a href="/docs/apis/css-regions/Region/regionOverset"><strong>regionOverset</strong></a> property returns <strong>fit</strong>. Note that this is <em>not</em> valid DOM structure, and simply illustrates how content <a href="/docs/css/concepts/fragment"><em>fragments</em></a> flow dynamically within the region chain.</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"content"</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...#2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Final Content<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+             <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+</pre>
+<p><em>Scenario #2:</em> This shows the same situation, but with not enough area in the region chain to display <em>overset</em> content. The final <strong>div</strong> element’s <a href="/docs/apis/css-regions/Region/regionOverset"><strong>regionOverset</strong></a> property returns <strong>overset</strong>. The named flow’s <a href="/apis/css-regions/NamedFlow/overset"><strong>overset</strong></a> property likewise returns <strong>true</strong>.</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"content"</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...#2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- OVERSET CONTENT, DOES NOT DISPLAY:
+              &lt;p&gt;Final Content&lt;/p&gt;
+             &lt;/article&gt;
+--&gt;</span>
+</code></pre>
+</pre>
+<p><em>Scenario #3:</em> In this example, there is <em>not enough</em> content to fill the region chain. The final <strong>div</strong> element’s <a href="/docs/apis/css-regions/Region/regionOverset"><strong>regionOverset</strong></a> property returns <strong>empty</strong>.</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"content"</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...#2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              ...
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Final Content<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+             <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              <span class="hljs-comment">&lt;!-- EMPTY REGION --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+</pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-regions/">CSS Regions Module Level 1</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Regions</h4>
+<ul>
+<li><p><a href="/docs/apis/css-regions">CSS Regions API</a></p></li>
+<li><p><a href="/docs/apis/css-regions/CSSRegionStyleRule">CSSRegionStyleRule</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow">NamedFlow</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/firstEmptyRegionIndex">firstEmptyRegionIndex</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getContent">getContent()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getRegions">getRegions()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getRegionsByContent">getRegionsByContent()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/name">name</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/overset">overset</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/regionfragmentchange">regionfragmentchange</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/regionoversetchange">regionoversetchange</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlowCollection">NamedFlowCollection</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlowCollection/namedItem">namedItem()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region">Region</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/getComputedRegionStyle">getComputedRegionStyle()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/getRegionFlowRanges">getRegionFlowRanges()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/regionOverset">regionOverset</a></p></li>
+<li><p><a href="/docs/css/atrules/@region">@region</a></p></li>
+<li><p><a href="/docs/css/concepts/fragment">content fragments</a></p></li>
+<li><p><a href="/docs/css/concepts/named_flow">named flows</a></p></li>
+<li><p><strong>overset content</strong></p></li>
+<li><p><a href="/docs/css/concepts/region">regions</a></p></li>
+<li><p><a href="/docs/css/concepts/region_chain">region chains</a></p></li>
+<li><p><a href="/docs/css/properties/break-after">break-after</a></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/break-inside">break-inside</a></p></li>
+<li><p><a href="/docs/css/properties/flow-from">flow-from</a></p></li>
+<li><p><a href="/docs/css/properties/flow-into">flow-into</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li>W3C editor’s draft: <a href="http://dev.w3.org/csswg/css3-regions/">CSS Regions Module Level 3</a></li>
+<li>Adobe Web Standards: <a href="http://html.adobe.com/webstandards/cssregions">CSS Regions</a></li>
+<li>Adobe Developer’s Network: <a href="http://www.adobe.com/devnet/html5/articles/css3-regions.html">CSS3 Regions: Rich page layout with HTML and CSS3</a></li>
+<li><a href="http://adobe.github.com/web-platform/samples/css-regions">Sample pages</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

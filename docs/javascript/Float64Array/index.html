@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Float64Array · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="A typed array of 64-bit float values. The contents are initialized to 0. If the requested number of bytes could not be allocated an exception is raised." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Float64Array/">Float64Array</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Float64Array</h1>
+<h2>Summary</h2>
+<p>A typed array of 64-bit float values. The contents are initialized to 0. If the requested number of bytes could not be allocated an exception is raised.</p>
+<h2>Syntax</h2>
+<pre><code>float64Array = new Float64Array( length );
+
+float64Array = new Float64Array( array );
+
+float64Array = new Float64Array( buffer , byteOffset , length );
+</code></pre>
+<dl>
+<dt><strong>float64Array</strong></dt>
+<dd>Required. The variable name to which the <strong>Float64Array</strong> object is assigned.
+</dd>
+<dt><strong>length</strong></dt>
+<dd>Specifies the length (in bytes) of the array.
+</dd>
+<dt><strong>array</strong></dt>
+<dd>The array (or typed array) that is contained in this array… The contents are initialized to the contents of the given array or typed array, with each element converted to the Float64 type.
+</dd>
+<dt><strong>buffer</strong></dt>
+<dd>The ArrayBuffer that the Float64Array represents.
+</dd>
+<dt><strong>byteOffset</strong></dt>
+<dd>Optional. Specifies the offset in bytes from the start of the buffer at which the Float64Array should begin.
+</dd>
+<dt><strong>length</strong></dt>
+<dd>The length of the array.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example shows how to use a Float64Array object to process the binary data acquired from an XmlHttpRequest:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> req = <span class="hljs-keyword">new</span> XMLHttpRequest();
+     req.open(<span class="hljs-string">'GET'</span>, <span class="hljs-string">"http://www.example.com"</span>);
+     req.responseType = <span class="hljs-string">"arraybuffer"</span>;
+     req.send();
+
+     req.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+         <span class="hljs-keyword">if</span> (req.readyState === <span class="hljs-number">4</span>) {
+             <span class="hljs-keyword">var</span> buffer = req.response;
+             <span class="hljs-keyword">var</span> dataview = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DataView</span>(buffer);
+             <span class="hljs-keyword">var</span> ints = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Float64Array</span>(buffer.byteLength / <span class="hljs-number">8</span>);
+             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; ints.length; i++) {
+                 ints[i] = dataview.getFloat64(i * <span class="hljs-number">8</span>);
+             }
+         alert(ints[<span class="hljs-number">10</span>]);
+         }
+     }
+</code></pre>
+<h2>Constants</h2>
+<p>The following table lists the constants of the <strong>Float64Array</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Constant</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/BYTES_PER_ELEMENT">BYTES_PER_ELEMENT Constant</a></td><td style="text-align:left">The size in bytes of each element in the array.</td></tr>
+</tbody>
+</table>
+<h2>Properties</h2>
+<p>The following table lists the constants of the <strong>Float64Array</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/byteLength">buffer Property</a></td><td style="text-align:left">Read-only. Gets the ArrayBuffer that is referenced by this array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/byteLength">byteLength Property</a></td><td style="text-align:left">Read-only. The length of this array from the start of its ArrayBuffer, in bytes, as fixed at construction time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/length">byteOffset Property</a></td><td style="text-align:left">Read-only. The offset of this array from the start of its ArrayBuffer, in bytes, as fixed at construction time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/length">length Property</a></td><td style="text-align:left">The length of the array.</td></tr>
+</tbody>
+</table>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>Float64Array</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/get">get Method</a></td><td style="text-align:left">Omittable. Gets the element at the specified index.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/set">set Method (Float64Array)</a></td><td style="text-align:left">Sets a value or an array of values.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Float64Array/subarray">subarray Method (Float64Array)</a></td><td style="text-align:left">Gets a new Float64Array view of the ArrayBuffer store for this array.</td></tr>
+</tbody>
+</table>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/br212931(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

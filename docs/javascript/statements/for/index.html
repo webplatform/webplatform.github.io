@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>for · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Executes a block of statements for as long as a specified condition is true." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/statements/">statements</a></li><li><a href="/docs/javascript/statements/for/">for</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>for</h1>
+<h2>Summary</h2>
+<p>Executes a block of statements for as long as a specified condition is true.</p>
+<h2>Syntax</h2>
+<pre><code>for ([ initialization ]; [ test ]; [ increment ]) {
+    statement
+}
+</code></pre>
+<dl>
+<dt><strong>initialization</strong></dt>
+<dd>Optional. An expression. This expression is executed only once, before the loop is executed.
+</dd>
+<dt><strong>test</strong></dt>
+<dd>Optional. A Boolean expression. If test is true , statement is executed. If test if false , the loop is terminated.
+</dd>
+<dt><strong>increment</strong></dt>
+<dd>Optional. An expression. The increment expression is executed at the end of every pass through the loop.
+</dd>
+<dt><strong>statement</strong></dt>
+<dd>Optional. One or more statements to be executed if test is <strong>true</strong>. Can be a compound statement.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>In the following example, the for statement executes the enclosed statements as follows:</p>
+<ul>
+<li>First, the initial value of the variable <code>i</code> is evaluated.</li>
+<li>Then, as long as the value of <code>i</code> is less than or equal to 9, the <code>document.write</code> statements are executed and <code>i</code> is reevaluated.</li>
+<li>When <code>i</code> is greater than 9, the condition becomes false and control is transferred outside the loop.</li>
+</ul>
+<pre><code class="js"><span class="hljs-comment">// i is set to 0 at the start and is incremented by 1 at the</span>
+ <span class="hljs-comment">// end of each iteration.</span>
+ <span class="hljs-comment">// The loop terminates when i is not less than or equal to</span>
+ <span class="hljs-comment">// 9 before a loop iteration.</span>
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">9</span>; i++) {
+    <span class="hljs-built_in">document</span>.write (i);
+    <span class="hljs-built_in">document</span>.write (<span class="hljs-string">" "</span>);
+ }
+
+ <span class="hljs-comment">// Output: 0 1 2 3 4 5 6 7 8 9</span>
+</code></pre>
+<p>All of the expressions of the for statement are optional. In the following example, the for statements create an infinite loop, and a break statement is used to exit the loop.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>;
+ <span class="hljs-keyword">for</span> (;;) {
+     <span class="hljs-keyword">if</span> (j &gt;= <span class="hljs-number">5</span>) {
+         <span class="hljs-keyword">break</span>;
+     }
+     j++;
+     <span class="hljs-built_in">document</span>.write (j + <span class="hljs-string">" "</span>);
+ }
+
+ <span class="hljs-comment">// Output: 1 2 3 4 5</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>You usually use a for loop when the loop is to be executed a known number of times. A for loop is useful for iterating over arrays and for performing sequential processing.</p>
+<p>The test of a conditional expression occurs before the execution of the loop, so a for statement executes zero or more times.</p>
+<p>On any line in a for loop statement block, you can use the break statement to exit the loop, or you can use the continue statement to transfer control to the next iteration of the loop.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/statements/for_in">for…in Statement</a></li>
+<li><a href="/docs/javascript/statements/while">while Statement</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/s1cyybdf(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

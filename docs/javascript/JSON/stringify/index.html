@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>stringify · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Converts a JavaScript value to a JavaScript Object Notation (JSON) string." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/JSON/">JSON</a></li><li><a href="/docs/javascript/JSON/stringify/">stringify</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>stringify</h1>
+<h2>Summary</h2>
+<p>Converts a JavaScript value to a JavaScript Object Notation (JSON) string.</p>
+<h2>Syntax</h2>
+<pre><code>JSON.stringify( value [ , replacer] [ , space] )
+</code></pre>
+<dl>
+<dt><strong>value</strong></dt>
+<dd>Required. A JavaScript value, usually an object or array, to be converted.
+</dd>
+<dt><strong>replacer</strong></dt>
+<dd>Optional. A function or array that transforms the results.If replacer is a function, JSON.stringify calls the function, passing in the key and value of each member. The return value is used instead of the original value. If the function returns undefined , the member is excluded. The key for the root object is an empty string: &quot;&quot;.If replacer is an array, only members with key values in the array will be converted. The order in which the members are converted is the same as the order of the keys in the array. The replacer array is ignored when the value argument is also an array.
+</dd>
+<dt><strong>space</strong></dt>
+<dd>Optional. Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.If space is omitted, the return-value text is generated without any extra white space.If space is a number, the return-value text is indented with the specified number of white spaces at each level. If space is greater than 10, text is indented 10 spaces.If space is a non-empty string, such as '\t’, the return-value text is indented with the characters in the string at each level.If space is a string that is longer than 10 characters, the first 10 characters are used.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>A string that contains the JSON text.</p>
+<h2>Examples</h2>
+<p>This example uses JSON.stringify to convert the <code>contact</code> object to JSON text. The <code>memberfilter</code> array is defined so that only the <code>surname</code> and <code>phone</code> members are converted. The <code>firstname</code> member is omitted.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> contact = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+ contact.firstname = <span class="hljs-string">"Jesper"</span>;
+ contact.surname = <span class="hljs-string">"Aaberg"</span>;
+ contact.phone = [<span class="hljs-string">"555-0100"</span>, <span class="hljs-string">"555-0120"</span>];
+
+ <span class="hljs-keyword">var</span> memberfilter = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>();
+ memberfilter[<span class="hljs-number">0</span>] = <span class="hljs-string">"surname"</span>;
+ memberfilter[<span class="hljs-number">1</span>] = <span class="hljs-string">"phone"</span>;
+ <span class="hljs-keyword">var</span> jsonText = <span class="hljs-built_in">JSON</span>.stringify(contact, memberfilter, <span class="hljs-string">"\t"</span>);
+ <span class="hljs-built_in">document</span>.write(jsonText);
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// { "surname": "Aaberg", "phone": [ "555-0100", "555-0120" ] }</span>
+</code></pre>
+<p>This example uses JSON.stringify with an array. The <code>replaceToUpper</code> function converts every string in the array to uppercase.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> continents = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>();
+ continents[<span class="hljs-number">0</span>] = <span class="hljs-string">"Europe"</span>;
+ continents[<span class="hljs-number">1</span>] = <span class="hljs-string">"Asia"</span>;
+ continents[<span class="hljs-number">2</span>] = <span class="hljs-string">"Australia"</span>;
+ continents[<span class="hljs-number">3</span>] = <span class="hljs-string">"Antarctica"</span>;
+ continents[<span class="hljs-number">4</span>] = <span class="hljs-string">"North America"</span>;
+ continents[<span class="hljs-number">5</span>] = <span class="hljs-string">"South America"</span>;
+ continents[<span class="hljs-number">6</span>] = <span class="hljs-string">"Africa"</span>;
+
+ <span class="hljs-keyword">var</span> jsonText = <span class="hljs-built_in">JSON</span>.stringify(continents, replaceToUpper);
+
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">replaceToUpper</span>(<span class="hljs-params">key, value</span>) </span>{
+     <span class="hljs-keyword">return</span> value.toString().toUpperCase();
+ }
+
+ <span class="hljs-comment">//Output:</span>
+ <span class="hljs-comment">// "EUROPE,ASIA,AUSTRALIA,ANTARCTICA,NORTH AMERICA,SOUTH AMERICA,AFRICA"</span>
+</code></pre>
+<p>This example uses the toJSON method to convert string values to uppercase.</p>
+<pre><code class="js">var contact = new Object();
+ contact.firstname = "Jesper";
+ contact.surname = "Aaberg";
+ contact.phone = ["555-0100", "555-0120"];
+
+ contact.toJSON = function(key)
+  {
+     var replacement = new Object();
+     for (var val in this)
+     {
+         if (typeof (this[val]) === 'string')
+             replacement[val] = this[val].toUpperCase();
+         else
+             replacement[val] = this[val]
+     }
+     return replacement;
+ };
+
+ var jsonText = JSON.stringify(contact);
+ document.write(jsonText);
+
+ // Output:
+ {"firstname":"JESPER","surname":"AABERG","phone":["555-0100","555-0120"]}
+
+
+
+ '{"firstname":"JESPER","surname":"AABERG","phone":["555-0100","555-0120"]}'
+ */
+</code></pre>
+<h2>Remarks</h2>
+<p>If value has a toJSON method, the JSON.stringify function uses the return value of that method. If the return value of the toJSON method is undefined , the member is not converted. This enables an object to determine its own JSON representation.</p>
+<p>Values that do not have JSON representations, such as undefined , will not be converted. In objects, they will be dropped. In arrays, they will be replaced with null.</p>
+<p>String values begin and end with a quotation mark. All Unicode characters may be enclosed in the quotation marks except for the characters that must be escaped by using a backslash. The following characters must be preceded by a backslash:</p>
+<ul>
+<li>Quotation mark (&quot;)</li>
+<li>Backslash (\)</li>
+<li>Backspace (b)</li>
+<li>Formfeed (f)</li>
+<li>Newline (n)</li>
+<li>Carriage return ®</li>
+<li>Horizontal tab (t)</li>
+<li>Four-hexadecimal-digits (uhhhh)</li>
+</ul>
+<p>During the serialization process, if a toJSON method exists for the value argument, JSON.stringify first calls the toJSON method. If it does not exist, the original value is used. Next, if a replacer argument is provided, the value (original value or toJSON return-value) is replaced with the return-value of the replacer argument. Finally, white spaces are added to the value based on the optional space argument to generate the final JSON text.</p>
+<h2>Exceptions</h2>
+<table>
+<thead>
+<tr><th style="text-align:left">Exception</th><th style="text-align:left">Condition</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Invalid replacer argument</td><td style="text-align:left">The replacer argument is not a function or an array.</td></tr>
+<tr><td style="text-align:left">Circular reference in value argument not supported</td><td style="text-align:left">The value argument contains a circular reference.</td></tr>
+</tbody>
+</table>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/JSON/parse">JSON.parse Function</a></li>
+<li><a href="/docs/javascript/Date/toJSON">toJSON Method (Date)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/cc836459(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

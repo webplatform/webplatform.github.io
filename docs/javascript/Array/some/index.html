@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>some · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Determines whether the specified callback function returns true for any element of an array." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Array/">Array</a></li><li><a href="/docs/javascript/Array/some/">some</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>some</h1>
+<h2>Summary</h2>
+<p>Determines whether the specified callback function returns true for any element of an array.</p>
+<h2>Syntax</h2>
+<pre><code>some( callbackfn [, thisArg ])
+</code></pre>
+<dl>
+<dt><strong>callbackfn</strong></dt>
+<dd>Required. A function that accepts up to three arguments. The <strong>some</strong> method calls the callbackfn function for each element in array1 until the callbackfn returns true , or until the end of the array.
+</dd>
+<dt><strong>thisArg</strong></dt>
+<dd>Optional. An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>true if the callbackfn function returns true for any array element; otherwise, false.</p>
+<h2>Examples</h2>
+<p>The following example uses the <strong>some</strong> method to find out if any elements in an array are even.</p>
+<pre><code class="js"><span class="hljs-comment">// The callback function.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CheckIfEven</span>(<span class="hljs-params">value, index, ar</span>) </span>{
+    <span class="hljs-keyword">if</span> (value % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+}
+
+<span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">15</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">22</span>];
+
+<span class="hljs-keyword">var</span> evens = numbers.some(CheckIfEven);
+<span class="hljs-built_in">document</span>.write(evens);
+
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// true</span>
+</code></pre>
+<p>The following example shows how to use the thisArg parameter, which specifies an object to which the this keyword can refer. It checks whether any of the numbers in an array are outside the range provided by an object passed</p>
+<pre><code class="js"><span class="hljs-comment">// Create a function that returns true if the value is</span>
+<span class="hljs-comment">// outside the range.</span>
+<span class="hljs-keyword">var</span> isOutsideRange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+    <span class="hljs-keyword">return</span> value &lt; <span class="hljs-keyword">this</span>.minimum || value &gt; <span class="hljs-keyword">this</span>.maximum;
+}
+
+<span class="hljs-comment">// Create an array of numbers.</span>
+<span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">6</span>, <span class="hljs-number">12</span>, <span class="hljs-number">16</span>, <span class="hljs-number">22</span>, -<span class="hljs-number">12</span>];
+
+<span class="hljs-comment">// The range object is to be the 'this' object.</span>
+<span class="hljs-keyword">var</span> range = { minimum: <span class="hljs-number">10</span>, maximum: <span class="hljs-number">20</span> };
+
+<span class="hljs-built_in">document</span>.write(numbers.some(isOutsideRange, range));
+
+<span class="hljs-comment">// Output: true</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The <strong>some</strong> method calls the callbackfn function on each array element, in ascending index order, until the callbackfn function returns true. If an element that causes callbackfn to return true is found, the some method immediately returns true. If the callback does not return true on any element, the some method returns false.</p>
+<p>The callback function is not called for missing elements of the array.</p>
+<p>In addition to array objects, the <strong>some</strong> method can be used by any object that has a length property and that has numerically indexed property names.</p>
+<p><strong>Note</strong> – You can use the <a href="/docs/javascript/Array/every">every Method (Array)</a> to check whether the callback function returns true for all the elements of an array.</p>
+<p>The syntax of the callback function is as follows:</p>
+<p><code>function callbackfn(value, index, array1)</code></p>
+<p>You can declare the callback function with up to three parameters.</p>
+<p>The following table lists the callback function parameters.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Callback parameter</th><th style="text-align:left">Definition</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">value</td><td style="text-align:left">The value of the array element.</td></tr>
+<tr><td style="text-align:left">index</td><td style="text-align:left">The numeric index of the array element.</td></tr>
+<tr><td style="text-align:left">array1</td><td style="text-align:left">The array object that contains the element.</td></tr>
+</tbody>
+</table>
+<p>The array object can be modified by the callback function.</p>
+<p>The following table describes the results of modifying the array object after the <strong>some</strong> method starts.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Condition after the <strong>some</strong> method starts</th><th style="text-align:left">Element passed to callback function?</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Element is added beyond the original length of the array.</td><td style="text-align:left">No.</td></tr>
+<tr><td style="text-align:left">Element is added to fill in a missing element of the array.</td><td style="text-align:left">Yes, if that index has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is changed.</td><td style="text-align:left">Yes, if that element has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is deleted from the array.</td><td style="text-align:left">No, unless that element has already been passed to the callback function.</td></tr>
+</tbody>
+</table>
+<h2>Exceptions</h2>
+<p>If the callbackfn argument is not a function object, a <strong>TypeError</strong> exception is thrown.</p>
+<h2>See also</h2>
+<h3>Specification</h3>
+<p>[15.4.4.17 Array.prototype.some ( callbackfn <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.17"> , thisArg</a> )] ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff679978(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

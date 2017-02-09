@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>XMLHttpRequest · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="XMLHttpRequest allows JavaScript to make HTTP requests, and is the most basic part of AJAX. It allows a website to dynamically request more content, without reloading the entire page." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/xhr/">xhr</a></li><li><a href="/apis/xhr/XMLHttpRequest/">XMLHttpRequest</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>XMLHttpRequest</h1>
+<h2>Summary</h2>
+<p>XMLHttpRequest allows JavaScript to make HTTP requests, and is the most basic part of AJAX. It allows a website to dynamically request more content, without reloading the entire page.</p>
+<h2>Overview</h2>
+<p>The <strong>XMLHttpRequest</strong> property is available on the <strong>window</strong> object.</p>
+<pre><code>var xhr = new XMLHttpRequest();
+</code></pre>
+<p>With the <strong>XMLHttpRequest</strong> object, clients can make HTTP requests to a URL without reloading the entire page. Despite the term “XML” in the name, this object can be used to retrieve any type of data.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/readyState">readyState</a></dt>
+<dd>Returns the current state of the XMLHttpRequest.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/response">response</a></dt>
+<dd>Returns the response entity body, which is the fragment of the entity body of the response received so far (if LOADING) or the complete entity body of the response (if DONE).
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/responseText">responseText</a></dt>
+<dd>Returns the text response entity body, a string representing the response entity body, which is the fragment of the entity body of the response received so far (if LOADING) or the complete entity body of the response (if DONE).
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/responseType">responseType</a></dt>
+<dd>Returns or sets the format the response will be returned in.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/responseXML">responseXML</a></dt>
+<dd>Returns the response to the request as a DOM Document object, or null if the request was unsuccessful, has not yet been sent, or cannot be parsed as XML or HTML.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/status">status</a></dt>
+<dd>Returns the HTTP result code (status) of the response to the request.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/statusText">statusText</a></dt>
+<dd>Returns the HTTP status text.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/timeout">timeout</a></dt>
+<dd>Returns or sets the number of milliseconds a request can take before automatically being terminated.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/upload">upload</a></dt>
+<dd>Returns the associated XMLHttpRequestUpload object. It can be used to gather transmission information when data is transferred to a server.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/withCredentials">withCredentials</a></dt>
+<dd>Returns or sets whether cross-site Access-Control requests should be made using credentials such as cookies or authorization headers.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/abort">abort</a></dt>
+<dd>Stops an asynchronous XMLHttpRequest in progress.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/getAllResponseHeaders">getAllResponseHeaders</a></dt>
+<dd>Returns all the response headers as a string, or null if no response has been received.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/getResponseHeader">getResponseHeader</a></dt>
+<dd>Returns the string containing the text of the specified header, or null if the response has not been received or the header does not exist.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/open">open</a></dt>
+<dd>Initializes an XMLHttpRequest.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/overrideMimeType">overrideMimeType</a></dt>
+<dd>Overrides the MIME type returned by the server.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/send">send</a></dt>
+<dd>Initiates the request defined by the XMLHttpRequest.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/setRequestHeader">setRequestHeader</a></dt>
+<dd>Sets the value of an XMLHttpRequest header.
+</dd>
+</dl>
+<h2>Events</h2>
+<dl>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/abort-event">abort</a></dt>
+<dd>When the request has been aborted. For instance, by invoking the abort() method.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/error">error</a></dt>
+<dd>When the request has failed.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/load">load</a></dt>
+<dd>When the request has successfully completed.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/loadend">loadend</a></dt>
+<dd>When the request has completed (either in success or failure).
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/loadstart">loadstart</a></dt>
+<dd>When the request starts.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/progress">progress</a></dt>
+<dd>While sending and loading data.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/readystatechange">readystatechange</a></dt>
+<dd>Fires whenever the readyState of the request changes. Mostly used to determine whether the body of the response is available for handling.
+</dd>
+<dt><a href="/docs/apis/xhr/XMLHttpRequest/timeout-event">timeout</a></dt>
+<dd>When the author specified timeout has passed before the request could complete.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following script demonstrates how to create and use the <strong>XMLHttpRequest</strong> object. For best client-side performance, the request is asynchronous and uses an <strong>onreadystatechange</strong> event handler to process the data returned by the call.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (xhr.readyState === <span class="hljs-number">4</span> <span class="hljs-comment">/* complete */</span>) {
+    <span class="hljs-keyword">if</span> (xhr.status === <span class="hljs-number">200</span>) {
+            <span class="hljs-built_in">console</span>.log(xhr.responseText);
+        }
+    }
+}
+<span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+xhr.open(<span class="hljs-string">"GET"</span>, <span class="hljs-string">"http://localhost/test.xml"</span>, <span class="hljs-literal">true</span>);
+xhr.onreadystatechange = handler;
+xhr.send();
+</code></pre>
+<p>This script demonstrates how to access resources that sits on a different domain. Example: siteA.com gets resource from siteB.com</p>
+<pre><code class="js"><span class="hljs-comment">// Create the XHR object.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createCORSRequest</span>(<span class="hljs-params">method, url</span>) </span>{
+  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+  <span class="hljs-keyword">if</span> (<span class="hljs-string">"withCredentials"</span> <span class="hljs-keyword">in</span> xhr) {
+    <span class="hljs-comment">// XHR for Chrome/Firefox/Opera/Safari.</span>
+    xhr.open(method, url, <span class="hljs-literal">true</span>);
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> XDomainRequest != <span class="hljs-string">"undefined"</span>) {
+    <span class="hljs-comment">// XDomainRequest for IE 9 and earlier.</span>
+    xhr = <span class="hljs-keyword">new</span> XDomainRequest();
+    xhr.open(method, url);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// CORS not supported.</span>
+    xhr = <span class="hljs-literal">null</span>;
+  }
+  <span class="hljs-keyword">return</span> xhr;
+}
+
+<span class="hljs-comment">// Helper method to parse the title tag from the response.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTitle</span>(<span class="hljs-params">text</span>) </span>{
+  <span class="hljs-keyword">return</span> text.match(<span class="hljs-string">'&lt;title&gt;(.*)?&lt;/title&gt;'</span>)[<span class="hljs-number">1</span>];
+}
+
+<span class="hljs-comment">// Make the actual CORS request.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeCorsRequest</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// All HTML5 Rocks properties support CORS.</span>
+  <span class="hljs-keyword">var</span> url = <span class="hljs-string">'http://updates.html5rocks.com'</span>;
+
+  <span class="hljs-keyword">var</span> xhr = createCORSRequest(<span class="hljs-string">'GET'</span>, url);
+  <span class="hljs-keyword">if</span> (!xhr) {
+    alert(<span class="hljs-string">'CORS not supported'</span>);
+    <span class="hljs-keyword">return</span>;
+  }
+
+  <span class="hljs-comment">// Response handlers.</span>
+  xhr.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> text = xhr.responseText;
+    <span class="hljs-keyword">var</span> title = getTitle(text);
+    alert(<span class="hljs-string">'Response from CORS request to '</span> + url + <span class="hljs-string">': '</span> + title);
+  };
+
+  xhr.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    alert(<span class="hljs-string">'Woops, there was an error making the request.'</span>);
+  };
+
+  xhr.send();
+}
+</code></pre>
+<h2>Usage</h2>
+<pre><code> The XMLHttpRequest object can be used to make either same-origin or cross-origin requests.
+</code></pre>
+<p>Same-origin requests are subject to the browser’s same-origin policy: <a href="http://en.wikipedia.org/wiki/Same_origin_policy">http://en.wikipedia.org/wiki/Same_origin_policy</a> This basically says that an XMLHttpRequest instance can make a request to a resource that lives on the same origin as the calling page.</p>
+<p>Requests that go across origins (for example, a request from originA.com to originB.com) can also be made. But in order for them to work, the destination server must support Cross-Origin Resource Sharing (CORS, <a href="http://www.w3.org/TR/cors/">http://www.w3.org/TR/cors/</a>). These are a set of headers included in the response that indicate how a resource can be accessed across domains.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/XMLHttpRequest/">W3C XMLHttpRequest Specification</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a></dt>
+<dd>W3C Candidate Recommendation 29 January 2013
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>XHR</h4>
+<ul>
+<li><p><a href="/docs/apis/xhr">XMLHttpRequest (XHR) API</a></p></li>
+<li><p><strong>XMLHttpRequest</strong></p></li>
+<li><p><a href="/docs/dom/FormData">FormData</a></p></li>
+<li><p><a href="/docs/tutorials/MSEPrimer">MSEPrimer</a></p></li>
+<li><p><a href="/docs/tutorials/file_xhr">file xhr</a></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/en/tutorials/cors/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

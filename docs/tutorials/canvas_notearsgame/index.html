@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to HTML5 games · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An intermediate tutorial for creating games using HTML5 and Canvas." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/canvas_notearsgame/">canvas notearsgame</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Introduction to HTML5 games</h1>
+<p><strong>By Daniel X Moore</strong><br>
+Originally published Feb 1, 2011</p>
+<h2>Summary</h2>
+<p>An intermediate tutorial for creating games using HTML5 and Canvas.</p>
+<h2>Introduction</h2>
+<p>This tutorial shows you how to build a game using HTML5 and the &lt;canvas&gt; element, and assumes you have an intermediate level of knowledge of JavaScript.</p>
+<p><em>Space Demo main screen</em> <img src="//static.webplatform.org/3/35/space-demo.png" alt="space-demo.png"></p>
+<p>Before you get started, try <a href="http://strd6.com/space_demo/">playing the game</a> and <a href="http://strd6.com/wp-content/uploads/2010/12/space_demo.zip">viewing the source code for the game</a>.</p>
+<h2>Creating the canvas</h2>
+<p>To draw objects on the page, we’ll need to first create a canvas. Because this is a No Tears guide, we’ll use jQuery.</p>
+<pre><code>var CANVAS_WIDTH = 480;
+var CANVAS_HEIGHT = 320;
+
+var canvasElement = $(&quot;&lt;canvas width='&quot; + CANVAS_WIDTH +
+                      &quot;' height='&quot; + CANVAS_HEIGHT + &quot;'&gt;&lt;/canvas&gt;&quot;);
+var canvas = canvasElement.get(0).getContext(&quot;2d&quot;);
+canvasElement.appendTo('body');
+</code></pre>
+<h2>Game loop</h2>
+<p>To simulate the appearance of smooth and continuous gameplay, let’s update the game and redraw the screen slightly faster than the human mind and eye can perceive.</p>
+<pre><code>var FPS = 30;
+setInterval(function() {
+  update();
+  draw();
+}, 1000/FPS);
+</code></pre>
+<p>For now we can leave the update() and draw() methods blank, since <code>setInterval()</code>, calls them periodically.</p>
+<pre><code>function update() { ... }
+function draw() { ... }
+</code></pre>
+<h2>Hello world</h2>
+<p>Now, let’s update the draw() method to draw text on the screen.</p>
+<pre><code>function draw() {
+  canvas.fillStyle = &quot;#000&quot;; // Set color to black
+  canvas.fillText(&quot;Sup Bro!&quot;, 50, 50);
+}
+</code></pre>
+<p>Pro Tip: Be sure to run your app after making changes. It’s much easier to debug a few lines of code than a completed app. What you see now is pretty cool for stationary text. Since we have a game loop already set up, though, let’s enhance this text by adding movement.</p>
+<pre><code>var textX = 50;
+var textY = 50;
+
+function update() {
+  textX += 1;
+  textY += 1;
+}
+
+function draw() {
+  canvas.fillStyle = &quot;#000&quot;;
+  canvas.fillText(&quot;Sup Bro!&quot;, textX, textY);
+}
+</code></pre>
+<p>Try running the app now. You should see the text move, but you may be seeing some odd results. Because we are not clearing the screen, the previous drawings are being left behind.</p>
+<p>Let’s add code to the draw() method to clear the screen.</p>
+<pre><code>function draw() {
+  canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  canvas.fillStyle = &quot;#000&quot;;
+  canvas.fillText(&quot;Sup Bro!&quot;, textX, textY);
+}
+</code></pre>
+<p>Now that you’ve created a canvas and added text that moves around on the screen, let’s turn this into a game with players and interaction between the players.</p>
+<h2>Creating the player</h2>
+<p>Create an object to hold the player data and be responsible for things like drawing.</p>
+<pre><code>var player = {
+  color: &quot;#00A&quot;,
+  x: 220,
+  y: 270,
+  width: 32,
+  height: 32,
+  draw: function() {
+    canvas.fillStyle = this.color;
+    canvas.fillRect(this.x, this.y, this.width, this.height);
+  }
+};
+</code></pre>
+<p>At the moment, we’re using a simple colored rectangle to represent the player. When we draw the game, we’ll clear the canvas and draw the player.</p>
+<pre><code>function draw() {
+  canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  player.draw();
+}
+</code></pre>
+<h2>Keyboard controls</h2>
+<h3>Using jQuery Hotkeys</h3>
+<p>The <a href="https://github.com/tzuryby/jquery.hotkeys">jQuery Hotkeys plugin</a> makes key handling across browsers very easy. Instead of using difficult-to-use cross-browser <code>keyCode</code> and <code>charCode</code>, we can bind events like so:</p>
+<pre><code>$(document).bind(&quot;keydown&quot;, &quot;left&quot;, function() { ... });
+</code></pre>
+<p>By binding events, we don’t have to worry specifically about key and code combinations. Instead, we can use jQuery Hotkeys to add events like “when the player presses the Up arrow key, move forward.”</p>
+<h3>Player movement</h3>
+<p>Because the way JavaScript handles keyboard events is completely event-driven, there is no built-in query for checking whether a key is pressed. To address this, we’ll create our own query.</p>
+<p>Pro Tip: We don’t use an event-driven way of handling keys because the keyboard repeat rate varies across systems. Since these rates are not bound to the timing of the game loop, gameplay could vary greatly from system to system. To create a consistent experience, it is important to tightly integrate the keyboard event detection with the game loop.</p>
+<p>With the source code, I’ve included a 16-line JavaScript wrapper called key_status.js that will make event querying available. With this wrapper, you can query the status of a key at any time. For example, you can check <code>keydown.left</code>.</p>
+<p>Now that we have the ability to query the status of keys, we can use this simple update() method to move the player on the canvas.</p>
+<pre><code>function update() {
+  if (keydown.left) {
+    player.x -= 2;
+  }
+
+  if (keydown.right) {
+    player.x += 2;
+  }
+}
+</code></pre>
+<p>When you test this snippet, you may notice that you can move player off the screen. Let’s keep the player’s position within the bounds. We can also increase the speed of the player’s movement on the screen.</p>
+<pre><code>function update() {
+  if (keydown.left) {
+    player.x -= 5;
+  }
+
+  if (keydown.right) {
+    player.x += 5;
+  }
+
+  player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
+}
+</code></pre>
+<p>Let’s start working with sample projectiles to see how the key binding works.</p>
+<pre><code>function update() {
+  if (keydown.space) {
+    player.shoot();
+  }
+
+  if (keydown.left) {
+    player.x -= 5;
+  }
+
+  if (keydown.right) {
+    player.x += 5;
+  }
+
+  player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
+}
+
+player.shoot = function() {
+  console.log(&quot;Pew pew&quot;);
+  // :) Well at least adding the key binding was easy...
+};
+</code></pre>
+<h2>Adding more game objects</h2>
+<h3>Projectiles</h3>
+<p>Now, let’s add proper projectiles (or bullets, since this is, after all, a game). First, create a collection to store them:</p>
+<pre><code>var playerBullets = [];
+</code></pre>
+<p>Next, create a constructor to create bullet instances.</p>
+<pre><code>function Bullet(I) {
+  I.active = true;
+
+  I.xVelocity = 0;
+  I.yVelocity = -I.speed;
+  I.width = 3;
+  I.height = 3;
+  I.color = &quot;#000&quot;;
+
+  I.inBounds = function() {
+    return I.x &gt;= 0 &amp;&amp; I.x &lt;= CANVAS_WIDTH &amp;&amp;
+      I.y &gt;= 0 &amp;&amp; I.y &lt;= CANVAS_HEIGHT;
+  };
+
+  I.draw = function() {
+    canvas.fillStyle = this.color;
+    canvas.fillRect(this.x, this.y, this.width, this.height);
+  };
+
+  I.update = function() {
+    I.x += I.xVelocity;
+    I.y += I.yVelocity;
+
+    I.active = I.active &amp;&amp; I.inBounds();
+  };
+
+  return I;
+}
+</code></pre>
+<p>When the player shoots, create a bullet instance and add it to the collection of bullets.</p>
+<pre><code>player.shoot = function() {
+  var bulletPosition = this.midpoint();
+
+  playerBullets.push(Bullet({
+    speed: 5,
+    x: bulletPosition.x,
+    y: bulletPosition.y
+  }));
+};
+
+player.midpoint = function() {
+  return {
+    x: this.x + this.width/2,
+    y: this.y + this.height/2
+  };
+};
+</code></pre>
+<p>Finally, we need to add the status of the bullets to the update step function. To prevent the collection of bullets from filling up indefinitely, we filter the list of bullets to only include the active bullets. Filtering this list also allows us to remove bullets that have collided with an enemy.</p>
+<pre><code>function update() {
+  ...
+  playerBullets.forEach(function(bullet) {
+    bullet.update();
+  });
+
+  playerBullets = playerBullets.filter(function(bullet) {
+    return bullet.active;
+  });
+}
+</code></pre>
+<p>The final step is to draw the bullets:</p>
+<pre><code>function draw() {
+  ...
+  playerBullets.forEach(function(bullet) {
+    bullet.draw();
+  });
+}
+</code></pre>
+<h3>Enemies</h3>
+<p>Now that we have bullets, let’s add enemies to interact with our player.</p>
+<pre><code>  enemies = [];
+
+function Enemy(I) {
+  I = I || {};
+
+  I.active = true;
+  I.age = Math.floor(Math.random() * 128);
+
+  I.color = &quot;#A2B&quot;;
+
+  I.x = CANVAS_WIDTH / 4 + Math.random() * CANVAS_WIDTH / 2;
+  I.y = 0;
+  I.xVelocity = 0
+  I.yVelocity = 2;
+
+  I.width = 32;
+  I.height = 32;
+
+  I.inBounds = function() {
+    return I.x &gt;= 0 &amp;&amp; I.x &lt;= CANVAS_WIDTH &amp;&amp;
+      I.y &gt;= 0 &amp;&amp; I.y &lt;= CANVAS_HEIGHT;
+  };
+
+  I.draw = function() {
+    canvas.fillStyle = this.color;
+    canvas.fillRect(this.x, this.y, this.width, this.height);
+  };
+
+  I.update = function() {
+    I.x += I.xVelocity;
+    I.y += I.yVelocity;
+
+    I.xVelocity = 3 * Math.sin(I.age * Math.PI / 64);
+
+    I.age++;
+
+    I.active = I.active &amp;&amp; I.inBounds();
+  };
+
+  return I;
+};
+
+function update() {
+  ...
+
+  enemies.forEach(function(enemy) {
+    enemy.update();
+  });
+
+  enemies = enemies.filter(function(enemy) {
+    return enemy.active;
+  });
+
+  if(Math.random() &lt; 0.1) {
+    enemies.push(Enemy());
+  }
+};
+
+function draw() {
+  ...
+
+  enemies.forEach(function(enemy) {
+    enemy.draw();
+  });
+}
+</code></pre>
+<h2>Loading and drawing images</h2>
+<p>Now that we have the enemy-player interaction set with box images, let’s draw actual images to make this game more interesting. To avoid what is usually a painful experience with loading and drawing images on canvas, we can use a simple utility class.</p>
+<pre><code>player.sprite = Sprite(&quot;player&quot;);
+
+player.draw = function() {
+  this.sprite.draw(canvas, this.x, this.y);
+};
+
+function Enemy(I) {
+  ...
+
+  I.sprite = Sprite(&quot;enemy&quot;);
+
+  I.draw = function() {
+    this.sprite.draw(canvas, this.x, this.y);
+  };
+
+  ...
+}
+</code></pre>
+<h2>Collision detection</h2>
+<p>Now that we have images flying around on the screen, notice that they’re not interacting with each other. Let’s add collision detection to let the objects know when they’ve collided, and therefore when to blow up.</p>
+<p>Let’s use a simple rectangular collision detection algorithm:</p>
+<pre><code>function collides(a, b) {
+  return a.x &lt; b.x + b.width &amp;&amp;
+         a.x + a.width &gt; b.x &amp;&amp;
+         a.y &lt; b.y + b.height &amp;&amp;
+         a.y + a.height &gt; b.y;
+}
+</code></pre>
+<p>We want to check specifically collisions between:</p>
+<ol>
+<li>Player Bullets =&gt; Enemy Ships</li>
+<li>Player =&gt; Enemy Ships</li>
+</ol>
+<p>To check these specific collisions, create a method to handle the collisions which we can call from the update() method.</p>
+<pre><code>function handleCollisions() {
+  playerBullets.forEach(function(bullet) {
+    enemies.forEach(function(enemy) {
+      if (collides(bullet, enemy)) {
+        enemy.explode();
+        bullet.active = false;
+      }
+    });
+  });
+
+  enemies.forEach(function(enemy) {
+    if (collides(enemy, player)) {
+      enemy.explode();
+      player.explode();
+    }
+  });
+}
+
+function update() {
+  ...
+  handleCollisions();
+}
+</code></pre>
+<p>Finally, to make the interaction realistic, we’ll add the explode() methods to the player and the enemies to remove those that have been hit, and to display an explosion graphic.</p>
+<pre><code>function Enemy(I) {
+  ...
+
+  I.explode = function() {
+    this.active = false;
+    // Extra Credit: Add an explosion graphic
+  };
+
+  return I;
+};
+
+player.explode = function() {
+  this.active = false;
+  // Extra Credit: Add an explosion graphic and then end the game
+};
+</code></pre>
+<h2>Sound</h2>
+<p>To round out the experience, we’ll add some sweet sound effects. Sounds, like images, can be somewhat of a pain to use in HTML5, but thanks to our magic no-tears formula sound.js, sound can be made very easily.</p>
+<pre><code>player.shoot = function() {
+  Sound.play(&quot;shoot&quot;);
+  ...
+}
+
+function Enemy(I) {
+  ...
+
+  I.explode = function() {
+    Sound.play(&quot;explode&quot;);
+    ...
+  }
+}
+</code></pre>
+<p>Although the API is now tear-free, adding sounds is currently the quickest way to crash your application. It’s not uncommon for sounds to cut out or take down the entire browser tab.</p>
+<p>You can also play with the <a href="http://strd6.com/space_demo/">full working game demo</a> online.</p>
+<h2>Source Code</h2>
+<p>The source code is available <a href="http://strd6.com/wp-content/uploads/2010/12/space_demo.zip">here</a>.</p>
+<h2>Summary</h2>
+<p>I hope you enjoyed learning the basics of making a simple game in JavaScript and HTML5. By programming at the right level of abstraction, we can insulate ourselves from the more difficult parts of the APIs, as well as be resilient in the face of future changes.</p>
+<h2>References</h2>
+<ul>
+<li><a href="http://blog.nihilogic.dk/2009/02/html5-canvas-cheat-sheet.html">HTML5 Canvas Cheat Sheet</a></li>
+<li><a href="https://gist.github.com/768272">HTML5 Game Engines</a></li>
+</ul>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Canvas</h4>
+<ul>
+<li><p><a href="/docs/apis/canvas">canvas</a></p></li>
+<li><p><a href="/docs/html/elements/canvas">canvas</a></p></li>
+<li><p><strong>Introduction to HTML5 games</strong></p></li>
+<li><p><a href="/docs/tutorials/canvas_texteffects">Achieving typographic effects with the canvas tag</a></p></li>
+<li><p><a href="/docs/tutorials/canvas/canvas_tutorial">Introduction to Canvas</a></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/canvas/notearsgame/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS shorthand guide · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This short article covers the various bits of CSS shorthand you&#x27;ll encounter in your day to day work. It expands on the basic information found in the 
+    Getting Started with CSS tutorial.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/css_shorthand/">css shorthand</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>CSS shorthand guide</h1>
+<h2>Summary</h2>
+<p>This short article covers the various bits of CSS shorthand you’ll encounter in your day to day work. It expands on the basic information found in the Getting Started with CSS tutorial.</p>
+<h2>Border</h2>
+<p><code>border</code> allows you to set border width, style and, color all in one single property. So for example:</p>
+<pre><code class="css"><span class="hljs-tag">border</span>: 1<span class="hljs-tag">px</span> <span class="hljs-tag">solid</span> <span class="hljs-tag">black</span>;
+</code></pre>
+<p>is equivalent to the following three rules:</p>
+<pre><code class="css"><span class="hljs-tag">border-width</span>: 1<span class="hljs-tag">px</span>;
+<span class="hljs-tag">border-style</span>: <span class="hljs-tag">solid</span>;
+<span class="hljs-tag">border-color</span>: <span class="hljs-tag">black</span>;
+</code></pre>
+<p>You can also break these down further into even more specific rules, for a single border of the element it is applied to, like so:</p>
+<pre><code class="css"><span class="hljs-tag">border-left</span>: 1<span class="hljs-tag">px</span> <span class="hljs-tag">solid</span> <span class="hljs-tag">black</span>;
+<span class="hljs-tag">border-right</span>: 1<span class="hljs-tag">px</span> <span class="hljs-tag">solid</span> <span class="hljs-tag">black</span>;
+<span class="hljs-tag">border-top</span>: 1<span class="hljs-tag">px</span> <span class="hljs-tag">solid</span> <span class="hljs-tag">black</span>;
+<span class="hljs-tag">border-bottom</span>: 1<span class="hljs-tag">px</span> <span class="hljs-tag">solid</span> <span class="hljs-tag">black</span>;
+</code></pre>
+<p>or even:</p>
+<pre><code class="css"><span class="hljs-tag">border-left-width</span>: 2<span class="hljs-tag">px</span>;
+<span class="hljs-tag">border-left-style</span>: <span class="hljs-tag">solid</span>;
+<span class="hljs-tag">border-left-color</span>: <span class="hljs-tag">black</span>;
+</code></pre>
+<p>You will very rarely want to go this granular; you will probably use simply <code>border</code> or <code>border-left/-right/-top/-bottom</code> in most cases. The more granular options will likely be used only if you want to override an earlier border declaration.</p>
+<h2>Margin, padding, outline</h2>
+<p>Shorthand for <code>margin</code>, <code>padding</code>, and <code>outline</code> all works in the same way. Consider the following <code>margin</code> rule:</p>
+<pre><code class="css"><span class="hljs-tag">div</span><span class="hljs-class">.foo</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">1.5em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-bottom</span>:<span class="hljs-value"> <span class="hljs-number">2em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">2.5em</span></span></span>;
+}</span>
+</code></pre>
+<p>Such a rule could also be written as:</p>
+<pre><code class="css"><span class="hljs-tag">div</span><span class="hljs-class">.foo</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">1em</span> <span class="hljs-number">1.5em</span> <span class="hljs-number">2em</span> <span class="hljs-number">2.5em</span></span></span>;
+}</span>
+</code></pre>
+<p>These types of property can take less than four values too, as follows:</p>
+<ol>
+<li>Same value applied to all four sides — <code>margin: 2px;</code></li>
+<li>First value applied to the top and bottom, second to the left and right — <code>margin: 2px 5px;</code>.</li>
+<li>First and third values applied to the top and bottom respectively, second value applied to the left and right — <code>margin: 2px 5px 1px;</code>.</li>
+</ol>
+<h2>Font</h2>
+<p>You can specify the font size, weight, style, family, and line height using one line of shorthand. Consider the following CSS:</p>
+<pre><code class="css"><span class="hljs-tag">font-weight</span>: <span class="hljs-tag">bold</span>;
+<span class="hljs-tag">font-style</span>: <span class="hljs-tag">italic</span>;
+<span class="hljs-tag">font-variant</span>: <span class="hljs-tag">small-caps</span>;
+<span class="hljs-tag">font-size</span>: 1<span class="hljs-class">.5em</span>;
+<span class="hljs-tag">line-height</span>: 200%;
+<span class="hljs-tag">font-family</span>: <span class="hljs-tag">Georgia</span>, "<span class="hljs-tag">Times</span> <span class="hljs-tag">New</span> <span class="hljs-tag">Roman</span>", <span class="hljs-tag">serif</span>;
+</code></pre>
+<p>You could specify all of this using the following line:</p>
+<pre><code class="css">font: bold italic small-caps 1.5em/200% Georgia, "Times New Roman", serif;
+</code></pre>
+<p>Note that it doesn’t really matter about the order of many of these, although you should make sure that <code>font-size</code>/<code>line-height</code> and <code>font-family</code> come in the positions shown above; in addition, <code>font-size</code> and <code>font-family</code> should be specified. If not, this shorthand may not work in some browsers.</p>
+<p>Note also that if <code>font-weight</code>, <code>font-style</code> or <code>font-variant</code> are not specified, their values default to <code>normal</code>.</p>
+<h2>Background</h2>
+<p>In CSS 2, you can specify background color, background image, image repeat and image position with one line of CSS. Take the following:</p>
+<pre><code class="css"><span class="hljs-tag">background-color</span>: <span class="hljs-id">#000</span>;
+<span class="hljs-tag">background-image</span>: <span class="hljs-tag">url</span>(<span class="hljs-tag">image</span><span class="hljs-class">.gif</span>);
+<span class="hljs-tag">background-repeat</span>: <span class="hljs-tag">no-repeat</span>;
+<span class="hljs-tag">background-position</span>: <span class="hljs-tag">top</span> <span class="hljs-tag">left</span>;
+<span class="hljs-tag">background-attachment</span>: <span class="hljs-tag">fixed</span>;
+</code></pre>
+<p>This can all be represented using the following shorthand:</p>
+<pre><code class="css"><span class="hljs-tag">background</span>: <span class="hljs-id">#000</span> <span class="hljs-tag">url</span>(<span class="hljs-tag">image</span><span class="hljs-class">.gif</span>) <span class="hljs-tag">no-repeat</span> <span class="hljs-tag">top</span> <span class="hljs-tag">left</span> <span class="hljs-tag">fixed</span>;
+</code></pre>
+<p>Note that if any of the values are left out, the following defaults are assumed:</p>
+<pre><code class="css"><span class="hljs-tag">background-color</span>: <span class="hljs-tag">transparent</span>;
+<span class="hljs-tag">background-image</span>: <span class="hljs-tag">none</span>;
+<span class="hljs-tag">background-repeat</span>: <span class="hljs-tag">repeat</span>;
+<span class="hljs-tag">background-position</span>: <span class="hljs-tag">top</span> <span class="hljs-tag">left</span>;
+<span class="hljs-tag">background-attachment</span>: <span class="hljs-tag">scroll</span>;
+</code></pre>
+<h3>Enhancements in CSS3</h3>
+<p>CSS3 introduces three new properties: <a href="http://www.w3.org/TR/css3-background/#the-background-size"><code>background-size</code></a>, <a href="http://www.w3.org/TR/css3-background/#the-background-origin"><code>background-origin</code></a>, and <a href="http://www.w3.org/TR/css3-background/#the-background-clip"><code>background-clip</code></a>. You can include them in the <code>background</code> shorthand like so:</p>
+<pre><code class="css">background: #000 url(image.gif); no-repeat top left / 50% 20% border-box content-box;
+</code></pre>
+<p>Notice the slash between <code>top left</code> and <code>50% 20%</code>; it separates the values for <code>background-position</code> and <code>background-size</code> since these two properties share some value units (lengths and percentage); without it we cannot distinguish which values are for which.</p>
+<p>So if you want to include the <code>background-size</code> value in the shorthand syntax, you need to:</p>
+<ul>
+<li>Explicitly include <code>background-position</code> values even if these are the same as the defaults (see above).</li>
+<li>Write <code>background-position</code> values <em>before</em> <code>background-size</code> values.</li>
+<li>Put a slash in between these two pairs of values.</li>
+</ul>
+<p>Similarly, <code>background-origin</code> and <code>background-clip</code> share the same keyword as their values. These two also needs to be written in order: <code>background-origin</code> coming in first, and <code>background-clip</code> second.</p>
+<p>If you only specify one <code>box</code> value (<code>border-box</code>, <code>padding-box</code>, or <code>content-box</code>), then the value applies to <code>background-origin</code> and <code>background-clip</code>.</p>
+<p>Note: CSS3 gradients are a special, advanced value of <code>background-image</code> — aside from the syntactical difference, gradient values appear in exactly the same place in the shorthand as other <code>background-image</code> values, and work in the same way. For more on CSS3 gradients, you can read <a href="http://dev.opera.com/articles/view/css3-linear-gradients">CSS3 linear gradients</a> and <a href="http://dev.opera.com/articles/view/css3-radial-gradients/">CSS3 radial gradients</a> over at dev.opera.com.</p>
+<h2>List</h2>
+<p>You can specify the list bullet type, position, and image on a single line. Take the following CSS:</p>
+<pre><code class="css"><span class="hljs-tag">list-style-type</span>: <span class="hljs-tag">circle</span>;
+<span class="hljs-tag">list-style-position</span>: <span class="hljs-tag">inside</span>;
+<span class="hljs-tag">list-style-image</span>: <span class="hljs-tag">url</span>(<span class="hljs-tag">bullet</span><span class="hljs-class">.gif</span>);
+</code></pre>
+<p>This is the equivalent of:</p>
+<pre><code class="css"><span class="hljs-tag">list-style</span>: <span class="hljs-tag">circle</span> <span class="hljs-tag">inside</span> <span class="hljs-tag">url</span>(<span class="hljs-tag">bullet</span><span class="hljs-class">.gif</span>);
+</code></pre>
+<p>Note that if any of the values are left out, the following defaults are assumed:</p>
+<pre><code class="css"><span class="hljs-tag">list-style-type</span>: <span class="hljs-tag">circle</span>;
+<span class="hljs-tag">list-style-position</span>: <span class="hljs-tag">outside</span>;
+<span class="hljs-tag">list-style-image</span>: <span class="hljs-tag">none</span>;
+</code></pre>
+<h2>Color</h2>
+<p>When specifying hexadecimal color values, you can use shorthand if both hex values are the same for each color channel. For example, <code>#000</code> is equivalent to the longhand <code>#000000</code>. Let’s look at a more complicated example too: <code>#6c9</code> is the same as <code>#66cc99</code>.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML links - lets build a web · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/HTML_links - lets build a web/">HTML links - lets build a web</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML links - lets build a web</h1>
+<h2>Introduction</h2>
+<p>In this article you’ll learn all about one of the most ground-breaking inventions in the history of the Web — links. Links allow the reader of a document to follow them to another document and jump from server to server without having to disconnect and connect all over again. A lot has happened since they were first invented but one thing stayed the same: links are a very important part of the web experience and you can make accessing your content and functionality easy or hard for your web site’s visitors, depending on how you use them.</p>
+<p>After you’ve gone through this article you’ll know how to create links that are easy to understand and function in any environment. Furthermore you’ll learn how linking affects your search engine popularity and you’ll get some tips about wording links. As usual, <a href="http://dev.opera.com/articles/view/18-html-links-let-s-build-a-web/links_code.zip">there is an accompanying zip file to this tutorial</a>, which contains several files we’ll refer to as we go along.</p>
+<h2>What are links?</h2>
+<p>Links are parts of a web site that point to other resources — other HTML documents, text files, PDFs, etc. There are links that are followed automatically by the browser, created using <code>&lt;link&gt;</code> elements (you’ve already encountered some of those in earlier articles—they were used to import CSS files into an HTML document) and then there are links that are optional for the user to activate. These are called <strong>anchors</strong> and you can add them to the document using the <code>&lt;a&gt;</code> element.</p>
+<h2>The anatomy of an anchor link</h2>
+<p>You can turn any inline element in the document into an anchor link by adding an <code>&lt;a&gt;</code> element around it. For example, in the following HTML document the text <em>Opera Software</em> gets turned into a link (<a href="http://dev.opera.com/articles/view/18-html-links-let-s-build-a-web/linkexample.html">linkexample.html</a>).</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Link Example&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;A link to Opera&lt;/h1&gt;
+  &lt;p&gt;&lt;a href=&quot;http://www.opera.com&quot;&gt;Opera Software&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Visitors activating this link (either by clicking it with a mouse, or activating it with the keyboard or voice in some cases) will leave the current site and go to the Opera home page. There are more changes happening to the link itself, and we’ll see about them later when we talk about link styling.</p>
+<p>The anchor has several attributes you can add:</p>
+<ul>
+<li><code>href</code> — the resource it points to (either an external file or an anchor ID).</li>
+<li><code>id</code> — an ID to uniquely identify the link, for example if you want to style just that link differently to all the others. You can also use an <code>id</code> attribute to make an link into a page anchor, and link to it from other <code>&lt;a&gt;</code> elements.</li>
+<li><code>class</code> — a class to identify this link and others (and different elements, if you really want to), for example if you want to style certain links on the page with styles, but not others.</li>
+<li><code>title</code> — extra information about the external resource.</li>
+</ul>
+<p>Let’s go through the most important attributes first and then talk about what you can do to make things easy to grasp for your visitors.</p>
+<h2>The href attribute</h2>
+<p>An <code>&lt;a&gt;</code> element can play several roles depending on which attributes are set. The most common attribute you’ll use is the <code>href</code> attribute, which defines what resource the link points to. This attribute can contain different values:</p>
+<ul>
+<li>A URL in the same folder (help.html), relative to the current folder (for example “…/…/help/help.html” — 2 dots means “go up one level in the site folder hierarchy”) or absolute to the server root (for example “/help/help.html” — having a forward slash at the front of the address means the address starts at the root of the computer the page is on.)</li>
+<li>A URL on a different server altogether (for example <a href="http://wait-till-i.com">http://wait-till-i.com</a> or <a href="ftp://ftp.opera.com/">ftp://ftp.opera.com/</a> or <a href="http://developer.yahoo.com/yui">http://developer.yahoo.com/yui</a>).</li>
+<li>A fragment identifier or id name preceded by a hash (for example “#menu”). This points to a target inside the same document.</li>
+<li>A mixture of URLs and fragment identifiers — you can link directly to a section of a different document by pointing the <code>href</code> attribute to a URL followed by a fragment identifier (for example <a href="http://dev.opera.com/articles/view/new-structural-elements-in-html5/#aside">http://dev.opera.com/articles/view/new-structural-elements-in-html5/#aside</a>).</li>
+</ul>
+<p>Using an absolute or relative URL will make an <code>&lt;a&gt;</code> element into a link as it will point to somewhere else.</p>
+<h2>Creating in-page navigation with id attributes</h2>
+<p>You can also put an <code>id</code> attribute on an <code>&lt;a&gt;</code> element, to make it into a page anchor. You then reference that ID in the <code>href attribute of another link to link to it. For example:</code></p>
+<pre><code>&lt;h2&gt;&lt;a id=&quot;sec1&quot;&gt;Section #1&lt;/a&gt;&lt;/h2&gt;
+</code></pre>
+<p>Could be linked to by</p>
+<pre><code>&lt;a href=&quot;#sec1&quot;&gt;Section One&lt;/a&gt;
+</code></pre>
+<p>But most browsers you’ll want to support these days allow you to write a shortcut for this, and put the ID directly on the element you want to link to, for example:</p>
+<pre><code>&lt;h2 id=&quot;sec1&quot;&gt;Section #1&lt;/h2&gt;
+</code></pre>
+<p>This is much simpler, so we’d recommend that you stick to this.</p>
+<p>The following HTML has examples of all the different types of links in it (<a href="http://dev.opera.com/articles/view/18-html-links-let-s-build-a-web/linkexamples.html">linkexamples.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Different Links Example&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;linkexamplestyles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Different Links&lt;/h1&gt;
+
+  &lt;h2&gt;Example of in-page navigation with fragment identifiers, links and anchors&lt;/h2&gt;
+  &lt;div id=&quot;nav&quot;&gt;
+    &lt;ul id=&quot;toc&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;#sec1&quot;&gt;Section One&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sec2&quot;&gt;Section Two&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sec3&quot;&gt;Section Three&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sec4&quot;&gt;Section Four&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sec5&quot;&gt;Section Five&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;div&gt;
+      &lt;h2 id=&quot;sec1&quot;&gt;Section #1&lt;/h2&gt;
+      &lt;p&gt;&lt;a href=&quot;#toc&quot;&gt;Back to menu&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h2 id=&quot;sec2&quot;&gt;Section #2&lt;/h2&gt;
+      &lt;p&gt;&lt;a href=&quot;#toc&quot;&gt;Back to menu&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h2 id=&quot;sec3&quot;&gt;Section #3&lt;/h2&gt;
+      &lt;p&gt;&lt;a href=&quot;#toc&quot;&gt;Back to menu&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h2 id=&quot;sec4&quot;&gt;Section #4&lt;/h2&gt;
+      &lt;p&gt;&lt;a href=&quot;#toc&quot;&gt;Back to menu&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h2 id=&quot;sec5&quot;&gt;Section #5&lt;/h2&gt;
+      &lt;p&gt;&lt;a href=&quot;#toc&quot;&gt;Back to menu&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;h2&gt;Some other link examples&lt;/h2&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;http://dev.opera.com&quot;&gt;Opera Developer Network&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.wait-till-i.com/stuff/JavaScript-DOM-Cheatsheet.pdf&quot;&gt;Dom Cheatsheet&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;ftp://get.opera.com/pub/opera/win/&quot;&gt;Download different Opera versions&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://farm1.static.flickr.com/56/188791635_0b8bdd808d.jpg?v=0&quot;&gt;Photo of my book&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Open this file in your browser of choice and experiment with it. You’ll find that activating any of the links in the first list will jump to the appropriate section of the document. You might also have realized that the URL in the location bar of your browser changed and now shows the fragment identifier at the end of it, which means visitors can bookmark this section or email the link to other people to send them exactly where they should go. To recap:</p>
+<ul>
+<li>anchor links can have a fragment identifier as the value of the <code>href</code> attribute — this fragment identifier must start with a hash sign (#).</li>
+<li>When activated, this link will jump to any HTML element with an <code>id</code> of this value. The IDs on each page must be unique.</li>
+<li>IDs follow certain naming conventions. Most importantly is that they must start with an alphanumeric character and must not have any spaces in them.</li>
+</ul>
+<p>That covers the menu and the different sections in the example but what about the other links? If you try them out you’ll see that they point to different targets — one goes to another site, another displays a photo and the third one shows a specific section of another web page (found by jumping to a specific ID). If all of that worked for you, great — but what if you or your browser couldn’t understand some of these resources?</p>
+<h2>Don’t leave any ambiguity about what you’re linking to</h2>
+<p>The most important thing to remember about links is that they are a substantial part of your relationship with your visitors. They trust that when you offer them a link, they can follow it and get good, relevant information. If your links don’t work because the linked resource is not available or in a format the visitor cannot consume you will betray that trust and lose credibility. Don’t let that happen.</p>
+<h3>Providing extra information with a title attribute</h3>
+<p>Like almost any other HTML element you can add a <code>title</code> attribute to an <code>&lt;a&gt;</code> element to add some extra information. Browsers will show a so-called tooltip when visitors hover their mouse cursor over the link. This tooltip then tells them what the link is about. For example you could give a small introduction to the content and location of the linked document (<a href="http://dev.opera.com/articles/view/18-html-links-let-s-build-a-web/titleexample.html">titleexample.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;Adding extra information with a title attribute&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;linkexamplestyles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Adding extra information with a title attribute&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Find more information on the &lt;a title=&quot;The Yahoo Developer Network is the main hub for all the developer
+     tools Yahoo offers, including the Yahoo User Interface Library (YUI) and the Design Patterns repository&quot;
+     href=&quot;http://developer.yahoo.com&quot;&gt;Yahoo Developer Network&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>However, you cannot expect visitors to have enough patience and hand-eye coordination to rely on this for crucial information. Visually impaired users, who cannot see the page at all, are very likely not to be able to reach this information. While screen readers have the option to read out <code>title</code> attributes for the end user it is turned off by default, which is why you should never use the <code>title</code> attribute for crucial information about the link.</p>
+<p>Crucial information might be:</p>
+<ul>
+<li>Linking to non-HTML resources like PDF files, images, videos, sound files or downloads.</li>
+<li>Leaving the current site and linking to another server (external vs internal links).</li>
+<li>Linking to a document that’ll open in a different frame or a popup.</li>
+</ul>
+<h3>Linking to non-HTML resources — don’t make people guess</h3>
+<p>It can be very annoying when you click on a link and your browser does not know what to do with the content the link points to. It is unfortunately all too common to see web sites link to images, PDF documents and videos without warning their visitors to be prepared. Videos especially are very often a cause for browser crashes. Furthermore, the resource might be on the larger side (20MB PDF anyone?), which means that visitors might prefer to download it rather than opening it inside the browser, or just not access it at all.</p>
+<p>One of the biggest success factors of a web product is not keeping people guessing what happens when they perform an action and instead tell them flat out what effects their action will have. In the case of links all you need to do to prevent a lot of frustration is to tell your visitors what the linked resource is. Here are some examples (<a href="http://dev.opera.com/articles/view/18-html-links-let-s-build-a-web/linkingnonhtml.html">linkingnonhtml.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;Linking non-HTML resources&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;linkexamplestyles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Linking non-HTML resources&lt;/h1&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;Find more information on the &lt;a href=&quot;http://developer.yahoo.com&quot;&gt;Yahoo
+      Developer Network site (external)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Download the &lt;a href=&quot;http://www.wait-till-i.com/stuff/JavaScript-DOM-Cheatsheet.pdf&quot;&gt;
+      Dom Cheatsheet (PDF, 85KB)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Pick and &lt;a href=&quot;ftp://get.opera.com/pub/opera/win/&quot;&gt;download different Opera
+      versions from their FTP (external)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Check out a &lt;a href=&quot;http://farm1.static.flickr.com/56/188791635_0b8bdd808d.jpg?v=0&quot;&gt;
+      Photo of my book (JPG, 200KB)&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>By providing such information about linked files and their nature you leave the decision of what to do with them to your visitors rather than expecting them to have certain browser settings or installed software. If you mix that with clever styling you can even make such links look pretty and intuitive (for example, by giving different types of link different easily recognisable icons - find more out about this in <a href="/Styling_lists_and_links">Styling lists and links</a>). If you want to be very safe, also offer a help section that explains what the different file formats are and where you could get the software needed to display them.</p>
+<h3>External vs. internal links</h3>
+<p>One of the biggest fears of business decision makers when it comes to their company’s web sites is people leaving prematurely. This is often the reason for never offering third party links (unless the third parties pay money for the privilege of having web traffic directed towards them). We’ll come back to this error in judgment later on; for now let’s talk about what people do to avoid visitors leaving their site and how these measures affect the site’s success.</p>
+<h2>Frames and popups — just say no</h2>
+<p>The fear of losing visitors to other sites while still wanting to link to them gave us some inventions in web development that have been a thorn in the side of usability for years: frames and popups.</p>
+<p>Using HTML frames means you separate the page shown in the browser into several different documents. The benefit is that the document seemingly stays the same even when you load parts of it either from your own server or from third party servers. This is where the usefulness ends however — frames are a terrible user experience and actually harmful:</p>
+<ul>
+<li>Search engines can never index a whole page but instead might show up parts of a page in search results that don’t make sense out of context.</li>
+<li>Visitors cannot bookmark the page — the next time they open their bookmark they’ll get the initial state of the frameset and not the page as they left it.</li>
+<li>Visitors dependent on assistive technology have a very hard time navigating around framesets.</li>
+<li>Third party sites might not like to be shown inside a frameset and use “framebreaker” scripts that replace framesets with the real URL when you try to embed them. This is to stop criminals luring Internet users into entering for example credit card information into a web site that seemingly looks like a bank (so called “phishing”).</li>
+</ul>
+<p>Links inside a frameset use the <code>target</code> attribute of the anchor to target the correct frame. Each frame in a frameset gets a certain name and activating the link would open the document defined in the <code>href</code> attribute in that frame. If the frameset is not available (for example when a visitor found the document with the links via a search engine) each link opens in a new browser instance.</p>
+<p>Opening a new browser instance is another common way to link to third party sites — either with a scripted pop-up window or with a <code>target</code> attribute with a value of <code>_blank</code>. The fact that every modern browser comes with a pop-up blocker should give an indication of how safe it is to rely on this technique in this day and age. It’s not!</p>
+<p>In short: <strong>do not use the <code>target</code> attribute when you create links, unless you really know what you are doing</strong>. It is an outdated idea anyhow — these days most browsers have tabbed interfaces, so users can open third party sites in the background for later reading while they stay on your site. Under certain circumstances you may want to indicate the difference between external and internal links, but always leave it to the discretion of the visitor what they want to do with them.</p>
+<h2>Benefits of outbound and inbound links</h2>
+<p>There are several good reasons for linking to third party sites even when they are competitors.</p>
+<ul>
+<li>It gives you credibility in the eyes of your visitors — you are so sure of the quality of your content that you don’t shy away from the competition.</li>
+<li>It is an opportunity to deliver a full service — you can link to content and articles or even products on other sites that you don’t cover but that might be of interest for those visitors who want to dive deeper into the topic at hand.</li>
+<li>You can prove a point by building on an older article by a third party and offering a better or different solution and referencing the old article as a proof via a link.</li>
+</ul>
+<p>The usefulness of inbound links (links pointing from a third party site to yours) is less debated. The more often that valid and high quality sites link to yours with relevant keywords, the higher you’ll rank in search engines such as Google. Before that happens however you need to prove that you don’t shy away from linking to others either.</p>
+<p>The relevant keywords bring us to another very important part of creating good links: how to word them.</p>
+<h2>Link wording</h2>
+<p>I’ve covered this partly in the section about linking to non-HTML resources, but it is good to remind ourselves that links are not only part of the page copy but also interactive elements in the document.</p>
+<p>Some assistive technologies will offer a list of links instead of the whole document to allow visitors to quickly navigate their way through it and find the link they want, which means that your link text needs to make sense out of context as well as in context. You can easily check this in Opera by opening any web site and choosing Tools &gt; Links from the menu or pressing Ctrl + Shift + L. You’ll get a new tab that shows all the links in the document and where they point to.</p>
+<p>You should also make sure that there are not links that have the same wording but point to different resources. The classic mistake here is “click here” links, worded for example like “To download the latest version of our tool <strong>click here</strong>”. It is much better to use a link text that explains what it points to — in the case of “You can download the latest version of our tool and try it out for yourself”, turn the words “download the latest version of our tool” into a link.</p>
+<p>The same applies to “more” links. You’ll find these in news sites where you get a heading and some teaser text and a “more” or “full story” link to follow. The solution to this problem is to either use a linked “more” image and give it a unique alternative text or to add a span inside the link after the “more” and hide it with CSS.</p>
+<h2>Link styling</h2>
+<p>We won’t give this a full treatment until the [<a href="http://www.w3.org/wiki/Web_Standards_Curriculum#CSS">CSS section of the course</a>], but it is useful to consider at this point that the way links look is very important and there are several different link states to consider. The link states (which relate to CSS pseudo-selectors — this sounds complex, but it isn’t) are:</p>
+<ul>
+<li><code>&lt;link&gt;</code> — the default state — it defines what links should look like in a certain part of the document. By default, unvisited links are coloured blue.</li>
+<li><code>&lt;visited&gt;</code> — the style of a link that has already been visited before (and might already be in the browser cache). By default, already visited links are coloured purple.</li>
+<li><code>&lt;hover&gt;</code> — the style of a link whilst the mouse cursor is hovering over it.</li>
+<li><code>&lt;focus&gt;</code> — the style of a link whilst it has been given focus (or highlighted) via another alternative control mechanism, most commonly the keyboard.</li>
+<li><code>&lt;active&gt;</code> — the style of the link while it is activated, ie while the connection to the other site is in progress; it is also the style of the last activated link when you arrive at the document by going back in your browser.</li>
+</ul>
+<h2>HTML5: block level linking</h2>
+<p>In HTML4, the <code>&lt;a&gt;</code> element was restricted to just turning other inline elements into links. This was ok for most situations, but it became annoying when you wanted to, for example, turn a whole entire advertising banner containing images and paragraphs into a link. For the code to remain valid, you’d have to wrap the different bits of text and images in their own separate links, which is horribly repetitious, and confuses assistive technology users (“why are there multiple links going to the same place?”) Putting an inline element round a load of block level content also makes styling behave weirdly, unless you set it to display like a block level element using CSS.</p>
+<p>HTML5 removes this restriction, allowing you to put a link round any amount of content you want. To get it to behave properly, you’ll currently still have to set the link to behave like a block level element, but this is immediately a lot more flexible than what went before. Let’s look at an example:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Block level link Example&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+  &lt;style&gt;
+    a {
+      display: block;
+      background-color: blue;
+      text-decoration: none;
+      color: white;
+      width: 300px;
+      height: 100px;
+    }
+
+    a:hover {
+      background-color: red;
+    }
+
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a href=&quot;http://www.opera.com&quot;&gt;
+    &lt;h1&gt;A link to Opera&lt;/h1&gt;
+    &lt;p&gt;Opera Software&lt;/p&gt;
+  &lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Here you can see that I’ve got the <code>&lt;a&gt;</code> element wrapping both a heading and a paragraph. To make this work correctly I’ve set it to <code>display: block;</code> in the CSS. If you [<a href="http://devfiles.myopera.com/articles/373/blocklevellink.html">try the example out yourself</a>], you’ll see that the entire block is part of the clickable link area. I have added a colour changing hover effect to make this more visible.</p>
+<h2>Summary</h2>
+<p>We covered a lot this time, but it is very important to remember how links work and what they should do. You will learn a lot of tricks and techniques in your career as a web developer to override this default behaviour and I hope you’ll stop and wonder if what you are trying to do is really necessary.</p>
+<h2>Exercise questions</h2>
+<ul>
+<li>What is wrong with the following link: <code>&lt;&lt;a href=&quot;report.pdf&quot; title=&quot;report as PDF, 2.3MB&quot;&gt;get our latest report&lt;/a&gt;&gt;</code>?</li>
+<li>What is the <code>target</code> attribute in links for and are there any good uses for it?</li>
+<li>I’ve talked about link relationships and connections between links and anchors. Is there an attribute for links that describes relationships between documents, too?</li>
+<li>How can you write a link that sends the visitors to an element further down the page when they click it? What do you need to make sure of beforehand?</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/18-html-links-let-s-build-a-web/">18: HTML links - let’s build a web!</a>, written by Christian Heilmann. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

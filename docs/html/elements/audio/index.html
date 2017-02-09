@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>audio · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The audio element (&amp;lt;audio&amp;gt;) is used for playing audio files and may display a minimal media player user interface." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/audio/">audio</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>audio</h1>
+<h2>Summary</h2>
+<p>The audio element (&lt;audio&gt;) is used for playing audio files and may display a minimal media player user interface.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLAudioElement">HTMLAudioElement</a>
+</dd>
+</dl>
+<p>Extensive documentation on manipulating the element may be found on the <a href="/docs/dom/HTMLAudioElement">HTMLAudioElement</a> page.</p>
+<h2>HTML Attributes</h2>
+<ul>
+<li><code>autoplay</code> = “autoplay” or “” (empty string) or empty<br>
+Instructs the UA to automatically begin playback of the audio stream as soon as it can do so without stopping.</li>
+<li><code>preload</code> = “none” or “metadata” or “auto” or “” (empty string) or empty<br>
+Represents a hint to the UA about whether optimistic downloading of the audio stream itself or its metadata is considered worthwhile.
+<ul>
+<li>&quot;none&quot;: Hints to the UA that the user is not expected to need the video, or that minimizing unnecessary traffic is desirable.</li>
+<li>&quot;metadata&quot;: Hints to the UA that the user is not expected to need the audio stream, but that fetching its metadata (duration and so on) is desirable.</li>
+<li>&quot;auto&quot;: Hints to the UA that optimistically downloading the entire audio stream is considered desirable.<br>
+Specifying the empty string is equivalent to specifying the value &quot;auto&quot;.</li>
+</ul></li>
+<li><code>controls</code> = “controls” or “” (empty string) or empty<br>
+Instructs the UA to expose a user interface for controlling playback of the audio stream.</li>
+<li><code>loop</code> = “loop” or “” (empty string) or empty<br>
+Instructs the UA to seek back to the start of the audio stream upon reaching the end.</li>
+<li><code>mediagroup</code> = string<br>
+Instructs the UA to link multiple videos and/or audio streams together.</li>
+<li><code>src</code> = URL potentially surrounded by spaces<br>
+The URL for the audio stream.</li>
+</ul>
+<h2>Accessibility</h2>
+<p>Authors should ensure that the information and user interface components must be presentable to users in ways they can perceive (<a href="http://www.w3.org/TR/WCAG20/#perceivable">WCAG 2.0 - Principle 1: Perceivable</a>). This includes providing alternatives for time-based media <a href="http://www.w3.org/TR/WCAG20/#media-equiv">Guideline 1.2</a>.</p>
+<h2>Formats and Codecs</h2>
+<p>The specification does not require a specific audio codec to be supported by all user agents. Using both Ogg/Vorbis and MP4/AAC seems to cover most user-agents, however. See the <a href="http://en.wikipedia.org/wiki/Html5_audio#Audio_format_support">Audio format support on Wikipedia</a>.</p>
+<h2>Examples</h2>
+<p>play a mp3 on webpage</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">controls</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://freedownloads.last.fm/download/533190714/she%2Bso%2Bfly.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mp3"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/7282145">View live example</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/embedded-content.html#the-audio-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="http://wiki.xiph.org/Html5">HTML5 and Xiph codecs</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/HTML/Element/audio">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

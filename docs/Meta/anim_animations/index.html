@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Making things move with CSS3 animations · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="CSS animations allow you to build complex animated
+    sequences. Like transitions, they
+    manipulate the CSS properties that control how interface elements
+    appear. Unlike transitions, they are not tied to shifts between style
+    sheets that distinguish interface states. Keyframe animations can
+    execute freely, and offer the best way to build complex effects into
+    an interface.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/Meta:anim_animations/">Meta:anim animations</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Making things move with CSS3 animations</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>CSS animations allow you to build complex animated sequences. Like transitions, they manipulate the CSS properties that control how interface elements appear. Unlike transitions, they are not tied to shifts between style sheets that distinguish interface states. Keyframe animations can execute freely, and offer the best way to build complex effects into an interface.</p>
+<p>To get the most from this tutorial, you should already be familiar with <a href="/docs/tutorials/css_transitions">CSS transitions</a>. Since they work similarly, the term <em>CSS animations</em> often serves as a shorthand to refer to transitions as well, but this tutorial only discusses <em>keyframe animations</em>.</p>
+<p>These key points serve as reference:</p>
+<ul>
+<li><p>The required <a href="/docs/css/properties/animation-name"><strong>animation-name</strong></a> property specifies the name of a keyframe animation, and must correspond to a <a href="/docs/css/atrules/@keyframes"><strong>@keyframes</strong></a> rule. Loading the CSS or applying a new name causes the animation to execute.</p></li>
+<li><p>Use the required <a href="/docs/css/properties/animation-duration"><strong>animation-duration</strong></a> property to set the overall amount of time over which the animation executes, either in seconds or millseconds (<strong>1s</strong> == <strong>1000ms</strong>).</p></li>
+<li><p>The <a href="/docs/css/atrules/@keyframes"><strong>@keyframes</strong></a> rule declares the full sequence that corresponds to the <a href="/docs/css/properties/animation-name"><strong>animation-name</strong></a>. Within the block, keyframes such as 0%, 50%, and 100% behave as selectors that manipulate CSS properties over the duration of the animation.</p></li>
+<li><p>Any CSS property that be transitioned can also be animated.</p></li>
+<li><p>Use <a href="/docs/css/properties/animation-delay"><strong>animation-delay</strong></a> to pause before executing an animation, using the same time values as for duration.</p></li>
+<li><p>The <a href="/docs/css/properties/animation-iteration-count"><strong>animation-iteration-count</strong></a> property sets the number of times the animation plays, either as an integer or <strong>infinite</strong>.</p></li>
+<li><p>The <a href="/docs/css/properties/animation-direction"><strong>animation-direction</strong></a> property allows you to play the animation in <em><em>normal’</em>or</em>reverse** order, or <strong>alternate</strong> between the two for even/odd iterations.</p></li>
+<li><p>The <a href="/docs/css/properties/animation-fill-mode"><strong>animation-fill-mode</strong></a> property preserves an animation’s start state before a delayed animation executes (<strong>backwards</strong>)), its end state after its final iteration (<strong>forwards</strong>), or <strong>both</strong>.</p></li>
+<li><p>Set <a href="/docs/css/properties/animation-play-state"><strong>animation-play-state</strong></a> to <strong>pause</strong> or <strong>running</strong> to stop and start animations.</p></li>
+<li><p>The <a href="/docs/css/properties/animation-timing-function"><strong>animation-timing-function</strong></a> property controls the speed of progression between each keyframe, and can be altered within an animation. It uses the same set of keywords as transitions: <strong>ease</strong>, <strong>ease-in</strong>, <strong>ease-out</strong>, <strong>ease-in-out</strong>, <strong>linear</strong>, or custom <strong>cubic-bezier()</strong> functions.</p></li>
+<li><p>The <a href="/docs/css/properties/animation"><strong>animation</strong></a> shorthand property can represent values from all other animation properties. If two time measurements are included, they are interpreted first as duration then as delay.</p></li>
+<li><p>Use standard property names along with <em>-webkit-</em> prefixes. Specify both the <strong>@keyframes</strong> rule and <strong>@-webkit-keyframes</strong>. From JavaScript, specify standard properties such as <strong>animationName</strong> along with <strong>WebkitAnimationName</strong>.</p></li>
+<li><p>Use comma-separated property values to specify more than one animation. Animations that run concurrently cannot manipulate any of the same properties.</p></li>
+<li><p>To modify <a href="/docs/css/atrules/@keyframes"><strong>@keyframes</strong></a> rules dynamically, inject CSS into a local <strong>style</strong> region, or use the <a href="/docs/css/cssom/CSSKeyframeRule"><strong>CSSKeyframeRule</strong></a> interface.</p></li>
+</ul>
+<h2>Animation properties</h2>
+<p>To understand how animations work, start with an example of a pulsing icon, which may be used in a mobile interface to indicate what part of an application is selected. The animation continuously shrinks and grows one of the icons as it dims and brightens it. This simple example will illustrate several other features below:</p>
+<p><img src="//static.webplatform.org/6/64/anim_pulse.png" alt="anim pulse.png"></p>
+<p>The <a href="/docs/css/properties/animation"><strong>animation</strong></a> CSS property specifies the <em>name</em> of an animation you will supply, <strong>pulse</strong> in this case, and its overall <em>duration</em> of 1 second. Both are required:</p>
+<pre><code>div.selected {
+    animation : pulse 1s infinite;
+}
+</code></pre>
+<p>The <strong>infinite</strong> keyword indicates that the animation repeats indefinitely. If not specified, the animation executes only once.</p>
+<p>The <a href="/docs/css/properties/animation"><strong>animation</strong></a> property is a shorthand that combines the values of others:</p>
+<pre><code>div.selected {
+    animation-name            : pulse;
+    animation-duration        : 1s;
+    animation-iteration-count : infinite;
+}
+</code></pre>
+<p>Animation properties are standard in many browsers, but as of this writing require prefixes for all WebKit browsers and older versions of Gecko and Opera. For widest support, you should define animation properties redundantly:</p>
+<pre><code>div.selected {
+    -webkit-animation : pulse 1s infinite;
+    -moz-animation    : pulse 1s infinite;
+    -o-animation      : pulse 1s infinite;
+    animation         : pulse 1s infinite;
+}
+</code></pre>
+<p>From here on, examples feature only the un-prefixed property names.</p>
+<h2>The @keyframes rule</h2>
+<p>The <a href="/docs/css/properties/animation-name"><strong>animation-name</strong></a> property specifies an animation named <strong>pulse</strong>. Use a <a href="/docs/css/atrules/@keyframes"><strong>@keyframes</strong></a> rule within the CSS to define each named animation sequence:</p>
+<pre><code>@keyframes pulse {
+    from {
+        transform : scale(1);
+        opacity   : 1;
+    }
+    50% {
+        transform : scale(0.75);
+        opacity   : 0.25;
+    }
+    to {
+        transform : scale(1);
+        opacity   : 1;
+    }
+}
+</code></pre>
+<p>The entire sequence between <strong>from</strong> and <strong>to</strong> executes over the span of time defined by the <a href="/docs/css/properties/animation-duration"><strong>animation-duration</strong></a> property. Each keyframe within the sequence behaves like a CSS selector, manipulating the values of individual properties. Shifts from one keyframe to another work the same as transitions, and the same set of properties that can be transitioned can also be manipulated in keyframes. In this case, <a href="/docs/css/properties/opacity"><strong>opacity</strong></a> dims the icon and <a href="/docs/css/properties/transform"><strong>transform</strong></a> shrinks it. (See the <a href="/docs/tutorials/css_transforms">tutorial on transforms</a> for details on the <a href="/docs/css/properties/transform"><strong>transform</strong></a> property’s <strong>scale()</strong> function.)</p>
+<p>As with animation properties, each <a href="/docs/css/atrules/@keyframes"><strong>@keyframes</strong></a> rule also needs to be prefixed redundantly to run on WebKit-based browsers such as Chrome and Safari. The transform properties below are also prefixed:</p>
+<pre><code>@-webkit-keyframes pulse {
+   0%   { -webkit-transform: scale(1)   ; opacity: 1;    }
+   50%  { -webkit-transform: scale(0.75); opacity: 0.25; }
+   100% { -webkit-transform: scale(1)   ; opacity: 1;    }
+}
+</code></pre>
+<p>This example also substitutes <strong>0%</strong> and <strong>100%</strong> for their synonymous keywords <strong>from</strong> and <strong>to</strong>. (If you don’t specify either, values transition from the next available keyframe in the series.)</p>
+<h2>Changing Direction</h2>
+<p>This simple animation can also be alternated to produce the same effect:</p>
+<pre><code>div.selected {
+    animation-name            : pulse;
+    animation-duration        : 0.5s;
+    animation-iteration-count : infinite;
+    animation-direction       : alternate;
+}
+</code></pre>
+<p>The <a href="/docs/css/properties/animation-duration"><strong>animation-duration</strong></a> is now half of its previous value. Setting <a href="/docs/css/properties/animation-direction"><strong>animation-direction</strong></a> to <strong>alternate</strong> makes the animation execute in normal order (<strong>from</strong>/<strong>to</strong>), then in reverse order (<strong>to</strong>/<strong>from</strong>) for even-numbered iterations. This allows the animation’s start and end points to vary:</p>
+<pre><code>@keyframes pulse {
+   from { transform: scale(1)   ; opacity: 1;    }
+   to   { transform: scale(0.75); opacity: 0.25; }
+}
+</code></pre>
+<p>(You can also set <a href="/docs/css/properties/animation-direction"><strong>animation-direction</strong></a> to always <strong>reverse</strong>, or to <strong>reverse-alternate</strong>.)</p>
+<h2>Multiple animations</h2>
+<p>Animation properties accept more than one comma-delineated value, which allows you to chain together different animations or run them concurrently.</p>
+<p>This variation on the pulsing icon uses two keyframes to manipulate the <a href="/docs/css/properties/opacity"><strong>opacity</strong></a> and <a href="/docs/css/properties/transform"><strong>transform</strong></a> properties separately. In this case, setting different durations makes the two <em>fade</em> and <em>shrink</em> effects fall out of phase:</p>
+<pre><code>div.selected {
+    animation: fade 0.5s infinite alternate, shrink 0.53s infinite alternate;
+}
+/* long form: */
+div.selected {
+    animation-name            : fade      , shrink    ;
+    animation-duration        : 0.5s      , 0.53s     ;
+    animation-iteration-count : infinite  , infinite  ;
+    animation-direction       : alternate , alternate ;
+}
+@keyframes fade {
+    from { opacity   : 1; }
+    to   { opacity   : 0.25; }
+}
+@keyframes shrink {
+    from { transform : scale(1); }
+    to   { transform : scale(0.75); }
+}
+</code></pre>
+<p>Make sure that any keyframes or transitions that execute concurrently don’t manipulate any of the same properties. This is <em>not</em> a problem for animations or transitions applied to different elements.</p>
+<h2>Setting a Delay</h2>
+<p>As with transitions, animations can be delayed before they execute. Use the <a href="/docs/css/properties/animation-delay"><strong>animation-delay</strong></a> property to wait some time before pulsing the icon:</p>
+<pre><code>div.selected {
+    animation-name            : pulse;
+    animation-duration        : 0.5s;
+    animation-iteration-count : 6;
+    animation-direction       : alternate;
+    animation-delay           : 3s;
+}
+</code></pre>
+<p>(In this version, the icon pulses three times.)</p>
+<p>Whenever two time measurements are specified in a shorthand property value, the second is interpreted as the delay:</p>
+<pre><code>div.selected {
+    animation : pulse 0.5s 3s infinite alternate;
+}
+</code></pre>
+<p>This more elaborate example shows a delayed animation within a mobile interface. After an initial pause, content shifts down to make room for a series of banner advertisements, which then continuously cycle horizontally and rewind to display the first:</p>
+<p><img src="//static.webplatform.org/9/9b/anim_cycle.png" alt="anim cycle.png"></p>
+<p>To achieve this effect, the <a href="/docs/css/properties/animation-delay"><strong>animation-delay</strong></a> property makes content shift down after 4 seconds. Here is the relevant CSS:</p>
+<pre><code>article {
+    animation-name            : displaceContent;
+    animation-duration        : 1s;
+    animation-delay           : 4s;
+    animation-iteration-count : 1;
+    animation-fill-mode       : forwards;
+}
+@keyframes displaceContent {
+    from { transform : translateY(0em) }
+    to   { transform : translateY(3em) } /* slide down to make room for advertisements */
+}
+</code></pre>
+<p>The <a href="/docs/css/properties/animation-iteration-count"><strong>animation-iteration-count</strong></a> property makes the animation execute only once. (The next section explains the <a href="/docs/css/properties/animation-fill-mode"><strong>animation-fill-mode</strong></a> property.)</p>
+<p>The banner’s first animation (<em>insertBanner</em>) closely mirrors that of the content (<em>displaceContent</em>) shown above. After 4 seconds, it slides into view from off the screen:</p>
+<pre><code>header {
+    animation-name            : insertBanner , scrollBanner;
+    animation-duration        : 1s           , 25s;
+    animation-delay           : 4s           , 5s;
+    animation-iteration-count : 1            , infinite;
+    animation-fill-mode       : backwards    , none;
+    width                     : 500%;        /* wide banner featuring 5 panels */
+    column-count              : 5;
+    column-gap                : 0;
+}
+@keyframes insertBanner {
+    from { transform : translateY(-6em) } /* slide down from off-screen */
+    to   { transform : translateY(0em) }
+}
+</code></pre>
+<p>The banner’s second animation (<em>scrollBanner</em>) takes over at the 5-second mark, after the first has completed. Over the course of 25 seconds, it shifts the banner sideways to view each advertisement for nearly 5 seconds. After rewinding to its initial position 97% of the way through the keyframes, setting <a href="/docs/css/properties/animation-iteration-count"><strong>animation-iteration-count</strong></a> to <strong>infinite</strong> makes the animation replay indefinitely:</p>
+<pre><code>@keyframes scrollBanner {
+    from { transform : translateX(0) }
+    17%  { transform : translateX(0%) }
+    20%  { transform : translateX(-20%) }
+    37%  { transform : translateX(-20%) }
+    40%  { transform : translateX(-40%) }
+    57%  { transform : translateX(-40%) }
+    60%  { transform : translateX(-60%) }
+    77%  { transform : translateX(-60%) }
+    80%  { transform : translateX(-80%) }
+    97%  { transform : translateX(-80%) }
+    to   { transform : translateX(0%) }
+}
+</code></pre>
+<h2>Fill mode</h2>
+<p>Each keyframe within an animation specifies CSS properties, just like regular CSS selectors. Properties manipulated by keyframes may vary from those defined or inherited by selectors. By default, after animations complete their series of iterations, these properties abruptly snap from the final keyframe’s value back to their original value. Likewise when animations are delayed, properties snap from their original values to that of the first keyframe’s value.</p>
+<p>The <a href="/docs/css/properties/animation-fill-mode"><strong>animation-fill-mode</strong></a> property fixes this problem. Setting it to <strong>forwards</strong> makes the final keyframe’s property values persist after the animation completes. Setting it to <strong>backwards</strong> makes the first keyframe’s property override how the property would appear without the animation. Setting it to <strong>both</strong> makes the keyframe’s properties override the element’s default properties both before and after the animation executes. Setting it to the default value of <strong>none</strong> keeps all properties at their default values unless the animation is executing.</p>
+<p>Note that none of these values make any difference for animations whose <a href="/docs/css/properties/animation-delay"><strong>animation-delay</strong></a> is set to zero, and whose <a href="/docs/css/properties/animation-iteration-count"><strong>animation-iteration-count</strong></a> is <strong>infinite</strong>. Even then, they only make a difference for properties whose values specified at the start or end of the animation vary from how they are already specified by the element itself.</p>
+<p>The banner animation shown above gives an example of how to use <a href="/docs/css/properties/animation-fill-mode"><strong>animation-fill-mode</strong></a>. By default, both the banner and the main content inhabit the same space at the top of the screen. The content’s <em>displaceContent</em> animation slides it out of its default position, and its fill-mode of <strong>forwards</strong> keeps it there after it is done sliding. If it didn’t, it would snap right back to the top of screen. Likewise, the banner’s <em>insertBanner</em> animation slides it from a position specified in the first keyframe, and its fill-mode of <strong>backwards</strong> keeps it there before the delayed animation starts to execute, and it slides down to its default position.</p>
+<p>Fill mode can override not only an element’s underlying properties, but other animations as well. For the banner’s second animation, the <a href="/docs/css/properties/animation-fill-mode"><strong>animation-fill-mode</strong></a> is set to <strong>none</strong>. If it were set to <strong>both</strong> or <strong>backwards</strong>, the first animation would not execute. Since animations are interpreted in their order of declaration, and since both animations manipulate the <a href="/docs/css/properties/transform"><strong>transform</strong></a> property, specifying a fill-mode for the period before the second animation executes would override whatever the first animation does with the <strong>transform</strong> property:</p>
+<pre><code>header {
+    /* both animations alter the 'transform' property: */
+    animation-name            : insertBanner     , scrollBanner;
+    /* animations execute in sequence: */
+    animation-delay           : 4s               , 5s;
+    animation-duration        : 1s               , 25s;
+    animation-iteration-count : 1                , infinite;
+    animation-fill-mode       : backwards        , none;
+    /* 'none' does not clobber previous animation: ^^^^ */
+}
+</code></pre>
+<h2>Timing functions</h2>
+<p>The same set of timing functions that apply to transitions also apply to animations. (For details on these functions, see <a href="/docs/tutorials/css_transitions#timing">Timing Functions</a>.) The <a href="/docs/css/properties/animation-timing-function"><strong>animation-timing-function</strong></a> property allows you to control the response curve for each keyframe’s progress. It recognizes keyword values <strong>ease</strong>, <strong>ease-in</strong>, <strong>ease-out</strong>, <strong>ease-in-out</strong>, <strong>linear</strong>, along with <strong>cubic-bezier()</strong> functions for custom response curves.</p>
+<p>By default, the <strong>ease</strong> value starts each keyframe slowly, builds speed, then slows at the end, which is not always appropriate behavior. In this example, a series of items, skewed to appear fast-moving, slide in haphazardly from the right edge of the screen, then hit a wall at the left edge and wobble to a stop:</p>
+<p><img src="//static.webplatform.org/6/62/animDelay.png" alt="animDelay.png"></p>
+<p>Setting the timing function to <strong>linear</strong> makes the shift from a moving to a stopped state as abrupt as possible. This occurs at the 70% keyframe:</p>
+<pre><code>div {
+    animation-duration        : 0.5s;
+    animation-fill-mode       : both;
+    animation-iteration-count : 1;
+    animation-name            : fastSlide;
+    animation-timing-function : linear;
+    transform-origin          : bottom;
+}
+@keyframes fastSlide {
+    0%   { transform: translate(120%) skewX(-30deg) ; }
+    70%  { transform: translate(0%)   skewX(-30deg) ; }
+    80%  { transform: translate(0%)   skewX(20deg)  ; }
+    95%  { transform: translate(0%)   skewX(-10deg) ; }
+    100% { transform: translate(0%)   skewX(0deg)   ; }
+}
+</code></pre>
+<p>For greater control, you can even manipulate the value of the <a href="/docs/css/properties/animation-timing-function"><strong>animation-timing-function</strong></a> property <em>within</em> each keyframe, so that it changes over the course of the animation.</p>
+<h2>Dynamic animations</h2>
+<p>The example above uses JavaScript to assign random delays to stagger each animation’s execution. Any animation property can be set directly on an element’s <strong>style</strong> object, but as of this writing you also need to add alternative <em>Webkit</em>-prefixed property names:</p>
+<pre><code>window.onload = function() {
+    var delay, divs = document.querySelectorAll('div');
+    for (var i = 0, l = divs.length; i &amp;lt; l; i++) {
+        // set delay up to 1 second:
+        delay  = Math.round(Math.random() * 1000) + 'ms';
+        divs[i].style.animationDelay = delay;
+        divs[i].style.WebkitAnimationDelay = delay;
+    }
+}
+</code></pre>
+<p>Once an animation starts to execute, setting the <a href="/docs/css/properties/animation-play-state"><strong>animation-play-state</strong></a> property to <strong>pause</strong> stops it, and a value of <strong>running</strong> resumes it.</p>
+<p>To dynamically initiate an animation, specify a different name. In this example, applying an <em>animate</em> class overrides the <a href="/docs/css/properties/animation-name"><strong>animation-name</strong></a> property’s default value, which is an empty string. The <em>sequence</em> animation executes each time the class is applied after having been absent:</p>
+<pre><code>div         { -webkit-animation-name: &quot;&quot;;       }
+div.animate { -webkit-animation-name: sequence; }
+</code></pre>
+<p>Once the <em>animate</em> class is applied, simply reapplying it has no effect, because the animation’s name has to actualy change its value. The same is true when applying the property directly to the element. The first button below only works once, but the second can be repeated because it responds to asynchronous mouse or touch input:</p>
+<pre><code>&amp;lt;div onclick=&quot;document.querySelector('#animation').style.WebkitAnimationName = 'sequence';&quot;&gt;
+REPLAY&amp;lt;/div&gt;
+
+&amp;lt;div
+   onmousedown='document.querySelector(&quot;#animation&quot;).style.WebkitAnimationName = &quot;&quot;;'
+   onmouseup='document.querySelector(&quot;#animation&quot;).style.WebkitAnimationName = &quot;sequence&quot;;'
+&gt;REPLAY&amp;lt;/div&gt;
+</code></pre>
+<p>As a workaround, you can inject CSS into a local <strong>style</strong> region. Re-interpreting the CSS causes the animation to re-execute:</p>
+<pre><code>&amp;lt;style id=&quot;customCSS&quot;&gt;&amp;lt;/style&gt;
+. . .
+&amp;lt;div onclick=&quot;replay()&quot;&gt;REPLAY&amp;lt;/div&gt;
+. . .
+&amp;lt;script&gt;
+function replay() {
+    document.querySelector('#customCSS').textContent =
+        &quot;div { animation-name: 'sequence'; -webkit-animation-name: 'sequence' }&quot;;
+}
+&amp;lt;/script&gt;
+</code></pre>
+<p>Applying a <a href="/docs/css/atrules/@keyframes"><strong>@keyframes</strong></a> rule is a bit more complex than it is to set properties. Perhaps the easiest way is to inject the CSS into a <strong>style</strong> region in the same way as described above:</p>
+<pre><code>var css = document.querySelector('#customCSS')
+css.textContent += &quot;@keyframes pulse { &quot;;
+css.textContent += &quot;0% {transform:scale(1);opacity:1;} &quot;;
+css.textContent += &quot;100% {transform:scale(0.75);opacity:0.25;} &quot;;
+css.textContent += &quot;}&quot;;
+</code></pre>
+<p>A more formal API is available, especially to modify existing rules. Briefly, suppose this is your first declared style:</p>
+<pre><code>@keyframes shiftColor {
+   from { background-color: plum }
+   to { background-color: #ddd }
+}
+</code></pre>
+<p>Here is how you might change the initial color to a shade of gray:</p>
+<pre><code>var sources = document.styleSheets; // from link/style tags
+var rules = sources[0].cssRules;    // list of all styles and at-rules
+var rule = rules[0];                // get first
+if( rule.type == rule.KEYFRAMES_RULE &amp;#124;&amp;#124; rule.type == rule.WEBKIT_KEYFRAMES_RULE ) {
+    console.log(rule.name);         // shiftColor
+    console.log(rule[0].cssText);   // 0% { background-color: rgb(221, 160, 221); }
+    if ( rule[0].keyText == '0%' )  // 'from' converts to '0%'
+        rule[0].style.backgroundColor = '#aaa';
+    console.log(rule[0].cssText);   // 0% { background-color: rgb(170, 170, 170); }
+}
+</code></pre>
+<p>See <a href="/docs/css/cssom/CSSKeyframesRule"><strong>CSSKeyframesRule</strong></a>, <a href="/docs/css/cssom/CSSKeyframeRule"><strong>CSSKeyframeRule</strong></a> and <a href="/docs/css/cssom/CSSRule"><strong>CSSRule</strong></a> for details.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/css3-animations/">CSS Animations: W3C Working Draft</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

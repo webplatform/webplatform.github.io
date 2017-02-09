@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>objects · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="JavaScript is designed on a simple object-based paradigm. An object is a collection of properties, and a property is association between a name and a value. A value of property can be a function, which is then known as the object&#x27;s method. In addition to objects that are predefined in the browser, you can define your own objects.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/objects/">objects</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>objects</h1>
+<h2>Summary</h2>
+<p>JavaScript is designed on a simple object-based paradigm. An object is a collection of properties, and a property is association between a name and a value. A value of property can be a function, which is then known as the object’s method. In addition to objects that are predefined in the browser, you can define your own objects.</p>
+<p>This chapter describes how to use objects, properties, functions, and methods, and how to create your own objects.</p>
+<h2>Objects overview</h2>
+<p>Objects in JavaScript, just as many other programming languages, can be compared to objects in real life. The concept of objects in JavaScript can be understood with real life, tangible objects.</p>
+<p>In JavaScript, an object is a standalone entity, with properties and type. Compare it with a cup for example. A cup is an object, with properties. A cup has a colour, a design, weight, a material it is made of, etc. The same way, JavaScript objects can have properties, which define their characteristics.</p>
+<h2>Objects and properties</h2>
+<p>A JavaScript object has properties associated with it. A property of an object can be explained as variables that are attached to the object. Object properties are basically the same as ordinary JavaScript variables, except object properties are attached to objects. The properties of an object define the characteristics of the object. You access the properties of an object with a simple dot-notation:</p>
+<pre><code>objectName.propertyName
+</code></pre>
+<p>Like all JavaScript variables, both the object name (which could be a normal variable) and property name are case sensitive. You define a property by assigning it a value. For example, let’s create an object named <code>myCar</code> and give it properties named <code>make</code>, <code>model</code>, and <code>year</code> as follows:</p>
+<pre><code>var myCar = new Object();
+myCar.make = &quot;Ford&quot;;
+myCar.model = &quot;Mustang&quot;;
+myCar.year = 1969;
+</code></pre>
+<p>Above we have used the key word <code>new</code> to create a new object named <code>myCar</code>. Then, using dot-notation, we added three properties to <code>myCar</code> and assigned them values. In addition to using dot-notation to access and set object property values, we may also use bracket-notation. So, for example, you could access the properties of the <code>myCar</code> object as follows:</p>
+<pre><code>myCar[&quot;make&quot;] = &quot;Ford&quot;;
+myCar[&quot;model&quot;] = &quot;Mustang&quot;;
+myCar[&quot;year&quot;] = 1969;
+</code></pre>
+<p>Objects are sometimes called <em>associative arrays</em>, since each property is associated with a string value that can be used to access it. Object property names can be valid JavaScript strings, or anything that can be converted to string, including the empty string. However, any property name that is not a valid JavaScript identifier (for example, a property name that has space or dash, or starts with a number) can only be accessed using bracket-notation. Bracket-notation is also very useful when property names are to be dynamically determined (when the property name is not determined until runtime). Examples are as follows:</p>
+<pre><code>var myObj = new Object(),
+    str = &quot;myString&quot;,
+    rand = Math.random(),
+    obj = new Object();
+
+myObj.type              = &quot;Dot syntax&quot;;
+myObj[&quot;date created&quot;]   = &quot;String with space&quot;;
+myObj[str]              = &quot;String value&quot;;
+myObj[rand]             = &quot;Random Number&quot;;
+myObj[obj]              = &quot;Object&quot;;
+myObj[&quot;&quot;]               = &quot;Even an empty string&quot;;
+
+console.log(myObj);
+</code></pre>
+<p>You can also access properties by using a string value that is stored in a variable:</p>
+<pre><code>var propertyName = &quot;make&quot;;
+myCar[propertyName] = &quot;Ford&quot;;
+
+propertyName = &quot;model&quot;;
+myCar[propertyName] = &quot;Mustang&quot;;
+</code></pre>
+<p>You can use bracket-notation with <a href="/w/index.php?title=concepts/programming/javascript/objects/js/statements&amp;action=edit&amp;redlink=1">for…in</a> to iterate over all the enumerable properties of an object. To illustrate how this works, the following function displays the properties of the object when you pass the object and the object’s name as arguments to the function:</p>
+<pre><code>function showProps(obj, objName) {
+  var result = &quot;&quot;;
+  for (var i in obj)
+    result += objName + &quot;.&quot; + i + &quot; = &quot; + obj[i] + &quot;\n&quot;;
+  return result;
+}
+</code></pre>
+<p>So, the function call <code>showProps(myCar, &quot;myCar&quot;)</code> would return the following:</p>
+<pre><code>myCar.make = Ford
+myCar.model = Mustang
+myCar.year = 1969
+</code></pre>
+<h2>Object everything</h2>
+<p>In JavaScript, almost everything is an object. All primitive types except <code>null</code> and <code>undefined</code> are treated as objects. They can be assigned properties (assigned properties of some types are not persistent), and they have all characteristics of objects. Even simple functions are objects in JavaScript.</p>
+<h2>Enumerating all properties of an object</h2>
+<p>Starting with ECMAScript 5, there are three native ways to list/traverse object properties:</p>
+<ul>
+<li><a href="/w/index.php?title=concepts/programming/javascript/objects/js/statements/for...in&amp;action=edit&amp;redlink=1">for…in</a> loops<br>
+This method traverses all enumerable properties of an object and its prototype chain</li>
+<li><a href="/w/index.php?title=concepts/programming/javascript/objects/js/objects/Object/keys&amp;action=edit&amp;redlink=1">Object.keys(o)</a><br>
+This method returns an array of Strings. Each string is a key in the object <code>o</code>. This array doesn’t include keys that <code>o</code> inherited from it’s prototype.</li>
+<li><a href="/docs/concepts/programming/javascript/objects/js/objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames(o)</a><br>
+This method returns an array containing all own properties names (enumerable or not) of an object <code>o</code>.</li>
+</ul>
+<p>In ECMAScript 5, there is no native way to list all properties of an object. However, this can be achieved with the following function:</p>
+<pre><code>function listAllProperties(o){
+    var objectToInspect;
+    var result = [];
+
+    for(objectToInspect = o; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)){
+        result = result.concat(Object.getOwnPropertyNames(objectToInspect));
+    }
+
+    return result;
+}
+</code></pre>
+<p>This can be useful to reveal “hidden” properties (properties in the prototype chain which are not accessible through the object, because another property has the same name earlier in the prototype chain). Listing accessible properties only can easily be done by removing duplicates in the array.</p>
+<h2>Creating new objects</h2>
+<p>JavaScript has a number of predefined objects. In addition, you can create your own objects. Starting in JavaScript 1.2, you can create an object using an object-literal. Alternatively, you can use a constructor function by calling the <code>new</code> operator on an existing function. Consider:</p>
+<pre><code> var a = {};            //object-literal
+ var b = new Object();  //constructor function
+</code></pre>
+<p>Both of these methods will get you a new object. Let’s take a closer look at each of them.</p>
+<h3>Using object literals</h3>
+<p>One way to create an object is to use object literals. Using object literals is sometimes referred to as creating objects with object-literal notation.</p>
+<p>In it’s most basic form, object literals are empty objects. To create one, do the following:</p>
+<pre><code> var obj = {};
+</code></pre>
+<p>Since it might help to have an object with more substance, consider the following:</p>
+<pre><code> var artist = {
+     name : &quot;Freddie Mercury&quot;,
+     band : &quot;Queen&quot;,
+     rank : 1
+ }
+</code></pre>
+<p>We now have an <code>artist</code> object. <code>artist</code> has a name, and band, and a rank of 1.</p>
+<p>If an object is created with an object-literal in a top-level script, JavaScript interprets the object each time it evaluates an expression containing the object literal. In addition, an object literal used in a function is created each time the function is called.</p>
+<p>The following statement creates an object and assigns it to the variable <code>x</code> if and only if the expression <code>cond</code> is true.</p>
+<pre><code>if (cond) var x = {hi: &quot;there&quot;};
+</code></pre>
+<p>The following example creates <code>myHonda</code> with three properties. Note that the <code>engine</code> property is also an object with its own properties.</p>
+<pre><code> var myHonda = {
+     color: &quot;red&quot;,
+     wheels: 4,
+     engine: {
+         cylinders: 4,
+         size: 2.2
+     }
+ };
+</code></pre>
+<p>You can also use object literals to create arrays and regular expressions. See <a href="/w/index.php?title=concepts/programming/javascript/objects/js/guides/JavaScript/Values&amp;action=edit&amp;redlink=1">array</a> and <a href="/w/index.php?title=concepts/programming/javascript/objects/js/guides/JavaScript/Values&amp;action=edit&amp;redlink=1">regular expression</a> literals.</p>
+<p>In JavaScript 1.1 and earlier, you could not use object literals. You could create objects only using their constructor functions or using a function supplied by some other object for that purpose. See <a href="#Using_a_constructor_function">Using a constructor function</a>.</p>
+<h3>Using a constructor function</h3>
+<p>Alternatively, you can create an object with these two steps:</p>
+<ol>
+<li>Define the object type by writing a constructor function. There is a strong convention, with good reason, to use a capital initial letter.</li>
+<li>Create an instance of the object with <code>new</code>.</li>
+</ol>
+<p>To define an object type, create a function for the object type that specifies its name, properties, and methods. For example, suppose you want to create an object type for cars. You want this type of object to be called <code>car</code>, and you want it to have properties for make, model, and year. To do this, you would write the following function:</p>
+<pre><code>function Car(make, model, year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+}
+</code></pre>
+<p>Notice the use of <code>this</code> to assign values to the object’s properties based on the values passed to the function.</p>
+<p>Now you can create an object called <code>mycar</code> as follows:</p>
+<pre><code>var mycar = new Car(&quot;Eagle&quot;, &quot;Talon TSi&quot;, 1993);
+</code></pre>
+<p>This statement creates <code>mycar</code> and assigns it the specified values for its properties. Then the value of <code>mycar.make</code> is the string &quot;Eagle&quot;, <code>mycar.year</code> is the integer 1993, and so on.</p>
+<p>You can create any number of <code>car</code> objects by calls to <code>new</code>. For example,</p>
+<pre><code>var kenscar = new Car(&quot;Nissan&quot;, &quot;300ZX&quot;, 1992);
+var vpgscar = new Car(&quot;Mazda&quot;, &quot;Miata&quot;, 1990);
+</code></pre>
+<p>An object can have a property that is itself another object. For example, suppose you define an object called <code>person</code> as follows:</p>
+<pre><code>function Person(name, age, sex) {
+  this.name = name;
+  this.age = age;
+  this.sex = sex;
+}
+</code></pre>
+<p>and then instantiate two new <code>person</code> objects as follows:</p>
+<pre><code>var rand = new Person(&quot;Rand McKinnon&quot;, 33, &quot;M&quot;);
+var ken = new Person(&quot;Ken Jones&quot;, 39, &quot;M&quot;);
+</code></pre>
+<p>Then, you can rewrite the definition of <code>car</code> to include an <code>owner</code> property that takes a <code>person</code> object, as follows:</p>
+<pre><code>function Car(make, model, year, owner) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.owner = owner;
+}
+</code></pre>
+<p>To instantiate the new objects, you then use the following:</p>
+<pre><code>var car1 = new Car(&quot;Eagle&quot;, &quot;Talon TSi&quot;, 1993, rand);
+var car2 = new Car(&quot;Nissan&quot;, &quot;300ZX&quot;, 1992, ken);
+</code></pre>
+<p>Notice that instead of passing a literal string or integer value when creating the new objects, the above statements pass the objects <code>rand</code> and <code>ken</code> as the arguments for the owners. Then if you want to find out the name of the owner of car2, you can access the following property:</p>
+<pre><code>car2.owner.name
+</code></pre>
+<p>Note that you can always add a property to a previously defined object. For example, the statement</p>
+<pre><code>car1.color = &quot;black&quot;;
+</code></pre>
+<p>adds a property <code>color</code> to car1, and assigns it a value of “black.” However, this does not affect any other objects. To add the new property to all objects of the same type, you have to add the property to the definition of the <code>car</code> object type.</p>
+<h3>Using the Object.create method</h3>
+<p>Objects can also be created using the <code>Object.create</code> method. This method can be very useful, because it allows you to choose the prototype object for the object you want to create, without having to define a constructor function. For more detailed information on the method and how to use it, see <a href="/w/index.php?title=concepts/programming/javascript/objects/js/objects/Object/create&amp;action=edit&amp;redlink=1">Object.create method</a></p>
+<h3>Inheritance</h3>
+<p>All objects in JavaScript inherit from at least one other object. The object being inherited from is known as the prototype, and the inherited properties can be found in the <code>prototype</code> object of the constructor.</p>
+<h3>Indexing object properties</h3>
+<p>In JavaScript 1.0, you can refer to a property of an object either by its property name or by its ordinal index. In JavaScript 1.1 and later, however, if you initially define a property by its name, you must always refer to it by its name, and if you initially define a property by an index, you must always refer to it by its index.</p>
+<p>This restriction applies when you create an object and its properties with a constructor function (as we did previously with the <code>Car</code> object type) and when you define individual properties explicitly (for example, <code>myCar.color = &quot;red&quot;</code>). If you initially define an object property with an index, such as <code>myCar[5] = &quot;25 mpg&quot;</code>, you can subsequently refer to the property only as <code>myCar[5]</code>.</p>
+<p>The exception to this rule is objects reflected from HTML, such as the <code>forms</code> array. You can always refer to objects in these arrays by either their ordinal number (based on where they appear in the document) or their name (if defined). For example, if the second <code>&lt;FORM&gt;</code> tag in a document has a <code>NAME</code> attribute of &quot;myForm&quot;, you can refer to the form as <code>document.forms[1]</code> or <code>document.forms[&quot;myForm&quot;]</code> or <code>document.myForm</code>.</p>
+<h3>Defining properties for an object type</h3>
+<p>You can add a property to a previously defined object type by using the <code>prototype</code> property. This defines a property that is shared by all objects of the specified type, rather than by just one instance of the object. The following code adds a <code>color</code> property to all objects of type <code>car</code>, and then assigns a value to the <code>color</code> property of the object <code>car1</code>.</p>
+<pre><code>Car.prototype.color = null;
+car1.color = &quot;black&quot;;
+</code></pre>
+<p>See the <a href="/w/index.php?title=concepts/programming/javascript/objects/js/objects/Function/prototype&amp;action=edit&amp;redlink=1"><code>prototype</code> property</a> of the <code>Function</code> object in the JavaScript Reference for more information.</p>
+<h3>Defining methods</h3>
+<p>A <em>method</em> is a function associated with an object, or, simply put, a method is a property of an object that is a function. Methods are defined the way normal functions are defined, except that they have to be assigned as the property of an object. Examples are:</p>
+<pre><code>objectName.methodname = function_name;
+
+var myObj = {
+  myMethod: function(params) {
+    // ...do something
+  }
+};
+</code></pre>
+<p>where <code>objectName</code> is an existing object, <code>methodname</code> is the name you are assigning to the method, and <code>function_name</code> is the name of the function.</p>
+<p>You can then call the method in the context of the object as follows:</p>
+<pre><code>object.methodname(params);
+</code></pre>
+<p>You can define methods for an object type by including a method definition in the object constructor function. For example, you could define a function that would format and display the properties of the previously-defined <code>car</code> objects; for example,</p>
+<pre><code>function displayCar() {
+  var result = &quot;A Beautiful &quot; + this.year + &quot; &quot; + this.make
+    + &quot; &quot; + this.model;
+  pretty_print(result);
+}
+</code></pre>
+<p>where <code>pretty_print</code> is a function to display a horizontal rule and a string. Notice the use of <code>this</code> to refer to the object to which the method belongs.</p>
+<p>You can make this function a method of <code>car</code> by adding the statement</p>
+<pre><code>this.displayCar = displayCar;
+</code></pre>
+<p>to the object definition. So, the full definition of <code>car</code> would now look like</p>
+<pre><code>function Car(make, model, year, owner) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.owner = owner;
+  this.displayCar = displayCar;
+}
+</code></pre>
+<p>Then you can call the <code>displayCar</code> method for each of the objects as follows:</p>
+<pre><code>car1.displayCar();
+car2.displayCar();
+</code></pre>
+<p>This produces the output shown in the following figure.</p>
+<p><a href="/w/index.php?title=Obja.gif&amp;action=edit&amp;redlink=1">Image:obja.gif</a></p>
+<p><small><strong>Figure 7.1: Displaying method output.</strong></small></p>
+<h3>Using <code>this</code> for object references</h3>
+<p>JavaScript has a special keyword, <code>this</code>, that you can use within a method to refer to the current object. For example, suppose you have a function called <code>validate</code> that validates an object’s <code>value</code> property, given the object and the high and low values:</p>
+<pre><code>function validate(obj, lowval, hival) {
+  if ((obj.value &lt; lowval);
+[object Object]
+js&gt; o.a;
+7
+js&gt; o.b;
+8
+js&gt; o.c = 50;
+js&gt; o.a;
+25
+</code></pre>
+<p>The <code>o</code> object’s properties are:</p>
+<ul>
+<li><code>o.a</code> — a number</li>
+<li><code>o.b</code> — a getter that returns <code>o.a</code> plus 1</li>
+<li><code>o.c</code> — a setter that sets the value of <code>o.a</code> to half of the value <code>o.c</code> is being set to</li>
+</ul>
+<p>Please note that function names of getters and setters defined in an object literal using &quot;[gs]et <em>property</em>()&quot; (as opposed to <code>__define[GS]etter__</code> below) are not the names of the getters themselves, even though the <code>[gs]et propertyName(){ }</code> syntax may mislead you to think otherwise. To name a function in a getter or setter using the &quot;[gs]et <em>property</em>()&quot; syntax, define an explicitly named function programmatically using <code>Object.defineProperty</code> (or the <code>Object.prototype.__defineGetter__</code> legacy fallback).</p>
+<p>This JavaScript shell session illustrates how getters and setters can extend the <code>Date</code> prototype to add a <code>year</code> property to all instances of the predefined <code>Date</code> class. It uses the <code>Date</code> class’s existing <code>getFullYear</code> and <code>setFullYear</code> methods to support the <code>year</code> property’s getter and setter.</p>
+<p>These statements define a getter and setter for the year property:</p>
+<pre><code>js&gt; var d = Date.prototype;
+js&gt; d.__defineGetter__(&quot;year&quot;, function() { return this.getFullYear(); });
+js&gt; d.__defineSetter__(&quot;year&quot;, function(y) { this.setFullYear(y); });
+</code></pre>
+<p>These statements use the getter and setter in a <code>Date</code> object:</p>
+<pre><code>js&gt; var now = new Date;
+js&gt; print(now.year);
+2000
+js&gt; now.year = 2001;
+987617605170
+js&gt; print(now);
+Wed Apr 18 11:13:25 GMT-0700 (Pacific Daylight Time) 2001
+</code></pre>
+<h4>Obsolete syntaxes</h4>
+<p>In the past, JavaScript supported several other syntaxes for defining getters and setters. None of these syntaxes were supported by other engines, and support has been removed in recent versions of JavaScript. See <a href="http://whereswalden.com/2010/04/16/more-spidermonkey-changes-ancient-esoteric-very-rarely-used-syntax-for-creating-getters-and-setters-is-being-removed/">this dissection of the removed syntaxes</a> for further details on what was removed and how to adapt to those removals.</p>
+<h4>Summary</h4>
+<p>In principle, getters and setters can be either</p>
+<ul>
+<li>defined using <a href="#Using_object_initializers">object initializers</a>, or</li>
+<li>added later to any object at any time using a getter or setter adding method.</li>
+</ul>
+<p>When defining getters and setters using <a href="#Using_object_initializers">object initializers</a> all you need to do is to prefix a getter method with <code>get</code> and a setter method with <code>set</code>. Of course, the getter method must not expect a parameter, while the setter method expects exactly one parameter (the new value to set). For instance:</p>
+<pre><code>var o = {
+  a: 7,
+  get b() { return this.a + 1; },
+  set c(x) { this.a = x / 2; }
+};
+</code></pre>
+<p>Getters and setters can also be added to an object at any time after creation using two special methods called <code>__defineGetter__</code> and <code>__defineSetter__</code>. Both methods expect the name of the getter or setter as their first parameter, in the form of a string. The second parameter is the function to call as the getter or setter. For instance (following the previous example):</p>
+<pre><code>o.__defineGetter__(&quot;b&quot;, function() { return this.a + 1; });
+o.__defineSetter__(&quot;c&quot;, function(x) { this.a = x / 2; });
+</code></pre>
+<p>Which of the two forms to choose depends on your programming style and task at hand. If you already go for the object initializer when defining a prototype you will probably most of the time choose the first form. This form is more compact and natural. However, if you need to add getters and setters later — because you did not write the prototype or particular object — then the second form is the only possible form. The second form probably best represents the dynamic nature of JavaScript — but it can make the code hard to read and understand.</p>
+<p>Prior to Firefox 3.0, getter and setter are not supported for DOM Elements. Older versions of Firefox silently fail. If exceptions are needed for those, changing the prototype of HTMLElement <code>(HTMLElement.prototype.__define[SG]etter__)</code> and throwing an exception is a workaround.</p>
+<p>With Firefox 3.0, defining getter or setter on an already-defined property will throw an exception. The property must be deleted beforehand, which is not the case for older versions of Firefox.</p>
+<h3>Deleting properties</h3>
+<p>You can remove a property by using the <code>delete</code> operator. The following code shows how to remove a property.</p>
+<pre><code>//Creates a new object, myobj, with two properties, a and b.
+var myobj = new Object;
+myobj.a = 5;
+myobj.b = 12;
+
+//Removes the a property, leaving myobj with only the b property.
+delete myobj.a;
+</code></pre>
+<p>You can also use <code>delete</code> to delete a global variable if the <code>var</code> keyword was not used to declare the variable:</p>
+<pre><code>g = 17;
+delete g;
+</code></pre>
+<p>See <code>[/guides/JavaScript/Expressions#delete|delete]]</code> for more information.</p>
+<p><span style="float: left"><a href="/w/index.php?title=concepts/programming/javascript/objects/guides/JavaScript/Functions&amp;action=edit&amp;redlink=1">« Previous</a></span><a href="/w/index.php?title=concepts/programming/javascript/objects/guides/JavaScript/Predefined_Core_Objects&amp;action=edit&amp;redlink=1">Next »</a></p>
+<p>}}</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><code>__defineGetter__</code></li>
+<li><code>/js/objects/Object/defineSetter __defineSetter__</code></li>
+<li><code>get</code></li>
+<li><code>set</code></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://es5.github.com/#x4.2">ECMAScript 5.1 spec: Language Overview</a></li>
+<li><a href="http://dmitrysoshnikov.com/ecmascript/javascript-the-core">JavaScript. The core. (Dmitry A. Soshnikov ECMA-262 article series)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Working_with_Objects">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

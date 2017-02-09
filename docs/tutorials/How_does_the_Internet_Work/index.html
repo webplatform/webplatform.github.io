@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>How does the Internet work · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/How_does the Internet work/">How does the Internet work</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>How does the Internet work</h1>
+<h2>Introduction</h2>
+<p>Every so often, you get offered a behind-the-scenes look at the cogs and fan belts behind the action. Today’s your lucky day. In this article we’ll usher you behind the scenes of one of the hottest technologies that you might already be familiar with: the World Wide Web. Cue theme music.</p>
+<p>This article covers the underlying technologies that power the World Wide Web:</p>
+<ul>
+<li>Hypertext Markup Language (HTML)</li>
+<li>Hypertext Transfer Protocol (HTTP)</li>
+<li>Domain Name System (DNS)</li>
+<li>Web servers and web browsers</li>
+<li>Static and dynamic content</li>
+</ul>
+<p>While most of what’s covered here won’t help you to build a better web site, it will give you the proper language to use when speaking with clients and with others about the Web. It’s like a wise nun-turned-nanny once said in <em>The Sound of Music</em>: “When we read we begin with ABC. When we sing we begin with Do Re Mi.”. In this article I will briefly look at how computers actually communicate, then go on to look at the different languages that go together to create the web pages that make up the Web.</p>
+<h2>How do computers communicate via the Internet?</h2>
+<p>Thankfully, we have kept things simple for computers. When it comes to the World Wide Web, most pages are written using the same language, HTML, which is passed around using a common protocol — HTTP. HTTP is the common internet language (dialect, or specification), allowing a Windows machine, for example, to sing in harmony with a machine running the latest and greatest version of Linux (Do Re Mi!). Through the use of a web browser, a special piece of software that interprets HTTP and renders HTML into a human-readable form, web pages authored in HTML on any type of computer can be read anywhere, including telephones, PDAs and even popular games consoles.</p>
+<p>Even though they’re speaking the same language, the various devices accessing the web need to have some rules in place to be able to talk to one another — it’s like learning to raise your hand to ask a question in class. HTTP lays out these ground rules for the Internet. Because of HTTP, a client machine (like your computer) knows that it has to be the one to initiate a request for a web page; it sends this request to a <strong>server</strong>. A server is a computer where web sites reside — when you type a web address into your browser, a server receives your request, finds the web page you want, and sends it back to your computer to be displayed in your web browser.</p>
+<h3>Dissecting a request/response cycle</h3>
+<p>Now that we’ve looked at all the parts that allow computers to communicate across the Internet, let’s look at the HTTP request/response cycle in more detail. There are some numbered steps below for you to work along with, so I can demonstrate some of the concepts to you more effectively.</p>
+<ol>
+<li>Every request/response starts by typing a URL (commonly known as a web address) into the address bar of your web browser, something like <a href="http://www.apple.com">http://www.apple.com</a>. Open a browser now, and type this URL and press Enter/Return (or follow the above link) to go to the Apple homepage. Now, one thing you may not know is that web browsers actually don’t use URLs to request web sites from servers; they use <strong>Internet Protocol</strong> or <strong>IP addresses</strong> (which function like phone numbers or postal addresses, but identify servers, rather than phones or addresses). For example, the IP address of <a href="http://www.apple.com">http://www.apple.com</a> is 17.149.160.10.</li>
+<li>Try opening a new browser tab or window, typing <a href="http://17.149.160.10">http://17.149.160.10</a> into the address bar and hitting enter — you will get the same web page that you got to in step 1. <a href="http://www.apple.com">http://www.apple.com</a> is basically acting as an alias for <a href="http://17.149.160.10/">http://17.149.160.10/</a>, but why, and how? This is because people are better at remembering words than long strings of numbers. The system that makes this work is called DNS, which is a comprehensive automatic directory of all of the machines connected to the Internet. When you punch <a href="http://www.apple.com">http://www.apple.com</a> into your address bar and hit enter, that address is sent off to a name server that tries to associate it to its IP address. There are a literally millions of machines connected to the Internet, and not every DNS server has a listing for every machine online, so there’s a system in place where your request will be referred on to another name server to fulfill your request, if the first one doesn’t have the right information. So the DNS system looks up the Apple web site, finds that it is located at 17.149.160.10, and sends this IP address back to your web browser. Your machine then sends a request to the machine at the IP address specified and waits to get a response back. If all goes well, the server sends a short message back to the client with a message saying that everything is okay (see Figure 1,) followed by the web page itself. This type of message is contained in an <strong>HTTP header</strong>.</li>
+</ol>
+<p><img src="//static.webplatform.org/6/62/article3.gif" alt="successful request response cycle"></p>
+<p>Figure 1: In this case, everything is fine, and the server returns the correct web page. If something goes wrong, for example you typed the URL incorrectly, you’ll get an <strong>HTTP error</strong> returned to your web browser instead — the infamous 404 “page not found” error is the most common example you’ll come across.</p>
+<ol>
+<li>Try typing in <a href="http://www.joniscool.co.uk/jonlane/">http://www.joniscool.co.uk/jonlane/</a>. The page doesn’t exist, so you’ll get a 404 error returned. Try it with a few different fake page addresses and you’ll see a variety of different pages returned. This is because some web developers have just left the web server to return their default error pages, and others have coded custom error pages to appear when a non-existent page is returned. This is an advanced technique that won’t be covered in this course, but Stuart Colville provides a good article on it at <a href="http://dev.opera.com/articles/view/adding-meaning-to-http-error-pages/">Adding meaning to your HTTP error pages!</a>. Lastly, a note about URLs — usually the first URL you go to on a site doesn’t have an actual file name at the end of it (eg <a href="http://www.mysite.com/">http://www.mysite.com/</a>), and then subsequent pages sometimes do and sometimes don’t. You are always accessing actual files, but sometimes the web developer has set up the web server to not display the file names in the URL — this often makes for neater, easier to remember URLs, which leads to a better experience for the user of your web site. We’ll not cover how to do this in this course, as again, it is quite advanced; we cover uploading files to a server and file/folder directory structures in <a href="http://dev.opera.com/articles/view/supplementary-getting-your-content-onli/">Getting your content online</a>, by Craig Grannell.</li>
+</ol>
+<h2>Types of Content</h2>
+<p>Now you’ll look at the different types of content you’ll expect to see on the Internet. They are grouped these into 4 types — plain text, web standards, server-side languages, and formats requiring other applications or plugins.</p>
+<h3>Plain text</h3>
+<p>In the really early days of the Internet, before any web standards or plugins came along, the Internet was mainly just images and plain text — files with an extension of .txt or similar. When a plain text file is encountered on the Internet, the browser will just display it as is, without any processing involved. You often still get plain text files on university sites.</p>
+<h3>Web Standards</h3>
+<p>The basic building blocks of the World Wide Web are the three most commonly-used web standards — HTML, CSS and JavaScript.</p>
+<p>Hypertext Markup Language is actually a pretty good name as far as communicating it’s purpose. HTML is what’s used to divide up a document, specify its contents and structure, and define the meaning of each part (headings, paragraphs, bulleted lists, etc.) It uses elements to identify the different components of a page.</p>
+<p>Cascading Style Sheets give you complete control over how an element is styled and positioned. It’s easy, using style declarations, to change all paragraphs to be double-spaced (<code>line-height: 2em;</code>), or to make all second-level headings green (<code>color: green;</code>). There are a ton of advantages to separating the structure from the style, and we’ll look at this in more detail [<a href="http://dev.opera.com/articles/view/4-the-web-standards-model-html-css-a/">in the next article</a>]. To demonstrate the power of HTML and CSS used together, Figure 2 shows some plain HTML on the left, with no formatting added to it at all, while on the right you can see exactly the same HTML with some CSS styles applied to it.</p>
+<p><img src="//static.webplatform.org/6/6e/article4.gif" alt="successful request response cycle"></p>
+<p>Figure 2: Plain HTML on the left, HTML with CSS applied to it on the right.</p>
+<p>Finally, JavaScript provides dynamic functions to your web site/application. You can write programs in JavaScript that will run in the web browser, requiring no special software to be installed. JavaScript allows you to add powerful interactivity and dynamic features to your web site, but it has its limitations, which brings us to server-side programming languages, and dynamic web pages.</p>
+<h3>Server-side languages</h3>
+<p>Sometimes, when browsing the Internet, you’ll come across web pages that don’t have an .html extension—they might have a .php, .asp, .aspx, .jsp, or some other strange extension. These are all examples of server-side web technologies, which can be used to create web pages with sections that change depending on variable values given to the page on the server, before the page is sent to the web browser to be displayed. For example, a movie listings page could pull movie information from a database, and display different movie information for different days, weeks or months. We’ll cover these types of web pages further in the Static versus Dynamic pages section below.</p>
+<h3>Formats requiring other applications or plugins</h3>
+<p>Because web browsers are only equipped to interpret and display certain technologies like web standards, if you’ve requested a URL that points to a file format the browser isn’t able to interpret, or a web page containing a technology requiring plugins, it will either be downloaded to your computer or opened using a plugin if the browser has it installed. For example:</p>
+<ol>
+<li>If you encounter a Word document, Excel file, PDF, compressed file (ZIP, or RAR), complex image file such as a Photoshop PSD, or another file that the browser doesn’t understand, the browser will usually ask you if you want to download or open the file. Both of these usually have similar results, except that the latter will cause the file to be downloaded and then opened by an application that does understand it, if one is installed.</li>
+<li>If you encounter a page containing a Flash movie, Java Applet, or music of video file that it doesn’t understand, the browser will play it using an installed plugin, if one has been installed. If not, you will usually be given a link to install the required plugin, or the file will download and look for a desktop application to run it.</li>
+</ol>
+<p>Of course, there are some gray areas—for example some browsers will come with some plugins pre-installed, so you may not be aware that content is being displayed via a plugin and not natively within the browser.</p>
+<h2>Static vs. Dynamic Web Sites</h2>
+<p>So what are static and dynamic web sites, and what is the difference between the two? Similar to a box of chocolates, it’s all in the filling:</p>
+<p>A static web site is a web site where the content (eg the HTML and graphic content) is always static—it is served up to any visitor the same, unless the person who created the web site decides to manually change the copy of it on the server—this is exactly what we’ve been looking at throughout most of this article.</p>
+<p>On a dynamic web site on the other hand the content on the server is the same, but instead of just being HTML, it also contains dynamic code, which may display different data depending on information such as the time of day, the user who is logged in, the date, the search term it has been given to look for. Let’s look at an example — navigate to www.amazon.com in your web browser, and search for 5 different products. Amazon hasn’t sent you 5 different pages; it has sent you the same page 5 times, but with different dynamic information filled in each time. This different information is kept in a database, which pulls up the relevant information when requested, and gives it to the web server to insert into the dynamic page.</p>
+<p>Another thing to note is that special software must be installed on the server to create a dynamic web site. Whereas normal static HTML files are saved with a file extension of .html and can just be run by the browser with no extra help, these files contain special dynamic code in addition to HTML, and are saved with special file extensions to tell the web server that they need extra processing before they are sent to the client (such as having the data inserted from the database). PHP files for example usually have a .php file extension.</p>
+<p>There are many dynamic languages to choose from — I’ve already mentioned PHP, and other examples include Python, Ruby on Rails, ASP.NET and Coldfusion. In the end, all of these languages have pretty much the same capabilities, like talking to databases, validating information entered into forms, etc., but they do things slightly differently, and have some advantages and disadvantages. It all boils down to what suits you best.</p>
+<p>We won’t be covering dynamic languages any further in this course, but I have provided a list of resources here in case you want to go and read up on them:</p>
+<ul>
+<li>Rails: Fernandez, Obie. (2007), The Rails Way. Addison-Wesley Professional Ruby Series.</li>
+<li><a href="http://www.rubyonrails.org/screencasts">Rails screencasts</a></li>
+<li>PHP: Powers, David (2006), PHP Solutions: Dynamic web development made easy, friends of ED.</li>
+<li><a href="http://www.php.net/docs.php">PHP Online documentation</a></li>
+<li>ASP.NET: Lorenz, Patrick. (2003). ASP.NET 2.0 Revealed. Apress.</li>
+<li>ASP.NET: [<a href="http://asp.net">online ASP.NET documentation and tutorials.</a>]</li>
+</ul>
+<h2>Summary</h2>
+<p>That’s it for the behind-the-scenes tour of how the Internet works. This article really just scratches the surface of a lot of the topics covered, but it is useful as it puts them all in perspective, showing how they all relate and work together. There is still a lot left to learn about the actual language syntax that makes up HTML, CSS and JavaScript, and this is where we’ll go to next — the next article focuses on the HTML, CSS and JavaScript “web standards” model of web development, and takes a look at web page code.</p>
+<h2>Exercise questions</h2>
+<ul>
+<li>Provide a brief definition for HTML and HTTP and explain the difference between the two.</li>
+<li>Explain the function of a web browser.</li>
+<li>Have a look around the Internet for about 5–10 minutes and try to find some different types of content—plain text, images, HTML, dynamic pages such as PHP and .NET (.aspx) pages, PDFs, word documents, Flash movies etc. Access some of these and have a think about how your computer displays them to you.</li>
+<li>What is the difference between a static page and a dynamic page?</li>
+<li>Find a list of HTTP error codes, list 5 of them, and explain what each one means.</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/3-how-does-the-internet-work/">3: How does the Internet work?</a>, written by Jon Lane. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

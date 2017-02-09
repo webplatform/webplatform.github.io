@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>implementing html5 audio · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="A step-by-step guide on how to implement the HTML5 audio-tag." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/implementing_html5 audio/">implementing html5 audio</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>implementing html5 audio</h1>
+<p><strong>By Ernest Delgado</strong><br>
+Originally published Feb. 5, 2010</p>
+<h2>Summary</h2>
+<p>A step-by-step guide on how to implement the HTML5 audio-tag.</p>
+<h1>Implementing the HTML5 Audio Tag</h1>
+<h2>Step 1: Wrap your Flash object with the audio tag</h2>
+<p>Those browsers that don’t recognize the audio tag will load the Flash content instead.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">audio</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span>
+            <span class="hljs-attribute">data</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=test.mp3"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span>
+             <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span>
+             <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=test.mp3"</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">embed</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+</code></pre>
+<h2>Step 2: Add the source reference</h2>
+<p>We can add as many “source” lines and formats as we want. If the browser doesn’t support one specific format it will fallback to the next one and so forth.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">audio</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"test.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mpeg"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"test.ogg"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/ogg"</span> /&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span>
+          <span class="hljs-attribute">data</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=test.mp3"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span>
+           <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span>
+           <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=test.mp3"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">embed</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+</code></pre>
+<h2>Step 3: Add fallback to Flash</h2>
+<p>To be safe, we need to add the fallback to a Flash audio player, in case the browser doesn’t support any of the formats we specified. For instance, Firefox 3.5 only supports the audio tag with <em>Ogg</em> format, but we might only have the <em>mp3</em> file available.</p>
+<p><em>Note:</em> There are also tools and <a href="/w/index.php?title=online_converters&amp;action=edit&amp;redlink=1">online converters</a> you can use if you want to create ogg files from your mp3 and add support for ogg too.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">audio</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"test.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mpeg"</span> /&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span>
+          <span class="hljs-attribute">data</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=test.mp3"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span>
+           <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span>
+           <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=test.mp3"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">embed</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"player_fallback"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType(<span class="hljs-string">'audio/mpeg'</span>)) {
+      swfobject.embedSWF(
+        <span class="hljs-string">"player_mp3_mini.swf"</span>,
+        <span class="hljs-string">"player_fallback"</span>,
+        <span class="hljs-string">"200"</span>,
+        <span class="hljs-string">"20"</span>,
+        <span class="hljs-string">"9.0.0"</span>,
+        <span class="hljs-string">""</span>,
+        {<span class="hljs-string">"mp3"</span>:<span class="hljs-string">"test.mp3"</span>},
+        {<span class="hljs-string">"bgcolor"</span>:<span class="hljs-string">"#085c68"</span>});
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>To make it easier, we are using the <a href="/w/index.php?title=SWFObject&amp;action=edit&amp;redlink=1">SWFObject</a> library to insert the Flash player via JavaScript. To include the library you can simply use the <a href="/w/index.php?title=Google_AJAX_Libraries_API&amp;action=edit&amp;redlink=1">Google AJAX Libraries API</a> inserting these two lines in your header:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://www.google.com/jsapi"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">google.load(<span class="hljs-string">"swfobject"</span>, <span class="hljs-string">"2.2"</span>);</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h2>Step 4: Add the default controls to show the player</h2>
+<p>These controls are not customizable (see examples at the end). Since these default controls will show up regardless of the supported format we will need to handle its visibility with the conditional we previously created.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"audio_with_controls"</span> <span class="hljs-attribute">controls</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"test.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mpeg"</span> /&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span>
+          <span class="hljs-attribute">data</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=test.mp3"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span>
+           <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span>
+           <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=test.mp3"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">embed</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"player_fallback"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType(<span class="hljs-string">'audio/mpeg'</span>)) {
+      ... SWFObject script line here ...
+      <span class="hljs-built_in">document</span>.getElementsById(<span class="hljs-string">'audio_with_controls'</span>).style.display = <span class="hljs-string">'none'</span>;
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Alternatively, you can create your own player using JavaScript and CSS.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"audio"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"test.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mpeg"</span> /&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span>
+          <span class="hljs-attribute">data</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=test.mp3"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span>
+           <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span>
+           <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=test.mp3"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">embed</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"player_fallback"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"player"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"display: none"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">"document.getElementById('audio').play()"</span>&gt;</span>Play<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">"document.getElementById('audio').pause()"</span>&gt;</span>Pause<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType(<span class="hljs-string">'audio/mpeg'</span>)) {
+      ... SWFObject script lines here ...
+    } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// HTML5 audio + mp3 support</span>
+      <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'player'</span>).style.display = <span class="hljs-string">'block'</span>;
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h2>Examples</h2>
+<p>The following two examples will fallback to the Flash player in those browsers that don’t support the audio tag nor can play mp3 in it.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+      <span class="hljs-tag">h3</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">'Droid Sans'</span>, Arial, sans-serif</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">14px</span></span></span>;
+      }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"toc-player-default"</span>&gt;</span>Player with default controls<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"audio_with_controls"</span> <span class="hljs-attribute">controls</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mpeg"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/test.ogg"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/ogg"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"default_player_fallback"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"toc-player-custom"</span>&gt;</span>Player with customized controls<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">audio</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"audio"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/mpeg"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/test.ogg"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"audio/ogg"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"flash_obj"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"playerpreview"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bgcolor"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"#085c68"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"FlashVars"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">embed</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span> <span class="hljs-attribute">bgcolor</span>=<span class="hljs-value">"#085c68"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"movie"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">""</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span> <span class="hljs-attribute">flashvars</span>=<span class="hljs-value">"mp3=http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">audio</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"custom_player_fallback"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"player"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"display: none"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">"document.getElementById('audio').play()"</span>&gt;</span>Play<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">"document.getElementById('audio').pause()"</span>&gt;</span>Pause<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType) {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType(<span class="hljs-string">'audio/mpeg'</span>) &amp;&amp;
+            !<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'audio'</span>).canPlayType(<span class="hljs-string">'audio/ogg'</span>)) {
+          swfobject.embedSWF(<span class="hljs-string">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span>,
+                             <span class="hljs-string">"default_player_fallback"</span>, <span class="hljs-string">"200"</span>, <span class="hljs-string">"20"</span>, <span class="hljs-string">"9.0.0"</span>, <span class="hljs-string">""</span>,
+                             {<span class="hljs-string">"mp3"</span>:<span class="hljs-string">"http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span>},
+                             {<span class="hljs-string">"bgcolor"</span>:<span class="hljs-string">"#085c68"</span>}
+                            );
+          swfobject.embedSWF(<span class="hljs-string">"http://www.html5rocks.com/en/tutorials/audio/quick/player_mp3_mini.swf"</span>,
+                             <span class="hljs-string">"custom_player_fallback"</span>, <span class="hljs-string">"200"</span>, <span class="hljs-string">"20"</span>, <span class="hljs-string">"9.0.0"</span>, <span class="hljs-string">""</span>,
+                             {<span class="hljs-string">"mp3"</span>:<span class="hljs-string">"http://www.html5rocks.com/en/tutorials/audio/quick/test.mp3"</span>},
+                             {<span class="hljs-string">"bgcolor"</span>:<span class="hljs-string">"#085c68"</span>}
+                            );
+          <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'audio_with_controls'</span>).style.display = <span class="hljs-string">'none'</span>;
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-comment">// HTML5 audio + mp3 support</span>
+          <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'player'</span>).style.display = <span class="hljs-string">'block'</span>;
+        }
+      }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>​
+</code></pre>
+<p>If you don’t want to start your customized player from the scratch you can take a <a href="/w/index.php?title=basic_one&amp;action=edit&amp;redlink=1">basic one</a> and style it from there.</p>
+<p>You are all set!</p>
+<p>Flash MP3 player is from <a href="/w/index.php?title=neolao_production&amp;action=edit&amp;redlink=1">neolao production</a>. MP3 sample is <strong>Modal Blues</strong> by <a href="/w/index.php?title=Rushus&amp;action=edit&amp;redlink=1">Rushus</a> and is licensed under a <a href="/w/index.php?title=Creative_Commons_Attribution_License&amp;action=edit&amp;redlink=1">Creative Commons Attribution License</a>.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Audio</h4>
+<ul>
+<li><p><a href="/docs/apis/audio-video">audio-video</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/enabled">enabled</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/language">language</a></p></li>
+<li><p><a href="/docs/apis/webaudio">Web Audio API</a></p></li>
+<li><p><a href="/docs/apis/webaudio/AudioParam/value">value</a></p></li>
+<li><p><a href="/docs/concepts/Internet_and_Web/webrtc">WebRTC</a></p></li>
+<li><p><a href="/docs/html/elements/bgSound">bgSound</a></p></li>
+<li><p><a href="/docs/html/elements/bgSound/ja">bgsound</a></p></li>
+<li><p><strong>implementing html5 audio</strong></p></li>
+<li><p><a href="/docs/tutorials/webrtc_resources">WebRTC Resources</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

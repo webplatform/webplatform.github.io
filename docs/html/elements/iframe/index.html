@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>iframe · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The iframe element (&amp;lt;iframe&amp;gt;) introduces a new nested browsing context." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/iframe/">iframe</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>iframe</h1>
+<h2>Summary</h2>
+<p>The iframe element (&lt;iframe&gt;) introduces a new nested browsing context.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLIFrameElement">HTMLIFrameElement</a>
+</dd>
+</dl>
+<p>Iframes are one the best ways to build up a complex, detailed webpage from smaller, more manageable chunks. By using iframe tags, a developer can include webpages as part of a larger, enompassing parent page. Unlike frames, iframes can be styled through CSS and easily molded to fit seamlessly within the parent page. One neat use of an iframe is to display a custom Google map within the page. This can be done by setting the ‘src’ attribute of the iframe tag to Google Map URL.</p>
+<h2>HTML Attributes</h2>
+<ul>
+<li><code>src</code> = URL potentially surrounded by spaces<br>
+Gives the address of a page that the nested browsing context is to contain.</li>
+<li><code>srcdoc</code> = HTML contents<br>
+Gives the content of the page that the nested browsing context is to contain.</li>
+<li><code>name</code> = browsing-context name<br>
+Represents the browsing-context name. When the browsing context is created, if the attribute is present, the browsing context name must be set to the value of this attribute; otherwise, the browsing context name must be set to the empty string.</li>
+<li><code>sandbox</code> = allow-same-origin/ allow-top-navigation/ allow-forms/ allow-scripts<br>
+Enables a set of extra restrictions on any content hosted by the iframe.
+<ul>
+<li>If presents, given in the following list set.
+<ul>
+<li>prevents content from navigating browsing contexts other than the sandboxed browsing context itself.</li>
+<li>prevents content from navigating their top-level browsing context.</li>
+<li>prevents content from instantiating plugins, whether using the embed element, the object element, the applet element, or through navigation of a nested browsing context.</li>
+<li>prevents content from using the seamless attribute on descendant iframe elements.</li>
+<li>forces content into a unique origin, thus preventing it from accessing other content from the same origin.</li>
+<li>blocks form submission, blocks script execution.</li>
+<li>blocks features that trigger automatically, such as automatically playing a video or automatically focusing a form control.</li>
+</ul></li>
+<li><code>allow-same-origin</code><br>
+allows the content to be treated as being from the same origin instead of forcing it into a unique origin.</li>
+<li><code>allow-top-navigation</code><br>
+allows the content to navigate its top-level browsing context</li>
+<li><code>allow-forms</code> and <code>allow-scripts</code><br>
+re-enable forms and scripts respectively (though scripts are still prevented from creating popups).</li>
+</ul></li>
+<li><code>seamless</code> = boolean<br>
+Indicates that the iframe element’s browsing context is to be rendered in a manner that makes it appear to be part of the containing document (seamlessly included in the parent document).</li>
+<li><code>width</code> = non-negative integer<br>
+Give the width of the visual content of the element, in CSS pixels.</li>
+<li><code>height</code> = non-negative integer<br>
+Give the height of the visual content of the element, in CSS pixels.</li>
+</ul>
+<h2>Examples</h2>
+<p>This example embeds <code>http://example.com/</code> via an IFrame element.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">iframe</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"theFrame"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://example.com/"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">iframe</span>&gt;</span>
+</code></pre>
+<p>This example shows how to grab the Document contained within an IFrame element (note that you may only reach down into an IFrame if the page it has loaded is same-origin).</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> frameDoc = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"theFrame"</span>).contentDocument;
+</code></pre>
+<h2>Usage</h2>
+<pre><code> The developer should be careful not to overuse iframes, because they dramatically slow down the rendering of a page. For each extra iframe, the browser has to make an extra request to the server.
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>iframe</strong> element functions as a document within a document, or like a floating <strong>frame</strong>. The <a href="/w/index.php?title=dom/properties/frames&amp;action=edit&amp;redlink=1"><strong>frames</strong></a> collection provides access to the contents of an <strong>iframe</strong>. Use the <strong>frames</strong> collection to read or write to elements contained in an <strong>iframe</strong>. For example, the syntax for accessing the <a href="/docs/css/properties/background-color"><strong>backgroundColor</strong></a> style of the <strong>body</strong> object in an <strong>iframe</strong> is:</p>
+<pre><code>sColor = document.frames(&quot;sFrameName&quot;).document.body.style.backgroundColor;
+</code></pre>
+<p>You can access the <strong>iframe</strong> object’s properties, but not its contents, through the object model of the page where the <strong>iframe</strong> object resides. For example, the syntax for accessing the <a href="/docs/css/properties/border"><strong>border</strong></a> style of the <strong>iframe</strong> object is:</p>
+<pre><code>sBorderValue = document.all.oFrame.style.border;
+</code></pre>
+<p><strong>Note</strong>  Properties of the <strong>iframe</strong> must be accessed using the prefix, <code>document.all</code>, for example, <code>document.all.iframeId.marginWidth</code>.</p>
+<p>**Security Warning:  ** To protect user privacy and safeguard your applications, Windows Internet Explorer restricts some interactions between frames that host Web pages from different domains. To treat the content of the <strong>iframe</strong> as if it were in the Restricted Sites zone, set the <strong>SECURITY</strong> attribute to “restricted.” For more information about using the Dynamic HTML (DHTML) object model with the <strong>frame</strong> and <strong>iframe</strong> objects, see About Cross-Frame Scripting and Security and Security Considerations: Dynamic HTML. Windows Internet Explorer 8 and later. The values of the <a href="/docs/html/attributes/longDesc"><strong>longDesc</strong></a> and <a href="/docs/html/attributes/src_(iframe,_embed,_xml)"><strong>src</strong></a> attributes depend on the current document compatibility mode. Windows Internet Explorer 7 and later. For security reasons, resizing is disabled for <strong>iframe</strong> objects that display content hosted on a domain different from the domain hosting the parent document. If you trust the content you are loading into an <strong>iframe</strong> object, you can enable resizing by specifying values for the <a href="/docs/css/properties/min-width"><strong>minWidth</strong></a> and <a href="/docs/css/properties/max-width"><strong>maxWidth</strong></a> attributes of the <strong>iframe</strong> element in the source of the parent document. You must specify values for both attributes to enable resizing. Microsoft Internet Explorer 5.5 supports transparent content with inline floating frames. The following conditions must be met to define transparent content for inline floating frames.</p>
+<ol>
+<li>The <a href="/docs/html/attributes/allowTransparency"><strong>allowTransparency</strong></a> attribute, used with the <strong>iframe</strong> element, must be set to <code>true</code>.</li>
+<li>In the <strong>iframe</strong> content source document, the <a href="/docs/css/properties/background-color"><strong>backgroundColor</strong></a> attribute of the <strong>body</strong> element must be set to <code>transparent</code>.</li>
+</ol>
+<p>Using Transparency with Inline Floating Frames</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/embedded-content.html#the-iframe-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-iframe-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/present/frames.html#edef-IFRAME">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<p><a href="http://www.w3.org/TR/html-markup/iframe.html#iframe">http://www.w3.org/TR/html-markup/iframe.html#iframe</a></p>
+<h3>Related pages</h3>
+<ul>
+<li><code>Using IFRAME Elements</code></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

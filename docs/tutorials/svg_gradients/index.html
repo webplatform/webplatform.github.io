@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG gradients · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="This article looks at filling SVG shapes with linear and radial gradients." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/svg_gradients/">svg gradients</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG gradients</h1>
+<h2>Summary</h2>
+<p>This article looks at filling SVG shapes with linear and radial gradients.</p>
+<p>So, perhaps more exciting than just fills and strokes, you can also create and apply gradients as either fills or strokes.</p>
+<p>There are two types of gradients allowed, linear and radial ones. Linear gradients change along a straight line. To insert one, you create a <code>&lt;linearGradient&gt;</code> node inside the definitions section of your SVG file. You <strong>must</strong> give the gradient an <code>id</code> attribute, otherwise it can’t be referenced by other elements inside the file, and it basically becomes a waste of space.</p>
+<p><img src="//static.webplatform.org/3/3e/SVG_Linear_Gradient_Example.png" alt="SVG Linear Gradient Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+
+&lt;svg width=&quot;120&quot; height=&quot;240&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;defs&gt;
+      &lt;linearGradient id=&quot;Gradient1&quot;&gt;
+        &lt;stop class=&quot;stop1&quot; offset=&quot;0%&quot;/&gt;
+        &lt;stop class=&quot;stop2&quot; offset=&quot;50%&quot;/&gt;
+        &lt;stop class=&quot;stop3&quot; offset=&quot;100%&quot;/&gt;
+      &lt;/linearGradient&gt;
+      &lt;linearGradient id=&quot;Gradient2&quot; x1=&quot;0&quot; x2=&quot;0&quot; y1=&quot;0&quot; y2=&quot;1&quot;&gt;
+        &lt;stop offset=&quot;0%&quot; stop-color=&quot;red&quot;/&gt;
+        &lt;stop offset=&quot;50%&quot; stop-color=&quot;black&quot; stop-opacity=&quot;0&quot;/&gt;
+        &lt;stop offset=&quot;100%&quot; stop-color=&quot;blue&quot;/&gt;
+      &lt;/linearGradient&gt;
+      &lt;style type=&quot;text/css&quot;&gt;&lt;![CDATA[
+        #rect1 { fill: url(#Gradient1); }
+        .stop1 { stop-color: red; }
+        .stop2 { stop-color: black; stop-opacity: 0; }
+        .stop3 { stop-color: blue; }
+      ]]&gt;&lt;/style&gt;
+  &lt;/defs&gt;
+
+  &lt;rect id=&quot;rect1&quot; x=&quot;10&quot; y=&quot;10&quot; rx=&quot;15&quot; ry=&quot;15&quot; width=&quot;100&quot; height=&quot;100&quot;/&gt;
+  &lt;rect x=&quot;10&quot; y=&quot;120&quot; rx=&quot;15&quot; ry=&quot;15&quot; width=&quot;100&quot; height=&quot;100&quot; fill=&quot;url(#Gradient2)&quot;/&gt;
+
+&lt;/svg&gt;
+</code></pre>
+<p>Above is an example of a linear gradient being applied to a <code>&lt;rect&gt;</code> element. Inside the linear gradient are several [[&lt;stop&gt;]] nodes. These nodes tell the gradient what color it should be at certain positions by specifying an <code>offset</code> attribute for the position, and a <code>stop-color</code> attribute. This can be assigned directly or through CSS. I’ve intermixed the two for the purposes of an example. For instance, this one tells the gradient to start at the color red, change to transparent-black in the middle, and end at the color blue. You can insert as many stop colors as you like to create a blend that’s as beautiful or hideous as you need, but the offsets should always increase from 0% (or 0 if you want to drop the % sign) to 100% (or 1). Duplicate values will use the stop that is assigned furthest down the XML tree. Also, like with fill and stroke, you can specify a <code>stop-opacity</code> attribute to set the opacity at that position (again, in FF3 you can also use rgba values to do this).</p>
+<pre><code>&lt;stop offset=&quot;100%&quot; stop-color=&quot;yellow&quot; stop-opacity=&quot;0.5&quot;/&gt;
+</code></pre>
+<p>To use a gradient, we have to reference it from an objects fill or stroke attributes. This is done the same way you reference elements in CSS, using a <code>url</code>. In this case, the url is just a reference to our gradient, which I’ve given the creative ID, &quot;Gradient&quot;. So to attach it we just set the fill to <code>url(#Gradient)</code>, and voila, our object is now multicolored. You can do the same with stroke.</p>
+<p>The <code>&lt;linearGradient&gt;</code> element also takes several other attributes which specify the size and appearance of the gradient. The orientation of the gradient is controlled by two &quot;points&quot;, designated by the attributes <code>x1</code>, <code>x2</code>, <code>y1</code>, and <code>y2</code>. These attributes define a line along which the gradient travels. The gradient defaults to a horizontal orientation, but it can be rotated by changing these. Gradient2 in the above example is designed to create a vertical gradient.</p>
+<pre><code>&lt;linearGradient id=&quot;Gradient2&quot; x1=&quot;0&quot; x2=&quot;0&quot; y1=&quot;0&quot; y2=&quot;1&quot;&gt;
+
+ Note: You can also use the xlink:href attribute on gradients too. When it is used, attributes and stops from one gradient can be included on another. In the above example, you wouldn't have to recreate all the stops in Gradient2.
+
+
+&lt;linearGradient id=&quot;Gradient1&quot;&gt;
+   &lt;stop id=&quot;stop1&quot; offset=&quot;0%&quot;/&gt;
+   &lt;stop id=&quot;stop2&quot; offset=&quot;50%&quot;/&gt;
+   &lt;stop id=&quot;stop3&quot; offset=&quot;100%&quot;/&gt;
+ &lt;/linearGradient&gt;
+ &lt;linearGradient id=&quot;Gradient2&quot; x1=&quot;0&quot; x2=&quot;0&quot; y1=&quot;0&quot; y2=&quot;1&quot;
+    xmlns:xlink=&quot;[[http://www.w3.org/1999/xlink]]&quot; xlink:href=&quot;#Gradient1&quot;/&gt;
+</code></pre>
+<p>I’ve included the xlink namespace here directly on the node, although usually you would define it at the top of your document. More on that when we <a href="/w/index.php?title=talk_about_images&amp;action=edit&amp;redlink=1">talk about images</a>. Radial gradients are similar to linear ones but draw a gradient that radiates out from a point. To create one you add a [[&lt;radialGradient&gt;]] element to the definitions section of your document.</p>
+<p><img src="//static.webplatform.org/3/33/SVG_Radial_Gradient_Example.png" alt="SVG Radial Gradient Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+
+&lt;svg width=&quot;120&quot; height=&quot;240&quot; version=&quot;1.1&quot;
+  xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;defs&gt;
+      &lt;radialGradient id=&quot;Gradient1&quot;&gt;
+        &lt;stop offset=&quot;0%&quot; stop-color=&quot;red&quot;/&gt;
+        &lt;stop offset=&quot;100%&quot; stop-color=&quot;blue&quot;/&gt;
+      &lt;/radialGradient&gt;
+      &lt;radialGradient id=&quot;Gradient2&quot; cx=&quot;0.25&quot; cy=&quot;0.25&quot; r=&quot;0.25&quot;&gt;
+        &lt;stop offset=&quot;0%&quot; stop-color=&quot;red&quot;/&gt;
+        &lt;stop offset=&quot;100%&quot; stop-color=&quot;blue&quot;/&gt;
+      &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+
+  &lt;rect x=&quot;10&quot; y=&quot;10&quot; rx=&quot;15&quot; ry=&quot;15&quot; width=&quot;100&quot; height=&quot;100&quot; fill=&quot;url(#Gradient1)&quot;/&gt;
+  &lt;rect x=&quot;10&quot; y=&quot;120&quot; rx=&quot;15&quot; ry=&quot;15&quot; width=&quot;100&quot; height=&quot;100&quot; fill=&quot;url(#Gradient2)&quot;/&gt;
+
+&lt;/svg&gt;
+</code></pre>
+<p>The stops used here are the same as before, but now the object will be red in the center, and in all directions gradually change to blue at the edge. Like linear gradients, the <code>&lt;radialGradient&gt;</code> node can take several attributes to describe its position and orientation. However, unlike linear gradients, its a bit more complex. The radial gradient, is again defined by two points, which determine where its edges are. The first of these defines a circle around which the gradient ends. It requires a center point, designated by the <code>cx</code> and <code>cy</code> attributes, and a radius, <code>r</code>. Setting these three attributes will allow you to move the gradient around and change its size, as shown in the second rect above.</p>
+<p>The second point is called the focal point and is defined by the <code>fx</code> and <code>fy</code> attributes. While the first point described where the edges of the gradient were, the focal point describes where its middle is. This is easier to see with an example.</p>
+<p><img src="//static.webplatform.org/1/17/SVG_Radial_Grandient_Focus_Example.png" alt="SVG Radial Grandient Focus Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+
+&lt;svg width=&quot;120&quot; height=&quot;120&quot; version=&quot;1.1&quot;
+  xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;defs&gt;
+      &lt;radialGradient id=&quot;Gradient&quot;
+            cx=&quot;0.5&quot; cy=&quot;0.5&quot; r=&quot;0.5&quot; fx=&quot;0.25&quot; fy=&quot;0.25&quot;&gt;
+        &lt;stop offset=&quot;0%&quot; stop-color=&quot;red&quot;/&gt;
+        &lt;stop offset=&quot;100%&quot; stop-color=&quot;blue&quot;/&gt;
+      &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+
+  &lt;rect x=&quot;10&quot; y=&quot;10&quot; rx=&quot;15&quot; ry=&quot;15&quot; width=&quot;100&quot; height=&quot;100&quot;
+        fill=&quot;url(#Gradient)&quot; stroke=&quot;black&quot; stroke-width=&quot;2&quot;/&gt;
+
+  &lt;circle cx=&quot;60&quot; cy=&quot;60&quot; r=&quot;50&quot; fill=&quot;transparent&quot; stroke=&quot;white&quot; stroke-width=&quot;2&quot;/&gt;
+  &lt;circle cx=&quot;35&quot; cy=&quot;35&quot; r=&quot;2&quot; fill=&quot;white&quot; stroke=&quot;white&quot;/&gt;
+  &lt;circle cx=&quot;60&quot; cy=&quot;60&quot; r=&quot;2&quot; fill=&quot;white&quot; stroke=&quot;white&quot;/&gt;
+  &lt;text x=&quot;38&quot; y=&quot;40&quot; fill=&quot;white&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10pt&quot;&gt;(fx,fy)&lt;/text&gt;
+  &lt;text x=&quot;63&quot; y=&quot;63&quot; fill=&quot;white&quot; font-family=&quot;sans-serif&quot; font-size=&quot;10pt&quot;&gt;(cx,cy)&lt;/text&gt;
+
+&lt;/svg&gt;
+</code></pre>
+<p>If the focal point is moved outside the circle described earlier, its impossible for the gradient to be rendered correctly, so the spot will be assumed to be on the edge of the circle. If the focal point isn’t given at all, its assumed to be at the same place as the center point.</p>
+<p>Both gradients also take a few other attributes to describe transformations and whatnot on them. The only other one I want to mention here is the <code>spreadMethod</code> attribute. This attribute controls what happens when the gradient reaches its end, but the object isn’t filled yet. It can take on one of three values, &quot;pad&quot;, &quot;reflect&quot;, or &quot;repeat&quot;. “Pad” is what you have seen so far. When the gradient reaches its end, the final offset color is just used to fill the rest of the object. “reflect” causes the gradient to continue on, but this take backwards, starting with the color offset at 100% and moving back to the offset at 0%, and then back up again. “Repeat” also lets the gradient keep moving, but instead of going backwards, it just jumps back to the beginning and runs again.</p>
+<p><img src="//static.webplatform.org/b/b6/SVG_SpreadMethod_Example.png" alt="SVG SpreadMethod Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+
+&lt;svg width=&quot;220&quot; height=&quot;220&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;defs&gt;
+      &lt;radialGradient id=&quot;Gradient&quot;
+            cx=&quot;0.5&quot; cy=&quot;0.5&quot; r=&quot;0.25&quot; fx=&quot;.25&quot; fy=&quot;.25&quot;
+            spreadMethod=&quot;repeat&quot;&gt;
+        &lt;stop offset=&quot;0%&quot; stop-color=&quot;red&quot;/&gt;
+        &lt;stop offset=&quot;100%&quot; stop-color=&quot;blue&quot;/&gt;
+      &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect x=&quot;50&quot; y=&quot;50&quot; rx=&quot;15&quot; ry=&quot;15&quot; width=&quot;100&quot; height=&quot;100&quot;
+       fill=&quot;url(#Gradient)&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>As a bit of another aside here, both gradients also have an attribute named <code>gradientUnits</code> that describes the unit system you’re going to use when you describe the size or orientation of the gradient. There are two possible values to use here: <code>userSpaceOnUse</code> or <code>objectBoundingBox</code>. <code>objectBoundingBox</code> is the default so that’s what I’ve shown so far. It essentially scales the gradient to the size of your object, so you only have to specify coordinates in values from zero to one, and they’re scaled to the size of your object automatically for you. <code>userSpaceOnUse</code> essentially takes in absolute units. So you have to know where your object is, and place the gradient at the same place. The radialGradient above would be rewritten:</p>
+<pre><code>&lt;radialGradient id=&quot;Gradient&quot; cx=&quot;60&quot; cy=&quot;60&quot; r=&quot;50&quot; fx=&quot;35&quot; fy=&quot;35&quot; gradientUnits=&quot;userSpaceOnUse&quot;&gt;
+</code></pre>
+<p>You can also then apply another transformation to the gradient by using the <code>gradientTransform</code> attribute, but since we haven’t <a href="/w/index.php?title=introduced_transforms&amp;action=edit&amp;redlink=1">introduced transforms</a> yet, I’ll leave that for later.</p>
+<p>There are some other caveats for dealing with <code>gradientUnits=&quot;objectBoundingBox&quot;</code> when the object bounding box isn’t square, but they’re fairly complex and will have to wait for someone more in-the-know to explain them.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/Gradients">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

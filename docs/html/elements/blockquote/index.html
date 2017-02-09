@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>blockquote · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="The blockquote element indicates an extended quotation." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/blockquote/">blockquote</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>blockquote</h1>
+<h2>Summary</h2>
+<p>The blockquote element indicates an extended quotation.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLQuoteElement">HTMLQuoteElement</a>
+</dd>
+</dl>
+<h3>Introduction</h3>
+<p>The <strong>blockquote</strong> element represents content that is quoted from another source, optionally with a citation which must be within a <a href="/docs/html/elements/footer"><strong>footer</strong></a> or <a href="/docs/html/elements/cite"><strong>cite</strong></a> element, and optionally with in-line changes such as annotations and abbreviations.</p>
+<p>Content inside a <strong>blockquote</strong> other than citations and in-line changes must be quoted from another source, whose address, if it has one, may be cited in the <a href="/docs/html/attributes/cite"><strong>cite</strong> attribute</a>.</p>
+<dl>
+<dd>
+Note: In cases where a page contains contributions from multiple people, such as comments on a blog post, 'another source' can include text from the same page, written by another person.
+</dd>
+</dl>
+If the cite attribute is present, it must be a valid URL potentially surrounded by spaces. To obtain the corresponding citation link, the value of the attribute must be resolved relative to the element. User agents may allow users to follow such citation links, but they are primarily intended for private use (e.g. by server-side scripts collecting statistics about a site's use of quotations), not for readers.
+<p>The cite IDL attribute must reflect the element’s cite content attribute.</p>
+<h2>HTML Attributes</h2>
+<ul>
+<li><code>cite</code> = valid URL potentially surrounded by spaces<br>
+Specifies the address in the quotation source. <a href="#Example_B">[Example B]</a></li>
+</ul>
+<h2>Examples</h2>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- This example uses the blockquote element to set off a quotation that renders as indented text: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>He said,
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span> <span class="hljs-attribute">cite</span>=<span class="hljs-value">"http://www.example.com"</span>&gt;</span>"Hi there!"<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<p>The <strong>blockquote</strong> element represents content that is quoted from another source, optionally with a citation which must be within a <strong>footer</strong> or <strong>cite</strong> element, and optionally with in-line changes such as annotations and abbreviations. For example, in English, abbreviations are traditionally identified using square brackets. Consider a page with the sentence &quot;Fred ate the cracker. He then said he liked apples and fish.&quot;; it could be quoted as follows:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>[Fred] then said he liked [...] fish.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<p>Quotation marks may be used to delineate between quoted text and annotations within a <strong>blockquote</strong>.</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- For example, an in-line note provided by the author: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ "That monster custom, who all sense doth eat
+ Of habit's devil," <span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"et cetera"</span>&gt;</span>&amp;c.<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span> not in Folio
+ "What a falling off was there !
+ From me, whose love was of that dignity
+ That it went hand in hand even with the vow
+ I made to her in marriage, and to decline
+ Upon a wretch."
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>
+ — <span class="hljs-tag">&lt;<span class="hljs-title">cite</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"title"</span>&gt;</span>Shakespeare manual<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span> by <span class="hljs-tag">&lt;<span class="hljs-title">cite</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"author"</span>&gt;</span>Frederick Gard Fleay<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>,
+ p19 (in Google Books)
+ <span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- <span class="hljs-doctag">Note:</span> In the example above, the citation is contained within the footer of a figure element, this groups and associates the information about the quote with the quote. The figcaption element was not used in this case as a container for the citation, as it is not a caption. --&gt;</span>
+</code></pre>
+<p>Attribution for the quotation may be be placed inside the <strong>blockquote</strong> element, but must be within a <strong>cite</strong> element for in-text attributions or within a <strong>footer</strong> element.</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- For example, here the attribution is given in a footer after the quoted text, to clearly relate the quote to its attribution: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I contend that we are both atheists. I just believe in one fewer
+ god than you do. When you understand why you dismiss all the other
+ possible gods, you will understand why I dismiss yours.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>— <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Stephen Roberts<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- Here the attribution is given in a cite element on the last line of the quoted text. Note that a link to the author is also included. --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ The people recognize themselves in their commodities; they find their
+ soul in their automobile, hi-fi set, split-level home, kitchen equipment.
+ — <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://en.wikipedia.org/wiki/Herbert_Marcuse"</span>&gt;</span>Herbert Marcuse<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- Here the attribution is given in a footer after the quoted text, and metadata about the reference has been added using the Microdata syntax (note it could have equally been marked up using RDFA Lite). --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>... she said she would not sign any deposition containing the word "amorous" instead of "advances". For her the difference was of crucial significance, and one of the reasons she had separated from her husband was that he had never been amorous but had consistently made advances.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">footer</span> <span class="hljs-attribute">itemscope</span> <span class="hljs-attribute">itemtype</span>=<span class="hljs-value">"http://schema.org/Book"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">itemprop</span>=<span class="hljs-value">"author"</span>&gt;</span>Heinrich Böll<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>,
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">itemprop</span>=<span class="hljs-value">"name"</span>&gt;</span>The Lost Honor of Katharina Blum<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>,
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">itemprop</span>=<span class="hljs-value">"datePublished"</span>&gt;</span>January 1, 1974<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- <span class="hljs-doctag">Note:</span> There is no formal method for indicating the markup in a blockquote is from a quoted source. It is suggested that if the footer or cite elements are included and these elements are also being used within a '''blockquote''' to identify citations, the elements from the quoted source could be annotated with metadata to identify their origin, for example by using the class attribute (a defined extensibility mechanism). --&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- In this example the source of a quote includes a cite element, which is annotated using the class attribute: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My favorite book is <span class="hljs-tag">&lt;<span class="hljs-title">cite</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"from-source"</span>&gt;</span>At Swim-Two-Birds<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>- <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Mike[tm]Smith<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<p>The other examples below show other ways of showing attribution.</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- Here a blockquote element is used in conjunction with a figure element and its figcaption: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The truth may be puzzling. It may take some work to grapple with. It may be counterintuitive. It may contradict deeply held prejudices. It may not be consonant with what we desperately want to be true. But our preferences do not determine what's true. We have a method, and that method helps us to reach not absolute truth, only asymptotic approaches to the truth — never there, just closer and closer, always finding vast new oceans of undiscovered possibilities. Cleverly designed experiments are the key.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Carl Sagan<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>, in "<span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Wonder and Skepticism<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>", from the <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Skeptical Enquirer<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span> Volume 19, Issue 1 (January-February 1995)<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- This next example shows the use of cite alongside blockquote: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>His next piece was the aptly named <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Sonnet 130<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span> <span class="hljs-attribute">cite</span>=<span class="hljs-value">"http://quotes.example.org/s/sonnet130.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My mistress' eyes are nothing like the sun,<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+  Coral is far more red, than her lips red,<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+  ...
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- This example shows how a forum post could use blockquote to show what post a user is replying to. The article element is used for each post, to mark up the threading. --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://bacon.example.com/?blog=109431"</span>&gt;</span>Bacon on a crowbar<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>t3yw<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 12 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29578"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>greg<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 8 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Dude narwhals don't eat bacon.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29579"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>t3yw<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 15 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Dude narwhals don't eat bacon.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Next thing you'll be saying they don't get capes and wizard
+    hats either!<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29580"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>boing<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> -5 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>narwhals are worse than ceiling cat<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29581"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>fred<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 1 points 23 minutes ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet they'd love to peel a banana too.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29582"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- This example shows the use of a blockquote for short snippets, demonstrating that one does not have to use p elements inside blockquote elements: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>He began his list of "lessons" with the following:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>One should never assume that his side of
+the issue will be recognized, let alone that it will
+be conceded to have merits.<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>He continued with a number of similar points, ending with:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>Finally, one should be prepared for the threat
+of breakdown in negotiations at any given moment and not
+be cowed by the possibility.<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>We shall now discuss these points...
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<ul>
+<li>Examples of how to represent a conversation are shown in a later section; it is not appropriate to use the <strong>cite</strong> and <strong>blockquote</strong> elements for this purpose.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/grouping-content.html#the-blockquote-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/grouping-content.html#the-blockquote-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/text.html#edef-BLOCKQUOTE">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages (internal)</h3>
+<ul>
+<li>q<a href="/docs/html/elements/q">q</a></li>
+<li>cite<a href="/docs/html/elements/cite">cite</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/HTML/Element/blockquote">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Timing and performance standards · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="Unknown" />
+    <meta name="description" content="This section documents the timing and performance-based standards supported by Windows Internet Explorer and Windows Store apps." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/timing-and-performance/">timing-and-performance</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Timing and performance standards</h1>
+<h2>Summary</h2>
+<p>This section documents the timing and performance-based standards supported by Windows Internet Explorer and Windows Store apps.</p>
+<h2>Navigation Timing</h2>
+<h3>Abstract</h3>
+<p>This specification defines an interface for web applications to access timing information related to navigation and elements.</p>
+<p>The Navigation Timing API basically provides timings of all things going on from initiating navigating to another document (e.g. clicking a link, settings location.href) until the end of document onload event.</p>
+<ul>
+<li>Navigation Timing API Recommendation <a href="http://www.w3.org/TR/navigation-timing/">[1]</a> (17 December 2012)</li>
+<li>Tutorial: Measuring page load speed with Navigation Timing <a href="http://www.html5rocks.com/en/tutorials/webperformance/basics/">[2]</a></li>
+<li>Browser Support: FF7+, Chrome6+, IE9+, Android Browser 4.0+, Mobile Chrome 33+ <a href="http://caniuse.com/nav-timing">[3]</a></li>
+<li>Polyfill: <a href="http://nicj.net/usertiming-js/">[4]</a></li>
+</ul>
+<h2>Resource Timing</h2>
+<h3>Abstract</h3>
+<p>This specification defines an interface for web applications to access the complete timing information for resources in a document.</p>
+<p>The Resource Timing API provides timings for all resources linked into a page.</p>
+<ul>
+<li>Resource Timing API Candidate Recommendation <a href="http://www.w3.org/TR/resource-timing/">[5]</a> (25 March 2014)</li>
+<li>Tutorial: An Introduction to the Resource Timing API <a href="http://calendar.perfplanet.com/2012/an-introduction-to-the-resource-timing-api/">[6]</a></li>
+<li>Browser Support: FF15+, IE10, Chrome? (2012)</li>
+</ul>
+<h2>User Timing</h2>
+<h3>Abstract</h3>
+<p>This specification defines an interface to help web developers measure the performance of their applications by giving them access to high precision timestamps.</p>
+<p>Helps to get rid of Date.now() in performance measuring code. Can be used to measure random parts of code.</p>
+<ul>
+<li>User Timing API Recommendation <a href="http://www.w3.org/TR/user-timing/">[7]</a> (12 December 2013)</li>
+<li>Tutorial: User Timing API <a href="http://www.html5rocks.com/en/tutorials/webperformance/usertiming/">[8]</a></li>
+<li>Polyfill: <a href="https://gist.github.com/pmeenan/5902672">[9]</a></li>
+<li>Browser Support: IE10+, Chrome25+, Android Browser 4.4+, Mobile Chrome 33+ <a href="http://caniuse.com/user-timing">[10]</a></li>
+</ul>
+<h2>Page Visibility</h2>
+<h3>Abstract</h3>
+<p>This specification defines a means for site developers to programmatically determine the current visibility state of the page in order to develop power and CPU efficient web applications.</p>
+<p>Enables developers to listen to visibility change event (e.g. user switches to another browser tab) and to determine visibility state of the page. Thus, expensive operations in means of performance can be stopped on invisible pages.</p>
+<ul>
+<li>Page Visibility API Recommendation <a href="http://www.w3.org/TR/page-visibility/">[11]</a> (29 October 2013)</li>
+<li>Tutorial: Using the PageVisibility API <a href="http://www.html5rocks.com/en/tutorials/pagevisibility/intro/">[12]</a></li>
+<li>Browser Support: FF10+, IE10+, Chrome14+, Safari 6.1+, mobile Safari 7+, Android Browser 4.4+, Mobile Chrome 33+ <a href="http://caniuse.com/pagevisibility">[13]</a></li>
+</ul>
+<h2>Animation Timing</h2>
+<h3>Abstract</h3>
+<p>This document defines an API web page authors can use to write script-based animations where the user agent is in control of limiting the update rate of the animation. The user agent is in a better position to determine the ideal animation rate based on whether the page is currently in a foreground or background tab, what the current load on the CPU is, and so on. Using this API should therefore result in more appropriate utilization of the CPU by the browser.</p>
+<ul>
+<li>Animation Timing API Recommendation <a href="http://www.w3.org/TR/animation-timing/">[14]</a> (31 October 2013)</li>
+<li>Tutorial: The secret to silky smooth JavaScript animation! <a href="http://creativejs.com/resources/requestanimationframe/">[15]</a></li>
+<li>Browser Support: FF4+, Chrome10+, Safari 6+, mobile Safari 6+, Android Browser 4.4+, Mobile Chrome 33+ <a href="http://caniuse.com/requestanimationframe">[16]</a></li>
+</ul>
+<h2>Efficient Script Yielding</h2>
+<h3>Abstract</h3>
+<p>This specification defines an interface for web applications to flush the browser event queue and receive an immediate callback.</p>
+<ul>
+<li>Efficient Script Yielding Editor’s Draft <a href="https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/setImmediate/Overview.html">[17]</a> (editor’s draft, 28 July 2011)</li>
+<li>Browser Support: IE10+</li>
+</ul>
+<h3>In this section</h3>
+<p>{</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

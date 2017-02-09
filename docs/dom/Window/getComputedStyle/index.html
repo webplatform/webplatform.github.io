@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>getComputedStyle · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="Gets the values of all the CSS properties of an element after applying the active stylesheets and resolving the basic computations they may contain. 
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Window/">Window</a></li><li><a href="/dom/Window/getComputedStyle/">getComputedStyle</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>getComputedStyle</h1>
+<h2>Summary</h2>
+<p>Gets the values of all the CSS properties of an element after applying the active stylesheets and resolving the basic computations they may contain.</p>
+<p>The returned object is of the same type that the object returned from the element’s <a href="/docs/css/cssom/style">“style”</a> property, however the two objects have different purposes. The object returned from getComputedStyle is read-only and can be used to inspect the element’s style (including those set by a &lt;style&gt; element or an external stylesheet). The elt.style object should be used to set styles on a specific element.</p>
+<p>Method of <a href="/docs/dom/Window">dom/Window</a><a href="/docs/dom/Window">dom/Window</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> declaration = <span class="hljs-built_in">window</span>.getComputedStyle(<span class="hljs-comment">/* see parameter list */</span>);
+</code></pre>
+<h2>Parameters</h2>
+<h3>element</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>DOM Node
+</dd>
+</dl>
+<p>The element that contains the desired style settings.</p>
+<h3>pseudoElementName</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>(Optional)</p>
+<p>The name of a CSS pseudo-element or a null value (“::before” or “::after”). Optional in WebKit based browsers.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type CSSStyleDeclarationCSSStyleDeclaration</p>
+<p>A <a href="/docs/css/cssom/CSSStyleDeclaration/CSSStyleDeclaration"><strong>CSSStyleDeclaration</strong></a> object that contains the CSS settings applied to the desired object.</p>
+<p>The settings in the returned object account for all applicable style rules and represent the resolved values for the various CSS properties applied to the specified object.</p>
+<h2>Examples</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> elem1 = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"elemId"</span>);
+<span class="hljs-keyword">var</span> style = <span class="hljs-built_in">window</span>.getComputedStyle(elem1, <span class="hljs-literal">null</span>);
+
+<span class="hljs-comment">// this is equivalent:</span>
+<span class="hljs-comment">// var style = document.defaultView.getComputedStyle(elem1, null);</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">&lt;<span class="hljs-tag">br</span>/&gt; <span class="hljs-id">#elem-container</span><span class="hljs-rules">{&lt;br/&gt;   <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;&lt;br/&gt;   <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value">     <span class="hljs-number">100px</span></span></span>;&lt;br/&gt;   <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value">      <span class="hljs-number">200px</span></span></span>;&lt;br/&gt;   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value">   <span class="hljs-number">100px</span></span></span>;&lt;br/&gt; }</span>&lt;<span class="hljs-tag">br</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"elem-container"</span>&gt;</span>dummy<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"output"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">&lt;br/&gt;  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTheStyle</span><span class="hljs-params">()</span></span>{&lt;br/&gt;    <span class="hljs-keyword">var</span> elem = document.getElementById(<span class="hljs-string">"elem-container"</span>);&lt;br/&gt;    <span class="hljs-keyword">var</span> theCSSprop = window.getComputedStyle(elem,<span class="hljs-literal">null</span>).getPropertyValue(<span class="hljs-string">"height"</span>);&lt;br/&gt;    document.getElementById(<span class="hljs-string">"output"</span>).innerHTML = theCSSprop;&lt;br/&gt;   }&lt;br/&gt;  getTheStyle();&lt;br/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>getComputedStyle can pull style info off of pseudo-elements (for example, ::after, ::before, ::marker, ::line-marker).</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">&lt;<span class="hljs-tag">br</span>/&gt; <span class="hljs-tag">h3</span><span class="hljs-pseudo">:after</span> <span class="hljs-rules">{&lt;br/&gt;   <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">' rocks!'</span></span></span>;&lt;br/&gt; }</span>&lt;<span class="hljs-tag">br</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>generated content<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">&lt;br/&gt;  <span class="hljs-keyword">var</span> h3       = document.querySelector(<span class="hljs-string">'h3'</span>), &lt;br/&gt;      result   = getComputedStyle(h3, <span class="hljs-string">':after'</span>).content;&lt;br/&gt; &lt;br/&gt;  console.log(<span class="hljs-string">'the generated content is: '</span>, result); <span class="hljs-comment">// returns ' rocks!'&lt;br/&gt;</span></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<p>The first argument must be an Element (passing a non-Element Node, like a #text Node, will throw an error).</p>
+<p>The returned object actually represents the CSS 2.1 resolved values, not the computed values. While those values are usually equal, some older CSS properties like 'width’, ‘height’ or ‘padding’ will return their used value instead.</p>
+<p>Originally, CSS 2.0 defined the computed values to be the “ready to be used” final values of properties after cascading and inheritance, but CSS 2.1 redefined computed values as pre-layout, and added the used values as post-layout. The differences between pre- and post-layout does include the resolution of percentages relative to the width or the height of an element (its layout).</p>
+<p>While the computed style will return percentages values untouched in this case, the getComputedStyle function will sometimes, to preserve backwards compatibility, return the old meaning of computed values (now called used values) for a specific set of CSS 2.0 properties and resolve those percentages anyway.</p>
+<p>The returned value can, in certain known cases, be expressly inaccurate by deliberate intent. In particular, to avoid the so called CSS History Leak security issue, browsers may expressly “lie” about the used value for a link and always return values as if a user has never visited the linked site. See <a href="http://blog.mozilla.com/security/2010/03/31/plugging-the-css-history-leak/">http://blog.mozilla.com/security/2010/03/31/plugging-the-css-history-leak/</a> and <a href="http://hacks.mozilla.org/2010/03/privacy-related-changes-coming-to-css-vistited/">http://hacks.mozilla.org/2010/03/privacy-related-changes-coming-to-css-vistited/</a> for details of the examples of how this is implemented, most other modern browser have applied similar changes to the application of pseudo-selector styles and the values returned by getComputedStyle.</p>
+<p>During a CSS transition, getComputedStyle returns the original property value in FireFox, but the final property value in WebKit.</p>
+<p>When the <em>pseudoElementName</em> is set to a value other than null, the value is interpreted as a CSS pseudo-element with respect to the object specified in the <em>element</em> parameter.</p>
+<p>Starting in Gecko 1.9.2 (Firefox 3.6 / Thunderbird 3.1 / Fennec 1.0), returned URL values now have quotes around the URL, like this: url(&quot;<a href="http://foo.com/bar.jpg">http://foo.com/bar.jpg</a>&quot;).</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113/css.html">DOM Level 2 Style</a></dt>
+<dd>Recommendation
+</dd>
+<dt><a href="http://dev.w3.org/csswg/cssom/#resolved-values">CSS Object Model (resolved style)</a></dt>
+<dd>Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>CSSOM</h4>
+<ul>
+<li><p><a href="/docs/css/cssom/CSSImportRule/href">href</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSImportRule/media">media</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule">CSSKeyframeRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule/keyText">keyText</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule/style">style</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule">CSSKeyframesRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/cssRules">cssRules</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/deleteRule">deleteRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/findRule">findRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/insertRule">insertRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/name">name</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaList/CSSMediaList">CSSMediaList</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaList/appendMedium">appendMedium</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaList/deleteMedium">deleteMedium</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaList/item">item</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaList/mediaText">mediaText</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaRule/CSSMediaRule">CSSMediaRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaRule/cssRules">cssRules</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaRule/deleteRule">deleteRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaRule/insertRule">insertRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSMediaRule/media">media</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSNamespaceRule/CSSNamespaceRule">CSSNamespaceRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSNamespaceRule/namespaceURI">namespaceURI</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSNamespaceRule/prefix">prefix</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSOM_view">CSSOM View</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSRule">CSSRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSRule/cssText">cssText</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSRule/parentStyleSheet">parentStyleSheet</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSRule/type">type</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSStyleDeclaration/getPropertyPriority">getPropertyPriority</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/clipLeft">clipLeft</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/clipRight">clipRight</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/clipTop">clipTop</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/cssFloat">cssFloat</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/fontWeight">fontWeight</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/hasLayout">hasLayout</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/height">height</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/href">href</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/imports">imports</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/innerWidth">innerWidth</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/isAlternate">isAlternate</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/isPrefAlternate">isPrefAlternate</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/item">item</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/length">length</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/media">media</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/offsetX">offsetX</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/offsetY">offsetY</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/outerHeight">outerHeight</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/outerWidth">outerWidth</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/pageX">pageX</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/pageXOffset">pageXOffset</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/pageY">pageY</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/pageYOffset">pageYOffset</a></p></li>
+<li><p><a href="/docs/css/cssom/properties/pixelBottom">pixelBottom</a></p></li>
+<li><p><a href="/docs/css/cssom/screen/deviceXDPI">deviceXDPI</a></p></li>
+<li><p><a href="/docs/css/cssom/screen/deviceYDPI">deviceYDPI</a></p></li>
+<li><p><a href="/docs/css/cssom/screen/fontSmoothingEnabled">fontSmoothingEnabled</a></p></li>
+<li><p><a href="/docs/css/cssom/screen/height">height</a></p></li>
+<li><p><a href="/docs/css/cssom/style">style</a></p></li>
+<li><p><a href="/docs/css/cssom/style/type">type</a></p></li>
+<li><p><a href="/docs/css/cssom/styleSheet">styleSheet</a></p></li>
+<li><p><a href="/docs/css/cssom/styleSheet/addImport">addImport</a></p></li>
+<li><p><a href="/docs/css/cssom/styleSheet/blockDirection">blockDirection</a></p></li>
+<li><p><a href="/docs/css/cssom/styleSheet/cssRules">cssRules</a></p></li>
+<li><p><a href="/docs/css/cssom/styleSheet/cssText">cssText</a></p></li>
+<li><p><a href="/docs/css/cssom/styleSheet/ownerNode">ownerNode</a></p></li>
+<li><p><a href="/docs/css/cssom/stylesheet/removeImport">removeImport</a></p></li>
+<li><p><a href="/docs/css/cssom/stylesheet/removeRule">removeRule</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matchMedium">matchMedium</a></p></li>
+<li><p><strong>getComputedStyle</strong></p></li>
+<li><p><a href="/docs/dom/Window/innerHeight">innerHeight</a></p></li>
+<li><p><a href="/docs/dom/Window/styleMedia">styleMedia</a></p></li>
+</ul>
+<h3>External resources</h3>
+<p>Microsoft Test Drive for getComputedStyle <a href="http://ie.microsoft.com/testdrive/HTML5/getComputedStyle/">http://ie.microsoft.com/testdrive/HTML5/getComputedStyle/</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/DOM/window.getComputedStyle">getComputedStyle</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/ff975168(v=vs.85).aspx">getComputedStyle Method</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FontFace · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to the JavaScript FontFace object and font loading. Part of the  Typography tutorials section." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/typography/">typography</a></li><li><a href="/tutorials/typography/fontface/">fontface</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>FontFace</h1>
+<p><strong>By Dave Gash</strong><br>
+Originally published 15 May 2014</p>
+<h2>Summary</h2>
+<p>An introduction to the JavaScript FontFace object and font loading. Part of the Typography tutorials section.</p>
+<h2>Introduction</h2>
+<p>The FontFace object is conceptually based on the CSS @font-face property, a powerful and flexible feature that allows you to use custom fonts in your web pages. If you aren’t familiar with @font-face, please read Paul Irish’s excellent <a href="/docs/tutorials/typography/font-face">@font-face tutorial</a> first and then come back. It’s okay, we’ll wait.</p>
+<p>While @font-face works fine for pre-coded pages, many developers would also like to use custom fonts on the fly via scripting. This has historically been difficult to accomplish, but has now become much more straightforward with the introduction of the Javascript <strong>FontFace</strong> object.</p>
+<p>At its core, FontFace is a new interface used for dynamically accessing font resources through scripting. With FontFace, you can load, add, and use custom fonts at any time by manipulating the object in script.</p>
+<p><strong>Note:</strong> As of this writing the FontFace object is only available in Google Chrome Canary, which you can get <a href="https://www.google.com/intl/en/chrome/browser/canary.html">here</a>.</p>
+<h2>Background</h2>
+<p>Interestingly, a manually created CSS @font-face rule implicitly defines a Javascript FontFace object, with its properties set to the same values as the @font-face rule’s. The FontFace object is said to be &quot;CSS-connected&quot;. Thus, you can manipulate a manual @font-face with script, but that isn’t exactly what we’re after.</p>
+<p>Of course, you can also create any document element, such as a @font-face rule, with script and “shoehorn” it into the page’s stylesheet using the <strong>.insertRule()</strong> method, but that’s also not the goal here.</p>
+<p>While your script can certainly interact with manual @font-face rules, or create and manipulate CSS rules directly, in this tutorial we’ll be focusing on independently creating and using FontFace objects.</p>
+<h2>Preparing the Fonts</h2>
+<p>Before we can begin using a custom font, we have to <em>have</em> a custom font. As covered in the <a href="/docs/tutorials/typography/font-face">@font-face tutorial</a>, in order to ensure cross-browser compatibility you should have these versions of your font available:</p>
+<ul>
+<li>Embedded Open Type (.eot), specifically for Internet Explorer</li>
+<li>True Type Font (.ttf), for Safari, Opera, Firefox, and Chrome</li>
+<li>Web Open Font Format (.woff), for Firefox, Chrome, Opera, and IE9</li>
+<li>Scalable Vector Graphics (.svg), for iPhones, iPads, and other devices that run Mobile Safari</li>
+</ul>
+<p>The easiest way to convert an existing font in any of these formats to all the others is with the amazing <a href="http://www.fontsquirrel.com/tools/webfont-generator">Font Squirrel</a> webfonts generator. Font Squirrel is a free online tool that uploads your original font, creates the required variants, and zips it up into a convenient downloadable package.</p>
+<p>Naturally, the font variants must all be available on the server to the pages that use them, either in the same folder or in a defined path. And – this should go without saying, but let’s say it anyway – you <strong>must</strong> be sure that the font you want to use is licensed for web use. For this article we’re using an absolutely free and web-licensed font called <a href="http://www.fontsquirrel.com/fonts/finger-paint">FingerPaint</a>, available (along with many others) at Font Squirrel. Finger Paint is a fun, decorative font; here’s how it looks.</p>
+<p><img src="//static.webplatform.org/a/af/fingerpaintfont1.png" alt="fingerpaintfont1.png"></p>
+<h2>Creating the FontFace Object</h2>
+<p>This is pretty straightforward; you create a FontFace with the JavaScript <strong>new</strong> keyword as you would any other object.</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+</code></pre>
+<p>The first parameter is the user-defined name. Call it whatever you like, but use common sense; later, you’ll need to refer to the font by that name.</p>
+<p>The second parameter is the URL of the font file. As you can see, we’re using the True Type version for this example.</p>
+<p>The third parameter is the attribute list, such as <em>family</em>, <em>style</em>, <em>weight</em>, etc. As these values are optional, just include the empty braces and don’t worry about it for now.</p>
+<p>That defines the JavaScript FontFace object and requests that the browser locate the font file and associate it with the object. But the page doesn’t know it’s there yet.</p>
+<h2>Adding the Font to the Page</h2>
+<p>The next step is to add the FontFace to the document; a font cannot be used until it exists in the document’s <strong>FontFaceSet</strong> object. The FontFaceSet is implicitly referenced through the document’s <strong>fonts</strong> property. It would seem, then, that we could just use the <strong>add()</strong> method to include the font in the page. That is, this</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+document.fonts.add(f);
+</code></pre>
+<p>should add the FontFace to the page’s font list. And it would, <em>if the font were actually loaded</em> – but it isn’t. Before we can add the font to the document, we must explictly force it to be loaded with (what else?) the <strong>load()</strong> method.</p>
+<p>Interestingly, the load process raises an issue. We have to be sure that the font is done loading before trying to add it to the document, but in an async world, that can be a tricky business. However, we can use an innovative method to wait for the load to finish by combining the load call with the (also new) JavaScript <strong>Promise</strong> feature. If you want to read up on promises, see <a href="http://www.html5rocks.com/en/tutorials/es6/promises/">this HTML5Rocks article</a>. But briefly, a JavaScript promise is a pattern for handling asynchronous operations. It operates a bit like an event listener, and lets you call a <strong>then()</strong> method that contains a callback function to be executed only when the calling method is complete (“the promise is fulfilled”). So this</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+f.load().then(function (loadedFace) {
+  //statements
+});
+</code></pre>
+<p>will invoke the load, wait for it to complete, and only execute the then() method’s anonymous function when the load is done.</p>
+<p>Now, what should the function do? At the very least, it should add the now loaded font to the FontFaceSet via the fonts list (as we tried to do earlier), like this.</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+f.load().then(function (loadedFace) {
+  document.fonts.add(loadedFace);
+});
+</code></pre>
+<p>So far, so good. The font is identified, loaded, and added, but we still haven’t actually seen it anywhere on the page. That is, we’ve made the font available to the page, but haven’t used it yet.</p>
+<h2>Using the FontFace</h2>
+<p>For the examples in this section, we’ll use this simple bit of HTML, with a mix of unclassed and class=&quot;fp&quot; elements.</p>
+<pre><code>&lt;h2&gt;This is an H2.&lt;/h2&gt;
+&lt;p&gt;This is a regular paragraph.&lt;/p&gt;
+&lt;p class=&quot;fp&quot;&gt;This is a class=&quot;fp&quot; paragraph.&lt;/p&gt;
+&lt;h2 class=&quot;fp&quot;&gt;This is a class=&quot;fp&quot; H2.&lt;/h2&gt;
+&lt;p&gt;This is another regular paragraph.&lt;/p&gt;
+&lt;p class=&quot;fp&quot;&gt;This is another class=&quot;fp&quot; paragraph.&lt;/p&gt;
+</code></pre>
+<p>There are any number of ways to assign the font to one or more HTML elements, and any number of places to put the assignment in the page. Perhaps the most straightforward location is within the anonymous function itself; that’s a good idea because it keeps all the font usage code localized. All the action is in one place, so that when the FontFace load is complete, the font is added to the document.fonts property and then immediately applied to the desired elements. For example, this</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+f.load().then(function (loadedFace) {
+  document.fonts.add(loadedFace);
+  document.body.style.fontFamily = &quot;fingerpaint, serif&quot;;
+});
+</code></pre>
+<p>sets the entire document body to the new font, and falls back to <em>serif</em> if there’s a problem. (As with any font assignment, always include one or more fallbacks.) Here’s the output.</p>
+<p><img src="//static.webplatform.org/e/e4/fingerpaintfont2.png" alt="fingerpaintfont2.png"></p>
+<p>Okay, that’s a pretty broad application, especially for a whimsical font like Finger Paint. It would make more sense to only apply the font to a specific set of tags, such as just those with a class of &quot;fp&quot;. So this</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+f.load().then(function (loadedFace) {
+  document.fonts.add(loadedFace);
+  var fptags = document.getElementsByClassName(&quot;fp&quot;);
+  for (var i = 0; i &lt; fptags.length; i++) {
+    fptags[i].style.fontFamily = &quot;fingerpaint, serif&quot;;
+  }
+});
+</code></pre>
+<p>would do the trick, selecting all tags with the class of “fp” and looping through them to apply the Finger Paint font to each. That output looks like this.</p>
+<p><img src="//static.webplatform.org/3/3f/fingerpaintfont3.png" alt="fingerpaintfont3.png"></p>
+<p>Or, if you’d rather not rely on pre-assigned classes, you might opt to display all the H2s in the document in Finger Paint. If so, this</p>
+<pre><code>var f = new FontFace(&quot;fingerpaint&quot;, &quot;url(fingerpaint-regular-webfont.ttf)&quot;, {});
+f.load().then(function (loadedFace) {
+  document.fonts.add(loadedFace);
+  var h2s = document.getElementsByTagName(&quot;h2&quot;);
+  for (var i = 0; i &lt; h2s.length; i++) {
+    h2s[i].style.fontFamily = &quot;fingerpaint, serif&quot;;
+  }
+});
+</code></pre>
+<p>is what you need, selecting all H2 elements regardless of class and applying the font to them. That produces this output.</p>
+<p><img src="//static.webplatform.org/d/d3/fingerpaintfont4.png" alt="fingerpaintfont4.png"></p>
+<p>Again, applying the font in the same place, code-wise, where it is identified, loaded, and added keeps the font code together and aids in debugging and maintenance.</p>
+<h2>Conclusion</h2>
+<p>Although the CSS @font-face rule has been around for a long time and is the go-to guy for pre-written pages using custom web fonts, it doesn’t satisfy the scripter’s need to identify, load, and use custom fonts dynamically. The JavaScript FontFace object does just that, cleanly and without hassle.</p>
+<p>Now it’s your turn. Have a go!</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

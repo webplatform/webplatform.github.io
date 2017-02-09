@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Position and Transformation · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="This article is an overview of the coordinate system, positioning and performing translations, transforms, rotation, skewing, scaling on SVG elements." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/position_and transformation/">position and transformation</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Position and Transformation</h1>
+<h2>Summary</h2>
+<p>This article is an overview of the coordinate system, positioning and performing translations, transforms, rotation, skewing, scaling on SVG elements.</p>
+<h2>The grid</h2>
+<p><img src="//static.webplatform.org/5/50/Canvas_default_grid.png" alt="Canvas default grid.png"></p>
+<p>For all elements, SVG uses a coordinate system or grid system similar to the one used by <a href="/docs/canvas">canvas</a> (and by a whole lot of other computer drawing routines). That is, the top left corner of the document is considered to be the point (0,0). Positions are then measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction being to the bottom. Note, that this is the opposite of the way you’re taught to graph as a kid. However, this is the same way elements in HTML are positioned.</p>
+<h4>Example:</h4>
+<p>The element</p>
+<pre><code>&lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;100&quot; height=&quot;100&quot; /&gt;
+</code></pre>
+<p>defines a rectangular from the upper left corner, that spans from there 100px to the right and to the bottom.</p>
+<h3>What are &quot;pixels&quot;?</h3>
+<p>In the most basic case one pixel in an SVG document maps to one pixel on the output device (a.k.a. the screen). But SVG wouldn’t have the “Scalable” in its name, if there weren’t several possibilities to change this behaviour. Much like absolute and relative font sizes in CSS SVG defines absolute units (ones with a dimensional identifier like “pt” or “cm”) and so-called user units, that lack that identifier and are plain numbers.</p>
+<p>Without further specification, one user unit equals one screen unit. To explicitly change this behaviour, there are several possibilities in SVG. We start with the <code>svg</code> root element:</p>
+<pre><code>&lt;svg width=&quot;100&quot; height=&quot;100&quot;&gt;
+</code></pre>
+<p>The above element defines a simple SVG canvas with 100x100px. One user unit equals one screen unit.</p>
+<pre><code>&lt;svg width=&quot;200&quot; height=&quot;200&quot; '''viewBox=&quot;0 0 100 100&quot;'''&gt;
+</code></pre>
+<p>The whole SVG canvas here is 200px by 200px in size. However, the <code>viewBox</code> attribute defines the portion of that canvas to display. These 200x200 pixels display an area that starts at user unit (0,0) and spans 100x100 user units to the right and to the bottom. This effectively zooms in on the 100x100 unit area and enlarges the image to double size.</p>
+<p>The current mapping (for a single element or the whole image) of user units to screen units is called <strong>user coordinate system</strong>. Apart from scaling the coordinate system can also be rotated, skewed and flipped. The default user coordinate system maps one user pixel to one device pixel. (However, the device may decide, what it understands as one pixel.) Lengths in the SVG file with specific dimensions, like “in” or &quot;cm&quot;, are then calculated in a way that makes them appear 1:1 in the resulting image.</p>
+<p>A quote from the SVG 1.1 specification illustrates this:</p>
+<blockquote>
+<p>[…] suppose that the user agent can determine from its environment that “1px” corresponds to “0.2822222mm” (i.e., 90dpi). Then, for all processing of SVG content: […] “1cm” equals “35.43307px” (and therefore 35.43307 user units)</p>
+</blockquote>
+<h2>Transformations</h2>
+<p>Now we’re ready to start distorting our beautiful images. But first, let’s formally introduce the <a href="/w/index.php?title=Template:SVGElement(%22g%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“g”)</a> element. With this helper, you can assign properties to a complete set of elements. Actually, that’s its only purpose. An example:</p>
+<pre><code>&lt;g fill=&quot;red&quot;&gt;
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;10&quot; height=&quot;10&quot; /&gt;
+  &lt;rect x=&quot;20&quot; y=&quot;0&quot; width=&quot;10&quot; height=&quot;10&quot; /&gt;
+&lt;/g&gt;
+</code></pre>
+<p>This results in two red rectangles.</p>
+<p>All following transformations are summed up in an element’s <code>transform</code> attribute. Transformations can be chained simply by concatenating them, separated by whitespace.</p>
+<h2>Translation</h2>
+<p>It may be necessary to move an element around, even though you can position it with the according attributes. For this purpose, the <code>translate()</code> transformation stands ready.</p>
+<pre><code>&lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;10&quot; height=&quot;10&quot; transform=&quot;translate(30,40)&quot; /&gt;
+</code></pre>
+<p>The example will render a rectangle, translated to the point (30,40) instead of (0,0).</p>
+<p>If the second value is not given, it is assumed to be 0.</p>
+<h2>Rotation</h2>
+<p>Rotating an element is quite a common task. Use the <code>rotate()</code> transformation for this:</p>
+<pre><code>&lt;rect x=&quot;20&quot; y=&quot;20&quot; width=&quot;20&quot; height=&quot;20&quot; transform=&quot;rotate(45)&quot; /&gt;
+</code></pre>
+<p>This example shows a square that is rotated by 45 degrees. The value for <code>rotate()</code> is given in degrees.</p>
+<h2>Skewing</h2>
+<p>To make a rhombus out of our rectangle, the <code>skewX()</code> and <code>skewY()</code> transformations are available. Each one takes an angle that determines how far the element will be skewed.</p>
+<h2>Scaling</h2>
+<p><code>scale()</code> changes the size of an element. It takes two numbers, evaluated as ratio by which to scale. 0.5 shrinks by 50%. If the second number is omitted, it is assumed to be equal to the first.</p>
+<h2>Complex transformations with matrix()</h2>
+<p>All the above transformations can be expressed by a 3x3 transformation matrix. To combine several transformations, one can set the resulting matrix directly with the <code>matrix(A1, A2, B1, B2, C1, C2)</code> transformation. Detailed information about this property can be found in the <a href="/w/index.php?title=SVG_Recomendation&amp;action=edit&amp;redlink=1">SVG Recomendation</a>.</p>
+<h2>Effects on Coordinate Systems</h2>
+<p>When using transformations you establish a new coordinate system inside the element the transformations apply to. That means, the units you specify for the element and its children might not follow the 1:1 pixel mapping, but are also distorted, skewed, translated and scaled according to the transformation.</p>
+<pre><code>&lt;g transform=&quot;scale(2)&quot;&gt;
+  &lt;rect width=&quot;50&quot; height=&quot;50&quot; /&gt;
+&lt;/g&gt;
+</code></pre>
+<p>The resulting rectangular in the above example will be 100x100px. The more intriguing effects arise, when you rely on attributes like <code>userSpaceOnUse</code> and the such.</p>
+<h2>Embedding SVG in SVG</h2>
+<p>In contrast to HTML SVG allows you to embed other <code>svg</code> elements seamlessly. This way you can also simply create new coordinate systems by utilizing the <code>viewBox</code>, <code>width</code> and <code>height</code> of the inner <code>svg</code> element.</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;svg width=&quot;100&quot; height=&quot;100&quot; viewBox=&quot;0 0 50 50&quot;&gt;
+    &lt;rect width=&quot;50&quot; height=&quot;50&quot; /&gt;
+  &lt;/svg&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>The example above has basically the same effect as the one above, namely that the rect will be twice as large as specified.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/Positions">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

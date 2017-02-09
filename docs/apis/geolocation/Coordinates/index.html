@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coordinates · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="The geographic coordinate reference system used by the attributes in this interface is the World Geodetic System (2d)." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/geolocation/">geolocation</a></li><li><a href="/apis/geolocation/Coordinates/">Coordinates</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Coordinates</h1>
+<h2>Summary</h2>
+<p>The geographic coordinate reference system used by the attributes in this interface is the World Geodetic System (2d).</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/geolocation/Coordinates/accuracy">accuracy</a></dt>
+<dd>Denotes the accuracy level of the <em>latitude</em> and <em>longitude</em> coordinates. It is specified in meters and must be supported by all implementations. The value of this attribute must be a non-negative real number.
+</dd>
+<dt><a href="/docs/apis/geolocation/Coordinates/alititudeAccuracy">alititudeAccuracy</a></dt>
+<dd>Denotes the accuracy level of the <em>altitude</em> coordinate, specified in meters. If the implementation cannot provide altitude information, the value of this attribute must be null.
+</dd>
+<dt><a href="/docs/apis/geolocation/Coordinates/altitude">altitude</a></dt>
+<dd>Denotes the height of the position, specified in meters above the ellipsoid. If the implementation cannot provide altitude information, the value of this attribute must be null.
+</dd>
+<dt><a href="/docs/apis/geolocation/Coordinates/heading">heading</a></dt>
+<dd>Denotes the direction of travel of the hosting device specified in degrees, where 0° ≤ heading &lt; 360°, counting clockwise relative to the true north. If the implementation cannot provide heading information, the value of this attribute must be null. If the hosting device is stationary (i.e., the value of the <em>speed</em> attribute is 0), then the value of this attribute must be NaN.
+</dd>
+<dt><a href="/docs/apis/geolocation/Coordinates/latitude">latitude</a></dt>
+<dd>Geographic latitude specified in decimal degrees.
+</dd>
+<dt><a href="/docs/apis/geolocation/Coordinates/longitude">longitude</a></dt>
+<dd>Geographic longitude specified in decimal degrees.
+</dd>
+<dt><a href="/docs/apis/geolocation/Coordinates/speed">speed</a></dt>
+<dd>Denotes the magnitude of the horizontal component of the hosting device’s current velocity specified in meters per second. If the implementation cannot provide speed information, the value of this attribute must be null. Otherwise, the value of this attribute must be a non-negative real number.
+</dd>
+</dl>
+<h2>Methods</h2>
+<p><em>No methods.</em></p>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Examples</h2>
+<p>Obtain user location with all available information available within to coordinates object.</p>
+<pre><code class="js">navigator.geolocation.getCurrentPosition(geoSuccess,geoError);
+
+<span class="hljs-comment">/* Position found*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">geoSuccess</span>(<span class="hljs-params">position</span>)
+</span>{
+alert(<span class="hljs-string">'latitude: '</span>+position.coords.latitude+<span class="hljs-string">' AND longitude: '</span>+position.coords.longitude);
+<span class="hljs-comment">/* Denotes the accuracy level of the latitude and longitude coordinates in meters */</span>
+alert(position.coords.accuracy);
+<span class="hljs-comment">/* Denotes the accuracy level of the altitude coordinate in meters */</span>
+alert(position.coords.alititudeAccuracy);
+<span class="hljs-comment">/* Denotes the height of the position, specified in meters above the ellipsoid. */</span>
+alert(position.coords.altitude);
+<span class="hljs-comment">/* Denotes the direction of travel of the hosting device specified in degrees */</span>
+alert(position.coords.heading);
+<span class="hljs-comment">/* Denotes the magnitude of the horizontal component of the hosting device's current velocity specified in meters per second. */</span>
+alert(position.coords.speed);
+}
+
+<span class="hljs-comment">/* Position not found*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">geoError</span>(<span class="hljs-params">position</span>)
+</span>{
+alert(<span class="hljs-string">"No position found"</span>);
+}
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://dev.w3.org/geo/api/spec-source.html">W3C Geolocation Specification</a></dt>
+<dd>W3C Proposed Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Using_geolocation">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

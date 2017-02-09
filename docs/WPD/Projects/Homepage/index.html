@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homepage · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/Homepage/">Homepage</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Homepage</h1>
+<h2>Homepage project</h2>
+<h3>Summary</h3>
+<p>This document describes the status and points to other related documentation for the <a href="/">www.webplatform.org “landing page”</a> and various static content that aren’t and should not be managed by a CMS.</p>
+<p>The code is available on <a href="https://github.com/webplatform/www.webplatform.org">github.com/webplatform.org/www.webplatform.org</a>, you can contribute by forking and submitting a pull-request, report issues in <a href="https://github.com/webplatform/www.webplatform.org/issues/new?title=Describe%20issue%20found%20&amp;labels=bug&amp;assignee=renoirb&amp;body=URL:%20Insert%20address%20where%20you%20found%20the%20problem">the repository issue tracker</a>.</p>
+<h3>Scope</h3>
+<p>Static content are pages that we do not want to allow edition without audit such as: The landing page, the stewards section, the logo, and error pages. Since those pages are’t going to change frequently we could use serve plain static files directly, and when we need to change content, leverage a static site generator to create the documents but prevent us copy-pasting code through many files.</p>
+<p>Also, in order to improve the load time our our page, we could set in place workflows that helps us organize our CSS/JavaScript files and allow us to serve them with appropriate caching headers and reduced file-size (i.e. minification). Since the content at <em>www.webplatform.org</em> is mostly static, doesn’t have application that requires cookies it will help us increase our HTTP cache HIT rate for both static pages and CSS/JavaScript files.</p>
+<h3>Objectives</h3>
+<ol>
+<li>Workspace where a contributor can fork and improve CSS/JavaScript assets</li>
+<li>Serve from one place all CSS/JavaScript, already minified (currently using MediaWiki’s minifier; create load for no tangible benefit)</li>
+<li>Ensure uniformity in pages without relying on server side language</li>
+<li>Provide a workspace where we can focus on HTML/CSS/JavaScript without backend code involved</li>
+</ol>
+<h3>Requirements</h3>
+<h4>Functional</h4>
+<ol>
+<li>Leverage tools to generate, concatenate, validate, minify assets before deploying; serving only static files to the live site.</li>
+<li>Support pages nesting in directories, for example: <em>stewards/microsoft</em></li>
+<li>Support multiple tools (e.g. Process Markdown to HTML, Process templating engine, etc)</li>
+</ol>
+<h4>Non functional</h4>
+<ol>
+<li>Workspace has to allow contributor to use without a too steep learning-curve</li>
+<li>Tools to use the language of the Web Platform (e.g. JavaScript)</li>
+<li>Serve as a reference to illustrate current Frontend development best-practices</li>
+<li>Have as less as possible technology requirements (i.e. if we can rely only on JavaScript+Node, the better)</li>
+</ol>
+<h3>Choice</h3>
+<p><a href="/User:Renoirb">User:renoirb</a> has personally tried a few static site generators and found that <a href="http://docpad.org/">DocPad</a> was the most sensible choice. What made the choice clear was that it took less than one hour to be able to do basic things such as sub pages, and other things described in the <a href="#Requirements">#Requirements</a> sections. Among the projects <a href="/User:Renoirb">User:renoirb</a> tried were: Assemble, Octopress, Jekyll, and Ghost.</p>
+<p>Besides the fact that DocPad was uses CoffeeScript, we are not forced to use it in our own code.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="https://gist.github.com/balupton/5519403">Use DocPad to pull and render content from a GitHub repository</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

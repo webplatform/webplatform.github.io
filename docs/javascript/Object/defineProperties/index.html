@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>defineProperties · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Adds one or more properties to an object, and/or modifies attributes of existing properties." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Object/">Object</a></li><li><a href="/docs/javascript/Object/defineProperties/">defineProperties</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>defineProperties</h1>
+<h2>Summary</h2>
+<p>Adds one or more properties to an object, and/or modifies attributes of existing properties.</p>
+<h2>Syntax</h2>
+<pre><code>object.defineProperties( object , descriptors )
+</code></pre>
+<dl>
+<dt><strong>object</strong></dt>
+<dd>Required. The object on which to add or modify the properties. This can be a native JavaScript object or a DOM object.
+</dd>
+<dt><strong>descriptors</strong></dt>
+<dd>Required. A JavaScript object that contains one or more descriptor objects. Each descriptor object describes a data property or an accessor property.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>The object that was passed to the function.</p>
+<h2>Examples</h2>
+<p><strong>Adding Properties</strong></p>
+<p>In the following example, the <strong>Object.defineProperties</strong> function adds a data property and an accessor property to a user-defined object.</p>
+<p>The example uses an object literal to create the descriptors object with the <code>newDataProperty</code> and <code>newAccessorProperty</code> descriptor objects.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> newLine = <span class="hljs-string">"&lt;br /&gt;"</span>;
+
+<span class="hljs-keyword">var</span> obj = {};
+<span class="hljs-built_in">Object</span>.defineProperties(obj, {
+    newDataProperty: {
+        value: <span class="hljs-number">101</span>,
+        writable: <span class="hljs-literal">true</span>,
+        enumerable: <span class="hljs-literal">true</span>,
+        configurable: <span class="hljs-literal">true</span>
+    },
+    newAccessorProperty: {
+        set: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">x</span>) </span>{
+            <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"in property set accessor"</span> + newLine);
+            <span class="hljs-keyword">this</span>.newaccpropvalue = x;
+        },
+        get: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"in property get accessor"</span> + newLine);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.newaccpropvalue;
+        },
+        enumerable: <span class="hljs-literal">true</span>,
+        configurable: <span class="hljs-literal">true</span>
+    });
+
+<span class="hljs-comment">// Set the accessor property value.</span>
+obj.newAccessorProperty = <span class="hljs-number">10</span>;
+<span class="hljs-built_in">document</span>.write (<span class="hljs-string">"newAccessorProperty value: "</span> + obj.newAccessorProperty + newLine);
+
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// in property set accessor</span>
+<span class="hljs-comment">// in property get accessor</span>
+<span class="hljs-comment">// newAccessorProperty value: 10</span>
+</code></pre>
+<p>Like the previous example, the following example adds properties dynamically instead of with an object literal.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> newLine = <span class="hljs-string">"&lt;br /&gt;"</span>;
+
+<span class="hljs-comment">// Create the descriptors object.</span>
+<span class="hljs-keyword">var</span> descriptors = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+
+<span class="hljs-comment">// Add a data property descriptor to the descriptors object.</span>
+descriptors.newDataProperty = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+descriptors.newDataProperty.value = <span class="hljs-number">101</span>;
+descriptors.newDataProperty.writable = <span class="hljs-literal">true</span>;
+descriptors.newDataProperty.enumerable = <span class="hljs-literal">true</span>;
+descriptors.newDataProperty.configurable = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Add an accessor property descriptor to the descriptors object.</span>
+descriptors.newAccessorProperty = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+descriptors.newAccessorProperty.set = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">x</span>) </span>{
+    <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"in property set accessor"</span> + newLine);
+    <span class="hljs-keyword">this</span>.newaccpropvalue = x;
+};
+descriptors.newAccessorProperty.get = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"in property get accessor"</span> + newLine);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.newaccpropvalue;
+};
+descriptors.newAccessorProperty.enumerable = <span class="hljs-literal">true</span>;
+descriptors.newAccessorProperty.configurable = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Call the Object.defineProperties function.</span>
+<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+<span class="hljs-built_in">Object</span>.defineProperties(obj, descriptors);
+
+<span class="hljs-comment">// Set the accessor property value.</span>
+obj.newAccessorProperty = <span class="hljs-number">10</span>;
+<span class="hljs-built_in">document</span>.write (<span class="hljs-string">"newAccessorProperty value: "</span> + obj.newAccessorProperty + newLine);
+
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// in property set accessor</span>
+<span class="hljs-comment">// in property get accessor</span>
+<span class="hljs-comment">// newAccessorProperty value: 10</span>
+</code></pre>
+<p><strong>Modifying Properties</strong></p>
+<p>To modify property attributes for the object, add the following code. The <strong>Object.defineProperties</strong> function modifies the writable attribute of <code>newDataProperty</code> , and modifies the enumerable attribute of <code>newAccessorProperty</code>. It adds <code>anotherDataProperty</code> to the object because that property name does not already exist.</p>
+<pre><code class="js"><span class="hljs-built_in">Object</span>.defineProperties(obj, {
+        newDataProperty: { writable: <span class="hljs-literal">false</span> },
+        newAccessorProperty: { enumerable: <span class="hljs-literal">false</span> },
+        anotherDataProperty: { value: <span class="hljs-string">"abc"</span> }
+    });
+</code></pre>
+<h2>Remarks</h2>
+<p>The descriptors argument is an object that contains one or more descriptor objects.</p>
+<p>A data property is a property that can store and retrieve a value. A data property descriptor contains a value attribute, a writable attribute, or both. For more information, see Data Properties and Accessor Properties.</p>
+<p>An accessor property calls a user-provided function every time the property value is set or retrieved. An accessor property descriptor contains a set attribute, a get attribute, or both.</p>
+<p>If the object already has a property that has the specified name, the property attributes are modified. For more information, see <a href="/docs/javascript/Object/defineProperty">Object.defineProperty Function</a>.</p>
+<p>To create an object and add properties to the new object, you can use the <a href="/docs/javascript/Object/create">Object.create Function</a>.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor Function</a></li>
+<li><a href="/docs/javascript/Object/getOwnPropertyNames">Object.getOwnPropertyNames Function</a></li>
+<li><a href="/docs/javascript/Object/defineProperty">Object.defineProperty Function</a></li>
+<li><a href="/docs/javascript/Object/create">Object.create Function</a></li>
+<li><a href="/docs/javascript/Object">Object Object</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff800817(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>custom · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    <meta property="standardization" content="Non-Standard" />
+    <meta name="description" content="Represents a user-defined HTML tag (nonstandard)" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/custom/">custom</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>custom</h1>
+<h2>Summary</h2>
+<p>Represents a user-defined HTML tag (nonstandard)</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLElement">HTMLElement</a>
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>This example uses the <strong>custom</strong> element to create custom RED, GREEN, and BLUE elements. These elements change the color of the text to red, green, or blue, depending on whether it is surrounded by RED, GREEN, or BLUE tags. In this example, the RED, GREEN, and BLUE tags are defined within a namespace called CUSTOMTAG.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">HTML</span> <span class="hljs-attribute">XMLNS:CUSTOMTAG</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">STYLE</span>&gt;</span><span class="css">
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> all </span>{
+    <span class="hljs-tag">CUSTOMTAG</span>\<span class="hljs-pseudo">:RED</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; }</span>
+    <span class="hljs-tag">CUSTOMTAG</span>\<span class="hljs-pseudo">:GREEN</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> green</span></span>; }</span>
+    <span class="hljs-tag">CUSTOMTAG</span>\<span class="hljs-pseudo">:BLUE</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>; }</span>
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">STYLE</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">CUSTOMTAG:RED</span>&gt;</span>
+This text is red because it is enclosed within opening
+and closing CUSTOMTAG:RED tags.
+<span class="hljs-tag">&lt;/<span class="hljs-title">CUSTOMTAG:RED</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">CUSTOMTAG:GREEN</span>&gt;</span>
+This text is green because it is enclosed within opening
+and closing CUSTOMTAG:GREEN tags.
+<span class="hljs-tag">&lt;/<span class="hljs-title">CUSTOMTAG:GREEN</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">CUSTOMTAG:BLUE</span>&gt;</span>
+This text is blue because it is enclosed within opening
+and closing CUSTOMTAG:BLUE tags.
+<span class="hljs-tag">&lt;/<span class="hljs-title">CUSTOMTAG:BLUE</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HTML</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/custom.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>To declare a namespace, use the <a href="/docs/apis/xhr/properties/XMLNS_attribute"><strong>XMLNS</strong></a> attribute of the HTML element. When defining custom tags, you must enclose custom tag definitions within an <a href="/docs/css/atrules/@media"><strong>@media</strong></a> wrapper. Custom tags become much more interesting when applied with a Dynamic HTML (DHTML) behavior. Dynamic HTML (DHTML) behaviors (or behaviors) and styles are applied to elements on a page the same way—using Cascading Style Sheets (CSS) attributes. More specifically, the proposed CSS <a href="/docs/css/media_queries/behavior"><strong>behavior</strong></a> attribute enables a document author to specify the location of the behavior and apply that behavior to an element. The Windows Internet Explorer support for custom tags on an HTML page requires that a namespace be defined for the tag. Otherwise, the custom tag is treated as an unknown tag when the document is parsed. Although navigating to a page with an unknown tag in Internet Explorer does not result in an error, unknown tags have the disadvantage of not being able to contain other tags, nor can they have behaviors applied to them. This element is available in HTML and script as of Microsoft Internet Explorer 5.</p>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li><code>Using Custom Tags in Internet Explorer</code></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

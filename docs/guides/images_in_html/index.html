@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Images in HTML · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article provides an introduction to using images in an HTML document with the &amp;lt;img&amp;gt; tag." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/images_in html/">images in html</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Images in HTML</h1>
+<h2>Summary</h2>
+<p>This article provides an introduction to using images in an HTML document with the &lt;img&gt; tag.</p>
+<h2>Introduction</h2>
+<p>In this article we will discuss one of the things that makes web design “pretty” — images. You’ll learn how to add images to web documents in an accessible way so that people with visual impairments can still use the information on your site, how and when to use inline images to deliver information, and how to use background images to improve page layout.</p>
+<h2>A picture says more than a thousand words — or does it?</h2>
+<p>It is tempting to use a lot of imagery on your web sites. Images are a great way to set the mood for the visitor, and illustrations help make complex information easier to take in for visual learners.</p>
+<p>The drawback of images on the web is that not everybody can see them. Back in the days when images were first supported by browsers, web connections were slow, and you’d pay a lot of money for each minute you were online. Many site visitors had images turned off to save on download costs and get a faster surfing experience. While this is not very common these days, there are still other problems to consider:</p>
+<ul>
+<li>People surfing on mobile devices might still have images turned off due to small screen size or the cost of downloading data.</li>
+<li>Visitors to your site might be visually impaired such that they cannot see your images properly or at all.</li>
+<li>Other visitors might be from a different culture and not understand the icons or diagrams you use.</li>
+<li>Search engines only index text — they don’t analyze images, which means that information stored in images cannot be found and indexed. (At least, not yet: try searching “image indexing” or “search by image” for additional information regarding the latest on image indexing.)</li>
+</ul>
+<p>It is therefore very important to choose images wisely and use them appropriately. It is even more important to always offer a fallback for users who cannot see your images. Let’s see what technologies are available to add images to an HTML document.</p>
+<h2>Content and background images</h2>
+<p>There are two main ways to add images to a document: content images using the <code>&lt;img&gt;</code> element, and background images applied to elements using CSS. Which method you use depends on your intent:</p>
+<ul>
+<li>If the image is crucial to the content of the document, such as a photo of the author or a data graph, it should be added as an <code>&lt;img&gt;</code> element with proper alternative text.</li>
+<li>If the image is there strictly for aesthetic purposes, you should use a CSS background image. These images should not have any alternative text (what use is the description “round green corner with a twinkle” to a blind person?) and you have more options for image styling in CSS.</li>
+</ul>
+<h2>The <code>&lt;img&gt;</code> element and its attributes</h2>
+<p>Adding an image to an HTML document is very easy using the <code>&lt;img&gt;</code> element: you specify the location of the image you want to display as the value of the <code>src</code> (source) attribute, and away you go. The following HTML document displays the photo balconyview.jpg in a browser (provided that the image is in the same folder as the HTML file).</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you run this code in a browser, you’ll get output like this:</p>
+<p><img src="//static.webplatform.org/8/83/images-f.jpg" alt="the image displayed in a browser"></p>
+<p><em>Figure 1: The image as it is shown in a browser.</em></p>
+<p>Note: The <code>&lt;img&gt;</code> element is what is known as an <em>empty tag</em>; that is, it does not require an end tag (like <code>&lt;/img&gt;</code>). In HTML5, it need not even be closed with an internal slash (like &lt;img src=&quot;balconyview.jpg&quot;/&gt;), although many web page authors do so as a matter of consistency.</p>
+<h3>Providing a text alternative with the alt attribute</h3>
+<p>Although the image is displayed correctly, the HTML is invalid because the <code>&lt;img&gt;</code> element lacks an <code>alt</code> attribute. This attribute contains text to be displayed if the image is not available for some reason. The image may not be available because it could not be found, failed to load, or because the user agent (normally a browser) does not support images. In addition, people with visual impairments use assistive technologies to read web pages aloud; these technologies look for the contents of the <code>alt</code> attribute to describe the image. It is therefore important to write good alternative text to describe the contents of the image and put it in the image’s <code>alt</code> attribute for reasons of accessibility and search engine optimization.</p>
+<p>A quick note: Many web pages — and web authors — use the term &quot;alt tags&quot;. This is factually incorrect, as there is no tag (or element) with that name. Remember that <code>alt</code> is an attribute of the <code>&lt;img&gt;</code> element, not a tag.</p>
+<p>Thus, in order to make the image understandable for everyone, you must always include proper alternative text, as in this example, &quot;View from my balcony, showing a row of houses, trees and a castle&quot;:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3>Adding “nice-to-have” information using the <code>title</code> attribute</h3>
+<p>The <code>alt</code> attribute contains the text that should be displayed when the image is not available. The information in the <code>alt</code> attribute should not be displayed when the image is successfully loaded; Internet Explorer gets this wrong, and shows it as a tooltip when you hover your mouse pointer over the image. Unfortunately, many authors consider this the default, which leads them to put additional information about the image into the <code>alt</code> attribute. Please don’t do this; if you want to add extra information about the image, use the <code>title</code> attribute instead.</p>
+<p>Most browsers display the value of an <code>&lt;img&gt;</code> element’s <code>title</code> attribute as a tooltip when you hover your mouse cursor over it (see Figure 2). This can help a visitor learn more about the image, but you cannot rely on every visitor to use a mouse. The <code>title</code> attribute can be very useful, but it is not a foolproof way of providing crucial information. Instead, it offers a good way to provide non-essential information, such as the mood of the image, or what it means in context:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image with alternative text and title<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>
+  <span class="hljs-attribute">title</span>=<span class="hljs-value">"What I see when I look out of my window; the castle was one reason to move there."</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>This code will display like this:</p>
+<p><img src="//static.webplatform.org/7/7c/images-g.jpg" alt="title attribute contents shown as a tool tip"></p>
+<p><em>Figure 2: <code>title</code> attributes are shown as tool tips in many browsers.</em></p>
+<h3>Using <code>longdesc</code> to provide an alternative for complex images</h3>
+<p>If the image is very complex, such as a chart or diagram, you can offer a more lengthy description of it using the <code>longdesc</code> attribute, so that people using screen readers or browsing with images turned off can still access the information conveyed by the image.</p>
+<p>This attribute contains a URL that points to an HTML document containing the same information. For example, if you have a chart showing a set of data, you can link it to a page with the same information using <code>&lt;longdesc&gt;</code>:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image with longdesc<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"chart.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"450"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"150"</span>
+  <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Chart showing the fruit consumption amongst under 15 year olds.
+  Most children ate Pineapples, followed by Pears"</span>
+  <span class="hljs-attribute">longdesc</span>=<span class="hljs-value">"fruitconsumption.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The data file “fruitconsumption.html” contains a table that represents the same data as the chart:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Fruit consumption<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">table</span> <span class="hljs-attribute">summary</span>=<span class="hljs-value">"Fruit Consumption of under 15 year olds, March 2007"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">caption</span>&gt;</span>Fruit Consumption<span class="hljs-tag">&lt;/<span class="hljs-title">caption</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">thead</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Fruit<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">scope</span>=<span class="hljs-value">"col"</span>&gt;</span>Amount<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">thead</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">tbody</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Apples<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>10<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Oranges<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>58<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pineapples<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>95<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Bananas<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>30<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Raisins<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Pears<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>63<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">tbody</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"inlineimagelongdesc.html"</span>&gt;</span>Back to article<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The two different data representations side-by-side look like this:</p>
+<p><img src="//static.webplatform.org/f/f5/images-h.jpg" alt="A document next to its longdesc output"></p>
+<p><em>Figure 3: A document with complex data linked to an image using the <code>longdesc</code> attribute.</em></p>
+<p>Note that there is no visual clue that there is a long description file connected with this image. Most assistive technologies, however, will let their users know there is an alternative available. Some people think that <code>longdesc</code> is pointless, and that you should just provide an alternative page linked via a normal link. This may be appropriate sometimes, as it is often useful to give all users a choice of how they consume your information. There are situations, however, where you’ll want to not show the text link by default.</p>
+<h3>Faster image display by defining the dimensions using width and height</h3>
+<p>When the user agent finds an <code>&lt;img&gt;</code> element in the HTML, it starts loading the image the <code>src</code> attribute points to. By default, it doesn’t know the image dimensions, so it will just display all the loaded text lumped together, and then shift it around when the images finally load and appear. This can slow down page loading, and looks unsightly (to say the least) to page visitors. To prevent this, just tell the browser to allocate the right amount of space for the images before they load by providing the image dimensions using the <code>width</code> and <code>height</code> attributes:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of an inline image with dimensions<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>
+  <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"186"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>This will display a placeholder the same size as the image until the image actually loads and takes its place, therefore avoiding the unsightly and unprofessional page shift. <strong>Always</strong> include the <code>width</code> and <code>height</code> attributes on your images.</p>
+<p>You can also resize images using these attributes (try halving the attribute values in the above example), but this is not good practice, as image resizing quality is not smooth in all browsers. It is especially bad to resize images to represent thumbnails, because the idea of thumbnails is to not only have a smaller image in physical size, but also in file size. Nobody wants to load a 300K photo just to see a small image that could have been sent as a 5K file.</p>
+<h2>Containing images properly using HTML5 &lt;figure&gt;</h2>
+<p>One problem that has always existed with HTML images is the choice of what container element to put them in. After all, images are inline elements by default: they don’t force line breaks before and after themselves. This is fine for cases where you want to put a small icon next to a piece of text, but you’ll more often want an image to sit on its own line in the page. You could describe this usage as making the image into a separate <em>figure</em>.</p>
+<p>In HTML4, the most common way to achieve this is to put the image inside a <code>&lt;p&gt;</code> or <code>&lt;div&gt;</code>, but neither of these is ideal — an image isn’t a paragraph, and a division is semantically ambiguous. Realizing this, the creators of HTML5 introduced a new element that solves the problem: <code>&lt;figure&gt;</code>. This element is specifically designed to contain a figure, which could be an image, two images, or a combination of several multimedia elements, text, or other content. Let’s look at an example:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Figure element with figcaption example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+    <span class="hljs-tag">figure</span>,<span class="hljs-tag">figcaption</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+    }</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'figure'</span>);
+    <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'figcaption'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses,
+      trees and a castle"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"186"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span>The view from outside my window.<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Proper captions using HTML5 &lt;figcaption&gt;</h2>
+<p>Another new addition to HTML5 is an element for containing figure captions. Previously this was done using <code>&lt;p&gt;</code> or some other not-wholly-appropriate element, but now we have the <code>&lt;figcaption&gt;</code> element. Nested inside a <code>&lt;figure&gt;</code>, it says “this is the caption to go along with the contents of this figure.” For example:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+  ...
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"balconyview.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"View from my balcony, showing a row of houses, trees and a castle"</span>
+      <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"186"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span>The view from outside my window.<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+
+  ...
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Note that the contents of the figure caption do not necessarily act as a replacement for the contents of the <code>alt</code> attribute or the <code>title</code> attribute: it depends on whether the caption accurately describes everything in the image, or provides the same supplementary information that the <code>title</code> attribute does. In this case, we need an <code>alt</code> attribute as well, as sighted users can see what is in the image by looking at it. The <code>alt</code> attribute says exactly what the image contains for the benefit of users who can’t see it, while the caption gives some more context.</p>
+<h2>Background images with CSS</h2>
+<p>It is pretty safe to say that web design became a lot more fun when browsers started supporting CSS. Instead of hacking around in the HTML using table cells for positioning items on the page, non-breaking spaces ( ) to force alignment, and spacer GIFs (transparent 1x1 pixel GIF images resized to create margins), we can now use padding, margin, dimensions, and positioning in CSS and leave the HTML free to just worry about the content structure.</p>
+<p>CSS also means you can use background images in a very versatile way — you can position them behind and around your text any way you want, and also repeat images in regular patterns to create backgrounds. Before closing, we’ll cover CSS images briefly.</p>
+<h3>How to apply backgrounds with CSS</h3>
+<p>The CSS to apply images as backgrounds is fairly straightforward. Before you look at the CSS code below, have a look at this multiple example to get an idea of the different things that are possible with background images in CSS:</p>
+<p><img src="//static.webplatform.org/e/ea/images-f.gif" alt="CSS background examples"></p>
+<p><em>Figure 4: Backgrounds with CSS.</em></p>
+<p>The boxes are actually styled <code>&lt;h2&gt;</code> elements with some padding and borders applied with CSS to allow space for the background image. The CSS for the first example is:</p>
+<pre><code class="css"><span class="hljs-tag">background-image</span><span class="hljs-pseudo">:url(ball</span><span class="hljs-class">.gif</span>);
+</code></pre>
+<p>You add the image with the <code>background-image</code> property and give it a URL in parentheses to specify the image to be included. By default, background images are repeated both horizontally and vertically to fill up the whole element space, as in the first example. But you can define various repetition schemes with the <code>background-repeat</code> property:</p>
+<ul>
+<li>Don’t repeat the image at all: <code>background-repeat:no-repeat;</code></li>
+<li>Only repeat the image horizontally: <code>background-repeat:repeat-x;</code></li>
+<li>Only repeat the image vertically: <code>background-repeat:repeat-y;</code></li>
+</ul>
+<p>By default, the background image (if not repeated) will be positioned at the top left corner of the element. You can, however, use <code>background-position</code> to move the background image around. The easiest values to use are <code>top</code>, <code>center</code>, and <code>bottom</code> for vertical alignment, and <code>left</code>, <code>center</code>, and <code>right</code> for horizontal alignment. For example, to position the image on the bottom right, use <code>background-position:right bottom;</code>, while to center the image vertically on the right use <code>background-position:right center;</code>.</p>
+<p>By controlling the repetition and the position of background images and using clever images you can create stunning effects that were not possible before CSS, and by keeping the background definitions in a separate CSS file you make it very easy to change the look and feel of a whole site by changing a few lines of code.</p>
+<h2>Conclusion</h2>
+<p>HTML images are a powerful and flexible way to provide non-textual information, enhance the value of other content, and improve the visual attractiveness of your pages. Combining tried-and-true techniques with new HTML5 elements and attributes can help ensure that your web pages are useful, interesting, and accessible.</p>
+<h2>See also</h2>
+<h3>Exercise Questions</h3>
+<ul>
+<li>Why is it important to add good text to an image in an <code>alt</code> attribute? Are there any situations in which you don’t need to?</li>
+<li>If you have an image that is 1280x786 pixels large and you want to display it as a 40x30 pixel thumbnail, can you do that in HTML and is it wise to do so?</li>
+<li>What does the <code>longdesc</code> attribute do, and how do browsers show it?</li>
+<li>What do the <code>valign</code> and the <code>align</code> attributes do and why weren’t they covered here?</li>
+<li>Where are CSS background images positioned inside an element by default, and how do they get repeated by default?</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RTCPeerConnection · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Provides for the connection between remote peers, the transmission of locally generated MediaStream data and arbitrary data between peers." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/webrtc/">webrtc</a></li><li><a href="/apis/webrtc/RTCPeerConnection/">RTCPeerConnection</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>RTCPeerConnection</h1>
+<h2>Summary</h2>
+<p>Provides for the connection between remote peers, the transmission of locally generated MediaStream data and arbitrary data between peers.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/iceGatheringState">iceGatheringState</a></dt>
+<dd>Returns the gathering state of the ICE agent.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/iceState">iceState</a></dt>
+<dd>Returns the ICE state of the ICE agent.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/localDescription">localDescription</a></dt>
+<dd>Returns the <a href="/docs/apis/webrtc/RTCSessionDescription">RTCSessionDescription</a> most recently passed to the <a href="/docs/apis/webrtc/RTCPeerConnection/setLocalDescription">setLocalDescription()</a> method along with any local candidate descriptions generated since the method was called.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/localStreams">localStreams</a></dt>
+<dd>Returns an array of <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> objects added to the connection with <a href="/docs/apis/webrtc/RTCPeerConnection/addStream">addStream()</a>.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onaddstream">onaddstream</a></dt>
+<dd>Handles the <a href="/w/index.php?title=apis/webrtc/RTCPeerConnection/addstream&amp;action=edit&amp;redlink=1">addstream</a> event fired when <a href="/docs/apis/webrtc/RTCPeerConnection/setRemoteDescription">setRemoteDescription()</a> is called.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/ondatachannel">ondatachannel</a></dt>
+<dd>Handles the <strong>datachannel</strong> event.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/ongatheringchange">ongatheringchange</a></dt>
+<dd>Handles the <strong>gatheringchange</strong> event for a change to the <a href="/docs/apis/webrtc/RTCPeerConnection/iceGatheringState">iceGatheringState</a> property.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onicecandidate">onicecandidate</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/icechange">icechange</a> event for a change to the <a href="/docs/apis/webrtc/RTCPeerConnection/iceState">apis/webrtc/RTCPeerConnection/iceState</a> property. It is called any time there is a new ICE candidate added to a previous offer or answer.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onicechange">onicechange</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/icechange">icechange</a> event. It is called any time the <a href="/docs/apis/webrtc/RTCPeerConnection/iceState">iceState</a> changes.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onidentityresult">onidentityresult</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/identityresult">identityresult</a> event for the success or failure of an identity verification.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onnegotiationneeded">onnegotiationneeded</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/negotiationneeded">negotiationneeded</a> event.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onopen">onopen</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/open">open</a> event.
+Testing.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onremovestream">onremovestream</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/removeStream">removeStream</a> event for when <a href="/docs/apis/webrtc/RTCPeerConnection/setRemoteDescription">setRemoteDescription()</a> is called to remove a <a href="/apis/webrtc/MediaStream">MediaStream</a> object on the remote peer.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/onstatechange">onstatechange</a></dt>
+<dd>Handles the <a href="/docs/apis/webrtc/RTCPeerConnection/statechange">statechange</a> event for when the <a href="/docs/apis/webrtc/RTCPeerConnection/readyState">readyState</a> property is changed, i.e. with a call to <a href="/apis/webrtc/RTCPeerConnection/setLocalDescription">setLocalDescription()</a> or <a href="/apis/webrtc/RTCPeerConnection/setRemoteDescription">setRemoteDescription()</a>. The event does not fire when a new RTCPeerConnection object is created.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/peerIdentity">peerIdentity</a></dt>
+<dd>Contains the peer identity assertion information if an identity assertion was provided and verified.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/readyState">readyState</a></dt>
+<dd>Returns the ready state of the peer connection.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/remoteDescription">remoteDescription</a></dt>
+<dd>Returns the <a href="/docs/apis/webrtc/RTCSessionDescription">RTCSessionDescription</a> most recently passed to the <a href="/docs/apis/webrtc/RTCPeerConnection/setRemoteDescription">setRemoteDescription()</a> method along with any remote candidate descriptions supplied with <a href="/apis/webrtc/RTCPeerConnection/addIceCandidate">addIceCandidate()</a>. Returns null if the remote description has not been set.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/remoteStreams">remoteStreams</a></dt>
+<dd>Returns an array of <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> objects added to the connection by the remote peer. This array is updated when the <a href="/docs/apis/webrtc/RTCPeerConnection/onaddstream">addstream</a> and <a href="/apis/webrtc/RTCPeerConnection/removeStream">removestream</a> events are fired.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/addIceCandidate">addIceCandidate</a></dt>
+<dd>Provides a remote candidate to the ICE agent.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/addStream">addStream</a></dt>
+<dd>Adds a new stream to the RTCPeerConnection.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/close">close</a></dt>
+<dd>Closes a peer connection, stops all active ICE processing and any active streaming, and releases any relevant resources such as TURN permissions.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/createAnswer">createAnswer</a></dt>
+<dd>Creates a session description compatible with the remote configuration.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/createDataChannel">createDataChannel</a></dt>
+<dd>Creates an <a href="/docs/apis/webrtc/RTCDataChannel">RTCDataChannel</a> object with the given label.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/createOffer">createOffer</a></dt>
+<dd>Creates a session description compatible with the local configuration.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/getIdentityAssertion">getIdentityAssertion</a></dt>
+<dd>Provides an identity assertion.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/getStats">getStats</a></dt>
+<dd>Retrieves status information for a given <a href="/docs/apis/webrtc/MediaStreamTrack">MediaStreamTrack</a>.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/removeStream">removeStream</a></dt>
+<dd>Removes the given stream from the <a href="/docs/apis/webrtc/RTCPeerConnection/localStreams">localStreams</a> array in the RTCPeerConnection and fires the <a href="/docs/apis/webrtc/RTCPeerConnection/negotiationneeded">negotiationneeded</a> event.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/setIdentityProvider">setIdentityProvider</a></dt>
+<dd>Sets the identity provider. Not required if the browser is already configured for an identity provider.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/setLocalDescription">setLocalDescription</a></dt>
+<dd>Applies the supplied <a href="/docs/apis/webrtc/RTCSessionDescription">RTCSessionDescription</a> to the local description.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/setRemoteDescription">setRemoteDescription</a></dt>
+<dd>Applies the supplied <a href="/docs/apis/webrtc/RTCSessionDescription">RTCSessionDescription</a> to the remote description.
+</dd>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/updateIce">updateIce</a></dt>
+<dd>Updates the ICE agent process that gathers local candidates and remote candidates.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><a href="/docs/apis/webrtc/RTCPeerConnection/icecandidate">icecandidate</a><br>
+:</p>
+<p><a href="/docs/apis/webrtc/RTCPeerConnection/icechange">icechange</a><br>
+:</p>
+<p><a href="/docs/apis/webrtc/RTCPeerConnection/identityresult">identityresult</a><br>
+:</p>
+<dl>
+<dt><a href="/docs/apis/webrtc/RTCPeerConnection/negotiationneeded">negotiationneeded</a></dt>
+<dd><p>The browser anticipates a session negotiation is required.</p>
+<p>It is triggered whenever <a href="/docs/apis/webrtc/RTCPeerConnection/addStream">addStream</a>, <a href="/docs/apis/webrtc/RTCPeerConnection/removeStream">removeStream</a> or <a href="/apis/webrtc/RTCPeerConnection/setIdentityProvider">setIdentityProvider</a> methods were called successfully and <strong>RTCPeerConnection</strong> signalingState is <code>stable</code> .</p>
+</dd>
+</dl>
+<p><a href="/docs/apis/webrtc/RTCPeerConnection/open">open</a><br>
+:</p>
+<p><a href="/docs/apis/webrtc/RTCPeerConnection/statechange">statechange</a><br>
+:</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

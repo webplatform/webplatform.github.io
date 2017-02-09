@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Phase 1 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Compatibility_Info/">WPD/Compatibility Info</a></li><li><a href="/docs/WPD/Compatibility_Info/Phase_1/">Phase 1</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Phase 1</h1>
+<h2>Phase 1: <em>Integrate automated compatibility tables from CanIUse data</em></h2>
+<ul>
+<li><strong>Timeline:</strong> March–April <del>2013</del> 2014</li>
+<li><strong>Status:</strong> in progress, partial completion</li>
+</ul>
+<p>This first phase of automated data compatibility tables is to integrate the data from <a href="http://caniuse.com/">CanIUse.com</a>, a popular data-driven compatibility site.</p>
+<h2>Methodology</h2>
+<ol>
+<li><p>Set up a cron job to pull the data from Alexis Deveria’s <a href="https://github.com/Fyrd/caniuse">CanIUse GitHub repo</a> (<a href="https://raw.github.com/Fyrd/caniuse/master/data.json">https://raw.github.com/Fyrd/caniuse/master/data.json</a>) on a weekly basis</p></li>
+<li><p>We saved the data in our own mirror at <a href="/docs/compat/caniuse/data.json">/docs/compat/caniuse/data.json</a></p></li>
+<li><p>We copied the data.json file to our shared data directory: <a href="/docs/compat/data.json">/docs/compat/data.json</a></p>
+<ul>
+<li>Currently, only CanIUse data is integrated into the shared data directory, but in later phases, we will integrate multiple sources of data, including QuirksMode and W3C Test Suites</li>
+</ul></li>
+<li><p>We created a MediaWiki extension, <a href="/docs/WPD/Infrastructure/Extensions/CompaTables">CompaTables</a> to automatically display the data as a table</p>
+<ol>
+<li>Created a specific tag element that serves as placeholder for the table in the content. To use, add in a Wiki page using the following syntax:</li>
+</ol></li>
+</ol>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">compatability</span> <span class="hljs-attribute">feature</span>=<span class="hljs-value">"border-radius"</span> <span class="hljs-attribute">format</span>=<span class="hljs-value">"table"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">compatability</span>&gt;</span>
+</code></pre>
+<ol>
+<li><ol>
+<li>format can be either: 'table’, or ‘list’</li>
+<li>When this element is used in an article, we pull the data from the local repository, extract the data for the keyword indicated in the <strong>feature</strong> attribute, and format in into a table showing the first version supported for each browser</li>
+</ol></li>
+</ol>
+<h2>Results</h2>
+<p>The results are a table showing the compatibility tables for the feature indicated in the <strong>feature</strong> attribute; for example, the CSS property <em>border-radius</em>: &lt;compatability topic=&quot;css&quot; type=&quot;property&quot; feature=&quot;border-radius&quot;&gt;test&lt;/compatability&gt;</p>
+<h2>Data Comparison</h2>
+<p>There are substantial differences between the manual data currently available on many articles on WPD and the data available from CanIUse.</p>
+<p>See the existing table on the <a href="/docs/css/properties/border-radius#Compatibility">border-radius article</a>: <img src="//static.webplatform.org/f/f2/compat-table_border-radius.png" alt="compat-table border-radius.png"></p>
+<h2>Caching</h2>
+<p>Generated HTML has three layers of caching:</p>
+<ol>
+<li>Inside a wiki page behind Varnish,</li>
+<li>Generates ESI tag for varnish (in progress)</li>
+<li>Cache generated HTML inside Memcached, invalidate cache if source JSON file is changed</li>
+</ol>
+<p><img src="//static.webplatform.org/thumb/7/7b/CompaTables_to_use_ESI_and_Memcached.png/300px-CompaTables_to_use_ESI_and_Memcached.png" alt="CompaTables to use ESI and Memcached.png"></p>
+<h3>Feature Coverage</h3>
+<p>The CanIUse data only focuses on newer features, not features that are consistently well-supported, so not every article has analogous information available.</p>
+<h3>Feature Granularity</h3>
+<p>The manual data has a finer degree of granularity for some features, including different values for certain properties and specific methods of an API. For example, with the CSS property <em>border-radius</em>, while the CanIUse data currently only includes results for general support, the manual data includes results for the following granular values:</p>
+<ul>
+<li>Basic Support</li>
+<li>Percentages</li>
+<li>Elliptical borders</li>
+<li>4 values for 4 corners</li>
+</ul>
+<h3>Result Details and Consistency</h3>
+<p>The manual data is missing detailed information on when a given browser first started supporting a particular feature, indicating only <strong>“Supported”</strong> in some fields, while the CanIUse data more consistently reports the version.</p>
+<p>There are discrepancies between reported results in the manual data and the CanIUse data; these will need to be researched and accurate, test-driven results should be used.</p>
+<h3>Prefixes and Polyfills</h3>
+<p>The CanIUse data has information on the following states of support:</p>
+<ul>
+<li>Supported</li>
+<li>Partial support</li>
+<li>Supported but requires prefix</li>
+<li>Unsupported, but has polyfill</li>
+<li>Unsupported</li>
+<li>Unknown</li>
+</ul>
+<p>The manual data also includes this information, but inconsistently.</p>
+<h3>Classifications and Naming Conventions</h3>
+<p>The CanIUse data has its own set of idiosyncratic classifications and naming conventions for features. These are intuitive and valid taxonomies, but unifying based on a systematic convention may improve interoperability with other data sets.</p>
+<h3>Notes</h3>
+<p>Both the manual and CanIUse data supply extra notes about support, but each has different information.</p>
+<h2>Next Steps</h2>
+<p>Next steps for phase 1 are:</p>
+<ul>
+<li>add data to fill in features missing from CanIUse, with test coverage where possible</li>
+<li><del>improve the reporting of partial support, prefixes, and polyfills based on CanIUse data</del></li>
+<li>categorize and align data targets for optimal coverage</li>
+<li>improve table style, possibly with icons</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

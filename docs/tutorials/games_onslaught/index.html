@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Building the Onslaught! Arena game · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Learn how to use the &amp;lt;canvas&amp;gt; element to create an interactive game with retro-looking graphics." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/games_onslaught/">games onslaught</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Building the Onslaught! Arena game</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#matthackett">Matt Hackett &amp; Geoff Blair</a></strong><br>
+Originally published Februrary 10, 2011</p>
+<h2>Summary</h2>
+<p>Learn how to use the &lt;canvas&gt; element to create an interactive game with retro-looking graphics.</p>
+<h2>Introduction</h2>
+<p>In June of 2010, it came to our attention that local publishing “zine” <a href="http://boingboing.net/">Boing Boing</a> was having a <a href="http://boingboing.net/arcade/">game development competition</a>. We saw this as a perfectly good excuse to make a quick, simple game in JavaScript and <code>&lt;canvas&gt;</code>, so we set to work. After the competition we still had a lot of ideas and wanted to finish what we started. Here’s the case study of the result, a little game called <a href="https://chrome.google.com/webstore/detail/khodnfbkbanejphecblcofbghjdgfaih">Onslaught! Arena</a>.</p>
+<h2>The retro, pixelated look</h2>
+<p>It was important that our game look and feel like a retro <em>Nintendo Entertainment System</em> game, given the <a href="http://www.boingboing.net/2010/06/14/games-inspired-by-mu.html">contest premise</a> to develop a game based on a <a href="http://en.wikipedia.org/wiki/Chiptune">chiptune</a>. Most games don’t have this requirement, but it’s still a common artistic style (especially among indie developers) due to its ease of asset creation and natural appeal to nostalgic gamers.</p>
+<p><img src="//static.webplatform.org/f/ff/pixels.png" alt="Increasing pixel size can decrease graphic design work."></p>
+<p>Given how small these sprites are we decided to double-up our pixels, meaning that a 16x16 sprite would now be 32x32 pixels and so forth. From the beginning we had been doubling-up on the asset creation side of things instead of making the browser do the heavy lifting. This was simply easier to implement but also had some definite appearance advantages.</p>
+<p>Here’s a scenario that we considered:</p>
+<pre><code>&lt;style&gt;
+canvas {
+  width: 640px;
+  height: 320px;
+}
+&lt;/style&gt;
+&lt;canvas width=&quot;320&quot; height=&quot;240&quot;&gt;
+  Sorry, your browser is not supported.
+&lt;/canvas&gt;
+</code></pre>
+<p>This method would consist of 1x1 sprites instead of doubling them up on the asset creation side. From there, CSS would take over and resize the canvas itself. Our benchmarks revealed that this method can be about twice as fast as rendering larger (doubled-up) images, but unfortunately CSS resizing includes anti-aliasing, something we couldn’t find a way to prevent.</p>
+<p>This was a deal breaker for our game since individual pixels are so important but if you need to resize your canvas and anti-aliasing is appropriate for your project, you could consider this approach for performance reasons.</p>
+<h2>Fun canvas tricks</h2>
+<p>We all know that <code>&lt;canvas&gt;</code> is the new hotness, but sometimes <a href="http://paulbakaus.com/2010/07/19/why-canvas-is-not-an-obvious-choice-for-web-games/">developers still recommend using DOM</a>. If you’re on the fence about which to use, here’s an example of how <code>&lt;canvas&gt;</code> saved us lots of time and energy.</p>
+<p>When an enemy gets hit in <strong>Onslaught! Arena</strong>, it flashes red and briefly displays a “pain” animation. To limit the number of graphics we had to create, we only show enemies in “pain” in the downward-facing direction. This looks acceptable in-game and saved tons of time of sprite creation. For the boss monsters however, it was jarring to see a large sprite (at 64x64 pixels or more) snap from facing left or up to suddenly facing down for the pain frame.</p>
+<p>An obvious solution would be to draw a pain frame for each boss in each of the eight directions, but this would have been very time-consuming. Thanks to <code>&lt;canvas&gt;</code>, we were able to solve this problem in the code:</p>
+<p>First we draw the monster to a hidden “buffer” <code>&lt;canvas&gt;</code>, overlay it with red, then render the result back to the screen. The code looks something like this:</p>
+<pre><code>// Get the &quot;buffer&quot; canvas (that isn't visible to the user)
+var bufferCanvas = document.getElementById(&quot;buffer&quot;);
+var buffer = bufferCanvas.getContext(&quot;2d&quot;);
+
+// Draw your image on the buffer
+buffer.drawImage(image, 0, 0);
+
+// Draw a rectangle over the image using a nice translucent overlay
+buffer.save();
+buffer.globalCompositeOperation = &quot;source-in&quot;;
+buffer.fillStyle = &quot;rgba(186, 51, 35, 0.6)&quot;; // red
+buffer.fillRect(0, 0, image.width, image.height);
+buffer.restore();
+
+// Copy the buffer onto the visible canvas
+document.getElementById(&quot;stage&quot;).getContext(&quot;2d&quot;).drawImage(bufferCanvas, x, y);
+</code></pre>
+<h2>The Game Loop</h2>
+<p>Game development has some notable differences from web development. In the web stack, it’s common to react to events that happened via event listeners. So initialization code may do nothing other than listen for input events. A game’s logic is different, as it’s necessary to constantly be updating itself. If, for example, a player hasn’t moved, that shouldn’t stop goblins from getting him!</p>
+<p>Here’s an example of a game loop:</p>
+<pre><code>function main () {
+  handleInput();
+  update();
+  render();
+};
+
+setInterval(main, 1);
+</code></pre>
+<p>The first important difference is that the <code>handleInput</code> function doesn’t actually <em>do</em> anything right away. If a user presses a key in a typical web app, it makes sense to immediately perform the desired action. But in a game, things have to happen in chronological order to flow correctly.</p>
+<pre><code>window.addEventListener(&quot;mousedown&quot;, function(e) {
+  // A mouse click means the players wants to attack.
+  // We don't actually do that yet, but instead tell the rest
+  // of the program about the request.
+  buttonStates[e.button] = true;
+}, false);
+
+function handleInput() {
+  // Here is where we respond to the click
+  if (buttonStates[LEFT_BUTTON]) {
+    player.attacking = true;
+    delete buttonStates[LEFT_BUTTON];
+  }
+};
+</code></pre>
+<p>Now we know about the input and can consider it in the <code>update</code> function, knowing that it will adhere to the rest of the game rules.</p>
+<pre><code>function update() {
+  // Check for collisions, states, whatever else is needed
+
+  // If after that the player can still attack, do it!
+  if (player.attacking &amp;&amp; player.canAttack()) {
+    player.attack();
+  }
+};
+</code></pre>
+<p>Lastly, once everything has been computed, it’s time to redraw the screen! In DOM-land, the browser handles this heaving lifting. But when using <code>&lt;canvas&gt;</code> it’s necessary to manually redraw whenever something happens (which is usually every single frame!).</p>
+<pre><code>function render() {
+  // First erase everything, something like:
+  context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+  // Draw the player (and whatever else you need)
+  context.drawImage(
+    player.getImage(),
+    player.x, player.y
+  );
+};
+</code></pre>
+<h2>Time-Based Modeling</h2>
+<p>Time-based modeling is the concept of moving sprites based on the amount of elapsed time since the last frame update. This technique allows your game to run as fast as possible while ensuring that sprites move at consistent speeds.</p>
+<p>In order to use time-based modeling we need to capture the elapsed time since the last frame was drawn. We’ll need to augment our game loop’s <code>update()</code> function to track this.</p>
+<pre><code>function update() {
+
+  // NOTE: You'll need to initially seed this.lastUpdate
+  // with the current time when your game loop starts
+  // this.lastUpdate = Date.now();
+
+  // Calculate elapsed time since last frame
+  var now = Date.now();
+  var elapsed = (now - this.lastUpdate);
+  this.lastUpdate = now;
+
+  // Do stuff with elapsed
+
+};
+</code></pre>
+<p>Now that we have the elapsed time we can calculate how far a given sprite should move each frame. First, we’ll need to keep track of a few things on a sprite object: Current position, speed and direction.</p>
+<pre><code>var Sprite = function() {
+
+  // The sprite's position relative to the top left of the game world
+  this.position = {x: 0, y: 0};
+
+  // The sprite's direction. A positive x value indicates moving to the right
+  this.direction = {x: 1, y: 0};
+
+  // How many pixels the sprite moves per second
+  this.speed = 50;
+};
+</code></pre>
+<p>With these variables in mind here’s how we’d move an instance of the above sprite class using time-based modeling:</p>
+<pre><code>// Determine how far this sprite will move this frame
+var distance = (sprite.speed / 1000) * elapsed;
+
+// Apply the movement distance to the sprite's current position
+// taking into account its direction
+sprite.position.x += (distance * sprite.direction.x);
+sprite.position.y += (distance * sprite.direction.y);
+</code></pre>
+<p>Note that the <code>direction.x</code> and <code>direction.y</code> values should be <em>normalized</em> which means they should always fall between <code>-1</code> and <code>1</code>.</p>
+<h2>Controls</h2>
+<p>Controls have been possibly the biggest stumbling block while developing <strong>Onslaught! Arena</strong>. The very first demo only supported the keyboard; players moved the main character around the screen with the arrow keys and fired in the direction he was facing with the space bar. While somewhat intuitive and easy to grasp, this made the game almost unplayable at more difficult levels. With dozens of enemies and projectiles flying at the player at any given time, it’s imperative to be able to weave between bad guys <em>while</em> firing in any which direction.</p>
+<p>In order to compare with similar games in its genre we added mouse support to control a targeting reticle, which the character would use to aim his attacks. The character could still be moved with the keyboard, but after this change he could simultaneously fire in any full 360-degree direction. Hardcore players appreciated this feature but it had the unfortunate side effect of frustrating trackpad users.</p>
+<p>To accommodate trackpad users, we brought back arrow key controls, this time to allow firing in the pressed direction(s). While we felt that we were catering to all types of players, we were also unknowingly introducing too much complexity to our game. To our surprise, we’d later hear that some players weren’t aware of the optional mouse (or keyboard!) controls for attacking, despite tutorial modals, which were largely ignored.</p>
+<p>We also are fortunate to have some European fans, but we’ve heard frustrations from them that they may not have typical QWERTY keyboards and are unable to use the WASD keys for directional movement. Left-handed players have expressed similar complaints.</p>
+<p>With this complex control scheme that we’ve implemented, there’s also the problem of playing on mobile devices. Indeed, one of our most common requests is to make <strong>Onslaught! Arena</strong> available on Android, iPad and other touch devices (where there is no keyboard). One of HTML5’s core strengths is its portability, so getting the game onto these devices is definitely doable, we just have to solve the many problems (most notably, controls and performance).</p>
+<p>To address these many issues, we began playing with a single-input method of gameplay that involves only mouse (or touch) interaction. Players click or touch the screen and the main character walks towards the pressed location, automatically attacking the nearest bad guy. The code looks something like this:</p>
+<pre><code>// Find the nearest hostile target (if any) to the player
+var player = this.getPlayerObject();
+var hostile = this.getNearestHostile(player);
+if (hostile !== null) {
+  // Found one! Shoot in its direction
+  var shoot = hostile.boundingBox().center().subtract(
+    player.boundingBox().center()
+  ).normalize();
+}
+
+// Move towards where the player clicked/touched
+var move = this.targetReticle.position.clone().subtract(
+  player.boundingBox().center()
+).normalize();
+var distance = this.targetReticle.position.clone().subtract(
+  player.boundingBox().center()
+).magnitude();
+
+// Prevent jittering if the character is close enough
+if (distance &lt; 3) {
+  move.zero();
+}
+
+// Move the player
+if ((move.x !== 0) || (move_y !== 0)) {
+  player.setDirection(move);
+}
+</code></pre>
+<p>Removing the additional factor of having to aim at enemies can make the game easier in some situations, but we feel that making things simpler for the player has many advantages. Other strategies emerge, such as having to position the character close to dangerous enemies to target them, and the ability to support touch devices is invaluable.</p>
+<h2>Audio</h2>
+<p>Among controls and performance, one of our biggest issues while developing <strong>Onslaught! Arena</strong> was HTML5’s <code>&lt;audio&gt;</code> tag. Probably the worst aspect is the latency: in almost all browsers there’s a delay between calling <code>.play()</code> and the sound actually playing. This can ruin a gamer’s experience, especially when playing with a fast-paced game like ours.</p>
+<p>Other problems include <a href="http://code.google.com/p/chromium/issues/detail?id=59372">the “progress” event failing to fire</a>, which could cause the game’s loading flow to hang indefinitely. For these reasons, we adopted what we call a “fall-forward” method, where if Flash fails to load we switch to HTML5 Audio. The code looks something like this:</p>
+<pre><code> /*
+ This example uses the SoundManager 2 library by Scott Schiller:
+ http://www.schillmania.com/projects/soundmanager2/
+ */
+
+ // Default to sm2 (Flash)
+ var api = &quot;sm2&quot;;
+
+ function initAudio (callback) {
+   switch (api) {
+     case &quot;sm2&quot;:
+       soundManager.onerror = (function (init) {
+         return function () {
+           api = &quot;html5&quot;;
+           init(callback);
+         };
+       }(arguments.callee));
+       break;
+     case &quot;html5&quot;:
+       var audio = document.createElement(&quot;audio&quot;);
+
+       if (
+         audio
+         &amp;&amp; audio.canPlayType
+         &amp;&amp; audio.canPlayType(&quot;audio/mpeg;&quot;)
+       ) {
+         callback();
+       } else {
+         // No audio support :(
+       }
+       break;
+   }
+ };
+</code></pre>
+<p>It may also be important for a game to support browsers that will not play MP3 files (such as Mozilla Firefox). If this is the case, support can be detected and switched to something like <a href="http://www.vorbis.com/">Ogg Vorbis</a>, with code like this:</p>
+<pre><code> /*
+ Note: you could instead use &quot;new Audio()&quot; here,
+ but the client will throw an error if it doesn't support Audio,
+ which makes using &quot;document.createElement&quot; a safer approach.
+ */
+
+ var audio = document.createElement(&quot;audio&quot;);
+
+ if (audio &amp;&amp; audio.canPlayType) {
+   if (!audio.canPlayType(&quot;audio/mpeg;&quot;)) {
+     // Here you know you CANNOT use .mp3 files
+     if (audio.canPlayType(&quot;audio/ogg; codecs=vorbis&quot;)) {
+       // Here you know you CAN use .ogg files
+     }
+   }
+ }
+</code></pre>
+<h2>Saving data</h2>
+<p>You can’t have an arcade-style shoot 'em up without high scores! We knew we’d need some of our game data to persist, and while we could have used something old-hat like cookies, we wanted to dig into the fun new HTML5 technologies. There is certainly no shortage of options, including Local storage, Session storage and Web SQL Databases.</p>
+<p>We decided to use <code>localStorage</code> since it’s new, awesome and easy to use. It supports saving basic key/value pairs which is all our simple game needed. Here’s a straightforward example of how to use it:</p>
+<pre><code>if (typeof localStorage == &quot;object&quot;) {
+  localStorage.setItem(&quot;foo&quot;, &quot;bar&quot;);
+  localStorage.getItem(&quot;foo&quot;); // Value is &quot;bar&quot;
+  localStorage.removeItem(&quot;foo&quot;);
+  localStorage.getItem(&quot;foo&quot;); // Value is now null
+}
+</code></pre>
+<p>There are some “gotchas” to be aware of. No matter what you pass in, values are stored as strings, which can lead to some unexpected results:</p>
+<pre><code>localStorage.setItem(&quot;foo&quot;, false);
+typeof localStorage.getItem(&quot;foo&quot;); // Value is &quot;false&quot; (a string literal)
+if (localStorage.getItem(&quot;foo&quot;)) {
+  // It's true!
+}
+
+// Don't pass objects into setItem
+localStorage.setItem(&quot;bar&quot;, {&quot;key&quot;: &quot;value&quot;});
+localStorage.getItem(&quot;bar&quot;); // Value is &quot;[object Object]&quot; (a string literal)
+
+// JSON stringify and parse when dealing with localStorage
+localStorage.setItem(&quot;json&quot;, JSON.stringify({&quot;key&quot;: &quot;value&quot;}));
+typeof localStorage.getItem(&quot;json&quot;); // string
+JSON.parse(localStorage.getItem(&quot;json&quot;)); // {&quot;key&quot;: &quot;value&quot;}
+</code></pre>
+<h2>Summary</h2>
+<p>HTML5 is amazing to work with. Most implementations handle everything a game developer needs, from graphics to saving the game state. While there are some growing pains (such as <code>&lt;audio&gt;</code> tag woes), browser developers are moving quickly and with things already as great as they are, the future looks bright for games built on HTML5.</p>
+<p>Except as otherwise <a href="http://code.google.com/policies.html#restrictions">noted</a>, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>, and code samples are licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/en/tutorials/casestudies/onslaught/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

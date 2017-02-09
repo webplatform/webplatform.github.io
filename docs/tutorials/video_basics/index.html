@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Video Basics · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to the HTML5 video tag." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/video_basics/">video basics</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML5 Video Basics</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#ernestd">Ernest Delgado</a></strong><br>
+Originally published Aug. 3, 2010</p>
+<h2>Summary</h2>
+<p>An introduction to the HTML5 video tag.</p>
+<h2>Introduction</h2>
+<p>The video tag is one of those HTML5 features that gets a lot of attention. Often presented in the media as an alternative to Flash, the video tag actually goes beyond that. Although it’s recently joined the rest of the ubiquitous HTML tags, its capabilities and support across browsers have increased at an amazing speed. As you will see in this tutorial, its main advantage is the natural integration with the other layers of the web development stack such as CSS and JavaScript, as well as with the other HTML tags.</p>
+<p>This tutorial will give you a basic understanding of the video tag and also show you various examples of different integrations with other HTML5 features, such as <code>&lt;canvas&gt;</code>.</p>
+<h2>The Markup</h2>
+<p>To make HTML video work in your site, the following lines should be sufficient.</p>
+<pre><code> &lt;video&gt;
+   &lt;source src=&quot;movie.mp4&quot; type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;' /&gt;
+   &lt;source src=&quot;movie.webm&quot; type='video/webm; codecs=&quot;vp8, vorbis&quot;' /&gt;
+ &lt;/video&gt;
+</code></pre>
+<p>This snippet uses the <code>&lt;source&gt;</code> tag which lets you include multiple formats as fallback types in case the user’s browser doesn’t support one of them. More about this in the next section.</p>
+<p>You can also use a single video format which makes the syntax very similar to the image tag. This syntax will be the most used one in the near future when all browsers support one common video format.</p>
+<pre><code> &lt;video src=&quot;movie.webm&quot; controls=&quot;controls&quot;&gt;&lt;/video&gt;
+</code></pre>
+<p>For now, we’ll focus on the former case which is currently more common. <em>The most important thing to remember</em> is to make sure your server is serving video files with the correct MIME type, specified in the <code>Content-Type</code> header. If not, videos might not work properly, even if they are working on a local copy of your site. See <a href="/docs/tutorials/configuring_mimetypes_on_the_server">Configuring Mime Types on the server</a> for more information on configuring your server with new Mime Types</p>
+<p>In order to improve the client side performance it’s important to remember to specify the <code>type</code> attribute in the <code>source</code> tags when dealing with multiple formats. This way, the browser can decide which format it can download and play. In other words, it won’t download the ones it can’t play, in order to increase the performance of the site.</p>
+<h2>Video Formats</h2>
+<p>Think of a <span style="color:green">video format</span> as a zip file that contains the encoded <span style="color:blue">video stream</span> and an <span style="color:red">audio stream</span>. The three formats you should care about for the web are mp4, ogv, and webm:</p>
+<ul>
+<li><span style="color:green">.mp4</span> = <span style="color:blue">H.264</span> + <span style="color:red">AAC</span></li>
+<li><span style="color:green">.ogg/.ogv</span> = <span style="color:blue">Theora</span> + <span style="color:red">Vorbis</span></li>
+<li><span style="color:green">.webm</span> = <span style="color:blue">VP8</span> + <span style="color:red">Vorbis</span></li>
+</ul>
+<p>The speed of evolution of the video tag is really encouraging. Today, most modern browsers support HTML5 video.</p>
+<p>In <a href="http://www.html5rocks.com/en/tutorials/video/basics/">this HTML5Rocks! article</a> you can see which of these formats your browser can render (you should feel lucky if you see all three of them!).</p>
+<p>For now, here is the snippet that has the safest combination of formats so you can be sure your video is displayed in all browsers:</p>
+<pre><code> &lt;video&gt;
+   &lt;source src=&quot;movie.webm&quot; type='video/webm; codecs=&quot;vp8, vorbis&quot;' /&gt;
+   &lt;source src=&quot;movie.mp4&quot; type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;' /&gt;
+   &lt;source src=&quot;movie.ogv&quot; type='video/ogg; codecs=&quot;theora, vorbis&quot;' /&gt;
+   Video tag not supported. Download the video &lt;a href=&quot;movie.webm&quot;&gt;here&lt;/a&gt;.
+ &lt;video&gt;
+</code></pre>
+<p><em>Note</em>: Because of a bug in the iPad you need to put .mp4 as the first option if you want the video to be loaded in that device, until the bug is fixed.</p>
+<p>As mentioned before, most browser vendors have agreed to support a common video format. So, here is the code which will most likely be used across the web soon:</p>
+<pre><code> &lt;video&gt;
+   &lt;source src=&quot;movie.webm&quot; type='video/webm; codecs=&quot;vp8, vorbis&quot;' /&gt;
+   &lt;source src=&quot;movie.mp4&quot; type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;' /&gt;
+   Video tag not supported. Download the video &lt;a href=&quot;movie.webm&quot;&gt;here&lt;/a&gt;.
+ &lt;video&gt;
+</code></pre>
+<p>One of the main concerns about using the .mp4 format is that its video codec (h.264) is not an open codec and the licenses that a company would have to pay for using it are very complex. There’s more information about this format in <a href="http://diveintohtml5.info/video.html#licensing">this video chapter</a>.</p>
+<p>Another issue with the .mp4 format is that the <code>type</code> attribute needs to be more specific than other formats depending on the profile used to encode the video. Although the most common is &quot;avc1.42E01E, mp4a.40.2&quot;, you should double check at this <a href="http://wiki.whatwg.org/wiki/Video_type_parameters#MPEG-4">profile list</a> to be sure.</p>
+<p>Even though Microsoft announced the support of the video tag, as well as other HTML5 elements, its user migration rate to newer versions is typically slower than the other major browsers. Hence the following section:</p>
+<h2>What happens with IE versions that don’t support the video tag?</h2>
+<p>There are two plugins that can be used as possible solutions:</p>
+<h3>Chrome Frame</h3>
+<p>The advantage of using the <a href="http://code.google.com/chrome/chromeframe/">Chrome Frame plugin</a> is that, once it’s installed, Internet Explorer will have the support for the latest HTML, JavaScript and CSS standard features that older versions of IE don’t support. This plugin has an added benefit for web developers, which is that it allows them to code applications with modern web features without leaving IE users behind. Just think the amount of time that a web developer saves without having to code hacks and workarounds for IE.</p>
+<h3>Flash fallback</h3>
+<p>You can also use Flash as a fallback case. Depending on the format of your video you might need to encode it again to a compatible format for the Flash player. The good news is that Adobe has committed to support the <em>webm</em> format in their Flash player, although that timeline is still not clear. The biggest drawback of this solution compared to the Chrome Frame plugin is that you will get the Flash player as the degraded version of whatever custom UI or enhanced features you have built for your video tag. The details of this technique can be seen in the <a href="http://tutorials.html5rocks.com/tutorials/audio/quick/#toc-step3">Quick Guide to Implementing the HTML5 Audio</a> tutorial.</p>
+<h2>Encode Your Videos</h2>
+<p>If you need to encode your existing videos to the formats we mentioned in the previous section you can use <a href="http://www.mirovideoconverter.com/">Miro Converter</a> for both Windows and Mac to easily get the format you need. The program doesn’t allow you to tweak many settings but comes with the most common outputs for the web, including the three formats we use in this tutorial. Under the hood, this software is actually a wrapper for <a href="http://ffmpeg.org/">ffmpeg</a> and <a href="http://v2v.cc/~j/ffmpeg2theora/">ffmpeg2theora</a> which you can use in Windows, Mac, and Linux from the command line and specify more parameters. You can read more about this tool at <a href="http://diveintohtml5.info/video.html#webm-cli">divintohtml5.org</a>.</p>
+<h2>Missing Features and Differences with Flash</h2>
+<p>There’s no doubt that having the video tag as a native element gives the best environment to integrate video with the rest of your web application. <a href="http://www.craftymind.com/2010/04/20/blowing-up-html5-video-and-mapping-it-into-3d-space/">More</a> and <a href="http://demos.hacks.mozilla.org/openweb/WARMCSS/">more samples</a>, <a href="http://dev.opera.com/articles/view/custom-html5-video-player-with-css3-and-jquery/">video controls</a>, and <a href="http://yayquery.github.com/jquery-singalong/">related UI components</a> are being created every day.</p>
+<p>It’s almost inevitable that comparisons arise between the video element and other technologies which have been around much longer and provide capabilities like fullscreen view, access to <a href="http://dev.w3.org/html5/html-device/">microphones and cameras</a>, or support for <a href="http://www.whatwg.org/specs/web-apps/current-work/#stream-api">streaming video</a>. All these capabilities are currently being addressed both in the specification and browser support. If the video capabilities continue to evolve as fast as they have so far, it won’t be long before we have all these features supported and ready for production across the modern browser market.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/video/basics/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

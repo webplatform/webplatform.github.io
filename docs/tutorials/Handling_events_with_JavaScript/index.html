@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Handling events with JavaScript · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/Handling_events with JavaScript/">Handling events with JavaScript</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Handling events with JavaScript</h1>
+<h2>Introduction</h2>
+<p>Now you are comfortable with using CSS for styling and layout, and have taken your first stumbling steps with understanding variables, functions, methods, etc. in JavaScript, it is time to start using that knowledge to provide your site visitors with interactivity and dynamic behavior (such as dragging and dropping, animation, etc). Controlling events with JavaScript allows you to step into the role as Doctor Frankenstein and really give life to your creations!</p>
+<p>But enough about the joys of JavaScript—this <a href="http://www.w3.org/wiki/Web_Standards_Curriculum">Web Standards Curriculum</a> article will get practical, telling you what events are and how to make use of them on your pages.</p>
+<p>Bear in mind that you can <a href="http://dev.opera.com/articles/view/handling-events-with-javascript/code-example.zip">download the code example for this article</a> and try it out for yourself.</p>
+<h2>What are events?</h2>
+<p>Events occur when some sort of interaction takes place in a web page. This can be the end user clicking on something, moving the mouse over a certain element or pressing down certain keys on the keyboard. An event can also be something that happens in the web browser, such as the web page completing the loading of a page, or the user scrolling or resizing the window.</p>
+<p>Through the use of JavaScript, you can detect when certain events happen, and cause things to occur in response to those events.</p>
+<h2>How events work</h2>
+<p>When events happen to an HTML element in a web page, it checks to see if any event handlers are attached to it. If the answer is yes, it calls them in respective order, while sending along references and further information for each event that occurred. The event handlers then act upon the event.</p>
+<p>There are two types of event order: <em>event capturing</em> and <em>event bubbling</em>.</p>
+<p>Event capturing starts with the outer most element in the DOM and works inwards to the HTML element the event took place on and then out again. For example, a click in a web page would first check the <code>HTML</code> element for <code>onclick</code> event handlers, then the <code>body</code> element, and so on, until it reaches the target of the event.</p>
+<p>Event bubbling works in exactly the opposite manner: it begins by checking the target of the event for any attached event handlers, then bubbles up through each respective parent element until it reaches the HTML element.</p>
+<h2>The evolution of events</h2>
+<p>In the early days of JavaScripting, we used event handlers directly within the HTML element, like this:</p>
+<pre><code>&lt;a href=&quot;http://www.opera.com/&quot; onclick=&quot;alert('Hello')&quot;&gt;Say hello&lt;/a&gt;
+</code></pre>
+<p>The problem with this approach is that it resulted in event handlers spread throughout the code, no central control and missing out on web browsers’ caching features when it comes to external JavaScript file includes.</p>
+<p>The next step in event evolution was to apply events from within a JavaScript block, for example:</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+  document.getElementById(&quot;my-link&quot;).onclick = waveToAudience;
+    function waveToAudience() {
+      alert(&quot;Waving like I've never waved before!&quot;);
+    }
+&lt;/script&gt;
+
+&lt;a id=&quot;my-link&quot; href=&quot;http://www.opera.com/&quot;&gt;My link&lt;/a&gt;
+</code></pre>
+<p>Note the clean HTML in the last example. This is generally what’s referred to as unobtrusive JavaScript. The benefit of this, besides JavaScript caching and code control, is code separation: you have all your content in one location and your interaction code in another. This also allows for a more accessible approach where the link will work perfectly fine with JavaScript disabled; it is also something that will please search engines.</p>
+<h3>DOM Level 2 Events</h3>
+<p>Back in November in 2000, the Document Object Model (DOM) Level 2 Events Specification was released by the W3C, offering a more detailed and granular way to control events in a web page. The new way to apply events to HTML elements looked like this:</p>
+<pre><code>document.getElementById(&quot;my-link&quot;).addEventListener(&quot;click&quot;, myFunction, false);
+</code></pre>
+<p>The first parameter of the <code>addEventListener method</code> is the name of the event, and you should note that it no longer uses the “on” prefix. The second parameter is a reference to the function we want to call when the event occurs. The third parameter controls the so-called <code>useCapture</code> of the event, ie if event capturing or event bubbling should be used.</p>
+<p>The counterpart of <code>addEventListener</code> is <code>removeEventListener</code>, which removes any applied event from an HTML element.</p>
+<h3>Internet Explorer event model exception</h3>
+<p>Unfortunately, Internet Explorer has so far not implemented the DOM Level 2 event model, and instead has its own proprietary <code>attachEvent</code> method. It looks like this in action:</p>
+<pre><code>document.getElementById(&quot;my-link&quot;).attachEvent(&quot;onclick&quot;, myFunction);
+</code></pre>
+<p>Note that the <code>attachEvent</code> still uses the “on” prefix before the name of the actual event, and it doesn’t include any support for deciding the capture phase.</p>
+<p>The counterpart of <code>attachEvent</code> is <code>detachEvent</code>, to remove any applied event from an HTML element.</p>
+<h3>Applying events cross-browser</h3>
+<p>With the inconsistencies between web browsers in event handling implementations, there have been numerous attempts from web developers to offer a good solution for applying events sucessfully across all major browsers. These solutions have different pros and cons, and are usually referred to as <code>addEvent</code> functions.</p>
+<p>Most major JavaScript libraries have these built in, and there are also a number of stand-alone solutions available online. One suggestion is to use <a href="http://dean.edwards.name/weblog/2005/10/add-event/">addEvent by Dean Edwards</a>; you should also consider looking at something like <a href="http://docs.jquery.com/Events">event handling options with the jQuery JavaScript library</a>.</p>
+<h2>Events and accessibility</h2>
+<p>Before we delve deeper into explaining how to control and call events, I just want to emphasize accessibility. While it’s normally a broad term for most people, I use it here to convey that what you want to do through the usage of events really should work when JavaScript is disabled or for other reasons blocked in the web browser.</p>
+<p>Some people do turn off JavaScript in their web browsers, but more commonly proxy servers, firewalls and overzealous antivirus programs stop JavaScript from behaving as expected. Don’t let this discourage you; my aim is to guide you through creating events that have an accessible fallback in case of JavaScript not being available.</p>
+<p>In general, never apply events to HTML elements that don’t already have a built-in behavior for that certain event. You should only apply <code>onclick</code> events to elements like <code>a</code>, which already have a fallback behavior for click events (eg browsing to the location specified in the link, or submitting a form).</p>
+<h2>Controlling events</h2>
+<p>Let’s start out with a simple example of an event, and how you can react to it. For the sake of simplicity, I will be using the <code>addEvent</code> solution referred to above, to avoid delving into the intricacies of cross-browser workarounds in each example.</p>
+<p>Our first example is the <code>onload</code> event, which belongs to the <code>window</code> object. Generally, any events that affect the browser window (like <code>onload</code>, <code>onresize</code> and <code>onscroll</code>) are available through the <code>window</code> object.</p>
+<p>The <code>onload</code> event takes place when everything in the web page has completely loaded. This includes the HTML code itself as well as external dependencies such as images, CSS files and JavaScript files. When all of them have finished loading, <code>window.onload</code> gets called, and you can trigger web page functionality to occur. The following very simple example makes an alert message appear when the page has loaded:</p>
+<pre><code>addEvent(window, &quot;load&quot;, sayHi);
+function sayHi() {
+  alert(&quot;Hello there, stranger!&quot;);
+}
+</code></pre>
+<p>That wasn’t too bad, right? If you want to, you can use so-called anonymous functions instead, eliminating the need for a name for your function. Like this:</p>
+<pre><code>addEvent(window, &quot;load&quot;, function () {
+  alert(&quot;Hello there, stranger!&quot;);
+});
+</code></pre>
+<h3>Applying events to certain elements</h3>
+<p>To take this further, we should start by looking into adding events to some other elements on the page. For the sake of argument, let’s suppose you want to have an event happen every time a link is clicked. Combining this with what we learned above, this would be the way to go about it:</p>
+<pre><code>addEvent(window, &quot;load&quot;, function () {
+  var links = document.getElementsByTagName(&quot;a&quot;);
+    for (var i=0; i&lt;links.length; i++) {
+      addEvent(links[i], &quot;click&quot;, function () {
+        alert(&quot;NOPE! I won't take you there!&quot;);
+
+        // This line's support added through the addEvent function. See below.
+      evt.preventDefault();
+    });
+  }
+});
+</code></pre>
+<p>Ok, what just happened? First we used the <code>onload</code> event to check when the web page had completely loaded. Then we found all the links in the page by using the <code>getElementsByTagName</code> method of the <code>document</code> object. With an established reference to them, we looped through all links and applied an event to them to cause an action to occur once they were clicked.</p>
+<p>But what about the cheeky “won’t take you there” part? After the <code>alert</code> has been shown, the line below reads <code>return false</code>. This means that within that context, returning false prevents the default action. We’ll get into other ways to dictate how events behave in the last section of this article.</p>
+<h2>Event object references</h2>
+<p>To add more detail to your event handling, you can take different actions depending on certain properties of the event that took place. For instance, if you are dealing with an <code>onkeypress</code>, you might want the event to occur only if the user presses the enter key, but no other keys.</p>
+<p>As with the event model, Internet Explorer has decided to use a global event object called <code>event</code> for handling objects, while the W3C-recommended way implemented by all other web browsers is passing event objects belonging just to that specific event. The most common problem with implementing such functionality across browsers is getting a reference to the event itself, and a reference to the element that the event is targeting. This code solves that for you:</p>
+<pre><code>addEvent(document.getElementById(&quot;check-it-out&quot;), &quot;click&quot;, eventCheck);
+function eventCheck (evt) {
+  var eventReference = (typeof evt !== &quot;undefined&quot;)? evt : event;
+  var eventTarget = (typeof eventReference.target !== &quot;undefined&quot;)? eventReference.target : eventReference.srcElement;
+}
+</code></pre>
+<p>The first line in the <code>eventCheck</code> function checks if there’s an event object passed along to the function. If yes, it automatically becomes the first parameter of the function, hence getting the name <code>evt</code> in this example. If it doesn’t exist, meaning that the current web browser is Internet Explorer, it refers to a global property of the <code>window</code> object named <code>event</code>.</p>
+<p>The second line looks for a <code>target</code> property on the established event reference. If it doesn’t exist, it falls back to the <code>srcElement</code> property implemented by Internet Explorer.</p>
+<p>Note: this control and behavior is also addressed with the above referenced <a href="http://dean.edwards.name/weblog/2005/10/add-event/">addEvent</a> function, where the event object has been normalized to work the same in all web browsers. The above code is written out as if this is not the case, though, to give you an insight into web browser differences.</p>
+<h3>Checking an event-specific property</h3>
+<p>Let’s put this into action. The following example executes a different code block depending on what key was pressed:</p>
+<pre><code>addEvent(document.getElementById(&quot;user-name&quot;), &quot;keyup&quot;, whatKey);
+function whatKey (evt) {
+  var eventReference = (typeof evt !== &quot;undefined&quot;)? evt : event;
+  var keyCode = eventReference.keyCode;
+  if (keyCode === 13) {
+    // The Enter key was pressed
+    // Code to validate the form and then submit it
+  }
+  else if (keyCode === 9) {
+    // The Tab key was pressed
+    // Code to, perhaps, clear the field
+  }
+}
+</code></pre>
+<p>The code inside the <code>whatKey</code> function checks a property on the event that took place, namely <code>keyCode</code>, to see which key was actually pressed on the keyboard. The number 13 means the Enter key and the number 9 means the Tab key.</p>
+<h2>Event defaults and event bubbling</h2>
+<p>There are a number of cases where you would be interested in stopping the default behavior of an event. For instance, you might want to prevent the user from submitting a form if certain fields aren’t filled out. The same goes for event bubbling, and this part will explain how you can take control of such situations.</p>
+<h3>Preventing the default behavior of events</h3>
+<p>Just as with event model and event object differences, there are two ways to go about this to support IE, and all other browsers. Building on the previous code for getting an event object reference, the next listing includes code to stop the default link behaviour occuring when links are clicked:</p>
+<pre><code>addEvent(document.getElementById(&quot;stop-default&quot;), &quot;click&quot;, stopDefaultBehavior);
+function stopDefaultBehavior (evt) {
+  var eventReference = (typeof evt !== &quot;undefined&quot;)? evt : event;
+  if (eventReference.preventDefault) {
+    eventReference.preventDefault();
+  }
+  else {
+    eventReference.returnValue = false;
+  }
+}
+</code></pre>
+<p>This approach uses something called object detection, to confirm that a method is actually available before it is called, which helps prevent possible errors. The <code>preventDefault</code> method is available in every web browser but Internet Explorer, and it prevents the default action of an event from happening.</p>
+<p>If that method isn’t supported, it falls back to setting the <code>returnValue</code> of the global event object to <code>false</code>, thus stopping the default behaviour in Internet Explorer.</p>
+<h3>Stopping event bubbling</h3>
+<p>Consider the following HTML hierarchy:</p>
+<pre><code>&lt;div&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;a href=&quot;http://www.opera.com/&quot; id=&quot;stop-default&quot;&gt;Opera&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href=&quot;http://www.opera.com/products/dragonfly/&quot; id=&quot;stop-default&quot;&gt;Opera Dragonfly&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Suppose you had applied an <code>onclick</code> event to all the <code>a</code> elements, <code>li</code> elements and the <code>ul</code> element. The <code>onclick</code> event would first call the event handler of the link, then the list items, and finally the event handler of the unordered list.</p>
+<p>If the user clicks the link, most likely, you don’t want to call any possible event handler for the parent <code>li</code> element, but instead just let the user navigate to the corresponding page. However, if the user clicks the <code>li</code> item beside the link, you might want to trigger an event handler for the <code>li</code> as well as the <code>ul</code> element.</p>
+<p>Note that with the DOM level 2 Event Model and <code>useCapture</code> enabled, ie using event capturing, it would start with the unordered list, then the list item and finally the link. However, since event capturing isn’t an option in Internet Explorer, this functionality is very seldom used in real practice.</p>
+<p>Here’s how to write code to stop the bubbling of an event:</p>
+<pre><code>addEvent(document.getElementById(&quot;stop-default&quot;), &quot;click&quot;, cancelEventBubbling);
+function cancelEventBubbling (evt) {
+  var eventReference = (typeof evt !== &quot;undefined&quot;)? evt : event;
+  if (eventReference.stopPropagation) {
+    eventReference.stopPropagation();
+  }
+  else {
+    eventReference.cancelBubble = true;
+  }
+}
+</code></pre>
+<h2>Complete event handling example</h2>
+<p>I have put together <a href="http://dev.opera.com/articles/view/handling-events-with-javascript/javascript-event-handling-example.html">an example page</a> showcasing adding an event handler and preventing that event’s default action, depending on certain criteria. The event handler checks whether a form is allowed to be submitted or not depending on if the user has filled out all fields. The JavaScript code is as follows:</p>
+<pre><code>addEvent(window, &quot;load&quot;, function () {
+  var contactForm = document.getElementById(&quot;contact-form&quot;);
+  if (contactForm) {
+    addEvent(contactForm, &quot;submit&quot;, function (evt) {
+      var firstName = document.getElementById(&quot;first-name&quot;);
+      var lastName = document.getElementById(&quot;last-name&quot;);
+      if (firstName &amp;&amp; lastName) {
+        if (firstName.value.length === 0 || lastName.value.length === 0) {
+          alert(&quot;You have to fill in all fields, please.&quot;);
+          evt.preventDefault();
+        }
+      }
+    });
+  }
+});
+</code></pre>
+<h2>Summary</h2>
+<p>I have merely scratched the surface of event handling in this article, but I hope you have gained a good understanding of how events work. I might have been a little hard on you with web browser inconsistencies, but my belief is that it’s very important to know these issues from the start.</p>
+<p>Once you have accepted these issues and learned to master the solutions above, there’s no end to the possibilities you can achieve with JavaScript and event handling!</p>
+<h2>Exercise questions</h2>
+<ul>
+<li>What is an event?</li>
+<li>What’s the difference between event capture and event bubbling?</li>
+<li>Is it possible to control the execution of an event, ie stopping the default behavior. How?</li>
+<li>What’s the main problem with the <a href="http://dev.opera.com/articles/view/handling-events-with-javascript/javascript-event-handling-example.html">attachEvent</a> and scope, which triggered a JavaScript web community contest?</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/handling-events-with-javascript/">49 - Handling events with JavaScript</a>, written by Robert Nyman. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

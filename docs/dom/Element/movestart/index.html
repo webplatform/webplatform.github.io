@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>movestart · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Element/">Element</a></li><li><a href="/dom/Element/movestart/">movestart</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>movestart</h1>
+<h2>Overview Table</h2>
+<table class="wikitable">
+<tr>
+<th>
+Synchronous
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Bubbles
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Target
+</th>
+<td>
+dom/Element
+</td>
+</tr>
+<tr>
+<th>
+Cancelable
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Default action
+</th>
+<td>
+ ?
+</td>
+</tr>
+</table>
+## Examples
+<p>The following example shows how to use the <strong>onmovestart</strong> event with a movable <strong>DIV</strong> and have the background color and inner text change when the <strong>DIV</strong> starts to move.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">HTML</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">TITLE</span>&gt;</span>Editing events sample page<span class="hljs-tag">&lt;/<span class="hljs-title">TITLE</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span>&gt;</span><span class="javascript">
+<span class="hljs-comment">// Turn on 2-D positioning</span>
+<span class="hljs-built_in">document</span>.execCommand(<span class="hljs-string">"2D-position"</span>,<span class="hljs-literal">false</span>,<span class="hljs-literal">true</span>);
+<span class="hljs-comment">// Function called when the onmovestart event is fired</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnHandleMoveStart</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> oDiv = event.srcElement
+  oDiv.style.backgroundColor = <span class="hljs-string">"green"</span>;
+  oDiv.innerText = <span class="hljs-string">"I Started Moving"</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnHandleMoveEnd</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> oDiv = event.srcElement
+  oDiv.style.backgroundColor = <span class="hljs-string">"red"</span>;
+  oDiv.innerText = <span class="hljs-string">"I Stopped"</span>;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span>  <span class="hljs-attribute">onmovestart</span>=<span class="hljs-value">"fnHandleMoveStart();"</span> <span class="hljs-attribute">onmoveend</span>=<span class="hljs-value">"fnHandleMoveEnd();"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">DIV</span> <span class="hljs-attribute">CONTENTEDITABLE</span>=<span class="hljs-value">"true"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">DIV</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:300px;height:100px; color:white; background-color:red;
+position:absolute;"</span>&gt;</span>
+My DIV<span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HTML</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/onmovestartendEx1.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>onmovestart</strong> event fires only when an editable element starts to move. This event can only be bound to absolutely positioned elements. Calls the associated event handler if there is one. To invoke this event, do one of the following:</p>
+<ul>
+<li>Start to move the editable object.</li>
+</ul>
+<p>The <em>pEvtObj</em> parameter is required for the following interfaces:</p>
+<ul>
+<li><strong>HTMLAnchorEvents2</strong></li>
+<li><strong>HTMLAreaEvents2</strong></li>
+<li><strong>HTMLButtonElementEvents2</strong></li>
+<li><strong>HTMLControlElementEvents2</strong></li>
+<li><strong>HTMLDocumentEvents2</strong></li>
+<li><strong>HTMLElementEvents2</strong></li>
+<li><strong>HTMLFormElementEvents2</strong></li>
+<li><strong>HTMLImgEvents2</strong></li>
+<li><strong>HTMLFrameSiteEvents2</strong></li>
+<li><strong>HTMLInputFileElementEvents2</strong></li>
+<li><strong>HTMLInputImageEvents2</strong></li>
+<li><strong>HTMLInputTextElementEvents2</strong></li>
+<li><strong>HTMLLabelEvents2</strong></li>
+<li><strong>HTMLLinkElementEvents2</strong></li>
+<li><strong>HTMLMapEvents2</strong></li>
+<li><strong>HTMLMarqueeElementEvents2</strong></li>
+<li><strong>HTMLObjectElementEvents2</strong></li>
+<li><strong>HTMLOptionButtonElementEvents2</strong></li>
+<li><strong>HTMLScriptEvents2</strong></li>
+<li><strong>HTMLSelectElementEvents2</strong></li>
+<li><strong>HTMLStyleElementEvents2</strong></li>
+<li><strong>HTMLTableEvents2</strong></li>
+<li><strong>HTMLTextContainerEvents2</strong></li>
+<li><strong>HTMLWindowEvents2</strong></li>
+</ul>
+<h3>Syntax</h3>
+<h3>Standards information</h3>
+<p>There are no standards that apply here.</p>
+<h3>Event handler parameters</h3>
+<dl>
+<dt><em>pEvtObj</em> [in]</dt>
+<dd>Type: ****IHTMLEventObj****
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

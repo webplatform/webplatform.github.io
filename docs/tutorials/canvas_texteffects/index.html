@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Achieving typographic effects with the canvas tag · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to typographic effects using the &amp;lt;canvas&amp;gt; element." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/canvas_texteffects/">canvas texteffects</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Achieving typographic effects with the canvas tag</h1>
+<p><strong>By Michael Deal</strong><br>
+Originally published March 1, 2011</p>
+<h2>Summary</h2>
+<p>An introduction to typographic effects using the &lt;canvas&gt; element.</p>
+<h2>My background</h2>
+<p>The &lt;canvas&gt; element entered my awareness in 2006 when Firefox v2.0 was released. An article on <a href="http://ajaxian.com/">Ajaxian</a> describing the transformation matrix inspired me to create my first &lt;canvas&gt; web-app, <a href="http://www.colorjack.com/sphere/">Color Sphere</a> (2007). This immersed me into the world of colors and graphic primitives, inspiring the creation of <a href="http://mugtug.com/sketchpad/">Sketchpad</a> (2007-2008) in an effort to put together an application <em>better than Paint</em> in the browser.</p>
+<p>These experiments eventually led to the creation of the startup Mugtug with my long-time friend Charles Pritchard. We are developing <a href="http://mugtug.com/darkroom/">Darkroom</a> in HTML5 &lt;canvas&gt;. Darkroom is a non-destructive photo-sharing app, combining the powers of pixel-based filters with vector-based typography and drawing.</p>
+<h2>Introduction</h2>
+<p><img src="//static.webplatform.org/6/6b/typ01-canvas.png" alt="typ01-canvas.png"></p>
+<p>The &lt;canvas&gt; element brings Javascript programmers full control of the colors, vectors, and pixels on their screens—the visual makeup of the monitor.</p>
+<p>The following examples deal with one area in &lt;canvas&gt; that hasn’t gotten much attention: creating <strong>text-effects</strong>. The variety of text-effects that can be created in &lt;canvas&gt; is as vast as you can imagine; these demos cover a sub-section of what is possible. Although we’re dealing with text in this article, the methods can be applied to any vector objects, creating exciting visuals in games and other applications, such as:</p>
+<dl>
+<dt>Text-Shadows in &lt;canvas&gt;</dt>
+<dd>CSS-like text-effects in &lt;canvas&gt; creating clipping masks, finding metrics in &lt;canvas&gt;, and using the shadow property<br>
+Zebra-reflection/chaining effects
+</dd>
+<dd>Photoshop-like text-effects in &lt;canvas&gt; using globalCompositeOperation, createLinearGradient, createPattern<br>
+Outer shadows in &lt;canvas&gt;
+</dd>
+<dd>Revealing a little known feature using clockwise vs. anti-clockwise winding to create the inverse of a drop-shadow (the inner-shadow)<br>
+Spaceage-generative effect
+</dd>
+<dd>Generative based text-effect in &lt;canvas&gt; using hsl() color-cycling and <code>window.requestAnimationFrame</code> to create the feeling of motion
+</dd>
+</dl>
+<h2>Text-Shadows in Canvas</h2>
+<p>One of my favorite additions to CSS3 (along with border-radius, web-gradients, and others) is the ability to create shadows. It’s important to realize the differences between CSS and &lt;canvas&gt; shadows, specifically:</p>
+<p>CSS uses two methods, <em>box-shadow</em> for box elements such as div, span, and so on, and <em>text-shadow</em> for text content.</p>
+<p>&lt;canvas&gt; has one type of shadow, used for all the vector objects: ctx.moveTo, ctx.lineTo, ctx.bezierCurveTo, ctx.quadradicCurveTo, ctx.arc, ctx.rect, ctx.fillText, ctx.strokeText, and so on. To create a shadow in &lt;canvas&gt;, tap into these four properties:</p>
+<dl>
+<dt><strong>ctx.shadowColor</strong> = “red” // string</dt>
+<dd>Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid<br>
+<strong>ctx.shadowOffsetX</strong> = 0; // integer
+</dd>
+<dd>Horizontal distance of the shadow, in relation to the text<br>
+<strong>ctx.shadowOffsetY</strong> = 0; // integer
+</dd>
+<dd>Vertical distance of the shadow, in relation to the text<br>
+<strong>ctx.shadowBlur</strong> = 10; // integer
+</dd>
+<dd>Blurring effect to the shadow; the larger the value, the greater the blur
+</dd>
+</dl>
+<p>To get things started, let’s see how &lt;canvas&gt; can emulate CSS effects. Searching through Google images for “css text-shadow” led to a few great demos for us to emulate, <a href="http://line25.com/articles/using-css-text-shadow-to-create-cool-text-effects">Line25</a>, <a href="http://lab.simurai.com/css/css3d/">Stereoscopic</a>, and <a href="http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial">Shadow 3D</a>.</p>
+<p><img src="//static.webplatform.org/a/a4/typ02-css3d.png" alt="typ02-css3d.png"></p>
+<p>The stereoscopic 3D effect (see <a href="http://en.wikipedia.org/wiki/Anaglyph_image">Anaglyph image</a> for more) is an example of a simple line of code put to great use. With the following line of CSS, we can create the illusion of depth when viewed with 3D red/cyan glasses (the kind they give you at 3D movies):</p>
+<pre><code> text-shadow: -0.06em 0 0 red, 0.06em 0 0 cyan;
+</code></pre>
+<p>There are two things to notice when converting this string to &lt;canvas&gt;:</p>
+<p>(1) There is no shadow-blur (the third value), so there is no reason to actually run shadow, as fillText would create the same results:</p>
+<pre><code> var text = &quot;Hello world!&quot;
+ ctx.fillStyle = &quot;#000&quot;;
+ ctx.fillText(text, -7, 0);
+ ctx.fillStyle = &quot;red&quot;;
+ ctx.fillText(text, 0, 0);
+ ctx.fillStyle = &quot;cyan&quot;;
+ ctx.fillText(text, 7, 0);
+</code></pre>
+<p>(2) The <em>em</em> unit isn’t supported in &lt;canvas&gt; so it must be converted to <em>px</em> (pixels). We can find the conversion ratio for converting between PT, PC, EM, EX, PX and so forth by creating an element with the same font-properties in the DOM and setting the width to the format to be measured. For instance, to capture the EM-to-PX conversion, we would measure the DOM element with a height of 1em; the resulting offsetHeight would be how many PXs are in each EM.</p>
+<pre><code> var font = &quot;20px sans-serif&quot;;
+ var d = document.createElement(&quot;span&quot;);
+ d.style.cssText = &quot;font: &quot; + font + &quot; height: 1em; display: block&quot;;
+ // the value to multiply PXs by to convert to EMs
+ var EM2PX = 1 / d.offsetHeight;
+</code></pre>
+<h3>Preventing alpha-multiplication</h3>
+<p>In a more complex example, such as the Neon effect found on Line25, the <code>shadowBlur</code> property must be used to emulate the effect properly. Because the Neon effect relies on multiple shadows, we run into a problem: in &lt;canvas&gt; each vector object can only have one shadow. So, in order to draw multiple shadows, you must draw multiple versions of the text on top of itself. This results in alpha multiplication, and ultimately jagged edges.</p>
+<p><img src="//static.webplatform.org/8/88/typ03-neon.png" alt="typ03-neon.png"></p>
+<p>I tried running <code>ctx.fillStyle = &quot;rgba(0,0,0,0)&quot;</code> or <code>&quot;transparent&quot;</code> to hide the text, while displaying the shadow. However, this attempt was futile; since the shadow is a multiplication of the fillStyle alpha, the shadow can never be more opaque than the fillStyle.</p>
+<p>Luckily, there is a way around this. We can draw the shadow offset from the text, keeping them separated (so they’re not overlapping), and thereby hiding the text off the side of the screen:</p>
+<pre><code> var text = &quot;Hello world!&quot;
+ var blur = 10;
+ var width = ctx.measureText(text).width + blur * 2;
+ ctx.textBaseline = &quot;top&quot;;
+ ctx.shadowColor = &quot;#000&quot;;
+ ctx.shadowOffsetX = width;
+ ctx.shadowOffsetY = 0;
+ ctx.shadowBlur = blur;
+ ctx.fillText(text, -width, 0);
+</code></pre>
+<h3>Clipping around a text block</h3>
+<p>To clean this up a bit we can prevent the fillText from being drawn in the first place (while allowing the shadow to be drawn) by adding a clipping path. In order to create a clipping path surrounding the text, we need to know the height of the text (called the &quot;em-height&quot;; historically, the height of the letter M) and the width of the text. We can get the width using <code>ctx.measureText().width</code>, however, <code>ctx.measureText().height</code> doesn’t exist.</p>
+<p>Luckily, through CSS hack-ardry (see <a href="http://mudcu.be/journal/html5-typographic-metrics/">Typographic Metrics</a> for more ways to fix older implementations of &lt;canvas&gt; using CSS measurements), we can find the height of the text by measuring the <code>offsetHeight</code> of a &lt;span&gt; with the same font-properties:</p>
+<pre><code> var d = document.createElement(&quot;span&quot;);
+ d.font = ;20px arial&quot;;
+ d.textContent = &quot;Hello world!&quot;;
+ var emHeight = d.offsetHeight;
+</code></pre>
+<p>From there, we can create a rectangle to use as a clipping path, enclosing the shadow while removing the dummy shape.</p>
+<pre><code> ctx.rect(0, 0, width, emHeight);
+ ctx.clip();
+</code></pre>
+<p>Tying it all together, and optimizing as we go: if a shadow has no blur, fillText can be used to the same effect, saving us from setting up the clipping mask:</p>
+<pre><code> var width = ctx.measureText(text).width;
+ var style = shadowStyles[text];
+ // add a background to the current effect
+ ctx.fillStyle = style.background;
+ ctx.fillRect(0, offsetY, ctx.canvas.width, textHeight - 1)
+ // parse text-shadows from css
+ var shadows = parseShadow(style.shadow);
+ // loop through the shadow collection
+ var n = shadows.length; while(n--) {
+     var shadow = shadows[n];
+     var totalWidth = width + shadow.blur * 2;
+     ctx.save();
+     ctx.beginPath();
+     ctx.rect(offsetX - shadow.blur, offsetY, offsetX + totalWidth, textHeight);
+     ctx.clip();
+     if (shadow.blur) { // just run shadow (clip text)
+         ctx.shadowColor = shadow.color;
+         ctx.shadowOffsetX = shadow.x + totalWidth;
+         ctx.shadowOffsetY = shadow.y;
+         ctx.shadowBlur = shadow.blur;
+         ctx.fillText(text, -totalWidth + offsetX, offsetY + metrics.top);
+     } else { // just run pseudo-shadow
+         ctx.fillStyle = shadow.color;
+         ctx.fillText(text, offsetX + (shadow.x||0), offsetY - (shadow.y||0) + metrics.top);
+     }
+     ctx.restore();
+ }
+ // drawing the text in the foreground
+ if (style.color) {
+     ctx.fillStyle = style.color;
+     ctx.fillText(text, offsetX, offsetY + metrics.top);
+ }
+ // jump to next em-line
+ ctx.translate(0, textHeight);
+</code></pre>
+<p>Since you’re not going to want to enter all these &lt;canvas&gt; commands manually, I’ve included a simple text-shadow parser in the demo source; this way you can feed it CSS commands and have it generate &lt;canvas&gt; commands. Now, our &lt;canvas&gt; elements have a whole range of styles they can tie into. These same shadow-effects can be used on any vector object, from WebFonts to complex shapes imported from SVGs, to generative vector shapes, and so on!</p>
+<p><img src="//static.webplatform.org/d/da/typ04-multi.png" alt="typ04-multi.png"></p>
+<p>View <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/Text-Effects.html">Text-Shadows in &lt;canvas&gt;</a> effects.</p>
+<h3>Intermission (a tangent on pixel-pushing)</h3>
+<p>In writing this section of the article, the Stereoscopic example made me curious. How hard it would be to create a 3D-movie-screen effect using &lt;canvas&gt; and two images taken from slightly different perspectives?  Apparently, not too hard. The following kernel combines the red channel of the first image (data) with the cyan channel of the second image (data2):</p>
+<pre><code> data[i] = data[i] * 255 / 0xFF;
+ data[i+1] = 255 * data2[i+1] / 0xFF;
+ data[i+2] = 255 * data2[i+2] / 0xFF;
+</code></pre>
+<p>Visit the <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/Stereoscopy.html">Stereoscopic demo</a> to see how to create images to be enhanced with 3D glasses (cyan/magenta). Now, someone just needs to duct-tape two iPhones to their forehead, click “record video” at the same time, and we could make our own 3D movies in HTML5. Any volunteers?</p>
+<p><img src="//static.webplatform.org/9/9f/typ05-stereo.png" alt="typ05-stereo.png"></p>
+<h2>Neon-rainbow, zebra-reflection — chaining effects</h2>
+<p>Chaining multiple effects in &lt;canvas&gt; can be simple, but a basic knowledge of the globalCompositeOperation (GCO) is required. To compare the operations to GIMP (or Photoshop): there are 12 GCOs in &lt;canvas&gt;: <em>darker</em> and <em>lighter</em> can be thought of as layer blend-modes; the other 10 operations are applied to the layers as alpha masks (one layer removes the pixels of the other layer). The globalCompositeOperation ties <em>layers</em> (or in our case, strings of code) together, combining them in new and exciting ways:</p>
+<p><img src="//static.webplatform.org/7/7b/typ06-global.png" alt="typ06-global.png"></p>
+<p>The <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/globalCompositeOperation.html">globalCompositeOperation chart</a> shows GCO modes at work; this chart uses a large portion of the color-spectrum and multiple levels of alpha transparency in order to see in detail what to expect. I would recommend checking out Mozilla’s <a href="https://developer.mozilla.org/en/Canvas_tutorial/Compositing">globalCompositeOperation reference</a> for textual descriptions. For further research, you can learn how the operation works in Porter Duff’s <a href="http://keithp.com/~keithp/porterduff/">Compositing Digital Images</a>.</p>
+<p>My favorite mode is globalCompositeOperation=&quot;lighter&quot;. Lighter mixes the appended pixels similar to how light mixes; when red, green, and white light are at full intensity, we see white light. It’s an exciting feature to play around with, especially when the &lt;canvas&gt; is set to a low globalAlpha, enabling finer control and smoother edges. Lighter has been put to many uses, my recent favorite being an HTML5 desktop background creator found at <a href="http://weavesilk.com/">WeaveSilk</a>. One of my demos, <a href="http://mudcu.be/labs/JS1k/BreathingGalaxies.html">Breathing Galaxies</a> (JS1k), also uses the lighter mode. Drawing patterns from these two examples, you start to see what effect this mode yields.</p>
+<p><strong>NOTE:</strong> There is some missing support for some of the GCO modes across the browsers that needs to be sorted out. There are six modes that generally work across browsers: source-over, source-atop, destination-over, destination-out, lighter, and xor. For more information visit <a href="http://www.rekim.com/tag/globalcompositeoperation/">globalCompositeOperation browser handling</a>.</p>
+<h3>Neon-Rainbow Jitter Effect</h3>
+<p>In the following demo, we’re going to achieve a Photoshop-like neon-rainbow-glow with a jittered outline by chaining effects together using the globalCompositeOperation (source-in, lighter, and darker). This demo is a progression of the “Text-Shadows in &lt;canvas&gt;” demo, using the same strategy in separating the shadow from the text (see previous section):</p>
+<p><img src="//static.webplatform.org/f/f6/typ07-jitter.png" alt="typ07-jitter.png"></p>
+<p>View <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/Text-Effects.html#neon+rainbow+jitter">Neon-Rainbow Jitter</a> effect.</p>
+<pre><code> function neonLightEffect() {
+   var text = &quot;alert('&quot;+String.fromCharCode(0x2665)+&quot;')&quot;;
+   var font = &quot;120px Futura, Helvetica, sans-serif&quot;;
+   var jitter = 25; // the distance of the maximum jitter
+   var offsetX = 30;
+   var offsetY = 70;
+   var blur = getBlurValue(100);
+   // save state
+   ctx.save();
+   ctx.font = font;
+   // calculate width + height of text-block
+   var metrics = getMetrics(text, font);
+   // create clipping mask around text-effect
+   ctx.rect(offsetX - blur/2, offsetY - blur/2,
+            offsetX + metrics.width + blur, metrics.height + blur);
+   ctx.clip();
+   // create shadow-blur to mask rainbow onto (since shadowColor doesn't accept gradients)
+   ctx.save();
+   ctx.fillStyle = &quot;#fff&quot;;
+   ctx.shadowColor = &quot;rgba(0,0,0,1)&quot;;
+   ctx.shadowOffsetX = metrics.width + blur;
+   ctx.shadowOffsetY = 0;
+   ctx.shadowBlur = blur;
+   ctx.fillText(text, -metrics.width + offsetX - blur, offsetY + metrics.top);
+   ctx.restore();
+   // create the rainbow linear-gradient
+   var gradient = ctx.createLinearGradient(0, 0, metrics.width, 0);
+   gradient.addColorStop(0, &quot;rgba(255, 0, 0, 1)&quot;);
+   gradient.addColorStop(0.15, &quot;rgba(255, 255, 0, 1)&quot;);
+   gradient.addColorStop(0.3, &quot;rgba(0, 255, 0, 1)&quot;);
+   gradient.addColorStop(0.5, &quot;rgba(0, 255, 255, 1)&quot;);
+   gradient.addColorStop(0.65, &quot;rgba(0, 0, 255, 1)&quot;);
+   gradient.addColorStop(0.8, &quot;rgba(255, 0, 255, 1)&quot;);
+   gradient.addColorStop(1, &quot;rgba(255, 0, 0, 1)&quot;);
+   // change composite so source is applied within the shadow-blur
+   ctx.globalCompositeOperation = &quot;source-atop&quot;;
+   // apply gradient to shadow-blur
+   ctx.fillStyle = gradient;
+   ctx.fillRect(offsetX - jitter/2, offsetY,
+                metrics.width + offsetX, metrics.height + offsetY);
+   // change composite to mix as light
+   ctx.globalCompositeOperation = &quot;lighter&quot;;
+   // multiply the layer
+   ctx.globalAlpha = 0.7
+   ctx.drawImage(ctx.canvas, 0, 0);
+   ctx.drawImage(ctx.canvas, 0, 0);
+   ctx.globalAlpha = 1
+   // draw white-text ontop of glow
+   ctx.fillStyle = &quot;rgba(255,255,255,0.95)&quot;;
+   ctx.fillText(text, offsetX, offsetY + metrics.top);
+   // created jittered stroke
+   ctx.lineWidth = 0.80;
+   ctx.strokeStyle = &quot;rgba(255,255,255,0.25)&quot;;
+   var i = 10; while(i--) {
+       var left = jitter / 2 - Math.random() * jitter;
+       var top = jitter / 2 - Math.random() * jitter;
+       ctx.strokeText(text, left + offsetX, top + offsetY + metrics.top);
+   }
+   ctx.strokeStyle = &quot;rgba(0,0,0,0.20)&quot;;
+   ctx.strokeText(text, offsetX, offsetY + metrics.top);
+   ctx.restore();
+ };
+</code></pre>
+<h3>Zebra reflection effect</h3>
+<p>The zebra reflection effect was inspired by <a href="http://www.webdesignerwall.com/demo/css-gradient-text">WebDesignerWall</a>'s excellent resource on how to spice up your page with CSS. This takes the idea a little bit further, creating a “reflection” for the text such as you might see in iTunes. The effect combines fillColor (white), createPattern (zebra.png), and linearGradient (shine); this illustrates the ability to apply multiple fill types to each vector object:</p>
+<p><img src="//static.webplatform.org/c/c3/typ08-zebra.png" alt="typ08-zebra.png"></p>
+<p>View <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/Text-Effects.html#pattern+gradient+reflect">zebra reflection</a> effect.</p>
+<pre><code> function sleekZebraEffect() {
+   // inspired by - http://www.webdesignerwall.com/demo/css-gradient-text/
+   var text = &quot;Sleek Zebra...&quot;;
+   var font = &quot;100px Futura, Helvetica, sans-serif&quot;;
+
+   // save state
+   ctx.save();
+   ctx.font = font;
+
+   // getMetrics calculates:
+   // width + height of text-block
+   // top + middle + bottom baseline
+   var metrics = getMetrics(text, font);
+   var offsetRefectionY = -20;
+   var offsetY = 70;
+   var offsetX = 60;
+
+   // throwing a linear-gradient in to shine up the text
+   var gradient = ctx.createLinearGradient(0, offsetY, 0, metrics.height + offsetY);
+   gradient.addColorStop(0.1, '#000');
+   gradient.addColorStop(0.35, '#fff');
+   gradient.addColorStop(0.65, '#fff');
+   gradient.addColorStop(1.0, '#000');
+   ctx.fillStyle = gradient
+   ctx.fillText(text, offsetX, offsetY + metrics.top);
+
+   // draw reflected text
+   ctx.save();
+   ctx.globalCompositeOperation = &quot;source-over&quot;;
+   ctx.translate(0, metrics.height + offsetRefectionY)
+   ctx.scale(1, -1);
+   ctx.font = font;
+   ctx.fillStyle = &quot;#fff&quot;;
+   ctx.fillText(text, offsetX, -metrics.height - offsetY + metrics.top);
+   ctx.scale(1, -1);
+
+   // cut the gradient out of the reflected text
+   ctx.globalCompositeOperation = &quot;destination-out&quot;;
+   var gradient = ctx.createLinearGradient(0, offsetY, 0, metrics.height + offsetY);
+   gradient.addColorStop(0.0, 'rgba(0,0,0,0.65)');
+   gradient.addColorStop(1.0, '#000');
+   ctx.fillStyle = gradient;
+   ctx.fillRect(offsetX, offsetY, metrics.width, metrics.height);
+
+   // restore back to original transform state
+   ctx.restore();
+
+   // using source-atop to allow the transparent .png to show through to the gradient
+   ctx.globalCompositeOperation = &quot;source-atop&quot;;
+
+   // creating pattern from &lt;image&gt; sourced.
+   ctx.fillStyle = ctx.createPattern(image, 'repeat');
+
+   // fill the height of two em-boxes, to encompass both normal and reflected state
+   ctx.fillRect(offsetX, offsetY, metrics.width, metrics.height * 2);
+   ctx.restore();
+ };
+</code></pre>
+<h2>Inner/outer shadows in canvas</h2>
+<p>The &lt;canvas&gt; spec doesn’t touch on the subject of <em>inner</em> vs. <em>outer</em> shadows. In fact, at first appearance, you may expect that inner shadow isn’t supported. This is not the case, it’s just a bit tricker to enable. As proposed in a recent post from <a href="http://weblog.bocoup.com/can-i-draw-an-inset-shadow-with-the-html5-canvas-api">F1LT3R</a>, you can create inner-shadows using the unique properties of clockwise vs. anti-clockwise winding rules. To do this, you create an inner-shadow by drawing a container rectangle and then, using opposite winding rules, draw a cutout shape, creating the inverse of the shape.</p>
+<p>The following example allows for the inner-shadow and fillStyle to be stylized with color+gradient+pattern simultaneously. You can specify pattern rotation individually; notice the zebra stripes are now perpendicular to each other. A clipping mask the size of the bounding-box is used, removing the need for a super-large container to enclose the cutout shape, and improving the speed by preventing the unnecessary parts of the shadow from being processed.</p>
+<p><img src="//static.webplatform.org/9/98/typ09-inner.png" alt="typ09-inner.png"></p>
+<p>View <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/Text-Effects.html#innershadow+pattern+gradient">inner-shadow</a> effect.</p>
+<pre><code> function innerShadow() {
+
+   function drawShape() { // draw anti-clockwise
+     ctx.arc(0, 0, 100, 0, Math.PI * 2, true); // Outer circle
+     ctx.moveTo(70, 0);
+     ctx.arc(0, 0, 70, 0, Math.PI, false); // Mouth
+     ctx.moveTo(-20, -20);
+     ctx.arc(30, -30, 10, 0, Math.PI * 2, false); // Left eye
+     ctx.moveTo(140, 70);
+     ctx.arc(-20, -30, 10, 0, Math.PI * 2, false); // Right eye
+   };
+
+   var width = 200;
+   var offset = width + 50;
+   var innerColor = &quot;rgba(0,0,0,1)&quot;;
+   var outerColor = &quot;rgba(0,0,0,1)&quot;;
+
+   ctx.translate(150, 170);
+
+   // apply inner-shadow
+   ctx.save();
+   ctx.fillStyle = &quot;#000&quot;;
+   ctx.shadowColor = innerColor;
+   ctx.shadowBlur = getBlurValue(120);
+   ctx.shadowOffsetX = -15;
+   ctx.shadowOffsetY = 15;
+
+   // create clipping path (around blur + shape, preventing outer-rect blurring)
+   ctx.beginPath();
+   ctx.rect(-offset/2, -offset/2, offset, offset);
+   ctx.clip();
+
+   // apply inner-shadow (w/ clockwise vs. anti-clockwise cutout)
+   ctx.beginPath();
+   ctx.rect(-offset/2, -offset/2, offset, offset);
+   drawShape();
+   ctx.fill();
+   ctx.restore();
+
+   // cutout temporary rectangle used to create inner-shadow
+   ctx.globalCompositeOperation = &quot;destination-out&quot;;
+   ctx.fill();
+
+   // prepare vector paths
+   ctx.beginPath();
+   drawShape();
+
+   // apply fill-gradient to inner-shadow
+   ctx.save();
+   ctx.globalCompositeOperation = &quot;source-in&quot;;
+   var gradient = ctx.createLinearGradient(-offset/2, 0, offset/2, 0);
+   gradient.addColorStop(0.3, '#ff0');
+   gradient.addColorStop(0.7, '#f00');
+   ctx.fillStyle = gradient;
+   ctx.fill();
+
+   // apply fill-pattern to inner-shadow
+   ctx.globalCompositeOperation = &quot;source-atop&quot;;
+   ctx.globalAlpha = 1;
+   ctx.rotate(0.9);
+   ctx.fillStyle = ctx.createPattern(image, 'repeat');
+   ctx.fill();
+   ctx.restore();
+
+   // apply fill-gradient
+   ctx.save();
+   ctx.globalCompositeOperation = &quot;destination-over&quot;;
+   var gradient = ctx.createLinearGradient(-offset/2, -offset/2, offset/2, offset/2);
+   gradient.addColorStop(0.1, '#f00');
+   gradient.addColorStop(0.5, 'rgba(255,255,0,1)');
+   gradient.addColorStop(1.0, '#00f');
+   ctx.fillStyle = gradient
+   ctx.fill();
+
+   // apply fill-pattern
+   ctx.globalCompositeOperation = &quot;source-atop&quot;;
+   ctx.globalAlpha = 0.2;
+   ctx.rotate(-0.4);
+   ctx.fillStyle = ctx.createPattern(image, 'repeat');
+   ctx.fill();
+   ctx.restore();
+
+   // apply outer-shadow (color-only without temporary layer)
+   ctx.globalCompositeOperation = &quot;destination-over&quot;;
+   ctx.shadowColor = outerColor;
+   ctx.shadowBlur = 40;
+   ctx.shadowOffsetX = 15;
+   ctx.shadowOffsetY = 10;
+   ctx.fillStyle = &quot;#fff&quot;;
+   ctx.fill();
+ };
+</code></pre>
+<p>From these examples you can see that, using globalCompositeOperation, we can chain effects together, producing more elaborate effects (utilizing masking and blending). The screen is your oyster! ;-)</p>
+<h2>Spaceage—generative effects.</h2>
+<p>In &lt;canvas&gt;, going from the unicode character 0x2708…</p>
+<p><img src="//static.webplatform.org/3/34/typ10-unicode.png" alt="typ10-unicode.png"></p>
+<p>…to this shaded example</p>
+<p><img src="//static.webplatform.org/5/51/typ11-shaded.png" alt="typ11-shaded.png"></p>
+<p>can be achieved by multiple calls to <code>ctx.strokeText()</code> with a thin lineWidth (0.25), while slowly decreasing the x-offset and alpha, giving our vector elements the feeling of motion.</p>
+<p>By mapping the element’s XY position to a sine/cosine wave and cycling through colors using the HSL property, we can create more interesting effects, such as this “biohazard” example:</p>
+<p><img src="//static.webplatform.org/5/55/typ12-biohazard.png" alt="typ12-biohazard.png"></p>
+<h3>HSL: Hue, Saturation, Lightness (1978)</h3>
+<p>HSL is a newly supported format in the CSS3 specs. Where HEX was designed for computers, HSL is designed to be human readable.</p>
+<p>Illustrating the ease of HSL, to cycle through the color spectrum, we’d simply increment the “hue” from 360; the hue is mapped to the spectrum in cylindric fashion. Lightness controls how dark/light the color is; 0% indicates a black pixel, whereas 100% indicates a white pixel. Saturation controls how bright or vivid a color is; greys are created with a saturation of 0%, and vivid colors are created using a value of 100%.</p>
+<p><img src="//static.webplatform.org/1/1c/typ13-hsl.png" alt="typ13-hsl.png"></p>
+<p>Because HSL is a recent standard, you may wish to continue supporting older browsers, which is possible via color-space conversion. The following code accepts an HSL object {H: 360, S: 100, L: 100} and outputs an RGB object {R: 255, G: 255, B: 255}. From there, you can use those values to create your rgb or rgba string. For more in-depth information see Wikipedia’s insightful article on <a href="http://en.wikipedia.org/wiki/HSL_and_HSV">HSL</a>.</p>
+<pre><code> // HSL (1978) = H: Hue / S: Saturation / L: Lightness
+ HSL_RGB = function (o) { // { H: 0-360, S: 0-100, L: 0-100 }
+   var H = o.H / 360,
+       S = o.S / 100,
+       L = o.L / 100,
+       R, G, B, _1, _2;
+
+   function Hue_2_RGB(v1, v2, vH) {
+     if (vH &lt; 0) vH += 1;
+     if (vH &gt; 1) vH -= 1;
+     if ((6 * vH) &lt; 1) return v1 + (v2 - v1) * 6 * vH;
+     if ((2 * vH) &lt; 1) return v2;
+     if ((3 * vH) &lt; 2) return v1 + (v2 - v1) * ((2 / 3) - vH) * 6;
+     return v1;
+   }
+
+   if (S == 0) { // HSL from 0 to 1
+     R = L * 255;
+     G = L * 255;
+     B = L * 255;
+   } else {
+     if (L &lt; 0.5) {
+       _2 = L * (1 + S);
+     } else {
+       _2 = (L + S) - (S * L);
+     }
+     _1 = 2 * L - _2;
+
+     R = 255 * Hue_2_RGB(_1, _2, H + (1 / 3));
+     G = 255 * Hue_2_RGB(_1, _2, H);
+     B = 255 * Hue_2_RGB(_1, _2, H - (1 / 3));
+   }
+
+   return {
+     R: R,
+     G: G,
+     B: B
+   };
+ };
+</code></pre>
+<h3>Creating animations with requestAnimationFrame</h3>
+<p>In the past, to create animations in Javascript there were two choices, <code>setTimeout</code> and <code>setInterval</code>.</p>
+<p><code>window.requestAnimationFrame</code> is the new standard here to replace both; saving the world electricity (and your computer a few heartbeats) by allowing the browser to regulate animations based on available resources. Some important features include:</p>
+<ul>
+<li>When a user exists the frame, the animation can slow down or stop completely, to prevent the unnecessary use of resources.</li>
+<li>There is a limit cap to the frame-rate at 60FPS. The reason for this is that it is well above the level humans can notice (most humans by 30FPS see animation being “fluid”).</li>
+</ul>
+<p>At the time of this writing, vendor-specific prefixes are required to use <code>requestAnimationFrame</code>. Paul Irish created a shim layer that has cross-vendor support, in <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame for smart animating</a>:</p>
+<pre><code> // shim layer with setTimeout fallback
+ window.requestAnimFrame = (function(){
+   return  window.requestAnimationFrame       ||
+           window.webkitRequestAnimationFrame ||
+           window.mozRequestAnimationFrame    ||
+           window.oRequestAnimationFrame      ||
+           window.msRequestAnimationFrame     ||
+           function(/* function */ callback, /* DOMElement */ element){
+             window.setTimeout(callback, 1000 / 60);
+           };
+ })();
+</code></pre>
+<p>Taking that a bit further, the more ambitious might tie this together with a poly-fill such as <a href="https://github.com/neonux/requestAnimationFrame.js">requestAnimationFrame.js</a> (there are a few features to be worked out) that would support older browsers to a further extent, while switching to this new standard.</p>
+<p>The following example shows how to create an animation, sending thousands of calls to strokeText through a low alpha without stalling the browser. The controls are a bit strange, but it produces some cool results:</p>
+<p>View <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/Text-Effects.html#spaceage">Spaceage</a> effect.</p>
+<pre><code> (function animate() {
+   var i = 50;
+   while(i--) {
+       if (n &gt; endpos) return;
+
+       n += definition;
+       ctx.globalAlpha = (0.5 - (n + startpos) / endpos) * alpha;
+       if (doColorCycle) {
+           hue = n + color;
+           ctx.strokeStyle = &quot;hsl(&quot; + (hue % 360) + &quot;,99%,50%)&quot;; // iterate hue
+       }
+       var x = cos(n / cosdiv) * n * cosmult; // cosine
+       var y = sin(n / sindiv) * n * sinmult; // sin
+       ctx.strokeText(text, x + xoffset, y + yoffset); // draw rainbow text
+   }
+   timeout = window.requestAnimationFrame(animate, 0);
+ })();
+</code></pre>
+<p><img src="//static.webplatform.org/2/24/typ14-spaceage1.png" alt="typ14-spaceage1.png"></p>
+<p><img src="//static.webplatform.org/2/24/typ15-spaceage2.png" alt="typ15-spaceage2.png"></p>
+<p><img src="//static.webplatform.org/4/4a/typ16-spaceage3.png" alt="typ16-spaceage3.png"></p>
+<h2>Source code</h2>
+<p>With support from across the browser vendor-sphere, there is no question about the future of &lt;canvas&gt;. It can be ported to the iPhone/Android/Desktop executables using <a href="http://www.phonegap.com/">PhoneGap</a> or <a href="http://www.appcelerator.com/products/titanium-cross-platform-application-development/">Titanium</a>.</p>
+<p>Source code can be found in <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/CanvasTextEffects.zip">CanvasTextEffects.zip</a>.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Canvas</h4>
+<ul>
+<li><p><a href="/docs/apis/canvas">canvas</a></p></li>
+<li><p><a href="/docs/html/elements/canvas">canvas</a></p></li>
+<li><p><a href="/docs/tutorials/canvas_notearsgame">Introduction to HTML5 games</a></p></li>
+<li><p><strong>Achieving typographic effects with the canvas tag</strong></p></li>
+<li><p><a href="/docs/tutorials/canvas/canvas_tutorial">Introduction to Canvas</a></p></li>
+</ul>
+<h4>Text</h4>
+<ul>
+<li><p><a href="/docs/css/properties/block-progression">block-progression</a></p></li>
+<li><p><a href="/docs/css/properties/font-language-override">font-language-override</a></p></li>
+<li><p><a href="/docs/css/properties/font-size">font-size</a></p></li>
+<li><p><a href="/docs/css/properties/hyphenate-limit-chars">hyphenate-limit-chars</a></p></li>
+<li><p><a href="/docs/css/properties/hyphenate-limit-lines">hyphenate-limit-lines</a></p></li>
+<li><p><a href="/docs/css/properties/hyphenate-limit-zone">hyphenate-limit-zone</a></p></li>
+<li><p><a href="/docs/css/properties/hyphens">hyphens</a></p></li>
+<li><p><a href="/docs/css/properties/ime-mode">ime-mode</a></p></li>
+<li><p><a href="/docs/css/properties/layout-grid">layout-grid</a></p></li>
+<li><p><a href="/docs/css/properties/layout-grid-char">layout-grid-char</a></p></li>
+<li><p><a href="/docs/css/properties/layout-grid-line">layout-grid-line</a></p></li>
+<li><p><a href="/docs/css/properties/layout-grid-mode">layout-grid-mode</a></p></li>
+<li><p><a href="/docs/css/properties/layout-grid-type">layout-grid-type</a></p></li>
+<li><p><a href="/docs/css/properties/letter-spacing">letter-spacing</a></p></li>
+<li><p><a href="/docs/css/properties/text-overflow-ellipsis">text-overflow-ellipsis</a></p></li>
+<li><p><a href="/docs/css/properties/text-overflow-mode">text-overflow-mode</a></p></li>
+<li><p><a href="/docs/css/properties/text-rendering">text-rendering</a></p></li>
+<li><p><a href="/docs/css/properties/user-modify">user-modify</a></p></li>
+<li><p><a href="/docs/css/text">Text</a></p></li>
+<li><p><a href="/docs/html/attributes/size">size</a></p></li>
+<li><p><a href="/docs/html/elements/b">b</a></p></li>
+<li><p><a href="/docs/html/elements/b/ja">b</a></p></li>
+<li><p><a href="/docs/html/elements/br">br</a></p></li>
+<li><p><a href="/docs/html/elements/br/ja">br</a></p></li>
+<li><p><a href="/docs/html/elements/caption">caption</a></p></li>
+<li><p><a href="/docs/html/elements/cite">cite</a></p></li>
+<li><p><a href="/docs/html/elements/code">code</a></p></li>
+<li><p><a href="/docs/html/elements/del">del</a></p></li>
+<li><p><a href="/docs/html/elements/dfn">dfn</a></p></li>
+<li><p><a href="/docs/html/elements/em">em</a></p></li>
+<li><p><a href="/docs/html/elements/font">font</a></p></li>
+<li><p><a href="/docs/html/elements/hr">hr</a></p></li>
+<li><p><a href="/docs/html/elements/i">i</a></p></li>
+<li><p><a href="/docs/html/elements/ins">ins</a></p></li>
+<li><p><a href="/docs/html/elements/kbd">kbd</a></p></li>
+<li><p><a href="/docs/html/elements/mark">mark</a></p></li>
+<li><p><a href="/docs/html/elements/samp">samp</a></p></li>
+<li><p><a href="/docs/html/elements/strong">strong</a></p></li>
+<li><p><strong>Achieving typographic effects with the canvas tag</strong></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

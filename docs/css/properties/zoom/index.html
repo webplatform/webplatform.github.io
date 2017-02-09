@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>zoom · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="Specifies the magnification scale of the object." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/zoom/">zoom</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>zoom</h1>
+<h2>Summary</h2>
+<p>Specifies the magnification scale of the object.</p>
+<h3>Syntax</h3>
+<p><code>zoom: normal number percentage</code></p>
+<h3>Remarks</h3>
+<p>Setting the value of the <code>zoom</code> property on a rendered object causes the content that surrounds the object to reflow. Even though the <code>zoom</code> property is not inherited, it affects its children. This effect is similar to the transformation caused by the <a href="/docs/html/attributes/background_(Body_element)"><strong>background</strong></a> and <a href="/docs/css/media_queries/filter"><strong>-ms-filter</strong></a> properties.</p>
+<h2>Examples</h2>
+<p>The following examples use the <strong>-ms-zoom</strong> attribute and the <strong>-ms-zoom</strong> property to change the magnification scale of a <strong>p</strong> element.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">STYLE</span>&gt;</span><span class="css">
+  <span class="hljs-class">.clsTeenyWeeny</span>  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">zoom</span>:<span class="hljs-value"> <span class="hljs-number">0.10</span> </span></span></span>}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">STYLE</span>&gt;</span>
+</code></pre>
+<p>[This example uses a style rule in an embedded style sheet to set the <strong>-ms-zoom</strong> attribute to one-tenth of normal. View live example]</p>
+<p>This example uses inline scripting to set the <strong>-ms-zoom</strong> property to 200% when an <a href="/w/index.php?title=dom/events/mouseover&amp;action=edit&amp;redlink=1"><strong>onmouseover</strong></a> event occurs. The magnification scale returns to normal when the <a href="/w/index.php?title=dom/events/mouseout&amp;action=edit&amp;redlink=1"><strong>onmouseout</strong></a> event occurs.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span> <span class="hljs-attribute">onmouseover</span>=<span class="hljs-value">"this.style.zoom='200%'"</span>
+   <span class="hljs-attribute">onmouseout</span>=<span class="hljs-value">"this.style.zoom='normal'"</span>&gt;</span>
+</code></pre>
+<p>This example provides controls that let the user adjust the <strong>-ms-zoom</strong> property.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns:control</span>=<span class="hljs-value">""</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Zoom Demo<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomIn</span>(<span class="hljs-params"></span>) </span>{
+  newZoom= <span class="hljs-built_in">parseInt</span>(oZoom.style.zoom)+<span class="hljs-number">10</span>+<span class="hljs-string">'%'</span>
+      oZoom.style.zoom =newZoom;
+      oCode.innerText=<span class="hljs-string">'zoom: '</span>+newZoom+<span class="hljs-string">''</span>;
+  }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomOut</span>(<span class="hljs-params"></span>) </span>{
+  newZoom= <span class="hljs-built_in">parseInt</span>(oZoom.style.zoom)-<span class="hljs-number">10</span>+<span class="hljs-string">'%'</span>
+      oZoom.style.zoom =newZoom;
+      oCode.innerText=<span class="hljs-string">'zoom: '</span>+newZoom+<span class="hljs-string">''</span>;
+  }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeZoom</span>(<span class="hljs-params"></span>) </span>{
+  newZoom= <span class="hljs-built_in">parseInt</span>(oSlider.value)
+        oZoom.style.zoom=newZoom+<span class="hljs-string">'%'</span>;
+        oCode.innerText=<span class="hljs-string">'zoom: '</span>+newZoom+<span class="hljs-string">'%'</span>;
+  }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeZoom2</span>(<span class="hljs-params">oSel</span>) </span>{
+  newZoom= oSel.options[oSel.selectedIndex].innerText
+        oZoom.style.zoom=newZoom;
+        oCode.innerText=<span class="hljs-string">'zoom: '</span>+newZoom+<span class="hljs-string">''</span>;
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"oZoom.style.zoom='100%';
+    oCode.innerText='zoom: 100%'; "</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- Slider and + and - controls  --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position: absolute; top: 15px; left: 20px;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">control:slider</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oSlider"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"sl--orientation:vertical;
+    height:204px; width:28px; background-color:#336699;
+    padding-left:5px; border-left:1px solid #6699CC"</span> <span class="hljs-attribute">tickinterval</span>=<span class="hljs-value">"10"</span>
+    <span class="hljs-attribute">max</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">min</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">onchange</span>=<span class="hljs-value">"changeZoom()"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">control:slider</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position: absolute; top: 15px; left: 48px; width: 28px; height: 200px; background-color: #336699;"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">"center"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/workshop/graphics/zoomscale.gif"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"scale"</span> <span class="hljs-attribute">border</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">usemap</span>=<span class="hljs-value">"#scaler"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- The zoomable area container --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position: absolute; top: 15px; left: 76px; width: 550px; height: 204px; background-color: black; vertical-align: middle; padding: 25px; font-family: arial; font-weight: bold; color: white; z-index: 3"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">"center"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- The zoomable area --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oZoom"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"zoom: 100%"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">"center"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Welcome to Seattle!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/workshop/graphics/seattlesmall.jpg"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Seattle skyline"</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">"left"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">"center"</span>&gt;</span>A great city in the beautiful state of Washington.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- Displayed code --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"overflow: hidden; border: 1px solid black; position: absolute; top: 219px; left: 20px; width: 606px; height: 90px; padding: 1px; padding-left: 25px; background-color: white; z-index: 3;"</span>&gt;</span>
+    &amp;lt;div style=&amp;quot;
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"font-weight: bold; font-family: verdana; color: red; font-size: 9pt"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"coder"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oCode"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>&amp;quot;&amp;gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        &amp;lt;h1&amp;gt; Welcome to seattle!&amp;lt;/h1&amp;gt;<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        &amp;lt;img src=&amp;quot;seattlesmall.jpg&amp;quot;&amp;gt;<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+        &amp;lt;p&amp;gt;A great city in the beautiful state of Washington.&amp;lt;/p&amp;gt;<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"coder"</span>&gt;</span>
+        &amp;lt;/div&amp;gt;<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oControls"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position: absolute; top: 308px; left: 20px; width: 606px; height: 100px; background-color: gray; color: white; font-family: verdana; font-size: 11pt; font-weight: normal; padding: 10px; z-index: 3; text-align: center; border: 1px solid black; text-align: left;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"padding-left: 65px"</span>&gt;</span>
+        The code used to generate the image is shown in the area above. <span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+        Modify the image using the selections below or the <span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+        slider control above and to the left of this window. <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">hr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">align</span>=<span class="hljs-value">"center"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">select</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"percent"</span> <span class="hljs-attribute">onchange</span>=<span class="hljs-value">"changeZoom2(percent); "</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span> <span class="hljs-attribute">selected</span>=<span class="hljs-value">""</span>&gt;</span>Use Percentage Value<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>10%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>25%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>50%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>75%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>100%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>150%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>200%<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">select</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">select</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"normal"</span> <span class="hljs-attribute">onchange</span>=<span class="hljs-value">"changeZoom2(normal); "</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span> <span class="hljs-attribute">selected</span>=<span class="hljs-value">""</span>&gt;</span>Use Number Value<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>.1<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>0.25<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>0.5<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>0.75<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>1.0<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>1.5<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">select</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">hr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">map</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"scaler"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"rect"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"0,182,19,199"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"plus"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"zoomIn()"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"cursor: hand"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"rect"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"1,1,18,15"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"minus"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"zoomOut()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/zoom.htm">View live example</a></p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Visual Effects</h4>
+<ul>
+<li><p><a href="/docs/css/color">color</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_hue">Colors by Hue</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_name">Colors by Name</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_saturation">Colors by Saturation</a></p></li>
+<li><p><a href="/docs/css/color/user-defined_system_colors">User-Defined System Colors</a></p></li>
+<li><p><a href="/docs/css/high_contrast_mode/properties/-ms-high-contrast">-ms-high-contrast</a></p></li>
+<li><p><a href="/docs/css/high_contrast_modeapis/properties/ms-high-contrast-adjust">ms-high-contrast-adjust</a></p></li>
+<li><p><a href="/docs/css/properties/-ms-progress-appearance">-ms-progress-appearance</a></p></li>
+<li><p><a href="/docs/css/properties/background-blend-mode">background-blend-mode</a></p></li>
+<li><p><a href="/docs/css/properties/clip">clip</a></p></li>
+<li><p><a href="/docs/css/properties/cursor">cursor</a></p></li>
+<li><p><a href="/docs/css/properties/opacity">opacity</a></p></li>
+<li><p><strong>zoom</strong></p></li>
+<li><p><a href="/docs/html/attributes/height">height</a></p></li>
+<li><p><a href="/docs/html/elements/blink">blink</a></p></li>
+<li><p><a href="/docs/svg/elements/filter">filter</a></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li>CSSStyleDeclaration<a href="/docs/css/cssom/CSSStyleDeclaration/CSSStyleDeclaration">CSSStyleDeclaration</a></li>
+<li>currentStyle<a href="/docs/css/cssom/currentStyle">currentStyle</a></li>
+<li>runtimeStyle<a href="/docs/css/cssom/runtimeStyle">runtimeStyle</a></li>
+<li>style<a href="/docs/css/cssom/style">style</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

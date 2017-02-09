@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>touch-action · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Determines whether touch input may trigger default behavior supplied by the user agent, such as panning or zooming." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/touch-action/">touch-action</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>touch-action</h1>
+<h2>Summary</h2>
+<p>Determines whether touch input may trigger default behavior supplied by the user agent, such as panning or zooming.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>auto</code>
+</dd>
+<dt>Applies to</dt>
+<dd>All elements except non-replaced inline elements, table rows, row groups, table columns, and column groups
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>Same as specified value
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+</dl>
+<p><a href="/docs/css/concepts/cssom">CSS Object Model Property</a><br>
+:</p>
+<dl>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>touch-action: auto</code></li>
+<li><code>touch-action: manipulation</code></li>
+<li><code>touch-action: none</code></li>
+<li><code>touch-action: pan-x</code></li>
+<li><code>touch-action: pan-y</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>auto</dt>
+<dd>The user agent MAY determine any permitted touch behaviors, such as panning and zooming manipulations of the viewport, for touches that begin on the element.
+</dd>
+<dt>none</dt>
+<dd>Touches that begin on the element MUST NOT trigger default touch behaviors.
+</dd>
+<dt>pan-x</dt>
+<dd>The user agent MAY consider touches that begin on the element only for the purposes of horizontally scrolling the element’s nearest ancestor with horizontally scrollable content.
+</dd>
+<dt>pan-y</dt>
+<dd>The user agent MAY consider touches that begin on the element only for the purposes of vertically scrolling the element’s nearest ancestor with vertically scrollable content.
+</dd>
+<dt>manipulation</dt>
+<dd>The user agent MAY consider touches that begin on the element only for the purposes of scrolling and continuous zooming.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>You might find the following example within a fingerpainting application to ensure that its canvas doesn’t move when a user touches and manipulates it. When a user touches this canvas and moves his or her finger, no manipulation will occur. DOM events will be sent instead.</p>
+<pre><code class="css"><span class="hljs-tag">canvas</span><span class="hljs-id">#fingerpainter</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">touch-action</span>:<span class="hljs-value"> none</span></span>;
+}</span>
+</code></pre>
+<p>The application has content that extends horizontally beyond the viewport and the desired behavior is to allow the user to scroll content left and right as desired without the browser moving the entire page.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"touch-action: pan-x;"</span>&gt;</span>
+    This element receives pointer events when not panning in the horizontal direction.
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p><a href="http://www.love2dev.com/">View live example</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="https://dvcs.w3.org/hg/pointerevents/raw-file/tip/pointerEvents.html#the-touch-action-css-property">Pointer Events</a></dt>
+<dd>Editor’s Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/library/ie/hh772044.aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

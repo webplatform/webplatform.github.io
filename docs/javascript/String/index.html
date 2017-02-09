@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>String · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Allows manipulation and formatting of text strings and determination and location of substrings within strings." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/String/">String</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>String</h1>
+<h2>Summary</h2>
+<p>Allows manipulation and formatting of text strings and determination and location of substrings within strings.</p>
+<h2>Syntax</h2>
+<pre><code>// Declaring a string literal.
+var newString = &quot;stringLiteral&quot;;
+
+// Or, declaring a String object - discouraged, long, verbose and pretty useless.
+var newString = new String([&quot; stringLiteral &quot;]);
+</code></pre>
+<dl>
+<dt><strong>newString</strong></dt>
+<dd>Required. The variable name to which the String object is assigned.
+</dd>
+<dt><strong>stringLiteral</strong></dt>
+<dd>Optional. Any group of Unicode characters.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>JavaScript provides escape sequences that you can include in strings to create characters that you cannot type directly. For example, <code>\t</code> specifies a tab character. For more information, see Special Characters (JScript).</p>
+<p>A string literal is zero or more characters enclosed in single or double quotation marks. A string literal has a primary (primitive) data type of string. A String object is created by using the <a href="/docs/javascript/operators/new">new Operator</a> , and has a data type of <strong>Object</strong>.</p>
+<p>The following example shows that the data type of a string literal is not the same as that of a <strong>String</strong> object.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> strLit = <span class="hljs-string">"This is a string literal."</span>;
+<span class="hljs-keyword">var</span> strObj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"This is a string object."</span>);
+
+<span class="hljs-built_in">document</span>.write(<span class="hljs-keyword">typeof</span> strLit);
+<span class="hljs-built_in">document</span>.write(<span class="hljs-string">"&lt;br/&gt;"</span>);
+<span class="hljs-built_in">document</span>.write(<span class="hljs-keyword">typeof</span> strObj);
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// string</span>
+<span class="hljs-comment">// object</span>
+</code></pre>
+<p>When you call a method on a string literal, it is temporarily converted to a string wrapper object. The string literal is treated as though the <strong>new</strong> operator were used to create it.</p>
+<p>The following example applies the <strong>toUpperCase</strong> method to a string literal.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> strLit = <span class="hljs-string">"This is a string literal."</span>;
+
+<span class="hljs-keyword">var</span> result1 = strLit.toUpperCase();
+
+<span class="hljs-keyword">var</span> result2 = (<span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(strLit)).toUpperCase();
+
+<span class="hljs-built_in">document</span>.write(result1);
+<span class="hljs-built_in">document</span>.write(<span class="hljs-string">"&lt;br/&gt;"</span>);
+<span class="hljs-built_in">document</span>.write(result2);
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// THIS IS A STRING LITERAL.</span>
+<span class="hljs-comment">// THIS IS A STRING LITERAL.</span>
+</code></pre>
+<p>In modern browsers (2011 onwards), you can access an individual character of a string as a read-only array-indexed property. The following example accesses individual string characters.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> str = <span class="hljs-string">"abcd"</span>;
+<span class="hljs-keyword">var</span> result = str[<span class="hljs-number">2</span>];
+<span class="hljs-built_in">document</span>.write (result);
+<span class="hljs-comment">// Output: c</span>
+
+<span class="hljs-keyword">var</span> result = <span class="hljs-string">"the"</span>[<span class="hljs-number">0</span>];
+<span class="hljs-built_in">document</span>.write(result);
+<span class="hljs-comment">// Output: t</span>
+</code></pre>
+<h2>Properties</h2>
+<p>The following table lists the properties of the <strong>String</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/constructor">constructor</a></td><td style="text-align:left">Specifies the function that creates an object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/length">length</a></td><td style="text-align:left">Returns the length of a String object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/prototype">prototype</a></td><td style="text-align:left">Returns a reference to the prototype for a class of objects.</td></tr>
+</tbody>
+</table>
+<h2>Functions</h2>
+<p>The following table lists the functions of the <strong>String</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Function</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/fromCharCode">fromCharCode</a></td><td style="text-align:left">Returns a string from a number of Unicode character values.</td></tr>
+</tbody>
+</table>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>String</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/HTML_Tag_Methods">HTML Tag Methods</a></td><td style="text-align:left">Places various HTML tags around text.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/charAt">charAt</a></td><td style="text-align:left">Returns the character at the specified index.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/charCodeAt">charCodeAt</a></td><td style="text-align:left">Returns the Unicode encoding of the specified character.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/concat">concat</a></td><td style="text-align:left">Returns a string that contains the concatenation of two supplied strings.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/indexOf">indexOf</a></td><td style="text-align:left">Returns the character position where the first occurrence of a substring occurs within a string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/lastIndexOf">lastIndexOf</a></td><td style="text-align:left">Returns the last occurrence of a substring within a string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/localeCompare">localeCompare</a></td><td style="text-align:left">Returns a value that indicates whether two strings are equivalent in the current locale.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/match">match</a></td><td style="text-align:left">Searches a string by using a supplied <strong>Regular Expression</strong> object and returns the results as an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/replace">replace</a></td><td style="text-align:left">Uses a regular expression to replace text in a string and returns the result.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/search">search</a></td><td style="text-align:left">Returns the position of the first substring match in a regular expression search.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/slice">slice</a></td><td style="text-align:left">Returns a section of a string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/split">split</a></td><td style="text-align:left">Returns the array of strings that results when a string is separated into substrings.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/substr">substr</a></td><td style="text-align:left">Returns a substring beginning at a specified location and having a specified length.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/substring">substring</a></td><td style="text-align:left">Returns the substring at a specified location within a String object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/toLocaleLowerCase">toLocaleLowerCase</a></td><td style="text-align:left">Returns a string in which all alphabetic characters are converted to lowercase, taking into account the host environment’s current locale.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/toLocaleUpperCase">toLocaleUpperCase</a></td><td style="text-align:left">Returns a string in which all alphabetic characters are converted to uppercase, taking into account the host environment’s current locale.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/toLowerCase">toLowerCase</a></td><td style="text-align:left">Returns a string in which all alphabetic characters are converted to lowercase.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/toString">toString</a></td><td style="text-align:left">Returns the string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/toUpperCase">toUpperCase</a></td><td style="text-align:left">Returns a string in which all alphabetic characters are converted to uppercase.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/trim">trim</a></td><td style="text-align:left">Returns a string with leading and trailing white space and line terminator characters removed.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/String/valueOf">valueOf</a></td><td style="text-align:left">Returns the string.</td></tr>
+</tbody>
+</table>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/operators/new">new Operator</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ecczf11c(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reports to review status · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/architecture/">architecture</a></li><li><a href="/docs/WPD/Infrastructure/architecture/Reports_to review status/">Reports to review status</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Reports to review status</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><strong>Reports to review status</strong></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>From the <a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The Salt Master</a> we can get various system health status. This document describes how to access them.</p>
+<h1>Reports</h1>
+<h2>How many emails has been sent</h2>
+<p>We have <a href="http://mailgraph.schweikert.ch/"><em>Mailgraph</em></a> installed on all <em>mail</em> VMs. With it, we can visualize how many emails are being sent to our mail server. It should display the number of refusals (e.g. somebody outside our network trying to use us) over time.</p>
+<p>From the browser, through <a href="#Read_reports_from_a_VM_through_private_network">#Read reports from a VM through private network</a>.</p>
+<pre><code> http://mail/cgi-bin/mailgraph.cgi
+</code></pre>
+<p>Should look like this:</p>
+<p><img src="//static.webplatform.org/d/da/20150106_mailgraph_day.png" alt="20150106 mailgraph day.png"><img src="//static.webplatform.org/4/44/20150104_mailgraph_day.png" alt="20150104 mailgraph day.png"></p>
+<p><strong>Note</strong> please disregard the address in the screenshot, it has been taken during deployment scripts has been set in place.</p>
+<h2>Getting to know the status of a php5-fpm backend</h2>
+<p>You can make a basic <em>GET /php-status</em> to any VMs that has <strong>php5-fpm</strong> running. (@@TODO make a role to get all of them and remove the need to guess)</p>
+<p>There are a few variants we can get data;</p>
+<ul>
+<li>Simple report</li>
+</ul>
+<!-- -->
+<pre><code> curl piwik/php-status
+</code></pre>
+<ul>
+<li>A more detailed report of each worker process</li>
+</ul>
+<!-- -->
+<pre><code> curl piwik/php-status?full
+</code></pre>
+<ul>
+<li>“Ping” check if <em>php5-fpm</em> connection is accessible from NGINX</li>
+</ul>
+<!-- -->
+<pre><code> curl piwik/php-ping
+</code></pre>
+<p><img src="//static.webplatform.org/3/3f/nginx_fastcgi_status_full.png" alt="nginx fastcgi status full.png"><img src="//static.webplatform.org/f/f5/nginx_fastcgi_status.png" alt="nginx fastcgi status.png"></p>
+<p><strong>Note</strong> that in this example I used an SSH tunnel <em>-L 8080:piwik:80</em>, but it could have been done through <a href="#Read_reports_from_a_VM_through_private_network">#Read reports from a VM through private network</a>.</p>
+<h2>Getting to know the status of an NGINX web server</h2>
+<ul>
+<li>From the local network</li>
+</ul>
+<!-- -->
+<pre><code> curl piwik/nginx-status
+ Active connections: 1
+ server accepts handled requests
+  3031 3031 3024
+ Reading: 0 Writing: 1 Waiting: 0
+</code></pre>
+<ul>
+<li>From salt</li>
+</ul>
+<!-- -->
+<pre><code> salt piwik nginx.status
+ piwik:
+   ----------
+   accepted:
+       3030
+   active connections:
+       1
+   handled:
+       3030
+   reading:
+       0
+   requests:
+       3023
+   waiting:
+       0
+   writing:
+       1
+</code></pre>
+<h2>Getting to know the status of an Apache2 web server</h2>
+<ul>
+<li>From salt</li>
+</ul>
+<!-- -->
+<pre><code> salt app\* apache.server_status
+ app3:
+   ----------
+   BusyWorkers:
+       3
+   BytesPerReq:
+       865.907
+   BytesPerSec:
+       3152.89
+   CPULoad:
+       0.300867
+   IdleWorkers:
+       16
+   ReqPerSec:
+       3.64114
+   Scoreboard:
+       ----------
+       .:
+           45
+       C:
+           2
+       D:
+           0
+       G:
+           0
+       I:
+           0
+       K:
+           0
+       L:
+           0
+       R:
+           0
+       S:
+           0
+       W:
+           1
+       _:
+           16
+   Total Accesses:
+       40748
+   Total kBytes:
+       34457
+   Uptime:
+       11191
+</code></pre>
+<h2>Nutcracker</h2>
+<p>Nutcracker should run on any VM that runs a backend.</p>
+<p>You can query its status from the VM itself, through the localhost loopback (only!) by doing a <em>GET</em> request like this:</p>
+<pre><code> curl localhost:22222 | python -m json.tool
+ {
+   &quot;sessions_redis&quot;: {
+       &quot;10.10.10.177:6379&quot;: {
+           &quot;in_queue&quot;: 0,
+           &quot;in_queue_bytes&quot;: 0,
+           &quot;out_queue&quot;: 0,
+           &quot;out_queue_bytes&quot;: 0,
+           &quot;request_bytes&quot;: 2681,
+           &quot;requests&quot;: 28,
+           &quot;response_bytes&quot;: 713,
+           &quot;responses&quot;: 27,
+           &quot;server_connections&quot;: 0,
+           &quot;server_ejected_at&quot;: 0,
+           &quot;server_eof&quot;: 1,
+           &quot;server_err&quot;: 0,
+           &quot;server_timedout&quot;: 1
+       },
+       &quot;client_connections&quot;: 0,
+       &quot;client_eof&quot;: 0,
+       &quot;client_err&quot;: 14,
+       &quot;forward_error&quot;: 1,
+       &quot;fragments&quot;: 0,
+       &quot;server_ejects&quot;: 0
+   },
+   &quot;source&quot;: &quot;app1&quot;,
+   &quot;timestamp&quot;: 1425064419,
+   &quot;uptime&quot;: 9285,
+   &quot;version&quot;: &quot;0.3.0&quot;
+ }
+</code></pre>
+<p><strong>Note</strong> the output has been truncated to only one backend to illustrate what data the call provides.</p>
+<ul>
+<li>Use salt to get data</li>
+</ul>
+<!-- -->
+<pre><code> salt -C 'G@roles:app or G@roles:blog or G@roles:piwik or G@roles:project' cmd.run 'curl -s localhost:22222'
+ // Data will be similar to the previous example
+</code></pre>
+<p>Notice how I am targeting the minions using <a href="http://docs.saltstack.com/en/latest/topics/targeting/compound.html">Salt Compound matcher</a> and asking it to give me Nutcracker status data.</p>
+<p>Eventually we could use similar mechanism to gather status on services to learn how the server is going.</p>
+<h2>MySQL/MariaDB</h2>
+<p>We can check what’s the state of the MySQL server by issuing the following commands.</p>
+<p>They are available through <a href="http://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.mysql.html#salt.modules.mysql.get_slave_status"><em>Salt Stack</em> <strong>mysql</strong> module</a></p>
+<h3>Get replication status</h3>
+<pre><code> salt db2 mysql.get_slave_status
+ db2:
+   ----------
+   Connect_Retry:
+       10
+   Master_Host:
+       masterdb.local.wpdn
+   Master_SSL_Allowed:
+       Yes
+   Master_SSL_CA_File:
+       /etc/mysql/ca-cert.pem
+   Master_SSL_Cert:
+       /etc/mysql/client-cert.pem
+   Master_SSL_Crl:
+       /etc/mysql/ca-cert.pem
+   Master_SSL_Key:
+       /etc/mysql/client-key.pem
+ // ... truncated
+</code></pre>
+<h3>Get replication master status</h3>
+<pre><code> salt -G 'roles:masterdb' mysql.get_master_status
+ db1-masterdb:
+   ----------
+   File:
+       mariadbrepl-bin.000093
+   Position:
+       32058870
+ // ... truncated
+</code></pre>
+<h3>Get process list</h3>
+<pre><code> salt -G 'roles:db' mysql.processlist
+ db2:
+   |_
+     ----------
+     Command:
+         Connect
+     Id:
+         3
+     Info:
+         None
+     Progress:
+         0.0
+     State:
+         Slave has read all relay log; waiting for the slave I/O thread to update it
+     Time:
+         1
+     User:
+         system user
+     db:
+         None
+</code></pre>
+<h3>Misc. reports available on MySQL servers through Salt stack</h3>
+<p>Here are a few possibly useful commands to pick from;</p>
+<p><strong>Note</strong> its even possible to work on grants/privileges, add/delete databases. Note that if you do so, you MUST make sure that you do it ONLY on the salt master. To learn more, refer to <a href="http://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.mysql.html#salt.modules.mysql.get_slave_status"><em>Salt Stack</em> documentation at <strong>mysql</strong> module</a>.</p>
+<pre><code> salt db2 mysql.get_slave_status
+ salt -G 'roles:masterdb' mysql.get_master_status
+ salt -G 'roles:db' mysql.status
+</code></pre>
+<h2>MediaWiki</h2>
+<p>Some reports can be gathered from the MediaWiki API. Here’s a list of a few useful ones. If you want to change the way they are displayed, you can change the <em>&amp;format=</em> URL fragment (ref: <a href="https://www.mediawiki.org/wiki/API:Main_page#The_format"><em>MediaWiki.org</em> documentation</a>.</p>
+<h3>Misc. reports</h3>
+<ul>
+<li><a href="/docs/w/api.php?format=jsonfm&amp;action=query&amp;prop=contributors&amp;continue=&amp;titles=css/properties/border">Contributors on <strong>css/properties/border</strong> page (through the API)</a></li>
+<li><a href="/docs/Special:Contributions/Renoirb">Contributions made by a specific user</a></li>
+<li><a href="/docs/w/api.php?format=jsonfm&amp;action=query&amp;list=users&amp;ususers=Renoirb&amp;usprop=blockinfo%7Cgroups%7Ceditcount%7Cemailable">More details about a user (through the API)</a></li>
+</ul>
+<h3>User creation log</h3>
+<p>As long as we don’t have a separate accounts system in place for every components, including our wiki, we need to review in each web application the new accounts that are being created. If we have too many accounts created, it means that we might be under spambot attacks.</p>
+<ul>
+<li><a href="/docs/w/api.php?format=jsonfm&amp;action=query&amp;list=logevents&amp;letype=newusers&amp;lelimit=50&amp;leprop=user%7Ctimestamp">list new users (through the API)</a></li>
+</ul>
+<p><img src="//static.webplatform.org/d/d3/20150106-account-creation-log-api.png" alt="20150106-account-creation-log-api.png"></p>
+<h3>What’s the IP address of a given user?</h3>
+<p>In case of need to review how our infrastructure is being abused, we can get to know the IP address of visitors so that we can effectively ban them.</p>
+<p>To do so, we are using the <a href="https://www.mediawiki.org/wiki/Extension:CheckUser"><em>MediaWiki CheckUser</em> Extension</a>. Only users of the wiki with sysop privileges can review this information.</p>
+<p><img src="//static.webplatform.org/a/a3/20150108-visualizing-visitor-IP-vs-users.png" alt="20150108-visualizing-visitor-IP-vs-users.png"></p>
+<h2>Using Monit</h2>
+<p>Monit is a software that you can configure to check if a service is accessible or running and how it can make sure its up automatically for you.</p>
+<p><strong>More about Monit in <a href="/docs/WPD/Infrastructure/Monitoring/Monit">WPD/Infrastructure/Monitoring/Monit</a></strong></p>
+<h3>From the salt master</h3>
+<p>We can get <strong>monit</strong> reports <strong>from the salt master</strong> like this</p>
+<pre><code> salt -G 'roles:app' monit.summary
+ app2-jobrunner:
+   ----------
+   Process:
+       ----------
+       apache2:
+           Running
+       nutcracker:
+           Running
+       openssh-server:
+           Running
+       salt-minion:
+           Running
+   System:
+       ----------
+       app2-jobrunner.production.wpdn:
+           Running
+ app1:
+   ----------
+   Process:
+       ----------
+       apache2:
+           Running
+       nutcracker:
+           Running
+       openssh-server:
+           Running
+       salt-minion:
+           Running
+   System:
+       ----------
+       app1.production.wpdn:
+           Running
+</code></pre>
+<p>Or from the same VM:</p>
+<pre><code> sudo salt-call monit.summary
+ [INFO    ] Executing command 'monit summary' in directory '/root'
+ local:
+   ----------
+   Process:
+       ----------
+       exim4:
+           Running
+       gdnsd:
+           Running
+       openssh-server:
+           Running
+       salt-master:
+           Running
+       salt-minion:
+           Running
+       syslog-ng:
+           Running
+   System:
+       ----------
+       salt.production.wpdn:
+           Running
+</code></pre>
+<h3>From the web frontend</h3>
+<p>To do this, you need to create a SOCKS proxy like its described in <a href="#Read_reports_from_a_VM_through_private_network">#Read reports from a VM through private network</a></p>
+<p>Once connected through ssh with the proxy described, you can connect like this:</p>
+<pre><code> http://monit:p4ssword@sessions1:2812/
+</code></pre>
+<p>Which should look like this;</p>
+<p><img src="//static.webplatform.org/5/5d/20150224-monit-status-preview.png" alt="20150224-monit-status-preview.png"></p>
+<h4>Monit password</h4>
+<p>The password is not &quot;p4ssword&quot;, you’ll have to look at <strong>/srv/private/pillar/accounts/</strong> file yourself at <strong>accounts:monit:admin_password</strong> or in the VM itself at <strong>/etc/monit/conf.d/defaults.conf</strong>.</p>
+<p>An alternate way to get to know the password is to use salt like this:</p>
+<pre><code> salt-call pillar.get accounts:monit:admin_password
+ local:
+   p4ssword
+</code></pre>
+<h2>Read reports from a VM through private network</h2>
+<p>To view the internal only reports, you need to setup your local machine to pass through our <em>Jumpbox</em>. The instructions are available in <a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM#Accessing_a_VM_using_SSH">Accessing a VM using SSH in <strong>Base configuration of a VM’</strong></a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

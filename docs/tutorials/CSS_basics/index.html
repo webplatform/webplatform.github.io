@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS basics · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/CSS_basics/">CSS basics</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>CSS basics</h1>
+<h2>Introduction</h2>
+<p>In the earlier tutorials of this course we talked about the content of web sites and how to structure content using HTML. This is very important as it means that we give our documents meaning and structure for other technologies to seamlessly integrate with, manipulate and otherwise affect. The most important web technology to discuss next is CSS (Cascading Style Sheets), which is used to style our HTML and influence its position on the page. In this article we’ll introduce you to CSS — what it is, how to apply it to HTML, and what basic CSS syntax looks like.</p>
+<h2>What is CSS?</h2>
+<p>Whilst HTML structures the document and tells browsers what a certain element’s function is (it is a link to another page? Is it a heading?), CSS gives the browser instructions on how to display a certain element — styling, spacing, colouring, etc. If HTML is the struts and bricks that make up the structure of a house, CSS is the plaster and paint to decorate it.</p>
+<p>This is done using a system of rules (or rulesets), the exact syntax of which you’ll learn more about below. These rules:</p>
+<ol>
+<li>State what HTML elements should have styling added to them</li>
+<li>Specify the “properties” (colour, size, font, etc.) of the HTML elements we want to manipulate</li>
+<li>Give the values we want to give each property.</li>
+</ol>
+<p>For example, a CSS rule might state:</p>
+<blockquote>
+<p>I want to find every <code>&lt;h2&gt;</code> element on a page, and change the colour of their text to green</p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>I want to find every <code>&lt;p&gt;</code> element with a class attribute of <code>author-name</code>, colour their backgrounds in red, make the text inside them twice the size of normal paragraph text, and add 10 pixels of spacing around each one.</p>
+</blockquote>
+<p>CSS is not a programming language like JavaScript and it is not a markup language like HTML — actually there is nothing that can be compared to it. Technologies that defined interfaces before web development always mixed presentation and structure. As we’ve discussed earlier in the course, this is not a clever thing to do in an environment that changes as often as the web, which is why CSS was invented.</p>
+<h2>Defining style rules</h2>
+<p>Without further ado, let’s have a look at a CSS code example, and then dissect it:</p>
+<pre><code>selector {
+  property1:value;
+  property2:value;
+  property3:value;
+}
+</code></pre>
+<p>The pertinent parts are as follows:</p>
+<ul>
+<li>The selector identifies the HTML elements that the rule will be applied to, using actual element names, eg. <code>&lt;body&gt;</code>, or another identifier such as <code>class</code> attribute values. We’ll look at the different types of selectors available later on.</li>
+<li>The curly braces contain the property/value pairs, which are separated from each other by semi-colons; the properties are separated from their respective values by colons.</li>
+<li>The properties define what you want to do to the element(s) you have selected. These come in wide varieties, which can affect text colour, background colour, position on the page, font type, border colour and thickness and many other things.</li>
+<li>The values are the values that you want to set for each property of the selected elements. The values are dependent on the property, for example properties that affect colour can take hexadecimal colours like #336699, RGB values like rgb(12,134,22) or colour names like red, green or blue. Properties that affect position, margins, width, height etc. can be measured in pixels, ems, percentages, centimeters or other such units.</li>
+</ul>
+<p>Now let’s look at a specific example:</p>
+<pre><code>p {
+  margin: 5px;
+  font-family: arial;
+  color: blue;
+}
+</code></pre>
+<p>The HTML element this rule selects is <code>&lt;p&gt;</code> — every <code>&lt;p&gt;</code> in the HTML document(s) that this CSS is applied to will have this rule applied to it, unless they have more specific rules also applied to them, in which case the more specific rule(s) will overwrite this rule. The properties affected by this rule are the margins around the paragraphs, the font of the text inside the paragraphs, and the colour of that text. The margins are set at 5 pixels, the font is set as Arial, and the colour of the text is set as blue.</p>
+<p>We will come back to all of these specifics later — the main goal of this tutorial is to cover the basics of CSS and not the nitty-gritty details.</p>
+<p>A whole set of these rules goes together to form a style sheet. This is the most basic syntax of CSS there is. There is more, but not much — probably the coolest thing about CSS is its simplicity.</p>
+<h3>Whitespace in CSS</h3>
+<p>Note that whitespace in CSS works in exactly the same way as it does in HTML — excess whitespace is completely ignored by the browser that renders the CSS, so you can add as much whitespace as you like. So</p>
+<pre><code>p {
+  margin: 5px;
+  font-family: arial;
+  color: blue;
+}
+</code></pre>
+<p>Is functionally identical to</p>
+<pre><code>p {margin: 5px;font-family: arial;color: blue;}
+</code></pre>
+<p>As long as you include the necessary curly braces, colons and semi-colons to separate out different parts, you are ok.</p>
+<h3>CSS comments</h3>
+<p>One thing to know early on is how to comment in CSS. You add comments by enclosing them in <code>/*</code> and <code>*/</code>. Comments can span several lines, and the browser will ignore these lines:</p>
+<pre><code>/* These are basic element selectors */
+selector{
+  property1:value;
+  property2:value;
+  property3:value;
+}
+</code></pre>
+<p>You can add comments either between rules or inside the property block — for example in the following CSS the 2nd and 3rd properties are enclosed inside comment delimiters, so they will be ignored by the browser. This is useful when you are checking out what effect certain parts of your CSS are having on your web page; just comment them out, save your CSS, and reload the HTML.</p>
+<pre><code>selector{
+  property1:value;
+  /*
+  property2:value;
+  property3:value;
+  */
+}
+</code></pre>
+<h3>Grouping selectors</h3>
+<p>You can also group different selectors. Say you want to apply the same style to <code>h1</code> and <code>p</code> — you could write the following CSS:</p>
+<pre><code>h1 {color:red;}
+
+p {color:red;}
+</code></pre>
+<p>This however is not ideal, as you are repeating information that is the same. To remedy this, you can shorten the CSS by grouping the selectors together with a comma — the rules within the brackets are applied to both selectors:</p>
+<pre><code>h1, p {color:red;}
+</code></pre>
+<h3>Basic types of selector</h3>
+<p>There are several different selectors, each matching a different part of the markup. The three you’ll encounter most often are as follows:</p>
+<h4>Element Selector</h4>
+<pre><code>p {}
+</code></pre>
+<p>An element selector matches all the elements of that name on the page (<code>&lt;p&gt;</code> elements, in the case above).</p>
+<h4>Class Selector</h4>
+<pre><code>.example {}
+</code></pre>
+<p>A class selector matches all elements that have a <code>class</code> attribute with the value specified, so the above would match <code>&lt;p class=&quot;example&quot;&gt;</code>, <code>&lt;li class=&quot;example&quot;&gt;</code> or <code>&lt;div class=&quot;example&quot;&gt;</code>, or any other element with a <code>class</code> of <code>example</code>. Note that class selectors don’t test for any specific element name.</p>
+<h4>ID Selector</h4>
+<pre><code>#example {}
+</code></pre>
+<p>An id selector matches all elements that have an <code>id</code> attribute with the value specified, so the above would match <code>&lt;p id=&quot;example&quot;&gt;</code>, <code>&lt;li id=&quot;example&quot;&gt;</code> or <code>&lt;div id=&quot;example&quot;&gt;</code>, or any other element with an <code>id</code> of <code>example</code>. Note that ID selectors don’t test for any element name, and you can only have one of each ID per HTML document — they are unique to each page.</p>
+<p>You can see the above selectors in action in the following examples. Notice that when you open the example in a browser the <code>warning</code> style gets applied to both the list item and the paragraph (if the bullet disappears it’s because you are setting a white text colour on a white background).</p>
+<ul>
+<li><a href="http://dev.opera.com/articles/view/27-css-basics/example-selectors.html">example-selectors.html</a></li>
+<li><a href="http://dev.opera.com/articles/view/27-css-basics/selectors.css">selectors.css</a></li>
+</ul>
+<h4>Combining Selectors</h4>
+<p>You can join selectors together to define even more specific rules:</p>
+<ul>
+<li><code>p.warning {}</code> matches all paragraphs with a <code>class</code> of <code>warning</code>.</li>
+<li><code>div#example {}</code> matches the element with an <code>id</code> attribute of <code>example</code>, but only when it is a <code>div</code>.</li>
+<li><code>p.info, li.highlight {}</code> matches paragraphs with a <code>class</code> of <code>info</code> and list items with a <code>class</code> of <code>highlight</code>.</li>
+</ul>
+<p>In the following example we are using these to differentiate between the different warning styles:</p>
+<ul>
+<li><a href="http://dev.opera.com/articles/view/27-css-basics/example-specificselectors.html">example-specificselectors.html</a></li>
+<li><a href="http://dev.opera.com/articles/view/27-css-basics/specificselectors.css">specificselectors.css</a></li>
+</ul>
+<h2>CSS shorthand</h2>
+<p>Another thing you’ll come across regularly in this course is CSS shorthand. It is possible to combine several related CSS properties together into one property to save time and effort on your part. In this section we will look at the available types of shorthand.</p>
+<p>For example, the <code>border</code> property is shorthand.</p>
+<pre><code>border: 2px solid black;
+</code></pre>
+<p>is equivalent to</p>
+<pre><code>border-width: 2px;
+border-style: solid;
+border-color: black;
+</code></pre>
+<h3>Comparing individual and shorthand values</h3>
+<p>Consider the following margin rule:</p>
+<pre><code>div.foo {
+  margin-top: 1em;
+  margin-right: 1.5em;
+  margin-bottom: 2em;
+  margin-left: 2.5em;
+}
+</code></pre>
+<p>Such a rule could also be written as:</p>
+<pre><code>div.foo {
+  margin: 1em 1.5em 2em 2.5em;
+}
+</code></pre>
+<p>These types of property can take less than four values too, as follows:</p>
+<ol>
+<li>Same value applied to all four sides — <code>margin: 2px;</code></li>
+<li>First value applied to the top and bottom, second to the left and right — <code>margin: 2px 5px;</code>.</li>
+<li>First and third values applied to the top and bottom respectively, second value applied to the left and right — <code>margin: 2px 5px 1px;</code>.</li>
+</ol>
+<p>There are a number of properties that work like this, including <code>padding</code>, <code>margin</code> and <code>outline</code>. You’ll find more out about these later on.</p>
+<h3>Making the choice to use a single property or a shorthand value</h3>
+<p>Shorthand <code>margin</code> and <code>padding</code> properties tend to get the greatest share of use, though there are situations in which the shorthand properties are best avoided, or at least considered carefully, such as in the following situations:</p>
+<ul>
+<li><strong>When a single margin needs to be set.</strong> In a situation where only one property needs to be set, the act of simultaneously setting multiple properties usually violates the KISS (Keep It Simple, Stupid) Principle.</li>
+<li><strong>The selector to which your properties apply is subject to many edge cases.</strong> When this happens — which it will, sooner or later — the inevitable heap of shorthand values can become hard to follow when it comes time to repair or alter your layout.</li>
+<li><strong>The stylesheet you’re writing will be maintained by people with limited CSS skills (or spatial reasoning ability).</strong> If you can get them to read this article you may not need to worry about this scenario, but it’s best not to make any assumptions.</li>
+<li><strong>You need to supplant a value, to account for an edge case.</strong> This requirement is often a signal of a poorly designed document or stylesheet, but those are hardly unheard of.</li>
+</ul>
+<h2>Applying CSS to HTML</h2>
+<p>There are three ways to apply CSS to an HTML document: inline styles, embedded styles and external style sheets. Unless you have a very good reason to use one of the first two always go for the third option. The reason for this will become obvious to you soon, but first lets review the different options.</p>
+<h3>Inline styles</h3>
+<p>You can apply styles to a specific element using a <code>style</code> attribute, like so:</p>
+<pre><code>&lt;p style=&quot;background:blue; color:white; padding:5px;&quot;&gt;Paragraph&lt;/p&gt;
+</code></pre>
+<p>Inside this attribute you list all the CSS properties and their values. Each property/value pair is separated from the others by a semi-colon, and each property is separated from its value within each pair by a colon. <a href="http://dev.opera.com/articles/view/27-css-basics/example-inline.html">Try viewing the source of this example</a>.</p>
+<p>If you open this example in a browser you will see that the paragraph with the <code>style</code> attribute is blue with white text and has a different size to the others, as shown in Figure 1.</p>
+<p><img src="//static.webplatform.org/7/7c/cssbasic.png" alt="Screenshot of the Opera browser showing an applied inline style sheet"></p>
+<p>Figure 1: Opera shows the paragraph with the applied inline styles differently to the others.</p>
+<p>The benefit of inline styles is that the browser will be forced to use these settings. Any styles defined in other style sheets or even embedded in the <code>&lt;head&gt;</code> of the document will be overridden by these styles.</p>
+<p>The big problem with inline styles is that they make maintenance a lot harder than it should be. Using CSS is all about separating the presentation of the document from the structure, but inline styles are doing just the opposite — scattering presentation rules throughout the document.</p>
+<p>In addition to the maintenance issue you don’t take advantage of the most powerful part of CSS: the cascade. We’ll come back to the cascade in detail later, but for now all you need to know is that using the cascade means you define a look and feel in one place and the browser applies it to all the elements that match a certain rule.</p>
+<h3>Embedded styles</h3>
+<p>Embedded styles are placed in the <code>&lt;head&gt;</code> of the document inside a <code>&lt;style&gt;</code> element <a href="http://dev.opera.com/articles/view/27-css-basics/example-embedded.html">as in this example</a>:</p>
+<pre><code>&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+  p {
+    color:white;
+    background:blue;
+    padding:5px;
+  }
+&lt;/style&gt;
+</code></pre>
+<p>If you open the above link in a browser you’ll see that the defined styles get applied to all the paragraphs in the document, as shown in Figure 2. Also try looking at the example page’s source to see the CSS inside the <code>head</code>.</p>
+<p><img src="//static.webplatform.org/3/39/cssbasid.png" alt="Screenshot of the Opera browser showing how an embedded style sheet affects a lot of elements"></p>
+<p>Figure 2: Opera shows all paragraphs with the styles defined in the embedded style sheet.</p>
+<p>The benefit with embedded styles is that you don’t need to add a <code>style</code> attribute to each paragraph — you can style them all with one single definition. This also means that if you need to change the look and feel of all paragraphs, you can do it in one single location, however this is still limited to one document — what if you want to define the look of paragraphs for a whole site in one go? Enter external style sheets.</p>
+<h3>External style sheets</h3>
+<p>External style sheets means putting all your CSS definitions in their own file, saving it with a file extension of <code>.css</code>, and then applying it to your HTML documents using a <code>&lt;link&gt;</code> element inside the document <code>&lt;head&gt;</code>. View source of our <a href="http://dev.opera.com/articles/view/27-css-basics/example-external.html">example page</a>, and note that the <code>&lt;head&gt;</code> contains a <code>&lt;link&gt;</code> element that references this <a href="http://dev.opera.com/articles/view/27-css-basics/styles.css">external CSS file</a>, and verify that the styles defined in the external CSS file are applied to the HTML. Let’s have a closer look at that <code>&lt;link&gt;</code> element:</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+</code></pre>
+<p>We’ve talked about the <code>&lt;link&gt;</code> element before in this course. Just to recap: the <code>href</code> attribute points to the CSS file, the <code>media</code> attribute defines which media should get these styles applied to it (<code>screen</code> in this case as we don’t want a printout to look like this) and the <code>type</code> defines what the linked resource is (a file extension is not enough to determine that).</p>
+<p><img src="//static.webplatform.org/1/1b/cssbasie.png" alt="Screenshot of the Opera browser showing how an external style sheet affects a lot of elements"></p>
+<p>Figure 3: Opera shows the styles defined in the external style sheet when it is linked with a link element.</p>
+<p>This is the best of all worlds: you keep your look and feel definitions all in one single file, which means that you can make site-wide changes by changing one file, and the browser can load that once and then cache it for all other documents that reference it, meaning less to download.</p>
+<h3>@importing stylesheets</h3>
+<p>There is actually another way to import external style sheets into HTML files - the <code>@import</code> property. This is inserted into an embedded style sheet, in the same way as the embedded CSS shown above. The syntax looks as follows:</p>
+<pre><code>&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+  @import url(&quot;styles.css&quot;);
+
+  ...other import statements or CSS styles could go here...
+
+&lt;/style&gt;
+</code></pre>
+<p>You’ll sometimes see import statements without the brackets, but it does the same thing. Another thing to be aware of is that <code>@import</code> should always be first in an embedded style sheet. Finally, you can specify that the imported style sheet be applied only to certain types of media by including the media type at the end of the import statement (this works in every browser except IE6 and below). The following does the same thing as the previous code example:</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+  @import url(&quot;styles.css&quot;) screen;
+
+  ...other import statements or CSS styles could go here...
+
+&lt;/style&gt;
+</code></pre>
+<p>The first question you’ll be asking is “why on earth do I need another way to apply external style sheets to my HTML documents?” Well, you don’t really - I am mainly including information on <code>@import</code> here for the sake of completeness. There are a few minor advantages/disadvantages of using <code>@import</code> over <code>&lt;link&gt;</code> elements, but they are <em>very minor</em>, so it’s really up to you which way you go. <code>&lt;link&gt;</code> elements are the recognised best way to do things these days.</p>
+<ul>
+<li>Older browsers don’t recognise <code>@import</code> at all, so completely ignore it (Netscape 4 and older, and IE 4 and older if you omit the brackets from around the filename). You can therefore use an <code>@import</code> statement to hide styles from old buggy browsers that would use them incorrectly. You could put your up-to-date styles in an external stylesheet and import them with <code>@import</code>, then provide some really basic styles that will not cause IE/Netscape 4 to choke in the embedded stylesheet. This is useful, but you’ll very rarely need to ensure IE/Netscape 4 compatibility these days!</li>
+<li>As mentioned before, IE6 doesn’t support putting the media type at the end of the <code>@import</code> line, so they are not a good way to go if you want to insert multiple stylesheets for different media.</li>
+<li>You could argue that the code for multiple <code>@import</code> statements is smaller than the code for multiple <code>&lt;link&gt;</code> elements, but this is pretty negligible.</li>
+</ul>
+<h2>Summary</h2>
+<p>In this tutorial you learnt about applying CSS to HTML documents, either as inline styles using <code>style</code> attributes, embedded styles in a <code>&lt;style&gt;</code> element in the document <code>&lt;head&gt;</code> or as external files in their own document. You also learnt that the latter — linking an external style sheet using a <code>&lt;link&gt;</code> element — makes the most sense in terms of maintenance and caching. We then talked about the basic syntax of CSS and explained comments, different selector types, and grouping of selectors.</p>
+<p>In the next tutorial we’ll go deeper into the details of CSS, covering the cascade and specificity of selectors in detail.</p>
+<h2>Exercise Questions</h2>
+<ul>
+<li>What are the benefits and problems of inline styles and how do you apply them to an element?</li>
+<li>What is a style rule? Describe the different components and syntax.</li>
+<li>Say you have a bunch of style rules, what do you need to do to make them into an external style sheet?</li>
+<li>What does the following CSS selector match: <code>ul#nav{}</code>?</li>
+<li>What is the benefit of grouping selectors?</li>
+<li>How can you define a print style sheet?</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/27-css-basics/">27: CSS basics</a>, written by Christian Heilmann. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

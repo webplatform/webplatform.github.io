@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>filter · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="SVG filter effects apply graphics operations such as blurs and color transformations to a source graphic. Filters may be applied to graphical SVG elements (&amp;lt;circle&amp;gt;, &amp;lt;text&amp;gt;) as well as to grouping elements (&amp;lt;g&amp;gt;). The filter element specifies the position, dimensions, resolution and units for a filter effect. filter elements typically have multiple child elements (filter primitives) that combine together to create the final graphics effect." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/elements/">elements</a></li><li><a href="/svg/elements/filter/">filter</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>filter</h1>
+<h2>Summary</h2>
+<p>SVG filter effects apply graphics operations such as blurs and color transformations to a source graphic. Filters may be applied to graphical SVG elements (&lt;circle&gt;, &lt;text&gt;) as well as to grouping elements (&lt;g&gt;). The filter element specifies the position, dimensions, resolution and units for a filter effect. filter elements typically have multiple child elements (filter primitives) that combine together to create the final graphics effect.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/w/index.php?title=svg/objects/SVGFilterElement&amp;action=edit&amp;redlink=1">SVGFilterElement</a>
+</dd>
+</dl>
+<p>An SVG filter applies a graphics effect to an SVG element. In SVG 1.1, the range of available graphics effects includes blurs, convolutions, color curve manipulation, cross-channel color effects, erosion effects, blending, compositing and more. The <strong>filter</strong> element declares a filter effect and is usually included in the <strong>defs</strong> section of an SVG XML document or within an inline SVG element in a HTML5 document. The filter element contains a set of child elements that specify the individual graphics operations or “filter primitives” that comprise that filter operation. Filter effects are applied to an SVG element by adding a <strong>filter</strong> property, set to the id of the desired filter element.</p>
+<p>Below is a basic example of an SVG Filter that shows a gaussian blur applied to an SVG rectangle element. In this example, we first declare a filter whose id is &quot;gblur&quot;. Within this filter element, we declare a filter primitive (<strong>feGausssianBlur</strong>) with a standard deviation of 5. After closing our tags, we draw a rectangle with the SVG <strong>rect</strong> element. We apply the filter to the element by adding a filter property that references its id, <strong>gblur</strong>.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200px"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200px"</span> <span class="hljs-attribute">viewbox</span>=<span class="hljs-value">"0 0 200 200"</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/2000/svg"</span> <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.1"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>A basic filter example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"gblur"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"5"</span>/&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"175"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#gblur)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>​​​​​​​​​​​
+</code></pre>
+<p><img src="//static.webplatform.org/6/6b/BasicSVGFilterExampleGaussBlur.png" alt="image showing input and output of a blur filter effect"></p>
+<h3>Filter Region</h3>
+<p>The <strong>filter</strong> element may optionally define the position, dimensions, resolution, and units for the output of a filter effect. The position and dimensions of a filter may be specified using the following parameters: x, y, width, height. The default values are *not intuitive* and are:</p>
+<ul>
+<li>x: -10%</li>
+<li>y: -10%</li>
+<li>width: 120%</li>
+<li>height: 120%</li>
+</ul>
+<p>This has the effect that, by default, the output of a filter paints onto the screen with a 10% overflow all around relative to the input element. In some cases (such as blur effects) this may be desirable. In other cases, such as lighting effects, this may be undesirable, and the filter region should be specified explicitly. The below example shows the effect of specifying a filter effects region with x and y set at 50%: the filter effects region effectively clips the output.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200px"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200px"</span> <span class="hljs-attribute">viewbox</span>=<span class="hljs-value">"0 0 200 200 xmlns="</span><span class="hljs-value">http:</span>//<span class="hljs-attribute">www.w3.org</span>/<span class="hljs-attribute">2000</span>/<span class="hljs-attribute">svg</span>" <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.1"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>An example of a clipped filter region<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"gblurclipped"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"60%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"60%"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"5"</span>/&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"175"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#gblurclipped)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>​​​​​​​​​​​
+</code></pre>
+<p><img src="//static.webplatform.org/4/46/BasicSVGFilterExampleWithClipRegion.png" alt="image showing the result of specifying a custom filter effects region"></p>
+<h3>Filter Resolution</h3>
+<p>By default, the browser decides what resolution to use when performing operations on filter inputs, but it is possible to set this resolution by explicitly setting the <strong>filterRes</strong> property. Choosing a filter resolution significantly lower than the display default will result in visible pixelation but filters will execute faster. Choosing a filter resolution significantly higher than the default will cause slow filter performance. Filter resolution may be separately specified in both the <a href="/docs/svg/properties/filterResX"><strong>X</strong></a> and <a href="/docs/svg/properties/filterResY"><strong>Y</strong></a> dimension.</p>
+<p>Below we show an example of blurs with low values of filterRes. The first example shows a filterRes with a single low value which is applied to both the X and Y dimensions. The second example shows a filterRes with two values - a high value for X and a low value for the Y dimension - which results in a low resolution blur in just the Y dimension. Setting a very low resolution results in visible pixelation.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"450px"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"300px"</span> <span class="hljs-attribute">viewbox</span>=<span class="hljs-value">"0 0 450 300"</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/2000/svg"</span> <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.1"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example showing filterRes<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"lowresblur"</span> <span class="hljs-attribute">filterRes</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"-50%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"-50%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200%"</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"5"</span>/&gt;</span>
+       <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"lowresblurY"</span> <span class="hljs-attribute">filterRes</span>=<span class="hljs-value">"425 25"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"-50%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"-50%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200%"</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"5"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"175"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#lowresblur)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"325"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#lowresblurY)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>​
+</code></pre>
+<p><img src="//static.webplatform.org/b/bf/SVGFiltersFilterResExample.png" alt="image showing the result of specifying a custom filter effects region"></p>
+<h3>Units and Coordinates for Filter Effects</h3>
+<h4>filterUnits</h4>
+<p>By default, the units and coordinate system for the filter effects region (x,y,width,height) of a filter element are set relative to the bounding box of the element referencing the filter. In SVG terms, this is called the &quot;objectBoundingBox&quot;. When we write <strong>x=&quot;50%&quot;</strong> it means &quot;set the starting x position of the filter region at the left side of the bounding box of the referencing element + 50% of the width of the element&quot;.</p>
+<p>But you may also specify the units and coordinates explicitly by setting the <strong>filterUnits</strong> property. The two alternatives are “objectBoundingBox” (the default which we’re just described) or &quot;userSpaceOnUse&quot;. userSpaceOnUse sets the filter units and the coordinate system to the canvas of the referencing element, or in SVG terms, the &quot;userSpaceOnUse&quot;.</p>
+<h4>primitiveUnits</h4>
+<p>In addition to the unit system for the filter itself, you may also specify the unit system that the filter’s child filter primitives will use. Once again, the choice is between userSpaceOnUse and objectBoundingBox. These affect the 0,0 coordinates and the unit values for the filter primitives in the same way as for filterUnits.</p>
+<p>In the example below, we set the unit systems of both the filter and filter primitives to the four combinations possible for userSpaceOnUse and objectBoundingBox, while achieving the same filter effect. Here, we use an <strong>&lt;<a href="/w/index.php?title=feFlood&amp;action=edit&amp;redlink=1">feFlood</a>&gt;</strong> primitive to generate a rectangular color field that is offset from its referencing element. Then we use <strong>&lt;<a href="/w/index.php?title=feMerge&amp;action=edit&amp;redlink=1">feMerge</a>&gt;</strong> to combine the feFlood with the original element (the <strong>SourceGraphic</strong>).</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"600px"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"300px"</span> <span class="hljs-attribute">viewbox</span>=<span class="hljs-value">"0 0 600 300"</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/2000/svg"</span> <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.1"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>A basic filter example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">filterUnits</span>=<span class="hljs-value">"objectBoundingBox"</span> <span class="hljs-attribute">primitiveUnits</span>=<span class="hljs-value">"objectBoundingBox"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"BoxBox"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100%"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feFlood</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"20%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"20%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">flood-color</span>=<span class="hljs-value">"green"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+         <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">filterUnits</span>=<span class="hljs-value">"userSpaceOnUse"</span> <span class="hljs-attribute">primitiveUnits</span>=<span class="hljs-value">"objectBoundingBox"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"UserBox"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"175"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"120"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feFlood</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"20%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"20%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">flood-color</span>=<span class="hljs-value">"green"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+         <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">filterUnits</span>=<span class="hljs-value">"objectBoundingBox"</span> <span class="hljs-attribute">primitiveUnits</span>=<span class="hljs-value">"userSpaceOnUse"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"BoxUser"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0%"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100%"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feFlood</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"349"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"74"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"60"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"60"</span> <span class="hljs-attribute">flood-color</span>=<span class="hljs-value">"green"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+         <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">filterUnits</span>=<span class="hljs-value">"userSpaceOnUse"</span> <span class="hljs-attribute">primitiveUnits</span>=<span class="hljs-value">"userSpaceOnUse"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"UserUser"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"475"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"120"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feFlood</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"499"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"74"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"60"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"60"</span> <span class="hljs-attribute">flood-color</span>=<span class="hljs-value">"green"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"greenbox"</span>/&gt;</span>
+         <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#BoxBox)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"175"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"blue"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#UserBox)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"325"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"grey"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"black"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#BoxUser)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"475"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"black"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"purple"</span> <span class="hljs-attribute">filter</span>=<span class="hljs-value">"url(#UserUser)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+</code></pre>
+<p>Note: that when we use <strong>userSpaceOnUse</strong>, we calculate our filter and feFlood coordinates offset from the (0,0) of the user space that the <strong>&lt;rect&gt;</strong> has been drawn on, using viewbox units.</p>
+<p><img src="//static.webplatform.org/0/03/SVGFilterUnitsExamples.png" alt="image showing four identical filters with different unit systems for filterUnits and primitiveUnits"></p>
+<h2>Examples</h2>
+<p>Basic filter effect example</p>
+<pre><code>
+
+<span class="processing">&lt;svg <span class="hljs-variable">width</span>=<span class="hljs-string">"200px"</span> <span class="hljs-variable">height</span>=<span class="hljs-string">"200px"</span> viewbox=<span class="hljs-string">"0 0 200 200"</span> xmlns=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> version=<span class="hljs-string">"1.1"</span>&gt;
+&lt;title&gt;A basic <span class="hljs-built_in">filter</span> example&lt;/title&gt;
+   &lt;defs&gt;
+     &lt;<span class="hljs-built_in">filter</span> id=<span class="hljs-string">"gblur"</span>&gt;
+        &lt;feGaussianBlur stdDeviation=<span class="hljs-string">"5"</span>/&gt;
+     &lt;/<span class="hljs-built_in">filter</span>&gt;
+   &lt;/defs&gt;
+&lt;<span class="hljs-built_in">rect</span> x=<span class="hljs-string">"50"</span> y=<span class="hljs-string">"50"</span> <span class="hljs-variable">width</span>=<span class="hljs-string">"100"</span> <span class="hljs-variable">height</span>=<span class="hljs-string">"100"</span> <span class="hljs-built_in">fill</span>=<span class="hljs-string">"blue"</span> <span class="hljs-built_in">stroke</span>=<span class="hljs-string">"red"</span> <span class="hljs-built_in">filter</span>=<span class="hljs-string">"url(#gblur)"</span>/&gt;
+&lt;/svg&gt;​​​​​​​​​​​
+</span></code></pre>
+</pre>
+[View live example](http://jsfiddle.net/jsfmullany/djQ9A/)
+<h2>Usage</h2>
+<pre><code> Within the enclosing filter element, a filter effect is defined by taking inputs, applying transformation operations and feeding the results of those transformations into further operations. Advanced filters typically can contain 5or more individual filter primitives in an input/output chain. Filters are also capable of inheriting from other filters via the xlink:href attribute, however, this is not widely supported in current browsers (Dec 2012).
+</code></pre>
+<p>Most filter attributes are animateable via the &lt;animate&gt; element (available in all browses except IE as of November 2012). With the increasing prevalence of GPU acceleration of filters, performance on many browsers is now acceptable.</p>
+<p>Child elements of the Filter element - filter primitives - have two optional attributes that specify the color space within which color interpolation calculations are performed: <strong>color-interpolation</strong> and <strong>color-interpolation-filters</strong>. The default for the former is sRGB, and the default for the latter is linearRGB. Manipulations that invert the color space (through feColorMatrix or feComponentTransfer) can result in “non-intuitive” results. For example, a color inversion of a greyscale image in linearRGB will result in a pronounced shift toward whiter tones. This can be corrected by setting the value of the primitive to sRGB. These attributes can be set on the individual filter primitives or inherited from the filter element itself.</p>
+<p>If no other input is specified, but one is required, the first filter primitive within a filter will take a rasterized (bitmapped) version of the referring element as its input. Subsequent filter primitives that expect an input will take the result of the immediately preceding filter primitive as input.</p>
+<p>In complex filters, it can become difficult to keep track (and debug) inputs and outputs if they are left implicit; and it is good practice to explicitly declare inputs and outputs for each primitive.</p>
+<p>SVG filter primitives can be colloquially divided into inputs, transformations, lighting effects and combinations.</p>
+<p>Inputs:</p>
+<ul>
+<li>feFlood: generates a color field</li>
+<li>feTurbulence: generates a wide variety of noise effects</li>
+<li>feImage: generates an image from an external image reference (or object reference, but this is not widely supported in current browsers Dec '12)</li>
+</ul>
+<p>Transformations:</p>
+<ul>
+<li>feColorMatrix: transforms the input values of an RBGA pixel into output values</li>
+<li>feComponentTransfer: adjusts the color curve of an individual color channel</li>
+<li>feConvolveMatrix: replaces each pixel with a new pixel calculated from pixel values in an area relative to the the current pixel)</li>
+<li>feGaussianBlur: replaces the current pixel with a weighted average of pixels in an area around the pixel</li>
+<li>feDisplacementMap: moves each pixel from its current position based on the R,G or B values from another input graphic.</li>
+<li>feMorphology: replaces each pixel with a new pixel calculated from the maximum or minimum value of all pixels in a rectangular area around that pixel.</li>
+<li>feOffset: moves the input from its current position</li>
+</ul>
+<p>Lighting Effects:</p>
+<ul>
+<li>feSpecularLighting: provides a “shiny” 2D or pseudo-3D lighting effect</li>
+<li>feDiffuseLighting: provides a “matte” 2D or pseudo-3D lighting effect</li>
+<li>feDistantLight: provides a distant light source for specular or diffuse lighting</li>
+<li>feSpotLight: provides a conic section light source for specular or diffuse lighting</li>
+<li>fePointLight: provides a point light source for specular or diffuse lighting</li>
+</ul>
+<p>Combinations:</p>
+<ul>
+<li>feMerge: creates a simple <strong>over</strong> composite from multiple inputs (including previous filter inputs)</li>
+<li>feBlend: blends multiple inputs using mixing rules</li>
+<li>feComposite: combines multiple inputs using set combination rules, taking into account alpha values.</li>
+<li>feTile: tiles input to create a repeating pattern</li>
+</ul>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>Although SVG is a vector graphics technology, it is important to emphasize that SVG Filters perform *pixel-level* operations on all inputs (including SVG shapes) and produce rasterized (bitmapped) outputs at a specified level of resolution. Applying a 10x scale transform (for example) on an plain SVG curve that has been filtered at normal screen resolution will produce pixelated edges since the anti-aliasing of the original graphic has been converted to pixels by the filter and scaled up. (It is unclear whether this is spec compliant or just a limitation of current implementations)</p>
+<p>Remember that SVG is XML when you write filters, so all tags must be closed and many properties and attributes are required to be specified explicitly or the filter will not execute.</p>
+<p>A filter element is never rendered directly. It is only referenced using the filter property on the element to which the filter is applied. Note that the <a href="/docs/css/properties/display"><strong>display</strong></a> property does not apply to the <strong>filter</strong> element and elements are not directly rendered even if the <strong>display</strong> property is set to a value other than &quot;none&quot;. Conversely, <strong>filter</strong> elements are available for referencing even when the<strong>display</strong> property on the <strong>filter</strong>element or any of its ancestors is set to &quot;none&quot;.</p>
+<p>SVG filters can be referenced via a <a href="/w/index.php?title=CSS_Filter&amp;action=edit&amp;redlink=1">CSS Filter</a>, although as of November 2013, only a subset of primitives are supported via this mechanism.</p>
+<h3>Syntax</h3>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/SVG/filters.html#FilterElement">http://www.w3.org/TR/SVG/filters.html#FilterElement</a></li>
+</ul>
+<h3>Members</h3>
+<h4>Methods</h4>
+<p>The <strong>SVGFilterElement</strong> object has these methods.</p>
+<ul>
+<li><a href="/docs/svg/methods/setFilterRes"><strong>setFilterRes</strong></a>: Sets the X and Y values of the <a href="/docs/svg/properties/filterResX"><strong>filterRes</strong></a> attribute.</li>
+</ul>
+<h4>Properties</h4>
+<p>The <strong>SVGFilterElement</strong> object has these properties.</p>
+<ul>
+<li><a href="/docs/svg/properties/className"><strong>className</strong></a>: Gets the names of the classes that are assigned to this object.</li>
+<li><a href="/docs/svg/properties/externalResourcesRequired"><strong>externalResourcesRequired</strong></a>: Gets a value that indicates whether referenced resources that are not in the current document are required to correctly render a given element.</li>
+<li><a href="/docs/svg/properties/filter"><strong>filter</strong></a>: The <a href="/docs/svg/properties/filter"><strong>filter</strong></a> property is generally used to apply a previously defined <strong>filter</strong> to an applicable element.</li>
+<li><a href="/docs/svg/properties/filterResX"><strong>filterResX</strong></a>: Corresponds to the X component of the attribute filterRes on the given filter element.</li>
+<li><a href="/docs/svg/properties/filterResY"><strong>filterResY</strong></a>: Corresponds to the Y component of the attribute filterRes on the given filter element.</li>
+<li><a href="/docs/svg/properties/filterUnits"><strong>filterUnits</strong></a>: Defines the coordinate system for the filter attributes.</li>
+<li><a href="/docs/svg/properties/height"><strong>height</strong></a>: Gets or sets the height of an element.</li>
+<li><a href="/docs/svg/properties/primitiveUnits"><strong>primitiveUnits</strong></a>: Specifies the coordinate system for the various length values within the filter primitives and for the attributes that define the filter primitive subregion. The filter primitives identify a subregion which restricts calculation and rendering of the given filter primitive. The default filter primitive subregion is equal to the filter region.</li>
+<li><a href="/docs/svg/properties/style"><strong>style</strong></a>: Gets a <a href="/docs/css/cssom/style"><strong>style</strong></a> object.</li>
+<li><a href="/docs/svg/properties/width"><strong>width</strong></a>: Defines the width of an element.</li>
+<li><a href="/docs/svg/properties/x"><strong>x</strong></a>: Gets or sets the x-coordinate value.</li>
+<li><a href="/docs/svg/properties/xmllang"><strong>xmllang</strong></a>: Gets or sets a value that specifies the language that is used in the contents and attribute values of an element.</li>
+<li><a href="/docs/svg/properties/xmlspace"><strong>xmlspace</strong></a>: Gets or sets a value that indicates whether white space is preserved in character data.</li>
+<li><a href="/docs/svg/properties/y"><strong>y</strong></a>: Gets or sets the y-coordinate value.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/SVG/">SVG 1.1 (Second Edition)</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Visual Effects</h4>
+<ul>
+<li><p><a href="/docs/css/color">color</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_hue">Colors by Hue</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_name">Colors by Name</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_saturation">Colors by Saturation</a></p></li>
+<li><p><a href="/docs/css/color/user-defined_system_colors">User-Defined System Colors</a></p></li>
+<li><p><a href="/docs/css/high_contrast_mode/properties/-ms-high-contrast">-ms-high-contrast</a></p></li>
+<li><p><a href="/docs/css/high_contrast_modeapis/properties/ms-high-contrast-adjust">ms-high-contrast-adjust</a></p></li>
+<li><p><a href="/docs/css/properties/-ms-progress-appearance">-ms-progress-appearance</a></p></li>
+<li><p><a href="/docs/css/properties/background-blend-mode">background-blend-mode</a></p></li>
+<li><p><a href="/docs/css/properties/clip">clip</a></p></li>
+<li><p><a href="/docs/css/properties/cursor">cursor</a></p></li>
+<li><p><a href="/docs/css/properties/opacity">opacity</a></p></li>
+<li><p><a href="/docs/css/properties/zoom">zoom</a></p></li>
+<li><p><a href="/docs/html/attributes/height">height</a></p></li>
+<li><p><a href="/docs/html/elements/blink">blink</a></p></li>
+<li><p><strong>filter</strong></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+<h3>External resources</h3>
+<p>SVG Filter Effects <a href="http://www.w3.org/TR/SVG/filters.html#FilterElement">http://www.w3.org/TR/SVG/filters.html#FilterElement</a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

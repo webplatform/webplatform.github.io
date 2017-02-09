@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rebuilding SMW when job queue is going out of control · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Rebuilding_Semantic Media Wiki when job queue is going out of control/">Rebuilding Semantic Media Wiki when job queue is going out of control</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Rebuilding SMW when job queue is going out of control</h1>
+<h2>Symptom</h2>
+<p>When the job queue seems to always have more and more jobs (“SMWUpdateJob”) to do and the job runner (“maintenance/runJobs.php”) has more than one running for long periods. It means that the extension needs to rebuild the data from scratch.</p>
+<p><strong>How to validate if it apply?</strong> Look at the <a href="/docs/w/api.php?action=query&amp;meta=siteinfo&amp;siprop=statistics">stats component of MW api</a>. Last event, we had many thousands (e.g. jobs=&quot;318102&quot;).</p>
+<p><strong>On the database server</strong> From the master, read those values.</p>
+<pre><code class="html">mysql&gt; use wpwiki;
+mysql&gt; SELECT COUNT(*) FROM job WHERE job_cmd LIKE '%SMW%';
++----------+
+| COUNT(*) |
++----------+
+|   318223 |
++----------+
+</code></pre>
+<p>Note that number is getting bigger and bigger, it is expectable that they are most likely ALL for Semantic Media Wiki.</p>
+<h2>Things to know</h2>
+<ul>
+<li>If the database setup has one master and multiple slave, make sure you do them on the master only, the slaves should follow. Doing the opposite might break the consistency of the database cluster.</li>
+<li>The cronjobs should ideally, in the scripts, use the timeout utility with a maximum duration of an hour. Doing this prevents to have multiple long running tasks slowly eating all CPU resources.</li>
+<li>MediaWiki configuration file (see code below) should show you which is the database master, and which is the read only (“slave”). Only the first entry with <code>load=0</code> can read+write, the other entries are read-only.</li>
+</ul>
+<pre><code class="html">root@app5:/home/renoirb# head -n 40 /srv/webplatform/wiki/CurrentSettings.php
+<span class="php"><span class="hljs-preprocessor">&lt;?php</span>
+<span class="hljs-comment">// ... truncated file notes ...</span>
+<span class="hljs-variable">$wgDBservers</span> = <span class="hljs-keyword">array</span>(
+        <span class="hljs-keyword">array</span>(
+                <span class="hljs-string">'host'</span> =&gt; <span class="hljs-string">"master.db.wpdn"</span>,        <span class="hljs-comment">// &lt; The salt states ensures</span>
+                <span class="hljs-string">'dbname'</span> =&gt; <span class="hljs-string">"wpwiki"</span>,              <span class="hljs-comment">//     that the master database server</span>
+                <span class="hljs-string">'user'</span> =&gt; <span class="hljs-string">"HIDDENINFORMATION"</span>,     <span class="hljs-comment">//     has this hostname among all VMs.</span>
+                <span class="hljs-string">'password'</span> =&gt; <span class="hljs-string">"HIDDENINFORMATION"</span>,
+                <span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">"mysql"</span>,
+                <span class="hljs-string">'flags'</span> =&gt; DBO_DEFAULT,
+                <span class="hljs-string">'load'</span> =&gt; <span class="hljs-number">0</span>     <span class="hljs-comment">//  &lt; This means read AND write,</span>
+                                <span class="hljs-comment">//      it is specific to the master.</span>
+        ),
+);
+<span class="hljs-keyword">if</span> ( !<span class="hljs-variable">$wgCommandLineMode</span> ) {
+        <span class="hljs-variable">$wgDBservers</span>[] = <span class="hljs-keyword">array</span>(
+                <span class="hljs-string">'host'</span> =&gt; <span class="hljs-string">"HIDDENINFORMATION.dho.wpdn"</span>,
+                <span class="hljs-string">'dbname'</span> =&gt; <span class="hljs-string">"HIDDENINFORMATION"</span>,
+                <span class="hljs-string">'user'</span> =&gt; <span class="hljs-string">"HIDDENINFORMATION"</span>,
+                <span class="hljs-string">'password'</span> =&gt; <span class="hljs-string">"HIDDENINFORMATION"</span>,
+                <span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">"mysql"</span>,
+                <span class="hljs-string">'flags'</span> =&gt; DBO_DEFAULT,
+                <span class="hljs-string">'load'</span> =&gt; <span class="hljs-number">1</span>    <span class="hljs-comment">//  &lt; This means read ONLY</span>
+        );
+}
+</span></code></pre>
+<ul>
+<li>Not all app servers are used full time by the caching layer, Fastly (Varnish). You can see that in <a href="https://app.fastly.com/">Fastly admin panel</a>, in the “Hosts” within “Configure” for the appropriate service. Current configuration is that two <code>app*</code> VMs have the load in equal portions (200), the 3rd VM is exposed as a backup load (190, see B, in attached image). The 3rd is ready if the two first ones can’t serve all requests.</li>
+<li>The cronjobs are run from a 4th app server that is not exposed at all. In the <em>app server VM listing</em> below, it’s currently &quot;app5&quot;.</li>
+</ul>
+<p><img src="//static.webplatform.org/f/fb/fastly-docs-service-hosts-screenshot.png" alt="fastly-docs-service-hosts-screenshot.png"></p>
+<ul>
+<li>'<em>app server VM listing</em>. To know which VMs are <code>app*</code> servers, run the following.</li>
+</ul>
+<pre><code class="html">renoirb@deployment:~$ nova list | grep app
+| ... | app3  | ACTIVE | None       | Running     | vmnet=10.0.0.32, 208.113.157.171 |
+| ... | app4  | ACTIVE | None       | Running     | vmnet=10.0.0.18, 208.113.157.173 |
+| ... | app5  | ACTIVE | None       | Running     | vmnet=10.0.0.2, 208.113.157.166  |
+| ... | app6  | ACTIVE | None       | Running     | vmnet=10.0.0.14, 208.113.157.162 |
+</code></pre>
+<h2>Steps</h2>
+<h3>In summary</h3>
+<ol>
+<li>Make sure the “job runner” will not run during the whole process (e.g. comment all applicable crontab)</li>
+<li>Run SMW rebuild command</li>
+<li>Truncate job table</li>
+<li>Un comment the “job runner”</li>
+</ol>
+<h3>In detail</h3>
+<ul>
+<li>Find the cron entries mentioning ‘runJob.php’ and comment them. This can be found by searching (<code>grep -rli 'runJob' /srv/salt</code>) in the salt state files. The job are assigned to the &quot;<code>www-data</code>&quot; user on the strongest app server (e.g. app4).</li>
+<li>Make sure no job is running. The following shows it is fine.</li>
+</ul>
+<pre><code class="html">root@deployment:~# salt 'app*' cmd.run 'ps aux | grep runJob'
+app1:
+    root     32739  0.0  0.0   9220  1188 ?        S    00:14   0:00 /bin/sh -c ps aux | grep unJob
+    root     32741  0.0  0.0   6176   672 ?        S    00:14   0:00 grep unJob
+app6:
+    root     10650  0.0  0.0   9220  1188 ?        S    00:14   0:00 /bin/sh -c ps aux | grep unJob
+    root     10652  0.0  0.0   6180   704 ?        S    00:14   0:00 grep unJob
+app5:
+    www-data 23979  0.0  0.0   4112   580 ?        Ss   14:44   0:00 /bin/sh -c /srv/webplatform/wiki/mediawiki-runJobs.sh #1st run
+    www-data 23980  0.0  0.0   9228  1332 ?        S    14:44   0:00 /bin/bash -l /srv/webplatform/wiki/mediawiki-runJobs.sh
+    www-data 23983  0.0  0.0   3876   412 ?        Ss   14:44   0:00 /usr/bin/timeout 3100 /usr/bin/php /srv/webplatform/wiki/current/maintenance/runJobs.php
+    www-data 23984 71.7  0.6 203932 50700 ?        R    14:44  24:59 /usr/bin/php /srv/webplatform/wiki/current/maintenance/runJobs.php
+    www-data 24347  0.0  0.0   4112   584 ?        Ss   15:16   0:00 /bin/sh -c /srv/webplatform/wiki/mediawiki-runJobs.sh #2nd run
+    www-data 24348  0.0  0.0   9228  1328 ?        S    15:16   0:00 /bin/bash -l /srv/webplatform/wiki/mediawiki-runJobs.sh
+    www-data 24351  0.0  0.0   3876   412 ?        Ss   15:16   0:00 /usr/bin/timeout 3100 /usr/bin/php /srv/webplatform/wiki/current/maintenance/runJobs.php
+    www-data 24352 69.2  0.5 202424 49160 ?        S    15:16   1:59 /usr/bin/php /srv/webplatform/wiki/current/maintenance/runJobs.php
+    root     24395  0.0  0.0   3876   408 pts/1    S+   15:18   0:00 /usr/bin/timeout 10800 /usr/bin/php /srv/webplatform/wiki/current/maintenance/runJobs.ph
+p
+    root     24396 65.6  0.5 202472 49164 pts/1    R+   15:18   0:13 /usr/bin/php /srv/webplatform/wiki/current/maintenance/runJobs.php
+    root     24403  0.0  0.0   9220  1188 ?        S    15:18   0:00 /bin/sh -c ps aux | grep unJob
+    root     24405  0.0  0.0   6180   708 ?        S    15:18   0:00 grep unJob
+app4:
+    root      4183  0.0  0.0   9220  1188 ?        S    00:14   0:00 /bin/sh -c ps aux | grep unJob
+    root      4185  0.0  0.0   6176   672 ?        S    00:14   0:00 grep unJob
+</code></pre>
+<ul>
+<li>Note that in this sample, we can see the use of the <code>/usr/bin/timeout</code> with various durations. The current salt configuration has the cronjob to run tasks for a maximum of 3100 seconds. The other job that has a duration of 10800 has been started manually to attempt emptying the queue.</li>
+<li>Connect via SSH to the strongest app server with lowest weight in Fastly caching service. It is most likely the one that had crontabs with the <code>'runJob.php'</code> scheduled tasks.</li>
+<li>Kill all related process on the server, and make sure they are not running anymore</li>
+</ul>
+<pre><code class="html">root@app5:/srv/webplatform/wiki/test/extensions/SemanticMediaWiki/maintenance# kill -9 24395 24351 23983
+root@app5:/srv/webplatform/wiki/test/extensions/SemanticMediaWiki/maintenance# ps aux | grep unJob
+root     32427  0.0  0.0   7640   916 pts/3    S+   02:02   0:00 grep --color=auto unJob
+</code></pre>
+<ul>
+<li>Start a <code>screen</code> or <code>tmux</code> session and run the following from within it. That way, if your SSH connection dies, the script will continue to run.</li>
+<li>Go to the appropriate folder where MediaWiki is installed. We have more than one installation, in this situation the appropriate place is in <code>/srv/webplatform/wiki/current/</code>. Always refer to the Salt states on the deployment server in <code>/srv/salt</code></li>
+<li>Run the Semantic Media Wiki refreshData script, it might take a while. Expect about 20 minutes of time to wait.</li>
+</ul>
+<pre><code class="html">cd /srv/webplatform/wiki/wpwiki/mediawiki
+php extensions/SemanticMediaWiki/maintenance/SMW_refreshData.php -v
+...
+(29477) Processing ID 29478 ...
+(29478) Processing ID 29479 ...
+(29479) Processing ID 29480 ...
+(29480) Processing ID 29481 ...
+(29481) Processing ID 29482 ...
+(29482) Processing ID 29483 ...
+(29483) Processing ID 29484 ...
+(29484) Processing ID 29485 ...
+(29485) Processing ID 29486 ...
+(29486) Processing ID 29487 ...
+29487 IDs refreshed.
+</code></pre>
+<ul>
+<li>If the job runner dies, you can use the ID it died on, and re-run the <code>SMW_refreshData.php</code> with the <code>-s</code> option.</li>
+<li>When all is done, you can connect to the master database server and truncate the job table. Note that I made sure that the count is the same as I checked before running the <code>SMW_refreshData.php</code>.</li>
+</ul>
+<pre><code class="html">mysql&gt; use wpwiki;
+mysql&gt; SELECT COUNT(*) FROM job WHERE job_cmd LIKE '%SMW%';
++----------+
+| COUNT(*) |
++----------+
+|   318223 |
++----------+
+mysql&gt; truncate job;
+Query OK, 0 rows affected (0.34 sec)
+mysql&gt; SELECT COUNT(*) FROM job WHERE job_cmd LIKE '%SMW%';
++----------+
+| COUNT(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+</code></pre>
+<ul>
+<li>All should be fine now!</li>
+<li>Re-enable the jobRun in the appropriate cron jobs.</li>
+</ul>
+<h2>Reference</h2>
+<ul>
+<li><a href="http://semantic-mediawiki.org/wiki/Help:Repairing_SMW's_data">Repairing Semantic Media Wiki data</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

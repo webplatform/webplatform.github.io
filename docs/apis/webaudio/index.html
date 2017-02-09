@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Web Audio API · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="Describes a high-level JavaScript API for processing and synthesizing audio in web applications." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/webaudio/">webaudio</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Web Audio API</h1>
+<h2>Summary</h2>
+<p>Describes a high-level JavaScript API for processing and synthesizing audio in web applications.</p>
+<dl>
+<dt><a href="/docs/apis/webaudio/AudioBuffer">AudioBuffer</a></dt>
+<dd>This interface represents a memory-resident audio asset, primarily for one-shot sounds and other short audio clips. Its format is non-interleaved IEEE 32-bit linear PCM with a nominal range of -1 -&gt; +1. It can contain one or more channels.
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioListener">AudioListener</a></dt>
+<dd>This interface represents the position and orientation of the person listening to the audio scene. All <a href="/docs/apis/webaudio/PannerNode"><strong>PannerNode</strong></a> objects spatialize in relation to the <a href="/docs/apis/webaudio/AudioContext"><strong>AudioContext</strong></a>'s listener.
+</dd>
+<dt><a href="/docs/apis/webaudio/ChannelMergerNode">ChannelMergerNode</a></dt>
+<dd>Represents an AudioNode for combining channels from multiple audio streams into a single audio stream. Often used in conjunction with <a href="/docs/apis/webaudio/ChannelSplitterNode">ChannelSplitterNode</a>.
+</dd>
+<dt><a href="/docs/apis/webaudio/ChannelSplitterNode">ChannelSplitterNode</a></dt>
+<dd>Represents an AudioNode for accessing the individual channels of an audio stream in the routing graph. Often used in conjunction with <a href="/docs/apis/webaudio/ChannelMergerNode">ChannelMergerNode</a>.
+</dd>
+<dt><a href="/docs/apis/webaudio/ConvolverNode">ConvolverNode</a></dt>
+<dd>This interface represents a processing node which applies a linear convolution effect given an impulse response.
+</dd>
+<dt><a href="/docs/apis/webaudio/GainNode">GainNode</a></dt>
+<dd>Changing the gain of an audio signal is a fundamental operation in audio applications. The <a href="/docs/apis/webaudio/GainNode"><strong>GainNode</strong></a> is one of the building blocks for creating mixers. This interface is an <a href="/docs/apis/webaudio/AudioNode"><strong>AudioNode</strong></a> with a single input and single output, which multiplies the input audio signal by the (possibly time-varying) gain attribute, copying the result to the output.
+</dd>
+<dt><a href="/docs/apis/webaudio/OscillatorNode">OscillatorNode</a></dt>
+<dd><a href="/docs/apis/webaudio/OscillatorNode"><strong>OscillatorNode</strong></a> represents an audio source generating a periodic waveform. It can be set to a few commonly used waveforms. Additionally, it can be set to an arbitrary periodic waveform through the use of a <a href="/docs/apis/webaudio/WaveTable"><strong>WaveTable</strong></a> object. Oscillators are common foundational building blocks in audio synthesis.
+</dd>
+<dt><a href="/docs/apis/webaudio/WaveTable">WaveTable</a></dt>
+<dd>WaveTable represents an arbitrary periodic waveform to be used with an <a href="/docs/apis/webaudio/OscillatorNode"><strong>OscillatorNode</strong></a>.
+</dd>
+</dl>
+<h2>Usage</h2>
+<pre><code> This specification describes a high-level JavaScript API for processing and synthesizing audio in web applications. The primary paradigm is of an audio routing graph, where a number of AudioNode objects are connected together to define the overall audio rendering. The actual processing will primarily take place in the underlying implementation (typically optimized Assembly / C / C++ code), but direct JavaScript processing and synthesis is also supported.
+</code></pre>
+<p>This API is designed to be used in conjunction with other APIs and elements on the web platform, notably: <a href="/w/index.php?title=apis/xhr/objects/XMLHttpRequest&amp;action=edit&amp;redlink=1"><strong>XMLHttpRequest</strong></a> (using the <strong>responseType</strong> and <strong>response</strong> attributes). For games and interactive applications, it is anticipated to be used with the canvas 2D and WebGL 3D graphics APIs.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Audio</h4>
+<ul>
+<li><p><a href="/docs/apis/audio-video">audio-video</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/enabled">enabled</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/language">language</a></p></li>
+<li><p><strong>Web Audio API</strong></p></li>
+<li><p><a href="/docs/apis/webaudio/AudioParam/value">value</a></p></li>
+<li><p><a href="/docs/concepts/Internet_and_Web/webrtc">WebRTC</a></p></li>
+<li><p><a href="/docs/html/elements/bgSound">bgSound</a></p></li>
+<li><p><a href="/docs/html/elements/bgSound/ja">bgsound</a></p></li>
+<li><p><a href="/docs/tutorials/implementing_html5_audio">implementing html5 audio</a></p></li>
+<li><p><a href="/docs/tutorials/webrtc_resources">WebRTC Resources</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

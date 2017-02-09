@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Progressive Enhancement · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Progressive enhancement is a powerful development philosophy for creating universally accessible sites and web apps. It does require some learning, experience and discipline, but the return of investment is high." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/progressive_enhancement/">progressive enhancement</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Progressive Enhancement</h1>
+<h2>Summary</h2>
+<p>Progressive enhancement is a powerful development philosophy for creating universally accessible sites and web apps. It does require some learning, experience and discipline, but the return of investment is high.</p>
+<p>Part of the appeal of PE is the strength of the end result. PE forces you to initially plan out your project as a functional system using only the most basic of Web technologies. This means that you know you’ll always have a strong foundation to fall back on. You start by establishing a basic level of user experience that all browsers will be able to provide when rendering your web site, but you also build in more advanced functionality that will automatically be available to browsers that can use it.</p>
+<h2>The Layers of Progressive Enhancement</h2>
+<p>In practical terms, it’s easiest to break the concept of PE into different layers, each one building on the previous to improve the experience of interacting with the website.</p>
+<ul>
+<li><strong>Markup</strong> The first layer is clean, semantic HTML. This allows text-based, speech-based, antiquated and robotic user-agents to navigate the content of your website properly.</li>
+<li><strong>Styling</strong> The second layer is CSS. This allows visual-based user-agents to display or alter the visual representation of your website’s content.</li>
+<li><strong>Behavior</strong> The third layer is JavaScript. This allows user-agents that are capable of using it to provide your users with enhanced usability.</li>
+</ul>
+<p>There is another concept called <a href="/docs/concepts/graceful_degradation"><strong>Graceful Degradation</strong></a> (GD), what you should know. GD is similar, but it is an older concept <em>(predecessor of progressive enhancement)</em> that does things the other way round.</p>
+<h2>Examples</h2>
+<p>RGBa is not supported in all Browsers, so we have to declare a fallback color. Not declaring a fallback means no color will be applied in browsers that don’t support it.</p>
+<pre><code class="css"><span class="hljs-tag">div</span> <span class="hljs-rules">{
+   <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> red</span></span>; <span class="hljs-comment">/* The Fallback */</span>
+   <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-function">rgba</span>(<span class="hljs-number">200</span>, <span class="hljs-number">54</span>, <span class="hljs-number">54</span>, <span class="hljs-number">0.5</span>)</span></span>;
+}</span>
+</code></pre>
+<p><a href="http://css-tricks.com/examples/RGBaSupport/">View live example</a></p>
+<p><code>requestAnimationFrame</code> provides a native API for running any type of animation in the browser. How to use it the progressive enhanced way? <em>Avoid browser-specific code and use feature detection (not browser detection)</em></p>
+<pre><code class="js"><span class="hljs-comment">// Crossbrowser animation</span>
+<span class="hljs-keyword">var</span> requestAnimation = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">window</span>.requestAnimationFrame
+</code></pre>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://sixrevisions.com/web-development/progressive-enhancement/">Overview and Best Practices</a></li>
+<li><a href="http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/">What It Is, And How To Use It?</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>.</p>
+</li>
+	<li><p>Portions of this content come from HTML5Rocks!.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

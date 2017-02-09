@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebGL: an advanced shader · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Creating an advanced shader, building on the simple shader tutorial." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/webgl_an advanced shader/">webgl an advanced shader</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WebGL: an advanced shader</h1>
+<p><strong>By Erik Möller, Chris Mills</strong><br>
+Originally published July 25, 2012</p>
+<h2>Summary</h2>
+<p>Creating an advanced shader, building on the simple shader tutorial.</p>
+<h2>Introduction</h2>
+<p>Welcome to part 3 of our Raw WebGL series! Now that we’ve covered the real basics and built up some simple fragment and vertex shaders, let’s move forward and create a much more complex fragment shader example, to give you more of a flavour of the different options available to us.</p>
+<p>This article is a transcript of <a href="http://www.youtube.com/watch?v=me3BviH3nZc&amp;t=32m36s">time 32:36 to 56.50</a> in Erik Möller’s <a href="http://www.youtube.com/watch?v=me3BviH3nZc">WebGL 101</a> tutorial, available on YouTube.</p>
+<p><strong>Note</strong>: <a href="https://github.com/emoller/WebGL101">Access the full WebGL 101 code example set</a> and links to see the examples running live, at Github</p>
+<h2>Ramping up our fragment shader power!</h2>
+<p>You can see the final result of this article in 04-fragment-shader.html from the <a href="https://github.com/emoller/WebGL101">full WebGL 101 code example set</a>. To follow the step by step tutorial below, download 03-minimal-shader.html and use it as a starting point.</p>
+<p>First of all, change the size of the canvas to 900 x 900 pixels:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">canvas</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">'c'</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">'900'</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">'900'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">canvas</span>&gt;</span>
+</code></pre>
+<h3>Modifying the vertex shader</h3>
+<p>Now we’ll try another way of getting our texture coordinates into the fragment shader. Delete the <code>varying</code> and <code>uniform</code> lines from the vertex shader <code>&lt;script&gt;</code> element:</p>
+<pre><code><span class="hljs-keyword">varying</span> <span class="hljs-keyword">vec2</span> vTexCoord;
+ <span class="hljs-keyword">uniform</span> <span class="hljs-keyword">vec2</span> uOffset;
+</code></pre>
+<p>Also delete the line that references these two:</p>
+<pre><code>vTexCoord = aVertexPosition + uOffset<span class="hljs-comment">;</span>
+</code></pre>
+<p>This will leave us with a minimal vertex shader.</p>
+<p>We will now use a new built-in construct called <code>gl_FragCoord</code>, which gives us the pixel position of the current fragment. First add the following line inside the fragment shader’s main function to calculate the coordinates of the vertices:</p>
+<pre><code>vec2 texCoord = (gl_FragCoord.xy / uCanvasSize.xy) * <span class="hljs-number">2.0</span> - vec2(<span class="hljs-number">1.0</span>,<span class="hljs-number">1.0</span>);
+</code></pre>
+<p>This will give us the same as we had before, but without the offsets we added in the last part of the series. We also need to change the reference to this in the line below:</p>
+<pre><code>gl_FragColor = vec4(texCoord, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+</code></pre>
+<p>We don’t need the line that brings the texture coordinate data into the fragment shader, so delete the following line from there:</p>
+<pre><code><span class="hljs-keyword">varying</span> <span class="hljs-keyword">vec2</span> vTexCoord;
+</code></pre>
+<p>We’ll replace this with a new constant — add the following <code>uniform</code> in place of the line you just deleted, to convert between pixel position and the <code>texCoord</code> that we want (the -1 to 1 value):</p>
+<pre><code><span class="hljs-keyword">uniform</span> <span class="hljs-keyword">vec2</span> uCanvasSize;
+</code></pre>
+<p>Moving back down to the main <code>&lt;script&gt;</code> element, we now need to start making changes to this part of the code to use the new shaders we are creating. First of all, delete the <code>offset</code> line:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> offset = [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>];
+</code></pre>
+<p>Now go down to the <code>offsetUniform</code> line — we need to change these references to use the new shader uniform system. First change <code>program.offsetUniform</code> to <code>program.canvasSizeUniform</code>, then change <code>uOffset</code> to <code>uCanvasSize</code>. You will end up with the following line:</p>
+<pre><code class="js">program.canvasSizeUniform = gl.getUniformLocation(program, <span class="hljs-string">'uCanvasSize'</span>);
+</code></pre>
+<p>Next, onto the line where we specify the values for our uniforms. We need to change our references, like so:</p>
+<pre><code class="js">gl.uniform2f(program.canvasSizeUniform, c.width, c.height);
+</code></pre>
+<p>Here we have referenced our new uniform, and replaced the offset values with simple references to the <code>&lt;canvas&gt;</code> width and height. Checking the example as it stands, you’ll see that we have basically got back to where we started, but using the built-in <code>gl_FragCoord</code> instead of passing the texture coordinates from the vertex shader; see Figure 1.</p>
+<p><img src="//static.webplatform.org/9/91/figure1_3_luzc.png" alt="A canvas generated gradient going from green at the top left to red at the bottom right, with a large black square at the bottom left"></p>
+<p>Figure 1: Our new shader is functional.</p>
+<h3>Preparing our fragment shader</h3>
+<p>Now let’s prepare our fragment shader to take more detailed information. For this detailed shader, we want to use high precision floats. The problem with this is that lower powered devices may not be able to handle high precision, therefore we will want to detect what type of device is accessing our example, and use high precision or medium precision, depending on its capabilities. We will do this with an <code>#ifdef</code> construct, like so:</p>
+<pre><code class="js">#ifdef GL_FRAGMENT_PRECISION_HIGH
+   precision highp float;
+ #else
+   precision mediump float;
+ #endif
+</code></pre>
+<p>This is saying “if high precision is available, use highp floats, otherwise use mediump.” Put this block at the top of your fragment shader script element, right below the opening <code>&lt;script&gt;</code> tag.</p>
+<p>In this example, we are also going to be using an integer for the first time, which we will set as medium precision. therefore, change the existing <code>precision mediump float;</code> line that was already there to</p>
+<pre><code class="js">precision mediump int;
+</code></pre>
+<p>Now we will add some code to calculate the colour of every single pixel in our creation — staying inside the same <code>&lt;script&gt;</code> block, add the following function just below the <code>uniform vec2 uCanvasSize;</code> line:</p>
+<pre><code><span class="hljs-function">vec4 <span class="hljs-title">calc</span><span class="hljs-params">(vec2 texCoord)</span> </span>{
+   <span class="hljs-keyword">return</span> vec4 (texCoord, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+ }
+</code></pre>
+<p>Below, in the <code>main()</code> function, we also need to change the <code>gl_FragColor</code> line to use the new function:</p>
+<pre><code class="js">gl_FragColor = calc(texCoord);
+</code></pre>
+<p>If you save and refresh your browser, you should see the same as before. Nothing more exciting yet, but we have now made our shader a lot more flexible and able to handle more detail.</p>
+<h3>Turning it up to 11</h3>
+<p>With our preparation done, now let’s have some fun! We’ll ramp up the <code>calc()</code> function we just created to produce something far more interesting. First of all, add the following variables at the top of the <code>calc()</code> function:</p>
+<pre><code class="js">float x = <span class="hljs-number">0.0</span>;
+ float y = <span class="hljs-number">0.0</span>;
+</code></pre>
+<p>Now we’ll add an iteration loop to iteratively calculate a score value for each pixel. First, add the skeleton loop structure, below our variables:</p>
+<pre><code class="js"><span class="hljs-keyword">for</span>(int iteration = <span class="hljs-number">0</span>; iteration &lt; <span class="hljs-number">100</span>; ++iteration) {
+
+ }
+</code></pre>
+<p>We’ll now do some calculations. First of all, let’s calculate a temporary x value, which looks like this (add this inside the loop):</p>
+<pre><code class="js">float xtemp = x*x - y*y+texCoord.x;
+</code></pre>
+<p>now let’s calculate a <code>y</code> value — add this line just below the last:</p>
+<pre><code class="js">y = <span class="hljs-number">2.0</span>+x*y+texCoord.y;
+</code></pre>
+<p>Now set <code>x</code> to <code>xtemp</code> (again, just below the last one):</p>
+<pre><code class="js">x = xtemp;
+</code></pre>
+<p>Now for an <code>if</code> statement — add this construct next:</p>
+<pre><code class="js"><span class="hljs-keyword">if</span>(x*x+y*y &gt;= <span class="hljs-number">8.0</span>) {
+   float d = float(iteration)/<span class="hljs-number">20.0</span>;
+   <span class="hljs-keyword">return</span> vec4(d,d,d,<span class="hljs-number">1</span>);
+ }
+</code></pre>
+<p>Here we are saying that if the result of the calculations is less than 8, we keep iterating. So we iterate either until the result is &gt; 8 in which case we use the iteration count to colour the pixel, or until we iterate through all 100 iterations without ever going over 8, in which case we return a black color. Change the existing <code>return</code> line at the bottom of the <code>calc()</code> function to the following:</p>
+<pre><code><span class="hljs-keyword">return</span> vec4(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);
+</code></pre>
+<p>Now let’s try it out in the browser and see what happened. If you made all the updates correctly, you should be presented with a rather nice fractal, as seen in Figure 2!</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=figure2_3_luzc.png">A canvas generated fractal</a></p>
+<p>Figure 2: We have generated a rather nice fractal.</p>
+<h3>Continuous colouring</h3>
+<p>What we have got so far is quite nice, but the background is rather banded: it would be nice to have things looking a bit smoother. To do this, we will use a continuous colour mandelbrot algorithm. First of all, we need to plug the algorithm into our calculation of that <code>d</code> variable. Replace the <code>float d</code> line with the following:</p>
+<pre><code class="js">float d = (float(iteration) - (log(log(sqrt(x*x+y*y))) / log(<span class="hljs-number">2.0</span>))) / <span class="hljs-number">50.0</span>;
+</code></pre>
+<p>This will be a bit slow and can be optimized later on, but it’s ok for now as a proof of concept. Save and reload, and you’ll now see that the colouring is a lot smoother, as seen in Figure 3.</p>
+<p><img src="//static.webplatform.org/d/d4/figure3_3_luzc.png" alt="A canvas generated fractal with smoother colouring in the background"></p>
+<p>Figure 3: The background colour is now a smooth gradient!.</p>
+<h3>Further colour improvements</h3>
+<p>The smooth version looks a lot better, but it is still a bit dark and not very colourful. Let’s improve things further by blending in more properties of the fractal into the final colour. Set the following two variables below the other two variables we set earlier inside <code>calc()</code>:</p>
+<pre><code class="js">float v = <span class="hljs-number">10000.0</span>;
+ float j = <span class="hljs-number">10000.0</span>;
+</code></pre>
+<p>Inside the loop, we will now set <code>v</code> and <code>j</code> to be the minimum absolute value of <code>x</code> squared times <code>y</code> squared, and the minimum absolute value of <code>x</code> times <code>y</code>, respectively. Add the following in, below the <code>x = xtemp;</code> line:</p>
+<pre><code class="js">v = min(v, abs(x*x+y*y));
+ j = min(j, abs(x*y));
+</code></pre>
+<p>We’ll use these values to colour our fractal background a bit more interestingly; add these into the return value, like so:</p>
+<pre><code class="js"><span class="hljs-keyword">return</span> vec4(d+j,d,d+v,<span class="hljs-number">1</span>);
+</code></pre>
+<p>This will give us the much more colourful look seen in Figure 4.</p>
+<p><img src="//static.webplatform.org/2/23/figure4_3_luzc.png" alt="A canvas generated fractal with a beautiful coloured background gradient"></p>
+<p>Figure 4: This is much prettier.</p>
+<p>Let’s just fiddle with the colour values a bit more to see what we can get. Go back to the <code>calc()</code> function, and just above the <code>return</code> line, add the following so that we’ll actually end up inverting the values, and dividing them by 2.0:</p>
+<pre><code class="js">v = (<span class="hljs-number">1.0</span> - v) / <span class="hljs-number">2.0</span>;
+ j = (<span class="hljs-number">1.0</span> - j) / <span class="hljs-number">2.0</span>;
+</code></pre>
+<p>See Figure 5 for the rather halo-like result!</p>
+<p><img src="//static.webplatform.org/b/b7/figure5_3_luzc.png" alt="A canvas generated fractal with inverted colours"></p>
+<p>Figure 5: Inverted colours give our fractal a halo-type effect.</p>
+<h3>Offsetting and scaling our fractal</h3>
+<p>We’ve got a pretty pleasing result so far, but let’s just tweak it a little bit more before we have a well-earned beer. As it stands, we can’t see all of the halo at once, so let’s offset and scale our fractal so we can see it a bit better.</p>
+<p>To get this plan into action, let’s start by adding a couple of variables to represent our offset and scale. Add the following two lines below our <code>uniform vec2 uCanvasSize;</code> line:</p>
+<pre><code><span class="hljs-keyword">uniform</span> <span class="hljs-keyword">vec2</span> uOffset;
+ <span class="hljs-keyword">uniform</span> <span class="hljs-keyword">float</span> uScale;
+</code></pre>
+<p>Dipping down into the main <code>&lt;script&gt;</code> element now, let’s make the program aware of these values and feed them in. Add the following below your <code>program.canvasSizeUniform</code> line:</p>
+<pre><code class="js">program.offsetUniform = gl.getUniformLocation(program, <span class="hljs-string">'uOffset'</span>);
+ program.scaleUniform = gl.getUniformLocation(program, <span class="hljs-string">'uScale'</span>);
+</code></pre>
+<p>Now we need to give these some values to use — add the following array above your <code>var vertexPosBuffer = screenQuad();</code> line:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> offset = [-<span class="hljs-number">0.5</span>, <span class="hljs-number">0</span>];
+ <span class="hljs-keyword">var</span> scale = <span class="hljs-number">1.35</span>;
+</code></pre>
+<p>Now we’ll set the offset for the program. Near the bottom of your code, just after your <code>uniform2f</code> line, we’ll add in another one for the offset:</p>
+<pre><code class="js">gl.uniform2f(program.offsetUniform, offset[<span class="hljs-number">0</span>], offset[<span class="hljs-number">1</span>]);
+</code></pre>
+<p>Then directly afterwards, add the following for scale (this uses <code>uniform1f</code> instead, as it is only setting a single float value):</p>
+<pre><code class="js">gl.uniform1f(program.scaleUniform, scale);
+</code></pre>
+<p>We’re almost there now! Now we just need to modify the <code>main()</code> function back up in the fragment shader to apply the scale and offset to each pixel. Add the following just below the <code>main()</code> function’s <code>vec2 texCoord</code> line:</p>
+<pre><code class="js">texCoord = texCoord * uScale + uOffset;
+</code></pre>
+<p>Note: You should now be able to see your fractal much better on your screen. If you wanted to improve this for better viewing on different devices, you could also consider using media queries to change the canvas size when appropriate, and viewport, to make mobile devices respect those media queries better. See <a href="http://dev.opera.com/articles/view/love-your-devices-adaptive-web-design-with-media-queries-viewport-and-more/">Love your devices: adaptive web design with media queries, viewport and more</a> for more details.</p>
+<h3>Moving and zooming the fractal</h3>
+<p>The design is looking great, but how about adding in some control functionality to move around the fractal, and zoom in and out? To achieve this, we’ll draw the fractal several times, once for each time it is moved and zoomed. To give our code the flexibility to do this, wrap the bottom four lines of code in our main code in a function called <code>draw()</code>, like so:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">draw</span>(<span class="hljs-params"></span>) </span>{
+   gl.uniform2f(program.canvasSizeUniform, c.width, c.height);
+   gl.uniform2f(program.offsetUniform, offset[<span class="hljs-number">0</span>], offset[<span class="hljs-number">1</span>]);
+   gl.uniform1f(program.scaleUniform, scale);
+   gl.drawArrays(gl.TRIANGLE_STRIP, <span class="hljs-number">0</span>, vertexPosBuffer.numItems);
+ }
+
+ draw();
+</code></pre>
+<p>We want to call this function each time the fractal is to be drawn, and allow the user to control the scaling and zooming via the keyboard. Add the following just below the line where we set our <code>offset</code> and <code>scale</code> variable values:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> actions = [];
+ <span class="hljs-keyword">var</span> keyMappings = { <span class="hljs-string">'37'</span> : <span class="hljs-string">'panleft'</span>, <span class="hljs-string">'38'</span> : <span class="hljs-string">'panup'</span>, <span class="hljs-string">'39'</span> : <span class="hljs-string">'panright'</span>, <span class="hljs-string">'40'</span> : <span class="hljs-string">'pandown'</span>, <span class="hljs-string">'90'</span> : <span class="hljs-string">'zoomin'</span>, <span class="hljs-string">'88'</span> : <span class="hljs-string">'zoomout'</span> };
+</code></pre>
+<p><strong>Note</strong>: The key codes map to the arrow keys and the minus and plus buttons. You might find that these key mappings don’t behave quite as expected on some browsers or operating systems, as keycodes tend to differ across different implementations. One fix might be to ask the user to choose their keyboard controls when the demo loads, but we’ll leave that for now!</p>
+<p>Now we’ll initialise all the keymappings as <code>false</code>:</p>
+<pre><code class="js"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> k <span class="hljs-keyword">in</span> keyMappings) {
+   actions[keyMappings[k]] = <span class="hljs-literal">false</span>;
+ }
+</code></pre>
+<p>With the actions initialised, we now need to add in some event handlers to listen out for keys being pressed and released and then react accordingly. First, the key press:</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.onkeydown = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+   <span class="hljs-keyword">var</span> kc = e.keyCode.toString();
+   <span class="hljs-keyword">if</span> (keyMappings.hasOwnProperty(kc)) {
+     actions[keyMappings[kc]] = <span class="hljs-literal">true</span>;
+   }
+ };
+</code></pre>
+<p>Here we are getting the code of the key that was pressed and storing it in a string. If this key code appears in the <code>keyMappings</code> object, we set the action to <code>true</code>. For the corresponding key release, we just copy the function, set the handler to <code>onkeyup</code>, and reverse the functionality (what goes down, must go up):</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.onkeyup = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+   <span class="hljs-keyword">var</span> kc = e.keyCode.toString();
+   <span class="hljs-keyword">if</span> (keyMappings.hasOwnProperty(kc)) {
+     actions[keyMappings[kc]] = <span class="hljs-literal">false</span>;
+   }
+ };
+</code></pre>
+<p>But there’s more. We want to keep redrawing as long as an action is active. To do this we’ll use an interval — initialise an interval variable near the top of your main code, where you initialised the others:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> iv = <span class="hljs-literal">null</span>;
+</code></pre>
+<p>Going back to the <code>onkeydown</code> function, we need to add the following inside the <code>if</code> block, below the line that is already there:</p>
+<pre><code class="js"><span class="hljs-keyword">if</span> (!iv) {
+   iv = setInterval(<span class="hljs-string">'draw();'</span>, <span class="hljs-number">16</span>);
+ }
+</code></pre>
+<p>Here were are saying that if an interval is not already set, we will set an interval — we are calling the <code>draw()</code> function every 16 milliseconds while an action is active.</p>
+<p>Now on to the <code>onkeyup</code> handler: in this case we need to add the following to the bottom of the function, just before the closing curly brace:</p>
+<pre><code class="js"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j <span class="hljs-keyword">in</span> keyMappings) {
+   <span class="hljs-keyword">if</span> (actions[keyMappings[j]]) {
+     <span class="hljs-keyword">return</span>;
+   }
+ }
+ clearInterval(iv);
+ iv = <span class="hljs-literal">null</span>;
+</code></pre>
+<p>This code loops through the different actions and checks to see if any are active. If so, we clear the interval to stop drawing, and set the <code>iv</code> variable back to null.</p>
+<p>As a last step, we need to add the following lines into the top of the <code>draw()</code> function, to update the offset and zoom with each call of the function:</p>
+<pre><code class="js">offset[<span class="hljs-number">0</span>] += -(actions.panleft ? scale / <span class="hljs-number">25</span> : <span class="hljs-number">0</span>) + (actions.panright ? scale / <span class="hljs-number">25</span> : <span class="hljs-number">0</span>);
+ offset[<span class="hljs-number">1</span>] += -(actions.pandown ? scale / <span class="hljs-number">25</span> : <span class="hljs-number">0</span>) + (actions.panup ? scale / <span class="hljs-number">25</span> : <span class="hljs-number">0</span>);
+ scale = scale * (actions.zoomin ? <span class="hljs-number">0.975</span> : <span class="hljs-number">1.0</span>) / (actions.zoomout ? <span class="hljs-number">0.975</span> : <span class="hljs-number">1.0</span>);
+</code></pre>
+<p>Now we’re done — reload the example and try zooming in and out, and panning around the fractal. This looks really cool now, I’m sure you’ll agree! Eventually when you zoom in really far, the fractal will start to look really blocky. The reason this is happening is that we’re looking at a very small piece of the fractal and we’re simply running out of precision: the graphics card cannot represent such small numbers precisely. We remedied this to some extent by using high precision floats, but eventually as you zoom in even those will not have enough precision.</p>
+<p>We hope you’ve had fun in this tutorial! Try experimenting with all the different colour variables, and post links to your modifications in the comments. We are looking forward to seeing what you will achieve!</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This content was originally published on <a href="http://dev.opera.com">DevOpera</a>, Opera's Developer Network. .</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

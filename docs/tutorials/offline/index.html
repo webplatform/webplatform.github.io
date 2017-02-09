@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Offline apps · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Mobile users expect to have the ability to open an app and interact with it, no matter if they have a connection.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/offline/">offline</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Offline apps</h1>
+<h2>Summary</h2>
+<p>Mobile users expect to have the ability to open an app and interact with it, no matter if they have a connection.</p>
+<p>AppCache provides a solution that allows you to cache your entire app on a user’s device. This allows your app to continue working even when the user is offline. When the user is connected, AppCache will also make the app load faster by minimizing the number of requests made to your server.</p>
+<p>In addition to the benefits offered by AppCache, modern browsers allow storing of a user’s app specific data, for example their high scores in a game, via localStorage. Using these two features enables your app to work in an offline state.</p>
+<p>Gmail, for example, uses both of these features so that you can continue to read your emails, even on a plane.</p>
+<p>Note that this guide focuses on mobile, but the same practices can be applied to desktop, as well.</p>
+<h2>Caching the App</h2>
+<p><a href="http://www.whatwg.org/specs/web-apps/current-work/#applicationcache">App Cache</a> allows caching of static resources like images, CSS, and Javascript. Using AppCache, these resources only need to be requested the first time the app is run, or whenever it is updated. AppCache is currently supported on Chrome 10.0+, Firefox 3.6+, IE 10.0, Opera 10.6+, Safari 4.0+ and on iPhone 2.1+, Android 2.0+. For up-to-date compatibility support, check out <a href="http://www.caniuse.com/#search=appcache">CanIUse.com’s support table</a>.</p>
+<p>You can enable AppCache by including a simple text file, called a cache manifest, that specifies which resources should be preloaded and cached for offline access. All HTML pages should reference this manifest file by including the <code>manifest</code> attribute in the html tag. Here’s an example.</p>
+<pre><code>&lt;html manifest=&quot;myapp.appcache&quot;&gt;
+  ...
+  ...
+&lt;/html&gt;
+</code></pre>
+<p>Note that any page that references the cache manifest will be cached by the browser and need not be included in the manifest file. The manifest file must be served from the same domain as the app and must have a <code>text/cache-manifest</code> MIME type. For example, to serve this mime-type in Apache, add this line to the <code>.htaccess</code> file, which will serve a <code>text/cache-manifest</code> MIME type for files with an <code>.appcache</code> extension:</p>
+<pre><code>AddType text/cache-manifest .appcache
+</code></pre>
+<h3>Structure of a Manifest File</h3>
+<p>A simple manifest file looks like this.</p>
+<pre><code>CACHE MANIFEST
+fbstyle.css
+js/graph_api.js
+js/auth.js
+res/facebook.png
+res/places.png
+</code></pre>
+<p>In this particular example, all five resources listed, along with HTML page that referenced the manifest, and the manifest file itself, will be cached. Note that the entire cache process fails if one of the specified resources cannot be loaded. As of today, most implementations limit the size of the cached data to 5MB per domain.</p>
+<p>The manifest file does offer more granular controls such as listing alternate resources in case of failures and listing files which require network access. Let’s look at more complex example.</p>
+<pre><code>CACHE MANIFEST
+# Update revision number to trigger a cache refresh
+# v0.4.3-11-fac3b00c
+
+# Should always be cached
+CACHE:
+fbstyle.css
+js/graph_api.js
+js/auth.js
+img/facebook.png
+img/places.png
+
+# User must be online for these actions:
+NETWORK:
+auth.php
+logout.php
+checkin.php
+
+# serve offline.png if fails to get images in img folder
+# serve offline.html if fails to get index.html
+FALLBACK:
+img/ images/offline.png
+index.html /offline.html
+</code></pre>
+<p>A manifest can have three distinct sections, which can be listed in any order and can also appear more than once:</p>
+<p><code>CACHE</code>: the default section for entries. Files listed under this section (or immediately after the CACHE MANIFEST) will be explicitly cached after they’re downloaded for the first time.</p>
+<p><code>NETWORK</code>: resources listed under this section require network access. By default, AppCache won’t allow network access to files which aren’t specified in this section. Thankfully, you can override this default behavior by using the online whitelist wildcard flag (the asterisk ‘*’) which allows any external content to be accessed directly. For example, the below manifest file would cache <code>app.css</code>, <code>app.js</code>, and <code>img/logo.png</code> but would allow direct access to any other file the app might require:</p>
+<pre><code>CACHE MANIFEST
+app.css
+app.js
+img/logo.png
+
+NETWORK:
+*
+</code></pre>
+<p>You can also use prefix match patterns if you want tighter control. For example, the following manifest file would allow network access to all files in the <code>img/</code> and videos/ directories, but wouldn’t display resources stored elsewhere.</p>
+<pre><code>CACHE MANIFEST
+app.css
+app.js
+
+NETWORK:
+img/
+video/
+</code></pre>
+<p><code>FALLBACK</code>: specify a fallback for uncached resources when there is no network connection. Obviously, the fallback resource itself will be cached. Like the <code>NETWORK</code> section, <code>FALLBACK</code> lets you use prefix match patterns. This could be used, for example, to provide a fallback page for all archived content:</p>
+<pre><code>CACHE MANIFEST
+# ...
+FALLBACK:
+archives/ offline.html
+</code></pre>
+<h3>Updating the Cache</h3>
+<p>Updating the cache is a bit more involved. Whenever your app is loaded, if your app calls the <code>window.applicationCache.update()</code> API, or if the user wiped out its cache, AppCache will attempt to download the manifest file again and check to see if there have been changes to it. If the server responds with a <code>304 Not Modified</code> header or if the downloaded manifest file is byte-for-byte equivalent to the previous one, nothing happens. On the other hand, if there are changes, AppCache will download all resources again. To avoid generating extra traffic, it will use its previous cache as if it were a local HTTP cache, and, in doing so, will conform to any HTTP directives you might have set.</p>
+<p>To make sure changes to your manifest file are correctly picked up by AppCache, you will want to make sure that it doesn’t get cached by the browser’s HTTP cache. If you’re using Apache, this is done by adding the following directives to your <code>.htaccess</code> file:</p>
+<pre><code>ExpiresActive On
+ExpiresByType text/cache-manifest &quot;access&quot;
+</code></pre>
+<p>You also need to keep in mind that only modifications to the manifest file itself will trigger a cache refresh. Just modifying a resource won’t. You’ll have to either rename the modified asset (and update the manifest file accordingly) or include a version number, revision number or timestamp in a comment in the manifest file like so:</p>
+<pre><code>CACHE MANIFEST
+# Update revision number to trigger a cache refresh
+# v0.4.3-12-1337fac3
+</code></pre>
+<h3>JavaScript API</h3>
+<p>AppCache’s <a href="http://dev.w3.org/html5/spec/offline.html#application-cache-api">JS API</a> is currently limited but can still prove useful for debugging purposes (see Jonathan Stark’s <a href="http://jonathanstark.com/blog/2009/09/27/debugging-html-5-offline-application-cache/">script</a>), force swaps on long-lived apps or to prompt users to refresh their app once it has been updated.</p>
+<p>Prompting the user when a new version of the app has been downloaded can be done as follows:</p>
+<pre><code>var appCache = window.applicationCache;
+appCache.addEventListener('updateready', function(e) {
+  if (appCache.status == appCache.UPDATEREADY) {
+    // The new cache has been downloaded. Prompt the user
+    // to see if he wants to refresh his page now.
+
+    var msg = 'A new version of the app has been downloaded.\n'
+    msg += 'Click OK to use it now or Cancel to continue using the current version.'
+
+    if (window.prompt(msg)) {
+      window.location.reload();
+    }
+  }
+}, false);
+</code></pre>
+<p>On long-lived apps, you’ll have to add a timer that regularly checks the manifest file for changes. When changes are detected, an <code>updateready</code> event will also be triggered, calling the event handler and prompting the user:</p>
+<pre><code>window.setTimeInterval(function() {
+  appCache.update();
+}, 1000 * 60 * 60 * 24); // Checks for updates once a day.
+</code></pre>
+<h2>Caching Dynamic Content</h2>
+<p>Web apps may want to locally store dynamic user generated content like email or a game’s scoreboard. Currently, cookies have been used to work around this shortcoming and offer local storage, but cookies are limited by data size. Cookies are also included in every http request which not only slows down your app but also potentially exposes security risks.</p>
+<p>HTML5 overcomes these restrictions by offering local data storage options, which persist over page refresh and browser exit, and are not transmitted over the network. HTML5 storage is implemented natively in the browser, without the need for a plugin, and stores the data in key/value pairs.</p>
+<p>HTML5 storage is supported by almost all browsers: Chrome 10.0+, Firefox 3.6+, IE 8.0+, Opera 10.6+, Safari 4.0+ and on iPhone 2.0+, Android 2.1+. For up-to-date compatibility support, check out <a href="http://www.caniuse.com/#search=storage">CanIUse.com’s Local Storage support table</a>.</p>
+<h3>Detecting HTML5 Storage support</h3>
+<p>You can use Modernizr to detect support HTML5 Storage:</p>
+<pre><code>if (Modernizr.localstorage) {
+  // HTML5 Storage is supported
+} else {
+  // HTML5 storage not supported
+  // try PersistJS or a third-party solution
+}
+</code></pre>
+<h3>Storing the content</h3>
+<p>HTML5 stores data in key/value pairs. Note that both key and values are coerced to strings, so you might need to revive your data back to its original type when accessing it.</p>
+<pre><code>// Store data, this overwrite any previous value for &quot;One&quot; key
+localStorage.setItem(&quot;one&quot;, 1);
+
+// Retrieve data
+var one = parseInt(localStorage.getItem(&quot;one&quot;);
+
+// or using square brackets:
+
+localStorage[&quot;one&quot;] = 1;
+var one = parsetInt(localStorage[&quot;one&quot;]);
+
+// or even:
+
+localStorage.one = 1;
+var one = parsetInt(localStorage.one);
+
+// Delete the key's value, do nothing if key does not exist.
+localStorage.removeItem(&quot;one&quot;);
+
+// Clear the entire storage. Note that this wipes out everything, worth noting
+// if more than one person working on the same app is relying on localStorage.
+localStorage.clear();
+</code></pre>
+<p>A common and useful technique to store structured data is to use JSON:</p>
+<pre><code>var obj = { foo: { bar: 123 } };
+localStorage.someObj = JSON.stringify(obj);
+
+// later on:
+
+var obj = JSON.parse(localStorage.someObj);
+obj.foo.bar; // =&gt; 123
+</code></pre>
+<h3>Listening to Changes to the Storage</h3>
+<p>You can register listeners for <code>setItem()</code>, <code>removeItem()</code>, <code>clear()</code> functions, which will be called when the data in the storage changes.</p>
+<pre><code>if (window.addEventListener) {
+  window.addEventListener(&quot;storage&quot;, storage_listener, false);
+} else {
+  window.attachEvent(&quot;onstorage&quot;, storage_listener);
+}
+</code></pre>
+<p>The <code>storage_listener</code> function will be called with a <code>StorageEvent</code> object:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Type</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">key</td><td style="text-align:left">string</td><td style="text-align:left">The key that was changed, added or removed.</td></tr>
+<tr><td style="text-align:left">oldValue</td><td style="text-align:left">any</td><td style="text-align:left">The old value of the changed key or null if new key.</td></tr>
+<tr><td style="text-align:left">newValue</td><td style="text-align:left">any</td><td style="text-align:left">The new value of the added/changed key or null if removed.</td></tr>
+<tr><td style="text-align:left">url</td><td style="text-align:left">string</td><td style="text-align:left">The url that triggered the change.</td></tr>
+</tbody>
+</table>
+<h3>Potential Pitfalls</h3>
+<p>Local Storage has a single data store for each domain: e.g. there’s a single instance of <code>localStorage</code> for <a href="http://www.example.com">http://www.example.com</a>. The data it contains is shared across sessions and is not encrypted. While this is possibly fine on mobile, it could be an issue on shared computers. The data contained in <code>localStorage</code> is available to anyone who visits <a href="http://www.example.com">http://www.example.com</a>, whether or not the user is logged in or is the previously logged in user.</p>
+<h3>Data Storage Limits</h3>
+<p>Most implementations have a 5MB storage limit. More storage is often available, but the user will be prompted for it. Expect a <code>QUOTA_EXCEEDED_ERR</code> or similar error if the limit is exceeded or if the user refuses to allocate more storage for your app.</p>
+<h3>Libraries and Demos</h3>
+<ul>
+<li><a href="http://pablotron.org/?cid=1557">PersistJS: Cross Browser Client-Side Persistent Storage Without Cookies</a></li>
+<li><a href="https://github.com/jeremydurham/persist-js">PersistJS source code</a></li>
+<li><a href="https://read.amazon.com">Kindle Cloud Reader</a></li>
+<li><a href="http://futtta.be/NoWebDB/">TrappistDB: demo of cross-browser persistant data storage</a></li>
+</ul>
+<h2>Additional Resources {#resources}</h2>
+<ul>
+<li><a href="http://www.html5rocks.com/en/tutorials/appcache/beginner/">A Beginner’s Guide to Using the App Cache</a></li>
+<li><a href="http://diveintohtml5.org/offline.html">Dive into HTML5 Offline</a> - caching the static resources for web apps</li>
+<li><a href="http://diveintohtml5.org/storage.html">Dive into HTML5 Local Storage</a> - persistent local storage for web apps</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Facebook HTML5 Resource Center.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

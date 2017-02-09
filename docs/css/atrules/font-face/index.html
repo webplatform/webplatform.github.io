@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>@font-face · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="The @font-face CSS at-rule allows authors to specify online fonts to display text on their web pages. By allowing authors to provide their own fonts, @font-face eliminates the need to depend on the limited number of fonts users have installed on their computers." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/atrules/">atrules</a></li><li><a href="/docs/css/atrules/@font-face/">@font-face</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>@font-face</h1>
+<h2>Summary</h2>
+<p>The @font-face CSS at-rule allows authors to specify online fonts to display text on their web pages. By allowing authors to provide their own fonts, @font-face eliminates the need to depend on the limited number of fonts users have installed on their computers.</p>
+<p>The <code>@font-face</code> at-rule may be used not only at the top level of a CSS, but also inside any CSS conditional-group at-rule.</p>
+<h2>Syntax</h2>
+<pre><code class="css">@font-face {
+  [font-family: &lt;family-name&gt;;]?
+  [src: [ &lt;uri&gt; [format(&lt;string&gt;#)]? | &lt;font-face-name&gt; ]#;]?
+  [unicode-range: &lt;urange&gt;#;]?
+  [font-variant: &lt;font-variant&gt;;]?
+  [font-feature-settings: normal|&lt;feature-tag-value&gt;#;]?
+  [font-stretch: &lt;font-stretch&gt;;]?
+  [font-weight: &lt;weight&gt;];
+  [font-style: &lt;style&gt;];
+}
+</code></pre>
+<h3>Values</h3>
+<dl>
+<dt><strong>&lt;family-name&gt;</strong></dt>
+<dd><em>Specifies a <a href="/docs/css/properties/font-family"><strong>font-family</strong></a> name that will be used as font face value for font properties.</em><br>
+<strong>&lt;uri&gt;</strong>
+</dd>
+<dd><em>The location of a font file to use (either an external reference with an optional hint or a local reference). To specify an external reference, use <strong>url(sURL)</strong>, where <strong>sURL</strong> is an absolute or relative URL. To specify specific font formats (only for externally referenced font files), use a <strong>format</strong> hint (</em><em>format(fontFormat)</em><em>) where <strong>fontFormat</strong> is a comma-separated list of format strings that denote supported font formats. Possible <strong>fontFormat</strong> values are <strong>woff</strong>, <strong>truetype</strong>, <strong>opentype</strong>, and <strong>embedded-opentype</strong>. The <strong>format</strong> hint is optional.</em>
+</dd>
+</dl>
+<dl>
+<dd>
+*To specify a local reference, use **local(sFontName)**, where **sFontName** is the name of the locally-installed font to use. If that font is not found, other sources will be tried until one is found.*
+</dd>
+<dt>
+**\<urange\>**
+</dt>
+<dd>
+*A list of Unicode character ranges, where*urange*is a comma-separated list of Unicode range values.*
+</dd>
+<dt>
+**\<font-variant\>**
+</dt>
+<dd>
+*A [**font-variant**](/css/properties/font-variant) value.*
+</dd>
+<dt>
+**\<font-stretch\>**
+</dt>
+<dd>
+*A valid [**font-stretch**](/css/properties/font-stretch) property value.*
+</dd>
+<dt>
+**\<weight\>**
+</dt>
+<dd>
+*A valid [**font-weight**](/css/properties/font-weight) property value (except for the relative values, `bolder` and `lighter`).*
+</dd>
+<dt>
+**\<style\>**
+</dt>
+<dd>
+*A valid [**font-style**](/css/properties/font-style) property value.*
+</dd>
+</dl>
+## Examples
+<p>The following example uses the Open Sans font to style the paragraph element.</p>
+<pre><code class="css"><span class="hljs-comment">/* Declare the font using @font-face. */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">font-face</span></span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">"Open Sans"</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">local</span>(<span class="hljs-string">"Open Sans"</span>), <span class="hljs-comment">/* Prefer a locally installed version of the font. */</span>
+       <span class="hljs-function">local</span>(<span class="hljs-string">"OpenSans"</span>),
+       <span class="hljs-comment">/* URL requires a valid path to the respective font file.
+          Same origin policy is applicable here.
+       */</span>
+       <span class="hljs-function">url</span>(<span class="hljs-string">"/path/to/OpenSans.eot?#iefix"</span>) <span class="hljs-function">format</span>(<span class="hljs-string">"embedded-opentype"</span>),
+       <span class="hljs-function">url</span>(<span class="hljs-string">"/path/to/OpenSans.woff"</span>) <span class="hljs-function">format</span>(<span class="hljs-string">"woff"</span>),
+       <span class="hljs-function">url</span>(<span class="hljs-string">"/path/to/OpenSans.ttf"</span>) <span class="hljs-function">format</span>(<span class="hljs-string">"truetype"</span>),
+       <span class="hljs-function">url</span>(<span class="hljs-string">"/path/to/OpenSans.svg#OpenSans"</span>) <span class="hljs-function">format</span>(<span class="hljs-string">"svg"</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">"/path/to/OpenSans.eot"</span>)</span></span>;
+
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-style</span>:<span class="hljs-value"> normal</span></span>;
+}</span>
+
+<span class="hljs-comment">/* Use the font in your CSS as follows. */</span>
+<span class="hljs-tag">p</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">"Open Sans"</span>, sans-serif</span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/5481068">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> Use this at-rule in order to use specific fonts that might not be available on your local system.
+</code></pre>
+<h2>Notes</h2>
+<p>The rule has no default value. The <code>unicode-range</code> descriptor defines the range of Unicode characters that are supported by a given font. The values of <em>urange</em> are expressed by hexadecimal numbers prefixed by &quot;<code>U+</code>&quot;, that correspond&gt; to Unicode character code points. The <code>unicode-range</code> descriptor serves as a hint for the browser when it decides whether to download a font resource. Unicode range values are written by using hexadecimal values and are case insensitive. Each is prefixed by &quot;<code>U+</code>&quot; and multiple, discontinuous ranges are separated by commas. Whitespace before or after commas is ignored. Valid character code values vary between <code>0</code> and <code>10FFFF</code> inclusive. A single range has three basic forms:</p>
+<ul>
+<li>A single code point (for instance, <code>U+416</code>)</li>
+<li>An interval value range (for instance, <code>U+400-4ff</code>)</li>
+<li>A range where trailing ‘<code>?</code>’ characters imply ‘any digit value’ (for instance, <code>U+4??</code>)</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-fonts/">CSS Fonts Module Level 3</a></dt>
+<dd>Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Fonts</h4>
+<ul>
+<li><p><strong>@font-face</strong></p></li>
+<li><p><a href="/docs/css/fonts">Font related properties</a></p></li>
+<li><p><a href="/docs/css/fonts/font-variant">font-variant</a></p></li>
+<li><p><a href="/docs/css/properties/font">font</a></p></li>
+<li><p><a href="/docs/css/properties/font-family">font-family</a></p></li>
+<li><p><a href="/docs/css/properties/font-feature-settings">font-feature-settings</a></p></li>
+<li><p><a href="/docs/css/properties/font-kerning">font-kerning</a></p></li>
+<li><p><a href="/docs/css/properties/font-language-override">font-language-override</a></p></li>
+<li><p><a href="/docs/css/properties/font-size">font-size</a></p></li>
+<li><p><a href="/docs/css/properties/font-size-adjust">font-size-adjust</a></p></li>
+<li><p><a href="/docs/css/properties/font-stretch">font-stretch</a></p></li>
+<li><p><a href="/docs/css/properties/font-style">font-style</a></p></li>
+<li><p><a href="/docs/css/properties/font-variant">font-variant</a></p></li>
+<li><p><a href="/docs/css/properties/user-modify">user-modify</a></p></li>
+<li><p><a href="/docs/html/attributes/size">size</a></p></li>
+<li><p><a href="/docs/html/elements/font">font</a></p></li>
+</ul>
+<h4>Syntax</h4>
+<ul>
+<li><p><a href="/docs/css/atrules/@charset">@charset</a></p></li>
+<li><p><strong>@font-face</strong></p></li>
+<li><p><a href="/docs/css/atrules/@import">@import</a></p></li>
+<li><p><a href="/docs/css/atrules/@keyframes">@keyframes</a></p></li>
+<li><p><a href="/docs/css/atrules/@namespace">@namespace</a></p></li>
+<li><p><a href="/docs/css/atrules/@page">@page</a></p></li>
+<li><p><a href="/docs/css/atrules/@supports">@supports</a></p></li>
+<li><p><a href="/docs/css/reference">CSS reference</a></p></li>
+<li><p><a href="/docs/css/reference/alphabetical">Alphabetical list of CSS reference</a></p></li>
+<li><p><a href="/docs/css/syntax/!important">!important</a></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/CSS/@font-face">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ms530757(v=vs.85).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

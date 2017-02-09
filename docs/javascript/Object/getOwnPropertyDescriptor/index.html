@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>getOwnPropertyDescriptor · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Gets the own property descriptor of the specified object. An own property descriptor is one that is defined directly on the object and is not inherited from the object&#x27;s prototype." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Object/">Object</a></li><li><a href="/docs/javascript/Object/getOwnPropertyDescriptor/">getOwnPropertyDescriptor</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>getOwnPropertyDescriptor</h1>
+<h2>Summary</h2>
+<p>Gets the own property descriptor of the specified object. An own property descriptor is one that is defined directly on the object and is not inherited from the object’s prototype.</p>
+<h2>Syntax</h2>
+<pre><code>Object.getOwnPropertyDescriptor( object , propertyname )
+</code></pre>
+<dl>
+<dt><strong>object</strong></dt>
+<dd>Required. The object that contains the property.
+</dd>
+<dt><strong>propertyname</strong></dt>
+<dd>Required. The name of the property.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>The descriptor of the property.</p>
+<h2>Examples</h2>
+<p>The following example gets a data property descriptor and uses it to make the property read-only.</p>
+<pre><code class="js"><span class="hljs-comment">// Create a user-defined object.</span>
+<span class="hljs-keyword">var</span> obj = {};
+
+<span class="hljs-comment">// Add a data property.</span>
+obj.newDataProperty = <span class="hljs-string">"abc"</span>;
+
+<span class="hljs-comment">// Get the property descriptor.</span>
+<span class="hljs-keyword">var</span> descriptor = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="hljs-string">"newDataProperty"</span>);
+
+<span class="hljs-comment">// Change a property attribute.</span>
+descriptor.writable = <span class="hljs-literal">false</span>;
+<span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">"newDataProperty"</span>, descriptor);
+</code></pre>
+<p>To list the property attributes, you can add the following code to this example.</p>
+<pre><code class="js"><span class="hljs-comment">// Get the descriptor from the object.</span>
+<span class="hljs-keyword">var</span> desc2 = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="hljs-string">"newDataProperty"</span>);
+
+<span class="hljs-comment">// List the descriptor attributes.</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> desc2) {
+    <span class="hljs-built_in">document</span>.write(prop + <span class="hljs-string">': '</span> + desc2[prop]);
+    <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"&lt;br /&gt;"</span>);
+}
+
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// value: abc</span>
+<span class="hljs-comment">// writable: false</span>
+<span class="hljs-comment">// enumerable: true</span>
+<span class="hljs-comment">// configurable: true</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>You can use the <strong>Object.getOwnPropertyDescriptor</strong> function to obtain a descriptor object that describes attributes of the property.</p>
+<p>The <a href="/docs/javascript/Object/defineProperty">Object.defineProperty Function</a> is used to add or modify properties.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/Object/defineProperty">Object.defineProperty Function</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/dd548686(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

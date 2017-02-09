@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Replacing a VM · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a VM/">Replacing a VM</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Replacing a VM</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><strong>Replacing a VM</strong></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>This document describes how to replace any VM in an existing deployment (e.g. staging) with a new one, install/update targeted web application and apply current configurations. All of that is done in a way that we can replace a faulty VM without affecting the site uptime.</p>
+<p>Using our <em>Salt Stack</em> (not published yet, see <em>/srv/salt</em> and <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/48">webplatform/ops#48</a></strong>), rebuilding a VM is reduced to a few commands and makes it cheap to replace any components which gives us the insurance that we can consistently have the same outcome.</p>
+<p><strong>Remember</strong> most recurring commands are listed at the bottom of <code>/srv/salt/README.md</code> on the salt master.</p>
+<h2>Introduction</h2>
+<p><strong>EVERYTHING</strong> in WebPlatform infrastructure is managed through source control, including what configures (i.e. the <a href="https://github.com/webplatform/states">states</a>) from the VM acting as a <em>salt-master</em>, every VM can be replaced at will. Our infrastructure and scripts are specifically crafted to communicate with an <a href="http://www.openstack.org/">OpenStack cluster</a>. Over the years we’ve moved from multiple clusters without any problems and we are very happy with how reliable the <em>OpenStack</em> components are.</p>
+<p>Our infrastructure runs currently on <strong><a href="http://www.dreamhost.com/cloud/computing/">DreamCompute</a></strong>, a managed OpenStack cluster graciously sponsored to us by <strong><a href="http://www.dreamhost.com/">DreamHost</a></strong> and the configuration is managed by a software called <strong><a href="http://saltstack.com/">Salt Stack</a></strong>.</p>
+<h2>Procedure</h2>
+<p>In this procedure we will replace a app2 VM with another that has more <em>vRAM</em> and <em>vCPU</em>.</p>
+<p>Technically OpenStack allows us to “resize” a VM and after a few minutes get the new capacity. Depending of the OpenStack deployment, its even possible to make such resizes without interruption. For the purpose of this tutorial, we’ll walk through the steps of replacing a VM regardless of whether or not our current OpenStack host supports resizing.</p>
+<p>Since we have either Fastly or a NGINX proxy in front of most web applications, the fact that a VM isn’t live doesn’t break the site as the frontends already takes care of asking other VMs in the same cluster.</p>
+<p>In the end of this document, we will should be able to swap two VMs without interruptions.</p>
+<p><strong>About Fastly/Varnish</strong> if you need to work with Fastly/Varnish, refer to <a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration</a></p>
+<p><strong>Note</strong>; the output of the commands shown in this document were done from the staging deployment level.</p>
+<h3>Get the details of one VM</h3>
+<pre><code> nova list | grep app2
+ | ... | app2            | ACTIVE | -          | Running     | private-network=..., 10.10.10.215, 173.236.254.224 |
+</code></pre>
+<p>We know that <em>app2</em> has two IP addresses assigned</p>
+<ul>
+<li>private: <em>10.10.10.215</em></li>
+<li>public: <em>173.236.254.224</em>. If we look at the <em>Fastly</em> dashboard, we should have this IP in; <em>docs (staging)</em>, <em>www (staging)</em>, <em>code (staging)</em> services.</li>
+</ul>
+<p>What is the flavor (i.e. Size of RAM and number of CPUs) <em>app2</em> has?</p>
+<pre><code> nova show app2|grep flavor
+ | flavor                               | supersonic (200)                                                       |
+</code></pre>
+<p>What <em>supersonic</em> has (showing only some here);</p>
+<pre><code> nova flavor-list
+ +-----+------------+-----------+------+-----------+------+-------+-------------+-----------+
+ | ID  | Name       | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
+ +-----+------------+-----------+------+-----------+------+-------+-------------+-----------+
+ | 100 | subsonic   | 1024      | 80   | 0         |      | 1     | 1.0         | True      |
+ | 200 | supersonic | 2048      | 80   | 0         |      | 1     | 1.0         | True      |
+ | 300 | lightspeed | 4096      | 80   | 0         |      | 2     | 1.0         | True      |
+ +-----+------------+-----------+------+-----------+------+-------+-------------+-----------+
+</code></pre>
+<h3>Prepare to replace app2</h3>
+<p>Let’s unregister <em>app2</em>’s <em>salt-minion</em> from the <em>salt-master</em></p>
+<pre><code> salt-key -y -d app2
+</code></pre>
+<p><em>app2</em> still has its public IP address —we didn’t delete it— we only did remove it from the <em>salt-master</em>. Benefit here is that we will refer to our new VM as <em>app2</em> without conflicts when interacting via the <em>salt</em> commands.</p>
+<p><strong>Tip</strong> Unless the VM in question is &quot;<em>flapping</em>&quot; (inconsistently breaks the site), we could delete the faulty VM right away. If that VM is behind a proxy such as <em>Fastly</em> or part of a NGINX backends, other servers will take the load until a new one is in place.</p>
+<h3>Create a new VM</h3>
+<p>Boot a new VM;</p>
+<pre><code>nova boot --image Ubuntu-14.04-Trusty --user-data /srv/opsconfigs/userdata.txt --key_name renoirb-staging --flavor lightspeed --security-groups default,frontend app2
+</code></pre>
+<p>Notice a few details:</p>
+<dl>
+<dt><code>/srv/opsconfigs/userdata.txt</code></dt>
+<dd>is a configuration file that gets adjusted by the salt master from the salt master itself. It enforces a few details such as DNS and the IP address of the salt master<br>
+<code>--key_name renoirb-staging</code>
+</dd>
+<dd>assumes you would have your own passphrase protected SSH public key in the OpenStack Horizon dashboard<br>
+<code>--security-groups default,frontend</code>
+</dd>
+<dd>Are the firewall rules managed by OpenStack, make sure they exists in the OpenStack Horizon dashboard
+</dd>
+</dl>
+<p><strong>Tip</strong> Since every VM has a private network and that we dont give public IP address to all of them, we instead give a passphrase protected SSH public key per user, per environment. The reason is that if it is required to SSH to a new VM that didn’t yet have had “state.highstate” run on it, you won’t be able to access it anyway. To do so, make sure the OpenStack Horizon dashboard has at least two public keys and that you made a copy of both public and private keys in the private pillars in <em>/srv/private/pillars/sshkeys/</em> on the salt master.</p>
+<h3>Wait until the VM is ready</h3>
+<p>The <em>cloud-init</em> script we gave at <em>/srv/opsconfigs/userdata.txt</em> does also ensure the VM will have the lastest version of everything, plus salt stack minion installed.</p>
+<p>That way, all we have to do is to check from the salt master if we can see it.</p>
+<pre><code> salt-key
+ Accepted Keys:
+   accounts
+   app1
+   app3
+   backup
+   blog
+   db1-masterdb
+   elastic
+   mail
+   memcache-alpha1
+   notes
+   piwik
+   project
+   redis-alpha1
+   salt
+   sessions1
+ Unaccepted Keys:
+   app2
+ Rejected Keys:
+</code></pre>
+<p>We should see <strong>app2</strong> in <strong>Unaccepted Keys</strong>, we can accept the new VM like this:</p>
+<pre><code> salt-key -y -a app2
+</code></pre>
+<p>Then, wait a few seconds. You can see if the VM is ready by issuing a <em>test.version</em> command.</p>
+<pre><code> salt app2 test.version
+</code></pre>
+<p><em>Note</em> Accepting a new VM to the salt master is very quick. Sometimes it takes more time to get a response because the salt master might have a few automated scripts to run. Those scripts are called <strong>Salt Reactor</strong> (see <em><code>/srv/salt/reactor/reactions/*.sls</code></em>) that are configured to run when a VM has been added.</p>
+<h3>The VM is ready</h3>
+<p>Once the “test.version” test answers quickly, we are ready to continue. Before going any further, always run a sanity check if the VM has the essential “level” grain at the value. In our case, we should get &quot;staging&quot;.</p>
+<pre><code> salt app2 grains.get level
+ app2:
+    staging
+</code></pre>
+<p>We are ready!</p>
+<p><strong>Tip</strong> every salt commands are run from their targeted minion (in this example; <em>app2</em>). It means that if we lose SSH connection from the master will not break the salt run. In fact the command waits for the execution to complete as a comfort for us.</p>
+<pre><code> salt app2 state.highstate
+</code></pre>
+<p>Go drink a glass of water. It takes a while.</p>
+<h2>Replacing something else than app2?</h2>
+<p>Replacing a <em>web app runner</em> role VM such as <em>app</em>, <em>piwik</em>, <em>project</em>, or <em>notes</em> is pretty straight forward.</p>
+<p>In other cases, we need also to update the a few pillars of the current environment.</p>
+<p>The essential pillars to look for are the following:</p>
+<ul>
+<li><code>/srv/private/pillar/accounts/staging.sls</code></li>
+<li><code>/srv/private/pillar/accounts/staging_oauth.sls</code></li>
+<li><code>/srv/pillar/infra/staging.sls</code></li>
+</ul>
+<p><strong>Tip</strong> if you are in “production” level, just look at the files with <strong>production</strong> instead.</p>
+<p>The rule of thumb is that what’s in <strong>/srv/pillar</strong> MUST have nothing private as its publicly visible on GitHub.</p>
+<p>All private data is stored in <strong>/srv/private</strong> and have its own separate Git repository that only trusted people should have access.</p>
+<p>Here are a few situations where you have to update contents in one of those files:</p>
+<h3>Infra pillar</h3>
+<p>The configurations in <strong>/srv/pillar/infra/</strong> are mostly about what’s the current IP address to use for a given use. Each configuration file (in <strong>/srv/salt/code/files</strong>) gets the exact IP it need from there.</p>
+<ul>
+<li>Adding/Removing a VM with the <strong>memcached</strong> role</li>
+<li>Adding/Removing a VM with the <strong>sessions</strong> role</li>
+<li>Adding/Removing a VM with the <strong>redis</strong> role</li>
+<li>Adding/Removing a VM with the <strong>db</strong> role</li>
+<li>Adding/Removing a VM with the <strong>elastic</strong> role</li>
+<li>Adding/Removing a VM with the <strong>mail</strong> role</li>
+<li>Update the internal DNS zone (<strong>gdnsd_timestamp</strong>). Most useful if you change any of the above</li>
+</ul>
+<h3>Accounts pillar</h3>
+<p>This is where we store the private data. Database passwords, external providers API keys and so on. The convention is to have a specific set per environment level so we keep a separate deployment and can throughly test every layers somewhere safe before affecting the live site.</p>
+<ul>
+<li>Every password and private keys are stored in <strong>/srv/private/pillar/accounts/staging.sls</strong>.</li>
+<li>Accounts system OAuth2 relying parties client configurations and private keys are in <strong>/srv/private/pillar/accounts/staging_oauth.sls</strong>.</li>
+</ul>
+<p>With this, it will be possible to change service passwords across only by changing the private pillar and the service itself. Each relying web application will read the new password from there.</p>
+<h2>Apply configuration and code packages</h2>
+<p>@@TODO adjust once we harmonized the way to install web apps.</p>
+<p>To apply configuration according to current set of VMs we have do the following.</p>
+<p><strong>Tip</strong> always make sure every VM are “awake” and replies to ping commands before running them. You can run the following commands a few times, sometimes some might been sleepy.</p>
+<pre><code> salt-run manage.status
+ down:
+ up:
+   - accounts
+   - app1
+   - app2
+   - app3
+   - backup
+   - blog
+   - db1-masterdb
+   - elastic
+   - mail
+   - memcache-alpha1
+   - notes
+   - piwik
+   - project
+   - redis-alpha1
+   - salt
+   - sessions1
+</code></pre>
+<p>Now let’s deploy the code and apply regenerate configuration files</p>
+<pre><code> wpd-deploy app
+</code></pre>
+<p>This commands ensures that configuration files are applied on top of each web app with the current configuration. This ensure that can minimize hardcoded information.</p>
+<p>The output should look like this;</p>
+<p><img src="//static.webplatform.org/0/0d/Running_wpd-deploy.png" alt="Running wpd-deploy.png"></p>
+<h2>Testing before flipping the switch?</h2>
+<p>If you are testing a new configuration or plugin, it might be prudent to ensure that what you’ve worked on works before making it visible through the sites (i.e. <strong>webplatformstaging.org</strong> or <strong>webplatform.org</strong>). To do we can map a temporary public IP address and add it to your local <strong>hosts</strong> file.</p>
+<p>You can do so by following the next steps with another IP address, or use the OpenStack Horizon Dashboard the site is running on. Technically each VM requires first to have a public IP address so that a proxy (in most case; Fastly) can serve from it.</p>
+<p>Remember that each web app is deployed based on the role name, you can get them in <a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes#Deploying.2Fupdating_a_web_app">WPD/Infrastructure/procedures/Deploying_code_changes#Deploying.2Fupdating_a_web_app</a>.</p>
+<h2>Prepare to flip the Floating IP address</h2>
+<p>Let’s get the network adapter details of our new VM. This procedure will take into account that we didn’t test with another temporary IP address.</p>
+<p><strong>Note</strong> you might get two entries if you didn’t delete yet the old VM, the new VM should be the one that has only a private IP address.</p>
+<ul>
+<li>We first need to know what is the private IP address of our VMs</li>
+</ul>
+<!-- -->
+<pre><code> nova list | grep app2
+ | ... | app2            | ACTIVE | -          | Running     | private-network=..., 10.10.10.218 |
+ | ... | app2            | ACTIVE | -          | Running     | private-network=..., 10.10.10.215, 173.236.254.224 |
+</code></pre>
+<p>Remember when we asked app2 what was their public and private IP addresses.</p>
+<p>Old app2 has:</p>
+<ul>
+<li>10.10.10.215 (private)</li>
+<li>173.236.254.224 (public, that we’ll give to the new app2)</li>
+</ul>
+<p>New app2 has:</p>
+<ul>
+<li>10.10.10.218 (private)</li>
+</ul>
+<h2>Flipping the floating IP</h2>
+<p>The following commands in the order in which we need the proper values. Each field are generally hexadecimal strings of about 64 characters and dashes. In this example, they are replaced as “foo” and “bar” to illustrate their appropriate positions.</p>
+<ul>
+<li>Get the <strong>id</strong> of the floating IP we need. Fields from this command are in the order: id, fixed IP address, Floating IP address, port Id. We only care about the id, here: <strong>foo</strong>.</li>
+</ul>
+<!-- -->
+<pre><code> neutron floatingip-list | grep 173.236.254.224
+ | foo |  10.10.10.215   |  173.236.254.224  |    |
+</code></pre>
+<ul>
+<li>We also need what’s called the port id identifier. Its the first column, here: &quot;bar&quot;.</li>
+</ul>
+<!-- -->
+<pre><code> neutron port-list | grep 10.10.10.218
+ | bar |      | fa:16:3e:c1:6c:a0 | {&quot;subnet_id&quot;: &quot;...&quot;, &quot;ip_address&quot;: &quot;10.10.10.218&quot;}
+</code></pre>
+<ul>
+<li>We do have what we need to assign, enter them in this order:</li>
+</ul>
+<!-- -->
+<pre><code> neutron floatingip-associate --fixed-ip-address 10.10.10.218 foo bar
+</code></pre>
+<p>The new vm <em>app2</em> has now the public IP and the old VM is not used anymore</p>
+<h2>Delete the old app2 VM</h2>
+<p>Now that we have two app2 VMs in our OpenStack cluster, we cannot refer to the name to <em>nova</em>. Not a big deal, we can use the uuid string to refer to a VM. Note that I renamed the UUID here as “buzz” and &quot;bizz&quot;, they won’t look like this in a real deployment.</p>
+<p>Since we already know that we just changed the Floating IP to the <em>app2</em> VM we want to keep, it means that we know which one to delete.</p>
+<pre><code> nova list | grep app2
+ | buzz | app2            | ACTIVE | -          | Running     | private-network=..., 10.10.10.215 |
+ | bizz | app2            | ACTIVE | -          | Running     | private-network=..., 10.10.10.218, 173.236.254.224 |
+</code></pre>
+<p>We can delete the VM</p>
+<pre><code> nova delete buzz
+</code></pre>
+<p>We are done!</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

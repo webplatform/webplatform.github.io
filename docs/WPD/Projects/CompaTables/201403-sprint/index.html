@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sprint of 2014-03 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/CompaTables/">CompaTables</a></li><li><a href="/docs/WPD/Projects/CompaTables/201403-sprint/">201403-sprint</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Sprint of 2014-03</h1>
+<p>Sprint report, extending documentation at <a href="/docs/WPD/Projects/CompaTables">WPD/Projects/CompaTables</a></p>
+<h2>Work done</h2>
+<p><strong>mdn-compat-importer</strong>:</p>
+<ul>
+<li>Process and normalize data (living implementation)</li>
+</ul>
+<p><strong>CompaTables MediaWiki Extension</strong>:</p>
+<ul>
+<li>Implement mdn-compat-importer <em><a href="#Current_normalized_data">#Current normalized data</a></em> (living implementation)</li>
+<li>Relies on Memcached to save/purge/re-use chunks of HTML</li>
+<li>Allow manage markup-free text arrays (e.g. in format=table, the word “Unsupported” be in a dd tag, while in format=list it can be in a abbr tag)</li>
+<li>Support alternate URL for table itself on its own view:
+<ul>
+<li><a href="/docs/test/Special:Compatables?feature=border-radius&amp;format=table">Table in a standard view</a></li>
+<li><a href="/docs/test/Special:Compatables?feature=border-radius&amp;format=table&amp;foresi=1">Table alone (used for ESI, see in URL ‘&amp;foresi=1’)</a></li>
+</ul></li>
+<li>Purging Memcached version of generated HTML views:
+<ul>
+<li>When origin JSON file date changes mismatch cached version</li>
+<li>Purging a particular table directly, along with ESI purging mechanism <a href="/docs/test/Special:Compatables?feature=border-radius&amp;format=table&amp;action=purge">see in URL note ‘&amp;action=purge’</a></li>
+</ul></li>
+<li>Should not break current ESI support feature</li>
+<li>Rudimentary A11y markup (needs testing). Done according to <a href="http://www.w3.org/TR/WCAG10-HTML-TECHS/#identifying-table-rows-columns">this WCAG1 checkpoint</a></li>
+</ul>
+<h2>To fix or improve</h2>
+<h4>CompaTables MediaWiki Extension</h4>
+<ul>
+<li>List view format (format=list) is not using latest <em><a href="#Current_normalized_data">#Current normalized data</a></em></li>
+<li>Table view format
+<ul>
+<li>doesn’t show prefix icons (e.g. -webkit)</li>
+</ul></li>
+</ul>
+<h4>ESI</h4>
+<p>To use ESI, work has to be done on the servers. To summarize the findings, we cannot enable ESI tags on Fastly as it is at the moment due to a set of factors:</p>
+<p>Fastly’s Varnish version (2.1.5) doesn’t support gzip between backend and varnish; (but Varnish 3.x+ do.)</p>
+<ul>
+<li>Between our servers (“backend”) and Fastly we use currently compress with gzip</li>
+<li>Fastly has plans to upgrade their varnish, but its out of our hands</li>
+</ul>
+<p>To enable;</p>
+<ul>
+<li>Disable gzip between our backend servers and Fastly (might increase the data transfer usage, to validate with fastly)</li>
+<li>Enable gzip only from Fastly to our visitors (currently gzip is in both places)</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

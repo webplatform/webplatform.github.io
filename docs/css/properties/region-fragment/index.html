@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>region-fragment · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Controls whether the last region in a chain displays additional &#x27;overset&#x27; content according its default overflow property, or	if it displays a fragment of content as if it were flowing into a subsequent region." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/region-fragment/">region-fragment</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>region-fragment</h1>
+<h2>Summary</h2>
+<p>Controls whether the last region in a chain displays additional ‘overset’ content according its default overflow property, or if it displays a fragment of content as if it were flowing into a subsequent region.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>auto</code>
+</dd>
+<dt>Applies to</dt>
+<dd>CSS Regions
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>specified value
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+<dt><a href="/docs/css/concepts/cssom">CSS Object Model Property</a></dt>
+<dd><code>regionFragment</code>
+</dd>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>region-fragment: auto</code></li>
+<li><code>region-fragment: break</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>auto</dt>
+<dd>Region element displays <a href="/docs/css/concepts/overset">overset</a> content according to its <a href="/docs/css/properties/overflow"><strong>overflow</strong></a> property.
+</dd>
+<dt>break</dt>
+<dd>Region element overrides <a href="/docs/css/properties/overflow"><strong>overflow</strong></a> property, displaying whatever fragment of <a href="/docs/css/concepts/overset">overset</a> content can fit within the region.
+</dd>
+</dl>
+<h2>Examples</h2>
+<pre><code class="css">&lt;style&gt;
+  article {
+    flow-into: article-flow;
+  }
+  #region-1, #region-2 {
+    flow-from: article-flow;
+    region-fragment: break; /* or auto */
+    overflow: visible; /* or hidden */
+  }
+&lt;/style&gt;
+
+&lt;body&gt;
+  &lt;article&gt;...&lt;/article&gt;
+  &lt;div id="region-1"&gt;&lt;/div&gt;
+  &lt;div id="region-2"&gt;&lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<h2>Usage</h2>
+<pre><code> In the following example, 'region_1' can accommodate the article's gray text, 'region_2' can  accommodate the blue text, and the red  'overset' text does not fit within the region chain:
+</code></pre>
+<p><img src="//static.webplatform.org/4/44/region_fragment.png" alt="region fragment.png"></p>
+<p>Setting <strong>region-fragment</strong> to <strong>break</strong> suppresses display of the <a href="/docs/css/concepts/overset">overset</a> text, as shown in the example at the bottom. Setting <strong>region-fragment</strong> to its default <strong>auto</strong> value makes overset content display according to whatever <a href="/docs/css/properties/overflow"><strong>overflow</strong></a> property is defined, as shown in the two examples on the right. Even <strong>overflow:hidden</strong> may display part of the first line of overset text.</p>
+<p>The property only applies to the final element in a <a href="/docs/css/concepts/region_chain"><em>region chain</em></a> that is not large enough to accomodate remaining content. To behave as a 'region’, the element’s <a href="/docs/css/properties/flow-from"><strong>flow-from</strong></a> must specify a <a href="/docs/css/concepts/named_flow">named flow</a>, and display content from a corresponding <a href="/docs/css/properties/flow-into"><strong>flow-into</strong></a>.</p>
+<p>For an overview of CSS Regions, see <a href="/docs/tutorials/css-regions">Using CSS Regions to flow content through a layout</a>.</p>
+<h2>Notes</h2>
+<p>This property was formerly named <strong>region-overflow</strong>.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-regions/">CSS Regions Module Level 1</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li>W3C editor’s draft: <a href="http://dev.w3.org/csswg/css3-regions/">CSS Regions Module Level 3</a></li>
+<li>Adobe Web Standards: <a href="http://html.adobe.com/webstandards/cssregions">CSS Regions</a></li>
+<li>Adobe Developer’s Network: <a href="http://www.adobe.com/devnet/html5/articles/css3-regions.html">CSS3 Regions: Rich page layout with HTML and CSS3</a></li>
+<li><a href="http://adobe.github.com/web-platform/samples/css-regions">Sample pages</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

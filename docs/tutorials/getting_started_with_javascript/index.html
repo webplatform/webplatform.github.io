@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Getting started with JavaScript · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This tutorial provides a brief introduction to JavaScript, for readers who are already familiar with programming concepts" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/getting_started with javascript/">getting started with javascript</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Getting started with JavaScript</h1>
+<h2>Summary</h2>
+<p>This tutorial provides a brief introduction to JavaScript, for readers who are already familiar with programming concepts</p>
+<h2>Why JavaScript?</h2>
+<p>JavaScript is a powerful, complicated and not very well understood language in the field of computer languages. However, at its core potential lies the ability to develop a new range of applications that will likely change the landscape of the internet in this decade. A good example of one of these applications is <a href="http://local.google.com/">Google Maps</a>.</p>
+<p>The primary advantage to JavaScript, which is also known as ECMAScript, centers around the web browser, thus having the ability to produce the same results on all platforms supported by the browser. The examples on this page, just like Google Maps, run on Linux, Windows and the Mac OS. With the recent growth of numerous JavaScript libraries, it is now easier to navigate a document, select DOM elements, create animations, handle events, and develop Ajax applications. Unlike the hype around other technologies pushed by various proprietary interests, JavaScript is really the only cross-platform, client-side programming language that is both free and universally adopted.</p>
+<h2>What you should already know</h2>
+<p>JavaScript is a very easy language to start programming with. All you need is a text editor and a web browser to get started.</p>
+<p>There are many other technologies that can be integrated into and developed along with JavaScript that are beyond the scope of this document. Don’t expect to make a whole application like Google maps all on your first day!</p>
+<h2>Getting Started</h2>
+<p>Getting started with JavaScript is very easy. You don’t have to have complicated development programs installed. You don’t have to know how to use a shell, program Make or use a compiler. JavaScript is interpreted by your web browser. All you have to do is save your program as a text file and then open it up in your web browser. That’s it!</p>
+<p>JavaScript is a great programming language for introductory computer courses. It allows instant feedback to the new student and teaches them about tools they will likely find useful in their real life. This is in stark contrast to C, C++ and Java which are really only useful for dedicated software developers.</p>
+<h2>Browser Compatibility Issues</h2>
+<p>There are variations between what functionality is available in the different browsers. Mozilla, Microsoft IE, Apple Safari and Opera fluctuate in the behavior. We intend on documenting these variations. You can mitigate these issues by using the various cross platform JavaScript APIs that are available. These APIs provide common functionality and hide these browser fluctuations from you.</p>
+<h2>How to try the Examples</h2>
+<p>The examples below have some sample code. There are many ways to try these examples out. If you already have your own website, then you should be able to just save these examples as new web pages on your website.</p>
+<p>If you do not have your own website, you can save these examples as files on your computer and open them up with the web browser you are using now. JavaScript is a very easy language to use for beginning programmers for this reason. You don’t need a compiler or a development environment; you and your browser are all you need to get started!</p>
+<h2>Example: Catching a mouse click</h2>
+<p>The specifics of event handling (event types, handler registration, propagation, etc) are too extensive to be fully covered in this simple example. However this example cannot demonstrate catching a mouse click without delving a little into the JavaScript event system. Just keep in mind that this example will only graze the full details about JavaScript events and that if you wish to go beyond the basic capabilities described here to read more about the JavaScript event system.</p>
+<p>‘Mouse’ events are a subset of the total events issued by a web browser in response to user actions. The following is a list of the the events emitted in response to a user’s mouse action:</p>
+<ul>
+<li>Click - issued when a user clicks the mouse</li>
+<li>DblClick - issued when a user double-clicks the mouse</li>
+<li>MouseDown - issued when a user depresses a mouse button (the first half of a click)</li>
+<li>MouseUp - issued when a user releases a mouse button (the second half of a click)</li>
+<li>MouseOut - issued when the mouse pointer leaves the graphical bounds of the object</li>
+<li>MouseOver - issued when the mouse pointer enters the graphical bounds of the object</li>
+<li>MouseMove - issued when the mouse pointer moves while within the graphical bounds of the object</li>
+<li>ContextMenu - issued when the user clicks using the right mouse button</li>
+</ul>
+<p>The simplest method for capturing these events, to register event handlers — using HTML — is to specify the individual events as attributes for your element. Example:</p>
+<pre><code>  &lt;span onclick=&quot;alert('Hello World!');&quot;&gt;Click Here&lt;/span&gt;
+</code></pre>
+<p>The JavaScript code you wish to execute can be inlined as the attribute value or you can call a function which has been defined in a <code>&lt;script&gt;</code> block within the HTML page:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">;
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onclick_callback</span> <span class="hljs-params">()</span> </span>{
+      alert (<span class="hljs-string">"Hello, World!"</span>);
+   }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"onclick_callback();"</span>&gt;</span>Click Here<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>;
+</code></pre>
+<p>Additionally, the event object which is issued can be captured and referenced; providing the developer with access to specifics about the event such as which object received the event, the event’s type, and which mouse button was clicked. Using the inline example again:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onclick_callback</span><span class="hljs-params">(event)</span> </span>{
+     <span class="hljs-keyword">var</span> eType = event.type;
+     <span class="hljs-comment">/* the following is for compatability */</span>
+     <span class="hljs-comment">/* Moz populates the target property of the event object */</span>
+     <span class="hljs-comment">/* IE populates the srcElement property */</span>
+     <span class="hljs-keyword">var</span> eTarget = event.target || event.srcElement;
+
+     alert( <span class="hljs-string">"Captured Event (type="</span> + eType + <span class="hljs-string">", target="</span> + eTarget );
+   }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"onclick_callback(event);"</span>&gt;</span>Click Here<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+</code></pre>
+<p>In addition to registering to receive events in your HTML you can likewise set the same attributes of any HTMLElement objects generated by your JavaScript. The example below instantiates a span object, appends it to the page body, and registers the span object to recieve mouse-over, mouse-out, mouse-down, and mouse-up events.</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mouseevent_callback</span>(<span class="hljs-params">event</span>) </span>{
+     <span class="hljs-comment">/* The following is for compatability */</span>
+     <span class="hljs-comment">/* IE does NOT by default pass the event object */</span>
+     <span class="hljs-comment">/* obtain a ref to the event if one was not given */</span>
+     <span class="hljs-keyword">if</span> (!event) event = <span class="hljs-built_in">window</span>.event;
+
+     <span class="hljs-comment">/* obtain event type and target as earlier */</span>
+     <span class="hljs-keyword">var</span> eType = event.type;
+     <span class="hljs-keyword">var</span> eTarget = event.target || event.srcElement;
+     alert(eType +<span class="hljs-string">' event on element with id: '</span>+ eTarget.id);
+   }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myloadevent</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">/* obtain a ref to the 'body' element of the page */</span>
+    <span class="hljs-keyword">var</span> body = <span class="hljs-built_in">document</span>.body;
+    <span class="hljs-comment">/* create a span element to be clicked */</span>
+    <span class="hljs-keyword">var</span> span = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'span'</span>);
+    span.id = <span class="hljs-string">'ExampleSpan'</span>;
+    span.appendChild(<span class="hljs-built_in">document</span>.createTextNode (<span class="hljs-string">'Click Here!'</span>));
+
+    <span class="hljs-comment">/* register the span object to receive specific mouse events */</span>
+    span.onmousedown = mouseevent_callback;
+    span.onmouseup = mouseevent_callback;
+    span.onmouseover = mouseevent_callback;
+    span.onmouseout = mouseevent_callback;
+
+    <span class="hljs-comment">/* display the span on the page */</span>
+    body.appendChild(span);
+ }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p><strong>DRAFT</strong><br>
+<font size="x-small">This page is not complete.</font></p>
+<h2>Example: Catching a keyboard event</h2>
+<p>Similar to the “Catching a mouse event” example above, catching a keyboard event relies on exploring the JavaScript event system. Keyboard events are fired whenever any key is used on the keyboard.</p>
+<p>The list of available keyboard events emitted in response to a keyboard action is considerably smaller than those available for mouse:</p>
+<ul>
+<li>KeyPress - issued when a key is depressed and released</li>
+<li>KeyDown - issued when a key is depressed but hasn’t yet been released</li>
+<li>KeyUp - issued when a key is released</li>
+<li>TextInput (available in Webkit browsers only at time of writing) - issued when text is input either by pasting, speaking or keyboard. This event will not be covered in this article.</li>
+</ul>
+<p>In a <a href="/w/index.php?title=tutorials/getting_started_with_javascript/DOM/event/keypress&amp;action=edit&amp;redlink=1">keypress</a> event, the Unicode value of the key pressed is stored in either the <code>keyCode</code> or <code>charCode</code> property; never both. If the key pressed generates a character (e.g. ‘a’), <code>charCode</code> is set to the code of that character, respecting the letter case. (i.e. <code>charCode</code> takes into account whether the shift key is held down). Otherwise, the code of the pressed key is stored in <code>keyCode</code>.</p>
+<p>The simplest method for capturing keyboard events is again to register event handlers within the HTML, specifying the individual events as attributes for your element. Example:</p>
+<pre><code class="html">   <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">onkeypress</span>=<span class="hljs-value">"alert ('Hello World!');"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span>
+</code></pre>
+<p>As with mouse events, the JavaScript code you wish to execute can be inlined as the attribute value or you can call a function which has been defined in a &lt;script&gt; block within the HTML page:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onkeypress_callback</span> <span class="hljs-params">()</span> </span>{
+     alert (<span class="hljs-string">"Hello, World!"</span>);
+   }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+ <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">onkeypress</span>=<span class="hljs-value">"onkeypress_callback();"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span>
+</code></pre>
+<p>Capturing the event and referencing the target (i.e. the actual key that was pressed) is achieved in a similar way to mouse events:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onkeypress_callback</span><span class="hljs-params">(evt)</span> </span>{
+       <span class="hljs-keyword">var</span> eType = evt.type; <span class="hljs-comment">// Will return "keypress" as the event type</span>
+       <span class="hljs-keyword">var</span> eCode = <span class="hljs-string">'keyCode is '</span> + evt.keyCode;
+       <span class="hljs-keyword">var</span> eChar = <span class="hljs-string">'charCode is '</span> + evt.charCode;
+
+       alert (<span class="hljs-string">"Captured Event (type="</span> + eType + <span class="hljs-string">", key Unicode value="</span> + eCode + <span class="hljs-string">", ASCII value="</span> + eChar + <span class="hljs-string">")"</span>);
+    }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">onkeypress</span>=<span class="hljs-value">"onkeypress_callback(event);"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">input</span>&gt;</span>
+</code></pre>
+<p>Capturing any key event from the page can be done by registering the event at the document level and handling it in a function:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+   <span class="hljs-built_in">document</span>.onkeypress = key_event(event);
+   <span class="hljs-built_in">document</span>.onkeydown = key_event(event);
+   <span class="hljs-built_in">document</span>.onkeyup = key_event(event)
+
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">key_event</span>(<span class="hljs-params">evt</span>) </span>{
+       <span class="hljs-keyword">var</span> eType = evt.type;
+       <span class="hljs-keyword">var</span> eCode = <span class="hljs-string">"ASCII code is "</span> + evt.keyCode;
+       <span class="hljs-keyword">var</span> eChar = <span class="hljs-string">'charCode is '</span> + evt.charCode;
+
+       alert (<span class="hljs-string">"Captured Event (type="</span> + eType + <span class="hljs-string">", key Unicode value="</span> + eCode + <span class="hljs-string">", ASCII value="</span> + eChar + <span class="hljs-string">")"</span>);
+    }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Here is a complete example that shows key event handling:</p>
+<pre><code class="html"> <span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+     <span class="hljs-keyword">var</span> metaChar = <span class="hljs-literal">false</span>;
+     <span class="hljs-keyword">var</span> exampleKey = <span class="hljs-number">16</span>;
+     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">keyEvent</span>(<span class="hljs-params">event</span>) </span>{
+       <span class="hljs-keyword">var</span> key = event.keyCode || event.which;
+       <span class="hljs-keyword">var</span> keychar = <span class="hljs-built_in">String</span>.fromCharCode(key);
+       <span class="hljs-keyword">if</span> (key==exampleKey) { metaChar = <span class="hljs-literal">true</span>; }
+       <span class="hljs-keyword">if</span> (key!=exampleKey) {
+          <span class="hljs-keyword">if</span> (metaChar) {
+             alert(<span class="hljs-string">"Combination of metaKey + "</span> + keychar)
+             metaChar = <span class="hljs-literal">false</span>;
+          } <span class="hljs-keyword">else</span> { alert(<span class="hljs-string">"Key pressed "</span> + key); }
+       }
+     }
+     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">metaKeyUp</span> (<span class="hljs-params">event</span>) </span>{
+       <span class="hljs-keyword">var</span> key = event.keyCode || event.which;
+       <span class="hljs-keyword">if</span> (key==exampleKey) { metaChar = <span class="hljs-literal">false</span>; }
+     }
+   </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onkeydown</span>=<span class="hljs-value">"keyEvent(event)"</span> <span class="hljs-attribute">onkeyup</span>=<span class="hljs-value">"metaKeyUp(event)"</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3>Browser bugs and quirks</h3>
+<p>The two properties made available through the key events are <code>keyCode</code> and <code>charCode</code>. In simple terms, <code>keyCode</code> refers to the actual keyboard key that was pressed by the user, while <code>charCode</code> is intended to return that key’s ASCII value. These two values may not necessarily be the same; for instance, a lower case ‘a’ and an upper case ‘A’ have the same <code>keyCode</code>, because the user presses the same key, but a different <code>charCode</code> because the resulting character is different.</p>
+<p>The way in which browsers interpret the charCode is not a consistently-applied process. For example, Internet Explorer and Opera do not support <code>charCode</code>. However, they give the character information in <code>keyCode</code>, but only onkeypress. Onkeydown and -up <code>keyCode</code> contains key information. Firefox uses a different word, &quot;which&quot;, to distinguish the character.</p>
+<p>Refer to the documentation on Keyboard Events for a further treatment of keyboard events.</p>
+<p><strong>DRAFT</strong><br>
+<font size="x-small">This page is not complete.</font></p>
+<h2>Example: Dragging images around</h2>
+<p>The following example allows moving the image of firefox around the page.</p>
+<pre><code class="html"> <span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/css'</span>&gt;</span><span class="css">
+ <span class="hljs-tag">img</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>; }</span>
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+
+ <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">'text/javascript'</span>&gt;</span><span class="javascript">
+ <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+   movMeId=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"ImgMov"</span>);
+   movMeId.style.top = <span class="hljs-string">"80px"</span>;
+   movMeId.style.left = <span class="hljs-string">"80px"</span>;
+
+   <span class="hljs-built_in">document</span>.onmousedown = coordinates;
+   <span class="hljs-built_in">document</span>.onmouseup=mouseup;
+
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">coordinates</span>(<span class="hljs-params">e</span>) </span>{
+     <span class="hljs-keyword">if</span> (e == <span class="hljs-literal">null</span>) { e = <span class="hljs-built_in">window</span>.event;}
+     <span class="hljs-keyword">var</span> sender = (<span class="hljs-keyword">typeof</span>( <span class="hljs-built_in">window</span>.event ) != <span class="hljs-string">"undefined"</span> ) ? e.srcElement : e.target;
+
+     <span class="hljs-keyword">if</span> (sender.id==<span class="hljs-string">"ImgMov"</span>) {
+       mouseover = <span class="hljs-literal">true</span>;
+       pleft = <span class="hljs-built_in">parseInt</span>(movMeId.style.left);
+       ptop = <span class="hljs-built_in">parseInt</span>(movMeId.style.top);
+       xcoor = e.clientX;
+       ycoor = e.clientY;
+       <span class="hljs-built_in">document</span>.onmousemove=moveImage;
+       <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     } <span class="hljs-keyword">else</span> {
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     }
+   }
+
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">moveImage</span>(<span class="hljs-params">e</span>) </span>{
+     <span class="hljs-keyword">if</span> (e == <span class="hljs-literal">null</span>) { e = <span class="hljs-built_in">window</span>.event; }
+     movMeId.style.left = pleft+e.clientX-xcoor+<span class="hljs-string">"px"</span>;
+     movMeId.style.top = ptop+e.clientY-ycoor+<span class="hljs-string">"px"</span>;
+     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+   }
+
+   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mouseup</span>(<span class="hljs-params">e</span>) </span>{
+     <span class="hljs-built_in">document</span>.onmousemove = <span class="hljs-literal">null</span>;
+   }
+ }
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+ <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"ImgMov"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://mozcom-cdn.mozilla.net/img/covehead/about/logo/download/logo-only.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"64"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"64"</span> /&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Drag and drop around the image in this page.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+
+ <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Example: Resizing things</h2>
+<p><span class="inlineIndicaor todoInline"><strong>FIXME:</strong> <em>Need Content. Or, remove headline</em></span></p>
+<h2>Example: Drawing Lines</h2>
+<p><span class="inlineIndicaor todoInline"><strong>FIXME:</strong> <em>Need Content. Or, remove headline</em></span></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Getting_Started">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

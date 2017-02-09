@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Geolocation · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="The Geolocation object is used by scripts to programmatically determine the location information associated with the hosting device. The location information is acquired by applying a user-agent specific algorithm, creating a Position object, and populating that object with appropriate data accordingly." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/geolocation/">geolocation</a></li><li><a href="/apis/geolocation/Geolocation/">Geolocation</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Geolocation</h1>
+<h2>Summary</h2>
+<p>The Geolocation object is used by scripts to programmatically determine the location information associated with the hosting device. The location information is acquired by applying a user-agent specific algorithm, creating a Position object, and populating that object with appropriate data accordingly.</p>
+<h2>Properties</h2>
+<p><em>No properties.</em></p>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/geolocation/Geolocation/clearWatch">clearWatch</a></dt>
+<dd>Stops a specific watch process.
+</dd>
+<dt><a href="/docs/apis/geolocation/Geolocation/getCurrentPosition">getCurrentPosition</a></dt>
+<dd>Obtains the current location of the device.
+</dd>
+<dt><a href="/docs/apis/geolocation/Geolocation/watchPosition">watchPosition</a></dt>
+<dd>Returns a long value that uniquely identifies a watch operation and then asynchronously starts the watch operation.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Examples</h2>
+<p>The geolocation API is published through a geolocation child object within the navigator object. If the object exists, geolocation services are available.</p>
+<pre><code class="js"><span class="hljs-keyword">if</span> (<span class="hljs-string">"geolocation"</span> <span class="hljs-keyword">in</span> navigator) {
+  <span class="hljs-comment">/* geolocation is available */</span>
+  alert(<span class="hljs-string">"Geolocation services are supported by your browser."</span>);
+} <span class="hljs-keyword">else</span> {
+ <span class="hljs-comment">/* geolocation is not available */</span>
+  alert(<span class="hljs-string">"I'm sorry, but geolocation services are not supported by your browser."</span>);
+}
+</code></pre>
+<p>The script checks if geolocation is supported, if possible - the script obtains your actual position using the watchPosition method. If something went wrong you will get a detailed error message.</p>
+<pre><code class="js"><span class="hljs-comment">// variables</span>
+<span class="hljs-keyword">var</span> watchID;
+<span class="hljs-keyword">var</span> geoLoc;
+
+<span class="hljs-comment">// check if geolocation is available</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-string">"geolocation"</span> <span class="hljs-keyword">in</span> navigator)
+{
+<span class="hljs-comment">/* geolocation is available */</span>
+    alert(<span class="hljs-string">"Geolocation services are supported by your browser."</span>);
+    getLocationUpdate();
+}
+
+<span class="hljs-keyword">else</span>
+{
+<span class="hljs-comment">/* geolocation is not available */</span>
+    alert(<span class="hljs-string">"I'm sorry, but geolocation services are not supported by your browser."</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showLocation</span>(<span class="hljs-params">position</span>)
+</span>{
+alert(<span class="hljs-string">'latitude: '</span>+position.coords.latitude+<span class="hljs-string">' AND longitude: '</span>+position.coords.longitude);
+alert(position.coords.accuracy);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">errorHandler</span>(<span class="hljs-params">err</span>)
+</span>{
+<span class="hljs-keyword">if</span>(err.code == <span class="hljs-number">0</span>)
+{alert(<span class="hljs-string">"Error: Unknown error"</span>);}
+
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( err.code == <span class="hljs-number">1</span>)
+{alert(<span class="hljs-string">"Error: Permission denied"</span>);}
+
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( err.code == <span class="hljs-number">2</span>)
+{alert(<span class="hljs-string">"Error: Position not available"</span>);}
+
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( err.code == <span class="hljs-number">3</span>)
+{alert(<span class="hljs-string">"Error: Timeout"</span>);}
+
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getLocationUpdate</span>(<span class="hljs-params"></span>)</span>{
+
+   <span class="hljs-keyword">if</span>(navigator.geolocation){
+      <span class="hljs-comment">// timeout at 120000 milliseconds (120 seconds)</span>
+      <span class="hljs-keyword">var</span> options = {timeout:<span class="hljs-number">120000</span>};
+      geoLoc = navigator.geolocation;
+      watchID = geoLoc.watchPosition(showLocation,
+                                     errorHandler,
+                                     options);
+   }<span class="hljs-keyword">else</span>{
+      alert(<span class="hljs-string">"Sorry, browser does not support geolocation!"</span>);
+   }
+}
+</code></pre>
+<h2>Notes</h2>
+<p>Windows Internet Explorer 9. The <strong>Geolocation</strong> object is only supported for webpages displayed in IE9 Standards mode. For more information, see Defining Document Compatibility. The <strong>Geolocation</strong> object is not supported for applications hosting the WebBrowser Control.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://dev.w3.org/geo/api/spec-source.html">W3C Geolocation Specification</a></dt>
+<dd>W3C Editor’s Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

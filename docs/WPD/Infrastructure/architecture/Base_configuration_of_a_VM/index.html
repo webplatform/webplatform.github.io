@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Base configuration of a VM · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/architecture/">architecture</a></li><li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration of a VM/">Base configuration of a VM</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Base configuration of a VM</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><strong>Base configuration of a VM</strong></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>Here is a few details that every VMs has in common</p>
+<ul>
+<li>Ubuntu 14.04 LTS</li>
+<li><em>Apt</em> is configured to have security updates installed automatically</li>
+<li>IPv6 is supported by DreamCompute, but we aren’t using it yet. It’s disabled at <em>sysctl</em> level for now</li>
+<li>Private IPv4 networking <em>security groups</em> is allowing VMs to communicate among themselves</li>
+<li>Nothing is exposed to the public <em>Floating IPs</em>, except the bare minimum (e.g. TCP 80, 443 on web servers). Security groups are selectively opening ports to enforce the policy</li>
+<li>Access to ANY VM is only made through the salt master acting as a <em>Jump box</em>, see <a href="#Accessing_a_VM_using_SSH">Accessing a VM using SSH</a></li>
+<li>Every VM is booted from a basic Ubuntu 14.04 LTS image. A minimal <em>cloud-init</em> script installs <em>salt-minion</em> and makes it poke the <em>salt master</em>.</li>
+<li>Each VM can consult their initial <em>cloud-init</em> script using OpenStack internal API by doing: <code>curl http://169.254.169.254/openstack/2013-10-17/user_data</code></li>
+<li>The VM name define what softwares, services, and web apps deployed on them. For more details about it, refer to the section about “roles” at <a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level"><strong>Roles and environment level</strong></a></li>
+<li>Monit has automatic service checks definitions installed through Salt stack. <a href="/docs/WPD/Infrastructure/Monitoring/Monit">More about <strong>Monit</strong></a> and about how to <a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status#Using_Monit">get Monit reports</a>.</li>
+<li>Each VM has a full name describing its role and environment level known internally pointing to private IPs (e.g. <em>app3-jobrunner.production.wpdn</em>).</li>
+</ul>
+<h3>Every VMs, except ones with the mail role</h3>
+<ul>
+<li>Uses locally configured <em>exim4</em> to send email through the <em>email relay</em> (<em>mail.webplatform.org</em>) allowing us to have only one mail server to maintain.</li>
+</ul>
+<h3>Only VMs with mail role</h3>
+<ul>
+<li>The mail relay (e.g. <em>mail.webplatform.org</em>) takes care of converting to publicly addressable origin but has headers to know which VM sent the message</li>
+</ul>
+<h3>Every VMs that has frontend role</h3>
+<ul>
+<li>At this time they have the name <em>nginx</em> in them, they should be renamed <em>frontend</em> as its what they’ll do. Besides VMs with the <em>backend</em> role will also have NGINX to serve internally static assets for the frontend so it would make more sense to remove potential confusion with the software name</li>
+</ul>
+<h3>Every VMs with a backend</h3>
+<p>At this time its the VM with roles: <strong>app</strong>, <strong>project</strong>, <strong>piwik</strong>, <strong>blog</strong>. But eventually it’ll be attached differently.</p>
+<ul>
+<li>Every web app configuration (e.g. <em>/srv/salt/code/files/wiki/Settings.php.jinja</em>) uses Redis and Memcached as if it was local</li>
+<li>Nutcracker acts as a Redis and Memcached proxy on every VMs of the roles listed above</li>
+<li>Nutcracker configuration is managed by salt, lists of nodes are in <em>/srv/pillar/infra/staging.sls</em> with pillar keys <em>infra:sessions_redis</em>, <em>infra:sessions_memcache</em>, <em>infra:alpha_redis</em>, <em>infra:alpha_memcache</em>, list them like this:</li>
+</ul>
+<!-- -->
+<pre><code> salt app\* pillar.get infra:sessions_redis
+</code></pre>
+<ul>
+<li>Only Sessions data MUST be sent to localhost keystore at default port number, configured at both web app level and/or backend configuration itself (e.g. <em>php.ini</em>)</li>
+<li>Other keystore caches uses a different port, ending by <strong>55</strong> (e.g. Memcached 127.0.0.1:11255, Redis 127.0.0.1:6355) local nutcracker proxy</li>
+<li>Should have a minimal NGINX server to serve static assets as part of the web software package its serving as a backend. The <em>frontend</em> VMs will poll static assets from there.</li>
+</ul>
+<h3>VMs with either redis or memcache or session roles</h3>
+<ul>
+<li>Listens on default port on private IPv4 interface of their respective service</li>
+<li>No web app should call them directly, use Nutcracker as a proxy instead</li>
+<li>VMs with role <em>sessions</em> are separate from the other keystores by design so we can purge data from any other clusters without destroying our user sessions</li>
+</ul>
+<h2>Accessing a VM using SSH</h2>
+<p>To work on any VM on WebPlatform architecture, you have to have one of the site operators to add your SSH public key. Once you have access, you’ll be able to jump to the VMs you are granted access through what’s called a <em>SSH Jump box</em>.</p>
+<p>One of the common use-case for this setup is to gain access to <a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">WPD/Infrastructure/architecture/Reports_to_review_status</a>, or to make some random checks.</p>
+<p>The following will explain how you can install on your local machine the configuration you need to connect to the VMs through SSH.</p>
+<h3>How it works</h3>
+<p>In summary, a <em>SSH Jump box</em> is basically a way to refer to a VM within a private network using a publicly available SSH server acting as a proxy.</p>
+<p>To work on a cluster on a given level, you can use the salt master as a SOCKS proxy to view privileged reports such as service health and usage reports.</p>
+<p>To view the internal only reports, configure one of your web browser to use your local computer as a proxy through the SSH tunnel we will create.</p>
+<pre><code> ssh salt.webplatform.org -C -D 1080
+</code></pre>
+<p>This would allow you to connect only to the salt master and have a SOCKS proxy. To access all VMs and simplify the commands to use, read on.</p>
+<h3>Setting automatically a SOCKS proxy in your SSH configuration</h3>
+<p>A reliable solution is to setup your local ssh client to do things for you automatically.</p>
+<p>Those things can be done in <strong>~/.ssh/config</strong> file the following line within the appropriate <strong>Host</strong> block. Or using PuTTY, if you use Windows.</p>
+<pre><code>### WPD Production
+Host production.wpdn
+  Hostname salt.webplatform.org
+  ProxyCommand none
+  DynamicForward 1080
+Host *.production.wpdn
+  ProxyCommand ssh -e @ -o StrictHostKeyChecking=no -a -W %h:%p production.wpdn
+</code></pre>
+<p><strong>Note</strong> this block is an example of what you can use to have a <strong>DynamicForward</strong> automatically installed.</p>
+<p>To connect to the salt master, you’d have to do this instead and all will be setup automatically:</p>
+<pre><code> ssh production.wpdn
+</code></pre>
+<p>You can even connect to a VM directly using the salt master as a <em>Jump box</em></p>
+<pre><code> ssh app1.production.wpdn
+</code></pre>
+<p>To use the proxy, you need at least one SSH connection established to the infrastructure.</p>
+<p><strong>IMPORTANT</strong> Make sure you always use the connection block that the salt master provides you at connection time as this example here might become outdated.</p>
+<h3>Configuring a web browser to use the proxy</h3>
+<p>Once connected, you have to configure a web browser to use your new <strong>DynamicForward</strong> SOCKS proxy.</p>
+<p>In modern Firefox version, you can do that by going into <strong>Preferences</strong>, <strong>Advanced</strong>, <strong>Network</strong> tab, then <strong>Connection</strong> button. You’ll see a window similar to below. Adjust accordingly.</p>
+<p><img src="//static.webplatform.org/e/ee/201502-Firefox-Network-settings.png" alt="201502-Firefox-Network-settings.png"></p>
+<p>To learn how to configure your web browser to use SSH as a SOCKS proxy, you can view the <a href="https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding#Dynamic_Port_Forwarding">SSH Port forwarding help pages on <strong>help.ubuntu.com</strong></a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

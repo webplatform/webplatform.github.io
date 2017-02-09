@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Roles and environment level · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/architecture/">architecture</a></li><li><a href="/docs/WPD/Infrastructure/architecture/Roles_and environment level/">Roles and environment level</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Roles and environment level</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><strong>Roles and environment level</strong></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>Each VM has code and configuration deployed to them depending on two factors; <em>role</em> and environment <em>level</em>.</p>
+<dl>
+<dt>role</dt>
+<dd>defines what gets deployed (e.g. service package, web application, etc).<br>
+level
+</dd>
+<dd>will ensure deployment specific details (e.g. passwords, keys, SSL certificates, top level domain name, etc) are applied.
+</dd>
+</dl>
+<p>This document describes how we define what configuration and code will be applied on a given VM.</p>
+<h2>Roles</h2>
+<p>The roles of a VM is defined by its name, more than one role can be assigned on a single VM.</p>
+<p>Roles are parsed from the name as a list of role names separated by dashes, minus any number it might find. If you have a VM name <strong>redis-alpha1</strong>, the roles will therefore be: [“redis&quot;,&quot;alpha”]</p>
+<p>Some roles are made to ensure configuration based on design decisions (e.g. detect which database VM is the ones we should send writes to). Other roles are about the web application code we deploy, refer to the section <a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes#Deploying.2Fupdating_a_web_app">Deploying and/or updating a web app in <strong>Deploying code changes</strong></a>.</p>
+<p>For an example of a VM with two roles that doesn’t deploy a web application could be a VM with the name &quot;<strong>db5-masterdb</strong>&quot; which would be used as the main (&quot;<em>masterdb</em>&quot;) database server (&quot;<em>db</em>&quot;). Another example would be a VM with the name &quot;<em>notes</em>&quot; which installs hypothesis.</p>
+<p>The piece of code that makes the parsing is managed by a small piece of Python code in <code>/srv/salt/_grains/purpose.py</code> (see below) that parses the name.</p>
+<p>Getting the VM’s <em>roles</em> can be done like this:</p>
+<pre><code> salt db5-masterdb grains.get roles
+ db5-masterdb:
+   - db
+   - masterdb
+</code></pre>
+<p>Making an action only on VMs that has a given role can be done in one command.</p>
+<p>The following command gives the a NGINX status view each VM that has <em>nginx</em> as a role through <a href="http://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.nginx.html#salt.modules.nginx.status"><em>Salt Stack</em> <strong>nginx.status</strong> module</a>, more reports are available in <a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">WPD/Infrastructure/architecture/Reports_to_review_status</a></p>
+<pre><code> salt -G 'roles:nginx' nginx.status
+ specs-nginx:
+   ----------
+   accepted:
+       3052
+   active connections:
+       1
+   handled:
+       3052
+   reading:
+       0
+   requests:
+       3045
+   waiting:
+       0
+   writing:
+       1
+ ...
+</code></pre>
+<p><strong>Continue reading about roles in <a href="/docs/WPD/Infrastructure/architecture/VM_roles">WPD/Infrastructure/architecture/VM_roles</a></strong></p>
+<h2>Level</h2>
+<p>The &quot;<em>environment level</em>&quot; is defined as a <code>key: value</code> string (e.g. “level: production”) in <code>/etc/salt/grains</code>. That file is created when the VM is created using the salt master managed <code>/srv/opsconfig/userdata.txt</code> <strong>cloud-init</strong> boot script.</p>
+<p>Getting the <em>environment level</em> name that the VM knows it has can be done like this:</p>
+<pre><code> salt vmname grains.get level
+ vmname:
+   staging
+</code></pre>
+<p><strong>Tip</strong> Its a convention to keep in an OpenStack project ONLY contain ONE environment level. Mixing might cause to confusion and manipulation mistakes.</p>
+<h1>Related</h1>
+<h2>How salt detects the roles?</h2>
+<p>In the <a href="https://github.com/webplatform/salt-states">salt-states</a> code repository, generally available in the salt master <code>/srv/salt/_grains/purpose.py</code>. The code looks like this.</p>
+<pre><code><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">from</span> string <span class="hljs-keyword">import</span> digits
+
+hostname = socket.gethostname().translate(<span class="hljs-keyword">None</span>, digits)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">roles</span><span class="hljs-params">()</span>:</span>
+        <span class="hljs-string">'''
+        Parse the host hostname and creates a list of roles
+
+        Based on the hostname (without domain name), should return:
+
+                salt            -&gt; grain:roles: ["salt"]
+                redis-jobs1     -&gt; grain:roles: ["redis","jobs"]
+
+        '''</span>
+        dataObject = {<span class="hljs-string">'roles'</span>: hostname.split(<span class="hljs-string">'-'</span>)}
+        <span class="hljs-keyword">return</span> dataObject
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

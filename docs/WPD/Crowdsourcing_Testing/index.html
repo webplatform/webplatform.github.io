@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WPD/Crowdsourcing Testing · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Crowdsourcing_Testing/">WPD/Crowdsourcing Testing</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WPD/Crowdsourcing Testing</h1>
+<p>This idea was developed over the last few years, and briefly discussed after Adobe’s <a href="http://testthewebforward.org/">Test the Web Forward</a> event (see <a href="http://blogs.adobe.com/webplatform/2012/06/20/test-the-web-forward-weekend/">blog report</a>). That event showed that we have some opportunity around this, and a few challenges.</p>
+<p>Opportunities:</p>
+<ul>
+<li>Demonstrated interest by participants</li>
+<li>Enlightened self-interest for developers</li>
+</ul>
+<p>Challenges:</p>
+<ul>
+<li>How to train enough people to scale this up?</li>
+<li>How to get people (in whom we invest training) to persist in participating and contributing beyond the event itself?</li>
+<li>How to make the process simpler, to lower the barriers?</li>
+<li>How to vet the tests, and reward reviewers (everyone hates to review)?</li>
+</ul>
+<p>This is a basic sketch-out of an idea for a crowdsourcing infrastructure (e.g. webapp), detailed in the form of a user-interface workflow (since that’s the way I think). This would remove much of the administrivia and non-useful details (e.g. the metadata format), and concentrate on the skills that developers already have, or could learn or reuse:</p>
+<ul>
+<li>HTML, CSS, SVG, JS, APIs, etc.</li>
+<li>General unit testing</li>
+<li>Reading and understanding specifications, and extracting testable assertions (they may have to learn this)</li>
+<li>the particular W3C spec-testing methodology above and beyond unit testing skills (they will have to learn this)</li>
+</ul>
+<p>I estimate this will take 2 people 6 weeks to build, with 0.5 FTE ongoing for future development and maintenance, decreasing over time, but required periodically. So, that means that it will take 4 people 12 weeks to build. But we can start simple and see how the prototyping goes.</p>
+<h2>Specification and Testable Assertions page</h2>
+<p>List of all relevant specifications</p>
+<ul>
+<li>each spec expands out into a list of all testable assertions and other testable characteristics, with indicator of number of tests on that assertion (submitted, reviewed, accepted)
+<ul>
+<li>clicking on a testable assertion navigates to Testable Assertions page</li>
+</ul></li>
+</ul>
+<h2>Testable Assertion page</h2>
+<p>Info on a specific testable assertion, including:</p>
+<ul>
+<li>excerpt of spec, in context</li>
+<li>spec chapter, section, URL, etc.</li>
+<li>relative difficulty of testing (5-star)</li>
+<li>discussion forum, where people can clarify (or question) what is being tested, how to test it, and so on</li>
+<li>button to create test for that assertion (navigates to Test Creation page)</li>
+<li>button to file bug on that testable assertion (navigates to Bug Report page)</li>
+</ul>
+<h2>Test Creation page</h2>
+<p>JSFiddle-like interface, with sections for markup (HTML, SVG, MathML, etc.), Javascript, CSS, and output</p>
+<ul>
+<li>Can spawn more input areas (e.g. for testing external SVG file references in SVG or HTML)</li>
+<li>Metadata is already filled out for user, including author, spec URL and section, keywords, etc.
+<ul>
+<li>Most metadata can be edited</li>
+</ul></li>
+<li>Any spec-specific test framework code included in input areas</li>
+<li>Once test is completed, user clicks button to submit test for review
+<ul>
+<li>Code is validated on submit, no vendor prefixes allowed</li>
+<li>Successful submission navigates to Test Review page</li>
+</ul></li>
+</ul>
+<h2>Test Review page</h2>
+<p>Q&amp;A forum (StackOverflow-like)</p>
+<ul>
+<li>allows comments and discussion on test</li>
+<li>Voting
+<ul>
+<li>can vote test up or down</li>
+<li>can vote comments up or down</li>
+<li>can fork and refine test, all discussion stays on this page
+<ul>
+<li>test can have multiple authors</li>
+</ul></li>
+<li>karma is assigned to authors and good commenters
+<ul>
+<li>more user karma gives more weight to review, weighted by test difficulty</li>
+</ul></li>
+<li>once test reaches certain review threshold, submitted to WG for review and approval</li>
+</ul></li>
+</ul>
+<h2>All Tests page</h2>
+<p>List of all submitted tests and their status</p>
+<ul>
+<li>sorted by technology, spec, date</li>
+<li>clicking on a non-accepted test navigates to Test Review page</li>
+<li>clicking on an accepted test navigates to Accepted Test page</li>
+</ul>
+<h2>Accepted Test page</h2>
+<p>Shows test</p>
+<ul>
+<li>Shows test metadata, status, implementation report</li>
+<li>button to file bug on test (navigates to Test Review page)</li>
+<li>button to file bug on implementation (navigates to Bug Report page)</li>
+</ul>
+<h2>Bug Report page</h2>
+<ul>
+<li>Allows user to coment or file bug on spec, linking to testable assertion page</li>
+<li>Allows user to file bug on one or more implementations, by linking to a test</li>
+</ul>
+<h2>User Profile page</h2>
+<ul>
+<li>list of links to all activity for tests, wiki, forums, bug reports, maybe W3C activity</li>
+<li>karma rating</li>
+<li>badges, so on</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>Same kind of people who are likely to contribute to Web Platform Docs are likely to contribute tests or file bug reports</li>
+<li>See where we can integrate into Shepherd</li>
+<li>Maybe use Browserscope integration for reporting?</li>
+<li>Test Challenges: have limited-time events where specific conformance criteria are put forward, and the most innovative and comprehensive test wins a prize. These can start small, and continue as a series of events.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

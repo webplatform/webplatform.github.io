@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Setting up Mime Types on your server · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="How to set up media  or mime types for your your server and why you should always make sure they are set correctly." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/configuring_mimetypes on the server/">configuring mimetypes on the server</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Setting up Mime Types on your server</h1>
+<p><strong>By <a href="http://rivendellweb.net/work">Carlos Araya</a></strong><br>
+Originally published 4/5/2013</p>
+<h2>Summary</h2>
+<p>How to set up media or mime types for your your server and why you should always make sure they are set correctly.</p>
+<p>After creating your content and setting up the proper content with text tracks and all the bells and whistles only to have your users report that it doesn’t play for them. You wreck your head for a few days and then discover that your server is not set up to properly handle the new video (or audio or any other type of content) media types (also known as mime types.)</p>
+<p>The media types help both servers and browsers to identify the kind of resource being asked for by the browser and served by the server. Take for example:</p>
+<pre><code>video/mp4
+</code></pre>
+<p>represents an MP4 (sub type) video (type)</p>
+<p>while</p>
+<pre><code>application/font-woff
+</code></pre>
+<p>indicates a woff font (sub type) application (type).</p>
+<p>With the sheer number of formats, specifications and sub types (if you’re really curious you can check the [<a href="http://www.iana.org/assignments/media-types%7CIANA">Media Type Registry</a>]j), it would be unrealistic to expect a server configuration to handle all the formats that we will use in our web sites and applications.</p>
+<p>Fortunately for our system administrators, most if not all, the available servers have a way for you to add new mime types to the server arsenal. The exact process will depend on the server you’re using and some of the servers (Apache) have more than one way to add the media type(s).</p>
+<p>I have not listed all the possible servers. Only the ones I’ve directly worked with. If you have more servers to add, feel free to do so.</p>
+<h2>Apache HTTPD server - httpd.conf</h2>
+<p>An administrator (with root access ideally) should edit the global configuration file (/etc/httpd.d/httpd.conf for example) and add the new types at the end of the media type listing, the lass line that starts with <strong>AddType</strong>. The format is illustrated below.</p>
+<pre><code>AddType video/ogg .ogv
+AddType video/mp4 .mp4
+AddType video/webm .webm
+</code></pre>
+<h2>Apache HTTPD server - .htaccess</h2>
+<p>There may be times when you don’t have access to edit the global configuration file or may want to make an exception by changing the global settings. In this instances Apache will allow you to create a special file (.htaccess) in the directory and add configuration directives that will apply only to that directory tree.</p>
+<p>The sample below is a part of the [<a href="https://raw.github.com/h5bp/html5-boilerplate/%7CHTML5">Boilerplate</a>]</p>
+<pre><code>Sample Apache .htaccess mime type section, taken from the HTML5 Boilerplate
+
+  # Audio
+    AddType audio/mp4                                   m4a f4a f4b
+    AddType audio/ogg                                   oga ogg
+
+  # JavaScript
+    # Normalize to standard type (it's sniffed in IE anyways):
+    # http://tools.ietf.org/html/rfc4329#section-7.2
+    AddType application/javascript                      js jsonp
+    AddType application/json                            json
+
+  # Video
+    AddType video/mp4                                   mp4 m4v f4v f4p
+    AddType video/ogg                                   ogv
+    AddType video/webm                                  webm
+    AddType video/x-flv                                 flv
+
+  # Web fonts
+    AddType application/font-woff                       woff
+    AddType application/vnd.ms-fontobject               eot
+
+    # Browsers usually ignore the font MIME types and sniff the content,
+    # however, Chrome shows a warning if other MIME types are used for the
+    # following fonts.
+    AddType application/x-font-ttf                      ttc ttf
+    AddType font/opentype                               otf
+
+    # Make SVGZ fonts work on iPad:
+    # https://twitter.com/FontSquirrel/status/14855840545
+    AddType     image/svg+xml                           svg svgz
+    AddEncoding gzip                                    svgz
+</code></pre>
+<h2>NGINX</h2>
+<p>To change this, you need to update the mime.types file in the conf directory. Depending on how you set up NGINX it could be located under /etc/nginx or /opt/nginx.</p>
+<p>After opening the file, you should see something like this:</p>
+<p>types {</p>
+<pre><code> text/html      html htm shtml;
+ text/css      css;
+ text/xml      xml;
+ ...
+</code></pre>
+<p>}</p>
+<h2>IIS</h2>
+<pre><code>&lt;pre&gt;&lt;configuration&gt;
+  &lt;system.webServer&gt;
+    &lt;staticContent&gt;
+      &lt;!-- Video --&gt;
+      &lt;mimeMap fileExtension=&quot;.mp4&quot; mimeType=&quot;video/mp4&quot;/&gt;
+      &lt;mimeMap fileExtension=&quot;.webm&quot; mimeType=&quot;video/webm&quot;/&gt;
+    &lt;/staticContent&gt;
+  &lt;/system.webServer&gt;
+    &lt;system.web&gt;
+        &lt;compilation debug=&quot;true&quot; targetFramework=&quot;4.0&quot; /&gt;
+    &lt;/system.web&gt;
+&lt;/configuration&gt;
+</code></pre>
+<h2>Google App Engine</h2>
+<pre><code>- url: /(.*\.ogv)
+  static_files: videos_folder/
+  mime_type: video/ogg
+  upload: videos_folder/(.*\.ogv)
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

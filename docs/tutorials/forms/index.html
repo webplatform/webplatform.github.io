@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Forms · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="One of HTML5&#x27;s many new features is enhancements to forms. This includes new types of inputs (email, phone number, etc), attributes (form validation and styling), and elements (progress bar, meter, output, etc). Since these features are relatively new, support across browsers can vary. You should keep this in mind as you develop your web app to make it the best possible user experience across all browsers. In this document we will discuss the new features, how to detect and handle non-supporting browsers, and mobile considerations." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/forms/">forms</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Forms</h1>
+<h2>Summary</h2>
+<p>One of HTML5’s many new features is enhancements to forms. This includes new types of inputs (email, phone number, etc), attributes (form validation and styling), and elements (progress bar, meter, output, etc). Since these features are relatively new, support across browsers can vary. You should keep this in mind as you develop your web app to make it the best possible user experience across all browsers. In this document we will discuss the new features, how to detect and handle non-supporting browsers, and mobile considerations.</p>
+<h2>Input Types</h2>
+<p>HTML5 has expanded the types that are supported by the form input element. For example, here’s a simple text input.</p>
+<pre><code>&lt;input type=&quot;text&quot; value=&quot;my value&quot; /&gt;
+</code></pre>
+<p>There were other input types, for example the <code>password</code> type. With these types, and especially the text type, developers have created web forms to represent things like emails, web links, and date fields. As a developer, you probably also added client-side field validation to make sure an email entered was valid or that the user entered all the required fields for your form. You may also have created specialized user interfaces for certain input types such as a date picker.</p>
+<p>With the introduction of HTML5, your life as a web developer has just become much easier. HTML5 introduces input types to represent the most popular types, which means you can get the supporting browsers to take care of the formatting and handle the input validation.</p>
+<p>Switching to a new input type such as the <code>email</code> type will not break on browsers that do not support them. Every browser that does not recognize your input type will default to representing it as type <code>text</code>. This allows you to make the immediate switch to the new HTML input types, confident that older browser should still work as expected.</p>
+<p>See the compatibility section below for more details on how to handle browsers that do not support the new input types.</p>
+<p>The new types introduced include:</p>
+<h3>Email</h3>
+<p>Previously, to handle an email input field you would use a <code>text</code> type and write JavaScript to validate the input field upon user submission. Now you simply specify an <code>email</code> type and let supporting browsers take care of specialized displays and validation. For example, on the iPhone’s Safari browser, it will specially handle the <code>email</code> type by displaying a custom keyboard with characters related to email input. See an <a href="http://wufoo.com/html5/types/1-email.html">example of this field in action</a>.</p>
+<h3>Number</h3>
+<p>The number input type displays a spinbox control that allows the user to increment and decrement whole numbers. Supporting browsers take care of specialized displays and validation. For example, Chrome will not allow you to type in an invalid field. The iPhone Safari browser will show a number-based keyboard. This input type has optional <code>min</code>, <code>max</code>, and <code>step</code> attributes to help specify acceptable values and ranges. See an <a href="http://wufoo.com/html5/types/7-number.html">example of this field in action</a>.</p>
+<h3>Range</h3>
+<p>Unlike the number input type, range can be fractional and is typically displayed as a slider control. This input type has optional <code>min</code>, <code>max</code>, and <code>step</code> attributes to help specify acceptable values and ranges. See an <a href="http://wufoo.com/html5/types/8-range.html">example of this field in action</a>.</p>
+<h3>URL</h3>
+<p>Most supporting browsers will validate the URL field upon form submission. Browsers will render this field as a normal text entry field. The iPhone Safari browser will render a specialized keyboard for entering URL fields. See an <a href="http://wufoo.com/html5/types/3-url.html">example of this field in action</a>.</p>
+<h3>Date Picker</h3>
+<p>There is a collection of inputs that allow you to implement a date picker. Previously you would have to script these yourself. The six defined input types for selecting a date are <code>date</code>, <code>month</code>, <code>week</code>, <code>time</code>, <code>datetime</code>, and <code>datetime-local</code>. Supporting browsers will implement these types through specialized displays. For example, the Opera browser displays the <code>date</code> field by showing a calendar representing a date. See an <a href="http://wufoo.com/html5/types/4-date.html">example of this field in action</a>.</p>
+<h3>Telephone Number</h3>
+<p>To validate the user input you should specify a <code>pattern</code> attribute. Browsers will render this field as a normal text entry field. The iPhone Safari browser will render a specialized keyboard for entering telephone fields. See an <a href="http://wufoo.com/html5/types/2-tel.html">example of this field in action</a>.</p>
+<h3>Search</h3>
+<p>Supporting browsers may display this field in a special way for example showing an x button so the user can easily clear the search input. See an <a href="http://wufoo.com/html5/types/5-search.html">example of this field in action</a>.</p>
+<h3>Color</h3>
+<p>This allows you to pick a color. It returns the RGB hexadecimal value of the chosen color. See an <a href="http://wufoo.com/html5/types/6-color.html">example of this field in action</a>.</p>
+<h2>Form Attributes</h2>
+<p>HTML5 has introduced additional attributes to form inputs and elements. These attributes enable functionality including form validation, showing placeholder input text, controlling cursor focus, required form fields, regular expressions for field validation, and others. <a href="http://wufoo.com/html5/#attributes">Wufoo’s Current State of HTML5 Forms</a> lists all of the new form attributes.</p>
+<p>See the compatibility section of this doc, below, for more details on how to handle browsers that do not support the new form attributes.</p>
+<h3>Form validation</h3>
+<p>The <code>required</code> attribute can be added to any form element that must be filled out before a form is submitted. The browser will then look at the form element type and validate the entry before submitting the form. Here’s an example.</p>
+<pre><code>&lt;input type=&quot;text&quot; required&gt;
+</code></pre>
+<p>This will tell the browser to check for a non-empty value before form submission. The browsers will also display an appropriate error message. You can override and customize the error message displayed through JavaScript by calling the <code>setCustomValidity()</code> method for a form element.</p>
+<pre><code>var myInput = document.getElementById(&quot;myInput&quot;);
+myInput.setCustomValidity(&quot;My custom error message&quot;);
+</code></pre>
+<p>You can also turn off validation on a form by setting the <code>novalidate</code> attribute for a form.</p>
+<pre><code>&lt;form novalidate&gt;
+  &lt;input type=&quot;email&quot; value=&quot;&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Send&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>The form element validation and error message is dependent on the input type as well as a <code>pattern</code> attribute if it is defined. For example, if the element is an <code>email</code> input type then the browser will check if it is a valid, non-empty value and display a relevant message related to email validation. The <code>pattern</code> attribute can be used to specify a custom regular expression (regex) for validation. Here’s an example.</p>
+<pre><code>&lt;input type=&quot;text&quot; name=&quot;username&quot; pattern=&quot;^[a-zA-Z][a-zA-Z0-9]{1,10}$&quot;&gt;
+</code></pre>
+<p>This specifies a pattern check for a username field of type <code>text</code> that should be 2-10 characters, starting with a letter and otherwise alphanumeric. You can find a list of <a href="http://html5pattern.com/">useful HTML5 patterns here</a>. If you wish to check for a non-empty value then be sure to add the <code>required</code> attribute, as well.</p>
+<p>In addition to the validation methods discussed thus far, there is a constraints validation API that provides a built in methods, attributes, and events that can help you with form validation. For example, each form element has a <code>validity</code> attribute that returns a <code>ValidityState</code> object describing the validity state that the element is in. You can use this API to do your own validity checks or perform styling on form elements in a certain state.</p>
+<p>Note that even with client-side validation it is very important that you also have server-side validation to protect against malicious users who can bypass client-side checks. Client-side validation allows you to offer instant feedback to the user, as it avoids a round trip delay to the server for form validation.</p>
+<p>For additional reading, read the form validation <a href="http://www.alistapart.com/articles/forward-thinking-form-validation/">tutorial on A List Apart</a>.</p>
+<h3>CSS pseudo classes</h3>
+<p>HTML5 also introduced CSS pseudo classes. These can be used to control the display of forms elements in certain states or that have certain attributes. For example, you can use CSS to display all required fields with a certain style.</p>
+<pre><code>input:required { background:yellow }
+</code></pre>
+<p>This will show all required input forms with a yellow background. You can also use CSS to display form elements having a certain state.</p>
+<pre><code>input:required:valid { background-color: white }
+</code></pre>
+<p>This will display a white background for all required input forms that have a valid input. The classes that can be used to select form element states include <code>required</code>, <code>optional</code>, <code>valid</code>, <code>invalid</code>, <code>default</code>, <code>in-range</code>, <code>out-of-range</code>, <code>read-only</code>, and <code>read-write</code>. As with other form checks not all pseudo classes are supported in all browsers.</p>
+<h2>Form Elements</h2>
+<h3>Datalist</h3>
+<p>The <code>datalist</code> element is used in conjunction with an input <code>list</code> attribute to give the user suggested values. The user can also still enter their own value.</p>
+<pre><code>&lt;input type=&quot;text&quot; id=&quot;colorChoice&quot; list=&quot;myDatalist&quot;&gt;
+&lt;datalist id=&quot;myDatalist&quot;&gt;
+  &lt;option label=&quot;Red&quot; value=&quot;red&quot;&gt;
+  &lt;option label=&quot;Blue&quot; value=&quot;blue&quot;&gt;
+  &lt;option label=&quot;Green&quot; value=&quot;green&quot;&gt;
+&lt;/datalist&gt;
+</code></pre>
+<h3>Output</h3>
+<p>The <code>output</code> element which is used to display a result from multiple form fields, such as the addition of two numbers in a form.</p>
+<pre><code>&lt;form id=&quot;output_form&quot;
+ onsubmit=&quot;return false&quot;
+ oninput=&quot;
+  document.getElementById('o').innerHTML =
+   parseFloat(document.getElementById('a').value) +
+   parseFloat(document.getElementById('b').value)
+ &quot;
+&gt;
+ &lt;input name=&quot;a&quot; id=&quot;a&quot; type=&quot;number&quot; value=&quot;0&quot;&gt;
+ +
+ &lt;input name=&quot;b&quot; id=&quot;b&quot; type=&quot;number&quot; value=&quot;0&quot;&gt;
+ =
+ &lt;output name=&quot;o&quot; id=&quot;o&quot;&gt;&lt;/output&gt;
+&lt;/form&gt;
+</code></pre>
+<h3>Progress</h3>
+<p>The <code>progress</code> element that represents a progress bar. The progress visually flows from 0% to 100% and thus has <code>max</code> and <code>value</code> attributes. For certain browsers (e.g. Chrome 10+) if the window is not in focus the progress bar will look desaturated.</p>
+<pre><code>&lt;progress max=100 value=50&gt;50%&lt;/progress&gt;
+</code></pre>
+<h3>Meter</h3>
+<p>You can use the <code>meter</code> element to represent a measurement. It is visually similar to the <code>progress</code> element, but is used for a different purpose- for example, to show the results of a math quiz.</p>
+<pre><code>&lt;meter min=10 max=100 value=65&gt;65%&lt;/meter&gt;
+</code></pre>
+<h3>Keygen</h3>
+<p>The <code>keygen</code> element can be used to generate a public key / private key pair.</p>
+<pre><code>&lt;keygen name=key&gt;
+</code></pre>
+<h2>Browser Compatibility</h2>
+<p>Not all browsers support the new web form features. In order to ensure a good user experience across all browsers, there are several things you can do.</p>
+<h2>Feature Detection</h2>
+<p>Browsers that do not recognize the new input types will fall back to treating them as <code>text</code> types. Browsers that do not recognize the new form elements will simply not display them. Your approach for handling this and providing a good user experience should be to first detect support then make use of fallback JavaScript.</p>
+<h3>Input Types</h3>
+<p>One thing to remember for handling older browser is you do not want to throw away any of your existing client-side validation. You can take the following approach to provide fallback support:</p>
+<ol>
+<li>Create a dummy or hidden input element.</li>
+<li>Set the type attribute to the value you wish to check.</li>
+<li>If the browser supports this type it will be retained, otherwise it will contain the type will be <code>text</code>.</li>
+<li>Check for <code>text</code> type to verify your attribute type is supported.</li>
+</ol>
+<p>For example,</p>
+<pre><code>function checkInputType(typeToCheck) {
+  var myInput = document.createElement(&quot;input&quot;);
+  myInput.setAttribute(&quot;type&quot;, typeToCheck);
+  return myInput.type !== &quot;text&quot;;
+}
+// Example, check for &quot;date&quot; type
+if (!checkInputType(&quot;date&quot;) {
+ // Browser does not support type, create
+ // fallback HTML
+}
+</code></pre>
+<p>Instead of your creating your own JavaScript functions, there are existing libraries such as <a href="http://www.modernizr.com/">Modernizr</a>. It can be optionally configured to use <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills">various polyfills</a>. A polyfill is code that provides fallback support to older browser for a new API or feature that the browser does not natively support.</p>
+<h3>Form Attributes</h3>
+<p>To ensure compatibility with non-supporting browsers you should always have a fallback for your attributes. This depends on the attribute you are using. For example, the <code>autofocus</code> attribute allows you to focus an input field without using JavaScript. The fallback would be to use the JavaScript <code>focus()</code> method on the input element. Here’s an example approach.</p>
+<ol>
+<li>Create a dummy or hidden form element</li>
+<li>Check that the attribute you are looking for exists in that created element.</li>
+</ol>
+<p>For example,</p>
+<pre><code>function checkAttributeSupport(formElement, formAttribute) {
+  return formAttribute in document.createElement(formElement);
+}
+
+// Example, check for &quot;placeholder&quot; attribute in an &quot;input&quot; form element
+if (!checkAttributeSupport(&quot;input&quot;, &quot;placeholder&quot;)) {
+  // Browser does not support the attribute
+  // for this element, create fallback HTML
+}
+</code></pre>
+<p><a href="http://www.modernizr.com/">Modernizr</a> can also be used to easily check for attribute feature support instead of building your own functions. <a href="http://www.modernizr.com/">Modernizr</a> can be used with the <a href="http://yepnopejs.com/">yepnope.js</a> script loader library to conditionally load your fallback libraries, known as polyfills, that comprise your JavaScript fallback libraries. It is integrated into <a href="http://www.modernizr.com/">Modernizr</a>, but you can use it separately, for example, if you are using the jQuery library to load fallback libraries.</p>
+<h2>Tutorials</h2>
+<p>The following sites are great resources on browser compatibility and allow you to test the various features from within your browser.</p>
+<ul>
+<li><a href="http://wufoo.com/html5/">The Current State of HTML5 Forms</a></li>
+<li><a href="http://diveintohtml5.org/forms.html">Dive into HTML5: Forms</a></li>
+<li><a href="http://www.caniuse.com">CanIUse.com</a></li>
+</ul>
+<h2>Mobile Considerations</h2>
+<p>Support for HTML5 web forms on mobile browsers is further behind than on desktop browsers. These resources will give you a good sense of what is supported.</p>
+<ul>
+<li><a href="http://wufoo.com/html5/">The Current State of HTML5 Forms</a></li>
+<li><a href="http://www.quirksmode.org/html5/inputs_mobile.html">HTML5 Form Inputs on Mobile</a></li>
+</ul>
+<p>You can use the same approaches for form feature detection on the mobile browsers as you do on the desktop. The <a href="http://www.modernizr.com/">Modernizr</a> JavaScript library has a very small footprint and is ideal for both mobile browser feature detection. Also be sure to look through the <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">GitHub Polyfill repository</a> for fallback libraries you can use to support mobile browsers.</p>
+<p>You also need to be aware of how the mobile browsers handle the display of the new input types. The iPhone will customize the keyboard for the various types. For example, a numerical keyboard will be displayed for <code>number</code> type inputs and a URL-friendly keyboard shown for <code>url</code> type inputs.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Facebook HTML5 Resource Center.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

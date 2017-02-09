@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>getData · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="Gets the data in the specified format from the clipboard through the DataTransfer object or the ClipboardData object.
+    If there is no data, returns an empty string.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/DataTransfer/">DataTransfer</a></li><li><a href="/dom/DataTransfer/getData/">getData</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>getData</h1>
+<h2>Summary</h2>
+<p>Gets the data in the specified format from the clipboard through the DataTransfer object or the ClipboardData object. If there is no data, returns an empty string.</p>
+<p>Method of <a href="/docs/dom/DataTransfer">dom/DataTransfer</a><a href="/docs/dom/DataTransfer">dom/DataTransfer</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> eventData = event.dataTransfer.getData(format);
+</code></pre>
+<h2>Parameters</h2>
+<h3>format</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>The format of the data to be transferred, using one of the following values (case insensitve):</p>
+<ul>
+<li>URL</li>
+<li>Text</li>
+</ul>
+<h2>Return Value</h2>
+<p>Returns an object of type StringString</p>
+<p>Returns the data in the format retrieved from the clipboard/drag and drop operation through the <a href="/docs/dom/DataTransfer"><strong>DataTransfer</strong></a> object or the <a href="/docs/dom/ClipboardData"><strong>ClipboardData</strong></a> object. Depending on the information contained in <a href="/dom/DataTransfer/setData"><strong>setData</strong></a>, this variable can get a path to an image, text, or an anchor URL.</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>getData</strong> method and the <a href="/docs/dom/DataTransfer/setData"><strong>setData</strong></a> method with the <a href="/docs/dom/DataTransfer"><strong>DataTransfer</strong></a> object to create a shortcut to an image.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> sImageURL, oTarget, oImage;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initiateDrag</span>(<span class="hljs-params">e</span>) </span>{
+<span class="hljs-comment">/*  The setData parameters tell the source object
+   to transfer data as a URL and provide the path.  */</span>
+  e.dataTransfer.setData(<span class="hljs-string">"URL"</span>, oImage.src);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">finishDrag</span>(<span class="hljs-params">e</span>) </span>{
+<span class="hljs-comment">/*  The parameter passed to getData tells the target
+    object what data format to expect.  */</span>
+  sImageURL = e.dataTransfer.getData(<span class="hljs-string">"URL"</span>);
+  oTarget.textContent = sImageURL;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span>(<span class="hljs-params"></span>) </span>{
+ oImage = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"oImage"</span>);
+ oTarget = <span class="hljs-built_in">document</span>.getElementbyId(<span class="hljs-string">"oTarget"</span>);
+ oImage.addEventListener(<span class="hljs-string">"dragstart"</span>, initiateDrag, <span class="hljs-literal">false</span>);
+ oTarget.addEventListener(<span class="hljs-string">"dragenter"</span>, finishDrag, <span class="hljs-literal">false</span>);
+}
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"load"</span>, initialize, <span class="hljs-literal">false</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This example demonstrates how to use the setData and getData methods of the dataTransfer object to enable the source path of the image to be dragged.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oImage"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/workshop/graphics/black.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Black"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oTarget"</span>&gt;</span>
+    Drop the image here
+  <span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/setDataEX.htm">View live example</a></p>
+<h2>Notes</h2>
+<ul>
+<li>The <strong>getData</strong> method enforces cross-frame security and allows data transfers only in the same domain. To the user, this means that a selection that is dragged between different security protocols, such as HTTP and HTTPS, fails. In addition, that a selection that is dragged between two instances of the application with different security levels, where the first instance is set to medium and the second is set to high, fails. Finally, that a selection that is dragged into the application from another drag-enabled application, such as Microsoft Word, also fails.</li>
+<li>To use the <strong>getData</strong> method to get data from the clipboard in the <strong>oncopy</strong> event or the <strong>oncut</strong> event, you must call <a href="/docs/dom/Event/preventDefault">event.preventDefault()</a> in the event handler script.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html5/editing.html">HTML5</a></dt>
+<dd>Candidate Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

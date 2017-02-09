@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>object · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The &amp;lt;object&amp;gt; element represents can represent an external resource, which, depending on the type of the resource, will either be treated as an image, as a nested browsing context, or as an external resource to be processed by a plugin." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/object/">object</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>object</h1>
+<h2>Summary</h2>
+<p>The &lt;object&gt; element represents can represent an external resource, which, depending on the type of the resource, will either be treated as an image, as a nested browsing context, or as an external resource to be processed by a plugin.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLObjectElement">HTMLObjectElement</a>
+</dd>
+</dl>
+<p>Examples of external resources:</p>
+<ul>
+<li>Flash contents</li>
+<li>Java applet</li>
+<li>HTML resource</li>
+</ul>
+<h2>Accessibility</h2>
+<p>Authors should ensure that the information and user interface components must be presentable to users in ways they can perceive (<a href="http://www.w3.org/TR/WCAG20/#perceivable">WCAG 2.0 - Principle 1: Perceivable</a>). This includes providing alternatives for time-based media <a href="http://www.w3.org/TR/WCAG20/#media-equiv">Guideline 1.2</a>.</p>
+<h2>HTML Attributes</h2>
+<ul>
+<li><p><code>data</code> = URL potentially surrounded by spaces<br>
+Specifies the address of the resource.</p></li>
+<li><p><code>type</code> = MIME type<br>
+Specifies the type of the resource.</p></li>
+<li><p><code>name</code> = string<br>
+Gives the name of the input element.</p></li>
+<li><p><code>usemap</code> = hash-name reference<br>
+Specifies a hash-name reference to a map element with which to associate the object.</p></li>
+<li><p><code>form</code> = the ID of a form element in the element’s owner<br>
+Associate the object element with its form owner.</p></li>
+<li><p><code>width</code> = non-negative integer<br>
+Give the width of the visual content of the element, in CSS pixels.</p></li>
+<li><p><code>height</code> = non-negative integer<br>
+Give the height of the visual content of the element, in CSS pixels.</p></li>
+</ul>
+<p>The following attributes were previously defined but obsolete: <code>noembed</code>, <code>archive</code>, <code>classid</code>, <code>code</code>, <code>codebase</code>, <code>codetype</code>, <code>declare</code>, <code>standby</code>, <code>datasrc</code>, <code>datafld</code>, <code>dataformatas</code>, <code>align</code>, <code>border</code>, <code>hspace</code>, <code>vspace</code>.</p>
+<h2>Examples</h2>
+<p>The following example shows how a plugin can be used in HTML (in this case the Flash plugin, to show a video file). Fallback is provided for users who do not have Flash enabled, in this case using the video element to show the video for those using user agents that support video, and finally providing a link to the video for those who have neither Flash nor a video-capable browser</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Look at my video:
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-shockwave-flash"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">movie</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"http://video.example.com/library/watch.swf"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">allowfullscreen</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">true</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">flashvars</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"http://video.example.com/vids/315981"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">video</span> <span class="hljs-attribute">controls</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://video.example.com/vids/315981"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://video.example.com/vids/315981"</span>&gt;</span>View video<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>.
+    <span class="hljs-tag">&lt;/<span class="hljs-title">video</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>In the following example, a Java applet is embedded in a page using the object element. (Generally speaking, it is better to avoid using applets like these and instead use native JavaScript and HTML to provide the functionality, since that way the application will work on all Web browsers without requiring a third-party plugin. Many devices, especially embedded devices, do not support third-party technologies like Java.)</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/x-java-applet"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">param</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"code"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"MyJavaClass"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>You do not have Java available, or it is disabled.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span>My Java Clock<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+</code></pre>
+<p>In this example, an HTML page is embedded in another using the object element</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">object</span> <span class="hljs-attribute">data</span>=<span class="hljs-value">"clock.html"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">object</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span>My HTML Clock<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>An <strong>object</strong> element can be a child of the <strong>head</strong> or the <strong>body</strong> element of a document. Possible return values (those generated by Dynamic HTML (DHTML) Object Model properties) on the <strong>object</strong> element depend on the implementation of the <strong>object</strong>. For example, the <strong>readyState</strong> property returns null or error if the <strong>object</strong> does not implement a <strong>readyState</strong> property. DHTML Object Model properties available for an <strong>object</strong> depend on the content of the <strong>object</strong>. For information about supported properties, see the documentation for the individual object. Events are sent directly to the <strong>object</strong> element. If the event is returned by the embedded object, it bubbles accordingly. If the event is not returned, it does not bubble. <strong>Note</strong>  You can use the <a href="/w/index.php?title=dom/properties/object&amp;action=edit&amp;redlink=1"><strong>object</strong></a> property for the <strong>object</strong> element to reconcile DHTML Object Model members that are duplicated by the <strong>object</strong> element’s implementation and by DHTML. For instance, if the <strong>object</strong> implements an item method and DHTML implements an item method, use <code>document.all.objectID.object.item()</code> to access the one defined for the <strong>object</strong>. Windows Internet Explorer 9. In IE9 Standards mode, the <strong>object</strong> element is allowed to load content from other domains. In IE8 Standards mode, however, this is not allowed. Windows Internet Explorer 8 and later. IE8 mode enables several enhancements to the <strong>object</strong> element that are not available when pages are displayed in earlier document modes.</p>
+<ul>
+<li>Images are supported as native object types.</li>
+<li>The values of the <a href="/docs/html/attributes/codeBase"><strong>codeBase</strong></a> and <a href="/docs/html/attributes/data"><strong>data</strong></a> attributes depend on the current document compatibility mode.</li>
+<li>Object fallback is supported when an <strong>object</strong> fails to load for communication or cross-domain security failures.</li>
+</ul>
+<p><strong>Note</strong>  Object fallback does not occur when the <a href="/docs/html/attributes/contentEditable"><strong>contentEditable</strong></a> property of the <a href="/docs/dom/Document"><strong>Document</strong></a> object is set to <code>true</code>.</p>
+<ul>
+<li>The <a href="/docs/html/attributes/title"><strong>title</strong></a> attribute is preferred over the <a href="/docs/html/attributes/alt"><strong>alt</strong></a> attribute when specified as a pop-up tooltip.</li>
+<li>When the value of the <a href="/docs/html/attributes/data"><strong>data</strong></a> attribute specifies the data URI protocol, the value is not passed to Microsoft ActiveX controls upon instantiation. This preserves compatibility with older ActiveX controls that do not support the data URI protocol.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/embedded-content.html#the-object-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-object-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/objects.html#edef-OBJECT">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

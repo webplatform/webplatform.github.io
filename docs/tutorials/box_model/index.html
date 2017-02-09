@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exploring the CSS box model · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article briefly describes the CSS box model and how the elements are laid out when they are displayed in the browser." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/box_model/">box model</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Exploring the CSS box model</h1>
+<h2>Summary</h2>
+<p>This article briefly describes the CSS box model and how the elements are laid out when they are displayed in the browser.</p>
+<h2>Information: Box Model</h2>
+<p>When your browser displays an element, the element takes up space. You can think of all HTML elements as boxes. All boxes have certain dimensions and are specified by four properties: a content area of the element (e.g., a picture, a text header, etc.) and the optional <a href="/docs/css/properties/padding">padding</a>, <a href="/docs/css/properties/border">border</a> and <a href="/docs/css/properties/margin">margin</a> properties.</p>
+<p>The element is in the center and displays its content. Around that, there is padding. Around that, there is a border. Around that, there is a margin that separates the element from other elements.</p>
+<p>The “edges” or the perimeters of each of the previous areas can have different properties defined on them.</p>
+<p>Thus the content edge can have a certain width or height, the padding edge that surrounds the content can have a certain width or height, etc. Any or all of these sizes can be zero.</p>
+<p>Each property that surrounds the content can be broken down into a top, right, bottom, or a left part for example margin-left, padding-bottom, border-left, etc.</p>
+<p>In this <a href="http://code.webplatform.org/gist/11409432">Live Example</a> we see a typical declaration of a div element that we specify a width, a margin and a padding.</p>
+<h3>Coloring</h3>
+<p>You can specify a color for the element backround and the padding will also get the same one automatically. The border can have its own color but the margin is always transparent so you cannot color it.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Color</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Margin</td><td style="text-align:left">Always transparent</td></tr>
+<tr><td style="text-align:left">Element</td><td style="text-align:left">Same as background color (if any)</td></tr>
+<tr><td style="text-align:left">Padding</td><td style="text-align:left">Gets elements background color</td></tr>
+<tr><td style="text-align:left">Border</td><td style="text-align:left">Same as border-color property (if any)</td></tr>
+</tbody>
+</table>
+<h3>Borders</h3>
+<p>You can use borders to decorate elements with lines or boxes. To specify the same border all around an element, use the <a href="/docs/css/properties/border">border</a> property. Specify the width (usually in pixels for display on a screen), the style, and the color.</p>
+<p>The styles are:</p>
+<dl>
+<dt>none</dt>
+<dd>no border<br>
+dotted
+</dd>
+<dd>border as a series of dots<br>
+dashed
+</dd>
+<dd>border as a series of dashes<br>
+solid
+</dd>
+<dd>border as single lines<br>
+double
+</dd>
+<dd>border as two single lines with the same width as the <a href="/docs/css/properties/border-width">border-width</a> property<br>
+groove
+</dd>
+<dd>border as a grooved etched line<br>
+ridge
+</dd>
+<dd>border as a ridged etched line<br>
+inset
+</dd>
+<dd>border looks like its coming inside the element<br>
+outset
+</dd>
+<dd>opposite of inset. Border looks like its coming out of the element
+</dd>
+</dl>
+<p>See the <a href="http://code.webplatform.org/gist/11411135">Live Example</a> of border styles</p>
+<p>You can also set the style to <code>hidden</code> which is the same as none to explicitly remove the border, or set the color to <code>transparent</code> to make the border invisible without changing the layout.</p>
+<p>To specify borders one side at a time, use the properties: <a href="/docs/css/properties/border-top">border-top</a> , <a href="/docs/css/properties/border-right">border-right</a> , <a href="/docs/css/properties/border-bottom">border-bottom</a> , <a href="/docs/css/properties/border-left">border-left</a> . You can use these to specify a border on only one side, or different borders on different sides.</p>
+<h4>Border sides example</h4>
+<p>This rule sets the dimensions, the background color and the top border of all div elements:</p>
+<pre><code class="css"> <span class="hljs-tag">div</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">200px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;   <span class="hljs-comment">/* required to give divs some height */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">border-top</span>:<span class="hljs-value"> <span class="hljs-number">4px</span> solid green</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> yellow</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> dark-green</span></span>;
+}</span>
+</code></pre>
+<p>The result looks like this <a href="http://code.webplatform.org/gist/11429299">Live Example</a>.</p>
+<p>This rule makes images easier to see by giving them a mid-gray border all round:</p>
+<pre><code class="css"><span class="hljs-tag">img</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> solid <span class="hljs-hexcolor">#ccc</span></span></span>;}</span>
+</code></pre>
+<p>The result looks like this <a href="http://code.webplatform.org/gist/11429444">Live Example</a>.</p>
+<h3>Margins and padding</h3>
+<p>You use margins and padding to adjust elements’ positions and to create space around them. Use the <a href="/docs/css/properties/margin">margin</a> property or the <a href="/docs/css/properties/padding">padding</a> property to set the margin or padding widths respectively.</p>
+<p>If you specify one width, it applies all around the element (top, right, bottom and left). If you specify two widths, the first applies to the top and bottom, the second to the right and left. You can specify all four widths in the order: top, right, bottom, left.</p>
+<h3>Margin and padding example</h3>
+<p>This rule marks out paragraphs with the class <code>remark</code> by giving them a red border all round. Padding all round separates the border from the text a little. A left margin indents the paragraph relative to the rest of the text:</p>
+<pre><code class="css"><span class="hljs-tag">p</span><span class="hljs-class">.remark</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> solid red</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">4px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">24px</span></span></span>;
+}</span>
+</code></pre>
+<p>The result looks like this <a href="http://code.webplatform.org/gist/11429785">Live Example</a>.</p>
+<h2>More details</h2>
+<p>When you use margins and padding to adjust the way elements are laid out, your style rules interact with the browser’s defaults in ways that can be complex. Different browsers lay elements out differently. The results might look similar until your stylesheet changes things. Sometimes this can make your stylesheet give surprising results.</p>
+<p>To get the result you want, you might have to change your document’s markup. Other tutorials in this series have more information on this.</p>
+<h2>Action: Adding borders</h2>
+<ul>
+<li>Edit your CSS file, <code>style2.css</code>. Add this rule to draw a line across the page over each heading:</li>
+</ul>
+<pre><code class="css"><span class="hljs-tag">h3</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">border-top</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid gray</span></span>;}</span>
+</code></pre>
+<ul>
+<li>If you took the challenge on the last page, modify the rule you created, otherwise add this new rule to add space underneath each list item:</li>
+</ul>
+<pre><code class="css"><span class="hljs-tag">li</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">list-style</span>:<span class="hljs-value"> lower-roman</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-bottom</span>:<span class="hljs-value"> <span class="hljs-number">8px</span></span></span>;
+}</span>
+</code></pre>
+<ul>
+<li>Refresh your browser to see the <a href="http://code.webplatform.org/gist/11431094">Result</a>.</li>
+</ul>
+<h2>See also</h2>
+<h3>Exercise questions</h3>
+<ol>
+<li>Add one rule to your stylesheet, making a wide border all around the oceans in a color that reminds you of the sea.</li>
+<li>Look at a random website and see if you can find a paragraph or a section and guess that box model. Write down in a piece of paper their padding, margin, border properties. Then compare them to the actual CSS layout as you inspect the element in your browser.</li>
+</ol>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Boxes">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

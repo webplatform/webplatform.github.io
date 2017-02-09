@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using selectors · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This guide looks at CSS selectors — the mechanism you use to select which element receives styles — in detail, the different types of selectors available, and how different kinds of selectors have different priorities." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/using_selectors/">using selectors</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using selectors</h1>
+<h2>Summary</h2>
+<p>This guide looks at CSS selectors — the mechanism you use to select which element receives styles — in detail, the different types of selectors available, and how different kinds of selectors have different priorities.</p>
+<h2>Information: Selectors</h2>
+<p>CSS has its own terminology to describe the CSS language. In a previous tutorial, you created a line in your stylesheet like this:</p>
+<pre><code class="css"><span class="hljs-tag">strong</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>;
+}</span>
+</code></pre>
+<p>In CSS terminology, this entire code section is a <em>rule</em>. The rule starts with <code>strong</code>, which is a <em>selector</em>. It selects which elements in the DOM the rule applies to.</p>
+<ul>
+<li>The part inside the braces is the <em>declaration</em>.</li>
+<li>The keyword <code>color</code> is a <em>property</em>, and <code>red</code> is a <em>value</em>.</li>
+<li>The semicolon after the property-value pair separates it from other property-value pairs in the same declaration.</li>
+</ul>
+<p>This guide refers to a selector like <code>strong</code> as a <em>tag</em> selector; you will also see it commonly referred to as an <em>element</em> selector. The CSS Specification refers to it as a <em>type</em> selector.</p>
+<p>In addition to tag names, you can use attribute values in selectors. This allows your rules to be more specific. Two attributes, <a href="/docs/html/attributes/class">class</a> and <a href="/html/attributes/id">id</a>, have special status for CSS.</p>
+<h3>Class selectors</h3>
+<p>Use the <code>class</code> attribute in an element to assign the element to a named class. It is up to you what name you choose for the class. Multiple elements in a document can have the same class value.</p>
+<p>In your style sheet, type a dot (period) before the class name when you use it in a selector.</p>
+<h3>ID selectors</h3>
+<p>Use the <code>id</code> attribute in an element to assign an ID to the element. It is up to you what name you choose for the ID. The ID name must be unique in the document.</p>
+<p>In your stylesheet, type a number sign (hash) before the ID when you use it in a selector.</p>
+<h3>Class and ID selector example</h3>
+<p>This HTML tag has both a <code>class</code> attribute and an <code>id</code> attribute:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"key"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"principal"</span>&gt;</span>
+</code></pre>
+<p>The <strong>id</strong> value <code>principal</code> must be unique in the document, but other tags in the document can have the same <code>key</code> <strong>class</strong> name.</p>
+<p>In a CSS style sheet, this rule makes all the elements with class <code>key</code> green. (They might not all be <code>&lt;p&gt;</code> elements.)</p>
+<pre><code class="css"><span class="hljs-class">.key</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> green</span></span>;
+}</span>
+</code></pre>
+<p>This rule makes the one element with the <strong>id</strong> <code>principal</code> bold:</p>
+<pre><code class="css"><span class="hljs-id">#principal</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+}</span>
+</code></pre>
+<p>If more than one rule applies to an element and specifies the same property, then CSS gives priority to the rule that has the more specific selector. An ID selector is more specific than a class selector, which in turn is more specific than a tag selector.</p>
+<h3>Combining selectors</h3>
+<p>You can also combine selectors, making a more specific selector.</p>
+<p>For example, the selector <code>.key</code> selects all elements that have the class name <code>key</code>. The selector <code>p.key</code> selects only <code>&lt;p&gt;</code> elements that have the class name <code>key</code>.</p>
+<p>You are not restricted to the two special attributes, <code>class</code> and <code>id</code>. You can specify other attributes by using brackets. For example, the selector <code>[type='button']</code> selects all elements that have a <code>type</code> attribute with the value <code>button</code>.</p>
+<p>If the style sheet has conflicting rules and they are equally specific, then CSS gives priority to the rule that is later in the style sheet.</p>
+<p>When you have a problem with conflicting rules, try to resolve it by making one of the rules more specific, so that it has priority. If you cannot do that, try moving one of the rules nearer to the end of the style sheet so that it has priority.</p>
+<h3>Pseudo-class selectors</h3>
+<p>A CSS <a href="/docs/css/selectors/pseudo-classes">pseudo-class</a> is a keyword added to selectors that specifies a special state of the element to be selected. For example, <a href="/docs/css/selectors/pseudo-classes/:hover">:hover</a> will apply a style when the user hovers over the element specified by the selector.</p>
+<p>Pseudo-classes, together with pseudo-elements, let you apply a style to an element not only in relation to the content of the document tree, but also in relation to external factors like the history of the navigator (<a href="/docs/css/selectors/pseudo-classes/:visited">visited</a>, for example), the status of its content (like <a href="/docs/css/selectors/pseudo-classes/:checked">:checked</a> on some form elements), or the position of the mouse (like <a href="/docs/css/selectors/pseudo-classes/:hover">:hover</a>, which lets you know if the mouse is over an element or not). For a complete list of selectors, see <a href="/docs/css/selectors">css/selectors</a>.</p>
+<pre><code class="css"><span class="hljs-tag">selector</span><span class="hljs-pseudo">:pseudo-class</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;
+}</span>
+</code></pre>
+<h2>Information: Selectors based on relationships</h2>
+<p>CSS has some ways to select elements based on the relationships between elements. You can use these to make selectors that are more specific.</p>
+<p>||<br>
+|<strong>Selector</strong>|<strong>Selects</strong>|<br>
+|<code>A E</code>|Any E element that is a <em>descendant</em> of an A element (that is: a child, or a child of a child, <em>etc</em>.)|<br>
+|<code>A &gt; E</code>|Any E element that is a child of an A element|<br>
+|<code>E:first-child</code>|Any E element that is the first child of its parent|<br>
+|<code>B + E</code>|Any E element that is the next <em>sibling</em> of a B element (that is: the next child of the same parent)|</p>
+<p>You can combine these to express complex relationships. You can also use the symbol <code>*</code> (asterisk) to mean &quot;any element&quot;.</p>
+<h4>Example of selectors based on relationships</h4>
+<p>This HTML table has an <code>id</code> attribute, but its rows and cells do not have individual identifiers:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">table</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"data-table-1"</span>&gt;</span>
+…
+<span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>Prefix<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>0001<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">td</span>&gt;</span>default<span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+…
+</code></pre>
+<p>The following rules make the first cell in each row bold, and the second cell in each row monospaced. They only affect one specific table in the document, the one with the id <code>&lt;data-table-1&gt;</code>:</p>
+<pre><code class="css"><span class="hljs-id">#data-table-1</span> <span class="hljs-tag">td</span><span class="hljs-pseudo">:first-child</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;}</span>
+<span class="hljs-id">#data-table-1</span> <span class="hljs-tag">td</span><span class="hljs-pseudo">:first-child</span> + <span class="hljs-tag">td</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> monospace</span></span>;}</span>
+</code></pre>
+<p>The result looks like:</p>
+<table>
+<col width="100%" />
+<tbody>
+<tr class="odd">
+<td align="left"><table>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Prefix</strong></td>
+<td align="left"><code>0001</code></td>
+<td align="left">default</td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table>
+<h3>Increasing specificity</h3>
+<p>In the usual way, if you make a selector more specific, then you increase its priority.</p>
+<p>If you use these techniques, you avoid the need to specify <code>class</code> or <code>id</code> attributes on so many tags in your document. Instead, CSS does the work.</p>
+<p>In large designs where speed is important, you can make your style sheets more efficient by avoiding complex rules that depend on relationships between elements.</p>
+<h2>Action: Using class and ID selectors</h2>
+<ol>
+<li><p>Create an HTML page with the following code:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"UTF-8"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Sample document<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"style1.css"</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"first"</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">strong</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"carrot"</span>&gt;</span>C<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>ascading
+       <span class="hljs-tag">&lt;<span class="hljs-title">strong</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"spinach"</span>&gt;</span>S<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>tyle
+       <span class="hljs-tag">&lt;<span class="hljs-title">strong</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"spinach"</span>&gt;</span>S<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>heets
+     <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"second"</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>C<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>ascading
+           <span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>S<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>tyle
+           <span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>S<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>heets
+         <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre></li>
+<li><p>Now edit your CSS file. Replace the entire contents with:</p>
+<pre><code class="css"><span class="hljs-tag">strong</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; }</span>
+ <span class="hljs-class">.carrot</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> orange</span></span>; }</span>
+ <span class="hljs-class">.spinach</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> green</span></span>; }</span>
+ <span class="hljs-id">#first</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-style</span>:<span class="hljs-value"> italic</span></span>; }</span>
+</code></pre></li>
+<li><p>Save the files and refresh your browser to see the result:</p></li>
+</ol>
+<p><img src="//static.webplatform.org/2/22/usingclassandid_result.jpg" alt="usingclassandid result.jpg"></p>
+<p>You can try rearranging the lines in your CSS file to show that the order has no effect. The class selectors <code>.carrot</code> and <code>.spinach</code> have priority over the tag selector <code>strong</code>. The ID selector <code>#first</code> has priority over the class and tag selectors.</p>
+<h3>Exercise questions</h3>
+<ul>
+<li>Without changing the HTML file, add a single rule to your CSS file that leaves the initial letters the same color as they are now, but changes all the other text in the second paragraph to blue.</li>
+<li>Change the rule you just added (without changing anything else), to set the first paragraph to blue.</li>
+</ul>
+<h2>Action: Using pseudo-classes selectors</h2>
+<ol>
+<li><p>Create an HTML page with the following code:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"UTF-8"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Sample document<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"style1.css"</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Go to our <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"homepage"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.example.com/"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Home page"</span>&gt;</span>Home page<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre></li>
+<li><p>Now edit your CSS file. Replace the entire contents with:</p>
+<pre><code class="css"><span class="hljs-tag">a</span><span class="hljs-class">.homepage</span><span class="hljs-pseudo">:link</span>, <span class="hljs-tag">a</span><span class="hljs-class">.homepage</span><span class="hljs-pseudo">:visited</span> <span class="hljs-rules">{
+   <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> <span class="hljs-number">10px</span> <span class="hljs-number">1px</span> <span class="hljs-number">10px</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fff</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#666</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">border-radius</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> outset <span class="hljs-function">rgba</span>(<span class="hljs-number">50</span>,<span class="hljs-number">50</span>,<span class="hljs-number">50</span>,.<span class="hljs-number">5</span>)</span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> georgia, serif</span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">14px</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">font-style</span>:<span class="hljs-value"> italic</span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>;
+ }</span>
+
+ <span class="hljs-tag">a</span><span class="hljs-class">.homepage</span><span class="hljs-pseudo">:hover</span>, <span class="hljs-tag">a</span><span class="hljs-class">.homepage</span><span class="hljs-pseudo">:focus</span>, <span class="hljs-tag">a</span><span class="hljs-class">.homepage</span><span class="hljs-pseudo">:active</span> <span class="hljs-rules">{
+   <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#333</span></span></span>;
+ }</span>
+</code></pre></li>
+<li><p>Save the files and refresh your browser to see the result (hover the mouse over the link to see the effect):</p>
+<p><img src="//static.webplatform.org/8/84/pseudoclassselector_result.jpg" alt="pseudoclassselector result.jpg"></p>
+<p>The link turns to dark grey.</p></li>
+</ol>
+<h2>Action: Using selectors based on relationships and pseudo-classes</h2>
+<p>With selectors based on relationships and pseudo-classes you can create complex cascade algorithms. This is a common technique used, for example, in order to create <strong>pure CSS drop down menus</strong> (that is only CSS, without using JavaScript). The essence of this technique involves creating a rule like this:</p>
+<pre><code class="css"><span class="hljs-tag">div</span><span class="hljs-class">.menu-bar</span> <span class="hljs-tag">ul</span> <span class="hljs-tag">ul</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> none</span></span>;
+}</span>
+
+<span class="hljs-tag">div</span><span class="hljs-class">.menu-bar</span> <span class="hljs-tag">li</span><span class="hljs-pseudo">:hover</span> &gt; <span class="hljs-tag">ul</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+}</span>
+</code></pre>
+<p>to be applied to an HTML structure like the following:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"menu-bar"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Menu<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"menu-nav"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Submenu<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"menu-nav"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Submenu<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+              <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"example.html"</span>&gt;</span>Link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>In this way, CSS selectors can be used to create visual effects previously possible only with procedural languages like JavaScript.</p>
+<h2>Conclusion</h2>
+<p>In this tutorial we examined various types of CSS selectors, how to use them to achieve different styling effects, and explored ways to affect the cascading order (priority) of CSS rules. For more information, see the other CSS tutorials in this section.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Selectors">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

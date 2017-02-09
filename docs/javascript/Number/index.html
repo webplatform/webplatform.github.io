@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Number · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An object that represents a number of any kind. All JavaScript numbers are 64-bit floating-point numbers." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Number/">Number</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Number</h1>
+<h2>Summary</h2>
+<p>An object that represents a number of any kind. All JavaScript numbers are 64-bit floating-point numbers.</p>
+<h2>Syntax</h2>
+<pre><code>new Number( value )
+</code></pre>
+<dl>
+<dt><strong>value</strong></dt>
+<dd>Required. The numeric value.
+</dd>
+</dl>
+<h2>Examples</h2>
+<pre><code class="js"><span class="hljs-comment">// Returns an Object</span>
+<span class="hljs-keyword">var</span> thousand = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>(<span class="hljs-number">1000</span>);
+<span class="hljs-built_in">console</span>.log(thousand.valueOf() === <span class="hljs-number">1000</span>);
+
+<span class="hljs-comment">// remember, objects are not primitives</span>
+<span class="hljs-built_in">console</span>.log(thousand !== <span class="hljs-number">1000</span>);
+<span class="hljs-comment">// non-strict comparison calls valueOf() implicitly</span>
+<span class="hljs-built_in">console</span>.log(thousand == <span class="hljs-number">1000</span>);
+</code></pre>
+<pre><code class="js"><span class="hljs-comment">// Returns an Object</span>
+<span class="hljs-keyword">var</span> googol = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>(<span class="hljs-number">1e+100</span>);
+<span class="hljs-built_in">console</span>.log(googol.valueOf() === <span class="hljs-number">1e+100</span>);
+</code></pre>
+<pre><code class="js"><span class="hljs-comment">// Alfred B. Taylor octal notation for the decimal number 10</span>
+<span class="hljs-keyword">var</span> untydu = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>(<span class="hljs-number">012</span>);
+<span class="hljs-built_in">console</span>.log(untydu.valueOf() === <span class="hljs-number">10</span>);
+</code></pre>
+<pre><code class="js"><span class="hljs-comment">// Converting decimal variables to hexadecimal notation</span>
+<span class="hljs-comment">// by http://stackoverflow.com/users/444910/mystifeid</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decimalToHex</span>(<span class="hljs-params">d</span>) </span>{
+ <span class="hljs-comment">// converting negative numbers to positive using Math.abs()</span>
+  <span class="hljs-keyword">var</span> hex = <span class="hljs-built_in">Number</span>(<span class="hljs-built_in">Math</span>.abs(d)).toString(<span class="hljs-number">16</span>);
+  hex = <span class="hljs-string">"000000"</span>.substr(<span class="hljs-number">0</span>, <span class="hljs-number">6</span> - hex.length) + hex;
+  <span class="hljs-keyword">return</span> hex;
+}
+<span class="hljs-built_in">console</span>.log(decimalToHex(<span class="hljs-number">127</span>) === <span class="hljs-string">"00007f"</span>);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">parseInt</span>(<span class="hljs-string">"00007f"</span>, <span class="hljs-number">16</span>) === <span class="hljs-number">127</span>);
+</code></pre>
+<pre><code class="js"><span class="hljs-comment">// Infinity JavaScript Number constant</span>
+<span class="hljs-keyword">var</span> andBeyond = <span class="hljs-number">3</span> / <span class="hljs-number">0</span>;
+<span class="hljs-built_in">console</span>.log(andBeyond === <span class="hljs-literal">Infinity</span>);
+</code></pre>
+<h2>Remarks</h2>
+<p>JavaScript creates <strong>Number</strong> objects when a variable is set to a number value, for example <code>var num = 255.336;</code>. It is seldom necessary to create <strong>Number</strong> objects explicitly.</p>
+<p>The <strong>Number</strong> object has its own properties and methods, in addition to the properties and methods inherited from <strong>Object</strong>. Numbers are converted into strings under certain circumstances, for example when a number is added or concatenated with a string, as well as by means of the <strong>toString</strong> method. For more information, see <a href="/docs/javascript/operators/addition">Addition Operator (+)</a>.</p>
+<p>JavaScript has several number constants. For a complete list, see <a href="/docs/javascript/Number/constants">Number Constants</a>.</p>
+<p>For a value that can not be converted to a number, the <code>Number()</code> function returns the special value <strong>NaN (Not-a-Number)</strong> which indicates that the expression could not be evaluated to a number.</p>
+<p>Only basic types such as strings and boolean values can be converted to numbers. Note, however, that a string can be converted to a number only if it is a numeric string:</p>
+<pre><code class="js"><span class="hljs-built_in">Number</span>(<span class="hljs-string">"123"</span>); <span class="hljs-comment">// 123</span>
+<span class="hljs-built_in">Number</span>(<span class="hljs-string">"foo"</span>); <span class="hljs-comment">// NaN</span>
+<span class="hljs-built_in">Number</span>(<span class="hljs-string">"123foo"</span>); <span class="hljs-comment">// NaN</span>
+</code></pre>
+<p><strong>Integer range</strong></p>
+<p>Biggest int possible is 9007199254740992.<br>
+Smallest int possible is -9007199254740992.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> biggestInt = <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">2</span>, <span class="hljs-number">53</span>); <span class="hljs-comment">// 9007199254740992</span>
+<span class="hljs-built_in">console</span>.log(biggestInt  + <span class="hljs-number">1</span> === <span class="hljs-number">9007199254740992</span>) ;
+<span class="hljs-built_in">console</span>.log(biggestInt  + <span class="hljs-number">2</span> === <span class="hljs-number">9007199254740994</span>) ;
+</code></pre>
+<p><strong>Octals and Hexadecimals</strong></p>
+<p>Octal (base-8) and hexadecimal (base-16) numbers can be used in JavaScript.<br>
+Octal numbers must begin with 0 (zero) followed by one or more octal digits.<br>
+Hexadecimal numbers must begin with 0x.</p>
+<h2>Properties</h2>
+<p>The following table lists the properties of the <strong>Number</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/constants">constants</a></td><td style="text-align:left">Lists the constants of the Number object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/constructor">constructor</a></td><td style="text-align:left">Specifies the function that creates an object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/prototype">prototype</a></td><td style="text-align:left">Returns a reference to the prototype for a class of number.</td></tr>
+</tbody>
+</table>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>Number</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/toExponential">toExponential</a></td><td style="text-align:left">Returns a string that contains a number represented in exponential notation.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/toFixed">toFixed</a></td><td style="text-align:left">Returns a string that represents a number in fixed-point notation.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/toPrecision">toPrecision</a></td><td style="text-align:left">Returns a string that contains a number that is represented in either exponential or fixed-point notation and that has a specified number of digits.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/toString">toString</a></td><td style="text-align:left">Returns a string representation of an object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Number/valueOf">valueOf</a></td><td style="text-align:left">Returns the primitive value of the specified object.</td></tr>
+</tbody>
+</table>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Javascript</h4>
+<ul>
+<li><p><a href="/docs/dom/TransitionEvent/propertyName">propertyName</a></p></li>
+<li><p><strong>Number</strong></p></li>
+<li><p><a href="/docs/javascript/RegExp/unicode">unicode</a></p></li>
+<li><p><a href="/docs/javascript/future_reserved_words">future reserved words</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/objects">JavaScript Objects</a></li>
+<li><a href="/docs/javascript/Math">Math Object</a></li>
+<li><a href="/docs/javascript/operators/new">new Operator</a></li>
+<li><a href="/docs/javascript/NaN">JavaScript NaN constant</a></li>
+<li><a href="/docs/javascript/Infinity">JavaScript Infinity constant</a></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Octal">http://en.wikipedia.org/wiki/Octal</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Hexadecimal">http://en.wikipedia.org/wiki/Hexadecimal</a></li>
+<li><a href="http://www.2ality.com/2012/04/number-encoding.html">http://www.2ality.com/2012/04/number-encoding.html</a></li>
+</ul>
+<h3>Specification</h3>
+<p><a href="http://www.ecma-international.org/ecma-262/5.1/#sec-8.5">8.5 The Number Type</a></p>
+<p>ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/dwab3ed2(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

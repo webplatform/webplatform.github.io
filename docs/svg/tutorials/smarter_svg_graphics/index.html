@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG graphic effects · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This guide shows you how to embed images within SVG and apply various graphics effects such as gradients, patterns, clipping paths, and masks." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/tutorials/">tutorials</a></li><li><a href="/svg/tutorials/smarter_svg graphics/">smarter svg graphics</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG graphic effects</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>This guide shows you how to embed images within SVG and apply various graphics effects such as gradients, patterns, clipping paths, and masks.</p>
+<h2>Gradients</h2>
+<p>SVG’s support for gradients is similar to CSS’s. Two kinds of gradient are available: the <a href="/docs/svg/elements/linearGradient"><strong>linearGradient</strong></a> and <a href="/docs/svg/elements/radialGradient"><strong>radialGradient</strong></a> elements. The <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> property uses <strong>url()</strong> syntax to reference either kind:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tvScreen"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#tvScreenOff)"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M159.957 184.103c-21.826 13.892-102.52 17.859-122.361 0c-19.843-17.857-22.486-83.999 0-99.873c22.489-15.874 104.504-17.858 122.361 0C177.814 102.088 181.783 170.214 159.957 184.103z"</span>/&gt;</span>
+</code></pre>
+<p>This example transitions from a light to a dark gray from the top to the bottom of the shape:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">linearGradient</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tvScreenOff"</span> <span class="hljs-attribute">x1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">x2</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y2</span>=<span class="hljs-value">"1"</span> &gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#dddddd"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#444444"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">linearGradient</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/a/a8/svg_gfx_gradient_linear_bw.png/200px-svg_gfx_gradient_linear_bw.png" alt="svg gfx gradient linear bw.png"></p>
+<p>In their simplest form, gradients require at least two nested <a href="/docs/svg/elements/stop"><strong>stop</strong></a> elements to transition between their <a href="/w/index.php?title=svg/properties/stop-color&amp;action=edit&amp;redlink=1"><strong>stop-color</strong></a> properties. The <a href="/w/index.php?title=svg/attributes/offset&amp;action=edit&amp;redlink=1"><strong>offset</strong></a> attribute specifies the progression of colors, either in percentage or corresponding decimal terms. That progression follows the line defined by the <a href="/docs/svg/elements/linearGradient"><strong>linearGradient</strong></a> element’s pair of <em>x</em> and <em>y</em> coordinates. If <strong>y1</strong> were 1 in this example, the gradient would shift from the top left to the bottom right.</p>
+<p>This example defines many more colors, progressing from bottom to top. Setting <a href="/w/index.php?title=svg/attributes/gradientUnits&amp;action=edit&amp;redlink=1"><strong>gradientUnits</strong></a> to <strong>userSpaceOnUse</strong> makes the <em>x</em>/<em>y</em> coordinates correspond to specific points within the graphic:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">linearGradient</span>
+   <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">tvOn</span>"
+   <span class="hljs-attribute">x1</span>            = "<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">y1</span>            = "<span class="hljs-attribute">200</span>"
+   <span class="hljs-attribute">x2</span>            = "<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">y2</span>            = "<span class="hljs-attribute">70</span>"
+   <span class="hljs-attribute">gradientUnits</span> = "<span class="hljs-attribute">userSpaceOnUse</span>"
+&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0"</span>    <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#F15A29"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0.05"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#F15F29"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0.17"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#F68D24"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0.32"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#F9AC1C"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0.42"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#FCBF13"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0.5"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#FDC70C"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">stop</span>  <span class="hljs-attribute">offset</span>=<span class="hljs-value">"1"</span>    <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"#1C75BC"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">linearGradient</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/b/b9/svg_gfx_gradient_linear.png/200px-svg_gfx_gradient_linear.png" alt="svg gfx gradient linear.png"></p>
+<p>Radial gradients emanate outwards from the center point by default, filling rectangular shapes elliptically. In this example, which generates an obscure cultural reference to an Iggy Pop song, the black color defined at the 30% mark is extrapolated towards the center at 0%:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">radialGradient</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tvEye"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"30%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"black"</span>     /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"32%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"lightblue"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"58%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"lightblue"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"60%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"white"</span>     /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"80%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"white"</span>     /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"pink"</span>      /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">radialGradient</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/b/b9/svg_gfx_gradient_radial.png/200px-svg_gfx_gradient_radial.png" alt="svg gfx gradient radial.png"></p>
+<p>The <a href="/w/index.php?title=svg/attributes/fx&amp;action=edit&amp;redlink=1"><strong>fx</strong></a> and <a href="/w/index.php?title=svg/attributes/fy&amp;action=edit&amp;redlink=1"><strong>fy</strong></a> attributes specify coordinates for the <em>focus</em> of the gradient, while <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a> and <a href="/w/index.php?title=svg/attributes/cy&amp;action=edit&amp;redlink=1"><strong>cy</strong></a> set the center of the outermost circle. Modifying the <a href="/w/index.php?title=svg/attributes/r&amp;action=edit&amp;redlink=1"><strong>r</strong></a> (radius) effectively resizes the gradient, in this case magnifying it relative to the default 0.5 value:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">radialGradient</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tvRadial"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">fx</span>=<span class="hljs-value">"0.8"</span> <span class="hljs-attribute">fy</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"0.6"</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/a/a5/svg_gfx_gradient_radialY.png/200px-svg_gfx_gradient_radialY.png" alt="svg gfx gradient radialY.png"></p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/tv_gradient.svg">View the SVG file here</a>.</p>
+<h2>Patterns</h2>
+<p>SVG’s patterns are similar to CSS’s repeating background images, but allow you more control over padding and reorienting patterns. To implement a pattern, you must first design a graphic. In this case, a rectangle fits within a 5×10 area along with a margin of 1 unit:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tileRect"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"9.0"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"4.0"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"#E1BC9B"</span> /&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/3/35/svg_gfx_tileRect.png/100px-svg_gfx_tileRect.png" alt="svg gfx tileRect.png"></p>
+<p>The graphic is wrapped within a <a href="/docs/svg/elements/pattern"><strong>pattern</strong></a> element. Its <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> correspond to the intended size of tile. The <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a> and <a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a> simply specify the pattern’s offset starting point.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">pattern</span>
+   <span class="hljs-attribute">id</span>                    = "<span class="hljs-attribute">tilePattern</span>"
+   <span class="hljs-attribute">x</span>                     = "<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">y</span>                     = "<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">width</span>                 = "<span class="hljs-attribute">10</span>"
+   <span class="hljs-attribute">height</span>                = "<span class="hljs-attribute">5</span>"
+   <span class="hljs-attribute">patternContentUnits</span>   = "<span class="hljs-attribute">userSpaceOnUse</span>"
+   <span class="hljs-attribute">patternUnits</span>          = "<span class="hljs-attribute">userSpaceOnUse</span>"
+&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileRect"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">pattern</span>&gt;</span>
+</code></pre>
+<p>The units attributes maintain the same fixed coordinate system as for the overall graphic, so that units are not interpreted as percentages of the filled object’s dimensions.</p>
+<p>Use the <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> property to apply the pattern, in this case to a complex <a href="/docs/svg/elements/path"><strong>path</strong></a> shape:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"headShape"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M468.054,306.428c0.118,0.623,0.557,0.974,1.042,1.325 ... "</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"graphic"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#headShape"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#tilePattern)"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#shirtShape"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/4/48/svg_gfx_pattern_rect.png/300px-svg_gfx_pattern_rect.png" alt="svg gfx pattern rect.png"></p>
+<p>Increasing the pattern’s <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> attributes allows you control over the tile’s margins:</p>
+<p><img src="//static.webplatform.org/thumb/8/86/svg_gfx_pattern_rect_wh.png/300px-svg_gfx_pattern_rect_wh.png" alt="svg gfx pattern rect wh.png"></p>
+<h2>More complex tile patterns</h2>
+<p>This pattern consists of a very simple shape. You can make the pattern’s nested set of graphics as complex and varied as you want, or build larger patterns from smaller components. This example shows how to build series of alternating rotated tiles. First, modify the basic shape to include black around the margin:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tileRect"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tileRectWhite"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span>   <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span>   <span class="hljs-attribute">width</span>=<span class="hljs-value">"10"</span>  <span class="hljs-attribute">height</span>=<span class="hljs-value">"5"</span>   <span class="hljs-attribute">fill</span>=<span class="hljs-value">"#000000"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tileRectBlack"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0.5"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"9.0"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"4.0"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"#E1BC9B"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/f/f7/svg_gfx_tileRectBlack.png/100px-svg_gfx_tileRectBlack.png" alt="svg gfx tileRectBlack.png"></p>
+<p>A <em>tileSquare</em> object duplicates the underlying graphic and uses a <a href="/w/index.php?title=svg/attributes/transform&amp;action=edit&amp;redlink=1"><strong>transform</strong></a> to move it below the original to form a 10×10 square:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tileSquare"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileRect"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileRect"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(0,5)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/1/1e/svg_gfx_tileSquare.png/100px-svg_gfx_tileSquare.png" alt="svg gfx tileSquare.png"></p>
+<p>The square is then repeated four times within a larger 20×20 square:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tilePatternUnit"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileSquare"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"shiftDown"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(10,10) rotate(90)"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileSquare"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"shiftOver"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(10,10) rotate(-90)"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileSquare"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"shiftDownAndOver"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(10,10)"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileSquare"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/5/54/svg_gfx_tiles.png/200px-svg_gfx_tiles.png" alt="svg gfx tiles.png"></p>
+<p>All the tiles except for the first one have transforms that move them to the bottom-right corner of the larger square. The second and third are rotated, pivoting around their top-left corners so that they occupy the other two corners. (Unlike CSS transforms, SVG transforms do not <em>originate</em> around the object’s center point.) Rotating by only 80 degrees may clarify how the transform works:</p>
+<p><img src="//static.webplatform.org/thumb/a/a8/svg_gfx_tiles_rot.png/200px-svg_gfx_tiles_rot.png" alt="svg gfx tiles rot.png"></p>
+<p>To apply the modified fill, reference the more complex object, and increase the pattern’s tiling area to accomodate it:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">pattern</span>
+   <span class="hljs-attribute">id</span>                    = "<span class="hljs-attribute">tilePattern</span>"
+   <span class="hljs-attribute">x</span>                     = "<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">y</span>                     = "<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">width</span>                 = "<span class="hljs-attribute">20</span>"
+   <span class="hljs-attribute">height</span>                = "<span class="hljs-attribute">20</span>"
+   <span class="hljs-attribute">patternTransform</span>      = "<span class="hljs-attribute">scale</span>(<span class="hljs-attribute">1</span>)"
+   <span class="hljs-attribute">patternContentUnits</span>   = "<span class="hljs-attribute">userSpaceOnUse</span>"
+   <span class="hljs-attribute">patternUnits</span>          = "<span class="hljs-attribute">userSpaceOnUse</span>"
+&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tilePatternUnit"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">pattern</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/8/87/svg_gfx_pattern.png/300px-svg_gfx_pattern.png" alt="svg gfx pattern.png"></p>
+<p>If the pattern is not sized appropriately for the shape, you do not have to resize the pattern’s dimensions or any of the component tiles. The example above specifies a <a href="/w/index.php?title=svg/attributes/patternTransform&amp;action=edit&amp;redlink=1"><strong>patternTransform</strong></a> attribute with a <em>scale(1)</em> transform that leaves the size unchanged, but increasing the value to 1.5 magnifies the pattern:</p>
+<p><img src="//static.webplatform.org/thumb/8/82/svg_gfx_pattern_scale.png/300px-svg_gfx_pattern_scale.png" alt="svg gfx pattern scale.png"></p>
+<p>Other transforms allow you to reorient and reshape the pattern. In this example, <em>scale(1.5) skewY(15) rotate(30)</em> boosts the pattern’s size, shears it slightly into a diamond shape, and spins it:</p>
+<p><img src="//static.webplatform.org/thumb/1/1e/svg_gfx_pattern_skewrot.png/300px-svg_gfx_pattern_skewrot.png" alt="svg gfx pattern skewrot.png"></p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/pattern_fill.svg">View the SVG file here</a>.</p>
+<h2>Clipping paths</h2>
+<p>Patterns are not necessarily for tiny images. By applying generous <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> pattern dimensions, you can also use them to display a single large graphic behind an irregular shape. Another way to do this is to apply a <em>clipping path</em>, which renders a graphic only inside the contours of another graphic.</p>
+<p>Place a <a href="/docs/svg/elements/clipPath"><strong>clipPath</strong></a> element around the shape you want to clip the graphic with, in this case the <a href="/docs/svg/elements/path"><strong>path</strong></a> we saw earlier that defines the television screen:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">clipPath</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"screenClip"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tvScreen"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">clipPath</span>&gt;</span>
+</code></pre>
+<p>When rendering the graphic to clip, use the <a href="/w/index.php?title=svg/properties/clip-path&amp;action=edit&amp;redlink=1"><strong>clip-path</strong></a> property to reference the <a href="/docs/svg/elements/clipPath"><strong>clipPath</strong></a> element:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#yeller"</span> <span class="hljs-attribute">clip-path</span>=<span class="hljs-value">"url(#screenClip)"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"yeller"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#headShape"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#tilePattern)"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#shirtShape"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/3/34/svg_gfx_clip.png/200px-svg_gfx_clip.png" alt="svg gfx clip.png"></p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/tv_clip.svg">View the SVG file here</a>.</p>
+<h2>Adding images</h2>
+<p>While SVG is designed for vector graphics, it can freely incorporate raster graphics via the <a href="/docs/svg/elements/image"><strong>image</strong></a> element. Use <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a> and <a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a> attributes to position an image. Unlike HTML, you need to specify a <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> for an image to appear:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">image</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"giraffe.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"270"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"297"</span>
+       <span class="hljs-attribute">preserveAspectRatio</span>=<span class="hljs-value">"xMidYMid meet"</span>/&gt;</span>
+</code></pre>
+<p>If the supplied dimensions don’t match the underlying data, various <a href="/w/index.php?title=svg/attributes/preserveAspectRatio&amp;action=edit&amp;redlink=1"><strong>preserveAspectRatio</strong></a> options affect the image’s placement. The <strong>meet</strong> keyword fits the entire image, while <strong>slice</strong> clips it. To position the image, you can specify any combination of <em>Min</em>, <em>Mid</em>, and <em>Max</em>, which in the examples below match for each axis, but which you can mix arbitrarily. For example, <strong>xMidYMin</strong> aligns the image at the top, and centers it horizontally. Here are various ways to place a tall graphic in a wide image container:</p>
+<pre><code>xMinYMin meet
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/a/a6/xMinYMin_meet.png/300px-xMinYMin_meet.png" alt="xMinYMin meet.png"></p>
+<pre><code>xMidYMid meet
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/f/f6/xMidYMid_meet.png/300px-xMidYMid_meet.png" alt="xMidYMid meet.png"></p>
+<pre><code>xMaxYMax meet
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/5/54/xMaxYMax_meet.png/300px-xMaxYMax_meet.png" alt="xMaxYMax meet.png"></p>
+<pre><code>xMinYMin slice
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/d1/xMinYMin_slice.png/300px-xMinYMin_slice.png" alt="xMinYMin slice.png"></p>
+<pre><code>xMidYMid slice
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/a/a4/xMidYMid_slice.png/300px-xMidYMid_slice.png" alt="xMidYMid slice.png"></p>
+<pre><code>xMaxYMax slice
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/7/79/xMaxYMax_slice.png/300px-xMaxYMax_slice.png" alt="xMaxYMax slice.png"></p>
+<p>Images scale depending on the current <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a>. For example, if the SVG importing the image appears within a <em>viewport</em> of 500×500 pixels (as specified by its own <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a>), but its <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a> attribute specifies <strong>0 0 1000 1000</strong>, then the image appears much smaller.</p>
+<p>You can also use the <a href="/docs/svg/elements/image"><strong>image</strong></a> element to import SVG graphics:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">image</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"face_components.svg#eyes"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"300"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/9/96/svg_image_import_svg.png" alt="svg image import svg.png"></p>
+<p>These externally referenced SVG components may animate, but they do not preserve any interactive features.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Filters</h4>
+<ul>
+<li><p><a href="/docs/css/functions/blur">blur()</a></p></li>
+<li><p><a href="/docs/css/functions/brightness">brightness()</a></p></li>
+<li><p><a href="/docs/css/functions/contrast">contrast()</a></p></li>
+<li><p><a href="/docs/css/functions/custom">custom()</a></p></li>
+<li><p><a href="/docs/css/functions/drop-shadow">drop-shadow()</a></p></li>
+<li><p><a href="/docs/css/functions/grayscale">grayscale()</a></p></li>
+<li><p><a href="/docs/css/functions/hue-rotate">hue-rotate()</a></p></li>
+<li><p><a href="/docs/css/functions/invert">invert()</a></p></li>
+<li><p><a href="/docs/css/functions/opacity">opacity()</a></p></li>
+<li><p><a href="/docs/css/functions/saturate">saturate()</a></p></li>
+<li><p><a href="/docs/css/functions/sepia">sepia()</a></p></li>
+<li><p><a href="/docs/css/properties/filter">filter</a></p></li>
+<li><p><a href="/docs/svg/elements/feBlend">feBlend</a></p></li>
+<li><p><a href="/docs/svg/elements/feColorMatrix">feColorMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feComponentTransfer">feComponentTransfer</a></p></li>
+<li><p><a href="/docs/svg/elements/feComposite">feComposite</a></p></li>
+<li><p><a href="/docs/svg/elements/feConvolveMatrix">feConvolveMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feDiffuseLighting">feDiffuseLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feDisplacementMap">feDisplacementMap</a></p></li>
+<li><p><a href="/docs/svg/elements/feDistantLight">feDistantLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feFlood">feFlood</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncA">feFuncA</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncB">feFuncB</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncG">feFuncG</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncR">feFuncR</a></p></li>
+<li><p><a href="/docs/svg/elements/feGaussianBlur">feGaussianBlur</a></p></li>
+<li><p><a href="/docs/svg/elements/feImage">feImage</a></p></li>
+<li><p><a href="/docs/svg/elements/feMerge">feMerge</a></p></li>
+<li><p><a href="/docs/svg/elements/feMergeNode">feMergeNode</a></p></li>
+<li><p><a href="/docs/svg/elements/feMorphology">feMorphology</a></p></li>
+<li><p><a href="/docs/svg/elements/feOffset">feOffset</a></p></li>
+<li><p><a href="/docs/svg/elements/fePointLight">fePointLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpecularLighting">feSpecularLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpotlight">feSpotlight</a></p></li>
+<li><p><a href="/docs/svg/elements/feTile">feTile</a></p></li>
+<li><p><a href="/docs/svg/elements/feTurbulence">feTurbulence</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_deploy">SVG deployment</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_filters">SVG filters</a></p></li>
+<li><p><strong>SVG graphic effects</strong></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a></p></li>
+<li><p><a href="/docs/tutorials/svg_filters">SVG filters</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

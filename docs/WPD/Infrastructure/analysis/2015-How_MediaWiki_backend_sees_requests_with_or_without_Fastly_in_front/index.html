@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>How MediaWiki backend sees an HTTP request. With or without Fastly in front · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/analysis/">analysis</a></li><li><a href="/docs/WPD/Infrastructure/analysis/2015-How_MediaWiki backend sees requests with or without Fastly in front/">2015-How MediaWiki backend sees requests with or without Fastly in front</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>How MediaWiki backend sees an HTTP request. With or without Fastly in front</h1>
+<p>This page shows two equivalent browsing sessions. One was made with Fastly, and the other without.</p>
+<h2>Description</h2>
+<p>The purpose of this is to illustrate the difference in how MediaWiki backend processes what it gets from the browsers depending of whether or not Fastly is present.</p>
+<p>Things to notice:</p>
+<ol>
+<li>Cookies are trimmed; only the ones starting with <em>wpwiki</em> are passed to the backend</li>
+<li><em>Forwarded-For</em> headers and their temporary counterparts</li>
+</ol>
+<h2>Actions</h2>
+<h3>Go to Edit Form</h3>
+<h4>Without Fastly</h4>
+<pre><code>Start request GET /w/index.php?title=Special:UserLogin&amp;returnto=WPD<span class="hljs-variable">%3AInfrastructure</span><span class="hljs-variable">%2Farchitecture</span><span class="hljs-variable">%2FVM</span>+roles
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CONNECTION: keep-alive
+ACCEPT: <span class="hljs-keyword">text</span>/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,<span class="hljs-keyword">image</span>/webp,<span class="hljs-variable">*/</span><span class="hljs-variable">*;</span>q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: https:<span class="hljs-comment">/docs/w/index.php?title=Special:UserLogout&amp;returnto=WPD%3AInfrastructure%2Farchitecture%2FVM+roles</span>
+ACCEPT-ENCODING: gzip, deflate, sdch
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+COOKIE: _pk_ref<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424138557</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FPublic</span><span class="hljs-variable">%2Fpublic</span>-webplatform<span class="hljs-variable">%2F2015Feb</span><span class="hljs-variable">%2F0003</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=f60e7f3954913aa0<span class="hljs-number">.1420732750</span><span class="hljs-number">.108</span><span class="hljs-number">.1424138557</span><span class="hljs-number">.1424116005</span>.; _pk_ref<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424182609</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FTeam</span><span class="hljs-variable">%2Fw3t</span>-sys<span class="hljs-variable">%2F2015JanFeb</span><span class="hljs-variable">%2F0093</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=ea6c3462853cd2d6<span class="hljs-number">.1421114716</span><span class="hljs-number">.7</span><span class="hljs-number">.1424182620</span><span class="hljs-number">.1422055058</span>.; wptestwiki_session=<span class="hljs-number">37</span>ad13fe80ea727fdbb89a1870dbb29c; wptestwikiUserID=<span class="hljs-number">150</span>; wptestwikiUserName=Renoirb; _pk_ref<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424897026</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22http</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Fwww</span>.baidu.com<span class="hljs-variable">%2Fs</span><span class="hljs-variable">%3Fwd</span><span class="hljs-variable">%3Dhtml</span><span class="hljs-variable">%7Btouch</span>-action<span class="hljs-variable">%3Anone</span><span class="hljs-variable">%3B</span><span class="hljs-variable">%7D</span><span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; wpwikiUserName=Renoirb; wpwiki_session=mf5fir53lg7c2ao641o9pfjmn3; wpwikiLoggedOut=<span class="hljs-number">1424900841</span>; _pk_id<span class="hljs-number">.1</span>.db2a=e07e1a4d4c024be6<span class="hljs-number">.1424134581</span><span class="hljs-number">.36</span><span class="hljs-number">.1424900843</span><span class="hljs-number">.1424887118</span>.; _pk_ses<span class="hljs-number">.1</span>.db2a=*
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+MessageCache::load: Loading en... got from <span class="hljs-keyword">global</span> cache
+IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+MWCryptRand::realGenerate: Generating cryptographic random bytes <span class="hljs-keyword">for</span> LoginForm::setLoginToken/MWCryptRand::generateHex/MWCryptRand::realGenerateHex/MWCryptRand::generate/MWCryptRand::realGenerate
+MWCryptRand::realGenerate: openssl_random_pseudo_bytes generated <span class="hljs-number">16</span> bytes of strong randomness.
+MWCryptRand::realGenerate: <span class="hljs-number">0</span> bytes of randomness leftover <span class="hljs-keyword">in</span> the buffer.
+Unstubbing <span class="hljs-variable">$wgParser</span> on call of <span class="hljs-variable">$wgParser</span>::firstCallInit from MessageCache::getParser
+Parser: using preprocessor: Preprocessor_DOM
+Unstubbing <span class="hljs-variable">$wgLang</span> on call of <span class="hljs-variable">$wgLang</span>::_unstub from ParserOptions::__construct
+OutputPage::sendCacheControl: private caching;  <span class="hljs-variable">**</span>
+Request ended normally
+</code></pre>
+<h4>With Fastly</h4>
+<pre><code>Start request GET /w/index.php?title=WPD/Infrastructure/architecture/VM_roles&amp;action=edit
+HTTP HEADERS:
+HOST: docs.webplatform.org
+ACCEPT: text/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,image/webp,*/*;q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: /docs/WPD/Infrastructure/architecture/VM_roles
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+FASTLY-CLIENT-IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+X-FORWARDED-HOST: docs.webplatform.org
+X-FORWARDED-SERVER: www.webplatform.org
+FASTLY-SSL: <span class="hljs-number">1</span>
+FASTLY-TEMP-XFF: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+COOKIE: wpwikiLoggedOut=<span class="hljs-number">1424902515</span>; wpwikiUserID=<span class="hljs-number">10080</span>; wpwikiUserName=Renoirb; wpwiki_session=bc1ec4fbf11d31c6907ceb23b70f2d06
+X-VARNISH: <span class="hljs-number">4100626631</span>, <span class="hljs-number">438482695</span>
+ACCEPT-ENCODING: gzip
+FASTLY-CLIENT: <span class="hljs-number">1</span>
+X-FORWARDED-FOR: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+FASTLY-FF: cache-atl6221-ATL, cache-atl6223-ATL
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture/VM roles]]</span> are {edit,move}
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+User: got user <span class="hljs-number">10080</span> from cache
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+User: logged <span class="hljs-keyword">in</span> from session
+EditPage::edit: enter
+EditPage::importFormData: Not a posted form.
+SFUtils::showFormPreview: enter.
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+User::getBlockedStatus: checking...
+MessageCache::<span class="hljs-built_in">load</span>: Loading en... got from global cache
+Unstubbing $wgLang on call of $wgLang::getCode from MessageCache::getMessageFromFallbackChain
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture/VM roles]]</span> are {edit,move}
+Unstubbing $wgParser on call of $wgParser::firstCallInit from MessageCache::getParser
+Parser: using preprocessor: Preprocessor_DOM
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture/VM roles]]</span> are {edit,move}
+[deprecated] Use of wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line <span class="hljs-number">26</span>]
+[deprecated] Use of wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1498</span>]
+[deprecated] Use of wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1596</span>]
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture]]</span> are {edit,move}
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture/VM roles]]</span> are {edit,move}
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture/VM roles]]</span> are {edit,move}
+Title::getRestrictionTypes: applicable restrictions to <span class="hljs-string">[[WPD/Infrastructure/architecture/VM roles]]</span> are {edit,move}
+OutputPage::sendCacheControl: private caching;  **
+Request ended normally
+</code></pre>
+<h3>Submit Form, view page</h3>
+<h4>Without Fastly</h4>
+<pre><code>Start request POST /w/index.php?title=Special:UserLogin&amp;action=submitlogin&amp;type=login&amp;returnto=WPD/Infrastructure/architecture/VM+roles
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CONNECTION: keep-alive
+CONTENT-LENGTH: <span class="hljs-number">108</span>
+CACHE-CONTROL: <span class="hljs-keyword">max</span>-age=<span class="hljs-number">0</span>
+ACCEPT: <span class="hljs-keyword">text</span>/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,<span class="hljs-keyword">image</span>/webp,<span class="hljs-variable">*/</span><span class="hljs-variable">*;</span>q=<span class="hljs-number">0.8</span>
+ORIGIN: https:<span class="hljs-comment">/docs/</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+CONTENT-TYPE: application/x-www-form-urlencoded
+DNT: <span class="hljs-number">1</span>
+REFERER: https:<span class="hljs-comment">/docs/w/index.php?title=Special:UserLogin&amp;returnto=WPD%3AInfrastructure%2Farchitecture%2FVM+roles</span>
+ACCEPT-ENCODING: gzip, deflate
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+COOKIE: _pk_ref<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424138557</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FPublic</span><span class="hljs-variable">%2Fpublic</span>-webplatform<span class="hljs-variable">%2F2015Feb</span><span class="hljs-variable">%2F0003</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=f60e7f3954913aa0<span class="hljs-number">.1420732750</span><span class="hljs-number">.108</span><span class="hljs-number">.1424138557</span><span class="hljs-number">.1424116005</span>.; _pk_ref<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424182609</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FTeam</span><span class="hljs-variable">%2Fw3t</span>-sys<span class="hljs-variable">%2F2015JanFeb</span><span class="hljs-variable">%2F0093</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=ea6c3462853cd2d6<span class="hljs-number">.1421114716</span><span class="hljs-number">.7</span><span class="hljs-number">.1424182620</span><span class="hljs-number">.1422055058</span>.; wptestwiki_session=<span class="hljs-number">37</span>ad13fe80ea727fdbb89a1870dbb29c; wptestwikiUserID=<span class="hljs-number">150</span>; wptestwikiUserName=Renoirb; _pk_ref<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424897026</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22http</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Fwww</span>.baidu.com<span class="hljs-variable">%2Fs</span><span class="hljs-variable">%3Fwd</span><span class="hljs-variable">%3Dhtml</span><span class="hljs-variable">%7Btouch</span>-action<span class="hljs-variable">%3Anone</span><span class="hljs-variable">%3B</span><span class="hljs-variable">%7D</span><span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; wpwikiUserName=Renoirb; wpwiki_session=mf5fir53lg7c2ao641o9pfjmn3; wpwikiLoggedOut=<span class="hljs-number">1424900841</span>; _pk_id<span class="hljs-number">.1</span>.db2a=e07e1a4d4c024be6<span class="hljs-number">.1424134581</span><span class="hljs-number">.36</span><span class="hljs-number">.1424900895</span><span class="hljs-number">.1424887118</span>.; _pk_ses<span class="hljs-number">.1</span>.db2a=*
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+MessageCache::load: Loading en... got from <span class="hljs-keyword">global</span> cache
+IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+User: got user <span class="hljs-number">10080</span> from cache
+[cookie] setcookie: <span class="hljs-string">"wpwikiUserID"</span>, <span class="hljs-string">"10080"</span>, <span class="hljs-string">"1440452895"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"wpwikiUserName"</span>, <span class="hljs-string">"Renoirb"</span>, <span class="hljs-string">"1440452895"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"wpwikiToken"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424814495"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"1"</span>
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+DatabaseBase::query: Writes done: UPDATE <span class="hljs-string">`user`</span> SET user_touched = <span class="hljs-string">'X'</span>)
+OutputPage::sendCacheControl: private caching;  <span class="hljs-variable">**</span>
+Request ended normally
+
+
+Start request GET /wiki/WPD/Infrastructure/architecture/VM_roles
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CONNECTION: keep-alive
+CACHE-CONTROL: <span class="hljs-keyword">max</span>-age=<span class="hljs-number">0</span>
+ACCEPT: <span class="hljs-keyword">text</span>/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,<span class="hljs-keyword">image</span>/webp,<span class="hljs-variable">*/</span><span class="hljs-variable">*;</span>q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: https:<span class="hljs-comment">/docs/w/index.php?title=Special:UserLogin&amp;returnto=WPD%3AInfrastructure%2Farchitecture%2FVM+roles</span>
+ACCEPT-ENCODING: gzip, deflate, sdch
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+COOKIE: _pk_ref<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424138557</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FPublic</span><span class="hljs-variable">%2Fpublic</span>-webplatform<span class="hljs-variable">%2F2015Feb</span><span class="hljs-variable">%2F0003</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=f60e7f3954913aa0<span class="hljs-number">.1420732750</span><span class="hljs-number">.108</span><span class="hljs-number">.1424138557</span><span class="hljs-number">.1424116005</span>.; _pk_ref<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424182609</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FTeam</span><span class="hljs-variable">%2Fw3t</span>-sys<span class="hljs-variable">%2F2015JanFeb</span><span class="hljs-variable">%2F0093</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=ea6c3462853cd2d6<span class="hljs-number">.1421114716</span><span class="hljs-number">.7</span><span class="hljs-number">.1424182620</span><span class="hljs-number">.1422055058</span>.; wptestwiki_session=<span class="hljs-number">37</span>ad13fe80ea727fdbb89a1870dbb29c; wptestwikiUserID=<span class="hljs-number">150</span>; wptestwikiUserName=Renoirb; _pk_ref<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424897026</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22http</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Fwww</span>.baidu.com<span class="hljs-variable">%2Fs</span><span class="hljs-variable">%3Fwd</span><span class="hljs-variable">%3Dhtml</span><span class="hljs-variable">%7Btouch</span>-action<span class="hljs-variable">%3Anone</span><span class="hljs-variable">%3B</span><span class="hljs-variable">%7D</span><span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; wpwikiLoggedOut=<span class="hljs-number">1424900841</span>; _pk_id<span class="hljs-number">.1</span>.db2a=e07e1a4d4c024be6<span class="hljs-number">.1424134581</span><span class="hljs-number">.36</span><span class="hljs-number">.1424900895</span><span class="hljs-number">.1424887118</span>.; _pk_ses<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">*;</span> wpwikiUserID=<span class="hljs-number">10080</span>; wpwikiUserName=Renoirb; wpwiki_session=dcdcmaq5g1d067e87sr2beslr7
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+Title::getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,<span class="hljs-keyword">move</span>}
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+User: cache miss <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span>
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from database.
+User: logged <span class="hljs-keyword">in</span> from session
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+MessageCache::load: Loading en... got from <span class="hljs-keyword">global</span> cache
+OutputPage::checkLastModified: client did not send If-Modified-Since header
+Article::view using parser cache: yes
+Parser cache options found.
+ParserOutput cache found.
+Article::view: showing parser cache contents
+Unstubbing <span class="hljs-variable">$wgLang</span> on call of <span class="hljs-variable">$wgLang</span>::getCode from ParserOutput::replaceEditSectionLinksCallback
+[deprecated] Use of wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line <span class="hljs-number">26</span>]
+[deprecated] Use of wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1498</span>]
+[deprecated] Use of wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1596</span>]
+Title::getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,<span class="hljs-keyword">move</span>}
+Title::getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,<span class="hljs-keyword">move</span>}
+Unstubbing <span class="hljs-variable">$wgParser</span> on call of <span class="hljs-variable">$wgParser</span>::firstCallInit from MessageCache::getParser
+Parser: using preprocessor: Preprocessor_DOM
+Title::getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,<span class="hljs-keyword">move</span>}
+OutputPage::sendCacheControl: private caching; Wed, <span class="hljs-number">25</span> Feb <span class="hljs-number">2015</span> <span class="hljs-number">21</span>:<span class="hljs-number">48</span>:<span class="hljs-number">20</span> GMT <span class="hljs-variable">**</span>
+Request ended normally
+</code></pre>
+<h3>With Fastly</h3>
+<pre><code>Start request POST /w/index.php?title=WPD/Infrastructure/architecture/VM_roles&amp;action=submit
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CACHE-CONTROL: max-age=<span class="hljs-number">0</span>
+ACCEPT: text/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,image/webp,*/*;q=<span class="hljs-number">0.8</span>
+ORIGIN: /docs/
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10_9_5</span>) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+CONTENT-TYPE: multipart/form-data; boundary=----WebKitFormBoundary0HGHKqUos8MAYrRX
+DNT: <span class="hljs-number">1</span>
+REFERER: /docs/w/index.php?title=WPD/Infrastructure/architecture/VM_roles&amp;action=edit
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+FASTLY-CLIENT-IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+X-FORWARDED-HOST: docs.webplatform.org
+X-FORWARDED-SERVER: www.webplatform.org
+CONTENT-LENGTH: <span class="hljs-number">16198</span>
+FASTLY-SSL: <span class="hljs-number">1</span>
+FASTLY-TEMP-XFF: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+COOKIE: wpwikiLoggedOut=<span class="hljs-number">1424902515</span>; wpwikiUserID=<span class="hljs-number">10080</span>; wpwikiUserName=Renoirb; wpwiki_session=bc1ec4fbf11d31c6907ceb23b70f2d06
+ACCEPT-ENCODING: gzip
+X-VARNISH: <span class="hljs-number">3880587125</span>
+X-FORWARDED-FOR: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+FASTLY-FF: cache-iad2130-IAD
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: <span class="hljs-keyword">using</span> store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+Title<span class="hljs-type-annotation">::</span>getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,move}
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+User: got user <span class="hljs-number">10080</span> from cache
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+User: logged <span class="hljs-keyword">in</span> from session
+EditPage<span class="hljs-type-annotation">::</span>edit: enter
+MessageCache<span class="hljs-type-annotation">::</span>load: Loading en... got from <span class="hljs-keyword">global</span> cache
+EditPage<span class="hljs-type-annotation">::</span>importFormData: Passed token check.
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+SFUtils<span class="hljs-type-annotation">::</span>showFormPreview: enter.
+User<span class="hljs-type-annotation">::</span>getBlockedStatus: checking...
+IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+timestamp: <span class="hljs-number">20150225225143</span>, edittime: <span class="hljs-number">20150225225143</span>
+EditPage<span class="hljs-type-annotation">::</span>internalAttemptSave: getting section ''
+ConfirmEdit: user group allows skipping captcha
+ConfirmEdit: no need to show captcha.
+Unstubbing $wgParser on call of $wgParser<span class="hljs-type-annotation">::</span>parse from WikitextContent<span class="hljs-type-annotation">::</span>fillParserOutput
+Parser: <span class="hljs-keyword">using</span> preprocessor: Preprocessor_DOM
+[Preprocessor] Saved preprocessor XML to memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">116</span>c0786d3818b164345ef695ebc2196:<span class="hljs-number">1</span>)
+Pulling file metadata from cache key wpwiki:file:<span class="hljs-number">83</span>bf02230c13678a2e84aed806cc506b
+MimeMagic<span class="hljs-type-annotation">::</span>__construct: loading mime types from /srv/webplatform/wiki/wpwiki/mediawiki/includes/mime.types
+MimeMagic<span class="hljs-type-annotation">::</span>__construct: loading mime info from /srv/webplatform/wiki/wpwiki/mediawiki/includes/mime.info
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+FileBackendStore<span class="hljs-type-annotation">::</span>getFileStat: File mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png does not exist.
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_2624ed3fbbea-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_0382d0282548-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_5d44a03ba879-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+Unstubbing $wgLang on call of $wgLang<span class="hljs-type-annotation">::</span>getCode from Message<span class="hljs-type-annotation">::</span>inLanguage
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">116</span>c0786d3818b164345ef695ebc2196:<span class="hljs-number">1</span>)
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_9c3f133d0bf0-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_6e32ebd79da0-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_ba037b9a4be5-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: INSERT INTO <span class="hljs-string">`text`</span> (old_id,old_text,old_flags) VALUES (NULL,<span class="hljs-char">'X'</span>)
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: INSERT INTO <span class="hljs-string">`revision`</span> (rev_id,rev_page,rev_text_id,rev_comment,rev_minor_edit,rev_user,rev_user_text,rev_timestamp,rev_deleted,rev_len,rev_parent_id,rev_sha1,rev_content_model,rev_content_format) VALUES (NULL,<span class="hljs-char">'X'</span>,NULL,NULL)
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: UPDATE <span class="hljs-string">`page`</span> SET page_latest = <span class="hljs-char">'X'</span>
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: INSERT INTO <span class="hljs-string">`recentchanges`</span> (rc_timestamp,rc_namespace,rc_title,rc_type,rc_source,rc_minor,rc_cur_id,rc_user,rc_user_text,rc_comment,rc_this_oldid,rc_last_oldid,rc_bot,rc_ip,rc_patrolled,rc_new,rc_old_len,rc_new_len,rc_deleted,rc_logid,rc_log_type,rc_log_action,rc_params,rc_id) VALUES (<span class="hljs-char">'X'</span>,NULL)
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: INSERT INTO <span class="hljs-string">`cu_changes`</span> (cuc_id,cuc_namespace,cuc_title,cuc_minor,cuc_user,cuc_user_text,cuc_actiontext,cuc_comment,cuc_this_oldid,cuc_last_oldid,cuc_type,cuc_timestamp,cuc_ip,cuc_ip_hex,cuc_xff,cuc_xff_hex,cuc_agent,cuc_page_id) VALUES (NULL,<span class="hljs-char">'X'</span>)
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: INSERT INTO <span class="hljs-string">`logging`</span> (log_id,log_type,log_action,log_timestamp,log_user,log_user_text,log_namespace,log_title,log_page,log_comment,log_params) VALUES (NULL,<span class="hljs-char">'X'</span>)
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: UPDATE <span class="hljs-string">`user`</span> SET user_editcount=user_editcount+N WHERE user_id = <span class="hljs-char">'X'</span>
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: UPDATE <span class="hljs-string">`user`</span> SET user_touched = <span class="hljs-char">'X'</span>)
+WikiPage<span class="hljs-type-annotation">::</span>doEditUpdates: No vary-revision, <span class="hljs-keyword">using</span> prepared edit...
+Saved <span class="hljs-keyword">in</span> parser cache with key wpwiki:pcache:idhash:<span class="hljs-number">58597</span>-<span class="hljs-number">0</span>!*!<span class="hljs-number">0</span>!!*!<span class="hljs-number">2</span>!*!esi=<span class="hljs-number">1</span> and timestamp <span class="hljs-number">20150225225555</span> and revision id <span class="hljs-number">100865</span>
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: UPDATE <span class="hljs-string">`page`</span> SET page_touched = <span class="hljs-char">'X'</span>
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: UPDATE <span class="hljs-string">`page`</span> SET page_links_updated = <span class="hljs-char">'X'</span>
+BacklinkCache<span class="hljs-type-annotation">::</span>queryLinks: got results from DB
+[cookie] setcookie: <span class="hljs-string">"wpwikiPostEditRevision100865"</span>, <span class="hljs-string">"saved"</span>, <span class="hljs-string">"1424906155"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>
+OutputPage<span class="hljs-type-annotation">::</span>sendCacheControl: private caching;  **
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: UPDATE <span class="hljs-string">`site_stats`</span> SET ss_total_edits=ss_total_edits+N
+Title<span class="hljs-type-annotation">::</span>getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,move}
+DatabaseBase<span class="hljs-type-annotation">::</span>query: Writes done: REPLACE INTO <span class="hljs-string">`searchindex`</span> (si_page,si_title,si_text) VALUES (<span class="hljs-char">'X'</span>)
+BacklinkCache<span class="hljs-type-annotation">::</span>partition: got from full result cache
+BacklinkCache<span class="hljs-type-annotation">::</span>queryLinks: got results from DB
+BacklinkCache<span class="hljs-type-annotation">::</span>partition: got from full result cache
+Request ended normally
+
+
+Start request GET /wiki/WPD/Infrastructure/architecture/VM_roles
+HTTP HEADERS:
+HOST: docs.webplatform.org
+ACCEPT: text/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,image/webp,*/*;q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10_9_5</span>) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: /docs/w/index.php?title=WPD/Infrastructure/architecture/VM_roles&amp;action=edit
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+FASTLY-CLIENT-IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+X-FORWARDED-HOST: docs.webplatform.org
+X-FORWARDED-SERVER: www.webplatform.org
+FASTLY-SSL: <span class="hljs-number">1</span>
+FASTLY-TEMP-XFF: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+COOKIE: wpwikiLoggedOut=<span class="hljs-number">1424902515</span>; wpwikiUserID=<span class="hljs-number">10080</span>; wpwikiUserName=Renoirb; wpwiki_session=bc1ec4fbf11d31c6907ceb23b70f2d06
+X-VARNISH: <span class="hljs-number">3880592861</span>, <span class="hljs-number">3181312243</span>
+ACCEPT-ENCODING: gzip
+FASTLY-CLIENT: <span class="hljs-number">1</span>
+X-FORWARDED-FOR: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+FASTLY-FF: cache-iad2130-IAD, cache-iad2131-IAD
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: <span class="hljs-keyword">using</span> store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+Title<span class="hljs-type-annotation">::</span>getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,move}
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+User: cache miss <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span>
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from database.
+User: logged <span class="hljs-keyword">in</span> from session
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+MessageCache<span class="hljs-type-annotation">::</span>load: Loading en... got from <span class="hljs-keyword">global</span> cache
+OutputPage<span class="hljs-type-annotation">::</span>checkLastModified: client did not send If-Modified-Since header
+Article<span class="hljs-type-annotation">::</span>view <span class="hljs-keyword">using</span> parser cache: yes
+Parser options key expired, touched <span class="hljs-number">20150225225559</span>, epoch <span class="hljs-number">20150225172757</span>, cached <span class="hljs-number">20150225225555</span>
+Article<span class="hljs-type-annotation">::</span>view: doing uncached parse
+Parser cache options found.
+Unstubbing $wgParser on call of $wgParser<span class="hljs-type-annotation">::</span>parse from WikitextContent<span class="hljs-type-annotation">::</span>fillParserOutput
+Parser: <span class="hljs-keyword">using</span> preprocessor: Preprocessor_DOM
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">116</span>c0786d3818b164345ef695ebc2196:<span class="hljs-number">1</span>)
+Pulling file metadata from cache key wpwiki:file:<span class="hljs-number">83</span>bf02230c13678a2e84aed806cc506b
+MimeMagic<span class="hljs-type-annotation">::</span>__construct: loading mime types from /srv/webplatform/wiki/wpwiki/mediawiki/includes/mime.types
+MimeMagic<span class="hljs-type-annotation">::</span>__construct: loading mime info from /srv/webplatform/wiki/wpwiki/mediawiki/includes/mime.info
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+FileBackendStore<span class="hljs-type-annotation">::</span>getFileStat: File mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png does not exist.
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_3f643b418320-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_658641ce3075-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+File<span class="hljs-type-annotation">::</span>transform: Doing stat <span class="hljs-keyword">for</span> mwstore://<span class="hljs-keyword">local</span>-ceph/<span class="hljs-keyword">local</span>-thumb/<span class="hljs-number">8</span>/<span class="hljs-number">83</span>/Component-diagram-internal.png/<span class="hljs-number">1624</span>px-Component-diagram-internal.png
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: creating <span class="hljs-number">1624</span>x841 thumbnail at /tmp/transform_f85ce5bfbd99-<span class="hljs-number">1.</span>png <span class="hljs-keyword">using</span> scaler <span class="hljs-literal">im</span>
+BitmapHandler<span class="hljs-type-annotation">::</span>doTransform: returning unscaled image
+[Preprocessor] Loaded preprocessor XML from memcached (key wpwiki:preprocess-xml:<span class="hljs-number">7</span>a0fc0b889a3183dc9963db86fea7ee2:<span class="hljs-number">0</span>)
+Unstubbing $wgLang on call of $wgLang<span class="hljs-type-annotation">::</span>getCode from Message<span class="hljs-type-annotation">::</span>inLanguage
+Saved <span class="hljs-keyword">in</span> parser cache with key wpwiki:pcache:idhash:<span class="hljs-number">58597</span>-<span class="hljs-number">0</span>!*!<span class="hljs-number">0</span>!!*!<span class="hljs-number">2</span>!*!esi=<span class="hljs-number">1</span> and timestamp <span class="hljs-number">20150225225556</span> and revision id <span class="hljs-number">100865</span>
+[deprecated] Use of wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line <span class="hljs-number">26</span>]
+[deprecated] Use of wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1498</span>]
+[deprecated] Use of wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1596</span>]
+Title<span class="hljs-type-annotation">::</span>getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,move}
+Title<span class="hljs-type-annotation">::</span>getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,move}
+Title<span class="hljs-type-annotation">::</span>getRestrictionTypes: applicable restrictions to [[WPD/Infrastructure/architecture/VM roles]] are {edit,move}
+OutputPage<span class="hljs-type-annotation">::</span>sendCacheControl: private caching; Wed, <span class="hljs-number">25</span> Feb <span class="hljs-number">2015</span> <span class="hljs-number">22</span>:<span class="hljs-number">56</span>:<span class="hljs-number">00</span> GMT **
+Request ended normally
+</code></pre>
+<h3>Go to Main Page</h3>
+<h4>Without Fastly</h4>
+<pre><code>Start request GET /wiki/Main_Page
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CONNECTION: keep-alive
+ACCEPT: <span class="hljs-keyword">text</span>/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,<span class="hljs-keyword">image</span>/webp,<span class="hljs-variable">*/</span><span class="hljs-variable">*;</span>q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: https:<span class="hljs-comment">/docs/WPD/Infrastructure/architecture/VM_roles</span>
+ACCEPT-ENCODING: gzip, deflate, sdch
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+COOKIE: _pk_ref<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424138557</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FPublic</span><span class="hljs-variable">%2Fpublic</span>-webplatform<span class="hljs-variable">%2F2015Feb</span><span class="hljs-variable">%2F0003</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=f60e7f3954913aa0<span class="hljs-number">.1420732750</span><span class="hljs-number">.108</span><span class="hljs-number">.1424138557</span><span class="hljs-number">.1424116005</span>.; _pk_ref<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424182609</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FTeam</span><span class="hljs-variable">%2Fw3t</span>-sys<span class="hljs-variable">%2F2015JanFeb</span><span class="hljs-variable">%2F0093</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=ea6c3462853cd2d6<span class="hljs-number">.1421114716</span><span class="hljs-number">.7</span><span class="hljs-number">.1424182620</span><span class="hljs-number">.1422055058</span>.; wptestwiki_session=<span class="hljs-number">37</span>ad13fe80ea727fdbb89a1870dbb29c; wptestwikiUserID=<span class="hljs-number">150</span>; wptestwikiUserName=Renoirb; _pk_ref<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424897026</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22http</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Fwww</span>.baidu.com<span class="hljs-variable">%2Fs</span><span class="hljs-variable">%3Fwd</span><span class="hljs-variable">%3Dhtml</span><span class="hljs-variable">%7Btouch</span>-action<span class="hljs-variable">%3Anone</span><span class="hljs-variable">%3B</span><span class="hljs-variable">%7D</span><span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; wpwikiLoggedOut=<span class="hljs-number">1424900841</span>; wpwikiUserID=<span class="hljs-number">10080</span>; wpwikiUserName=Renoirb; wpwiki_session=dcdcmaq5g1d067e87sr2beslr7; _pk_id<span class="hljs-number">.1</span>.db2a=e07e1a4d4c024be6<span class="hljs-number">.1424134581</span><span class="hljs-number">.36</span><span class="hljs-number">.1424901013</span><span class="hljs-number">.1424887118</span>.; _pk_ses<span class="hljs-number">.1</span>.db2a=*
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+Title::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,<span class="hljs-keyword">move</span>}
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+User: got user <span class="hljs-number">10080</span> from cache
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+User: logged <span class="hljs-keyword">in</span> from session
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+MessageCache::load: Loading en... got from <span class="hljs-keyword">global</span> cache
+OutputPage::checkLastModified: client did not send If-Modified-Since header
+Article::view using parser cache: yes
+Parser cache options found.
+ParserOutput cache found.
+Article::view: showing parser cache contents
+Unstubbing <span class="hljs-variable">$wgLang</span> on call of <span class="hljs-variable">$wgLang</span>::getCode from ParserOutput::replaceEditSectionLinksCallback
+[deprecated] Use of wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line <span class="hljs-number">26</span>]
+[deprecated] Use of wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1498</span>]
+[deprecated] Use of wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1596</span>]
+Unstubbing <span class="hljs-variable">$wgParser</span> on call of <span class="hljs-variable">$wgParser</span>::firstCallInit from MessageCache::getParser
+Parser: using preprocessor: Preprocessor_DOM
+Title::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,<span class="hljs-keyword">move</span>}
+Title::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,<span class="hljs-keyword">move</span>}
+Title::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,<span class="hljs-keyword">move</span>}
+OutputPage::sendCacheControl: private caching; Wed, <span class="hljs-number">25</span> Feb <span class="hljs-number">2015</span> <span class="hljs-number">21</span>:<span class="hljs-number">50</span>:<span class="hljs-number">16</span> GMT <span class="hljs-variable">**</span>
+Request ended normally
+</code></pre>
+<h4>With Fastly</h4>
+<pre><code>Start request GET /wiki/Main_Page
+HTTP HEADERS:
+HOST: docs.webplatform.org
+ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+USER-AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36
+DNT: 1
+REFERER: /docs/WPD/Infrastructure/architecture/VM_roles
+ACCEPT-LANGUAGE: fr-CA,fr;q=0.8,fr-FR;q=0.6,en-US;q=0.4,en;q=0.2
+FASTLY-CLIENT-IP: 173.178.131.111
+X-FORWARDED-HOST: docs.webplatform.org
+X-FORWARDED-SERVER: www.webplatform.org
+FASTLY-SSL: 1
+FASTLY-TEMP-XFF: 173.178.131.111, 173.178.131.111
+COOKIE: wpwikiLoggedOut=1424902515; wpwikiUserID=10080; wpwikiUserName=Renoirb; wpwiki_session=bc1ec4fbf11d31c6907ceb23b70f2d06
+X-VARNISH: 1858527122, 805532583
+ACCEPT-ENCODING: gzip
+FASTLY-CLIENT: 1
+X-FORWARDED-FOR: 173.178.131.111, 173.178.131.111
+FASTLY-FF: cache-jfk1023-JFK, cache-jfk1032-JFK
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database 0 at 10.0.0.29
+Title<span class="hljs-comment">::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,move}</span>
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+User: got user 10080 <span class="hljs-keyword">from</span> cache
+User: loading options <span class="hljs-keyword">for</span> user 10080 <span class="hljs-keyword">from</span> override cache.
+User: logged <span class="hljs-keyword">in</span> <span class="hljs-keyword">from</span> session
+User: loading options <span class="hljs-keyword">for</span> user 10080 <span class="hljs-keyword">from</span> override cache.
+MessageCache<span class="hljs-comment">::load: Loading en... got from global cache</span>
+OutputPage<span class="hljs-comment">::checkLastModified: client did not send If-Modified-Since header</span>
+Article<span class="hljs-comment">::view using parser cache: yes</span>
+Parser cache options found.
+ParserOutput cache found.
+Article<span class="hljs-comment">::view: showing parser cache contents</span>
+Unstubbing $wgLang on call <span class="hljs-keyword">of</span> $wgLang<span class="hljs-comment">::getCode from ParserOutput::replaceEditSectionLinksCallback</span>
+[deprecated] Use <span class="hljs-keyword">of</span> wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki 1.21. [Called <span class="hljs-keyword">from</span> wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line 26]
+[deprecated] Use <span class="hljs-keyword">of</span> wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki 1.21. [Called <span class="hljs-keyword">from</span> wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line 1498]
+[deprecated] Use <span class="hljs-keyword">of</span> wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki 1.21. [Called <span class="hljs-keyword">from</span> wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line 1596]
+Unstubbing $wgParser on call <span class="hljs-keyword">of</span> $wgParser<span class="hljs-comment">::firstCallInit from MessageCache::getParser</span>
+Parser: using preprocessor: Preprocessor_DOM
+Title<span class="hljs-comment">::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,move}</span>
+Title<span class="hljs-comment">::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,move}</span>
+Title<span class="hljs-comment">::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,move}</span>
+OutputPage<span class="hljs-comment">::sendCacheControl: private caching; Wed, 25 Feb 2015 22:56:00 GMT **</span>
+Request ended normally
+</code></pre>
+<h3>Logout</h3>
+<h4>Without Fastly</h4>
+<pre><code>Start request GET /w/index.php?title=Special:UserLogout&amp;returnto=Main+Page
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CONNECTION: keep-alive
+ACCEPT: <span class="hljs-keyword">text</span>/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,<span class="hljs-keyword">image</span>/webp,<span class="hljs-variable">*/</span><span class="hljs-variable">*;</span>q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: https:<span class="hljs-comment">/docs/Main_Page</span>
+ACCEPT-ENCODING: gzip, deflate, sdch
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+COOKIE: _pk_ref<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424138557</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FPublic</span><span class="hljs-variable">%2Fpublic</span>-webplatform<span class="hljs-variable">%2F2015Feb</span><span class="hljs-variable">%2F0003</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=f60e7f3954913aa0<span class="hljs-number">.1420732750</span><span class="hljs-number">.108</span><span class="hljs-number">.1424138557</span><span class="hljs-number">.1424116005</span>.; _pk_ref<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424182609</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FTeam</span><span class="hljs-variable">%2Fw3t</span>-sys<span class="hljs-variable">%2F2015JanFeb</span><span class="hljs-variable">%2F0093</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=ea6c3462853cd2d6<span class="hljs-number">.1421114716</span><span class="hljs-number">.7</span><span class="hljs-number">.1424182620</span><span class="hljs-number">.1422055058</span>.; wptestwiki_session=<span class="hljs-number">37</span>ad13fe80ea727fdbb89a1870dbb29c; wptestwikiUserID=<span class="hljs-number">150</span>; wptestwikiUserName=Renoirb; _pk_ref<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424897026</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22http</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Fwww</span>.baidu.com<span class="hljs-variable">%2Fs</span><span class="hljs-variable">%3Fwd</span><span class="hljs-variable">%3Dhtml</span><span class="hljs-variable">%7Btouch</span>-action<span class="hljs-variable">%3Anone</span><span class="hljs-variable">%3B</span><span class="hljs-variable">%7D</span><span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; wpwikiLoggedOut=<span class="hljs-number">1424900841</span>; wpwikiUserID=<span class="hljs-number">10080</span>; wpwikiUserName=Renoirb; wpwiki_session=dcdcmaq5g1d067e87sr2beslr7; _pk_id<span class="hljs-number">.1</span>.db2a=e07e1a4d4c024be6<span class="hljs-number">.1424134581</span><span class="hljs-number">.36</span><span class="hljs-number">.1424901018</span><span class="hljs-number">.1424887118</span>.; _pk_ses<span class="hljs-number">.1</span>.db2a=*
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+User: got user <span class="hljs-number">10080</span> from cache
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+User: logged <span class="hljs-keyword">in</span> from session
+User: loading options <span class="hljs-keyword">for</span> user <span class="hljs-number">10080</span> from override cache.
+MessageCache::load: Loading en... got from <span class="hljs-keyword">global</span> cache
+[cookie] setcookie: <span class="hljs-string">"wpwikiUserID"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424814620"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"wpwikiToken"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424814620"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"forceHTTPS"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424814620"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"wpwikiLoggedOut"</span>, <span class="hljs-string">"1424901020"</span>, <span class="hljs-string">"1424987420"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"1"</span>
+Unstubbing <span class="hljs-variable">$wgParser</span> on call of <span class="hljs-variable">$wgParser</span>::firstCallInit from MessageCache::getParser
+Parser: using preprocessor: Preprocessor_DOM
+Unstubbing <span class="hljs-variable">$wgLang</span> on call of <span class="hljs-variable">$wgLang</span>::_unstub from ParserOptions::__construct
+IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+OutputPage::sendCacheControl: private caching;  <span class="hljs-variable">**</span>
+Request ended normally
+
+
+Start request GET /wiki/Main_Page
+HTTP HEADERS:
+HOST: docs.webplatform.org
+CONNECTION: keep-alive
+ACCEPT: <span class="hljs-keyword">text</span>/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0.9</span>,<span class="hljs-keyword">image</span>/webp,<span class="hljs-variable">*/</span><span class="hljs-variable">*;</span>q=<span class="hljs-number">0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh; Intel Mac OS X <span class="hljs-number">10</span>_9_5) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">40.0</span><span class="hljs-number">.2214</span><span class="hljs-number">.115</span> Safari/<span class="hljs-number">537.36</span>
+DNT: <span class="hljs-number">1</span>
+REFERER: https:<span class="hljs-comment">/docs/w/index.php?title=Special:UserLogout&amp;returnto=Main+Page</span>
+ACCEPT-ENCODING: gzip, deflate, sdch
+ACCEPT-LANGUAGE: fr-CA,fr;q=<span class="hljs-number">0.8</span>,fr-FR;q=<span class="hljs-number">0.6</span>,en-US;q=<span class="hljs-number">0.4</span>,en;q=<span class="hljs-number">0.2</span>
+COOKIE: _pk_ref<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424138557</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FPublic</span><span class="hljs-variable">%2Fpublic</span>-webplatform<span class="hljs-variable">%2F2015Feb</span><span class="hljs-variable">%2F0003</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.1</span><span class="hljs-number">.6</span>aa5=f60e7f3954913aa0<span class="hljs-number">.1420732750</span><span class="hljs-number">.108</span><span class="hljs-number">.1424138557</span><span class="hljs-number">.1424116005</span>.; _pk_ref<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424182609</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22https</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Flists</span>.w3.org<span class="hljs-variable">%2FArchives</span><span class="hljs-variable">%2FTeam</span><span class="hljs-variable">%2Fw3t</span>-sys<span class="hljs-variable">%2F2015JanFeb</span><span class="hljs-variable">%2F0093</span>.html<span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; _pk_id<span class="hljs-number">.9</span><span class="hljs-number">.6</span>aa5=ea6c3462853cd2d6<span class="hljs-number">.1421114716</span><span class="hljs-number">.7</span><span class="hljs-number">.1424182620</span><span class="hljs-number">.1422055058</span>.; wptestwiki_session=<span class="hljs-number">37</span>ad13fe80ea727fdbb89a1870dbb29c; wptestwikiUserID=<span class="hljs-number">150</span>; wptestwikiUserName=Renoirb; _pk_ref<span class="hljs-number">.1</span>.db2a=<span class="hljs-variable">%5B</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22</span><span class="hljs-variable">%22</span><span class="hljs-variable">%2C1424897026</span><span class="hljs-variable">%2C</span><span class="hljs-variable">%22http</span><span class="hljs-variable">%3A</span><span class="hljs-variable">%2F</span><span class="hljs-variable">%2Fwww</span>.baidu.com<span class="hljs-variable">%2Fs</span><span class="hljs-variable">%3Fwd</span><span class="hljs-variable">%3Dhtml</span><span class="hljs-variable">%7Btouch</span>-action<span class="hljs-variable">%3Anone</span><span class="hljs-variable">%3B</span><span class="hljs-variable">%7D</span><span class="hljs-variable">%22</span><span class="hljs-variable">%5D</span>; wpwikiUserName=Renoirb; wpwiki_session=dcdcmaq5g1d067e87sr2beslr7; wpwikiLoggedOut=<span class="hljs-number">1424901020</span>; _pk_id<span class="hljs-number">.1</span>.db2a=e07e1a4d4c024be6<span class="hljs-number">.1424134581</span><span class="hljs-number">.36</span><span class="hljs-number">.1424901022</span><span class="hljs-number">.1424887118</span>.; _pk_ses<span class="hljs-number">.1</span>.db2a=*
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+Title::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,<span class="hljs-keyword">move</span>}
+[ContentHandler] Created handler <span class="hljs-keyword">for</span> wikitext: WikitextContentHandler
+MessageCache::load: Loading en... got from <span class="hljs-keyword">global</span> cache
+OutputPage::checkLastModified: client did not send If-Modified-Since header
+Article::view using parser cache: yes
+Parser cache options found.
+ParserOutput cache found.
+Article::view: showing parser cache contents
+[deprecated] Use of wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line <span class="hljs-number">26</span>]
+[deprecated] Use of wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1498</span>]
+[deprecated] Use of wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1596</span>]
+Unstubbing <span class="hljs-variable">$wgLang</span> on call of <span class="hljs-variable">$wgLang</span>::getCode from MessageCache::getMessageFromFallbackChain
+Unstubbing <span class="hljs-variable">$wgParser</span> on call of <span class="hljs-variable">$wgParser</span>::firstCallInit from MessageCache::getParser
+Parser: using preprocessor: Preprocessor_DOM
+IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+Title::getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,<span class="hljs-keyword">move</span>}
+OutputPage::sendCacheControl: private caching; Wed, <span class="hljs-number">25</span> Feb <span class="hljs-number">2015</span> <span class="hljs-number">21</span>:<span class="hljs-number">50</span>:<span class="hljs-number">20</span> GMT <span class="hljs-variable">**</span>
+Request ended normally
+</code></pre>
+<h4>With Fastly</h4>
+<pre><code>Start request GET /w/index.php?title=Special:UserLogout&amp;returnto=Main+Page
+HTTP HEADERS:
+<span class="hljs-label">HOST:</span> docs.webplatform<span class="hljs-preprocessor">.org</span>
+<span class="hljs-label">ACCEPT:</span> text/html,application/xhtml+xml,application/xml<span class="hljs-comment">;q=0.9,image/webp,*/*;q=0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh<span class="hljs-comment">; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36</span>
+<span class="hljs-label">DNT:</span> <span class="hljs-number">1</span>
+<span class="hljs-label">REFERER:</span> https://docs.webplatform<span class="hljs-preprocessor">.org</span>/wiki/Main_Page
+ACCEPT-LANGUAGE: fr-CA,fr<span class="hljs-comment">;q=0.8,fr-FR;q=0.6,en-US;q=0.4,en;q=0.2</span>
+<span class="hljs-label">COOKIE:</span> wpwikiLoggedOut=<span class="hljs-number">1424902515</span><span class="hljs-comment">; wpwikiUserID=10080; wpwikiUserName=Renoirb; wpwiki_session=bc1ec4fbf11d31c6907ceb23b70f2d06; _pk_id.1.db2a=29c40a6dea503cbe.1424901216.1.1424905230.1424901216.; _pk_ses.1.db2a=*</span>
+FASTLY-CLIENT-IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+<span class="hljs-built_in">X</span>-FORWARDED-HOST: docs.webplatform<span class="hljs-preprocessor">.org</span>
+<span class="hljs-built_in">X</span>-FORWARDED-SERVER: www.webplatform<span class="hljs-preprocessor">.org</span>
+FASTLY-SSL: <span class="hljs-number">1</span>
+FASTLY-TEMP-XFF: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+<span class="hljs-built_in">X</span>-VARNISH: <span class="hljs-number">1409429639</span>, <span class="hljs-number">1608044916</span>
+ACCEPT-ENCODING: gzip
+FASTLY-CLIENT: <span class="hljs-number">1</span>
+<span class="hljs-built_in">X</span>-FORWARDED-FOR: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+FASTLY-FF: cache-jfk1026-JFK, cache-jfk1025-JFK
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+<span class="hljs-label">User:</span> got user <span class="hljs-number">10080</span> from cache
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+<span class="hljs-label">User:</span> loading options for user <span class="hljs-number">10080</span> from override cache.
+<span class="hljs-label">User:</span> logged <span class="hljs-keyword">in</span> from session
+<span class="hljs-label">User:</span> loading options for user <span class="hljs-number">10080</span> from override cache.
+<span class="hljs-label">MessageCache:</span>:load: Loading en... got from global cache
+[cookie] setcookie: <span class="hljs-string">"wpwikiUserID"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424818845"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"wpwikiToken"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424818845"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"forceHTTPS"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1424818845"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>
+[cookie] setcookie: <span class="hljs-string">"wpwikiLoggedOut"</span>, <span class="hljs-string">"1424905245"</span>, <span class="hljs-string">"1424991645"</span>, <span class="hljs-string">"/"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"1"</span>
+Unstubbing $wgParser on <span class="hljs-keyword">call</span> of $wgParser::firstCallInit from MessageCache::getParser
+<span class="hljs-label">Parser:</span> using preprocessor: Preprocessor_DOM
+Unstubbing $wgLang on <span class="hljs-keyword">call</span> of $wgLang::_unstub from ParserOptions::__construct
+<span class="hljs-label">IP:</span> <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+<span class="hljs-label">OutputPage:</span>:sendCacheControl: private caching<span class="hljs-comment">;  **</span>
+Request ended normally
+
+
+Start request GET /wiki/Main_Page
+HTTP HEADERS:
+<span class="hljs-label">HOST:</span> docs.webplatform<span class="hljs-preprocessor">.org</span>
+<span class="hljs-label">ACCEPT:</span> text/html,application/xhtml+xml,application/xml<span class="hljs-comment">;q=0.9,image/webp,*/*;q=0.8</span>
+USER-AGENT: Mozilla/<span class="hljs-number">5.0</span> (Macintosh<span class="hljs-comment">; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36</span>
+<span class="hljs-label">DNT:</span> <span class="hljs-number">1</span>
+<span class="hljs-label">REFERER:</span> https://docs.webplatform<span class="hljs-preprocessor">.org</span>/w/index.php?title=Special:UserLogout&amp;returnto=Main+Page
+ACCEPT-LANGUAGE: fr-CA,fr<span class="hljs-comment">;q=0.8,fr-FR;q=0.6,en-US;q=0.4,en;q=0.2</span>
+FASTLY-CLIENT-IP: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+<span class="hljs-built_in">X</span>-FORWARDED-HOST: docs.webplatform<span class="hljs-preprocessor">.org</span>
+<span class="hljs-built_in">X</span>-FORWARDED-SERVER: www.webplatform<span class="hljs-preprocessor">.org</span>
+FASTLY-SSL: <span class="hljs-number">1</span>
+FASTLY-TEMP-XFF: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+<span class="hljs-label">COOKIE:</span> wpwikiUserName=Renoirb<span class="hljs-comment">; wpwiki_session=bc1ec4fbf11d31c6907ceb23b70f2d06; wpwikiLoggedOut=1424905245</span>
+<span class="hljs-built_in">X</span>-VARNISH: <span class="hljs-number">2542060989</span>, <span class="hljs-number">805857636</span>
+ACCEPT-ENCODING: gzip
+FASTLY-CLIENT: <span class="hljs-number">1</span>
+<span class="hljs-built_in">X</span>-FORWARDED-FOR: <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>, <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+FASTLY-FF: cache-jfk1020-JFK, cache-jfk1032-JFK
+[caches] main: MemcachedPeclBagOStuff, message: MemcachedPeclBagOStuff, parser: MemcachedPeclBagOStuff
+[caches] LocalisationCache: using store LCStoreDB
+Fully initialised
+Connected to database <span class="hljs-number">0</span> at <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.29</span>
+<span class="hljs-label">Title:</span>:getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,move}
+[ContentHandler] Created handler for wikitext: WikitextContentHandler
+<span class="hljs-label">IP:</span> <span class="hljs-number">173.178</span><span class="hljs-number">.131</span><span class="hljs-number">.111</span>
+<span class="hljs-label">MessageCache:</span>:load: Loading en... got from global cache
+<span class="hljs-label">OutputPage:</span>:checkLastModified: client did not send If-Modified-Since header
+<span class="hljs-label">Article:</span>:view using parser cache: yes
+Parser cache options found.
+ParserOutput cache found.
+<span class="hljs-label">Article:</span>:view: showing parser cache contents
+[deprecated] Use of wfMsg was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfEditSectionLinkTransform <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/extensions/WebPlatformDocs/extensions/EditSectionIcon.php at line <span class="hljs-number">26</span>]
+[deprecated] Use of wfMsgReal was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsg <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1498</span>]
+[deprecated] Use of wfMsgGetKey was deprecated <span class="hljs-keyword">in</span> MediaWiki <span class="hljs-number">1.21</span>. [Called from wfMsgReal <span class="hljs-keyword">in</span> /srv/webplatform/wiki/wpwiki/mediawiki/includes/GlobalFunctions.php at line <span class="hljs-number">1596</span>]
+Unstubbing $wgLang on <span class="hljs-keyword">call</span> of $wgLang::getCode from MessageCache::getMessageFromFallbackChain
+Unstubbing $wgParser on <span class="hljs-keyword">call</span> of $wgParser::firstCallInit from MessageCache::getParser
+<span class="hljs-label">Parser:</span> using preprocessor: Preprocessor_DOM
+<span class="hljs-label">Title:</span>:getRestrictionTypes: applicable restrictions to [[Main Page]] are {edit,move}
+<span class="hljs-label">OutputPage:</span>:sendCacheControl: private caching<span class="hljs-comment">; Wed, 25 Feb 2015 23:00:45 GMT **</span>
+Request ended normally
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

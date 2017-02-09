@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>innerHTML · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/HTMLElement/">HTMLElement</a></li><li><a href="/dom/HTMLElement/innerHTML/">innerHTML</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>innerHTML</h1>
+<p>Property of <a href="/docs/dom/HTMLElement">dom/HTMLElement</a><a href="/docs/dom/HTMLElement">dom/HTMLElement</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> result = element.innerHTML;
+element.innerHTML = value;
+</code></pre>
+<h2>Examples</h2>
+<p>This example uses the <strong>innerHTML</strong> property to change the text of a paragraph when an <a href="/docs/dom/MouseEvent/mouseover"><strong>onmouseover</strong></a> event occurs. The affected text and any tags within it are changed by the <strong>onmouseover</strong> and <a href="/docs/dom/MouseEvent/mouseout"><strong>onmouseout</strong></a> events.</p>
+<pre><code class="html">...
+<span class="hljs-tag">&lt;<span class="hljs-title">P</span> <span class="hljs-attribute">onmouseover</span>=<span class="hljs-value">"this.innerHTML='&lt;B&gt;Mouse out to change back.&lt;/B&gt;'"</span>
+    <span class="hljs-attribute">onmouseout</span>=<span class="hljs-value">"this.innerHTML='&lt;I&gt;Mouse over again to change.&lt;/I&gt;'"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">I</span>&gt;</span>Mouse over this text to change it.<span class="hljs-tag">&lt;/<span class="hljs-title">I</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+...
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/innerHTML.htm">View live example</a></p>
+<p>This example uses the <strong>innerHTML</strong> property to insert script into the page.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">HTML</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span>&gt;</span><span class="actionscript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">insertScript</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">var</span> sHTML=<span class="hljs-string">"&lt;input type=button onclick="</span> + <span class="hljs-string">"go2()"</span> + <span class="hljs-string">" value='Click Me'&gt;&lt;BR&gt;"</span>;
+    <span class="hljs-keyword">var</span> sScript=<span class="hljs-string">"&lt;SCRIPT DEFER&gt;"</span>;
+    sScript = sScript + <span class="hljs-string">"function go2(){ alert('Hello from inserted script.') }"</span>;
+    sScript = sScript + <span class="hljs-string">"&lt;/SCRIPT"</span> + <span class="hljs-string">"&gt;"</span>;
+    ScriptDiv.innerHTML = sHTML + sScript;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"insertScript();"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">DIV</span> <span class="hljs-attribute">ID</span>=<span class="hljs-value">"ScriptDiv"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HTML</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/insertScript_2.htm">View live example</a></p>
+<p>The following example demonstrates how to convert the HTML source to text using a temporary <strong>div</strong> element and <a href="/docs/dom/Document/createTextNode"><strong>createTextNode</strong></a>. Once the HTML is sanitized, it can be safely inserted into the document using <strong>innerHTML</strong>.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"displaySource()"</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sanitizeHTML</span>(<span class="hljs-params">s</span>) </span>{
+    <span class="hljs-keyword">var</span> d = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>);
+    d.appendChild(<span class="hljs-built_in">document</span>.createTextNode(s));
+    <span class="hljs-keyword">return</span> d.innerHTML;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">displaySource</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> h = sanitizeHTML(<span class="hljs-built_in">document</span>.documentElement.outerHTML);
+    <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'asHTML'</span>).innerHTML = <span class="hljs-string">"&lt;pre&gt;"</span> + h + <span class="hljs-string">"&lt;/pre&gt;"</span>;
+    <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'asText'</span>).innerText = h;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>As HTML<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"asHTML"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>As Text<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"asText"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/innerHTMLsafe.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>innerHTML</strong> property is valid for both block and inline elements. By definition, elements that do not have both an opening and closing tag cannot have an <strong>innerHTML</strong> property. The <strong>innerHTML</strong> property takes a string that specifies a valid combination of text and elements. When the <strong>innerHTML</strong> property is set, the given string completely replaces the existing content of the object. If the string contains HTML tags, the string is parsed and formatted as it is placed into the document. This property is accessible at run time as the document is being parsed; however, removing elements at run time, before the document is fully loaded, could prevent other areas of the document from rendering. When using <strong>innerHTML</strong> to insert script, you must include the <a href="/docs/html/attributes/defer"><strong>DEFER</strong></a> attribute in the <strong>script</strong> element. The <strong>innerHTML</strong> property is read-only on the <strong>col</strong>, <strong>colGroup</strong>, <strong>frameSet</strong>, <strong>html</strong>, <strong>head</strong>, <strong>style</strong>, <a href="/html/elements/table"><strong>table</strong></a>, <strong>tBody</strong>, <strong>tFoot</strong>, <strong>tHead</strong>, <strong>title</strong>, and <strong>tr</strong> objects. You can change the value of the <strong>title</strong> element using the <a href="/docs/dom/Document"><strong>Document</strong></a>.title property. To change the contents of the <a href="/html/elements/table"><strong>table</strong></a>, <strong>tFoot</strong>, <strong>tHead</strong>, and <strong>tr</strong> elements, use the table object model described in Building Tables Dynamically. However, to change the content of a particular cell, you can use <strong>innerHTML</strong>.</p>
+<p>**Security Warning:  ** Improper handling of the <strong>innerHTML</strong> property can enable script-injection attacks. When accepting text from an untrusted source (such as the query string of a URL), use <a href="/docs/dom/Document/createTextNode"><strong>createTextNode</strong></a> to convert the HTML to text, and append the element to the document using <a href="/docs/dom/Node/appendChild"><strong>appendChild</strong></a>. Refer to the Examples section below for more information. To maintain compatibility with earlier versions of Windows Internet Explorer, this property applies to the <strong>textArea</strong> object. However, the property works only with strings that do not contain tags. With a string that contains a tag, this property returns an error. It is better to use the <a href="/dom/HTMLElement/innerText"><strong>innerText</strong></a> property with this object.</p>
+<h3>Syntax</h3>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

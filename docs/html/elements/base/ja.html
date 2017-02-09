@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>base · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="&amp;lt;base&amp;gt;は文書の基準となるURLを明示し、文書内の相対URLを解決するために使用します。." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/base/">base</a></li><li><a href="/html/elements/base/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>base</h1>
+<h2>Summary</h2>
+<p>&lt;base&gt;は文書の基準となるURLを明示し、文書内の相対URLを解決するために使用します。.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLBaseElement">HTMLBaseElement</a>
+</dd>
+</dl>
+<table class="wikitable">
+<tr>
+<th style="vertical-align: top" id="permitted-contents">
+Permitted contents
+</th>
+<td style="vertical-align: top; padding-top: 10px">
+*なし*
+</td>
+</tr>
+<tr>
+<th id="permitted-parents">
+Permitted parents
+</th>
+<td>
+[`<head>`](/html/elements/head)タグ内で1度のみ許可されています。
+</td>
+</tr>
+</table>
+アクセスする前に相対URL（<var>some/example.html</var>）を絶対URL(<var><http://example.org/some/example.html></var>) に変換しなければいけません。通常、相対URLを解決するためのベースURLとしてそのドキュメントのURL（JavaScriptで使用する[`location`](/w/index.php?title=dom/Location/ja&action=edit&redlink=1)オブジェクト）が使用されます。\<base\>要素の[`href`](/w/index.php?title=html/attributes/href/ja&action=edit&redlink=1)属性を記述することでデフォルトのベースURLを上書く事ができます。
+<p>リンク(<a href="/docs/html/elements/a/ja"><code>&lt;a&gt;</code></a>)やフォーム(<a href="/w/index.php?title=html/elements/form/ja&amp;action=edit&amp;redlink=1"><code>&lt;form&gt;</code></a>)で<a href="/w/index.php?title=html/attributes/target/ja&amp;action=edit&amp;redlink=1"><code>target</code></a>を開きますが、デフォルトのtargetは<var>_self</var>で、現在ドキュメントを表示しているのと同じウィンドウでリンクを開くことになります。<code>&lt;base target=&quot;…&quot;&gt;</code>と書くことでドキュメント全体のtargetのデフォルトを上書くことができます。</p>
+<p>ドキュメントが<a href="/w/index.php?title=html/elements/iframe/ja&amp;action=edit&amp;redlink=1"><code>iframe</code></a>を使って構成されている場合、<code>&lt;base target=&quot;_parent&quot;&gt;</code>と設定することで親フレームでリンクを開くことができます。フレームを使っていないドキュメントで<var>_parent</var>や<var>_top</var>を使用する場合、<var>_self</var>と同じ動きになります。</p>
+<h2>HTML属性</h2>
+<ul>
+<li><p><code>href</code>= URI（前後のスペースは取り除かれます。）<br>
+href属性を指定した&lt;base&gt;要素は、URLを使う属性を持つ他の要素よりも前に記述しなければいけません。（&lt;html&gt;要素以外。manifest属性はbase要素の影響を受けないため。）<a href="#Example_A">[Example A]</a></p></li>
+<li><p><code>target</code> = ブラウジング・コンテキストの名前、もしくは_blank, _self, _parent, _topのいずれか<br>
+ハイパーリンクやフォームがナビゲーションを表している場合、base要素のtarget属性の値がデフォルト値になります。</p></li>
+</ul>
+<h2>Examples</h2>
+<p>この例は関連ドキュメント<var>some-file.html</var>へのリンクを<var><a href="http://example.org/deep/some-file.html">http://example.org/deep/some-file.html</a></var>に書き換えています。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>base要素の例<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.example.org/deep/"</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"some-file.html"</span>&gt;</span>関連リンク<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- 上記のリンクを解決すると下記のようになります --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.example.org/deep/some-file.html"</span>&gt;</span>関連リンク<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>こちらの例では<strong>base</strong>要素より下に書かれている要素のみが影響を受けています。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>base要素の例<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"my-style.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://example.com"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"my-other-style.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span>&gt;</span>
+  <span class="hljs-comment">&lt;!--
+    [current domain and directory]/my-style.css
+    http://example.com/my-other-style.css
+    のように解釈されます。
+  --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+</code></pre>
+<p>こちらの例では複数の<strong>base</strong>要素を記述していますが、無視されています。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>base要素の例<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://example.com"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">"_blank"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://webplatform.org"</span> <span class="hljs-attribute">target</span>=<span class="hljs-value">"_top"</span>&gt;</span>
+  <span class="hljs-comment">&lt;!--
+    base要素の定義は1つにまとめられます：
+    &lt;base href="http://example.com/" target="_blank"&gt;
+    例外として、Internet Explorerでは最初の要素のみが有効になります：
+    &lt;base href="http://example.com/" target="_self"&gt;
+  --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Firefox 4とInternet Explorer 10は<code>&lt;base&gt;</code>要素に相対URLを指定することができます。これにより相対URLで相対URLを解釈することができます<br>
+（訳注:その他のブラウザも対応しているようです）。</li>
+<li><code>&lt;base&gt;</code>はそれよりも下で記述した要素に対してのみ有効です。</li>
+<li>複数の<code>&lt;base&gt;</code>を宣言するのは不正で、それぞれ最初の<a href="/w/index.php?title=html/attributes/href/ja&amp;action=edit&amp;redlink=1"><code>href</code></a>と<a href="/w/index.php?title=html/attributes/target/ja&amp;action=edit&amp;redlink=1"><code>target</code></a>のみが使用され、残りは破棄されます。Internet Explorer一番最初に書かれた<code>&lt;base&gt;</code>しか読んでくれません。</li>
+</ul>
+<p><strong>注</strong> インラインSVGで使われる<code>fill=&quot;url(#element-id)&quot;</code>のような参照は<code>&lt;base&gt;</code>を使ったドキュメントでは問題になります。<code>url(#element-id)</code>で正しいURLが取得されますが、CSS セレクターでは正しく認識されません。 最新のFirefox とChrome ではその影響を非常に受けやすくなっています。</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/document-metadata.html#the-base-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/document-metadata.html#the-base-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/links.html#edef-BASE">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/HTML/Element/base">Mozilla Developer Network</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ie/ms535191%28v=vs.85%29.aspx">Microsoft Developer Network</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

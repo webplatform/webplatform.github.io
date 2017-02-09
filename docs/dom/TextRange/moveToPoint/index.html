@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>moveToPoint · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="Non-Standard" />
+    <meta name="description" content="Moves the start and end positions of the text range to the given point." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/TextRange/">TextRange</a></li><li><a href="/dom/TextRange/moveToPoint/">moveToPoint</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>moveToPoint</h1>
+<h2>Summary</h2>
+<p>Moves the start and end positions of the text range to the given point.</p>
+<p>Method of <a href="/docs/dom/TextRange">dom/TextRange</a><a href="/docs/dom/TextRange">dom/TextRange</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> result = textRange.moveToPoint(<span class="hljs-comment">/* see parameter list */</span>);
+</code></pre>
+<h2>Parameters</h2>
+<h3>x</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>Number
+</dd>
+</dl>
+<p><strong>Integer</strong> that specifies the horizontal offset relative to the upper-left corner of the window, in pixels.</p>
+<h3>y</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>Number
+</dd>
+</dl>
+<p><strong>Integer</strong> that specifies the vertical offset relative to the upper-left corner of the window, in pixels.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type NumberNumber</p>
+<p>Type: <strong>HRESULT</strong></p>
+<p>If this method succeeds, it returns <strong>S_OK</strong>. Otherwise, it returns an <strong>HRESULT</strong> error code.</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>moveToPoint</strong> method to move the text range to the point where the user clicked the mouse, expands the range, and selects the text within the new range.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span> <span class="hljs-attribute">FOR</span>=<span class="hljs-value">document</span> <span class="hljs-attribute">EVENT</span>=<span class="hljs-value">onclick</span> <span class="hljs-attribute">LANGUAGE</span>=<span class="hljs-value">"JScript"</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">var</span> rng = <span class="hljs-built_in">document</span>.body.createTextRange();
+    rng.moveToPoint(<span class="hljs-built_in">window</span>.event.x, <span class="hljs-built_in">window</span>.event.y);
+    rng.expand(<span class="hljs-string">"word"</span>);
+    rng.select();
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+</code></pre>
+<p>The following example moves the caret in harmony with the mouse as it moves over a contenteditable div element.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>moveToPoint example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">contenteditable</span>=<span class="hljs-value">"true"</span> <span class="hljs-attribute">onmousemove</span>=<span class="hljs-value">"followMouse()"</span>&gt;</span>
+    Move the mouse over this text, the caret will follow it.
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">followMouse</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.body.createTextRange) {
+        <span class="hljs-keyword">var</span> range = <span class="hljs-built_in">document</span>.body.createTextRange();
+
+        range.moveToPoint(event.clientX, event.clientY);
+        range.select();
+      }
+    }
+  &amp;lt/script&gt;
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</span></span></code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The coordinates of the point must be in pixels and be relative to the upper-left corner of the window. The resulting text range is empty, but you can expand and move the range using methods such as <strong>expand</strong> and <a href="/docs/dom/TextRange/moveEnd"><strong>moveEnd</strong></a>. This feature might not be available on non-Microsoft Win32 platforms.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/ms536632(v=vs.85).aspx">moveToPoint Method</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

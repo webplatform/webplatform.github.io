@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>adding and deleting elements · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/tutorials/">tutorials</a></li><li><a href="/dom/tutorials/adding_and deleting elements/">adding and deleting elements</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>adding and deleting elements</h1>
+<h2>Adding and Deleting Elements</h2>
+<p>So far we have seen how to manipulate html tags that have already been declared in the document, but now let’s create some. (and then get rid of them).</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method Name</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">createElement()</td><td style="text-align:left">Used to create an element</td></tr>
+<tr><td style="text-align:left">removeChild()</td><td style="text-align:left">Remove the selected element or child node.</td></tr>
+<tr><td style="text-align:left">appendChild()</td><td style="text-align:left">Add an element or child node.</td></tr>
+<tr><td style="text-align:left">replaceChild()</td><td style="text-align:left">Replace an element or child node</td></tr>
+</tbody>
+</table>
+<ul>
+<li><strong>createElement()</strong></li>
+</ul>
+<p>Syntax for this method is as follows:</p>
+<pre><code class="js">Variable = element.createElement(<span class="hljs-string">"element name"</span>);
+</code></pre>
+<pre><code class="js"><span class="hljs-keyword">var</span> newimg = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"img"</span>);
+</code></pre>
+<p>This will just create an image element. To display an image we must first set its attributes.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> newimg = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"img"</span>);
+newimg.setAttribute(<span class="hljs-string">"src"</span>, <span class="hljs-string">"abc.jpg"</span>);
+</code></pre>
+<ul>
+<li><strong>removeChild()</strong></li>
+</ul>
+<p>Syntax for this method is as follows:</p>
+<pre><code class="js">element.node.removeChild(node);
+</code></pre>
+<pre><code class="js"><span class="hljs-built_in">document</span>.getElementsByTagName.removeChild(newimg);
+</code></pre>
+<ul>
+<li><strong>appendChild()</strong></li>
+</ul>
+<p>Syntax for this method is as follows:</p>
+<pre><code class="js">element.node.appendChild(node);
+</code></pre>
+<pre><code class="js"><span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"p"</span>)[<span class="hljs-number">0</span>].appendChild(newimg);
+</code></pre>
+<ul>
+<li><strong>replaceChild()</strong></li>
+</ul>
+<p>The Syntax for this method is as follows:</p>
+<pre><code class="js">node.replaceChild(newnode,oldnode);
+</code></pre>
+<p>All right, lets look at these methods in action.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create</span>(<span class="hljs-params"></span>)</span>{
+
+<span class="hljs-keyword">var</span> createstuff = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"p"</span>);
+createstuff.innerHTML=<span class="hljs-string">"Stuff"</span>;
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"container"</span>).appendChild(createstuff);
+
+
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">destroy</span>(<span class="hljs-params"></span>)</span>{
+
+<span class="hljs-keyword">var</span> olddata=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"container"</span>).lastChild;
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"container"</span>).removeChild(olddata);
+
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Javascript2_lesson11<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Psst over here"</span> <span class="hljs-attribute">onmouseover</span>=<span class="hljs-value">"create();"</span> <span class="hljs-attribute">onmouseout</span>=<span class="hljs-value">"destroy();"</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"container"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Ask yourself a few questions:</p>
+<ul>
+<li>What is happening in the create() function?</li>
+<li>What is happening in the destroy() function?</li>
+<li>In the destroy() function, what happens if you replace :</li>
+</ul>
+<pre><code class="js"><span class="hljs-keyword">var</span> olddata=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"container"</span>).lastChild;
+</code></pre>
+<p>with</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> olddata=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"container"</span>).firstChild;
+</code></pre>
+<p>Now let’s look at an example for replaceChild():</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>replaceChild<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">replaceit</span>(<span class="hljs-params"></span>)</span>{
+
+<span class="hljs-keyword">var</span> theoriginal = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'ori'</span>);
+
+<span class="hljs-keyword">var</span> thereplacement = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'p'</span>);
+
+thereplacement.appendChild(<span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">'Replacement Text'</span>));
+
+theoriginal.replaceChild(thereplacement, theoriginal.lastChild);
+
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+
+
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"ori"</span>&gt;</span>Original Text<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"click"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"replaceit()"</span>&gt;</span>
+
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

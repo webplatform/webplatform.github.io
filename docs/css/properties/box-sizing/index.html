@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>box-sizing · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="The box-sizing property alters the CSS box model used to calculate widths and heights of elements, so that they can be equal to the width and height of the content-, padding- or border-box." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/box-sizing/">box-sizing</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>box-sizing</h1>
+<h2>Summary</h2>
+<p>The box-sizing property alters the CSS box model used to calculate widths and heights of elements, so that they can be equal to the width and height of the content-, padding- or border-box.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>content-box</code>
+</dd>
+<dt>Applies to</dt>
+<dd>all elements that accept width or height
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>specified value
+</dd>
+<dt>Animatable</dt>
+<dd>Yes
+</dd>
+</dl>
+<p><a href="/docs/css/concepts/cssom">CSS Object Model Property</a><br>
+:</p>
+<h2>Syntax</h2>
+<ul>
+<li><code>box-sizing: border-box</code></li>
+<li><code>box-sizing: content-box</code></li>
+<li><code>box-sizing: padding-box</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>content-box</dt>
+<dd>The <code>width</code> and <code>height</code> properties (also including <code>min-width</code>, <code>max-width</code>, <code>min-height</code> and <code>max-height</code> properties) are calculated as the width/height of the content, but not the border, margin, or padding. This is the traditional behaviour of width and height as specified by CSS2.1.
+</dd>
+<dt>padding-box</dt>
+<dd>The <code>width</code> and <code>height</code> (also including <code>min-width</code>, <code>max-width</code>, <code>min-height</code> and <code>max-height</code> properties) of an element are calculated as the width/height of the content plus the <code>padding</code>. The dimensions of the content alone are thus calculated by subtracting the padding widths from each side of the element. Dimension properties are set to 0 if the calculated value is less than 0.
+</dd>
+<dt>border-box</dt>
+<dd>The <code>width</code> and <code>height</code> (also including <code>min-width</code>, <code>max-width</code>, <code>min-height</code> and <code>max-height</code> properties) of an element are calculated as the width/height of the content plus the <code>padding</code> and <code>border</code>.
+</dd>
+</dl>
+<p>The dimensions of the content alone are thus calculated by subtracting the padding and border widths from each side of the element. Dimension properties are set to 0 if the calculated value is less than 0.</p>
+<h2>Examples</h2>
+<p>The following examples assume markup that looks like this.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"parent"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"child"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>This CSS makes it so that the child <code>&lt;div&gt;</code> will always An element with padding that occupies half the width of its parent. This works because it has <code>box-sizing: border-box</code> set on it, so the total width will always be content plus padding plus border. As the border and padding get thicker, the element doesn’t get larger. Instead, the content gets smaller to make way for the change.</p>
+<pre><code class="css"><span class="hljs-comment">/* Support Firefox, WebKit, Opera and IE8+ */</span>
+
+<span class="hljs-class">.parent</span> <span class="hljs-rules">{
+   <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">200px</span></span></span>;
+   <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> red</span></span>;
+ }</span>
+
+ <span class="hljs-class">.child</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">30px</span> solid <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.5</span>)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">3rem</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> blue</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value"> border-box</span></span>;
+ }</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/5496267">View live example</a></p>
+<p>Input elements with type <code>search</code> are rendered with <code>border-box</code> in Safari 5 and Chrome. You can normalize this behavior across all browsers using the following code.</p>
+<pre><code class="css"><span class="hljs-tag">input</span><span class="hljs-attr_selector">[type="search"]</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value"> content-box</span></span>;
+}</span>
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-ui/#box-sizing">CSS Level 3 - Basic User Interface Module</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Box Model</h4>
+<ul>
+<li><p><a href="/docs/css/properties/border">border</a></p></li>
+<li><p><a href="/docs/css/properties/border-corner-shape">border-corner-shape</a></p></li>
+<li><p><a href="/docs/css/properties/bottom">bottom</a></p></li>
+<li><p><a href="/docs/css/properties/box-shadow">box-shadow</a></p></li>
+<li><p><strong>box-sizing</strong></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/clear">clear</a></p></li>
+<li><p><a href="/docs/css/properties/float">float</a></p></li>
+<li><p><a href="/docs/css/properties/height">height</a></p></li>
+<li><p><a href="/docs/css/properties/left">left</a></p></li>
+<li><p><a href="/docs/css/properties/line-height">line-height</a></p></li>
+<li><p><a href="/docs/css/properties/margin">margin</a></p></li>
+<li><p><a href="/docs/css/properties/margin-bottom">margin-bottom</a></p></li>
+<li><p><a href="/docs/css/properties/margin-left">margin-left</a></p></li>
+<li><p><a href="/docs/css/properties/margin-right">margin-right</a></p></li>
+<li><p><a href="/docs/css/properties/margin-top">margin-top</a></p></li>
+<li><p><a href="/docs/css/properties/max-height">max-height</a></p></li>
+<li><p><a href="/docs/css/properties/max-width">max-width</a></p></li>
+<li><p><a href="/docs/css/properties/min-height">min-height</a></p></li>
+<li><p><a href="/docs/css/properties/min-width">min-width</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/tutorials/box_model">WebPlatform.org tutorial on Box Model</a></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li>A <a href="http://css-tricks.com/box-sizing/">detailed article on box-sizing</a> by Chris Coyier.</li>
+<li>Paul Irish wrote about <a href="http://paulirish.com/2012/box-sizing-border-box-ftw/">applying <code>box-sizing: border-box;</code> on all elements</a>.</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/CSS/box-sizing">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

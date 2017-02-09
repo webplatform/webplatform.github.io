@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>linear-gradient · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="Defines a linear gradient as a CSS image." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/functions/">functions</a></li><li><a href="/docs/css/functions/linear-gradient/">linear-gradient</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>linear-gradient</h1>
+<h2>Summary</h2>
+<p>Defines a linear gradient as a CSS image.</p>
+<h2>Examples</h2>
+<pre><code class="css">background: #1e5799;
+background: -moz-linear-gradient(top, #1e5799 0%, #7db9e8 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(100%,#7db9e8));
+background: -webkit-linear-gradient(top, #1e5799 0%,#7db9e8 100%);
+background: -o-linear-gradient(top, #1e5799 0%,#7db9e8 100%);
+background: -ms-linear-gradient(top, #1e5799 0%,#7db9e8 100%);
+background: linear-gradient(to bottom, #1e5799 0%,#7db9e8 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 );
+</code></pre>
+<p><a href="http://jsfiddle.net/denbuzze/J2CLV/">View live example</a></p>
+<h3>Syntax</h3>
+<p><strong>linear-gradient</strong> <code>([ [ &lt;angle&gt; | to &lt;side-or-corner&gt; ] , ] ? &lt;color-stop&gt; [ , &lt;color-stop&gt; ] +)</code></p>
+<h3>Parameters</h3>
+<dl>
+<dt><em>angle</em></dt>
+<dd>Optional. The angle the gradient line should assume, expressed as a number followed by an angle units designator(for instance, “deg”).&quot;0deg&quot; points upward and positive angles increase in a clockwise direction. Therefore, “90deg” points toward the right, “180deg” points downward, and so on.If no angle is provided, the gradient line starts in the corner or side opposite the corner or side specified by <em>&lt;side-or-corner&gt;</em>.<br>
+<em>side-or-corner</em>
+</dd>
+<dd>Optional value that specifies an ending corner or side for the gradient. This value begins with &quot;to&quot;, which is followed by one or two of the following keywords. Including one keyword specifies an ending side, and two keywords specify an ending corner.
+<ul>
+<li>The following values can be used as the first value only:
+<ul>
+<li><strong>left</strong> Indicates gradient ends on the left.</li>
+<li><strong>right</strong> Indicates gradient ends on the right.</li>
+</ul></li>
+<li>The following values can be used as the second value only:
+<ul>
+<li><strong>top</strong> Indicates gradient ends on the top.</li>
+<li><strong>bottom</strong> Indicates gradient ends on the bottom.</li>
+</ul></li>
+<li>Not including any keywords or angle is equivalent to &quot;to bottom&quot;.</li>
+</ul>
+</dd>
+<dt><em>color-stop</em></dt>
+<dd>At least two color stops are required. Each color stop has one or two components—a color component and an optional position component. The first component defines the color component of a stop point for the gradient. Each stop point has its own designated color, and the area between each point is filled with a continuous color transition from one to the other. This value can be any supported color value.Each stop point can have an optional percentage or supported length value that indicates where along the gradient line to place the color stop. “0%” (or &quot;0px&quot;, &quot;0em&quot;, and so on) indicates the starting point (or side); “100%” indicates the ending point (or side).
+</dd>
+</dl>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-images/">CSS Image Values and Replaced Content Module Level 3</a></dt>
+<dd>Candidate Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Gradients</h4>
+<ul>
+<li><p><strong>linear-gradient</strong></p></li>
+<li><p><a href="/docs/css/functions/radial-gradient">css/functions/radial-gradient</a></p></li>
+<li><p><a href="/docs/css/functions/repeating-linear-gradient">repeating-linear-gradient</a></p></li>
+<li><p><a href="/docs/css/functions/repeating-radial-gradient">repeating-radial-gradient</a></p></li>
+<li><p><a href="/docs/css/properties/-ms-radial-gradient">-ms-radial-gradient</a></p></li>
+<li><p><a href="/docs/css/properties/-ms-repeating-linear-gradient">-ms-repeating-linear-gradient</a></p></li>
+<li><p><a href="/docs/css/properties/-ms-repeating-radial-gradient">-ms-repeating-radial-gradient</a></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

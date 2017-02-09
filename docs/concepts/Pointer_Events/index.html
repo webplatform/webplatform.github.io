@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pointer Events Primer · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="This document is written for web developers who have basic familiarity with HTML and JavaScript.  This document should help you:
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/Pointer_Events/">Pointer Events</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Pointer Events Primer</h1>
+<h2>Summary</h2>
+<p>This document is written for web developers who have basic familiarity with HTML and JavaScript. This document should help you:</p>
+<ol>
+<li>Understand the end-user and web developer problems that Pointer Events address</li>
+<li>Easily add Pointer Events to an existing web page</li>
+<li>Take advantage of additional methods and attributes available in Pointer Events</li>
+<li>Find additional resources to learn more about Pointer Events</li>
+</ol>
+<h2>Why Pointer Events?</h2>
+<h3>Unified Model for Multiple Input Types</h3>
+<p>In the last few years, there has been an explosion of computing devices that use mechanisms other than a mouse for user input. These input mechanisms include touch as on a smartphone, or pen/stylus as on a slate. All of today’s web browsers support mouse events (mouseover, mousedown, mousemove, etc.) but many users aren’t using a mouse. Today’s user may be interacting with a web page using their fingers on a smartphone while riding public transit, or using a pen on a slate/tablet while in a meeting. Pointer Events provides a unified model for all three of these input types without requiring web developers to write unique code for each. And Pointer Events is intended to be forward-compatible, covering future interaction paradigms.</p>
+<h3>Ability to Identify Different Input Types</h3>
+<p>Most modern browsers such as Chrome, Firefox, Internet Explorer, Opera, and Safari all map touch or pen input to mouse events. But this makes it hard to know if a mouse event is an actual mouse event or if was synthetically generated from a touch or pen input event. Pointer Events also includes attributes to identify which mouse or pen button(s) were pressed during the event.</p>
+<h3>Additional Methods and Attributes</h3>
+<p>Finally, Pointer Events provides additional attributes such as touch contact geometry size, pressure, and pen tilt so that web developers can take advantage of these additional inputs in building experiences for end users. And if web developers want, they can write unique code for each input type.</p>
+<h2>Basic Pointer Events</h2>
+<p>Pointer Events includes a number of basic events similar to mouse events:</p>
+<h3>Down and Up</h3>
+<p>Pointer Events includes basic pointer down and pointer up events.</p>
+<ul>
+<li><code>pointerdown</code> is triggered when a user clicks a mouse button or touches the screen with a finger or pen.</li>
+<li><code>pointerup</code> is triggered when a user releases a mouse button or releases their finger or pen from touching the screen.</li>
+</ul>
+<p>The example below shows how pointerdown and pointerup are similar to mousedown and mouseup:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseDownResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML += <span class="hljs-string">"Mouse Down&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseUpResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML += <span class="hljs-string">"Mouse Up&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerDownResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML +=
+                <span class="hljs-string">"PointerId:"</span> + event.pointerId +
+                <span class="hljs-string">" of pointerType:"</span> + event.pointerType + <span class="hljs-string">" Down&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerUpResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML +=
+                <span class="hljs-string">"PointerId:"</span> + event.pointerId +
+                <span class="hljs-string">" of pointerType:"</span> + event.pointerType + <span class="hljs-string">" Up&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"mousedown"</span>, MouseDownResponse, <span class="hljs-literal">false</span>);
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"mouseup"</span>, MouseUpResponse, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"pointerdown"</span>, PointerDownResponse, <span class="hljs-literal">false</span>);
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"pointerup"</span>, PointerUpResponse, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-comment">// Support for prefixed IE10 implementation</span>
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"MSPointerDown"</span>, PointerDownResponse, <span class="hljs-literal">false</span>);
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"MSPointerUp"</span>, PointerUpResponse, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Click, touch, or tap<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:30%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvMouseStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:40%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3>Move</h3>
+<p>Pointer Events also includes a basic move event. The <code>pointermove</code> event is triggered when a user moves their mouse, finger, or pen. Many devices with touch screens have default pan and zoom behaviors, such as zooming for a double tap. Web developers can disable these default behaviors with the <code>touch-action</code> CSS value of <code>none</code> as shown below. This example shows how <code>pointermove</code> is similar to <code>mousemove</code>:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseMoveResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML =
+                <span class="hljs-string">"Mouse position: "</span> + event.clientX + <span class="hljs-string">", "</span> + event.clientY + <span class="hljs-string">"&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerMoveResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML =
+                <span class="hljs-string">"PointerId:"</span> + event.pointerId + <span class="hljs-string">" of pointerType:"</span> + event.pointerType +
+                <span class="hljs-string">" isPrimary:"</span> + event.isPrimary +
+                <span class="hljs-string">" position: "</span> + event.clientX + <span class="hljs-string">", "</span> + event.clientY + <span class="hljs-string">"&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"mousemove"</span>, MouseMoveResponse, <span class="hljs-literal">false</span>);
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"pointermove"</span>, PointerMoveResponse, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-comment">// Support for prefixed IE10 implementation</span>
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"MSPointerMove"</span>, PointerMoveResponse, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"touch-action:none; -ms-touch-action:none;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Move your mouse, finger, or pen<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:30%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvMouseStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:40%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>In addition to the basic x and y coordinates, <code>pointermove</code> includes <code>pointerId</code>, <code>pointerType</code>, and other attributes.</p>
+<h3>Over and Out</h3>
+<p>Pointer Events includes basic pointer over and pointer out events.</p>
+<ul>
+<li><code>pointerover</code> is triggered when a user moves their mouse over an HTML element or touches it with their finger or pen.</li>
+<li><code>pointerout</code> is triggered when a user moves their mouse out of an HTML element, releases a finger or pen touch, or moves their finger our out of an HTML element while still touching the screen.</li>
+</ul>
+<p>This example shows how <code>pointerover</code> and <code>pointerout</code> are similar to <code>mouseover</code> and <code>mouseout</code>.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseOverResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML += <span class="hljs-string">"Mouse Over&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseOutResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML += <span class="hljs-string">"Mouse Out&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerOverResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML += <span class="hljs-string">"Pointer Over&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerOutResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML += <span class="hljs-string">"Pointer Out&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> dvObject = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvObject"</span>);
+
+            dvObject.addEventListener(<span class="hljs-string">"mouseover"</span>, MouseOverResponse, <span class="hljs-literal">false</span>);
+            dvObject.addEventListener(<span class="hljs-string">"mouseout"</span>, MouseOutResponse, <span class="hljs-literal">false</span>);
+
+            dvObject.addEventListener(<span class="hljs-string">"pointerover"</span>, PointerOverResponse, <span class="hljs-literal">false</span>);
+            dvObject.addEventListener(<span class="hljs-string">"pointerout"</span>, PointerOutResponse, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-comment">// Support for prefixed IE10 implementation</span>
+            dvObject.addEventListener(<span class="hljs-string">"MSPointerOver"</span>, PointerOverResponse, <span class="hljs-literal">false</span>);
+            dvObject.addEventListener(<span class="hljs-string">"MSPointerOut"</span>, PointerOutResponse, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Move your mouse, finger, or pen/stylus over the yellow box<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvObject"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"float:right; background-color:yellow; height:100px; width:200px;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:30%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvMouseStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:40%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3>Enter and Leave</h3>
+<p>Pointer Events includes basic pointer enter and pointer leave events. Enter and leave events are similar to over and out events described in the previous section, but with some exceptions, including that they do not bubble.</p>
+<ul>
+<li><code>pointerenter</code> is triggered when a user moves their mouse over an HTML element or touches it with their finger or pen.</li>
+<li><code>pointerleave</code> is triggered when a user moves their mouse out of an HTML element, releases a finger or pen touch, or moves their finger our out of an HTML element while still touching the screen.</li>
+</ul>
+<p>This example shows how <code>pointerenter</code> and <code>pointerleave</code> are similar to <code>mouseenter</code> and <code>mouseleave</code>.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseEnterResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML += <span class="hljs-string">"Mouse Enter&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseLeaveResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvMouseStatus"</span>).innerHTML += <span class="hljs-string">"Mouse Leave&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerEnterResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML += <span class="hljs-string">"Pointer Enter&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerLeaveResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML += <span class="hljs-string">"Pointer Leave&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> dvObject = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvObject"</span>);
+
+            dvObject.addEventListener(<span class="hljs-string">"mouseenter"</span>, MouseEnterResponse, <span class="hljs-literal">false</span>);
+            dvObject.addEventListener(<span class="hljs-string">"mouseleave"</span>, MouseLeaveResponse, <span class="hljs-literal">false</span>);
+
+            dvObject.addEventListener(<span class="hljs-string">"pointerenter"</span>, PointerEnterResponse, <span class="hljs-literal">false</span>);
+            dvObject.addEventListener(<span class="hljs-string">"pointerleave"</span>, PointerLeaveResponse, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Move your mouse, finger, or pen/stylus over the orange box<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvObject"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"float:right; background-color:orange; height:100px; width:200px;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">table</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:30%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvMouseStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">td</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"vertical-align:top; width:40%;"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3>Cancel</h3>
+<p>In the modern world of desktop PCs with multiple monitors or smartphones and tablets supporting multiple orientations, there are cases where a pointer is down and the next event should be a <code>pointercancel</code> event; rather than a <code>pointerup</code> event. These include:</p>
+<ul>
+<li>A user changes the position of a screen in a multi-screen configuration</li>
+<li>A user changes the orientation of a screen (i.e. rotate from portrait to landscape)</li>
+<li>A user exceeds the number of simultaneous contacts a device can support</li>
+<li>A user locks their device or logs off</li>
+</ul>
+<p>In all of these cases, a <code>pointercancel</code> event is triggered. This gives the developer a chance to handle any clean-up that is needed. More information on <code>pointercancel</code> cases can be found at: <a href="http://msdn.microsoft.com/en-us/library/ie/hh846776(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/ie/hh846776(v=vs.85).aspx</a></p>
+<h3>Comparison Of Mouse Events and Pointer Events</h3>
+<p>The below table lists Mouse Events and the related Pointer Events:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Mouse Event</th><th style="text-align:left">Pointer Event</th><th style="text-align:left">(Prefixed) IE10 Pointer Event</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">mousedown</td><td style="text-align:left">pointerdown</td><td style="text-align:left">MSPointerDown</td></tr>
+<tr><td style="text-align:left">mouseup</td><td style="text-align:left">pointerup</td><td style="text-align:left">MSPointerUp</td></tr>
+<tr><td style="text-align:left">mousemove</td><td style="text-align:left">pointermove</td><td style="text-align:left">MSPointerMove</td></tr>
+<tr><td style="text-align:left">mouseover</td><td style="text-align:left">pointerover</td><td style="text-align:left">MSPointerOver</td></tr>
+<tr><td style="text-align:left">mouseout</td><td style="text-align:left">pointerout</td><td style="text-align:left">MSPointerOut</td></tr>
+<tr><td style="text-align:left">mouseenter</td><td style="text-align:left">pointerenter</td><td style="text-align:left">(none)</td></tr>
+<tr><td style="text-align:left">mouseleave</td><td style="text-align:left">pointerleave</td><td style="text-align:left">(none)</td></tr>
+<tr><td style="text-align:left">(none)</td><td style="text-align:left">pointercancel</td><td style="text-align:left">MSPointerCancel</td></tr>
+</tbody>
+</table>
+<h2>Pointer Event Attributes</h2>
+<p>Pointer Events have a number of additional attributes that enable you, as a web developer, to enhance your interactions:</p>
+<h3>pointerType</h3>
+<p>The <code>pointerType</code> attribute tells you if a pointer is a mouse, a touch, a pen, or some new future pointer type. Use of the <code>pointerType</code> attribute was shown in the earlier examples for <code>pointerdown</code>, <code>pointerup</code>, and <code>pointermove</code>. As a best practice, if you are writing code that behaves uniquely for different <code>pointerType</code> values you should make sure to also handle a new future pointer type.</p>
+<h3>pointerId</h3>
+<p>The <code>pointerId</code> attribute tells you which pointer you’re interacting with. The mouse always has a <code>pointerId</code> of 1, and touch and pen pointers have integer <code>pointerId</code> values that are not 1.</p>
+<h3>isPrimary</h3>
+<p>The <code>isPrimary</code> attribute tells you which pointer is the <em>primary</em> pointer for that device type:</p>
+<ul>
+<li>For mouse, there is only one pointer so it is primary for the mouse type</li>
+<li>For touch, a pointer is considered primary if the user touched the screen where there were no other active touches</li>
+<li>For pen, a pointer is considered primary if the user’s pen initially contacted the screen when there were no other active pens contacting the screen</li>
+</ul>
+<p>Two potential uses for the <code>isPrimary</code> attribute are:</p>
+<ul>
+<li>If you are intending to support only single touch (and not multi-touch) only react if the pointer <code>isPrimary</code></li>
+<li>If you want to see which pointer will also generate Mouse Events, check the <code>isPrimary</code> attribute</li>
+</ul>
+<h3>Contact Geometry Width and Height</h3>
+<p>With some input types (especially touch) and screens of increasing resolution, the contact area between the pointer and the screen can be more than a single pixel. The <code>width</code> and <code>height</code> attributes indicate the width and height of the contact between the pointer and the screen. The example below shows the width and height attributes:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerDownInfo</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML +=
+                <span class="hljs-string">"Height:"</span> + event.height + <span class="hljs-string">" Width:"</span> + event.width + <span class="hljs-string">"&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"pointerdown"</span>, PointerDownInfo, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-comment">// Support for legacy IE10 implementation</span>
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"MSPointerDown"</span>, PointerDownInfo, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Click, touch, or tap<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h3>pressure</h3>
+<p>Another attribute that you can get with Pointer Events is <code>pressure</code>. If the hardware supports it, <code>pressure</code> is a floating point value between 0 and 1 (inclusive) where 0 represents no force per area and 1 represents the maximum force per area that the hardware can detect. If the hardware does not support detecting <code>pressure</code>, the browser might simulate values for pointer devices that do not report pressure, such as 0.5 for any action.</p>
+<h3>Pen tiltX and tiltY</h3>
+<p>Like <code>pressure</code>, if the hardware supports it, the tilt of the pen is also included on Pointer Events. There are two measures:</p>
+<ul>
+<li><code>tiltX</code> measures the angle in degrees (-90 to 90) between the pen and a plane formed by the Y Axis and Z Axis as shown below:</li>
+</ul>
+<p><img src="//static.webplatform.org/2/20/TiltX.png" alt="Image showing positive TiltX"></p>
+<ul>
+<li><code>tiltY</code> measures the angle in degrees (-90 to 90) between the pen and a plane formed by the X Axis and Z Axis as shown below:</li>
+</ul>
+<p><img src="//static.webplatform.org/6/62/TiltY.png" alt="Image showing positive TiltY"></p>
+<p>If the pen is perpendicular to the plane formed by the X Axis and Y Axis, then its <code>tiltX</code> and <code>tiltY</code> values will both be zero.</p>
+<h2>Multiple Pointers At Once / Multi-Touch</h2>
+<p>Pointer Events allows for interacting with multiple pointers at once. However, there are some systems where two touches on a screen at once causes the screen to pan or zoom.</p>
+<p>As the developer, you can disable pan and zoom behaviors by setting the CSS style of <code>touch-action</code> to none. For example:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerDownResponse</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML +=
+                <span class="hljs-string">"PointerId:"</span> + event.pointerId +
+                <span class="hljs-string">" of pointerType:"</span> + event.pointerType + <span class="hljs-string">" Down&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"pointerdown"</span>, PointerDownResponse, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-comment">// Support for prefixed IE10 implementation</span>
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"MSPointerDown"</span>, PointerDownResponse, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Try touching within each box with multiple fingers<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"float:left; width:200px;"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"float:left; background-color:orange; height:300px; width:300px"</span>&gt;</span>
+            Touches in this box will invoke default pan and zoom behaviors
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"float:left; background-color:blue; height:300px; width:300px;
+        touch-action:none; -ms-touch-action:none;"</span>&gt;</span>
+            This box has touch-action set to none
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>By disabling pan and zoom behaviors, you can capture Pointer Events for multiple pointers at the same time and build exciting multi-touch interactive experiences for your end-users.</p>
+<h2>Detecting which Button(s) are Pressed</h2>
+<p>Another opportunity for building new interactive experiences for your end-users is multi-button interactions.</p>
+<p>Pointer Events provides <code>button</code> and <code>buttons</code> that indicate which input device button(s) were involved in an interaction. For example:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PointerDownInfo</span>(<span class="hljs-params">event</span>) </span>{
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML +=
+                <span class="hljs-string">"Button: "</span> + event.button + <span class="hljs-string">" Buttons: "</span> + event.buttons + <span class="hljs-string">"&lt;br /&gt;"</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"pointerdown"</span>, PointerDownInfo, <span class="hljs-literal">false</span>);
+
+            <span class="hljs-comment">// Support for legacy IE10 implementation</span>
+            <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"MSPointerDown"</span>, PointerDownInfo, <span class="hljs-literal">false</span>);
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Click, touch, or tap<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Here is the list of potential values for <code>button</code> and <code>buttons</code>:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Device Button State</th><th style="text-align:left">button</th><th style="text-align:left">buttons</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Mouse move with no buttons pressed</td><td style="text-align:left">-1</td><td style="text-align:left">0</td></tr>
+<tr><td style="text-align:left">Left Mouse, Touch Contact, Pen contact (with no modifier buttons pressed)</td><td style="text-align:left">0</td><td style="text-align:left">1</td></tr>
+<tr><td style="text-align:left">Middle Mouse</td><td style="text-align:left">1</td><td style="text-align:left">4</td></tr>
+<tr><td style="text-align:left">Right Mouse, Pen contact with barrel button pressed</td><td style="text-align:left">2</td><td style="text-align:left">2</td></tr>
+<tr><td style="text-align:left">X1 (back) Mouse</td><td style="text-align:left">3</td><td style="text-align:left">8</td></tr>
+<tr><td style="text-align:left">X2 (forward) Mouse</td><td style="text-align:left">4</td><td style="text-align:left">16</td></tr>
+<tr><td style="text-align:left">Pen contact with eraser button pressed</td><td style="text-align:left">5</td><td style="text-align:left">32</td></tr>
+</tbody>
+</table>
+<h2>Try Pointer Events Today</h2>
+<p>You can tell if a browser supports Pointer Events by checking the <code>navigator.PointerEnabled</code> attribute:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+</span></code></pre>
+<pre><code class="js">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">if</span> ( (navigator.pointerEnabled) || (navigator.msPointerEnabled) ) {
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML =
+                    <span class="hljs-string">"This browser supports Pointer Events :)&lt;br /&gt;and supports "</span> +
+                    navigator.maxTouchPoints + <span class="hljs-string">" simultaneous touch contacts."</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"dvPointerStatus"</span>).innerHTML =
+                    <span class="hljs-string">"This browser does not support Pointer Events. :("</span>
+            }
+        }
+</code></pre>
+<pre><code class="html">    <span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"init()"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Checking your browser...<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dvPointerStatus"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Also shown in the above example is how to use the <code>navigator.maxTouchPoints</code> attribute to check the maximum number of touch points the hardware supports.</p>
+<h3>Webkit With Pointer Events Patch</h3>
+<p>As of February 2013, builds of WebKit with the Pointer Events patch for OSX and Windows are linked from this blog post by appendTo: <a href="http://appendto.com/blog/2013/02/prototype-chromium-build-with-support-for-ms-pointer-events/">http://appendto.com/blog/2013/02/prototype-chromium-build-with-support-for-ms-pointer-events/</a></p>
+<h3>Internet Explorer 10</h3>
+<p>A version of Pointer Events was implemented in IE10 and Pointer Events are prefixed with <em>MS</em> (for Microsoft.)</p>
+<p>IE10 is included with Windows 8 and Windows Server 2012.</p>
+<p>IE10 for Windows 7 or Windows Server 2008 can be downloaded from: <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-10/worldwide-languages">http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-10/worldwide-languages</a></p>
+<h2>Further Reading</h2>
+<p>If you’re interested in the W3C standardization process for Pointer Events, including reading the specification and providing feedback, here are some useful links:</p>
+<ul>
+<li>Specification: <a href="http://www.w3.org/TR/pointerevents/">http://www.w3.org/TR/pointerevents/</a></li>
+<li>Pointer Events Working Group: <a href="http://www.w3.org/2012/pointerevents/">http://www.w3.org/2012/pointerevents/</a></li>
+<li>Working Group Charter: <a href="http://www.w3.org/2012/pointerevents/charter/">http://www.w3.org/2012/pointerevents/charter/</a></li>
+<li>Working Group Email List: <a href="mailto:public-pointer-events@w3.org">mailto:public-pointer-events@w3.org</a></li>
+<li>Working Group Email List Archive: <a href="http://lists.w3.org/Archives/Public/public-pointer-events/">http://lists.w3.org/Archives/Public/public-pointer-events/</a></li>
+</ul>
+<p>To provide feedback to the working group, send <a href="mailto:public-pointer-events@w3.org">email to the Pointer Events WG</a>.</p>
+<p>If you’re interested in the patch that adds Pointer Events to WebKit, see:</p>
+<ul>
+<li>2013-02-11 (AppendTo Blog): <a href="http://appendto.com/blog/2013/02/prototype-chromium-build-with-support-for-ms-pointer-events/">Prototype Chromium build with support for MS Pointer Events</a></li>
+<li>2012-12-18 (Interoperability @ Microsoft): <a href="http://blogs.msdn.com/b/interoperability/archive/2012/12/18/open-source-release-from-ms-open-tech-pointer-events-initial-prototype-for-webkit.aspx">Open source release from MS Open Tech: Pointer Events initial prototype for WebKit</a></li>
+<li>2012-12-18 (HTML5 Labs): <a href="http://html5labs.interoperabilitybridges.com/prototypes/pointer-events-for-webkit/pointer-events-for-webkit/info">Pointer Events for WebKit</a></li>
+</ul>
+<p>If you’re interested in some of the history and evolution of Pointer Events, visit these links from the IEBlog:</p>
+<ul>
+<li>2012-11-12 (IEBlog): <a href="http://blogs.msdn.com/b/ie/archive/2012/11/12/w3c-charters-pointer-events-working-group.aspx">W3C Charters Pointer Events Working Group</a></li>
+<li>2012-09-24 (IEBlog): <a href="http://blogs.msdn.com/b/ie/archive/2012/09/24/towards-interoperable-pointer-events-evolving-input-events-for-multiple-devices.aspx">Towards Interoperable Pointer Events: Evolving Input Events for Multiple Devices</a></li>
+<li>2012-04-20 (IEBlog): <a href="http://blogs.msdn.com/b/ie/archive/2012/04/20/guidelines-for-building-touch-friendly-sites.aspx">Guildelines for Building Touch-friendly Sites</a></li>
+<li>2011-09-20 (IEBlog): <a href="http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx">Touch Input for IE10 and Metro style Apps</a></li>
+</ul>
+<p>Here are a few news articles about Pointer Events:</p>
+<ul>
+<li>2012-12-20 (NeoWin): <a href="http://www.neowin.net/news/microsoft-offers-pointer-events-specs-to-webkit-developers">http://www.neowin.net/news/microsoft-offers-pointer-events-specs-to-webkit-developers</a></li>
+<li>2012-12-19 (Ars Technica): <a href="http://arstechnica.com/information-technology/2012/12/microsoft-offers-patches-to-webkit-to-aid-touch-compatibility/">http://arstechnica.com/information-technology/2012/12/microsoft-offers-patches-to-webkit-to-aid-touch-compatibility/</a></li>
+<li>2012-09-24 (The Next Web): <a href="http://thenextweb.com/microsoft/2012/09/24/the-w3c-accepted-published-microsofts-pointer-events-submission/">http://thenextweb.com/microsoft/2012/09/24/the-w3c-accepted-published-microsofts-pointer-events-submission/</a></li>
+</ul>
+<h2>Appendix: Designing for Touch</h2>
+<p><img src="//static.webplatform.org/a/a9/TouchGuidelines.png" alt="Image showing 40px hit targets and 10px spacing"></p>
+<p>There are a few key principles that web designers should keep in-mind when updating pages for modern web browsers:</p>
+<ol>
+<li><strong>There may be no hover</strong> — For touch-only devices like many smartphones, there is no ability to hover without invoking</li>
+<li><strong>Don’t make hit targets too small</strong> — Studies by Microsoft indicate about 11mm is a good size hit target</li>
+<li><strong>Have spacing between targets</strong> — Studies also by Microsoft suggest 2mm is a good size for spacing between hit targets</li>
+</ol>
+<p>For more information, see: <a href="http://blogs.msdn.com/b/ie/archive/2012/04/20/guidelines-for-building-touch-friendly-sites.aspx">http://blogs.msdn.com/b/ie/archive/2012/04/20/guidelines-for-building-touch-friendly-sites.aspx</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/pointerevents/">Pointer Events</a></dt>
+<dd>Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Pointer Events</h4>
+<ul>
+<li><p><strong>Pointer Events Primer</strong></p></li>
+<li><p><a href="/docs/dom/Element/releasePointerCapture">releasePointerCapture</a></p></li>
+<li><p><a href="/docs/dom/Element/setPointerCapture">setPointerCapture</a></p></li>
+<li><p><a href="/docs/dom/Navigator/maxTouchPoints">maxTouchPoints</a></p></li>
+<li><p><a href="/docs/dom/Navigator/pointerEnabled">pointerEnabled</a></p></li>
+<li><p><a href="/docs/tutorials/mobile_touch">Introduction to multi-touch Web development</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

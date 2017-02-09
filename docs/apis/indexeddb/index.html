@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Indexed Database API · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Proposed Recommendation" />
+    <meta name="description" content="IndexedDB is a client side storage API that persists data in a user&#x27;s browser. It is a transactional, non-relational storage mechanism that saves key-value pairs in Object Stores and allows searching data using indexes." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/indexeddb/">indexeddb</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Indexed Database API</h1>
+<h2>Summary</h2>
+<p>IndexedDB is a client side storage API that persists data in a user’s browser. It is a transactional, non-relational storage mechanism that saves key-value pairs in Object Stores and allows searching data using indexes.</p>
+<dl>
+<dt><a href="/docs/apis/indexeddb/IDBCursor">IDBCursor</a></dt>
+<dd>Iterates over object stores and indices.
+</dd>
+<dt><a href="/docs/apis/indexeddb/IDBFactory">IDBFactory</a></dt>
+<dd>The object type for the <a href="/docs/apis/indexeddb/indexedDB">indexedDB</a> property, which provides access to the IndexedDB features supported by the browser and/or device.
+</dd>
+<dt><a href="/docs/apis/indexeddb/IDBVersionChangeEvent">IDBVersionChangeEvent</a></dt>
+<dd>The IDBVersionChangeEvent object represents the event object passed to the <a href="/docs/apis/indexeddb/IDBOpenDBRequest/onUpgradeNeeded">upgradeneeded</a> event, which fires when a database is opened using a higher version number.
+</dd>
+</dl>
+<h2>Usage</h2>
+<pre><code> IndexedDB enables you to store large amounts of data in a reliable and structured way. If you are building web applications that need to work offline the API can be useful to store, group, iterate, search, and filter JavaScript objects.
+</code></pre>
+<h2>Notes</h2>
+<p>The IndexedDB specification supports an Asynchronous API on the window object and a Synchronous API for Webworkers.</p>
+<p>An IndexedDB database is made up of Object Stores. Object stores can be created and JavaScript objects of any shape can be stored inside of them. Every object can have different properties, just because they are in the same Object Store it doesn’t mean that they need to have the same structure. The only requirement is that the object has properties that match any explicit Keys or Indexes that you have set up on the Object store.</p>
+<h3>Constructs</h3>
+<h4>Database</h4>
+<p>Each <a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> has a set of associated databases. Database comprise of Object Stores that store data</p>
+<h4>Object Store</h4>
+<p>Object Stores have list of records which hold data as key-value pairs. Every Object Store belongs to a database.</p>
+<h4>Keys</h4>
+<p>Every record in an object store is stored as key-value pairs. Keys are indexed for easy retrieval of data. A valid key can be an <a href="http://www.w3.org/TR/IndexedDB/#bib-ECMA-262">Array</a>, <a href="http://www.w3.org/TR/IndexedDB/#bib-ECMA-262">Date</a>, <a href="http://www.w3.org/TR/IndexedDB/#bib-WEBIDL">DOMString</a> or <a href="http://www.w3.org/TR/IndexedDB/#bib-WEBIDL">float</a>. Keys can either be generated automatically using a key generator, or specified during data insertion. Keys can also be derived from values using a key path attribute specified for an Object Store</p>
+<h4>Values</h4>
+<p>Every record has a value that contains the data for a record. A value must be supported by the <a href="http://www.w3.org/TR/IndexedDB/#bib-HTML5">Structured Cloning Algorithm</a>.</p>
+<h4>Index</h4>
+<p>An index allows looking up records in an object store using properties of the values in the object stores records. An index is a specialized persistent key-value storage and has a referenced object store. The index has a list of records which hold the data stored in the index. The records in an index are automatically populated whenever records in the referenced object store are inserted, updated or deleted. There can be several indexes referencing the same object store, in which changes to the object store cause all such indexes to get updated.</p>
+<h4>Cursor</h4>
+<p>A cursor is a transient construct to iterate over the records in a database. Cursors can be used on Object Stores or Indexes</p>
+<h4>Transaction</h4>
+<p>All database read and write operations occur in transactions. Transactions can be read or read_write. A version_change transaction is a special transaction that allows adding or deleting Object Stores or Indexes.</p>
+<h4>Request</h4>
+<p>Each reading and writing operation on a database is done using a request. The result of a request is usually available in success or error events raised on the request.</p>
+<h3>Security</h3>
+<p>The IndexedDB storage follows the same-origin policy.</p>
+<p>An IndexedDB database is unique for our domain. So if we set up a database only we are going to be able to see it and the Object stores inside of it. If you use a shared domain, then everyone sharing your domain will be able to access and work with the data in your IndexedDB.</p>
+<h3>Storage Limits</h3>
+<ul>
+<li>Firefox will just ask the user for permission for blobs bigger than 50 MB. <a href="http://support.mozilla.org/en-US/questions/818987">Reference</a></li>
+<li>For Google Chrome, see the <a href="https://developers.google.com/chrome/whitepapers/storage#temporary">reference on temporary storage</a></li>
+<li>Internet Explorer will ask the user for permission for Data Stores bigger than 10MB Users can also choose to allow websites to exceed the quota. Users can also change the default 10mb quota in Internet Options &gt; Browsing History &gt; Settings &gt; Caching and Databases. Enterprises can also increase this setting globally or per domain using Group Policy.</li>
+<li>Windows 8 Apps Each app has a quota of 250MB. Among all apps on the device, the limit is 4% of the disk size or 20GB, whichever is smaller. For hard drives that are less than 30GB, the limit among all apps on the device is 375MB. Because of the overall quota among all apps, test your app to ensure it functions properly when it can store very little or even no data because other apps consume the overall quota. See: <a href="http://msdn.microsoft.com/en-us/library/windows/apps/jj553412.aspx">[1]</a></li>
+</ul>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<p>Tutorials and Walkthroughs:</p>
+<ul>
+<li><a href="http://hacks.mozilla.org/2012/02/storing-images-and-files-in-indexeddb/">MDN: Storing images and files in IndexedDB</a></li>
+<li><a href="http://www.html5rocks.com/en/tutorials/indexeddb/todo/">HTML5 Rocks: A simple TODO list using HTML5 IndexedDB</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ie/jj154908(v=vs.85).aspx">MSDN: How to create a tag cloud using IndexedDB</a></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/IndexedDB/">W3C IndexedDB Specification</a></li>
+</ul>
+<h3>Library</h3>
+<ul>
+<li><p><a href="https://github.com/jensarps/IDBWrapper">IDBWrapper</a> Ease the use of indexedDB and abstract away the differences between the existing implementations in Chrome, Firefox and IE10 (yes, it works in all three). Show how IDB works. The code is split up into short methods, so that it’s easy to see what happens in what method.<a href="https://github.com/jensarps/IDBWrapper">[2]</a></p></li>
+<li><p><a href="https://github.com/yathit/ydn-db">YDN-DB</a> Javascript database module for Indexeddb, Web SQL and localStorage storage mechanisms supporting version migration, advanced query, SQL and transaction. <a href="http://dev.yathit.com/api-reference/ydn-db/storage.html">API Documentations</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

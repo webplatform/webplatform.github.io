@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Basic animations · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Timing and movement of shapes are explained in this part of the canvas tutorial. There&#x27;s a list of useful external examples at the end of the document." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/canvas/">canvas</a></li><li><a href="/tutorials/canvas/Canvas_tutorial/">Canvas tutorial</a></li><li><a href="/tutorials/canvas/Canvas_tutorial/Basic_animations/">Basic animations</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Basic animations</h1>
+<h2>Summary</h2>
+<p>Timing and movement of shapes are explained in this part of the canvas tutorial. There’s a list of useful external examples at the end of the document.</p>
+<p>Since we’re using script to control <code>canvas</code> elements it’s also very easy to make (interactive) animations. Unfortunately the canvas element was never designed to be used in this way (unlike Flash) so there are limitations.</p>
+<p>Probably the biggest limitation is that once a shape gets drawn it stays that way. If we need to move it we have to redraw it and everything that was drawn before it. It takes a lot of time to redraw complex frames and the performance depends highly on the speed of the computer it’s running on.</p>
+<h2>Basic animation steps</h2>
+<p>These are the steps you need to take to draw a frame:</p>
+<ol>
+<li><strong>Clear the canvas</strong><br>
+Unless the shapes you’ll be drawing fill the complete canvas (for instance a backdrop image), you need to clear any shapes that have been drawn previously. The easiest way to do this is using the <code>clearRect</code> method.</li>
+<li><strong>Save the canvas state</strong><br>
+If you’re changing any setting (styles, transformations, etc) which affect the canvas state and want to make sure the original state is used each time a frame is drawn, you need to save it.</li>
+<li><strong>Draw animated shapes</strong><br>
+The step where you do the actual frame rendering.</li>
+<li><strong>Restore the canvas state</strong><br>
+If you’ve saved the state, restore it before drawing a new frame.</li>
+</ol>
+<h2>Controlling an animation</h2>
+<p>Shapes are drawn to the canvas by using the canvas methods directly or calling custom functions. In normal circumstances we only see these results appear on the canvas when the script finishes execution. For instance it isn’t possible to do an animation from within a <code>for</code> loop.</p>
+<p>We need a way to execute our drawing functions over a period of time. There are two ways to control an animation like this. First there’s the <code>setInterval</code> and <code>setTimeout</code> functions which can be used to call a specific function over a set period of time (although [/en/DOM/window.requestAnimationFrame requestAnimationFrame] is recommended for these cases).</p>
+<pre><code>setInterval(animateShape,500);
+setTimeout(animateShape,500);
+</code></pre>
+<p>If you don’t want any user interaction it’s best to use the <code>setInterval</code> function which repeatedly executes the supplied code. In the example above the <code>animateShape</code> function is executed every 500 miliseconds (half a second). The <code>setTimeout</code> function only executes once after the set amount of time.</p>
+<p>The second method we can use to control an animation is user input. If we wanted to make a game we could use keyboard or mouse events to control the animation. By setting eventListeners we catch any user interaction and execute our animation functions.</p>
+<p>In the examples below I’m using the first method to control the animation. At the bottom of this page are some links to examples which use the second.</p>
+<h4>An animation example 1</h4>
+<p>In this example I’m going to animate a mini simulation of our solar system.</p>
+<p><img src="//static.webplatform.org/e/ea/Canvas_animation1.png" alt="A dark universe with a planet orbiting around a sun"></p>
+<pre><code>var sun = new Image();
+var moon = new Image();
+var earth = new Image();
+function init(){
+  sun.src = 'images/sun.png';
+  moon.src = 'images/moon.png';
+  earth.src = 'images/earth.png';
+  setInterval(draw,100);
+}
+
+function draw() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+
+  ctx.globalCompositeOperation = 'destination-over';
+  ctx.clearRect(0,0,300,300); // clear canvas
+
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+  ctx.save();
+  ctx.translate(150,150);
+
+  // Earth
+  var time = new Date();
+  ctx.rotate( ((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds() );
+  ctx.translate(105,0);
+  ctx.fillRect(0,-12,50,24); // Shadow
+  ctx.drawImage(earth,-12,-12);
+
+  // Moon
+  ctx.save();
+  ctx.rotate( ((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds() );
+  ctx.translate(0,28.5);
+  ctx.drawImage(moon,-3.5,-3.5);
+  ctx.restore();
+
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.arc(150,150,105,0,Math.PI*2,false); // Earth orbit
+  ctx.stroke();
+
+  ctx.drawImage(sun,0,0,300,300);
+}
+</code></pre>
+<h4>An animation example 2</h4>
+<p><img src="//static.webplatform.org/a/a3/Canvas_animation2.png" alt="An analog clock with hour, minute, and second hands"></p>
+<pre><code>function init(){
+  clock();
+  setInterval(clock,1000);
+}
+function clock(){
+  var now = new Date();
+  var ctx = document.getElementById('canvas').getContext('2d');
+  ctx.save();
+  ctx.clearRect(0,0,150,150);
+  ctx.translate(75,75);
+  ctx.scale(0.4,0.4);
+  ctx.rotate(-Math.PI/2);
+  ctx.strokeStyle = &quot;black&quot;;
+  ctx.fillStyle = &quot;white&quot;;
+  ctx.lineWidth = 8;
+  ctx.lineCap = &quot;round&quot;;
+
+  // Hour marks
+  ctx.save();
+  for (var i=0;i&lt;12;i++){
+    ctx.beginPath();
+    ctx.rotate(Math.PI/6);
+    ctx.moveTo(100,0);
+    ctx.lineTo(120,0);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Minute marks
+  ctx.save();
+  ctx.lineWidth = 5;
+  for (i=0;i&lt;60;i++){
+    if (i%5!=0) {
+      ctx.beginPath();
+      ctx.moveTo(117,0);
+      ctx.lineTo(120,0);
+      ctx.stroke();
+    }
+    ctx.rotate(Math.PI/30);
+  }
+  ctx.restore();
+
+  var sec = now.getSeconds();
+  var min = now.getMinutes();
+  var hr  = now.getHours();
+  hr = hr&gt;=12 ? hr-12 : hr;
+
+  ctx.fillStyle = &quot;black&quot;;
+
+  // write Hours
+  ctx.save();
+  ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec )
+  ctx.lineWidth = 14;
+  ctx.beginPath();
+  ctx.moveTo(-20,0);
+  ctx.lineTo(80,0);
+  ctx.stroke();
+  ctx.restore();
+
+  // write Minutes
+  ctx.save();
+  ctx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec )
+  ctx.lineWidth = 10;
+  ctx.beginPath();
+  ctx.moveTo(-28,0);
+  ctx.lineTo(112,0);
+  ctx.stroke();
+  ctx.restore();
+
+  // Write seconds
+  ctx.save();
+  ctx.rotate(sec * Math.PI/30);
+  ctx.strokeStyle = &quot;#D40000&quot;;
+  ctx.fillStyle = &quot;#D40000&quot;;
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.moveTo(-30,0);
+  ctx.lineTo(83,0);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0,0,10,0,Math.PI*2,true);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(95,0,10,0,Math.PI*2,true);
+  ctx.stroke();
+  ctx.fillStyle = &quot;#555&quot;;
+  ctx.arc(0,0,3,0,Math.PI*2,true);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.lineWidth = 14;
+  ctx.strokeStyle = '#325FA2';
+  ctx.arc(0,0,142,0,Math.PI*2,true);
+  ctx.stroke();
+
+  ctx.restore();
+}
+</code></pre>
+<h4>An animation example 3</h4>
+<p>This is the code for a left-to-right looping panoramic image scroller. Make sure the image is larger than the canvas.<br>
+Using this file for this example<br>
+<a href="http://commons.wikimedia.org/wiki/File:Capitan_Meadows,_Yosemite_National_Park.jpg">http://commons.wikimedia.org/wiki/File:Capitan_Meadows,_Yosemite_National_Park.jpg</a></p>
+<pre><code>var img = new Image();
+
+//User Variables
+img.src = 'Capitan_Meadows,_Yosemite_National_Park.jpg';
+var CanvasXSize = 800;
+var CanvasYSize = 200;
+var speed = 30; //lower is faster
+var scale = 1.05;
+var y = -4.5; //vertical offset
+//End User Variables
+
+var dx = 0.75;
+var imgW = img.width*scale;
+var imgH = img.height*scale;
+var x = 0;
+if (imgW &gt; CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas
+var clearX;
+var clearY;
+if (imgW &gt; CanvasXSize) { clearX = imgW; } // image larger than canvas
+else { clearX = CanvasXSize; }
+if (imgH &gt; CanvasYSize) { clearY = imgH; } // image larger than canvas
+else { clearY = CanvasYSize; }
+var ctx;
+
+function init() {
+   //Get Canvas Element
+   ctx = document.getElementById('canvas').getContext('2d');
+   //Set Refresh Rate
+   return setInterval(draw, speed);
+}
+
+function draw() {
+   //Clear Canvas
+   ctx.clearRect(0,0,clearX,clearY);
+   //If image is &lt;= Canvas Size
+   if (imgW &lt;= CanvasXSize) {
+      //reset, start from beginning
+      if (x &gt; (CanvasXSize)) { x = 0; }
+      //draw aditional image
+      if (x &gt; (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); }
+   }
+   //If image is &gt; Canvas Size
+   else {
+      //reset, start from beginning
+      if (x &gt; (CanvasXSize)) { x = CanvasXSize-imgW; }
+      //draw aditional image
+      if (x &gt; (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); }
+   }
+   //draw image
+   ctx.drawImage(img,x,y,imgW,imgH);
+   //amount to move
+   x += dx;
+}
+</code></pre>
+<p>html code. Canvas width and height should match the CanvasXSize, CanvasYSize.</p>
+<pre><code>&lt;body onload=&quot;init();&quot;&gt;
+&lt;canvas id=&quot;canvas&quot; width=&quot;800&quot; height=&quot;200&quot;&gt;&lt;/canvas&gt;
+</code></pre>
+<h2>Other examples</h2>
+<ul>
+<li><a href="http://www.gartic.net/">Gartic</a><br>
+Multi-player drawing game</li>
+<li><a href="http://www.abrahamjoffe.com.au/ben/canvascape/">Canvascape<br>
+</a>A 3D adventure game (first-person shooter).</li>
+<li><a href="http://www.freeciv.net/">Freeciv.net</a><br>
+A multiplayer strategy game with isometric graphics, created using HTML5 canvas.</li>
+<li><a href="https://developer.mozilla.org/en/A_Basic_RayCaster">https://developer.mozilla.org/en/A_Basic_RayCaster</a> A Basic RavCaster]<br>
+A good example of how to do animations using keyboard controls.</li>
+<li><a href="http://andrewwooldridge.com/canvas/canvasgame001/canvasgame002.html">canvas adventure</a><br>
+Also a nice example that uses keyboard controls.</li>
+<li><a href="http://www.blobsallad.se/">An interactive Blob</a><br>
+Have fun with the blob.</li>
+<li><a href="http://arapehlivanian.com/wp-content/uploads/2007/02/canvas.html">Flying through a starfield</a><br>
+Fly through stars, circles or squares.</li>
+<li><a href="http://igrapher.com/">iGrapher</a><br>
+An example of charting stock market data.</li>
+</ul>
+<p><a href="/docs/tutorials/canvas/Canvas_tutorial/Compositing">&lt;&lt;Previous</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Canvas_tutorial/Basic_animations">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

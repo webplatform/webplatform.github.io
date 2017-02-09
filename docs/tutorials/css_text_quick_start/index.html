@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS text quick start · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This tutorial provides a quick instruction on styling text with CSS." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/css_text quick start/">css text quick start</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>CSS text quick start</h1>
+<h2>Summary</h2>
+<p>This tutorial provides a quick instruction on styling text with CSS.</p>
+<h2>Information on text styles</h2>
+<p>CSS has several properties for styling text.</p>
+<p>There is a convenient shorthand property, <strong>font</strong>, which you can use to specify several aspects at once—for example:</p>
+<ul>
+<li>Bold, italic, and small-caps (small capital letters)</li>
+<li>The size</li>
+<li>The line height</li>
+<li>The font typeface</li>
+</ul>
+<p>Consider this example:</p>
+<pre><code class="css"><span class="hljs-tag">p</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> italic <span class="hljs-number">75%</span>/<span class="hljs-number">125%</span> <span class="hljs-string">"Comic Sans MS"</span>, cursive</span></span>;}</span>
+</code></pre>
+<p>This rule sets various font properties, making all paragraphs italic.</p>
+<ul>
+<li>The font size is set to three-quarters of the size in each paragraph’s parent element, and the line height is set to 125% (spaced a little wider than normal).</li>
+<li>The font typeface is set to Comic Sans MS, but if this typeface is not available, then the browser will use its default cursive (hand-written) typeface.</li>
+</ul>
+<p>The rule has the side-effect of turning off of bold and small-caps (setting them to <code>normal</code>):</p>
+<h3>Font faces</h3>
+<p>You cannot predict what typefaces visitors of your site will have. So when you specify font typefaces, it is a good idea to give a list of alternatives in order of preference. End the list with one of the built-in default typefaces: <code>serif</code>, <code>sans-serif</code>, <code>cursive</code>, <code>fantasy</code> or <code>monospace</code>.</p>
+<p>If the typeface does not support some features in the document, then the browser can substitute a different typeface. For example, the document might contain special characters that the typeface does not support. If the browser can find another typeface that has those characters, then it will use the other typeface.</p>
+<p>To specify a typeface on its own, use the [font-family] property.</p>
+<h3>Font sizes</h3>
+<p>Browser users can override the default font sizes or change the text size while they read a page, so it makes good sense for you to use relative sizes wherever you can.</p>
+<p>You can use some built-in values for font sizes, like <code>small</code>, <code>medium</code> and <code>large</code>. You can also use values relative to the font size of the parent element, like: <code>smaller</code>, <code>larger</code>, <code>150%</code> or <code>1.5em</code>. An “em” is equivalent to the width of the letter “m” (for the font size of the parent element); thus 1.5em is one-and-a-half times the size of the font of the parent element.</p>
+<p>If necessary, you can specify an actual size, like this: <code>14px</code> (14 pixels) for a display device or 14pt (14 points) for a printer. This practice does not promote accessibility for visually impaired users, because it does not allow them to change the size of text characters. A more accessible strategy is to set a built-in value like medium on a top-level element of the document, and then set relative sizes for all its descendent elements.</p>
+<p>To specify a font size on its own, use the [font-size] property.</p>
+<h3>Line height</h3>
+<p>The line height property specifies the spacing between lines. If your document has long paragraphs that contain many lines, a larger-than-normal spacing value makes text easier to read, especially if the font size is small.</p>
+<p>To specify a line height on its own, use the [line-height] property.</p>
+<h3>Decoration</h3>
+<p>The separate [text-decoration] property can specify other styles, like <code>underline</code> or <code>line-through</code>. You can set it to <code>none</code> to explicitly remove any decoration.</p>
+<h3>Other properties</h3>
+<p>To specify italic on its own, use <code>[font-style]: italic;</code><br>
+To specify bold on its own, use <code>[font-weight]: bold;</code><br>
+To specify small capitalized letters on its own, use <code>[font-variant]: small-caps;</code></p>
+<p>To turn any of these off individually, you can specify the value <code>normal</code> or <code>inherit</code>.</p>
+<h2>More details on applying text styles</h2>
+<p>You can specify text styles in a variety of other ways. For example, some of the properties mentioned here have other values that you can use. In a complex style sheet, avoid using the shorthand <code>font</code> property, because of its side-effects (resetting other individual properties).</p>
+<p>For full details of the properties that relate to fonts, see <a href="http://www.w3.org/TR/CSS21/fonts.html">Fonts</a> in the CSS Specification. For full details of text decoration, see <a href="http://www.w3.org/TR/css3-text/">Text</a> there. If you do not want to depend on the typefaces installed on visitors’ systems, you can use <a href="/docs/css/atrules/@font-face">@font-face</a> to specify an online font. However, this requires that the visitors are using a browser that supports this rule.</p>
+<h2>Action: Specifying fonts</h2>
+<p>For a simple document, you can set the font of the <code>&lt;body&gt;</code> element and the rest of the document inherits the settings.</p>
+<ol>
+<li><p>Edit your CSS file.</p></li>
+<li><p>Add the following rule to change the font throughout the document. The top of the CSS file is a logical place for it, but it has the same effect wherever you put it:</p>
+<pre><code class="css"><span class="hljs-tag">body</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> <span class="hljs-number">16px</span> <span class="hljs-string">"Comic Sans MS"</span>, cursive</span></span>;}</span>
+</code></pre></li>
+<li><p>Add a comment explaining the rule, and add white space to make it match your preferred layout.</p></li>
+<li><p>Save the file and refresh your browser to see the effect. If your system has Comic Sans MS, or another cursive font that does not support italic, then your browser chooses a different font face for the italic text in the first line.</p></li>
+<li><p>From your browser’s menu bar, choose <strong>View &gt; Text Size &gt; Increase</strong> (or <strong>View &gt; Zoom &gt; Zoom In</strong>). Even though you specified 16 pixels in the CSS style, a visitor reading the page can change the size of the text.</p></li>
+</ol>
+<h2>Conclusion</h2>
+<p>This article provides a quick introduction to styling text with CSS. For more in-depth information, see the other tutorial articles in this series.</p>
+<h2>See also</h2>
+<h3>Exercise questions</h3>
+<p>Without changing anything else, make all six initial letters twice the size in the browser’s default serif font.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Text_styles">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

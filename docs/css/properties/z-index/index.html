@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>z-index · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The z-index property controls the stacking order of elements. As the x-axis defines the horizontal (left-right) position of elements on the screen, and the y-axis defines the vertical (top-down) position, think of the z-axis as the third dimension or depth-of-field, rising “out of” the screen, towards the viewer, or descending “into” the screen, away from the viewer." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/z-index/">z-index</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>z-index</h1>
+<h2>Summary</h2>
+<p>The z-index property controls the stacking order of elements. As the x-axis defines the horizontal (left-right) position of elements on the screen, and the y-axis defines the vertical (top-down) position, think of the z-axis as the third dimension or depth-of-field, rising “out of” the screen, towards the viewer, or descending “into” the screen, away from the viewer.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>auto</code>
+</dd>
+<dt>Applies to</dt>
+<dd>Positioned elements
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>As specified
+</dd>
+<dt>Animatable</dt>
+<dd>Yes
+</dd>
+</dl>
+<p><a href="/docs/css/concepts/cssom">CSS Object Model Property</a><br>
+:</p>
+<dl>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>z-index: &lt;integer&gt;</code></li>
+<li><code>z-index: auto</code></li>
+<li><code>z-index: inherit</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>auto</dt>
+<dd>Default. Specifies the stacking order of the positioned objects based on the top-down order in which the objects appear in the HTML source.
+</dd>
+<dt>&lt;integer&gt;</dt>
+<dd>Integer that specifies the position of the object in the stacking order. The value is arbitrary and may be negative, zero, or positive.
+</dd>
+<dt>inherit</dt>
+<dd>Takes the same specified value as the property for the element’s parent.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example demonstrates the <code>z-index</code> property set to <code>auto</code>. Some style rules have been omitted for brevity. Please see the live example to view all the style rules.</p>
+<pre><code class="css"><span class="hljs-class">.box</span> <span class="hljs-rules">{
+  <span class="hljs-comment">/**
+   * The elements with the class `.box` are positioned absolutely
+   * so as to make them overlap on each other. This helps demonstrate
+   * the z-index property easily.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order (z-index) is set to auto. Thus, the elements
+   * stack in the order in which they appear in the DOM.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> auto</span></span>;
+}</span>
+
+<span class="hljs-comment">/* We offset the elements a little so the stacking order is easily seen. */</span>
+<span class="hljs-class">.bottom</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">50px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.middle</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">60px</span></span></span>;
+}</span>
+
+<span class="hljs-class">.top</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">150px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">70px</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6199316">View live example</a></p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"container"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box bottom"</span>&gt;</span>This box is at the bottom with z-index set to auto.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box middle"</span>&gt;</span>This box is in the middle with z-index set to auto.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box top"</span>&gt;</span>This box is at the top with z-index set to auto.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</pre>
+<p>The following example demonstrates the <code>z-index</code> property set to an integer. Some style rules have been omitted for brevity. Please see the live example to view all the style rules.</p>
+<pre><code class="css"><span class="hljs-class">.box</span> <span class="hljs-rules">{
+  <span class="hljs-comment">/**
+   * The elements with the class `.box` are positioned absolutely
+   * so as to make them overlap on each other. This helps demonstrate
+   * the z-index property easily.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+}</span>
+
+<span class="hljs-comment">/* We offset the elements a little so the stacking order is easily seen. */</span>
+<span class="hljs-class">.bottom</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">10px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order position of this element is 10.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">10</span></span></span>;
+}</span>
+
+<span class="hljs-class">.middle-level-one</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">60px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">60px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order position of this element is greater than
+   * that of `div.bottom`, thus this element will appear above `div.bottom`.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">20</span></span></span>;
+}</span>
+
+<span class="hljs-class">.middle-level-two</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">120px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">70px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order of this element is same as that of `div.middle-level-one`.
+   * Thus, these two elements will follow DOM order.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">20</span></span></span>;
+}</span>
+
+<span class="hljs-class">.top</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">180px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">80px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order of this element is greater than all the other elements.
+   * Thus this element will appear above all of them.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">30</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6199504">View live example</a></p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"container"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box top"</span>&gt;</span>This box is at the top with z-index set to 30.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box middle-level-one"</span>&gt;</span>This box is in the middle level 1 with z-index set to 20.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box middle-level-two"</span>&gt;</span>This box is in at middle level 2 with z-index set to 20.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box bottom"</span>&gt;</span>This box is at the bottom with z-index set to 10.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</pre>
+<p>The following example demonstrates the <code>z-index</code> property set to <code>inherit</code>. Some style rules have been omitted for brevity. Please see the live example to view all the style rules.</p>
+<pre><code class="css"><span class="hljs-class">.box</span> <span class="hljs-rules">{
+  <span class="hljs-comment">/**
+   * The elements with the class `.box` are positioned absolutely
+   * so as to make them overlap on each other. This helps demonstrate
+   * the z-index property easily.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+}</span>
+
+<span class="hljs-comment">/* We offset the elements a little so the stacking order is easily seen. */</span>
+<span class="hljs-class">.bottom</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">10px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">50px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order position of this element is 10.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">10</span></span></span>;
+}</span>
+
+<span class="hljs-class">.middle</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">60px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">60px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order position of this element is greater than
+   * that of `div.bottom`, thus this element will appear above `div.bottom`.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">20</span></span></span>;
+}</span>
+
+<span class="hljs-class">.middle-child</span> <span class="hljs-rules">{
+  <span class="hljs-comment">/**
+   * The stacking order of this element is inherited from its parent, `div.middle`.
+   * Thus, this will have the same stacking order as its parent.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> inherit</span></span>;
+}</span>
+
+<span class="hljs-class">.top</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">130px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">80px</span></span></span>;
+  <span class="hljs-comment">/**
+   * The stacking order of this element is greater than all the other elements.
+   * Thus this element will appear above all of them.
+   */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">30</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6199565">View live example</a></p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"container"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box top"</span>&gt;</span>This box is at the top with z-index set to 30.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box middle"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box middle-child"</span>&gt;</span>This box is the child of <span class="hljs-tag">&lt;<span class="hljs-title">code</span>&gt;</span>div.middle<span class="hljs-tag">&lt;/<span class="hljs-title">code</span>&gt;</span> with z-index set to inherit.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box bottom"</span>&gt;</span>This box is at the bottom with z-index set to 10.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</pre>
+<h2>Usage</h2>
+<pre><code> The z-index property controls the “z” dimension dimension, stacking (layering) elements above or below others. Elements with a higher z-index appear closer to the viewer and overlap other elements in the same space, whereas a lower z-index makes them appear behind other elements, occupying the same space on the cartesian plane. Different browsers have different interpretations of z-index ordering, so beware.
+</code></pre>
+<p>Remember that elements that are overlapped in this way are reachable by keyboard users and screen readers, which usually is confusing. Consider hiding (using <code>display:none;</code>) any completely invisible elements.</p>
+<p>This property only works with elements that are positioned <strong>absolute</strong>, <strong>relative</strong>, or <strong>fixed</strong>.</p>
+<h2>Notes</h2>
+<p>If two objects have the same <strong>z-index</strong>, they’re stacked according to their source order.</p>
+<p>An element with a positive z-index will be placed above an element that does not have a defined z-index. An element with a negative z-index will be placed below an element with no defined z-index.</p>
+<p>The property does not apply to windowed controls, such as <strong>select</strong> objects.</p>
+<p>When elements overlap, only the topmost element can receive action from a pointing device such as a mouse, even if it has a set opacity or is made invisible through CSS. This is also true for positioned elements with a negative z-index, unless:</p>
+<ul>
+<li>the parent is a scrolling container (that is, its <a href="/docs/css/properties/overflow">overflow</a> property is set to <strong>auto</strong> or <strong>scroll</strong>), or</li>
+<li>the parent is positioned (that is, its <a href="/docs/css/properties/position">position</a> property is set to <strong>absolute</strong>, <strong>relative</strong>, or <strong>fixed</strong>).</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/CSS2/visuren.html#propdef-z-index">Visual formatting model</a></dt>
+<dd>Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/CSS2/visuren.html#z-index">http://www.w3.org/TR/CSS2/visuren.html#z-index</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/z-index">https://developer.mozilla.org/en-US/docs/Web/CSS/z-index</a></li>
+</ul>
+<h3>Related pages</h3>
+<ul>
+<li>CSSStyleDeclaration<a href="/docs/css/cssom/CSSStyleDeclaration/CSSStyleDeclaration">CSSStyleDeclaration</a></li>
+<li>currentStyle<a href="/docs/css/cssom/currentStyle">currentStyle</a></li>
+<li>runtimeStyle<a href="/docs/css/cssom/runtimeStyle">runtimeStyle</a></li>
+<li>style<a href="/docs/css/cssom/style">style</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/z-index">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

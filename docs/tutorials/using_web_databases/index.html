@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>using web databases · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="Using Web databases" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/using_web databases/">using web databases</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>using web databases</h1>
+<p><strong>By Paul Kinlan</strong><br>
+Originally published Feb. 17, 2010</p>
+<h2>Summary</h2>
+<p>Using Web databases</p>
+<h1>A Simple To-do list using HTML5 WebDatabases</h1>
+<h2>Introduction</h2>
+<p><a href="/w/index.php?title=Web_Databases&amp;action=edit&amp;redlink=1">Web Databases</a> are new in HTML5. Web Databases are hosted and persisted inside a user’s browser. By allowing developers to create applications with rich query abilities it is envisioned that a new breed of web applications will emerge that have the ability to work online and off-line.</p>
+<p>On November 18, 2010, the <a href="/w/index.php?title=W3C_announced&amp;action=edit&amp;redlink=1">W3C announced</a> that Web SQL database is a deprecated specification. This is a recommendation for web developers to no longer use the technology as effectively the spec will receive no new updates and browser vendors aren’t encouraged to support this technology. Many major browsers including Chrome, Safari, Opera and nearly all Webkit based mobile devices support WebSQL and will likely maintain support for the foreseeable future.</p>
+<p>This tutorial is also <a href="/w/index.php?title=available_written_using_%22IndexedDB%22&amp;action=edit&amp;redlink=1">available written using “IndexedDB”</a>, the replacement offline storage technology.</p>
+<p>The example code in this article demonstrates how to create a very simple todo list manager. It is a very high level tour of some of the features available in HTML5.</p>
+<h2>Pre-requisites</h2>
+<p>This sample uses a namespace to encapsulate the database logic.</p>
+<pre><code>var html5rocks = {};
+html5rocks.webdb = {};
+</code></pre>
+<h2>Asynchronous and Transactional</h2>
+<p>In the majority of cases where you are using Web Database support you will be using the <a href="/w/index.php?title=Asynchronous_API&amp;action=edit&amp;redlink=1">Asynchronous API</a>. The Asynchronous API is a non-blocking system and as such will not get data through return values, but rather will get data delivered to a defined callback function.</p>
+<p>The Web Database support through HTML is transactional. It is not possible to execute SQL statements outside of a transaction. There are two types of transactions: read/write transactions (<em>transaction()</em>) and read only transactions (<em>readTransaction()</em>). Please note, read/write will lock the entire database.</p>
+<h2>Step 1. Opening the database</h2>
+<p>The database needs to be opened before it can be accessed. You need to define the name, version, description and the size of the database.</p>
+<pre><code>html5rocks.webdb.db = null;
+
+html5rocks.webdb.open = function() {
+  var dbSize = 5 * 1024 * 1024; // 5MB
+  html5rocks.webdb.db = openDatabase(&quot;Todo&quot;, &quot;1.0&quot;, &quot;Todo manager&quot;, dbSize);
+}
+
+html5rocks.webdb.onError = function(tx, e) {
+  alert(&quot;There has been an error: &quot; + e.message);
+}
+
+html5rocks.webdb.onSuccess = function(tx, r) {
+  // re-render the data.
+  // loadTodoItems is defined in Step 4a
+  html5rocks.webdb.getAllTodoItems(loadTodoItems);
+}
+</code></pre>
+<h2>Step 2. Creating a table</h2>
+<p>You can only create a table by executing a CREATE TABLE SQL statement inside a <a href="/w/index.php?title=transaction&amp;action=edit&amp;redlink=1">transaction</a>.</p>
+<p>We have defined a function that will create a table in the body onload event. If the table doesn’t already exist, a table will be created. The table is called todo and has 3 columns.</p>
+<ul>
+<li>ID - a incrementing sequential ID column</li>
+<li>todo - a text column that is the body of the item</li>
+<li>added_on - the time that the todo item was created</li>
+</ul>
+<!-- -->
+<pre><code>html5rocks.webdb.createTable = function() {
+  var db = html5rocks.webdb.db;
+  db.transaction(function(tx) {
+    tx.executeSql(&quot;CREATE TABLE IF NOT EXISTS &quot; +
+                  &quot;todo(ID INTEGER PRIMARY KEY ASC, todo TEXT, added_on DATETIME)&quot;, []);
+  });
+}
+</code></pre>
+<h2>Step 3. Adding data to a table</h2>
+<p>We are building a todo list manager so it is pretty important that we are able to add todo items in to the database.</p>
+<p>A transaction is created, inside the transaction an INSERT into the todo table is performed.</p>
+<p>executeSql takes several parameters, the SQL to execute and the parameters values to bind the query.</p>
+<pre><code>html5rocks.webdb.addTodo = function(todoText) {
+  var db = html5rocks.webdb.db;
+  db.transaction(function(tx){
+    var addedOn = new Date();
+    tx.executeSql(&quot;INSERT INTO todo(todo, added_on) VALUES (?,?)&quot;,
+        [todoText, addedOn],
+        html5rocks.webdb.onSuccess,
+        html5rocks.webdb.onError);
+   });
+}
+</code></pre>
+<h2>Step 4. Selecting data from a table</h2>
+<p>Now that the data is in the database, you need a function that gets the data back out. In Chrome, Webdatabase’s use standard SQLite SELECT queries.</p>
+<pre><code>html5rocks.webdb.getAllTodoItems = function(renderFunc) {
+  var db = html5rocks.webdb.db;
+  db.transaction(function(tx) {
+    tx.executeSql(&quot;SELECT * FROM todo&quot;, [], renderFunc,
+        html5rocks.webdb.onError);
+  });
+}
+</code></pre>
+<p>Note that all of these commands used in this sample are asynchronous and as such the data is not returned from the transaction or the executeSql call. The results are passed through to the success callback.</p>
+<h2>Step 4a. Rendering data from a table</h2>
+<p>Once the data has been fetched from the table, the loadTodoItems method will be called.</p>
+<p>The onSuccess callback takes two parameters. The first being the transaction of the query and the second being the result set. It is fairly simple to iterate across the data:</p>
+<pre><code>function loadTodoItems(tx, rs) {
+  var rowOutput = &quot;&quot;;
+  var todoItems = document.getElementById(&quot;todoItems&quot;);
+  for (var i=0; i &lt; rs.rows.length; i++) {
+    rowOutput += renderTodo(rs.rows.item(i));
+  }
+
+  todoItems.innerHTML = rowOutput;
+}
+function renderTodo(row) {
+  return &quot;&lt;li&gt;&quot; + row.todo +
+         &quot; [&lt;a href='javascript:void(0);' onclick='html5rocks.webdb.deleteTodo(&quot; +
+         row.ID +&quot;);'&gt;Delete&lt;/a&gt;]&lt;/li&gt;&quot;;
+}
+</code></pre>
+<p>The effect of this method call is that the todo list is rendered into a DOM Element called &quot;todoItems&quot;.</p>
+<h2>Step 5. Deleting data from a table</h2>
+<pre><code>html5rocks.webdb.deleteTodo = function(id) {
+  var db = html5rocks.webdb.db;
+  db.transaction(function(tx){
+    tx.executeSql(&quot;DELETE FROM todo WHERE ID=?&quot;, [id],
+        html5rocks.webdb.onSuccess,
+        html5rocks.webdb.onError);
+    });
+}
+</code></pre>
+<h2>Step 6. Hooking it all up</h2>
+<p>When the page loads, open the database and create the table (if needed) and render any todo items that might already be in the database.</p>
+<pre><code>....
+function init() {
+  html5rocks.webdb.open();
+  html5rocks.webdb.createTable();
+  html5rocks.webdb.getAllTodoItems(loadTodoItems);
+}
+&lt;/script&gt;
+
+&lt;body onload=&quot;init();&quot;&gt;
+</code></pre>
+<p>A function that takes the data out of the DOM is needed so, call the html5rocks.webdb.addTodo method</p>
+<pre><code>function addTodo() {
+  var todo = document.getElementById(&quot;todo&quot;);
+  html5rocks.webdb.addTodo(todo.value);
+  todo.value = &quot;&quot;;
+}
+</code></pre>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/webdatabase/todo/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

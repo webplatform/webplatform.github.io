@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Overview of drag and drop download in Chrome · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to native drag-and-drop download." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/box_dnd/">box dnd</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Overview of drag and drop download in Chrome</h1>
+<p><strong>By David Tong</strong><br>
+Originally published Sept. 25, 2010</p>
+<h2>Summary</h2>
+<p>An introduction to native drag-and-drop download.</p>
+<h2>Introduction</h2>
+<p>Drag and Drop (DnD) is one of the many great features of HTML5. Google recently rolled out a <a href="http://gmailblog.blogspot.com/2010/08/drag-and-drop-attachments-to-save-them.html">new feature</a> that allows Google Chrome users to drag and drop files from the browser to the desktop. It is an extremely convenient feature, but it was not widely known until Ryan Seddon posted an article on the <a href="http://www.thecssninja.com/javascript/gmail-dragout">discoveries</a> of his reverse engineering on this new feature.</p>
+<p>At Box.net, we are very excited about how these new capabilities are enabling us to improve our cloud content management solution, as well as contribute more to the developer community. I am pleased to announce that DnD Download has been integrated into our product. Now, Box users can drag files directly from a Chrome browser to their desktop to download and save the file.</p>
+<p>I would like to share how I went through several iterations during the development of this new feature.</p>
+<h2>Check for Drag and Drop API Support</h2>
+<p>The first thing to do is check that your browser fully supports HTML5 drag and drop. An easy way to do that is use a library called <a href="http://www.modernizr.com/">Modernizr</a> to check for the specific feature:</p>
+<pre><code> if (Modernizr.draganddrop) {
+   // Browser supports native HTML5 DnD.
+ } else {
+   // Fallback to a library solution.
+ }
+</code></pre>
+<h2>Iteration 1</h2>
+<p>I first tried the approach that Seddon found in Gmail. I added a new attribute called <code>data-downloadurl</code> to anchor links of files. This process uses HTML5’s <a href="http://ejohn.org/blog/html-5-data-attributes/">custom data attributes</a>. In <code>data-downloadurl</code>, you need to include the MIME type of the file, the destination file name (the desired file name of the downloaded file), and the download URL of the file. Thus, this is added to the HTML template:</p>
+<pre><code> &lt;a href=&quot;#&quot; class=&quot;dnd&quot;
+    data-downloadurl=&quot;{$item.mime}:{$item.filename}:{$item.url}&quot;&gt;&lt;/a&gt;
+</code></pre>
+<p>Which would create an output like this:</p>
+<pre><code> &lt;a href=&quot;#&quot; class=&quot;dnd&quot; data-downloadurl=
+   &quot;image/jpeg:Penguins.jpg:https://www.box.net/box_download_file?file_id=f66690&quot;&gt;&lt;/a&gt;
+</code></pre>
+<p>Based on a jQuery <a href="http://dev.blog.salesking.eu/coding/jquery-plugin-to-drag-files-from-browser-onto-desktop/">plugin</a> that von Schorsch created, which is based on Seddon’s article, I added a jQuery plugin that does a bit of browser feature detection. Highlighted are the lines that I added to von Schorsch’s version:</p>
+<pre><code> (function($) {
+
+ $.fn.extend({
+   dragout: function() {
+     var files = this;
+     if (files.length &gt; 0) {
+       $(files).each(function() {
+         var url = (this.dataset &amp;&amp; this.dataset.downloadurl) ||
+                    this.getAttribute(&quot;data-downloadurl&quot;);
+         if (this.addEventListener) {
+           this.addEventListener(&quot;dragstart&quot;, function(e) {
+             if (e.dataTransfer &amp;&amp; e.dataTransfer.constructor == Clipboard &amp;&amp;
+                 e.dataTransfer.setData('DownloadURL', 'http://www.box.net')) {
+               e.dataTransfer.setData(&quot;DownloadURL&quot;, url);
+             }
+           },false);
+         }
+       });
+     }
+   }
+ });
+
+ })(jQuery);
+</code></pre>
+<p>The reason I did this is that without prior browser detection, doing <code>addEventListener()</code> to a HTML element in IE will create a JavaScript error because IE uses its own <code>attachEvent()</code> method. <code>e.dataTransfer</code> is undefined in IE (as of this writing), <code>e.dataTransfer.constructor</code> returns <code>DataTransfer</code> in Firefox (Mozilla), while Webkit browsers (Chrome and Safari) implement the Clipboard constructor. In Safari, <code>e.dataTransfer.setData('DownloadURL','http://www.box.net')</code> returns <code>false</code>, and Chrome returns <code>true</code>. Doing all of the tests mentioned above leaves the feature only available to Chrome. You may argue that I could simply do the following:</p>
+<pre><code> /chrome/.test( navigator.userAgent.toLowerCase() )
+</code></pre>
+<p>But I prefer feature detection to browser detection, though this technically does not detect that DnD download will work.</p>
+<h3>Problems of iteration 1</h3>
+<ol>
+<li><p>Because we currently have on-page DnD enabled for moving/copying files between folders, we need a way to distinguish between DnD Download and on-page DnD. Technically, we cannot combine these two actions. We cannot predict whether the user wants to move a file to another folder within the Box.net account or drag it to their desktop, and these two actions are completely different. Moreover, there is no easy way to detect if the cursor is outside the browser window. You could use <code>window.onmouseout</code> (IE) and <code>document.onmouseout</code> (other browsers) to attach a mouseout event to the document, and check if <code>e.relatedTarget.nodeName == 'HTML'</code> (e is the mouseout event or window.event, whichever is available). But this is quite difficult due to event bubbling. The event may trigger randomly when you are over an image or layer, especially in a complex web app like Box.net.</p></li>
+<li><p>We want the user to explicitly do something to prevent them from dragging something out to the desktop by mistake. Potentially, an editor of a Box folder can upload an executable file that does something undesirable on the computer of whoever downloads it. Thus we want the user to know exactly when a file would be downloaded to the desktop.</p></li>
+</ol>
+<h2>Iteration 2</h2>
+<p>We decided to experiment with control + drag (dragging a file when the Windows Ctrl key is pressed). This action is consistent with what people can do on a Windows desktop to duplicate a file. It also requires extra work (but not an extra step) from the user to prevent files from being downloaded by mistake.</p>
+<p>The jQuery plugin in iteration 1 is abandoned now because we need to tightly integrate DnD Download with the on-page DnD. For those who are interested, we use a modified version of the jQuery UI’s <a href="http://jqueryui.com/demos/draggable/">Draggable plugin</a>. Inside the mousedown event of a target element, we put the following code:</p>
+<pre><code> // DnD to desktop when the Ctrl key is pressed while dragging
+ if (e.ctrlKey) {
+   var that = $(e.target);
+   // make sure it is not IE (attachEvent).
+   if (that[0].addEventListener) {
+       that[0].addEventListener(&quot;dragstart&quot;,function(e) {
+          // e.dataTransfer in Firefox uses the DataTransfer constructor
+          // instead of Clipboard
+          // make sure it's Chrome and not Safari (both webkit-based).
+          // setData on DownloadURL returns true on Chrome, and false on Safari
+          if (e.dataTransfer &amp;&amp; e.dataTransfer.constructor == Clipboard &amp;&amp;
+              e.dataTransfer.setData('DownloadURL','http://www.box.net')) {
+            var url = (this.dataset &amp;&amp; this.dataset.downloadurl) ||
+                       this.getAttribute(&quot;data-downloadurl&quot;);
+            e.dataTransfer.setData(&quot;DownloadURL&quot;, url);
+          }
+       }, false);
+       return;
+   }
+ }
+</code></pre>
+<p>Other than enabling the Ctrl key, we also added a little toaster tooltip, which shows up when the user performs a regular on-page drag. It tells the user that files can be downloaded if the file icon is dragged to the desktop while the Ctrl key is being held.</p>
+<h3>Problems of iteration 2</h3>
+<p>Due to security concerns, Box.net does not expose permanent URLs to directly access static files. This is not unique to Box.net. Any online storage service should not expose permanent URLs without an extra layer of security to check if the file is public and whether the intended download is requested by a user with appropriate permissions.</p>
+<p>When following the download URL (e.g., <code>https://www.box.net/box_download_file?file_id=f_60466690)</code> of an item, it returns a “302 Found” status code, and redirects to a random URL (e.g., <code>https://www.box.net/dl/6045?a=1f1207a084&amp;m=168299,11211&amp;t=2&amp;b=aca15820d924e3b)</code> that is the temporary actual URL of the file. The challenge is that it expires every few minutes, and so placing it in the HTML output is impractical. It could return a “404” when the user tries to download the file at the link in the HTML output generated several minutes ago.</p>
+<p>DnD Download only works on actual URLs that point directly to a resource. If redirection is involved, it is currently not smart enough to follow the chain (and it should never follow the chain due to security). Therefore, although the link <code>https://www.box.net/box_download_file?file_id=f_60466690</code> from above would let you download the file when you enter it in the browser location bar, it would not work with DnD.</p>
+<p>To better illustrate the differences between an <em>actual URL</em> and a <em>redirect URL</em>, see the screen shots below:</p>
+<p><em>302 redirect URL</em> <img src="//static.webplatform.org/2/21/dnd01-redirect.png" alt="302 Redirect URL"></p>
+<p><em>Actual URL</em> <img src="//static.webplatform.org/b/b0/dnd02-actualurl.png" alt="Actual URL"></p>
+<h2>Iteration 3</h2>
+<p>Let’s try Ajax.</p>
+<p>We slightly modified the code in the previous iteration and came up with the following:</p>
+<pre><code> // DnD to desktop when the Ctrl key is pressed while dragging
+ if (e.ctrlKey) {
+   var that = $(e.target);
+   // make sure it is not IE (attachEvent).
+   if (that[0].addEventListener) {
+     that[0].addEventListener(&quot;dragstart&quot;, function(e) {
+       // e.dataTransfer in Firefox uses the DataTransfer constructor
+       // instead of Clipboard
+       // make sure it's Chrome and not Safari (both webkit-based).
+       // setData on DownloadURL returns true on Chrome, and false on Safari
+       if (e.dataTransfer &amp;&amp; e.dataTransfer.constructor == Clipboard &amp;&amp;
+           e.dataTransfer.setData('DownloadURL', 'http://www.box.net')) {
+         var url = (this.dataset &amp;&amp; this.dataset.downloadurl) ||
+                    this.getAttribute(&quot;data-downloadurl&quot;);
+         $.ajax({
+           complete: function(data) {
+             e.dataTransfer.setData(&quot;DownloadURL&quot;, data.responseText);
+           },
+           type:'GET',
+           url: url
+         });
+       }
+     }, false);
+     return;
+   }
+ }
+</code></pre>
+<p>This makes sense. Upon dragstart, it immediately makes an Ajax call to the server to retrieve the latest download URL of the file. However, it does not work. It turns out that it needs to be a synchronous call (or as I like to call it, Sjax). Seems like <code>setData</code> has to be done at the time when the event listener is attached. According to jQuery’s API, the highlighted lines become:</p>
+<pre><code> $.ajax({
+   async: false,
+   complete: function(data) {
+     e.dataTransfer.setData(&quot;DownloadURL&quot;, data.responseText);
+   },
+   type: 'GET',
+   url: url
+ });
+</code></pre>
+<p>And it works fine… until I unplugged the network connection. Because it does a synchronous call, the browser freezes until the call is successful. If the Ajax call fails (e.g., with a 404, or if it does not respond at all), the browser would not defrost at all as if it had crashed.</p>
+<p>It is much safer to do something like the following:</p>
+<pre><code> $.ajax({
+   async: false,
+   complete: function(data) {
+     e.dataTransfer.setData(&quot;DownloadURL&quot;, data.responseText);
+   },
+   error: function(xhr) {
+     if (xhr.status == 404) {
+       xhr.abort();
+     }
+   },
+   type: 'GET',
+   timeout: 3000,
+   url: url
+ });
+</code></pre>
+<p>For a demo of this feature, feel free to upload a static file to a Box.net account. Drag the file icon out to your desktop while holding the Ctrl key. If you do not have an account, you can easily createone in less than 30 seconds.</p>
+<p>With this feature, you can be creative and make a lot of things possible. Dragging an image to a Windows printer dialog will immediately have the image printed. You can copy a song from Box to your mobile phone’s drive, drag a file from Box to your IM client in order to transfer it directly to your friend, etc. This opens up endless possibilities to increase your productivity. See the screen shots below for some examples.</p>
+<p><em>Dragging a file to the printer</em> <img src="//static.webplatform.org/1/1f/dnd03-dragtoprint.png" alt="Dragging a file to the printer"></p>
+<p><em>Dragging a file to an IM client</em> <img src="//static.webplatform.org/8/8d/dnd04-dragtoim.png" alt="Dragging a file to an IM client"></p>
+<h2>Thoughts and future improvements</h2>
+<p>This is still less than ideal, as a synchronous call could lock up the browser for a brief moment. The HTML5 Web Worker does not help either, as a Web Worker has to be asynchronous. It does seem like <code>setData</code> has to be done at the time when the event listener is attached.</p>
+<p>In reality, the performance is pretty acceptable. The synchronous Ajax (Sjax) call merely retrieves a URL string, which should be pretty fast. It does come with big overhead in the HTTP header, which can possibly be addressed by WebSockets. However, until we see more usage of this kind of technology, it is not worth using WebSockets to send every little update down to the client.</p>
+<p>I also hope that the capability of multi-file download will be added to the API in the future. Combined with custom checkboxes to select multiple files on the user interface, this would be incredible. Further, it would be even nicer if client-generated files, such as text files generated from the result of a form submitted, could be downloaded in this way.</p>
+<ul>
+<li>Column dnd</li>
+<li>Rearrange list</li>
+<li>Creating an image gallery</li>
+<li>Exporting a canvas image</li>
+</ul>
+<h2>References</h2>
+<ul>
+<li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/dnd.html#dnd">Drag and Drop</a> specification</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/casestudies/box_dnd_download/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

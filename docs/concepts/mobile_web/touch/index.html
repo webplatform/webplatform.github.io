@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Touch Input Considerations · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Today&#x27;s mobile devices are exploding in popularity, and most of them have capacitive touch screens, which provide input affordances that are very different from keyboard-and-mouse interfaces.  When the web was being developed, the vast majority of computers had a keyboard and mouse attached. Thus, the web provided (and continues to provide) a rich API for handling these sorts of input events." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/mobile_web/">mobile web</a></li><li><a href="/concepts/mobile_web/touch/">touch</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Touch Input Considerations</h1>
+<h2>Summary</h2>
+<p>Today’s mobile devices are exploding in popularity, and most of them have capacitive touch screens, which provide input affordances that are very different from keyboard-and-mouse interfaces. When the web was being developed, the vast majority of computers had a keyboard and mouse attached. Thus, the web provided (and continues to provide) a rich API for handling these sorts of input events.</p>
+<h2>Conceptual differences between mouse and touch</h2>
+<p>Today’s mobile devices are exploding in popularity, and most of them have capacitive touch screens, which provide input affordances that are very different from keyboard-and-mouse interfaces:</p>
+<ul>
+<li>Coarse input (fat fingers vs. tiny mouse pointers)</li>
+<li>Multiple pointers</li>
+<li>No hover events</li>
+</ul>
+<p>When the web was being developed, the vast majority of computers had a keyboard and mouse attached. Thus, the web provided (and continues to provide) a rich API for handling these sorts of input events, as described in the <a href="http://www.google.com">mouse and keyboard events</a> article.</p>
+<p>With the advent of touch screens, the web had to adapt, and eventually the touch events were developed and implemented in mobile web browsers.</p>
+<h2>Touch events on the web</h2>
+<p>The basic touch events of the web are:</p>
+<ul>
+<li><code>touchstart</code>, which corresponds to a new finger being placed on the touchscreen.</li>
+<li><code>touchmove</code>, which corresponds to a finger moving across the screen.</li>
+<li><code>touchend</code>, which corresponds to a finger lifting from the screen.</li>
+<li><code>touchenter</code>, which corresponds to a moving finger already on the screen entering a target.</li>
+<li><code>touchleave</code>, which corresponds to a moving finger already on the screen leaving a target.</li>
+</ul>
+<p>Each of these events contains a list of touches, with a numeric identifier associated with each touch. The <a href="http://www.google.com">basic touch events</a> article describes this model in greater detail.</p>
+<h2>Demystifying the click event</h2>
+<p>When the click event was conceived (before touch screens became popular), it was intended as a high level event to describe a mouse press followed by a mouse release in roughly the same area of the screen.</p>
+<p>On touch screens, click behaves more like a tap. The main difference here stems from the fact that fingers are far less precise than mouse pointers. As a result, some browsers like Chrome for Android do touch adjustments which scores all nodes underneath the finger (using radius information if available from the hardware) and picks the best one. This is very different from just using the <code>touchdown</code> event, which taps on the first element only using the center of the touch point.</p>
+<h2>Building sites for both mouse and touch input</h2>
+<p>Though the mouse is still a very common input modality, increasingly, the web is being viewed on touch screens. This means that we need to build sites that work well for both mouse and touch. Furthermore, some devices (eg. Windows 8 Surface) let you use both kinds of input by providing a touch screen and a physical keyboard. It is not safe to assume that just because a device has touch support, it doesn’t have mouse input, and vice versa.</p>
+<p>Because of this complex landscape, it’s important to do proper feature detection. New media queries have been proposed around the coarseness of the input (pointer: course |1)_ In general, feature detection is best handled by an external library like <a href="http://modernizr_com">Modernizr</a>, since feature detection approaches vary between browsers and browser versions, and are constantly in flux_</p>
+<p>Because many web pages were not originally developed for devices with touch screens, browsers implement a fallback to mouse events_ If a user taps some element on a touch screen, in addition to triggering a touch event, the browsers will pretend as if there was also a mouse event, and relay it to the page_ This behavior is described in more detail in the synthetic mouse events article_ You can also prevent the associated <a href="http://www_google_com">synthetic mouse events</a> from firing by calling <code>event_prentDefault()</code> in your touch handlers_<mark>Touch performance considerations</mark> Beware of the infamous 300ms click delay in many mobile web browsers. This delay exists because in many cases, double tapping the screen causes the page to zoom. After each tap, the browser cannot fire a click event until it is certain that there was no follow up touch event (which would indicate a zoom). This behavior causes a visible delay before the resulting event is fired. This can be remedied by using one of many <a href="http://www.google.com">fast click</a> approaches which use raw touch events, or in some newer browsers by <a href="http://www.google.com">setting the viewport</a> to never scale.</p>
+<p>Scrolling is another tricky area for performance. Mobile devices often feature inertial scrolling, where moving a finger on the screen and then releasing it causes the scrolled content to continue scrolling in the same direction. This effect is provided by a <a href="http://www.google.com">variety of JavaScript libraries</a>, but incurs significant performance overhead. The web platform provides some optional scrolling optimizations as well, which are described in more detail in <a href="http://www.google.com">optimizing scrolling</a> performance.</p>
+<p>Finally, handling large amounts of multi-touch input can be very taxing because of the high frequency of <code>touchmove</code> events that results from many fingers being on the screen simultaneously. It’s important to decouple drawing and input handling in this cases.</p>
+<h2>Higher level gestures</h2>
+<p>Touch screens unlock the possibility of interesting multi-touch gestures, the best known of which is pinch-zoom, often used for zooming content. Unfortunately, this area is heavily laden with patents, leading to an uneven landscape of support across the different browsers. iOS devices provide <a href="http://www.google.com">Safari high level gesture events</a>, and there are <a href="http://www.google.com">a number of JavaScript libraries</a> that implement gestures on top of the raw touch events.</p>
+<h2>Touching developer tools</h2>
+<p>Debugging input on mobile devices can be challenging because of the overhead of dealing with multiple devices. Though nothing can really replace testing on the actual device you are targeting, it can make sense to start by using tools to simulate a touch environment on the desktop. The Chrome DevTools provide a way to emulate touch events, essentially pre-translating every mouse event into the equivalent touch one (eg. <code>mousedown</code> becomes <code>touchstart</code>). This is useful for debugging single-touch applications. For more complex interactions, multi-touch can also be simulated (with projects like <a href="http://www.google.com">MagicTouch</a>), given the appropriate setup.</p>
+<p>With remote debugging in the Chrome DevTools, you can also set up event listener breakpoints that will break whenever a user performs touch-based interactions with the desired element. For more information on these techniques, see the <a href="http://www.google.com">mobile developer tools</a> article.</p>
+<h2>A consolidated model</h2>
+<p>Despite the many differences between the two input modes, mouse and touch input is fundamentally similar in one way: both fingers and mouse pointers can be viewed as abstract points with screen coordinates. This similarity makes it tempting to consolidate the two disparate models into one, which just deals with lists of pointers. This model was first proposed by Microsoft in the <a href="http://www.google.com">pointer events specification</a>. Though not implemented in the web platform yet, several <a href="http://www.google.com">pointer event polyfills</a> exist in the wild.</p>
+<p>A consolidated pointer-based model makes it easier to build sites that work well for both mouse and touch, avoiding click delays but still making it as easy to write multi-touch gestures if needed.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Touch</h4>
+<ul>
+<li><p><strong>Touch Input Considerations</strong></p></li>
+<li><p><a href="/docs/css/touch">touch</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

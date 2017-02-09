@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Content commenting system · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Requirements/">WPD/Requirements</a></li><li><a href="/docs/WPD/Requirements/Content_commenting system/">Content commenting system</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Content commenting system</h1>
+<h2>Overview</h2>
+<p>We want an extension to allow users on our wiki to comment on particular sections of wiki page, in an way that is unobtrusive for readers.</p>
+<h2>Environment</h2>
+<p>Semantic MediaWiki installation on dedicated servers, and several other extensions (including Semantic Forms, and Social Profile).</p>
+<h2>Specifications</h2>
+<p>The basic idea we want to reproduce (with improvements) is the Django Book commenting system <a href="http://djangobook.com/en/2.0/chapter02/">[1]</a>; click on the bubbles on the side, and look at the “help” tab for more details.</p>
+<p>My idea for implementation is that we would have some forum software installed (either a MediaWiki extension like WikiForum <a href="http://www.mediawiki.org/wiki/Extension:WikiForum">[2]</a> or AWC’s Forum <a href="http://www.mediawiki.org/wiki/Extension:AWC%27s_Forum">[3]</a>, or an external forum like phpBB). Each page would be represented by a “forum topic” and each section with a separate thread in that topic; when a user creates a new comment, it creates a new thread (and a new topic, if no comments exist for that page). Each thread would be attached to a particular section by the ID of that section.</p>
+<p>This forum interface would be rendered as the content of a “popup dialog” iframe, on the same page; from the user’s perspective, they are still on the same page. The forum should be greatly simplified for this use.</p>
+<p>However, this is just my idea of how this could be executed; another approach might be to use each page’s MediaWiki Discussion Page as the comment repository… but it should still be threaded.</p>
+<p>Requirements:</p>
+<ul>
+<li>Must allow comments on a per-section basis (using section ids)
+<ul>
+<li>Must show “bubble” for each section that has comments</li>
+<li>Bubble must show number of comments for that section
+<ul>
+<li>Comment dialog area (probably an iframe, not a separate window) should pop up when bubble is clicked</li>
+<li>Comment dialog must be dismissable (e.g. can be closed)</li>
+</ul></li>
+<li>Comments must be threaded (so people can comment on comments)</li>
+<li>All comments on a page should be visible through another view</li>
+<li>Comments must be “resolvable” (e.g. marked as solved and hidden when the comment has been addressed)</li>
+<li>Comments must be retained even if section has been removed (but doesn’t need to necessarily be available via a bubble)</li>
+</ul></li>
+<li>New comments can be made in an intuitive way (e.g. by clicking on the side of a section, like in DjangoBook)
+<ul>
+<li>Only logged-in users can comment, but anyone can view comments</li>
+</ul></li>
+<li>Readers should be able to turn off comment bubbles</li>
+<li>Comment dialog area should be draggable
+<ul>
+<li>Default position of comments should be off to one side or the other, so it doesn’t obscure the body text</li>
+</ul></li>
+<li>Comment dialog are must be stylable with skin’s CSS.</li>
+<li>Prefer if comments are not be stored inline in the wiki page</li>
+</ul>
+<p>Nice-to-have:</p>
+<ul>
+<li>Ability to select specific passages (words or sentences) that are copied into comments, or highlighted in some way.</li>
+<li>Ability to mod comments up or down</li>
+<li>Ability to add certain “flags” (categories, tags, or templates) to the comment or to the page itself (e.g. if I’m commenting that a particular section contains factual errors, in addition to making the comment, I might like to tag my comment as &quot;factual error&quot;, and have that insert a template (“flag”) into the page</li>
+<li>Comments might be “reattached” to a different section if content is reorganized… but this seems hard to do, unless it’s just subsections; maybe all orphaned comments should be raised to the page level, and can be reattached to another section manually?</li>
+<li>An API to read and write comments on a page and section</li>
+<li>Comment dialog would ideally be resizable</li>
+</ul>
+<h2>Credits and License</h2>
+<p>We would want to release the extension as open source (preferably MIT license), with our name as sponsor, and your name as developer (if you want to be credited).</p>
+<p>We don’t mind if your extension forks another extension, or relies on another (open source) extension; we just care that it works, and that it’s done as soon as possible.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

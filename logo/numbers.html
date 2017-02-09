@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>WPD numbers</title>
+<style>
+body {
+  max-width: 1000px;
+  padding: 10px;
+  margin: 20px auto;
+  border-radius: 10px;
+  background: #f9f7f3;
+  text-align: center;
+  font: 100%/1.5 sans-serif;
+}
+
+h1 img {
+  display: block;
+  height: 100px;
+  margin: 0 auto;
+}
+
+#numbers img {
+  font-size: 800%;
+  height: 1.5em;
+  margin: .05em;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Consolas, Monaco, monospace;
+}
+</style>
+
+</head>
+<body>
+
+<h1><img src="/logo/logo-2.svg" alt="WPD" /> numbers</h1>
+
+<p>
+  <label>
+    Type a number:
+    <input value="01234567894" pattern="\d+" />
+  </label>
+</p>
+
+<p id="numbers"></p>
+
+<p>
+  <label>
+    HTML code:
+    <textarea></textarea>
+  </label>
+</p>
+
+<script>
+function $(expr, con) { return (con || document).querySelector(expr); }
+
+var input = $('input'), textarea = $('textarea'), numbers = $('#numbers');
+
+(input.oninput = function() {
+  var number = input.value, counts = {};
+
+  var html = number.replace(/\d/g, function ($0) {
+    counts[$0] = (counts[$0] || 0) + 1;
+
+    var filename = $0;
+
+    if ($0 == '4' && counts[$0] % 2 == 0) {
+      filename += '-alt';
+    }
+
+    return '<img src="/assets/numbers/' + filename + '.svg" alt="' + $0 + '" /> '
+  });
+
+  numbers.innerHTML = textarea.value = html;
+})();
+</script>
+
+</body>
+</html>

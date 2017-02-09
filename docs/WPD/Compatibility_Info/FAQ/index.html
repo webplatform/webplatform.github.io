@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frequently Asked Questions (&quot;FAQ&quot;) · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Compatibility_Info/">WPD/Compatibility Info</a></li><li><a href="/docs/WPD/Compatibility_Info/FAQ/">FAQ</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Frequently Asked Questions (&quot;FAQ&quot;)</h1>
+<p>Questions we have been asked about our use of the Compatibility data and tables in our content.</p>
+<h2>Where is the data coming from?</h2>
+<p>The data was originally polled from <a href="http://developer.mozilla.org">Mozilla Developer Network (“MDN”)</a> as a one time import. The data was read using an <a href="https://github.com/webplatform/mdn-compat-importer">importer we made for this purpose (code on GitHub)</a>. We converted into a JSON file that we used as a starting point.</p>
+<p>At this time we are maintaining this data in <a href="https://github.com/webplatform/compatibility-data"><strong>webplatform/compatibility-data</strong> on GitHub</a>.</p>
+<h2>The compatibility data has been changed since I maintained it in the wiki (where is it?)</h2>
+<p>When you added data to the document you are talking about, did you see the warning about our intention to not maintain compatibility data in the wiki?</p>
+<p>You do not see the previous compatibility table based on the wiki source because we separated the way of storing the data, and how to generate the tables from the wiki content.</p>
+<p>The compatibility data you see in <a href="https://github.com/webplatform/compatibility-data">GitHub/webplatform/compatibility-data repo</a> as a big JSON file has been scraped from MDN, as a one time import, a few weeks ago.</p>
+<p>The objective of this is to ease the maintenance of the data, and eventually, remove the need to maintain manually. Our end goal is to feed data from browser builds test runs coming from <a href="https://github.com/w3c/web-platform-test">GitHub/w3c/web-platform-test</a> tests which will give us great compat data accuracy.</p>
+<h2>What is the format of the data?</h2>
+<p>Here is one entry sample. To represent this sample we could annotate it as <code>feature=&quot;css&quot; topic=&quot;border&quot;</code>.</p>
+<p>What generates the HTML table is inside &quot;<strong>contents</strong>&quot; section where we separate by &quot;<em>mobile</em>&quot; and &quot;<em>desktop</em>&quot; browser types. In each browser types, we list a sub feature description as the key. This feature description (e.g. “Basic support”) is freeform text and anything can be used to describe.</p>
+<p>You can safely ignore the &quot;breadcrumb&quot;, &quot;jsonselect&quot;, and “notes” keys. They were created for maintenance and might be removed in a near future.</p>
+<pre><code class="js">{
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"css"</span>: {
+      <span class="hljs-string">"border"</span>: {
+        <span class="hljs-string">"breadcrumb"</span>: [<span class="hljs-string">"css"</span>, <span class="hljs-string">"border"</span>],
+        <span class="hljs-string">"jsonselect"</span>: <span class="hljs-string">":root &gt; .data &gt; .css &gt; .border"</span>,
+        <span class="hljs-string">"contents"</span>: {
+          <span class="hljs-string">"desktop"</span>: {
+            <span class="hljs-string">"Basic support"</span>: {
+              <span class="hljs-string">"Chrome"</span>: { <span class="hljs-string">"1.0"</span>: <span class="hljs-string">"y"</span> },
+              <span class="hljs-string">"Firefox"</span>: { <span class="hljs-string">"notes"</span>: { <span class="hljs-string">"normal"</span>: <span class="hljs-string">"1.0 (1.7 or earlier)"</span> }, <span class="hljs-string">"1.0"</span>: <span class="hljs-string">"y"</span> },
+              <span class="hljs-string">"Internet Explorer"</span>: { <span class="hljs-string">"4.0"</span>: <span class="hljs-string">"y"</span> },
+              <span class="hljs-string">"Opera"</span>: { <span class="hljs-string">"3.5"</span>: <span class="hljs-string">"y"</span> },
+              <span class="hljs-string">"Safari"</span>: { <span class="hljs-string">"notes"</span>: { <span class="hljs-string">"normal"</span>: <span class="hljs-string">"1.0 (85)"</span> }, <span class="hljs-string">"1.0"</span>: <span class="hljs-string">"y"</span> }
+            }
+          },
+          <span class="hljs-string">"mobile"</span>: {
+            <span class="hljs-string">"Basic support"</span>: {
+              <span class="hljs-string">"Android"</span>: { <span class="hljs-string">"?"</span>: <span class="hljs-string">"u"</span> },
+              <span class="hljs-string">"Firefox Mobile"</span>: { <span class="hljs-string">"notes"</span>: { <span class="hljs-string">"normal"</span>: <span class="hljs-string">"1.0 (1.9.2)"</span> }, <span class="hljs-string">"1.0"</span>: <span class="hljs-string">"y"</span> },
+              <span class="hljs-string">"IE Phone"</span>: { <span class="hljs-string">"?"</span>: <span class="hljs-string">"u"</span> },
+              <span class="hljs-string">"Opera Mobile"</span>: { <span class="hljs-string">"?"</span>: <span class="hljs-string">"u"</span> },
+              <span class="hljs-string">"Safari Mobile"</span>: { <span class="hljs-string">"1.0"</span>: <span class="hljs-string">"y"</span> }
+            }
+          }
+        },
+        <span class="hljs-string">"links"</span>: [
+          {
+            <span class="hljs-string">"title"</span>: <span class="hljs-string">"Original article on MDN in css border"</span>,
+            <span class="hljs-string">"url"</span>: <span class="hljs-string">"https://developer.mozilla.org/en-US/docs/Web/CSS/border"</span>
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre>
+<h3>Support level values legend</h3>
+<p>Based on <a href="https://github.com/Fyrd/caniuse/blob/master/CONTRIBUTING.md#supported-changes">caniuse.com’s</a> model:</p>
+<p>||<br>
+|<strong>y</strong>|(Y)es, supported by default|<br>
+|<strong>a</strong>|(A)lmost supported (aka Partial support)|<br>
+|<strong>n</strong>|(N)o support, or disabled by default|<br>
+|<strong>p</strong>|No support, but has §olyfill|<br>
+|<strong>u</strong>|Support <em>is</em> (u)nknown|<br>
+|<strong>x</strong>|Requires prefi(x) to work|</p>
+<h2>How do you get the compatibility tables on your docs pages?</h2>
+<p>We created a <a href="/docs/WPD/Infrastructure/Components/WebPlatformDocsExtensionBundle">MediaWiki extension “WebPlatformDocs Extension bundle”</a> that takes care of generating the HTML views you see on our documentation pages. This extension reads the data from flat-file JSON file.</p>
+<p>Each documentation page that should require a compatibility table have, in some way, an inclusion of the <a href="/docs/Template:Compatibility">Template:Compatibility “template”</a>. If you want to see how we set the inclusion in place, head over to <a href="/docs/WPD/Projects/CompaTables/Adding_to_our_content">WPD/Projects/CompaTables/Adding_to_our_content</a>.</p>
+<h2>Can I get and use the data?</h2>
+<p>Sure you can! Our compatibility table is based on a raw JSON file and you can use it too. We serve it from <a href="/docs/compat/data.json"><strong>docs.webplatform.org/compat/data.json</strong></a>, and also serve an idempotent <a href="/docs/compat/data.json">&quot;<em>human friendly</em>&quot; (<strong>data-human.json</strong>) version with indentation</a>.</p>
+<p>If you are command line inclined, you can also make queries to it using <em><a href="https://github.com/ddopson/underscore-cli">underscore-cli</a></em>. The page <a href="/docs/WPD/Projects/CompaTables/Reading_the_data.json_file">WPD/Projects/CompaTables/Reading_the_data.json_file</a> explains how to do.</p>
+<h2>Can I improve the data?</h2>
+<p>Sure! At this time, we published our raw compatibility data as <a href="https://github.com/webplatform/compatibility-data"><strong>webplatform/compatibility-data</strong> on GitHub</a>. The manual edition is a temporary process until we improve it.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

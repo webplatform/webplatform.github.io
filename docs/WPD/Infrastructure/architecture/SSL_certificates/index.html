@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SSL Certificates · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/architecture/">architecture</a></li><li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates/">SSL certificates</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SSL Certificates</h1>
+<p>To manage our SSL certificates we copy around an encrypted file that holds our keys and certificates for our environments. Its maybe not the best method but we’ll keep it that way until we work on improving it.</p>
+<h2>Design decisions</h2>
+<dl>
+<dt>We do not want to have to enter a passphrase at every web server restart or server reboot</dt>
+<dd>we are then stuck to copy around private keys and certificates that aren’t passphrase protected<br>
+We want to rebuild any VM at any time
+</dd>
+<dd>We therefore need to make available the certificates so they can be rsync’ed at any time<br>
+We want to have a quick VM creation process
+</dd>
+<dd>That’s why we have salt, but we cannot encrypt/decrypt certificate archive at every time
+</dd>
+</dl>
+<p>It means that we’ll ensure that as few people as possible has access to the salt master as its where the certificates file is hosted decrypted.</p>
+<h2>Where are the files</h2>
+<ul>
+<li>The file is called <strong>certificates.tar.gz.gpg</strong> and its hosted in DreamObjects <strong>wpd-ci</strong> bucket.</li>
+<li>The file gets download on the salt master at <strong>/srv/code/packages/</strong> where <strong>certificates.tar.gz.gpg</strong> is kept decrypted, and decompressed.</li>
+<li>The file <strong>/srv/code/packages/certificates.README.md</strong> has a copy of this document in the wiki at <a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">/docs/WPD/Infrastructure/architecture/SSL_certificates</a></li>
+</ul>
+<h2>Certificates package convention</h2>
+<p>New convention is based on this <strong>certificates/foo/public_bar_bazz.pem</strong></p>
+<ul>
+<li><em>public</em> represents whether or not its a certificate from a CA. It’ll be useful when we’ll use self-signed that we wouldn’t expose to the public.</li>
+<li><em>foo</em> represents the environment level (e.g. production)</li>
+<li>Each file MUST have its equivalent any ‘foo’ folder (i.e. each environment we manage)</li>
+<li><em>bar</em> represents an identifier, one word should be fine (e.g. wildcard)</li>
+<li><em>bazz</em> represents the private key that was used to generate the CSR</li>
+<li>The file MUST be decrypted and extracted on the salt master at <strong>/srv/code/packages/certificates</strong> so that deployment state at <strong>code.certificates</strong> copies it where its expected</li>
+</ul>
+<h2>What’s the domain names for a certificate?</h2>
+<p>Run</p>
+<pre><code> openssl x509 -text -in certificates/production/public_accounts_subdomains_201404.pem | grep 'DNS:'
+</code></pre>
+<p>Will list them like this:</p>
+<pre><code> DNS:accounts.webplatform.org, DNS:webplatform.org, DNS:profile.accounts.webplatform.org, DNS:verifier.accounts.webplatform.org, DNS:certifier.accounts.web
+</code></pre>
+<h2>Testing certificate from the terminal</h2>
+<pre><code> openssl s_client -connect 173.236.254.96:443 -servername accounts.webplatform.org -CApath /etc/ssl/certs/  &lt; /dev/null | openssl x509 -text | grep 'DNS:'
+</code></pre>
+<p>Where:</p>
+<dl>
+<dt>173.236.254.96</dt>
+<dd>is the IP address of the server you just deployed certificates<br>
+accounts.webplatform.org
+</dd>
+<dd>is the domain name you want to test
+</dd>
+</dl>
+<p>Should look like this:</p>
+<pre><code> DNS:notes.webplatform.org, DNS:docs.webplatform.org, DNS:accounts.webplatform.org, DNS:specs.webplatform.org, DNS:www.webplatform.org, DNS:webplatform.org
+</code></pre>
+<h2>Updating the certificate archive</h2>
+<pre><code>   tar cfz certificates.tar.gz certificates
+   gpg -c certificates.tar.gz
+   source /srv/ci-dreamobjects.sh
+   swift upload wpd-packages certificates.tar.gz.gpg
+</code></pre>
+<p>Passphrase should be known by <strong>renoirb</strong> and <strong>shepazu</strong>.</p>
+<h2>Extracting data</h2>
+<p><strong>Note</strong>: this is done automatically at <em>/srv/salt/_utils/new-saltmaster-packages.sh</em> when we create a new salt master.</p>
+<pre><code>   gpg certificates.tar.gz.gpg
+   tar xfz certificates.tar.gz
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

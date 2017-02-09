@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>October 2014 sprint report · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/reports/">reports</a></li><li><a href="/docs/WPD/Infrastructure/reports/201410/">201410</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>October 2014 sprint report</h1>
+<p>This sprint is about refactoring the full server infrastructure to ease the maintenance work and automate what’s possible.</p>
+<p>In order to get more details on the work that has been done, refer to <a href="/docs/WPD/Infrastructure/analysis/2014-Improvements_plan"><em>2014 Improvements plan</em> page</a></p>
+<h2>Goal</h2>
+<p>The goal of this sprint is to have a separation between <em>development</em> (e.g. a local Vagrant VM, or code checkout), <em>staging</em> (i.e. a full deployment) and <em>production</em> (i.e. the live site) so we can test our changes in an environment without impacting the live “production” site.</p>
+<h2>Requirements</h2>
+<ol>
+<li>Every VMs w/ up to date softwares (database server, linux, etc)</li>
+<li>Every web application to work under SSL</li>
+<li>Every web applications are built on top of a Git release our customizations patched on top of them, see <a href="#Updating_the_web_applications">#Updating the web applications</a></li>
+<li>Refactor server configuration scripts in a way such that we can have a fully working clone of the production site. Without impacting it.</li>
+<li>Everything has to be public, except passwords and private keys</li>
+<li>Setup a system such that if a module gets merged to a specific branch triggers an automatic update of the code on the servers</li>
+<li>Setup a staging version of the site that replicates everything in a separate OpenStack project. Any component of the site could be used by adding ‘staging’ to it.</li>
+<li>Set in place a system that “listens” to given GitHub repository to update the related component. See <a href="#Automatic_updates">#Automatic updates</a></li>
+</ol>
+<p>In other words, we should be able to work on anything in; webplatform<em>Staging</em>.org as a “sandbox” (i.e. do not touch live “production” site), which will allow anybody to replicate the full environment regardless of where its hosted or which top level domain name its being used.</p>
+<h2>Expected outcome</h2>
+<ul>
+<li>Have a COMPLETELY INDEPENDENT set of Virtual Machines to serve the FULL public facing webplatform.org components (i.e. blog, docs, project.webplatform.org)</li>
+<li>Before deploying to production, every components MUST be running fine on <em>webplatformSTAGING.org</em> (a.k.a. &quot;<strong>staging</strong>&quot;)</li>
+<li>Deploy automatically on git push (GitHub hooks) on master branch and/or a release tag (TBD)</li>
+<li>Self-contained environment at every level; e.g, <em>staging</em> MUST NOT use any resources from <em>production</em></li>
+<li>Full clone of the site for each components; e.g. <strong>blog.webplatform.org</strong> (production), <strong>blog.webplatformSTAGING.org</strong> (staging).</li>
+<li>Harmonize configuration settings across the softwares, automate them based on known data facts, do not rely on internal DNS</li>
+<li>Remove anything that isn’t used anymore, and simplify system as much as possible</li>
+</ul>
+<h2>Tasks summary</h2>
+<p>… tasks details are in <a href="/docs/WPD/Infrastructure/analysis/2014-Improvements_plan">WPD/Infrastructure/analysis/2014-Improvements_plan</a></p>
+<ul>
+<li>Publish to the public all our deployment scripts, with correct author attribution, without passwords nor private data</li>
+<li>Set in place a system that will update code automatically when a contributor push on watched Git repos</li>
+<li>Salt reactor pull, and run scripts (bower, grunt, composer, etc) and makes a zip archive, deploy archive</li>
+<li>Salt reactor launch rsync when changes are detected</li>
+<li>Ensure all components works on BOTH <strong>webplatform.org</strong> AND <strong>webplatformSTAGING.org</strong> top level domains, <em>without configuration switches</em></li>
+<li>Ensure all VM are on Ubuntu 14.04 LTS</li>
+<li>Make sure every components are working as it should</li>
+</ul>
+<h2>Status</h2>
+<p><strong>NOTE</strong>: Project is completed.</p>
+<ul>
+<li>Missing web apps;
+<ul>
+<li>webat25.org (won’t be migrated, we will convert as a static site by May 2015)</li>
+</ul></li>
+<li>Set in place automation, see <a href="#Automatic_updates">#Automatic updates</a></li>
+</ul>
+<h2>Intervention plan</h2>
+<h3>Updating the web applications</h3>
+<p>For each web application:</p>
+<ul>
+<li>Pick a version from GitHub, fork in our repo</li>
+<li>Get anything that’s not source-controlled in our code, make it as a patch on top of the original code</li>
+<li>Make sure the web app looks fine with the current CSS</li>
+<li>Make sure the configuration is adjusted by salt stack, nothing manual</li>
+<li>Make sure the theme doesn’t refer to production site, but current deployment</li>
+<li>Make sure that the assets are protocol relative (i.e. if site over SSL, call images and other assets through SSL too, keeping the bar “green”)</li>
+</ul>
+<p>Later, we’ll have a system that listens and updates the site automatically.</p>
+<h3>Automatic updates</h3>
+<p>A system that listens to new version tags on given GitHub repositories.</p>
+<p>Once a tag is made, the staging salt master should;</p>
+<ol>
+<li>pull in the changes</li>
+<li>run any update scripts (sass, docpad, composer, etc)</li>
+<li>update all applicable web servers</li>
+</ol>
+<p>More to come. This is the current next step.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

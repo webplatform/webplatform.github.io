@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Building web games · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="With the combination of developments in HTML5 and improvements to modern browsers, it&#x27;s now possible to build high-quality games using web technologies.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/building_web games/">building web games</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Building web games</h1>
+<h2>Summary</h2>
+<p>With the combination of developments in HTML5 and improvements to modern browsers, it’s now possible to build high-quality games using web technologies.</p>
+<p>In this document, we’ll provide you with the tools, frameworks, and tutorials you’ll need to create games. We’ll also explain how they should be used and how they fit together.</p>
+<h2>2D Games</h2>
+<p>The <code>canvas</code> element was introduced in HTML5, a low level, procedural model that updates a bitmap and does not have a built-in scene graph. This allows web developers to easily create animation, rich interfaces and games.</p>
+<p><a href="http://www.caniuse.com/#search=canvas">Every major mobile and desktop browser supports the canvas element</a>, allowing you to create rich 2D games on both mobile and desktop. Also, traditional DOM manipulation can be used to create games.</p>
+<h3>Performance Considerations</h3>
+<p>There are important performance considerations to note as you’re developing your game, especially on mobile. New HTML5 games sometimes exhibit quirks and low frame rates. Although there are many other benchmark suites that measure JavaScript performance, Facebook has built one focused specifically on key game performance metrics. It’s called <a href="http://www.jsgamebench.com/">JSGameBench</a>.</p>
+<p>Facebook has also created a series of blog posts that explains performance findings so far, as well as information on how to use the benchmark.</p>
+<ul>
+<li><a href="https://developers.facebook.com/blog/post/454">The initial Tech Talk</a></li>
+<li><a href="https://www.facebook.com/notes/facebook-engineering/html5-games-01-speedy-sprites/491691753919">HTML5 Games 0.1: Speedy Sprites</a></li>
+<li><a href="https://developers.facebook.com/blog/post/460">HTML5 Games 0.2: Integers are Your Friends</a></li>
+<li><a href="https://developers.facebook.com/blog/post/468">HTML5 Games 0.3: Seeing the Future</a></li>
+<li><a href="https://developers.facebook.com/blog/post/492">HTML5 Games 0.4: Memory</a></li>
+</ul>
+<p>The main performance issue, especially on mobile, is the lack of hardware acceleration. There are a number of hacks available to force a hardware pipeline. For more information on how to do that, see <a href="http://www.html5rocks.com/en/tutorials/canvas/performance/">Improving HTML5 Canvas Performance</a>. To understand if you’re getting hardware acceleration on iOS, <a href="http://mir.aculo.us/2011/02/08/visualizing-webkits-hardware-acceleration/">you can set a flag in the simulator</a>.</p>
+<h3>Canvas</h3>
+<p>The canvas element was introduced in the HTML5 spec. The following code snippet is an example of how you can use it.</p>
+<pre><code>&lt;canvas id=&quot;gameCanvas&quot; width=&quot;500&quot; height=&quot;500&quot;&gt;
+    This text is displayed if your browser does not support HTML5 Canvas.
+&lt;/canvas&gt;
+</code></pre>
+<p>Using JavaScript, you can draw on the canvas.</p>
+<pre><code>var gameCanvas = document.getElementById('gameCanvas'),
+    gameCanvasContext = gameCanvas.getContext('2d');
+context.fillStyle = &quot;rgb(255,255,0)&quot;;
+context.fillRect(40, 40, 60, 60);
+</code></pre>
+<p>For a comprehensive overview of the canvas tag and what can be done with it, check out this <a href="http://projects.joshy.org/presentations/HTML/CanvasDeepDive/presentation.html">“HTML 5 Canvas Deep Dive” tutorial</a> or the <a href="http://diveintohtml5.org/canvas.html">tutorial at Dive Into HTML5</a>. The canvas element can be interacted with in a variety of ways. A <a href="http://simon.html5.org/dump/html5-canvas-cheat-sheet.html">handy cheat sheet</a> is available to keep track of all of the methods.</p>
+<p>There are a number of tutorials available online, including the <a href="http://www.html5rocks.com/en/tutorials/casestudies/onslaught.html">case study of Onslaught! Arena</a> and <a href="http://www.html5rocks.com/en/tutorials/#games">others on HTML5 Rocks</a>.</p>
+<p>While HTML5 game development is relatively nascent, there are a handful of game engines that are being used actively. We recommend the following engines in order to abstract away the need to write complicated logic for functionality like graphics and physics engines.</p>
+<h3><a href="http://craftyjs.com/">CraftyJS</a></h3>
+<p>CraftyJS is primarily focused on desktop development, including support for legacy browsers like IE6. Working interchangeably with the canvas element and DOM manipulation, it also contains a bunch of extra functionality like collision detection, sprite maps, and animation.</p>
+<p>You can learn more about it on the <a href="http://craftyjs.com/">CraftyJS website</a>, or try out some <a href="http://craftyjs.com/demos.php">sample games</a>. It’s open source and available on <a href="https://github.com/louisstow/Crafty">GitHub</a>.</p>
+<h3><a href="http://www.impactjs.com/">Impact</a></h3>
+<p>Impact is a game engine that utilizes only the canvas element and runs on both mobile and desktop. It includes functionality to help with collision detection and animation. It also has a level editor and integrates with Box 2D.</p>
+<p>You can check it out on the <a href="http://impactjs.com/">Impact website</a>. Full games are available, including <a href="http://playbiolab.com/">Biolab Disaster</a> and <a href="http://www.phoboslab.org/ztype/">ZType</a>. <a href="http://impactjs.com/buy-impact">Licenses for Impact</a> are $99.</p>
+<h3><a href="http://www.box2d.org/">Box2D</a></h3>
+<p>Box2D is a physics engine that was ported from Flash. It’s actively supported and works well with other gaming engines like Impact.</p>
+<p>You can learn more about it at the <a href="http://www.box2d.org/">Box2D website</a>. It’s open source and <a href="http://code.google.com/p/box2dweb/">available on Google Code</a>.</p>
+<h3>DOM Manipulation</h3>
+<p>Generally, we recommend using the &lt;canvas&gt; element to create games. The performance is increasingly quick and it gives you more control and flexibility over per-pixel manipulation, making game development easier. However, manipulating the <a href="http://en.wikipedia.org/wiki/Document_Object_Model">Document Object Model (DOM)</a> can have performance benefits depending on what and where you’re developing— especially on mobile.</p>
+<p>To get a sense of the performance differences, read through <a href="http://blog.frontendforce.com/2010/03/games-development-in-javascript-canvas-vs-dom-benchmark/">this article at Frontend Force</a> and run some of the tests available.</p>
+<p>If you’re interested in using DOM manipulation, Crafty JS and <a href="http://www.limejs.com/">Lime JS</a> are game engines that support this. Lime JS works on desktop and mobile, is open source and <a href="https://github.com/digitalfruit/limejs">is available on GitHub</a>. Check out the <a href="http://www.limejs.com/static/roundball/index.html">Roundball sample game</a> for an example running Lime JS.</p>
+<h3>Making the Game Load Fast</h3>
+<p>In order to ensure that your game loads quickly, you should package up as many static resources as possible. The fewer network requests your game makes, the faster it will load, especially on mobile. This includes images, Javascript, CSS and anything else that takes another network request to download.</p>
+<p>If you’re interested in learning why this is important, read <a href="http://css-tricks.com/158-css-sprites/">this article at CSS Tricks</a>.</p>
+<p>There are a couple of tools available that will compile multiple images into a spritesheet for you. First is the <a href="http://spritegen.website-performance.org/">CSS Sprite Generator</a>, a free and open source web-based tool. Also, there’s <a href="http://www.texturepacker.com/">Texture Packer</a>, a downloadable tool.</p>
+<h2>3D Game Engines</h2>
+<p>Also built on top of canvas, WebGL is actively being implemented into modern desktop browsers, allowing 3D development. No mobile browsers currently support WebGL. <a href="http://learningwebgl.com/blog/">Learning WebGL</a> is a great resource to follow the news, discover demos, and know when browsers have started supporting WebGL.</p>
+<p>There are a number of 3D WebGL-based engines under active development. We’ve highlighted some of the top engines below.</p>
+<h3><a href="https://github.com/mrdoob/three.js#readme">Three.js</a></h3>
+<p>Three.js is an open source 3D graphics engine that has been used in projects like <a href="http://www.ro.me/">ROME</a>.</p>
+<p>You can learn more, try out demos, and download the source at the <a href="https://github.com/mrdoob/three.js">GitHub repo</a>.</p>
+<p>Also freely available and open source are <a href="https://github.com/supereggbert/GLGE">GLGE</a> and <a href="https://github.com/cathyatseneca/c3dl">C3DL</a>.</p>
+<h3><a href="http://benvanik.github.com/WebGL-Inspector/">WebGL Inspector</a></h3>
+<p>Similar to Firebug, this tool helps you debug WebGL issues. It has functionality like injecting into pages, embedding in an existing application with a single script include, and capturing entire GL frames.</p>
+<p>Learn more about it on the <a href="http://benvanik.github.com/WebGL-Inspector/">WebGL Inspector</a> site.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Facebook HTML5 Resource Center.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

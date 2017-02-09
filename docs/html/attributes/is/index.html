@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>is · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Describes the base element from which the element with this attribute is extended." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/attributes/">attributes</a></li><li><a href="/html/attributes/is/">is</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>is</h1>
+<h2>Summary</h2>
+<p>Describes the base element from which the element with this attribute is extended.</p>
+<table class="wikitable">
+<tr>
+<th>
+Applies to
+</th>
+<td>
+dom/HTMLElement
+</td>
+</tr>
+</table>
+Extending an element with [document.createElement](/w/index.php?title=dom/document/createElement&action=edit&redlink=1) creates a new element. To use that element in markup, you must describe the element with a tag and include the `is=` attribute with the value of the base element from which the new element is extended. See examples.
+<h2>Examples</h2>
+<p>Markup for an extended element.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">is</span>=<span class="hljs-value">"mega-button"</span>&gt;</span>
+</code></pre>
+<p>Creates the custom element 'mega-button’, which is extended from the ‘button’ element.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> megaButton = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'button'</span>, <span class="hljs-string">'mega-button'</span>);
+<span class="hljs-comment">// megaButton instanceof MegaButton === true</span>
+</code></pre>
+<h2>Usage</h2>
+<pre><code> The extended element name must contain at least one dash (-). So for example, &lt;x-foo&gt;, &lt;foo-element&gt;, and &lt;my-foo-element&gt; are valid names, while &lt;tabs&gt; and &lt;foo_bar&gt; are not.
+</code></pre>
+<h2>Notes</h2>
+<p>The custom element name must not be one of the following existing hyphen-containing element names:</p>
+<ul>
+<li>annotation-xml</li>
+<li>color-profile</li>
+<li>font-face</li>
+<li>font-face-src</li>
+<li>font-face-uri</li>
+<li>font-face-format</li>
+<li>font-face-name</li>
+<li>missing-glyph</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/custom/index.html">Custom Elements</a></dt>
+<dd>Working draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Web Components</h4>
+<ul>
+<li><p><a href="/docs/dom/Document/register">register</a></p></li>
+<li><p><a href="/docs/dom/shadowdom">shadowdom</a></p></li>
+<li><p><strong>is</strong></p></li>
+<li><p><a href="/docs/html/attributes/reset-style-inheritance">reset-style-inheritance</a></p></li>
+<li><p><a href="/docs/html/elements/content">content</a></p></li>
+<li><p><a href="/docs/html/elements/element">element</a></p></li>
+<li><p><a href="/docs/html/elements/template">template</a></p></li>
+</ul>
+<h3>External resources</h3>
+<p>See <a href="http://www.html5rocks.com/en/tutorials/webcomponents/customelements/">Custom Elements</a> on <a href="http://www.html5rocks.com">HTML5Rocks!</a>.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/en/tutorials/webcomponents/customelements/">Custom Elements article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

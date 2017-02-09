@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WPD/Multilanguage Support · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Multilanguage_Support/">WPD/Multilanguage Support</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WPD/Multilanguage Support</h1>
+<h2>Design Goals</h2>
+<ul>
+<li>The default language of the site should be English</li>
+<li>There should be a single site hierarcy</li>
+<li>Translations should be a “first-class citizen” of the site</li>
+<li>It should be easy to discover which translations of a page are available</li>
+<li>Users should be able to choose a language of preference
+<ul>
+<li>When navigating to an article, if there is a translated version of that article available in the user’s language of choice, that version of the article should be presented</li>
+<li>Regardless of language preference, users should be able to navigate easily to the English-language version of an article (and possibly directly to other available translations)</li>
+<li>Automatic language negotiation should not be based on the location of the user (e.g. when a German who hasn’t set their language preference travels to France, the English-language version of pages should be served)</li>
+</ul></li>
+<li>We should have an infrastructure that encourages and makes it easy for people to provide translations</li>
+<li>For each article, we should allow an translation into an unlimited number of languages, but there should only be a single canonical translation of any given article into a particular language (e.g. there should be 1-to-1 translations)</li>
+<li>Contributors should be able to create original content in other languages, which may be translated into English or other languages</li>
+<li>There should be a way to tell if the original version of an article has changed since the translation was made</li>
+<li>Translations should use standard BCP 47 <a href="http://www.w3.org/International/articles/language-tags/">primary language tags</a> (e.g. <em>zh</em> for Mandarin Chinese), though in rare cases extended language subtags may also be used (e.g. <em>zh-hans</em> for Simplified Chinese, or <em>az-Latn</em> for Azerbaijani written in Latin script rather than Arabic)</li>
+<li>We should consider whether language tags should appear by default in the URL, or if the language tag should only appear in the URL to force the user to a specific language version of an article</li>
+</ul>
+<h2>Mechanism</h2>
+<p>This site will be using the MediaWiki convention of treating non-English articles (whether translations or original material) as <strong>subpages</strong> of the main article (which is assumed to be English). For example, the URL for the article on the CSS property <code>border-radius</code>, would be nested like so:</p>
+<ul>
+<li>webplatform.org/docs/css/properties/border-radius</li>
+</ul>
+<p><em>docs</em> is the wiki root, <em>css</em> is a subpage of <em>docs</em>, <em>properties</em> is a subpage of <em>css</em>, and <em>border-radius</em> is a subpage of <em>properties</em>.</p>
+<p>Translations of this article would be subpages of the article itself. For example:</p>
+<ul>
+<li><strong>Chinese:</strong> webplatform.org/docs/css/properties/border-radius/<strong>zh</strong></li>
+<li><strong>French:</strong> webplatform.org/docs/css/properties/border-radius/<strong>fr</strong></li>
+<li><strong>Hindi:</strong> webplatform.org/docs/css/properties/border-radius/<strong>hi</strong></li>
+<li><strong>Iranian Persian:</strong> webplatform.org/docs/css/properties/border-radius/<strong>pes</strong></li>
+<li><strong>Swahili:</strong> webplatform.org/docs/css/properties/border-radius/<strong>sw</strong></li>
+</ul>
+<p>This mechanism applies not only to the final “leaf” node articles, those at the end of the information hierarchy chain, but also to each level above that, the organizational or aggregation articles; each level has its own potential translation, like so:</p>
+<ul>
+<li>webplatform.org/docs/<strong>fr</strong></li>
+<li>webplatform.org/docs/css/<strong>fr</strong></li>
+<li>webplatform.org/docs/css/properties/<strong>fr</strong></li>
+<li>webplatform.org/docs/css/properties/border-radius/<strong>fr</strong></li>
+</ul>
+<p>This allows each language to reuse the same underlying information hierarchy and automatic semantic and structural mechanisms of the wiki system.</p>
+<h2>User Experience</h2>
+<h3>Readers</h3>
+<p>Each article will feature a language picker (not flags, which are controversial), showing all available translations for that article. If the user picks a particular language, that is saved as a preference, and that language becomes that user’s default until they actively pick another language.</p>
+<p>From any given translated page, the user can always return to the main (English-language version) article; the user should also be able to select any other translation of that same main article, from whatever translation they happen to be on (including the English-language version).</p>
+<p><strong>Open Question:</strong> Is it okay for the language tag to always appear in the URL? This may be a technical problem with MediaWiki, or may be solved by server-based content-negotiation.</p>
+<h4>Search and Categories</h4>
+<p>By default, only the English-language versions of article should show up in search results or category pages. Users can select the languages they wish to receive search results in.</p>
+<h3>Translators</h3>
+<p>We intend to provide infrastructure, resources, and rewards for translators to localize our articles. Many details of this still need to be discussed and decided.</p>
+<p>For each article, if there is not translation available, the user can select a language to translate into, and a subpage for that language will be created; optionally, a stub may be created from an automatic translation service, with the article automatically flagged as a stub.</p>
+<h4>Translation Teams</h4>
+<p>Once the site becomes known, we should actively recruit local Web developers to create translations for their language area. Some of these might come from W3C Members or W3C Offices, or from local offices of the Stewards; others may come from various Web developer communities.</p>
+<p>Organizationally, we could pick “Translation Team Leads” on a merit or reputation basis. In turn, these Team Leads will help coordination the localization efforts, coordinating with the WebPlatform leads and admins.</p>
+<h3>Rewards</h3>
+<p><strong>Community Service:</strong> The simplest reward is providing a framework in which high-quality content and multiple translations can exist and thrive. This reward may be altruistic or enlightened self-interest.</p>
+<p><strong>Attribution:</strong> Since all translations will be marked with the contributor’s username, and linked to their profile, they will get some degree of credibility and recognition from their contribution.</p>
+<p><strong>Authority:</strong> People who prove their expertise and willingness to help may be candidates for becoming Team Leads, or site admins.</p>
+<p><strong>Badges:</strong> People should get special badges for a certain number of translations (or quantity of translation), for organizing localization sprints, and so on. They can display these badges on their user profile, or on their own site.</p>
+<h4>Template Translations</h4>
+<p>Since the different Semantic Forms contain English-language terms for their output, we should localize these forms, if that’s possible.</p>
+<h2>Automatic Translation</h2>
+<p>The <a href="http://www.mediawiki.org/wiki/Extension:Live_Translate">Live Translate extension</a> allows the user translate an article via Google’s or Microsoft’s machine-translation services. In light of the highly technical nature of our content, with Web development and design jargon, this is likely to produce adequate translations. However, we could install the extension, to make it available to readers for pages that haven’t yet been localized, or for translators to use as a first-pass solution that they later rework.</p>
+<h2>Notes</h2>
+<p><strong>Richard Ishida:</strong></p>
+<ul>
+<li>language tags should only appear in urls when you want to force the user to a specific language version of a page
+<ul>
+<li>ie. in the general case, use example.org/html/elements/video and NOT example.org/html/elements/video/fr or some such</li>
+</ul></li>
+<li>there should be a mechanism for users to be directed by default to the language version of a page that corresponds to their browser language preferences</li>
+<li>there should be an additional mechanism for someone to specify that they want to visit this site in a language that is different from their browser preference</li>
+<li>there should be links on each page to the same page in all existing translations</li>
+</ul>
+<p>(See <a href="https://www.w3.org/2012/05/22-webdoc-minutes.html">22 May 2012</a> teleconference for more details.)</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

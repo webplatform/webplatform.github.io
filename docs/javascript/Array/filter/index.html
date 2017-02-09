@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>filter · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Returns the elements of an array that meet the condition specified in a callback function." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Array/">Array</a></li><li><a href="/docs/javascript/Array/filter/">filter</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>filter</h1>
+<h2>Summary</h2>
+<p>Returns the elements of an array that meet the condition specified in a callback function.</p>
+<h2>Syntax</h2>
+<pre><code>filter( callbackfn [, thisArg ])
+</code></pre>
+<dl>
+<dt><strong>callbackfn</strong></dt>
+<dd>Required. A function that accepts up to three arguments. The <strong>filter</strong> method calls the callbackfn function one time for each element in the array.
+</dd>
+<dt><strong>thisArg</strong></dt>
+<dd>Optional. An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>A new array that contains all the values for which the callback function returns true. If the callback function returns false for all elements of array1 , the length of the new array is 0.</p>
+<h2>Examples</h2>
+<p>The following example shows how to use the <strong>filter</strong> method.</p>
+<pre><code class="js"><span class="hljs-comment">// Define a callback function.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CheckIfPrime</span>(<span class="hljs-params">value, index, ar</span>) </span>{
+     high = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.sqrt(value)) + <span class="hljs-number">1</span>;
+
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> div = <span class="hljs-number">2</span>; div &lt;= high; div++) {
+         <span class="hljs-keyword">if</span> (value % div == <span class="hljs-number">0</span>) {
+             <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+         }
+     }
+     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+ }
+
+ <span class="hljs-comment">// Create the original array.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">31</span>, <span class="hljs-number">33</span>, <span class="hljs-number">35</span>, <span class="hljs-number">37</span>, <span class="hljs-number">39</span>, <span class="hljs-number">41</span>, <span class="hljs-number">43</span>, <span class="hljs-number">45</span>, <span class="hljs-number">47</span>, <span class="hljs-number">49</span>, <span class="hljs-number">51</span>, <span class="hljs-number">53</span>];
+
+ <span class="hljs-comment">// Get the prime numbers that are in the original array.</span>
+ <span class="hljs-keyword">var</span> primes = numbers.filter(CheckIfPrime);
+
+ <span class="hljs-built_in">document</span>.write(primes);
+ <span class="hljs-comment">// Output: 31,37,41,43,47,53</span>
+</code></pre>
+<p>In the following example, the callbackfn argument includes the code of the callback function.</p>
+<pre><code class="js"><span class="hljs-comment">// Create the original array.</span>
+ <span class="hljs-keyword">var</span> arr = [<span class="hljs-number">5</span>, <span class="hljs-string">"element"</span>, <span class="hljs-number">10</span>, <span class="hljs-string">"the"</span>, <span class="hljs-literal">true</span>];
+
+ <span class="hljs-comment">// Create an array that contains the string</span>
+ <span class="hljs-comment">// values that are in the original array.</span>
+ <span class="hljs-keyword">var</span> result = arr.filter(
+     <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+         <span class="hljs-keyword">return</span> (<span class="hljs-keyword">typeof</span> value === <span class="hljs-string">'string'</span>);
+     }
+ );
+
+ <span class="hljs-built_in">document</span>.write(result);
+ <span class="hljs-comment">// Output: element, the</span>
+</code></pre>
+<p>The following example displays the names of properties that start with the letter “css” in the <code>window</code> DOM object.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> filteredNames = <span class="hljs-built_in">Object</span>.getOwnPropertyNames(<span class="hljs-built_in">window</span>).filter(IsC);
+
+     <span class="hljs-keyword">for</span> (i <span class="hljs-keyword">in</span> filteredNames)
+         <span class="hljs-built_in">document</span>.write(filteredNames[i] + <span class="hljs-string">"&lt;br/&gt;"</span>);
+
+ <span class="hljs-comment">// Check whether the string starts with "css".</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">IsC</span>(<span class="hljs-params">value</span>) </span>{
+     <span class="hljs-keyword">var</span> firstChar = value.substr(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>);
+     <span class="hljs-keyword">if</span> (firstChar.toLowerCase() == <span class="hljs-string">"css"</span>)
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+     <span class="hljs-keyword">else</span>
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     }
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// CSSRule</span>
+ <span class="hljs-comment">// CSSFontFaceRule</span>
+ <span class="hljs-comment">// CSSImportRule</span>
+ <span class="hljs-comment">// CSSMediaRule</span>
+ <span class="hljs-comment">// CSSNamespaceRule</span>
+ <span class="hljs-comment">// CSSPageRule</span>
+ <span class="hljs-comment">// CSSRuleList</span>
+ <span class="hljs-comment">// CSSStyleDeclaration</span>
+ <span class="hljs-comment">// CSSStyleRule</span>
+ <span class="hljs-comment">// CSSStyleSheet</span>
+</code></pre>
+<p>The following example illustrates the use of the thisArg argument, which specifies an object to which the this keyword can refer.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> checkNumericRange = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>{
+     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'number'</span>)
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     <span class="hljs-keyword">else</span>
+         <span class="hljs-keyword">return</span> value &gt;= <span class="hljs-keyword">this</span>.minimum &amp;&amp; value &lt;= <span class="hljs-keyword">this</span>.maximum;
+ }
+
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">6</span>, <span class="hljs-number">12</span>, <span class="hljs-string">"15"</span>, <span class="hljs-number">16</span>, <span class="hljs-string">"the"</span>, -<span class="hljs-number">12</span>];
+
+ <span class="hljs-comment">// The obj argument enables use of the this value</span>
+ <span class="hljs-comment">// within the callback function.</span>
+ <span class="hljs-keyword">var</span> obj = { minimum: <span class="hljs-number">10</span>, maximum: <span class="hljs-number">20</span> }
+
+ <span class="hljs-keyword">var</span> result = numbers.filter(checkNumericRange, obj);
+
+ <span class="hljs-built_in">document</span>.write(result);
+ <span class="hljs-comment">// Output: 12,16</span>
+</code></pre>
+<p>The <strong>filter</strong> method can be applied to a string instead of an array. The following example shows how to do this.</p>
+<pre><code class="js"><span class="hljs-comment">// Define a callback function that returns true</span>
+ <span class="hljs-comment">// if the current array element follows a space</span>
+ <span class="hljs-comment">// or is the first character.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CheckValue</span>(<span class="hljs-params">value, index, ar</span>) </span>{
+     <span class="hljs-keyword">if</span> (index == <span class="hljs-number">0</span>)
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+     <span class="hljs-keyword">else</span>
+         <span class="hljs-keyword">return</span> ar[index - <span class="hljs-number">1</span>] === <span class="hljs-string">" "</span>;
+ }
+
+ <span class="hljs-comment">// Create a string.</span>
+ <span class="hljs-keyword">var</span> sentence = <span class="hljs-string">"The quick brown fox jumps over the lazy dog."</span>;
+
+ <span class="hljs-comment">// Create an array that contains all characters that follow a space.</span>
+ <span class="hljs-keyword">var</span> subset = [].filter.call(sentence, CheckValue);
+
+ <span class="hljs-comment">// You can use this alternative syntax.</span>
+ <span class="hljs-comment">//var subset = Array.prototype.filter.call(sentence, CheckValue);</span>
+
+ <span class="hljs-built_in">document</span>.write(subset);
+ <span class="hljs-comment">// Output: T,q,b,f,j,o,t,l,d</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The <strong>filter</strong> method calls the callbackfn function one time for each element in the array, in ascending index order. The callback function is not called for missing elements of the array.</p>
+<p>In addition to array objects, the <strong>filter</strong> method can be used by any object that has a length property and that has numerically indexed property names.</p>
+<p>The syntax of the callback function is as follows:</p>
+<p><code>function callbackfn(value, index, array1)</code></p>
+<p>You can declare the callback function by using up to three parameters.</p>
+<p>The following table lists the callback function parameters.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Callback argument</th><th style="text-align:left">Definition</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">value</td><td style="text-align:left">The value of the array element.</td></tr>
+<tr><td style="text-align:left">index</td><td style="text-align:left">The numeric index of the array element.</td></tr>
+<tr><td style="text-align:left">array1</td><td style="text-align:left">The array object that contains the element.</td></tr>
+</tbody>
+</table>
+<p>The <strong>filter</strong> method does not directly modify the original array, but the callback function might modify it. The following table describes the results of modifying the array object after the <strong>filter</strong> method starts.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Condition after the <strong>filter</strong> method starts</th><th style="text-align:left">Element passed to callback function?</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Element is added beyond the original length of the array.</td><td style="text-align:left">No.</td></tr>
+<tr><td style="text-align:left">Element is added to fill in a missing element of the array.</td><td style="text-align:left">Yes, if that index has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is changed.</td><td style="text-align:left">Yes, if that element has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is deleted from the array.</td><td style="text-align:left">No, unless that element has already been passed to the callback function.</td></tr>
+</tbody>
+</table>
+<h2>Exceptions</h2>
+<p>If the callbackfn argument is not a function object, a <strong>TypeError</strong> exception is thrown.</p>
+<h3>Requirements</h3>
+<p>Supported in the following document modes: Internet Explorer 9 standards, Internet Explorer 10 standards, and Internet Explorer 11 standards. Also supported in Windows Store apps. Not supported in the following document modes: Quirks, Internet Explorer 6 standards, Internet Explorer 7 standards, Internet Explorer 8 standards.</p>
+<h2>See also</h2>
+<h3>Specification</h3>
+<p>[15.4.4.20 Array.prototype.filter ( callbackfn <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.20"> , thisArg</a> )]</p>
+<p>ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+<p>Array.prototype.filter ( callbackfn [ , thisArg ] )</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff679973(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

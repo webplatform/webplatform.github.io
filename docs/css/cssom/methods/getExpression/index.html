@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>getExpression · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/cssom/">cssom</a></li><li><a href="/docs/css/cssom/methods/">methods</a></li><li><a href="/docs/css/cssom/methods/getExpression/">getExpression</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>getExpression</h1>
+<p>Method of <a href="/docs/css/cssom/methods">css/cssom/methods</a><a href="/docs/css/cssom/methods">css/cssom/methods</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> object = object.getExpression(PropertyName);
+</code></pre>
+<h2>Parameters</h2>
+<h3>PropertyName</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>String</strong> that specifies the name of the property from which to retrieve the expression.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type DOM NodeDOM Node</p>
+<p>A variant value representing the expression of the property.</p>
+<h2>Examples</h2>
+<p>The following examples demonstrate how to use the <strong>getExpression</strong> method to retrieve CSS properties. This example retrieves the <a href="/docs/css/properties/width"><strong>width</strong></a> property of a <strong>span</strong> object.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"trueBlueSpan"</span>
+    <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color:lightblue; width:100px"</span>&gt;</span>
+    The width of this blue span is set inline at 100 pixels.
+<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oldYellowSpan"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color:lightyellow;
+    width:200px"</span>&gt;</span>
+    The width of this yelllow span is set inline at 200 pixels.
+<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"AlGreenSpan"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color:lightgreen;
+    width:expression(trueBlueSpan.style.pixelWidth +
+    oldYellowSpan.style.pixelWidth)"</span>&gt;</span>
+    Click the button below to see the expression used to set
+    the width of this span.
+<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">alert(AlGreenSpan.style.getExpression("width"));</span>&gt;</span>
+    See Expression<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p>In the following example, the <a href="/docs/css/cssom/methods/setExpression"><strong>setExpression</strong></a> method is used to set the <a href="/docs/css/properties/width"><strong>width</strong></a> property of a blue <strong>input type=text</strong> object equal to the sum of the values in two other <strong>input type=text</strong> objects. When the user clicks the <strong>input type=button</strong> element, the <strong>getExpression</strong> method is used to display the expression.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">language</span>=<span class="hljs-value">"JScript"</span>&gt;</span><span class="actionscript">
+<span class="hljs-keyword">var</span> s;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnInit</span><span class="hljs-params">()</span> </span>{
+Box3.style.setExpression(<span class="hljs-string">"width"</span>,<span class="hljs-string">"eval(Box1.value) + eval(Box2.value)"</span>,
+<span class="hljs-string">"jscript"</span>);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getexp</span><span class="hljs-params">()</span> </span>{
+s=Box3.style.getExpression(<span class="hljs-string">"width"</span>);
+alert(<span class="hljs-string">"Expression for the width of the blue box is \n\n"</span> + s +
+<span class="hljs-string">"\n\nThe width property has a value of "</span> + Box3.style.width);
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">fnInit();</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"Box1"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">40</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"Box2"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">40</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"Box3"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color:blue"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"Button2"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Get expression"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"getexp()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/getExpression.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The following syntax sections show how to retrieve an expression from supported Cascading Style Sheets (CSS) and DHTML Properties.</p>
+<ul>
+<li>Use this syntax to retrieve an expression from a read/write property or from an <strong>expando</strong> property.</li>
+</ul>
+<p><code>var sExpression = object.getExpression(sPropertyName)</code></p>
+<ul>
+<li>Use this syntax to retrieve an expression from a CSS attribute.</li>
+</ul>
+<p><code>var sExpression = object.style.getExpression(sPropertyName)</code></p>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li><code>IHTMLStyle2</code></li>
+<li><code>IHTMLElement2</code></li>
+<li>currentStyle<a href="/docs/css/cssom/currentStyle">currentStyle</a></li>
+<li>runtimeStyle<a href="/docs/css/cssom/runtimeStyle">runtimeStyle</a></li>
+<li>style<a href="/docs/css/cssom/style">style</a></li>
+<li><code>Reference</code></li>
+<li>removeExpression<a href="/docs/css/cssom/methods/removeExpression">removeExpression</a></li>
+<li>setExpression<a href="/docs/css/cssom/methods/setExpression">setExpression</a></li>
+<li><code>Conceptual</code></li>
+<li><code>CSS Attributes: Index</code></li>
+<li><code>About Dynamic Properties</code></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

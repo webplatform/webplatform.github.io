@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>keypress · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="Deprecated" />
+    <meta name="description" content="Deprecated event for detecting when a key was pressed on the keyboard." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/KeyboardEvent/">KeyboardEvent</a></li><li><a href="/dom/KeyboardEvent/keypress/">keypress</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>keypress</h1>
+<h2>Summary</h2>
+<p>Deprecated event for detecting when a key was pressed on the keyboard.</p>
+<h2>Overview Table</h2>
+<table class="wikitable">
+<tr>
+<th>
+Synchronous
+</th>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<th>
+Bubbles
+</th>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<th>
+Target
+</th>
+<td>
+[dom/Element](/dom/Element), [dom/Document](/dom/Document)
+</td>
+</tr>
+<tr>
+<th>
+Cancelable
+</th>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<th>
+Default action
+</th>
+<td>
+Varies: launch text composition system; blur and focus events; DOMActivate event; other event
+</td>
+</tr>
+</table>
+This event used to be used to detect when a key value was inserted into the DOM. Developers should use beforeInput, keyup, or keydown events depending on the task instead of this event.
+<h3>Context information</h3>
+<dl>
+<dt><code>Event.target</code></dt>
+<dd>focused element which triggered the key event. This will be the root element if no suitable input element is focused.<br>
+<code>KeyboardEvent.charCode</code>
+</dd>
+<dd>legacy character code value for the event<br>
+<code>KeyboardEvent.keyCode</code>
+</dd>
+<dd>legacy numerical code for the key pressed<br>
+<code>KeyboardEvent.which</code>
+</dd>
+<dd>legacy numerical code for the key pressed<br>
+<code>KeyboardEvent.key</code>
+</dd>
+<dd>The key value of the key pressed<br>
+<code>KeybaordEvent.location</code>
+</dd>
+<dd>The location of the key on the device<br>
+<code>KeyboardEvent.altKey</code>
+</dd>
+<dd>true if ‘Alt’ modifier was active, otherwise false<br>
+<code>KeyboardEvent.shiftKey</code>
+</dd>
+<dd>true if ‘Shift’ modifier was active, otherwise false<br>
+<code>KeyboardEvent.ctrlKey</code>
+</dd>
+<dd>true if ‘Control’ modifier was active, otherwise false<br>
+<code>KeyboardEvent.metaKey</code>
+</dd>
+<dd>true if ‘Meta’ modifier was active, otherwise false<br>
+<code>KeyboardEvent.repeat</code>
+</dd>
+<dd>true if a key has been depressed long enough to trigger key repetition, otherwise false.
+</dd>
+</dl>
+<h2>Examples</h2>
+<pre><code class="js">&lt;!doctype html&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Keypress event demonstration<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+        // <span class="hljs-tag">this</span> <span class="hljs-tag">styling</span> <span class="hljs-tag">only</span> <span class="hljs-tag">exists</span> <span class="hljs-tag">so</span> <span class="hljs-tag">things</span> <span class="hljs-tag">look</span> <span class="hljs-tag">better</span> <span class="hljs-tag">on</span> <span class="hljs-tag">code</span><span class="hljs-class">.webplatform</span><span class="hljs-class">.org</span>
+        <span class="hljs-tag">form</span> <span class="hljs-rules">{
+            <span class="hljs-rule"><span class="hljs-attribute">padding-top</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;
+        }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"keypress"</span>&gt;</span>Keypress<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"keypress"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"target"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The last key code you entered for keypress is: <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"keypressEcho"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-comment">// Getting the target elements from the DOM that we would like to mess with.</span>
+    <span class="hljs-keyword">var</span> keypressInput = <span class="hljs-built_in">document</span>.getElementsByName(<span class="hljs-string">'keypress'</span>)[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">var</span> keypressTarget = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'keypressEcho'</span>);
+
+    <span class="hljs-comment">// This is going to run the function whenever a keypress event occurs on the Input element.</span>
+    keypressInput.addEventListener(<span class="hljs-string">'keypress'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-comment">//Change the text of the target element to be the number of the key pressed. (number is based on the ASCII key standard.)</span>
+        keypressTarget.textContent = e.which;
+        <span class="hljs-comment">// Log the key event as well.</span>
+        <span class="hljs-built_in">console</span>.log(e.which);
+    });
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</span></code></pre>
+<p><a href="http://code.webplatform.org/gist/8631904">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> ===Related event order===
+</code></pre>
+<ol>
+<li>keydown</li>
+<li>beforeInput</li>
+<li>keypress</li>
+<li>input</li>
+<li>keyup</li>
+</ol>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li>onkeydown<a href="/docs/dom/KeyboardEvent/keydown">onkeydown</a></li>
+<li>onkeyup<a href="/docs/dom/KeyboardEvent/keyup">onkeyup</a></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/DOM-Level-3-Events/#event-type-keypress">DOM Level 3 Events</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

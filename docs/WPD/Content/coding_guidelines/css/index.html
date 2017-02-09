@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Coding Guidelines · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="These guidelines aim to produce consistent coding style throughout all CSS examples on WebPlatform Docs.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Content/">WPD/Content</a></li><li><a href="/docs/WPD/Content/coding_guidelines/">coding guidelines</a></li><li><a href="/docs/WPD/Content/coding_guidelines/css/">css</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>CSS Coding Guidelines</h1>
+<h2>Summary</h2>
+<p>These guidelines aim to produce consistent coding style throughout all CSS examples on WebPlatform Docs.</p>
+<p>This article is based on Idiomatic CSS, a repository created by Nicolas Gallagher: <a href="https://github.com/necolas/idiomatic-css">https://github.com/necolas/idiomatic-css</a></p>
+<h2>General Principles</h2>
+<blockquote>
+<p>“Part of being a good steward to a successful project is realizing that writing code for yourself is a Bad Idea™. If thousands of people are using your code, then write your code for maximum clarity, not your personal preference of how to get clever within the spec.” - Idan Gazit</p>
+</blockquote>
+<ul>
+<li>You are not a human code compiler/compressor, so do not try to be one.</li>
+<li>All code in any code-base should look like a single person typed it, no matter how many people contributed.</li>
+<li>Strictly enforce the agreed upon style.</li>
+<li>If in doubt when deciding upon a style, use existing, common patterns.</li>
+</ul>
+<h2>Whitespace</h2>
+<p>Only one style should exist across the entire source of your code-base. Always be consistent in your use of whitespace. Use whitespace to improve readability.</p>
+<ul>
+<li>Use soft indents (spaces).</li>
+<li>Indent two spaces to maximize the amount of meaningful information per line.</li>
+</ul>
+<h2>Comments</h2>
+<ul>
+<li>Place comments on a new line above their subject.</li>
+<li>Avoid end of line comments.</li>
+<li>Keep line-length to a sensible maximum, such as 80 columns.</li>
+<li>Make liberal use of comments to break CSS code into discrete sections.</li>
+<li>Use “sentence case” comments and consistent text indentation.</li>
+</ul>
+<pre><code class="css"><span class="hljs-comment">/* ==========================================================================
+   Section comment block
+   ========================================================================== */</span>
+
+<span class="hljs-comment">/* Sub-section comment block
+   ========================================================================== */</span>
+
+<span class="hljs-comment">/**
+ * Short description using Doxygen-style comment format
+ *
+ * Long description first sentence starts here and continues on this line for a
+ * while finally concluding here at the end of this paragraph.
+ *
+ * The long description is ideal for more detailed explanations and
+ * documentation. It can include example HTML, URLs, or any other information
+ * that is deemed necessary or useful.
+ *
+ * @tag This is a tag named 'tag'
+ *
+ * @todo This is a todo statement that describes an atomic task to be completed
+ *   at a later date. It wraps after 80 characters and following lines are
+ *   indented by 2 spaces.
+ */</span>
+
+<span class="hljs-comment">/* Basic comment */</span>
+</code></pre>
+<h2>Format</h2>
+<ul>
+<li>Use one discrete selector per line in multi-selector rulesets.</li>
+<li>Include a single space before the opening brace of a ruleset.</li>
+<li>Include one declaration per line in a declaration block.</li>
+<li>Use one level of indentation for each declaration.</li>
+<li>Include single space after the colon of a declaration.</li>
+<li>Use lowercase and shorthand hex values, such as <code>#aaa</code>.</li>
+<li>Use double quotes, like this <code>content: &quot;&quot;</code>.</li>
+<li>Quote attribute values in selectors, such as <code>input[type=&quot;checkbox&quot;]</code>.</li>
+<li>Where allowed, avoid specifying units for zero-values, like this: <code>margin: 0</code>.</li>
+<li>Include a space after each comma in comma-separated property or function values.</li>
+<li>Include a semi-colon at the end of the last declaration in a declaration block.</li>
+<li>Place the closing brace of a ruleset in the same column as the first character of the ruleset.</li>
+<li>Separate each ruleset by a blank line.</li>
+</ul>
+<pre><code class="css"><span class="hljs-class">.selector-1</span>,
+<span class="hljs-class">.selector-2</span>,
+<span class="hljs-class">.selector-3</span><span class="hljs-attr_selector">[type="text"]</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">-moz-box-sizing</span>:<span class="hljs-value"> border-box</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-sizing</span>:<span class="hljs-value"> border-box</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value"> border-box</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#333</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fff</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-function">linear-gradient</span>(<span class="hljs-hexcolor">#fff</span>, <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.8</span>))</span></span>;
+}</span>
+</code></pre>
+<h3>Declaration order</h3>
+<p>Declarations should be ordered in accordance with a single principle. Structurally important properties are declared prior to all others:</p>
+<ol>
+<li>Position;</li>
+<li>Box Model (Dimension);</li>
+<li>Font;</li>
+<li>Text;</li>
+<li>Others;</li>
+<li>Animation.</li>
+</ol>
+<pre><code class="css"><span class="hljs-class">.selector</span> <span class="hljs-rules">{
+  <span class="hljs-comment">/* Position */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">bottom</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">z-index</span>:<span class="hljs-value"> <span class="hljs-number">10</span></span></span>;
+
+  <span class="hljs-comment">/* Display &amp; Box Model */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> hidden</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value"> border-box</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">10px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">10px</span> solid <span class="hljs-hexcolor">#333</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">10px</span></span></span>;
+
+  <span class="hljs-comment">/* Font */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> sans-serif</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
+
+  <span class="hljs-comment">/* Text */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> right</span></span>;
+
+  <span class="hljs-comment">/* Colors */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fff</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#000</span></span></span>;
+
+  <span class="hljs-comment">/* Others */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">cursor</span>:<span class="hljs-value"> pointer</span></span>;
+
+  <span class="hljs-comment">/* Animation */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">transition-property</span>:<span class="hljs-value"> all</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">transition-duration</span>:<span class="hljs-value"> .<span class="hljs-number">25s</span></span></span>;
+}</span>
+</code></pre>
+<p>Strict alphabetical ordering is also relatively popular, but the drawback is that it separates related properties. For example, position offsets are no longer grouped together and box-model properties can end up spread throughout a declaration block.</p>
+<h3>Exceptions and slight deviations</h3>
+<p>Large blocks of single declarations can use a slightly different, single-line format. In this case, a space should be included after the opening brace and before the closing brace.</p>
+<pre><code class="css"><span class="hljs-class">.selector-1</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">10%</span></span></span>; }</span>
+<span class="hljs-class">.selector-2</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">20%</span></span></span>; }</span>
+<span class="hljs-class">.selector-3</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">30%</span></span></span>; }</span>
+</code></pre>
+<p>Long, comma-separated property values - such as collections of gradients or shadows - can be arranged across multiple lines in an effort to improve readability and produce more useful diffs. There are various formats that could be used; one example is shown below.</p>
+<pre><code class="css"><span class="hljs-class">.selector</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value">
+    <span class="hljs-function">linear-gradient</span>(<span class="hljs-hexcolor">#fff</span>, <span class="hljs-hexcolor">#ccc</span>),
+    <span class="hljs-function">linear-gradient</span>(<span class="hljs-hexcolor">#f3c</span>, <span class="hljs-hexcolor">#4ec</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">box-shadow</span>:<span class="hljs-value">
+    <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-hexcolor">#000</span>,
+    <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-hexcolor">#ccc</span> inset</span></span>;
+}</span>
+</code></pre>
+<h2>Naming</h2>
+<p>Naming is hard, but it is very important. It is a crucial part of the process of developing a maintainable code base, and ensuring that you have a relatively scalable interface between your HTML and CSS.</p>
+<ul>
+<li>Avoid systematic use of abbreviated class names. Do not make things difficult to understand.</li>
+<li>Use clear, thoughtful, and appropriate names for HTML classes.</li>
+<li>Pick an understandable and consistent naming pattern that makes sense both within HTML files and CSS files.</li>
+<li>Selectors for components should uses class names; avoid the use of generic tags and unique ids.</li>
+</ul>
+<pre><code class="css"><span class="hljs-comment">/* Example of code with bad names */</span>
+<span class="hljs-class">.s-scr</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> auto</span></span>;
+}</span>
+
+<span class="hljs-class">.cb</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#000</span></span></span>;
+}</span>
+
+<span class="hljs-comment">/* Example of code with better names */</span>
+<span class="hljs-class">.is-scrollable</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> auto</span></span>;
+}</span>
+
+<span class="hljs-class">.column-body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#000</span></span></span>;
+}</span>
+</code></pre>
+<h2>Practical example</h2>
+<pre><code class="css"><span class="hljs-comment">/* ==========================================================================
+   Grid layout
+   ========================================================================== */</span>
+
+<span class="hljs-comment">/**
+  * Example HTML:
+  *
+  * &lt;div class="grid"&gt;
+  *   &lt;div class="cell cell-5"&gt;&lt;/div&gt;
+  *   &lt;div class="cell cell-5"&gt;&lt;/div&gt;
+  * &lt;/div&gt;
+  */</span>
+
+<span class="hljs-class">.grid</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> visible</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-comment">/* Prevent inline-block cells wrapping */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">white-space</span>:<span class="hljs-value"> nowrap</span></span>;
+  <span class="hljs-comment">/* Remove inter-cell whitespace */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-class">.cell</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> hidden</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">box-sizing</span>:<span class="hljs-value"> border-box</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">20%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-comment">/* Set the inter-cell spacing */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">10px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> solid <span class="hljs-hexcolor">#333</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">vertical-align</span>:<span class="hljs-value"> top</span></span>;
+  <span class="hljs-comment">/* Reset white-space */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">white-space</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-comment">/* Reset font-size */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">16px</span></span></span>;
+}</span>
+
+<span class="hljs-comment">/* Cell states */</span>
+
+<span class="hljs-class">.cell</span><span class="hljs-class">.is-animating</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fffdec</span></span></span>;
+}</span>
+
+<span class="hljs-comment">/* Cell dimensions
+   ========================================================================== */</span>
+
+<span class="hljs-class">.cell-1</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">10%</span></span></span>; }</span>
+<span class="hljs-class">.cell-2</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">20%</span></span></span>; }</span>
+<span class="hljs-class">.cell-3</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">30%</span></span></span>; }</span>
+<span class="hljs-class">.cell-4</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">40%</span></span></span>; }</span>
+<span class="hljs-class">.cell-5</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">50%</span></span></span>; }</span>
+
+<span class="hljs-comment">/* Cell modifiers
+   ========================================================================== */</span>
+
+<span class="hljs-class">.cell--detail</span>,
+<span class="hljs-class">.cell--important</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border-width</span>:<span class="hljs-value"> <span class="hljs-number">4px</span></span></span>;
+}</span>
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

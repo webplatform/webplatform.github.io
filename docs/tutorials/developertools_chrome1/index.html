@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to Chrome developer tools, part one · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to Chrome Developer Tools." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/developertools_chrome1/">developertools chrome1</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Introduction to Chrome developer tools, part one</h1>
+<p><strong>By Seth Ladd</strong><br>
+Originally published June 18, 2010</p>
+<h2>Summary</h2>
+<p>An introduction to Chrome Developer Tools.</p>
+<h2>Introduction</h2>
+<p>Google Chrome is a rich and powerful web browser, pioneering what is possible for applications on the web. Google has worked hard to deliver a very fast, very stable, feature rich browsing experience for end users. Google has also ensured that developers like you have a great experience with Chrome. The Developer Tools, bundled and available in Chrome and Safari, allow web developers and programmers deep access into the internals of the browser and their web applications.</p>
+<p>The Developer Tools are part of the open source Webkit project. Most of the discussion in this article applies to both Google Chrome and Safari. However, the screen shots were taken using Google Chrome 6, so there may be slight differences in your browser.</p>
+<p>In this article, we will take an overview tour of Developer Tools and point out their most popular and useful features. Our target audience is web developers who did not know of, or have not yet investigated, the Developer Tools. However, we are sure that even if you are an experienced web developer, you will pick up a tip or two.</p>
+<p>If your instance of Developer Tools does not quite match the screen shots found in this article, we recommend you upgrade to a newer version so you can follow along and gain access to all of the features described here.</p>
+<h2>Overview</h2>
+<p>Overall, there are eight main groups of tools available in Developer Tools, and the capabilities are being extended with every release. Chrome now offers Elements, Resources, Scripts, Timeline, Profiles, Storage, Audits, and Console.</p>
+<h3>Elements</h3>
+<p><em>Elements tab</em> <img src="//static.webplatform.org/0/03/icdt01-elements.jpg" alt="icdt01-elements.jpg"></p>
+<p>The Elements tool allows you to see the web page as the browser sees it. That is, using the Elements tool, you can see the raw HTML, raw CSS styles, the Document Object Model, and manipulate any of them in real time.</p>
+<h3>Resources</h3>
+<p><em>Resources tab</em> <img src="//static.webplatform.org/e/e8/icdt02-resources.jpg" alt="icdt02-resources.jpg"></p>
+<p>Use the Resources tool to learn what components your web page or application is requesting from web servers, how long these requests take, and how much bandwidth is required. You can also view the HTTP request and response headers for each of your resources. The Resources tool is perfect for helping you speed up page load times.</p>
+<h3>Scripts</h3>
+<p><em>Scripts tab</em> <img src="//static.webplatform.org/6/63/icdt03-scripts.jpg" alt="icdt03-scripts.jpg"></p>
+<p>To peer inside the JavaScript for a page, you use the Scripts tool. Here you can find a list of scripts required by the page plus a full featured script debugger. You can even change the JavaScript on the fly!</p>
+<h3>Timeline</h3>
+<p><em>Timeline tab</em> <img src="//static.webplatform.org/7/71/icdt04-timeline.jpg" alt="icdt04-timeline.jpg"></p>
+<p>For advanced timing and speed analysis, the Timeline tool offers in-depth visibility into various Chrome behind-the-scenes activities. You can learn how long the browser takes to handle DOM events, render page layouts, and paint the window.</p>
+<h3>Profiles</h3>
+<p><em>Profiles tab</em> <img src="//static.webplatform.org/2/28/icdt05-profiles.jpg" alt="icdt05-profiles.jpg"></p>
+<p>The Profiles tool helps you capture and analyze the performance of JavaScript scripts. For example, you can learn which functions take the most time to execute and zero in on exactly where to optimize.</p>
+<h3>Storage</h3>
+<p><em>Storage tab</em> <img src="//static.webplatform.org/0/03/icdt06-storage.jpg" alt="icdt06-storage.jpg"></p>
+<p>Modern web applications require more persistence than simply cookies, and the Storage tool helps you track, query, and debug local browser storage. This tool can display and query data stored in local databases, local storage, session storage, and cookies.</p>
+<h3>Audit</h3>
+<p><em>Audit tab</em> <img src="//static.webplatform.org/6/6d/icdt07-audits.jpg" alt="icdt07-audits.jpg"></p>
+<p>The Audit tool is like having your own web optimization consultant sitting next to you. This tool can analyze a page as it loads and provide suggestions and optimizations for decreasing page load time and increase perceived (and real) responsiveness.</p>
+<h3>Console</h3>
+<p><em>Console tab</em> <img src="//static.webplatform.org/1/1a/icdt08-console.jpg" alt="icdt08-console.jpg"></p>
+<p>Last but definitely not least, the Developer Tools offer a full featured Console. From the Console, you can enter arbitrary JavaScript and programmatically interact with your page.</p>
+<h2>Starting Up</h2>
+<p>It’s easy to start the Developer Tools while inside Chrome.</p>
+<p>For any operating system, you can simply right-click on any element in the page and select the <strong>Inspect Element</strong> option from the context menu. This will open the Developer Tools and drill down right to the element you clicked on.</p>
+<p>To see this in action, visit <code>http://www.google.com</code> in the Chrome browser. Right click on the Google logo, and you will see the following options:</p>
+<p><em>Opening the inspector</em> <img src="//static.webplatform.org/8/8c/icdt09-inspector.jpg" alt="icdt09-inspector.jpg"></p>
+<p>Selecting <strong>Inspect Element</strong> will bring up the Developer Tools, which should look like the following:</p>
+<p><em>Inside the element inspector</em> <img src="//static.webplatform.org/3/31/icdt10-inside.jpg" alt="icdt10-inside.jpg"></p>
+<p>Notice how the Developer Tools opens inside of the Elements tab and automatically drills down to, and highlights, the <code>&lt;img&gt;</code> tag for the Google logo. This is very useful when you are curious which HTML generated a particular page element.</p>
+<p>You may also open the Developer Tools with a simple keyboard shortcut. Depending on your operating system, try the following:</p>
+<ul>
+<li>On Windows and Linux, press <strong>Control-Shift-J</strong>.</li>
+<li>On Mac, press <strong>Command-Option-J</strong>.</li>
+</ul>
+<p>Finally, you can choose to open the Developer Tools from the main browser menu.</p>
+<p>On a Mac, and from the main application menu bar, select <strong>View &gt; Developer &gt; Developer Tools</strong>.</p>
+<p><em>Opening the Developer Tools on a Mac</em> <img src="//static.webplatform.org/8/8f/icdt11-opening.jpg" alt="icdt11-opening.jpg"></p>
+<p>On a Windows PC, you should use the <strong>Page</strong> menu at the top right, and select <strong>Developer &gt; Developer Tools</strong>.</p>
+<p><em>Opening the Developer Tools on Windows</em> <img src="//static.webplatform.org/5/59/icdt12-windows.jpg" alt="icdt12-windows.jpg"></p>
+<p>Now that you have the Developer Tools open and ready, let’s begin by exploring the elements on Google’s homepage.</p>
+<h2>Elements</h2>
+<p><em>Selecting the Elements tab</em> <img src="//static.webplatform.org/d/d4/icdt13-elements2.jpg" alt="icdt13-elements2.jpg"></p>
+<p>The first tab in the Developer Tools is Elements. This is your window into the structure of the web page, presented as your browser sees it.</p>
+<h3>DOM Browsing</h3>
+<p>You will often visit the Elements tab when you need to identify the HTML snippet for some aspect of the page. For example, you may be curious if an image has an HTML <code>id</code> attribute, and what that attribute’s value is.</p>
+<p>The Elements tab is sometimes a better way to “view source” for a page. Inside the Elements tab, the page’s DOM will be nicely formatted, showing you HTML elements, their ancestors, and their descendants. Too often, pages you visit will have minified or simply ugly HTML which makes it hard to see how the page is structured. The Elements tab is your solution for viewing the real underlying structure of the page.</p>
+<p>For example, the following is the output from the “view source” of the Google homepage.</p>
+<p><em>Google.com’s minified source</em> <img src="//static.webplatform.org/9/9a/icdt14-minified.jpg" alt="icdt14-minified.jpg"></p>
+<p>It’s hard to read the source because it is optimized and minified. The format is good for clients and servers, but difficult for developers!</p>
+<p>Instead, when you want to read the source of a page, use the Elements Tab to view a pretty-printed, syntax-highlighted element hierarchy.</p>
+<p><em>The Elements inspector pretty-printed HTML</em> <img src="//static.webplatform.org/a/ac/icdt15-pretty.jpg" alt="icdt15-pretty.jpg"></p>
+<p>The Elements tab also allows you to browse, interact, and sometimes even change the Styles, Metrics, Properties, and Event Listeners for any element on the page.</p>
+<h3>Styles Browsing</h3>
+<p>The cascading nature of CSS makes the Styles browser in the Elements tab very useful. Sometimes, styles collapse onto themselves and unintended visuals appear. Knowing which style rule the browser is applying to the element helps you debug such an issue.</p>
+<p>Clicking on any element in the Elements tab displays all the styles attached to that element.</p>
+<p><em>CSS styling in the inspector</em> <img src="//static.webplatform.org/c/cc/icdt16-styling.jpg" alt="icdt16-styling.jpg"></p>
+<p>You’ll see in the screen shot above that we’re able to identify all the style attributes that are being applied. For example, the padding comes directly from the &lt;img&gt; element’s <code>style</code> attribute. The width and height, however, come from their respective native attributes. Interestingly, you can tell there are also styles inherited from the <code>&gt;center&lt;</code> tag, the <code>&gt;body&lt;</code> tag, and others.</p>
+<p>While it’s great to see the individual styles and where they come from, it’s also very useful to see the final set of styles after they are computed and applied to the element. You can see the final product by selecting the <strong>Computed Style</strong> menu, as shown in the screenshot below.</p>
+<p><em>Browser computed styles are also displayed</em> <img src="//static.webplatform.org/e/eb/icdt17-computed.jpg" alt="icdt17-computed.jpg"></p>
+<p>Next, we’ll take a brief look at the other features provided by the Elements tab. We’ll cover the following in more detail in future articles.</p>
+<h3>Box Model</h3>
+<p>You can see the box model as it is applied to the selected element by selecting the <strong>Metrics</strong> menu:</p>
+<p><em>Viewing an element’s box model</em> <img src="//static.webplatform.org/f/ff/icdt18-box.jpg" alt="icdt18-box.jpg"></p>
+<h3>Element Properties</h3>
+<p>You can see all of the properties of the element as JavaScript and the DOM would see it by selecting the Properties menu:</p>
+<p><em>Viewing DOM element properties</em> <img src="//static.webplatform.org/c/c3/icdt19-properties.jpg" alt="icdt19-properties.jpg"></p>
+<h3>Event Listeners</h3>
+<p>And finally, you can even see the event listeners attached to, or that bubble through, the element via the Event Listeners menu:</p>
+<p><em>Viewing DOM element event listeners</em> <img src="//static.webplatform.org/1/10/icdt20-listeners.jpg" alt="icdt20-listeners.jpg"></p>
+<h3>Summary</h3>
+<p>There is a lot of functionality available via the Elements tab, and future articles will dive deeper into the individual menus.</p>
+<p>You should use the Elements tab when you want to see how the page looks to the browser itself. Common questions such as “How is this style computed?” or “What HTML tags generated this component?” are quickly and easily answered via the Elements tab.</p>
+<p>Think of the Elements tab like an uber-&quot;view source&quot;, allowing you to gain very sharp visibility into your page.</p>
+<p>After you’ve investigated the page, you might be wondering how the HTML, CSS, and images got there in the first place. The Resources tab, described next, shows you how the client browser and web server communicate to send over those resources.</p>
+<h2>Resources</h2>
+<p>Once your application is functioning, your next step should be to optimize the network and bandwidth performance. You should aim to make the transfer of your application from server to client as fast and as efficient as possible. Your users will thank you for the fast page loads, you’ll save money on bandwidth and server resources, and you’ll also score better in Google’s search result ranks (which now take site speed into account).</p>
+<p>The Resources tab in Developer Tools is your window into the communication between web server and client browser. You are able to see all of the resources requested by the browser (this is always very surprising!), the time it takes to receive them from the server, and how much bandwidth is used during the transfer.</p>
+<p>Ironically, running the Resources tab affects page load performance, so it is disabled by default. The first time you access the functionality, you will need to enable it for the page you are viewing.</p>
+<p><em>Enabling resources tracking</em> <img src="//static.webplatform.org/0/04/icdt21-tracking.jpg" alt="icdt21-tracking.jpg"></p>
+<p>I recommend you leave the default <strong>Only enable for this session</strong> option selected, as you do not want to needlessly incur the small performance penalty. Once you click <strong>Enable resource tracking</strong>, the page will reload, and the Developer Tools will monitor and display the resources sent from the server.</p>
+<p>The following screen shot shows the resources required, and loaded for, the Google homepage.</p>
+<p><em>Google.com’s resource tracking</em> <img src="//static.webplatform.org/1/13/icdt22-tracking2.jpg" alt="icdt22-tracking2.jpg"></p>
+<p>There’s a lot of information on this screen, so let’s take it piece by piece.</p>
+<p>The default behavior is to show you how long it took to request and load all the resources for the page. Scrolling down the Resources list may surprise you, as you may not know how many individual requests are being made by the client. A high number of requests from the client can severely impact performance. Gaining visibility as to exactly what is requested is the first step to optimization and eventual reduction of resources.</p>
+<p>If you are interested in just images or style sheets, you can filter the resource type using the menu directly under the main tab window.</p>
+<p><em>Viewing only image resources</em> <img src="//static.webplatform.org/b/b1/icdt23-images.jpg" alt="icdt23-images.jpg"></p>
+<p>You’ll also learn the order in which the resources are requested. Using the timeline display, you may gain a better understanding of why certain elements on your page show up later than others.</p>
+<p>After you gain an overview of all the requested resources and how they compose the entire request timeline, you’ll want to drill down to individual resources.</p>
+<p>If you notice that some resources are being requested every time you access the page, that is a sign that your caching headers are not configured correctly. You can view all of the headers for a resource by clicking on the resource in the left hand list.</p>
+<p><em>Viewing request headers</em> <img src="//static.webplatform.org/3/30/icdt24-headers.jpg" alt="icdt24-headers.jpg"></p>
+<p>Use the Headers display to ensure that the expected HTTP Response Code is set and the appropriate headers are provided. For example, if the resource is rarely or never changed, your server should set an Expires header for far into the future. This will tell the browser that the resource shouldn’t be requested again until that date. This reduces the number of HTTP connections required for your page, thus speeding up your site.</p>
+<h3>Summary</h3>
+<p>There is a lot more to the Resources tab, which we will cover in a future article.</p>
+<p>Use the Resources tab to gain visibility into how your client browser is communicating with the web server. Using this information, including request time, request size, and request order, you can make smart optimizations to reduce server load, costs, and increase speed and enhance user experience.</p>
+<p>Speed is very important for your web site, your users, and search engines. Once you have the number and size of the page resources reduced, and the appropriate HTTP conversations occurring, the next step is to investigate and optimize the scripts that are running in your page. Luckily the Scripts tab, discussed next, does just that.</p>
+<h2>Continued in Part 2…</h2>
+<p>The Chrome Developer Tools is a rich array of tools to help web developers investigate, debug, and optimize their web applications. There’s much more functionality than we have covered in this article. Stay tuned for Part 2, where we will cover the Scripts, Timeline, Profiles, Storage, Audits, and the Console. Feedback is always welcome, so let us know what topics you’d like more information on.</p>
+<h2>Additional Resources</h2>
+<p>For more information on the Developer Tools, we recommend the following:</p>
+<ul>
+<li><a href="http://code.google.com/events/io/2010/sessions/chrome-developer-tools.html">Chrome Developer Tools presentation video and slides from Google I/O 2010</a></li>
+<li><a href="http://www.chromium.org/devtools/google-chrome-developer-tools-tutorial">Chrome Developer Tools Tutorial</a></li>
+</ul>
+<p>And of course, stay tuned for Part 2 of this article, along with lots of other great HTML5 and Chrome content.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/developertools/part1/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

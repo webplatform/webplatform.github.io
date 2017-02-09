@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>bdo · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="The bdo element (&amp;lt;bdo&amp;gt;) allows you to specify the direction in which text is to be rendered on the page. (&amp;quot;BDO&amp;quot; stands for Bi-Directional Override.)" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/bdo/">bdo</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>bdo</h1>
+<h2>Summary</h2>
+<p>The bdo element (&lt;bdo&gt;) allows you to specify the direction in which text is to be rendered on the page. (“BDO” stands for Bi-Directional Override.)</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLElement">HTMLElement</a>
+</dd>
+</dl>
+<p>Internationalization topics related to the <code>bdo</code> element:</p>
+<ul>
+<li><a href="http://www.w3.org/International/techniques/authoring-html#bdo">Overriding the Unicode bidirectional algorithm</a></li>
+<li><a href="http://www.w3.org/International/techniques/authoring-html#inline">Mixing text direction inline</a></li>
+</ul>
+<h2>Examples</h2>
+<p>This example uses the <strong>BDO</strong> element to correct the reading order of a block of text.</p>
+<p>The following string includes text written in the left-to-right order of the English language and the right-to-left order of Hebrew: This fragment is in English, WERBEH NI SI TNEMGARF SIHT.</p>
+<p>Assume that the right-to-left text (WERBEH NI SI TNEMGARF SIHT.) already has been inverted, so that it displays in the correct direction. If you subsequently apply the Unicode bidirectional to the text, the text inverts a second time and incorrectly displays as left-to-right instead of right-to-left.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">BDO</span> <span class="hljs-attribute">DIR</span>=<span class="hljs-value">"ltr"</span>&gt;</span>This fragment is in English,
+    WERBEH NI SI TNEMGARF SIHT.<span class="hljs-tag">&lt;/<span class="hljs-title">BDO</span>&gt;</span>
+</code></pre>
+<p>[The solution is to override the bidirectional algorithm and put the block of text in the correct reading order inside a <strong>BDO</strong> element whose <a href="/docs/html/attributes/dir"><strong>DIR</strong></a> attribute is set to <strong>ltr</strong>. View live example]</p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>BDO</strong> element can be used to control the reading order of a block of text. The Unicode bidirectional algorithm automatically reverses embedded character sequences according to their inherent direction. For example, the base direction of an English document is left-to-right (ltr). If portions of a paragraph within this document contain a language with the right-to-left (rtl) reading order, you can reverse the direction of that language by applying the bidirectional algorithm. The bidirectional algorithm and the <a href="/docs/html/attributes/dir"><strong>DIR</strong></a> attribute generally suffice for embedded direction changes. However, incorrect presentations can occur when you expose formatted text to the bidirectional algorithm. For example, a paragraph containing English and Hebrew that is formatted for e-mail could be incorrectly inverted by the bidirectional algorithm. Because the reading order of the Hebrew text was inverted once for the e-mail, exposing it to the bidirectional algorithm would invert the words a second time. The <strong>BDO</strong> element turns off the algorithm and controls the reading order. The <a href="/docs/html/attributes/dir"><strong>DIR</strong></a> attribute is required when you use the <strong>BDO</strong> element. This element is available in HTML and script as of Microsoft Internet Explorer 5.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/text-level-semantics.html#the-bdo-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-bdo-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/dirlang.html#edef-BDO">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li>direction<a href="/docs/css/properties/direction">direction</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

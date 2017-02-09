@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Maintaining Varnish/Fastly configuration · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish or Fastly configuration/">Maintaining Varnish or Fastly configuration</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Maintaining Varnish/Fastly configuration</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><strong>Maintaining Fastly configuration</strong></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>The following summarizes how to manage our Varnish caching service served by our friends at <a href="https://fastly.com">Fastly</a>. Note that the documentation describes how Varnish works but also how to manage Fastly very own Varnish cluster so we don’t have to.</p>
+<p>This document is specific on how to maintain Varnish configuration at Fastly. Notes that describes the specifics of things we should keep in mind when configuring the cache should be moved to <a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></p>
+<h2>Abastract</h2>
+<p>If your system uses cookies, which is most of the time the case, Varnish does not caches. The configuration MUST to be adjusted to each site specifics. Details such as a web application sending HTTP headers such as Cache-Control, Set-Cookie, Cookie can still prevent caching to happen.</p>
+<p>This page is about keeping notes on current Varnish configuration files and notes to help maintaining an appropriate caching strategy.</p>
+<h2>NOTES</h2>
+<h3>Varnish version and limitations</h3>
+<p>An important detail to remember is that Fastly is using Varnish 2.1.4, their configuration specifics do not support either pipe, ban, nor purging with ACL.</p>
+<p>Also, the way to provide CDN service is with what they call &quot;Shield&quot;, it is basically a layer of application that stores a local copy of what is grabbed by a service backend server. Provided that the backend server do not explicitly prevent caching, or that the VCL has appropriate adjustments, Fastly will send files from the Shield before hitting again the backend servers.</p>
+<p>VCL is the Varnish Configuration language file, throughout the panel, we can see two VCL buttons, the one beside the service name and revision is to download the generated VCL, whereas we can also provide our own VCL that must have keywords so the panel adds content to it.</p>
+<p>A recommended way to work is to follow <strong><a href="https://fastly.zendesk.com/entries/23206371-How-do-I-mix-and-match-Fastly-VCL-with-custom-VCL-">How do I mix and match Fastly VCL with custom VCL</a></strong></p>
+<h3>Details to consider</h3>
+<h4>MediaWiki</h4>
+<p>Here are the specifics for MediaWiki</p>
+<ul>
+<li>Note that most of the cookies starts with the <em>$wgDBname</em> string from the <em>Settings*.php</em> file. In the list below, its value is 'wpwiki’.</li>
+<li>Delete all cookies, except: wpwikiUserID, wpwiki_session, wpwikiUserName, Token, LoggedOut, dismissSiteNotice</li>
+<li>Only place to set cookies are when UserLogin, UserLogout</li>
+</ul>
+<p><strong>Reminder</strong> more notes about specifics for each web application we deployed are noted in <a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish"><strong>Things to consider when we expose service via Fastly and Varnish</strong></a></p>
+<h2>Accessing VCL configuration from Fastly</h2>
+<p>To access/overwrite the file in Fastly, go to: <img src="//static.webplatform.org/6/68/20131121-Fastly-vcl-buttons.png" alt="20131121-Fastly-vcl-buttons.png"></p>
+<ul>
+<li><a href="https://app.fastly.com/">Fastly pannel</a>, login</li>
+<li>Select targeted site (e.g. <em>docs.webplatform.org</em>)</li>
+<li>Configure tab on top, Configure button</li>
+<li>VCL on the left</li>
+</ul>
+<h4>Wizard to add a backend host</h4>
+<p>While describing how to debug an issue we had with Semantic MediaWiki, I described how to change which public IPs would be proxyed by Fastly.</p>
+<p>The screenshot below is described in <a href="/docs/WPD/Infrastructure/procedures/Rebuilding_Semantic_Media_Wiki_when_job_queue_is_going_out_of_control">WPD/Infrastructure/procedures/Rebuilding_Semantic_Media_Wiki_when_job_queue_is_going_out_of_control</a></p>
+<p><img src="//static.webplatform.org/f/fb/fastly-docs-service-hosts-screenshot.png" alt="fastly-docs-service-hosts-screenshot.png"></p>
+<h3>Current Fastly configuration</h3>
+<p>Make the content of snippet as a file and upload it to the Fastly control pannel.</p>
+<p>Configuration files are stored on <a href="https://github.com/webplatform/varnish-configs">Github, in <strong>webplatform/varnish-configs</strong> project</a>, the VCL file name should match the subdomain and also the service bane in Fastly dashboard.</p>
+<h2>Reference</h2>
+<ul>
+<li><a href="https://fastly.zendesk.com/entries/23206371-How-do-I-mix-and-match-Fastly-VCL-with-custom-VCL-">Fastly: How to mix and match Fastly VCL with custom VCL (Varnish configuration file)</a></li>
+<li><a href="https://github.com/webplatform/varnish-configs"><strong>WebPlatform</strong> varnish-configs GitHub repository</a></li>
+<li>See also more notes on the topic at <a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code sample best practices · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="Guidelines to follow for developing code samples in Web Platform Docs." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Manual_Of Style/">WPD/Manual Of Style</a></li><li><a href="/docs/WPD/Manual_Of Style/Code_sample best practices/">Code sample best practices</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Code sample best practices</h1>
+<h2>Summary</h2>
+<p>Guidelines to follow for developing code samples in Web Platform Docs.</p>
+<h2>Overview</h2>
+<p>This topic provides guidance for writing code and markup samples and snippets for documentation published to webplatform.org. It is meant to provide a quality bar for code samples and snippets, and to provide consistency of style across this documentation, not functionality. Sample code serves as a mini-portal to content. Developers use samples as documentation, and they almost always browse code before reading a topic fully. Because of its special regard, code requires special attention.</p>
+<p>At the most basic level, effective code samples and snippets should follow these top five guidelines:</p>
+<ul>
+<li>It must run as intended. While you need not include an entire .html file, code samples should indicate where the code fits in with required elements.</li>
+<li>Code samples and snippets should be simple and brief. Their purpose is to demonstrate specific functionality, not what a clever programmer you are.</li>
+<li>Follow coding best practices, where they are clear. For example, use feature detection rather than browser sniffing.</li>
+<li>Ensure that the text leading up to the sample code has a clear description of what that code accomplishes. List any assumptions the code sample or snippet makes and state prerequisites clearly and completely in its description.</li>
+<li>List any requirements for each code sample or snippet in its description.</li>
+</ul>
+<h2>Types of sample code</h2>
+<p>Broadly speaking, there are two sizes for example code: code snippets and code samples.</p>
+<p><strong>Code snippet</strong>: A code snippet is any example in the documentation. It shows how to use a specific member or how to accomplish a specific task. It might be a short snippet that focuses on a specific task (for example, how to cause a button to change color using the <code>onhover</code> event), or a longer tutorial or how-to. The code shown may not even compile out of context, but ideally it should be possible to paste the code into an existing project without extensive rewriting. A code snippet is real code; it is not pseudocode.</p>
+<p><strong>Code sample</strong>: A code sample is intended to demonstrate programming tasks or scenarios, or to demonstrate a particular program architecture that is not easily demonstrated in a code snippet (for example, how to create, populate, and manage a list). A code sample is a complete web page or application, with references to all required source files in its description.</p>
+<p>When you approach a code sample, try to put yourself in the readers’ shoes. Ask yourself questions like these to enhance your samples and the content around them:</p>
+<ul>
+<li>“What do I want to learn from this sample?” (Not “What do I want to see this sample do?”)</li>
+<li>“What parts would I want to take from this sample, and how do I find them?”</li>
+<li>“How do I know that specific code blocks do what it looks like they are supposed to do?”</li>
+<li>“How can I map my own input and output requirements to those demonstrated in the sample code components?”</li>
+<li>“Can I cut-and-paste most of this into a webpage and successfully implement the code with minimal changes?”</li>
+<li>“Where do I go to learn more? What OTHER resources are easily available?”</li>
+</ul>
+<h2>Best practices</h2>
+<p>Creating code snippets or developing full samples share many best practices:</p>
+<ul>
+<li>Comment your code well. It can be frustrating to have to determine what a sample is doing at any one point. For example, see <a href="http://code.webplatform.org/gist/9011914">http://code.webplatform.org/gist/9011914</a>.</li>
+<li>Keep it easy to scan the code.
+<ul>
+<li>Use consistent indenting and other formatting. WPD uses two spaces for each indentation.</li>
+<li>Ensure the sample flows logically from start to finish.</li>
+</ul></li>
+<li>Keep the sample focused. If you find yourself using a lot of code branching, you are probably trying to tackle too much.</li>
+<li>Use common patterns from the computer science lexicon. For example, use the MVC pattern rather than mingling the modules.</li>
+</ul>
+<p>WPD uses some specific guidelines for HTML:</p>
+<ul>
+<li>Use lowercase letters for element names.</li>
+<li>Place all attribute values in quotation marks.</li>
+<li>Replace empty attributes with values, such as <code>defer=&quot;defer&quot;</code></li>
+<li>Use a valid DOCTYPE, preferably <code>&lt;!DOCTYPE html&gt;</code></li>
+<li>Avoid browser-sniffing. Test for feature presence instead.</li>
+<li>Avoid inline styles. They make the code harder to read.</li>
+</ul>
+<p>WPD uses some specific guidelines for JavaScript:</p>
+<ul>
+<li>Check for errors via exceptions.</li>
+<li>Remember your semi-colons.</li>
+<li>Use the following pattern to create Singleton objects:</li>
+</ul>
+<!-- -->
+<pre><code>var Singleton = (function() {
+var privateVariable = &quot;…&quot;;
+  this.publicMethod = function()    {…};
+  function privateMethod() {…};
+})();
+</code></pre>
+<ul>
+<li>Use JavaScript namespaces to isolate variables and functionality from the global namespace for anything beyond simple illustrations. This makes it simpler to copy-paste sample code into other pages.</li>
+<li>If every member in your namespace is public, use object-notation to create your namespace:</li>
+</ul>
+<!-- -->
+<pre><code>var SampleNamespace = {
+  &quot;init&quot; : function() {…},
+  &quot;destroy&quot; : function() {…},
+  &quot;defaultValue&quot; : &quot;…&quot;,
+    &quot;NestedNamespace&quot; : {
+    &quot;member&quot; : &quot;...&quot;
+    }
+}
+</code></pre>
+<ul>
+<li>If your namespace requires private members, use the singleton pattern. You can combine both patterns as you nest namespaces.</li>
+<li>All JSON structures should be well-formed and conform to the JSON specification <a href="http://www.json.org">http://www.json.org</a>.</li>
+<li>Use <code>JSON.parse()</code> and <code>JSON.stringify()</code> to parse and serialize JSON strings.</li>
+</ul>
+<h2>Creating a live code example</h2>
+<p>You can create a live code example on <a href="http://code.webplatform.org/">code.webplatform.org</a> to add to your content. Live code can be a good addition to in-page snippets. To add code to code.webplatform.org and link to it, follow these steps.</p>
+<ol>
+<li>Once on code.webplatform.org, press <strong>Ctrl + N</strong> or <strong>⌘ + N</strong> to get a new example. Delete any boilerplate code.</li>
+<li>On each tab - CSS, HTML, and JS - break down your example by language section, and put the code on its respective tab. For the main JavaScript function, you don’t need to include a function name. The magic behind code.webplatform.org executes your JavaScript once the HTML has loaded. Additional JavaScript functions that are called, however, do need to be defined with a function and name.</li>
+<li>The <code>body</code> and <code>head</code> tags are not needed.</li>
+<li>In the first line of code on the <code>CSS</code> tab, add a CSS comment with the title of your example, such as <code>/* Button example */</code>. You must add a comment do regardless of whether you have CSS content or not. This is essentially the same as using <code>title</code> in the head of a webpage.</li>
+<li>Click the <code>Result</code> tab to see your example. The title for the page tab should be the same as the title of the CSS comment.</li>
+<li>Click the <code>All</code> tab, and then press <strong>CTRL + S</strong> or <strong>⌘ + S</strong> to save the page. By saving from the <code>All</code> tab, users will automatically see your code executed when they land on the page.</li>
+<li>Copy the URL from the address bar and paste it into the &quot;Live example URL (optional)&quot; field in your topic.</li>
+</ol>
+<p>A special note about using the Save button at the top of code.webplatform.com:</p>
+<ul>
+<li>To see save options, hover your mouse over the Save button (it has an icon of an arrow pointing up into a cloud). The drop-down menu shows options for saving your code. If you click either the button or the arrow, the site automatically saves your sample.</li>
+</ul>
+<p>Some final suggestions: Be simple. Be straightforward. Do not try to impress. Just teach.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

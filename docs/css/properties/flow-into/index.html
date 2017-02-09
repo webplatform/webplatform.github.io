@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>flow-into · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Diverts the selected element&#x27;s content into a named flow, used to thread content through different layout regions specified by  flow-from." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/flow-into/">flow-into</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>flow-into</h1>
+<h2>Summary</h2>
+<p>Diverts the selected element’s content into a named flow, used to thread content through different layout regions specified by flow-from.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>none</code>
+</dd>
+<dt>Applies to</dt>
+<dd>Block elements, excluding pseudo-elements such as <strong>::before</strong> or <strong>::after</strong>.
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>as specified
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+<dt><a href="/docs/css/concepts/cssom">CSS Object Model Property</a></dt>
+<dd><code>flowInto</code>
+</dd>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>flow-into: &lt;ident&gt;</code></li>
+<li><code>flow-into: none</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>none</dt>
+<dd>The element’s content remains unchanged, and is not diverted to a flow unless an ancestor element specifies it.
+</dd>
+<dt>&lt;ident&gt;</dt>
+<dd>String identifier that specifies a <em>named flow</em> into which to divert the element’s content. Common keyword values such as <strong>none</strong>, <strong>inherit</strong>, <strong>default</strong>, <strong>auto</strong>, and <strong>initial</strong> are invalid flow names, as are <strong>element</strong> and <strong>content</strong>:
+</dd>
+</dl>
+<ul>
+<li><p><strong>&lt;ident&gt; element</strong>: The <strong>element</strong> keyword explicitly specifies the entire element diverts to the named flow, not just its contents. (This is the default behavior without the keyword.)</p></li>
+<li><p><strong>&lt;ident&gt; content</strong>: Adding the <strong>content</strong> keyword overrides the default behavior described above, diverting only the element’s nested content to the named flow.</p></li>
+</ul>
+<h2>Examples</h2>
+<p>The following CSS…</p>
+<pre><code class="css"><span class="hljs-tag">article</span><span class="hljs-class">.content</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">flow-into</span>:<span class="hljs-value"> main</span></span>;
+}</span>
+
+<span class="hljs-tag">section</span><span class="hljs-class">.layout</span> &gt; <span class="hljs-tag">div</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">flow-from</span>:<span class="hljs-value"> main</span></span>;
+}</span>
+</code></pre>
+<p>…flows the article through the series of <strong>div</strong> elements, transforming them into <a href="/docs/css/concepts/region"><em>regions</em></a> and replacing the placeholder text:</p>
+<pre><code class="html">
+
+<span class="hljs-comment">&lt;!-- CONTENT --&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"content"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  ...
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- LAYOUT --&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #1<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #2<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #3<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Region #4<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+</pre>
+<p>By default, or with the <strong>element</strong> keyword, content appears as if structured as follows, but dynamically <a href="/docs/css/concepts/fragment"><em>fragmenting</em></a> from one layout region to another. (Note that as presented, this is not a valid DOM structure, and simply helps to visualize how content appears in output.)</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"content"</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...#2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+             <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+</pre>
+<p>With the <strong>content</strong> keyword specified, content fragments appear as if structured as follows, <em>without</em> the interim <strong>article</strong> element that serves as their container:</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"layout"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #1<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...#2<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+              ...
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Content #n<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+</pre>
+<h2>Usage</h2>
+<pre><code> The flow-into property diverts content from where it would ordinarily appear in the document to a named flow.  It reappears elsewhere flowing through a series of region elements whose flow-from specifies the same named flow.
+</code></pre>
+<p>An element whose ****flow-into**** specifies a named flow takes its descendents along with it by default, with two exceptions:</p>
+<ul>
+<li><p>If a descendent specifies a different named flow, it can be presented in a different series of regions specified by a corresponding <a href="/docs/css/properties/flow-from"><strong>flow-from</strong></a>.</p></li>
+<li><p>If a descendent specifies the same named flow, it is moved from within the content and then appended.</p></li>
+</ul>
+<p>Setting a descendent’s ****flow-into**** to <strong>none</strong> has no effect, and cannot be used to prevent the descendent from flowing along with the ancestor.</p>
+<p>More than one element can contribute to the same named flow, in which case their DOM order determines how they appear output within regions.</p>
+<p>For an overview of CSS Regions, see <a href="/docs/tutorials/css-regions">Using CSS Regions to flow content through a layout</a>.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-regions/">CSS Regions Module Level 1</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Regions</h4>
+<ul>
+<li><p><a href="/docs/apis/css-regions">CSS Regions API</a></p></li>
+<li><p><a href="/docs/apis/css-regions/CSSRegionStyleRule">CSSRegionStyleRule</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow">NamedFlow</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/firstEmptyRegionIndex">firstEmptyRegionIndex</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getContent">getContent()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getRegions">getRegions()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getRegionsByContent">getRegionsByContent()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/name">name</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/overset">overset</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/regionfragmentchange">regionfragmentchange</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/regionoversetchange">regionoversetchange</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlowCollection">NamedFlowCollection</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlowCollection/namedItem">namedItem()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region">Region</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/getComputedRegionStyle">getComputedRegionStyle()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/getRegionFlowRanges">getRegionFlowRanges()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/regionOverset">regionOverset</a></p></li>
+<li><p><a href="/docs/css/atrules/@region">@region</a></p></li>
+<li><p><a href="/docs/css/concepts/fragment">content fragments</a></p></li>
+<li><p><a href="/docs/css/concepts/named_flow">named flows</a></p></li>
+<li><p><a href="/docs/css/concepts/overset">overset content</a></p></li>
+<li><p><a href="/docs/css/concepts/region">regions</a></p></li>
+<li><p><a href="/docs/css/concepts/region_chain">region chains</a></p></li>
+<li><p><a href="/docs/css/properties/break-after">break-after</a></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/break-inside">break-inside</a></p></li>
+<li><p><a href="/docs/css/properties/flow-from">flow-from</a></p></li>
+<li><p><strong>flow-into</strong></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li>W3C editor’s draft: <a href="http://dev.w3.org/csswg/css3-regions/">CSS Regions Module Level 3</a></li>
+<li>Adobe Web Standards: <a href="http://html.adobe.com/webstandards/cssregions">CSS Regions</a></li>
+<li>Adobe Developer’s Network: <a href="http://www.adobe.com/devnet/html5/articles/css3-regions.html">CSS3 Regions: Rich page layout with HTML and CSS3</a></li>
+<li><a href="http://adobe.github.com/web-platform/samples/css-regions">Sample pages</a></li>
+<li><a href="http://codepen.io/collection/jabto">Additional examples on codpen.io</a>. This experimental feature is in WebKit (Chrome and Safari) and Trident (Internet Explorer). Enable experimental features to see how CSS Regions works.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

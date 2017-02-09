@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IDBVersionChangeEvent · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Proposed Recommendation" />
+    <meta name="description" content="The IDBVersionChangeEvent object represents the event object passed to the  upgradeneeded event, which fires when a database is opened using a higher version number." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/indexeddb/">indexeddb</a></li><li><a href="/apis/indexeddb/IDBVersionChangeEvent/">IDBVersionChangeEvent</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>IDBVersionChangeEvent</h1>
+<p>
+</p>
+<h2>Summary</h2>
+<p>
+The IDBVersionChangeEvent object represents the event object passed to the  upgradeneeded event, which fires when a database is opened using a higher version number.</p><p><br/></p>
+<h2>Properties</h2>
+<dl><dt><a href="/docs/apis/indexeddb/IDBVersionChangeEvent/newVersion">newVersion</a></dt>
+  <dd>Returns the new version of the database, which is the version specified by the open request.</dd>
+</dl><dl><dt><a href="/docs/apis/indexeddb/IDBVersionChangeEvent/oldVersion">oldVersion</a></dt>
+  <dd>Returns the old version of the database.</dd>
+</dl><p><br/></p>
+<h2>Methods</h2>
+<p><i>No methods.</i>
+</p>
+<h2>Events</h2>
+<p><i>No events.</i>
+</p>
+<h2>Examples</h2>
+<p>In this example, properties from the IDBVersionChangeEvent object passed to the <a href="/docs/apis/indexeddb/IDBOpenDBRequest/onUpgradeNeeded">upgradeneeded</a> event are used by the createDatabaseObjects function (not shown):
+</p>
+<div class="example">
+<pre class="js">
+try {
+  var req = window.indexedDB.open( "MyDatabase", 1.0 );
+  req.onsuccess = doDatabaseWork; 
+  req.onerror = handleErrorEvent;
+  req.onblocked = handleBlockedEvent;
+  req.onupgradeneeded = function(evt) {
+    createDatabaseObjects( 
+       evt.target.result, evt.target.transaction, 
+       evt.oldVersion, evt.newVersion );
+  }
+} catch( ex ) {
+  handleException( ex.message );
+}
+</pre>
+<p><br/></p>
+</div>
+<h2>Usage</h2>
+<pre> When you open a database, you include a version number.  If the supplied version number is greater than the version of the database on the user's device (if any), an <a href="/docs/apis/indexeddb/IDBOpenDBRequest/onUpgradeNeeded">upgradeneeded</a> event is fired within the context of a version change transaction.  This context lets you create (or modify) object stores, indexes, ranges, and other database objects.
+</pre>
+<p>For more information about transaction types, see <a href="/docs/apis/indexeddb/IDBTransaction/mode">IDBTransaction mode</a>.
+</p>
+<h2>Notes</h2>
+<p>The <a href="/docs/apis/indexeddb/IDBOpenDBRequest/onUpgradeNeeded">upgradeneeded</a> event fires before the <a href="/docs/apis/indexeddb/IDBRequest/onsuccess">success</a> event, which can lead to issues when attempting to cache handles.
+</p><p> 
+</p>
+<h2>Related specifications</h2>
+<dl><dt><a rel="nofollow" class="external text" href="http://www.w3.org/TR/IndexedDB/">W3C IndexedDB Specification</a></dt>
+  <dd>W3C Proposed Recommendation</dd>
+</dl><h2>See also</h2>
+<h3>External resources</h3>
+<ul><li> <a rel="nofollow" class="external text" href="http://msdn.microsoft.com/en-us/library/jj154905.aspx">Creating and opening IndexedDB objects</a></li></ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/IndexedDB/IDBVersionChangeEvent">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">IDBVersionChangeEvent object</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

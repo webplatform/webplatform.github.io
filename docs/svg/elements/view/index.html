@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>view · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/elements/">elements</a></li><li><a href="/svg/elements/view/">view</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>view</h1>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/svg/objects/SVGElement">SVGElement</a>
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following code example shows how to zoom in and zoom out of rendered content.</p>
+<pre><code class="html">
+
+<span class="hljs-pi">&lt;?xml version="1.0" standalone="no"?&gt;</span>
+<span class="hljs-doctype">&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;</span>
+<span class="hljs-comment">&lt;!-- 400 pixels per 100 user units, or 4 pixels per 1 user unit. --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"400px"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"400px"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 100 100"</span> <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.1"</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/2000/svg"</span>
+     <span class="hljs-attribute">xmlns:xlink</span>=<span class="hljs-value">"http://www.w3.org/1999/xlink"</span>&gt;</span>  <span class="hljs-comment">&lt;!-- Required for 'xlink' usage. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>The SVG view Element<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">desc</span>&gt;</span>
+        The key concept is that the 'viewBox' attribute values of the
+        associated 'view' element are essentially applied to the 'viewBox'
+        attributes of its parent 'svg' element.
+  <span class="hljs-tag">&lt;/<span class="hljs-title">desc</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">radialGradient</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"myRadialGradient"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0%"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"yellow"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"white"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"blue"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">radialGradient</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"normalView"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 100 100"</span>/&gt;</span>  <span class="hljs-comment">&lt;!-- Same 'viewBox' values as on the 'svg' element (that is, 4 pixels per user unit). --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"halfView"</span>   <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 200 200"</span>/&gt;</span>  <span class="hljs-comment">&lt;!-- 400 pixels per 200 user units, or 2 pixels per 1 user unit - shrinking things. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"doubleView"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0  50  50"</span>/&gt;</span>  <span class="hljs-comment">&lt;!-- 400 pixels per 50 user units, or 8 pixels per 1 user unit - expanding things. --&gt;</span>
+  <span class="hljs-comment">&lt;!-- Outline the initial viewport. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"stroke: green; fill: none;"</span>/&gt;</span>
+  <span class="hljs-comment">&lt;!-- Fill the viewport with something interesting. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#myRadialGradient)"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"black"</span> <span class="hljs-attribute">stroke-width</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"40"</span>/&gt;</span>
+  <span class="hljs-comment">&lt;!-- Provide the user with a way, by clicking the links, to essentially change the 'svg' element's 'viewBox' values. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#doubleView"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"2"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"6"</span> <span class="hljs-attribute">font-size</span>=<span class="hljs-value">"5"</span>&gt;</span>[double size]<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#normalView"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"39"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"6"</span> <span class="hljs-attribute">font-size</span>=<span class="hljs-value">"5"</span>&gt;</span>[normal size]<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#halfView"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"77"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"6"</span> <span class="hljs-attribute">font-size</span>=<span class="hljs-value">"5"</span>&gt;</span>[half size]<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+</code></pre>
+</pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p><strong>Note:</strong> In addition to the attributes, properties, events, methods, and styles listed above, SVG elements also inherent core HTML attributes, properties, events, methods, and styles.</p>
+<p>The <strong>view</strong> element can change the <a href="/docs/svg/properties/viewBox"><strong>viewBox</strong></a> attributes of its parent <a href="/docs/svg/elements/svg"><strong>svg</strong></a> element. For example, you can use this behavior to zoom in or zoom out of rendered SVG content.</p>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=199815">Scalable Vector Graphics: Linking</a>, Section 17.4.2</li>
+</ul>
+<h3>Members</h3>
+<p>The <strong>SVGViewElement</strong> object has these events:</p>
+<ul>
+<li><a href="/docs/svg/events/load"><strong>onload</strong></a>: Occurs when the browser has fully parsed the element and all of its descendants.</li>
+</ul>
+<p>The <strong>SVGViewElement</strong> object has these properties:</p>
+<ul>
+<li><a href="/docs/svg/properties/externalResourcesRequired"><strong>externalResourcesRequired</strong></a>: Gets a value that indicates whether referenced resources that are not in the current document are required to correctly render a given element.</li>
+<li><a href="/docs/svg/properties/focusable"><strong>focusable</strong></a>: Determines if an element can acquire keyboard focus (that is, receive keyboard events) and be a target for field-to-field navigation actions (such as when a user presses the Tab key).</li>
+<li><a href="/docs/svg/properties/ownerSVGElement"><strong>ownerSVGElement</strong></a>: Gets the nearest ancestor <a href="/docs/svg/objects/SVGElement"><strong>svg</strong></a> element.</li>
+<li><a href="/docs/svg/properties/preserveAspectRatio"><strong>preserveAspectRatio</strong></a>: Gets an XML value that indicates whether to force uniform graphic scaling.</li>
+<li><a href="/docs/svg/properties/viewBox"><strong>viewBox</strong></a>: Gets a value that indicates how a graphic scales to fit a container element.</li>
+<li><a href="/docs/svg/properties/viewportElement"><strong>viewportElement</strong></a>: Gets the element that established the current viewport.</li>
+<li><a href="/docs/svg/properties/viewTarget"><strong>viewTarget</strong></a>: Gets the <a href="/docs/svg/properties/viewTarget"><strong>viewTarget</strong></a> attribute of a <strong>view</strong> element.</li>
+<li><a href="/docs/svg/properties/xmlbase"><strong>xmlbase</strong></a>: Gets or sets the <strong>base</strong> attribute on the element.</li>
+<li><a href="/docs/svg/properties/zoomAndPan"><strong>zoomAndPan</strong></a>: Gets the <a href="/docs/svg/properties/zoomAndPan"><strong>zoomAndPan</strong></a> attribute of an element.</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

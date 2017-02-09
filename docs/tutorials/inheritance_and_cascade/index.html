@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inheritance and cascade · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This guide explains inheritance and the cascade, two fundamental concepts in CSS." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/inheritance_and cascade/">inheritance and cascade</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Inheritance and cascade</h1>
+<h2>Summary</h2>
+<p>This guide explains inheritance and the cascade, two fundamental concepts in CSS.</p>
+<h2>Introduction</h2>
+<p>Inheritance and the cascade are two fundamental concepts in CSS, that are important to understand. The two concepts are closely related, yet different:</p>
+<ul>
+<li>Inheritance is associated with how the elements in the HTML markup inherit properties from their parent (containing) elements and pass them on to their children.</li>
+<li>The cascade relates to CSS declarations being applied to a document, and how conflicting rules do or do not override each other.</li>
+</ul>
+<p>This article provides an overview of both concepts.</p>
+<h2>Inheritance</h2>
+<p>Inheritance is the mechanism by which certain properties are passed on from a parent element down to its children, in the same fashion as genetics: if parents have blue eyes, their children will probably also have blue eyes.</p>
+<p>Not all CSS properties are inherited, because it does not make sense for some of them to be. For instance, margins and width are not inherited, since it is unlikely that a child element requires the same margins as its parent. Imagine if you set the content block of a site to be 70% of the browser window width, and then all of its children adopted a width of 70% of their parent elements? Designing page layouts with CSS would be a nightmare.</p>
+<p>In most cases, common sense indicates which properties are inherited and which are not: if you are not sure, look up all of the properties present in CSS2 in the <a href="http://www.w3.org/TR/CSS21/propidx.html">CSS 2.1 specification property summary table</a>. For CSS3 properties, consult the individual CSS3 module specifications, available in the <a href="http://www.w3.org/Style/CSS/current-work">CSS current work page</a>.</p>
+<h3>Why inheritance is useful</h3>
+<p>CSS has an inheritance mechanism because otherwise CSS rules would be redundant. Without inheritance, it would be necessary to specify styles like font family, font size, and text color individually — for every single element type. The code would become bloated and repetitive.</p>
+<p>Using inheritance, you can specify the font properties for the <code>html</code> or <code>body</code> elements and the styles will be inherited by all other elements. You can specify background and text colors for a specific container element and the text color will automatically be inherited by any child elements in that container. The background color is not inherited, but the initial value for <code>background-color</code> is <code>transparent</code>, which means a parent’s background will shine through. The effect is similar to the page’s appearance if background colors were inherited.</p>
+<p>Note: Consider what would happen if background <em>images</em> were inherited. Every child would display the same background image as its parent. The result would look like a jigsaw puzzle put together by someone with a serious drug problem, since the background would be redrawn inside each subsequent child element.</p>
+<h3>How inheritance works</h3>
+<p>Every element in an HTML document inherits all inheritable properties from its parent <em>except</em> the root element (<code>&lt;html&gt;</code>), which does not have a parent.</p>
+<p>Whether or not the inherited properties will have any effect depends on other things, as described later in the section about the cascade. Just as a blue-eyed mother can have a brown-eyed child if the father has brown eyes, inherited properties in CSS can be overridden.</p>
+<h3>An example of inheritance</h3>
+<ol>
+<li><p>Copy the following HTML document into a new file in your favorite text editor and save it as inherit.html.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"UTF-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Inheritance<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Heading<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>A paragraph of text.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you open the document in your web browser, you will see a rather boring document displayed according to your browser’s default styling.</p></li>
+<li><p>Create a new empty file in your text editor, copy the following CSS rule into it, and save the file as style.css in the same location as the HTML file.</p>
+<pre><code class="css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> <span class="hljs-number">75%</span> Verdana, sans-serif</span></span>;
+}</span>
+</code></pre></li>
+<li><p>Link the style sheet to your HTML document by inserting the following line before the <code>&lt;/head&gt;</code> tag:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"style.css"</span>&gt;</span>
+</code></pre></li>
+<li><p>Save the modified HTML file and reload the document in your browser.</p></li>
+</ol>
+<p>The font face changes from the browser’s default (often set to Times or Times New Roman) to Verdana.</p>
+<p>If you do not have Verdana installed on your computer, the text displays in the default sans-serif font specified in your browser settings. The text is also smaller; only three quarters of its size in the unstyled version. The CSS rule applies only to the <code>&lt;html&gt;</code> element. It does not specify any rules for headings or paragraphs, yet all of the text now displays in Verdana at 75% of its default size. Why? Because of inheritance. The <code>font</code> property is a shorthand property that sets a whole range of font-related properties.</p>
+<p>The CSS rule only specified two properties — the font size and the font family — but that rule is equivalent to the following:</p>
+<pre><code class="css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-style</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-variant</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">75%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> Verdana,sans-serif</span></span>;
+}</span>
+</code></pre>
+<p>All of those properties are inherited, so the <code>&lt;body&gt;</code> element will inherit them from the <code>&lt;html&gt;</code> element and then pass them on to its children — the heading and the paragraph text. But notice that there is something unusual occurring with the inheritance of font size.</p>
+<p>The <code>&lt;html&gt;</code> element’s font size is set to 75%, but 75% of <em>what</em>? Surely the font size of the <code>&lt;body&gt;</code> should be 75% of its parent’s font size, and the font sizes of the heading and the paragraph be 75% of that of the <code>&lt;body&gt;</code> element? The value inherited is not the specified value — the value typed in the style sheet — but something else called the computed value.</p>
+<p>The computed value is, in the case of font size, an absolute value measured in pixels. For the <code>&lt;html&gt;</code> element, which doesn’t have a parent element from which to inherit, a percentage value for font size relates to the default font size set in the browser. Most contemporary browsers have a default font size setting of 16px. 75% of 16 is 12, so the computed value for the font size of the <code>&lt;html&gt;</code> element is around 12px.</p>
+<p>And <em>that</em> is the value that is inherited by <code>&lt;body&gt;</code> and passed on to the heading and the paragraph. (The font size of the heading is larger, because the browser applies some built-in styling of its own. For more details, see the section below about the cascade.)</p>
+<p>Consider this example:</p>
+<ol>
+<li><p>Add two more declarations to the rule in your CSS style sheet:</p>
+<pre><code class="css"><span class="hljs-tag">html</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> <span class="hljs-number">75%</span> Verdana,sans-serif</span></span>;
+
+  <span class="hljs-comment">/* Add these */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> blue</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> white</span></span>;
+}</span>
+</code></pre></li>
+<li><p>Save the CSS file and reload the document in your browser. Now the background of the whole document is bright blue, and all of the text is white. The white text color is inherited by the <code>&lt;body&gt;</code> element and passed on to all children of <code>body</code> — in this case the heading and the paragraph. The heading and paragraph do not, however, inherit the background but instead default to <code>transparent</code>, so the net visual result is white text displayed on a blue background.</p></li>
+<li><p>Add another new rule to the style sheet:</p>
+<pre><code class="css"><span class="hljs-tag">h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">300%</span></span></span>;
+}</span>
+</code></pre></li>
+<li><p>Save and reload the document: this rule sets the font size of the heading. The percentage is applied to the inherited font size — 12px, as we discussed above — so the heading size will be 300% of 12px, or 36px.</p></li>
+</ol>
+<h3>Forcing inheritance</h3>
+<p>You can force inheritance — even for properties that are not inherited by default — by using the <code>inherit</code> keyword. Use this strategy with care, however, since Microsoft Internet Explorer versions up to and including version 7 do not support this keyword.</p>
+<p>The following rule will make all paragraphs inherit all background properties from their parents:</p>
+<pre><code class="css"><span class="hljs-tag">p</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> inherit</span></span>;
+}</span>
+</code></pre>
+<p>Forcing inheritance is not a common practice. It can be useful for “undoing” a declaration in a conflicting rule, or to avoid hard coding certain values. As an example, consider a typical navigation menu:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"nav"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/"</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/news/"</span>&gt;</span>News<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/products/"</span>&gt;</span>Products<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/services/"</span>&gt;</span>Services<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/about/"</span>&gt;</span>About Us<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+</code></pre>
+<p>To display this list of links as a horizontal menu, you could use the following CSS rules:</p>
+<pre><code class="css"><span class="hljs-id">#nav</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> blue</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> white</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+
+<span class="hljs-id">#nav</span> <span class="hljs-tag">li</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">0.5em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-right</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid</span></span>;
+}</span>
+
+<span class="hljs-id">#nav</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> inherit</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>;
+}</span>
+</code></pre>
+<p>Here the background color of the whole list is set to blue in the rule for <code>#nav</code>. This also sets the foreground color to white, and this property is inherited by each list item and each link. The rule for the list items sets a right border, but doesn’t specify the border color, which means it will use the inherited foreground color, white. For the links, the <code>color:inherit;</code> forces inheritance and overrides the browser’s default link color.</p>
+<p>Of course, you can specify the border color as white and the link text color as white, but the beauty of letting inheritance do the job is that it is only necessary to update one place to change the colors if you decide to update the color scheme later.</p>
+<h2>The cascade</h2>
+<p>CSS an acronym of Cascading Style Sheets, so it is not a surprise that the cascade is an important concept. It is the mechanism that controls the end result when multiple, conflicting CSS declarations apply to the same element. There are three main concepts that control the order in which CSS declarations are applied:</p>
+<ol>
+<li>Importance</li>
+<li>Specificity</li>
+<li>Source order</li>
+</ol>
+<p>These concepts are described below.</p>
+<p>Importance is the most … er … important. If two declarations have the same importance, the specificity of the rules decide which one will apply. If the rules have the same specificity, then source order controls the outcome.</p>
+<h3>Importance</h3>
+<p>The importance of a CSS declaration depends on <em>where</em> it is specified. The conflicting declarations will be applied in the following order, with later declarations overriding earlier ones:</p>
+<ol>
+<li>User agent style sheets</li>
+<li>Normal declarations in user style sheets</li>
+<li>Normal declarations in author style sheets</li>
+<li>Important declarations in author style sheets</li>
+<li>Important declarations in user style sheets</li>
+</ol>
+<h4>User agent style sheets</h4>
+<p>A user agent style sheet is the built-in style sheet of the browser. Every browser has its default rules for how to display various HTML elements if no style is specified by the user or designer of the page. For instance, unvisited links are usually blue and underlined.</p>
+<p>A user style sheet is a style sheet that the <em>user</em> has specified. Not all browsers support user style sheets, but they can be very useful, especially for users with certain types of disabilities. For instance, a dyslexic person can have a user style sheet that specifies certain fonts and colors to help them read more easily.</p>
+<p>An author style sheet is what we normally refer to when we say “style sheet”. It is the style sheet that the author of the document (or, more likely, the website’s designer) has written and linked (or included).</p>
+<h4>Normal and important declarations</h4>
+<p>Normal declarations are just that: normal declarations.</p>
+<p>The opposite is important declarations, which are declarations followed by an <code>!important</code> directive. A dyslexic user might, for instance, want all text to be displayed in Comic Sans MS if he finds that font easier to read. He could then have a user style sheet containing the following rule:</p>
+<pre><code class="css">* <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">"Comic Sans MS"</span> <span class="hljs-important">!important</span></span></span>;
+}</span>
+</code></pre>
+<p>Important declarations in a user style sheet will trump everything else, which is logical. In this case, no matter what the designer specified, and no matter what the browser’s default font family is set to, everything will be displayed in Comic Sans MS. The default browser rendering will only apply if those declarations aren’t overridden by any rules in a user style sheet or an author style sheet, since the user agent style sheet has the lowest precedence.</p>
+<p>To be honest, most designers don’t have to think too much about importance, since there’s nothing we can do about it. There is no way we could know if a user has a user style sheet defined that will override our CSS. If they do, they probably have a very good reason for doing so, anyway. Still, it’s good to know what importance is and how it may affect the presentation of our documents.</p>
+<h3>Specificity</h3>
+<p>Specificity is something every CSS author needs to understand and to think about. It can be thought of as a measure of how specific a rule’s selector is. A selector with low specificity may match many elements (like <code>*</code>, which matches every element in the document), while a selector with high specificity might only match a single element on a page (like <code>#nav</code>, which only matches the element with an <code>id</code> of <code>nav</code>).</p>
+<p>The specificity of a selector can easily be calculated, as we shall see below. If two or more declarations conflict for a given element, and all the declarations have the same importance, then the one in the rule with the most specific selector will “win”.</p>
+<p>Specificity has four components; let’s call them a, b, c and d. Component “a” is the most distinguishing, “d” the least.</p>
+<ul>
+<li>Component “a” is quite simple: it’s 1 for a declaration in a <code>style</code> attribute (also known as inline styling), otherwise it’s 0.</li>
+<li>Component “b” is the number of <code>id</code> selectors in the selector (those that begin with a <code>#</code>).</li>
+<li>Component “c” is the number of attribute selectors—including class selectors — and pseudo-classes.</li>
+<li>Component “d” is the number of element types and pseudo-elements in the selector.</li>
+</ul>
+<p>After a bit of counting, we can thus string those four components together to get the specificity for any rule. CSS declarations in a <code>style</code> attribute don’t have a selector, so their specificity is always 1,0,0,0.</p>
+<p>Let’s look at a few examples — after this it should be quite clear how this works.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Selector</th><th style="text-align:left">a</th><th style="text-align:left">b</th><th style="text-align:left">c</th><th style="text-align:left">d</th><th style="text-align:left">Specificity</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>h1</code></td><td style="text-align:left"></td><td style="text-align:left"></td><td style="text-align:left"></td><td style="text-align:left">1</td><td style="text-align:left">0,0,0,1</td></tr>
+<tr><td style="text-align:left"><code>.foo</code></td><td style="text-align:left"></td><td style="text-align:left"></td><td style="text-align:left">1</td><td style="text-align:left"></td><td style="text-align:left">0,0,1,0</td></tr>
+<tr><td style="text-align:left"><code>#bar</code></td><td style="text-align:left"></td><td style="text-align:left">1</td><td style="text-align:left"></td><td style="text-align:left"></td><td style="text-align:left">0,1,0,0</td></tr>
+<tr><td style="text-align:left"><code>html&gt;head+body ul#nav *.home a:link</code></td><td style="text-align:left"></td><td style="text-align:left">1</td><td style="text-align:left">2</td><td style="text-align:left">5</td><td style="text-align:left">0,1,2,5</td></tr>
+</tbody>
+</table>
+<p>Let’s look at the last example in some more detail. a = 0 since it’s a selector, not a declaration in a <code>style</code> attribute. There is one ID selector (<code>#nav</code>), so b = 1. There is one attribute selector (<code>.home</code>) and one pseudo-class (<code>:link</code> ), so c = 2. There are five element types (<code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>, <code>&lt;ul&gt;</code> and <code>&lt;a&gt;</code>), so d = 5.</p>
+<p>The final specificity is thus 0,1,2,5.</p>
+<p>Note: Combinators (like <code>&gt;</code>, <code>+</code> and white space) do not affect a selector’s specificity. The universal selector (<code>*</code>) has no input on specificity, either.</p>
+<p>Note #2: There is a huge difference in specificity between an <code>id</code> selector and an attribute selector that happens to refer to an <code>id</code> attribute. Although they match the same element, they have very different specificities. The specificity of <code>#nav</code> is 0,1,0,0 while the specificity of <code>[id=&quot;nav&quot;]</code> is only 0,0,1,0.</p>
+<p>Let’s look at how this works in practice.</p>
+<ol>
+<li><p>First of all, start by adding another paragraph to your HTML document.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Heading<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>A paragraph of text.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- Add this --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>A second paragraph of text.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre></li>
+<li><p>Next, add a rule to your stylesheet to make the paragraph text have a different color:</p>
+<pre><code class="css"><span class="hljs-tag">p</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> cyan</span></span>;
+}</span>
+</code></pre></li>
+<li><p>Now save both files and reload the document in your browser; there should now be two paragraphs with cyan text.</p></li>
+<li><p>Set an <code>id</code> on the first paragraph so you can target it easily with a CSS selector.</p>
+<pre><code class="css">&lt;body&gt;
+  &lt;h1&gt;Heading&lt;/h1&gt;
+  &lt;!-- Add the id of "special" to this paragraph --&gt;
+  &lt;p id="special"&gt;A paragraph of text.&lt;/p&gt;
+  &lt;p&gt;A second paragraph of text.&lt;/p&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>Carry on by adding a rule for the special paragraph in your style sheet:</p>
+<pre><code class="css"><span class="hljs-id">#special</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> red</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> yellow</span></span>;
+}</span>
+</code></pre></li>
+<li><p>Finally, save both files and reload the document in your browser to see the now rather colorful result.</p></li>
+</ol>
+<p>Let’s look at the declarations that apply to the two paragraphs.</p>
+<p>The first rule you added sets a text color of cyan for <em>all</em> paragraphs. The second rule sets a red background color and a yellow text color for the single element that has the <code>id</code> of <code>special</code>. Your first paragraph matches both of those rules; it is a paragraph and it has an <code>id</code> of <code>special</code>.</p>
+<p>The red background isn’t a problem, because it’s only specified for <code>#special</code>. Both rules contain a declaration of the <code>color</code> property, though, which means there is a conflict. Both rules have the same importance — they are normal declarations in the author style sheet — so you have to look at the specificity of the two selectors.</p>
+<p>The selector of the first rule is <code>&lt;p&gt;</code>, which has a specificity of 0,0,0,1 according to the rules above since it contains a single element type. The selector of the second rule is <code>#special</code>, which has a specificity of 0,1,0,0 since it consists of an <code>id</code> selector. 0,1,0,0 is much more specific than 0,0,0,1 so the <code>color: yellow;</code> declaration wins and you get yellow text on a red background.</p>
+<h3>Source order</h3>
+<p>If two declarations affect the same element, have the same importance and the same specificity, the final distinguishing mark is the source order. The declaration that appears later in the style sheets will “win” over those that come before it.</p>
+<p>If you have a single external style sheet, then the declarations at the end of the file will override those that occur earlier in the file if there’s a conflict. The conflicting declarations could also occur in different style sheets.</p>
+<p>In that case, the order in which the style sheets are linked, included or imported controls what declaration will be applied, so if you have two stylesheets linked in a document <code>&lt;head&gt;</code>, the one linked to further down will override the one linked to higher up. Let’s look at a practical example of how this works.</p>
+<ol>
+<li><p>Add a new rule to your style sheet at the very end of the file, like so:</p>
+<pre><code class="css"><span class="hljs-tag">p</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> yellow</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+}</span>
+</code></pre></li>
+<li><p>Save and reload the web page. you will now have <em>two</em> rules that match all paragraphs. They have the same importance and the same specificity (since the selector is the same), therefore the final mechanism for choosing which one wins will be the source order. The last rule specifies <code>color:black</code> and that will override <code>color:cyan</code> from the earlier rule.</p></li>
+</ol>
+<p>Note how the first paragraph isn’t affected at all by this new rule.</p>
+<p>Although the new rule appears last, its selector has lower specificity than the one for <code>#special</code>. This shows clearly how specificity trumps source order.</p>
+<h2>Summary</h2>
+<p>Inheritance and the cascade are fundamental concepts that every web designer should understand.</p>
+<p>Inheritance lets us declare properties on high-level elements and allows those properties to trickle down and style descendant elements. Only some properties are inherited by default, but inheritance can be forced with the <code>inherit</code> keyword.</p>
+<p>The cascade sorts out all conflicts when multiple declarations would affect a given element. Important declarations will override less important ones. Among declarations with equal importance, the rule’s specificity controls which one will apply.</p>
+<p>All else being equal, the source order makes the final distinction.</p>
+<h2>See also</h2>
+<h3>Exercise Questions</h3>
+<ul>
+<li>Is the <code>border</code> property inherited? Think about it first—would it make sense?—then look up the correct answer in the <a href="http://www.w3.org/TR/CSS21/">CSS specification</a>.</li>
+<li>If we add <code>!important</code> to the <code>color:black</code> declaration in the last rule in our example style sheet, will this have any effect on the text color in the first, “special” paragraph?</li>
+<li>Which selector is more specific, “<code>#special</code>” or “<code>html&gt;head+body&gt;h1+p</code>”?</li>
+<li>What should a user style sheet look like to make our test document display in black Comic Sans MS on a white background, regardless of the author style sheet?</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

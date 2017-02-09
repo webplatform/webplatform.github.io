@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exploring the CSS layout model · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article describes some fundamental ways to adjust the layout of your document, using padding, floats, and more." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/layout_fundamentals/">layout fundamentals</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Exploring the CSS layout model</h1>
+<h2>Summary</h2>
+<p>This article describes some fundamental ways to adjust the layout of your document, using padding, floats, and more.</p>
+<h2>Information: Layout</h2>
+<p>You can use CSS to specify various visual effects that change the layout of your document. When you design a layout to look similar in many browsers, your stylesheet interacts with the browser’s default stylesheet and layout engine in ways that can be complex. Some of the techniques for specifying layout are beyond the scope of this basic tutorial, but here we describe some simple techniques that you can try.</p>
+<h3>Document structure</h3>
+<p>If you want to control the layout of your document, then you might have to change its structure. Your document’s markup language might have general-purpose tags for creating structure. For example, in HTML you can use the <code>div</code> element to create structure.</p>
+<h4>Div usage example</h4>
+<p>In your sample document, the numbered paragraphs under the second heading do not have a container of their own. Your stylesheet cannot draw a border around those paragraphs, because there is no element to specify in the selector.</p>
+<p>To fix this structural problem, you can add a <code>div</code> tag around the paragraphs. This tag is unique, so it can by identified by an <code>id</code> attribute:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Numbered paragraphs<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"numbered"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Lorem ipsum<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Dolor sit<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Amet consectetuer<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Magna aliquam<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Autem veleum<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Now your stylesheet can use one rule to specify borders around both lists:</p>
+<pre><code class="css"><span class="hljs-tag">ul</span>, <span class="hljs-id">#numbered</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1em</span> solid <span class="hljs-hexcolor">#69b</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding-right</span>:<span class="hljs-value"><span class="hljs-number">1em</span></span></span>;
+}</span>
+</code></pre>
+<p>The result looks like:</p>
+<p><img src="//static.webplatform.org/a/aa/layout-fundamentals-fig-1.png" alt="Screenshot of the Mozilla Firefox browser showing paragraph tags within a structural div container"></p>
+<h3>Size units</h3>
+<p>So far in this tutorial, you have specified sizes in pixels (<code>px</code>). These are appropriate for some purposes on a display device like a computer screen. But when the user changes the font size, your layout can look wrong.</p>
+<p>For many purposes it is better to specify sizes as a percentage or in ems (<code>em</code>). An em is nominally the size of the current font (the width of a letter m). When the user changes the font size, your layout adjusts automatically.</p>
+<h3>Sizing example</h3>
+<p>The border on the left of this text has its size specified in pixels. The border on the right has its size specified in ems. In your sample CSS file, change the size of the font to see how the border on the right adjusts but the border on the left does not.</p>
+<p>For other devices, other length units are appropriate. There is more information about this in a later page of this tutorial. For full details of the values and units that you can use, see “Values” in the CSS Specification.</p>
+<h3>Text layout</h3>
+<p>Two properties specify how the content of an element is aligned. You can use them for simple layout adjustments:</p>
+<p><code>text-align</code> aligns the content. Use one of these values: <code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>. <code>text-indent</code> indents the content by an amount that you specify.</p>
+<p>These properties apply to any text-like content in the element, not only to actual text. Remember that they are inherited by the element’s children, so you might have to explicitly turn them off in the children to avoid surprising results.</p>
+<h3>Text align example</h3>
+<p>To center headings:</p>
+<pre><code class="css"><span class="hljs-tag">h3</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border-top</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid gray</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-align</span>:<span class="hljs-value"> center</span></span>;
+}</span>
+</code></pre>
+<p>In an HTML document, the content that you see below a heading is not structurally contained by the heading. So when you align a heading like this, the tags below the heading do not inherit the style.</p>
+<h3>Floats</h3>
+<p>The <code>flost</code> property forces an element to the left or right. This is a simple way to control its position and size.</p>
+<p>The rest of the document’s content normally flows around the floated element. You can control this by using the <code>clear</code> property on other elements to make them stay clear of floats.</p>
+<h3>Floats example</h3>
+<p>In your sample document, the lists stretch across the window. You can prevent this by floating them to the left. To keep the headings in place, you must also specify that they stay clear of floats on their left:</p>
+<pre><code class="css"><span class="hljs-tag">ul</span>, <span class="hljs-id">#numbered</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>;}</span>
+<span class="hljs-tag">h3</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">clear</span>:<span class="hljs-value"> left</span></span>;}</span>
+</code></pre>
+<p>(A little padding is needed on the right of the boxes, where the border is too close to the text.)</p>
+<h3>Positioning</h3>
+<p>You can specify an element’s position in four ways by specifying the <code>position</code> property and one of the following values.</p>
+<p>These are advanced properties. It is possible to use them in simple ways — that is why they are mentioned in this basic tutorial. But using them for complex layouts can be difficult.</p>
+<ul>
+<li><p><code>relative</code></p>
+<p>The element’s position is shifted relative to its normal position. Use this to shift an element by a specified amount. You can sometimes use the element’s margin to achieve the same effect.</p></li>
+<li><p><code>fixed</code></p>
+<p>The element’s position is fixed. Specify the element’s position relative to the document window. Even if the rest of the document scrolls, the element remains fixed.</p></li>
+<li><p><code>absolute</code></p>
+<p>The element’s position is fixed relative to a parent element. Only a parent that is itself positioned with <code>relative</code>, <code>fixed</code> or <code>absolute</code> will do. You can make any parent element suitable by specifying <code>position: relative;</code> for it without specifying any shift.</p></li>
+<li><p><code>static</code></p>
+<p>The default. Use this value if you need to turn positioning off explicitly.</p></li>
+</ul>
+<p>Along with these values of the <code>position</code> property (except for <code>static</code>), specify one or more of the properties: <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>, <code>width</code>, <code>height</code> to identify where you want the element to appear, and perhaps also its size.</p>
+<h3>Positioning example</h3>
+<p>To position two elements on top of each other, create a parent container in your document with the two elements inside it:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"parent-div"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"forward"</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"back"</span>&gt;</span>\<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>In your stylesheet, make the parent’s position <code>relative</code>. There is no need to specify any actual shift. Make the children’s position <code>absolute</code>:</p>
+<pre><code class="css"><span class="hljs-id">#parent-div</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> relative</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> bold <span class="hljs-number">200%</span> sans-serif</span></span>;
+}</span>
+
+<span class="hljs-id">#forward</span>, <span class="hljs-id">#back</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"><span class="hljs-number">0px</span></span></span>; <span class="hljs-comment">/* no margin around the elements */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>; <span class="hljs-comment">/* distance from top */</span>
+  <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">0px</span></span></span>; <span class="hljs-comment">/* distance from left */</span>
+}</span>
+
+<span class="hljs-id">#forward</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;
+}</span>
+
+<span class="hljs-id">#back</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>;
+}</span>
+</code></pre>
+<p>The result places the backslash on top of the forward slash.</p>
+<h3>More details</h3>
+<p>The full story on positioning takes up two complex chapters in the CSS Specification: “Visual formatting model” and &quot;Visual formatting model details&quot;.</p>
+<p>If you are designing stylesheets to work in many browsers, then you also need to take into account differences in the way browsers interpret the standard, and perhaps bugs in particular versions of particular browsers.</p>
+<h2>Action: Specifying layout</h2>
+<ol>
+<li><p>Change your sample document, <code>doc2.html</code>, and stylesheet, <code>style2.css</code>, using the examples above in the sections “Document structure” and &quot;Floats&quot;.</p></li>
+<li><p>In the “Floats” example, add padding to separate the text from the right border by 0.5 em.</p></li>
+</ol>
+<h2>See also</h2>
+<h3>Exercise questions</h3>
+<ol>
+<li><p>Change your sample document, <code>doc2.html</code>, adding this tag to it near the end, just before <code>&lt;/body&gt;.</code></p>
+<pre><code>&lt;img id=&quot;fixed-pin&quot; src=&quot;Yellow-pin.png&quot; alt=&quot;Yellow map pin&quot;&gt;
+</code></pre>
+<p>If you did not download the image file earlier in this tutorial, download it now, and place it in the same directory as the other sample files:</p></li>
+<li><p>Predict where the image will appear in your document. Then refresh your browser to see if you were correct.</p></li>
+<li><p>Add a rule to your stylesheet that places the image in the top right of your document.</p></li>
+<li><p>Refresh your browser and make the window small. Check that the image stays in the top right even when you scroll your document</p></li>
+</ol>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Layout">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG pattern fills · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article covers SVG pattern fills." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/svg_pattern fills/">svg pattern fills</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG pattern fills</h1>
+<h2>Summary</h2>
+<p>This article covers SVG pattern fills.</p>
+<p>Patterns, in my opinion, are one of the more confusing fill types to use in SVG. They’re also very powerful, so they’re worth talking about and getting at least a fundamental grasp on. Like gradients, the <code>&lt;pattern&gt;</code> element should be put in the <code>&lt;defs&gt;</code> section of your SVG file.</p>
+<p><img src="//static.webplatform.org/3/3d/SVG_Pattern_Example.png" alt="SVG Pattern Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;200&quot; height=&quot;200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id=&quot;Gradient1&quot;&gt;
+      &lt;stop offset=&quot;5%&quot; stop-color=&quot;white&quot;/&gt;
+      &lt;stop offset=&quot;95%&quot; stop-color=&quot;blue&quot;/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id=&quot;Gradient2&quot; x1=&quot;0&quot; x2=&quot;0&quot; y1=&quot;0&quot; y2=&quot;1&quot;&gt;
+      &lt;stop offset=&quot;5%&quot; stop-color=&quot;red&quot;/&gt;
+      &lt;stop offset=&quot;95%&quot; stop-color=&quot;orange&quot;/&gt;
+    &lt;/linearGradient&gt;
+
+    &lt;pattern id=&quot;Pattern&quot; x=&quot;.05&quot; y=&quot;.05&quot; width=&quot;.25&quot; height=&quot;.25&quot;&gt;
+      &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;50&quot; height=&quot;50&quot; fill=&quot;skyblue&quot;/&gt;
+      &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;25&quot; height=&quot;25&quot; fill=&quot;url(#Gradient2)&quot;/&gt;
+      &lt;circle cx=&quot;25&quot; cy=&quot;25&quot; r=&quot;20&quot; fill=&quot;url(#Gradient1)&quot; fill-opacity=&quot;0.5&quot;/&gt;
+    &lt;/pattern&gt;
+
+  &lt;/defs&gt;
+
+  &lt;rect fill=&quot;url(#Pattern)&quot; stroke=&quot;black&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200&quot; height=&quot;200&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Inside the pattern element you can include any of the other basic shapes you’ve included before, and each of them can be styled using any of the styles you’ve learned before, including gradients and opacity. Here we’ve just drawn two rectangle elements inside our pattern (which overlap, and one of which is twice the size of the other and is used to fill in the entire pattern), and one circle.</p>
+<p>The confusing thing about patterns is defining a unit system and their size. In the example above, we’ve defined a <code>width</code> and <code>height</code> attribute on the pattern element, to describe how far the pattern should go before it begins repeating itself again. There are also <code>x</code> and <code>y</code> attributes available if you want to offset the start point of this rectangle somewhere within your drawing. The reason they’ve been used here is described below.</p>
+<p>As with the <code>gradientUnits</code> attribute used above, patterns also have an attribute, <code>patternUnits</code> which specifies the units that these attributes will take. It defaults to “objectBoundingBox” as it did above, so a value of 1 is scaled to the width/height of the object you’re applying the pattern to. Since, in this case, we wanted the pattern to repeat 4 times horizontally and vertically, the height and width are set to 0.25. That means the patterns width/height is only 0.25 of the total box size.</p>
+<p>Unlike gradients, patterns then have a second attribute, <code>patternContentUnits</code>, which describes the units system used inside the pattern element, on the basic shapes themselves. This attribute defaults to &quot;userSpaceOnUse&quot;, the opposite of the <code>patternUnits</code> attribute. What this means is that unless you specify one or both of these attributes (<code>patternContentUnits</code> and <code>patternUnits</code>), the shapes you draw inside your pattern are being drawn in a different coordinate system than the pattern element is using, which can make things a bit confusing when you’re writing this by hand. To make this work in the above example, we had to consider the size of our box (200 pixels) and the fact that we wanted the pattern to repeat itself 4 times horizontally and vertically. That means that each pattern unit was a 50x50 square. The two rects and the circle inside the pattern were then sized to fit in a 50x50 box. Anything that we had drawn outside that box wouldn’t have been shown. The pattern also had to be offset by 10 pixels so that it would start in the upper left corner of our box, so the x and y attributes of the pattern had to be adjusted to 10/200 = 0.05.</p>
+<p>The caveat here is that if the object changes size, the pattern itself will scale to fit it, but the objects inside will not. So while we would still have 4 repeating units inside the pattern, the objects composing that pattern would remain the same size, and you end up with large areas of nothing in between them. By changing the <code>patternContentUnits</code> attribute, we can put all the elements into the same unit system:</p>
+<pre><code>&lt;pattern id=&quot;Pattern&quot; width=&quot;.25&quot; height=&quot;.25&quot; patternContentUnits=&quot;objectBoundingBox&quot;&gt;
+   &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;.25&quot; height=&quot;.25&quot; fill=&quot;skyblue&quot;/&gt;
+   &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;.125&quot; height=&quot;.125&quot; fill=&quot;url(#Gradient2)&quot;/&gt;
+   &lt;circle cx=&quot;.125&quot; cy=&quot;.125&quot; r=&quot;.1&quot; fill=&quot;url(#Gradient1)&quot; fill-opacity=&quot;0.5&quot;/&gt;
+ &lt;/pattern&gt;
+</code></pre>
+<p>Now, because the pattern content is in the same unit system as the pattern, we don’t have to offset the box so that the pattern starts in the correct place, and if the object size was changed to a larger one, the pattern would automatically scale so that it had the same number of objects and repeats inside it. This contrasts with the “userSpaceOnUse” system, where if the object changes size the pattern would stay the same, and just repeat itself more times to fill the box.</p>
+<p>As a slight aside, in Gecko circles seem to have trouble drawing if their radius is set to something less than 0.075 (even though they should be scaled up to have a much larger radius than that. This may be a bug in just the pattern element, or not a bug at all, I’m not sure). To work around that its probably best to avoid drawing in “objectBoundingBox” units unless you have to.</p>
+<p>Neither of these uses is what one would normally think of when you think of a pattern. Patterns usually have a set size and repeat themselves independently of what an objects shape is. To create something like this, both the pattern and its contents must be drawn in the current userSpace, so that they don’t change shape if the object does:</p>
+<pre><code> &lt;pattern id=&quot;Pattern&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;50&quot; height=&quot;50&quot; patternUnits=&quot;userSpaceOnUse&quot;&gt;
+   &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;50&quot; height=&quot;50&quot; fill=&quot;skyblue&quot;/&gt;
+   &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;25&quot; height=&quot;25&quot; fill=&quot;url(#Gradient2)&quot;/&gt;
+   &lt;circle cx=&quot;25&quot; cy=&quot;25&quot; r=&quot;20&quot; fill=&quot;url(#Gradient1)&quot; fill-opacity=&quot;0.5&quot;/&gt;
+ &lt;/pattern&gt;
+</code></pre>
+<p><img src="//static.webplatform.org/6/6d/SVG_Pattern_Comparison_of_Units.png" alt="SVG Pattern Comparison of Units.png"></p>
+<p>Of course, this means that the pattern won’t scale if you change your object size later. All three of the above examples are shown below on a rectangle that has been slightly elongated to a height of 300px, but I should note its not an exhaustive picture, and there are other options available depending on your application.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/Patterns">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

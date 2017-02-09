@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>More about the document head · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/More_about the document head/">More about the document head</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>More about the document head</h1>
+<h2>Introduction</h2>
+<p>In <a href="http://www.w3.org/community/webed/wiki/The_HTML_head_element">The HTML &lt;head&gt; element article</a> of this course we learned about the essential things that go inside the <code>head</code> of an HTML document. In this article of the <a href="http://www.w3.org/community/webed/wiki/Main_Page">Web Standards Curriculum</a> we’ll expand on that information and talk about some other — lesser used — things that you can add to the <code>head</code> section of an HTML document; these are less essential, but still very useful nonetheless. By the end of this tutorial you’ll know how to collate several HTML documents into a larger multi-part collection, what a favicon is and how to use it, and what RSS is all about. Before you go any further, <a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/moreinthehead.zip">download this article’s accompanying zip file</a> so you can follow along with the examples.</p>
+<h2>Document relationships — collating several HTML documents into a collection</h2>
+<p>One feature of HTML that stems from the origins of the web as a document repository are document relationships. These define how one document relates to another, for example if it is the previous or next document in a logical chain or if it is the index of a whole series of documents.</p>
+<p>In a sense, you’ve already done this in <a href="http://www.w3.org/community/webed/wiki/The_HTML_head_element">The HTML &lt;head&gt; element article</a>, when you applied a style sheet to a document to give it a different look and feel with the <code>link</code> element:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Breeding Dogs - Tips about Alsatians&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; href=&quot;styles.css&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; href=&quot;printstyles.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>The relationship of the current document to others is defined in much the same way using the <code>link</code> element and the <code>rel</code> or <code>rev</code> attributes. The <code>rel</code> attribute (<em>relationship</em>) defines the relationship that the linked document has to the current one, and the <code>rev</code> attribute (<em>reverse relationship</em>) defines the relationship the current document has to the linked one.</p>
+<p>Don’t worry about the <code>rev</code> attribute too much — it is a bit confusing, but you will need to use it rarely, if at all.</p>
+<p>There are no mandatory prefixed values for the <code>rel</code> and <code>rev</code> attributes, but there is a taxonomy supported by browsers and indexing tools that you should consider following under most normal circumstances for <code>rel</code>:</p>
+<ul>
+<li>home: The home document of the current collection</li>
+<li>index: The index of the current collection</li>
+<li>contents: The contents list of the current collection</li>
+<li>search: The search page of the current collection</li>
+<li>glossary: The glossary of the current collection</li>
+<li>help: The help page of the current collection</li>
+<li>first: The first document in current collection</li>
+<li>previous: The previous document from this one in the logical order of the collection</li>
+<li>next: The document following this one in the logical order of the collection</li>
+<li>last: The last document of the current collection</li>
+<li>up: The document one level up in the hierarchy of the current collection</li>
+<li>copyright: The copyright information of the current collection</li>
+<li>author: The information page about the author of the current collection</li>
+</ul>
+<p>Most browsers don’t do anything with this information. Some however will follow the link and load the document in the background so that it shows up a lot faster for the reader. The real browser exception is Opera, which has an extra navigation toolbar you can turn on by selecting View &gt; Toolbars &gt; Navigation bar from the menu. Once turned on you get the link relationships defined in the document as an extra toolbar. Figure 1 shows the W3C HTML standards document in Opera:</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=morehead.png">Screenshot of the Opera browser showing the navigation bar</a></p>
+<p>Figure 1: Opera shows the link relationships of the current document in a special navigation toolbar</p>
+<p>Even though they are not displayed in a visible sense, it is a good idea to provide a human-readable explanation of what the linked documents are about in a <code>title</code> attribute as the file names alone are not necessarily enough.</p>
+<p>Now let’s move on to have a look at how link relationships can be used to collate several documents into a collection. For example, the start page of an online course spanning several documents could be the following (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/start.html">start.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Link relationship example&lt;/title&gt;
+  &lt;link rel=&quot;contents&quot; title=&quot;table of contents&quot; href=&quot;toc.html&quot;&gt;
+  &lt;link rel=&quot;next&quot; title=&quot;next: chapter one&quot; href=&quot;chapter1.html&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Course example&lt;/h1&gt;
+  &lt;p&gt;This would be the cover page of an article series or course&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;chapter1.html&quot; rel=&quot;next&quot;&gt;Let's start with Chapter One&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>The first chapter would be the following (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/chapter1.html">chapter1.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Chapter One - Link relationship example&lt;/title&gt;
+  &lt;link rel=&quot;contents&quot; title=&quot;Table of Contents&quot; href=&quot;toc.html&quot;&gt;
+  &lt;link rel=&quot;home&quot; title=&quot;Home Page&quot; href=&quot;start.html&quot;&gt;
+  &lt;link rel=&quot;prev&quot; title=&quot;previous: Home Page&quot; href=&quot;start.html&quot;&gt;
+  &lt;link rel=&quot;next&quot; title=&quot;next: Second Chapter&quot; href=&quot;chapter2.html&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Chapter One&lt;/h1&gt;
+  &lt;p&gt;This would be the chapter one page of an article series or course&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;start.html&quot; rev=&quot;prev&quot;&gt;Back to Start&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;toc.html&quot; rel=&quot;contents&quot;&gt;Table of contents&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;chapter2.html&quot; rel=&quot;next&quot;&gt;Go on to Chapter Two&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>The second chapter (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/chapter2.html">chapter2.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Link relationship example&lt;/title&gt;
+  &lt;link rel=&quot;contents&quot; title=&quot;Table of Contents&quot; href=&quot;toc.html&quot;&gt;
+  &lt;link rel=&quot;home&quot; title=&quot;Home page&quot; href=&quot;start.html&quot;&gt;
+  &lt;link rel=&quot;prev&quot; title=&quot;previous: first chapter&quot; href=&quot;chapter1.html&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Chapter Two&lt;/h1&gt;
+  &lt;p&gt;This would be the second chapter page of an article series or course&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;chapter1.html&quot; rev=&quot;prev&quot;&gt;Back to chapter 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;toc.html&quot; rel=&quot;contents&quot;&gt;Table of contents&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>And finally the table of contents (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/toc.html">toc.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Table of contents - Link relationship example&lt;/title&gt;
+  &lt;link rel=&quot;home&quot; title=&quot;home page&quot; href=&quot;start.html&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Table of contents&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;chapter1.html&quot;&gt;Chapter One - about stuff&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;chapter2.html&quot;&gt;Chapter Two - about other stuff&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;start.html&quot; rel=&quot;home&quot;&gt;Back to home&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>You can also use <code>rel</code> and <code>rev</code> attributes on the links in the document to tell browsers and assistive technology that these anchors correspond with the link relationships. And <code>rel</code> and <code>rev</code> are used for other purposes such as Microformats—<a href="http://dev.opera.com/articles/view/xfn-encoding-extraction-and-visualizat/">check out this article for some uses of the XFN Microformat</a>.</p>
+<h2>Linking to alternative versions of the document</h2>
+<p>The option to link to other documents that have a certain relationship to the document in question also includes different language versions of the same document, or different formats. You can do both by providing a link with a <code>rel</code> attribute value of <code>alternate</code>, indicating an alternative version.</p>
+<h3>Translations</h3>
+<p>Translations are a great candidate for document interlinking. It might for example be that one language version of a document is very successful and visitors who don’t speak that language would love to have that information available to them. By linking from the original to the alternative language version you’ll make it easier for readers of the alternative to understand and promote the content and possibly make the other language version as successful. The following example shows how you can define the other language versions (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/languageexample.html">languageexample.html</a>); note the syntax — it’s pretty intuitive:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Multiple Languages example&lt;/title&gt;
+  &lt;link rel=&quot;contents&quot; title=&quot;table of contents&quot; href=&quot;toc.html&quot;&gt;
+  &lt;link rel=&quot;next&quot; title=&quot;next: chapter one&quot; href=&quot;chapter1.html&quot;&gt;
+  &lt;link rel=&quot;alternate&quot; title=&quot;The course in Dutch&quot; type=&quot;text/html&quot; hreflang=&quot;nl&quot; href=&quot;../nl/start.html&quot;&gt;
+  &lt;link rel=&quot;alternate&quot; title=&quot;The course in German&quot; type=&quot;text/html&quot; hreflang=&quot;de&quot; href=&quot;../de/start.html&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Course example&lt;/h1&gt;
+  &lt;p&gt;This would be the cover page of an article series or course&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;chapter1.html&quot; rel=&quot;next&quot;&gt;Let's start with Chapter One&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Other languages:
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;../de/start.html&quot; lang=&quot;de&quot; hreflang=&quot;de&quot;&gt;Deutsch&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;../de/start.html&quot; lang=&quot;nl&quot; hreflang=&quot;nl&quot;&gt;Nederlands&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>As a recap, the <code>hreflang</code> attribute on links and anchors defines the human language of the linked document and the <code>lang</code> attribute defines the language of the text inside the element that has this attribute. This is very important for accessibility as text-to-speech software needs to switch the pronounciation voice from language to language.</p>
+<p>Different languages have obviously been around since the Internet first existed (and thousands of years before that), but there is another type of alternative web page that you’ll see a lot as you trawl the web—feeds (eg. RSS feeds). These are very popular, especially for documents that change constantly, such as news sites. We’ll look at these next.</p>
+<h3>Feeds</h3>
+<p>A feed is a document containing condensed information detailing the new additions to your site in chronological order. Users can subscribe to it and get to know what has changed on your site recently without having to visit it. They do this by using tools like feed readers, eg. <a href="http://reader.google.com/">Google Reader</a>, <a href="http://www.netvibes.com/">Netvibes</a> or <a href="http://www.bloglines.com/">Bloglines</a>. Some modern browsers (such as Opera and Firefox) and e-mail clients (such as Mac Mail, or Outlook on Windows) can also process and display feeds. You can recognize that a web site offers a feed by the RSS icon next to the location as shown in Figure 2:</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=morehead.gif">Screenshot of the Opera browser showing a RSS icon in the navigation bar</a></p>
+<p>Figure 2: Opera shows an orange RSS icon next to the location of web sites that offer a feed.</p>
+<p>Feed pages are either structured using HTML or an XML format like RSS or Atom, and they are hardly ever generated by hand. Most of the time personal publishing systems will do that work for you and all you need to do to offer the world a feed of your site is link to the XML document with the correct meta element in the head of your document. The following is an excerpt from my blog at <a href="http://wait-till-i.com/">http://wait-till-i.com</a> and points to the RSS feed (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/feedexample.html">feedexample.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;link rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;Wait till I come! RSS Feed&quot; href=&quot;http://www.wait-till-i.com/feed/&quot;&gt;
+  &lt;title&gt;Wait till I come!&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;Example of an RSS feed&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Supplying a feed makes sense for content-heavy web sites that change very often (like blogs or photo sites), and by using a feed reading tool and subscribing to feeds you can cut down on a lot of your surfing and research time. If you don’t update your site that often but you have a lot of content and want people to have a visual reminder of your web site, then you might want to consider using a shortcut icon to stand out in people’s bookmark lists. This is what We’ll cover in the section below.</p>
+<h2>Making bookmarking more fun — using favicons</h2>
+<p>One last subject we’ll cover here is shortcut icons or favicons. These are small images with a file format of .ico — if you place one on your web server, you can use it to show a small icon next to the entry of your web site in a visitor’s bookmark list, as shown in Figure 3:</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=moreheae.gif">Screenshot of bookmark list with icons next to the entries</a></p>
+<p>Figure 3: Icons next to a bookmark make it easier to remember the site. You can add one of these by using a shortcut-icon meta element.</p>
+<p>Note that most browsers support formats other than .ico for favicons, but you should stick with .ico as IE doesn’t support other favicon formats.</p>
+<p>The biggest obstacle to adding your shortcut icon is actually creating it in the right format as not many graphics creation packages support the ico format. One option is to use the free online tool <a href="http://www.genfavicon.com/">genfavicon</a>. Once you have it, adding it to your document is as easy as adding another meta element with a <code>rel</code> value of “Shortcut Icon”, as shown in the following example (<a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/favicon-example.html">favicon-example.html</a>):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en-GB&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Shortcut Icon example&lt;/title&gt;
+  &lt;link rel=&quot;Shortcut Icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Example of a shortcut icon&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>If you open this document in a browser it should show the Opera icon next to the address in the location toolbar. If you bookmark it, the same icon will appear next to the bookmark.</p>
+<h2>Summary</h2>
+<p>That’s all for this article, and for the <code>head</code> section of an HTML document. There are other things we could cover, but they tend to be fairly advanced subjects, and often not a good idea — what we have covered here, and in <a href="http://www.w3.org/community/webed/wiki/The_HTML_head_element">The HTML &lt;head&gt; element article</a>, should give you all you need to get on.</p>
+<h2>Exercise questions</h2>
+<ul>
+<li>Why does it make sense to define link relationships when they are not displayed?</li>
+<li>How would you link to a search page?</li>
+<li>What use is offering a feed to your visitors? What <code>rel</code> value do you use to link to one?</li>
+<li>What do you need to make sure of when you link to documents in other languages?</li>
+<li>If you open the example documents in a text editor you’ll find another <code>meta</code> element we haven’t discussed here with an attribute of <code>content-type</code>, and something called <code>utf-8</code>. What is <code>utf-8</code>?</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/supplementary-more-about-the-document/">Supplementary: More about the document &lt;head&gt;</a>, written by Christian Heilmann. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

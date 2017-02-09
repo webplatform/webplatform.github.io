@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>box-decoration-break · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="Breaks a box into fragments creating new borders, padding and repeating backgrounds or lets it stay as a continuous box on a page break, column break, or, for inline elements, at a line break." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/box-decoration-break/">box-decoration-break</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>box-decoration-break</h1>
+<h2>Summary</h2>
+<p>Breaks a box into fragments creating new borders, padding and repeating backgrounds or lets it stay as a continuous box on a page break, column break, or, for inline elements, at a line break.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>slice</code>
+</dd>
+<dt>Applies to</dt>
+<dd>All elements
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>as specified
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+</dl>
+<p><a href="/docs/css/concepts/cssom">CSS Object Model Property</a><br>
+:</p>
+<h2>Syntax</h2>
+<ul>
+<li><code>box-decoration-break: clone</code></li>
+<li><code>box-decoration-break: slice</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>clone</dt>
+<dd>Each box fragment is independently wrapped with the border and padding. The <code>border-radius</code> and <code>border-image</code> and <code>box-shadow</code>, if any, are applied to each fragment independently. The background is drawn independently in each fragment of the element. A no-repeat background image will thus be rendered once in each fragment of the element.
+</dd>
+<dt>slice</dt>
+<dd>No border and no padding are inserted at a break. No box-shadow is drawn at a broken edge; <code>border-radius</code> does not apply to its corners; and the <code>border-image</code> is rendered for the whole box as if it were unbroken. The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward. Backgrounds are drawn as if, after the element has been laid out (including any justification, reordering, page breaks, etc.), all the element’s box fragments were taken and put one after the other in visual order. The background is applied to the bounding box of this composite box and then the fragments are put back, with each with its share of the background.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>This is an example of CSS how you can use box-decoration-break for a given element <code>.clone</code> which is part of the element element with column breaks.</p>
+<pre><code class="css"><span class="hljs-comment">/**
+ * box-decoration-break
+ *
+ * Please be aware that this demo uses prefix-free.js to
+ * remove the hassle of adding vendor prefixes.
+ * This is currently not working in any browser.
+ */</span>
+<span class="hljs-class">.clone</span> <span class="hljs-rules">{
+    <span class="hljs-comment">/* Set some values to be cloned */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#eee</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#aaa</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+
+    <span class="hljs-comment">/* Clone the box */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">box-decoration-break</span>:<span class="hljs-value"> clone</span></span>;
+}</span>
+
+<span class="hljs-comment">/* Creating a bunch of columns */</span>
+<span class="hljs-class">.box</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">column-count</span>:<span class="hljs-value"> <span class="hljs-number">4</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">column-gap</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6363867">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> This property comes in handy if you want to indicate how a box splits when, for example a user prints a page.
+</code></pre>
+<p>When using CSS columns, grids or regions it is useful to decide how a box looks when it breaks.</p>
+<h2>Notes</h2>
+<p>In Firefox there is <code>-moz-background-inline-policy</code> which enables you to treat background images how you want to. This is only a partial implementation of <code>box-decoration-break</code>.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-background/#box-decoration-break">CSS Level 3 - Backgrounds and Borders Module</a></dt>
+<dd>Candidate Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>CSS Layout</h4>
+<ul>
+<li><p><a href="/docs/concepts/mobile_web/responsive_design">Responsive Web Design</a></p></li>
+<li><p><a href="/docs/css/atrules/@import">@import</a></p></li>
+<li><p><a href="/docs/css/properties/align-self">align-self</a></p></li>
+<li><p><a href="/docs/css/properties/background">background</a></p></li>
+<li><p><strong>box-decoration-break</strong></p></li>
+<li><p><a href="/docs/css/properties/box-flex">box-flex</a></p></li>
+<li><p><a href="/docs/css/properties/box-lines">box-lines</a></p></li>
+<li><p><a href="/docs/css/properties/box-orient">box-orient</a></p></li>
+<li><p><a href="/docs/css/properties/box-pack">box-pack</a></p></li>
+<li><p><a href="/docs/css/properties/box-shadow">box-shadow</a></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/flex-align">flex-align</a></p></li>
+<li><p><a href="/docs/css/properties/flex-item-align">flex-item-align</a></p></li>
+<li><p><a href="/docs/css/properties/flex-line-pack">flex-line-pack</a></p></li>
+<li><p><a href="/docs/css/properties/grid-auto-rows">grid-auto-rows</a></p></li>
+<li><p><a href="/docs/css/properties/grid-definition-columns">grid-definition-columns</a></p></li>
+<li><p><a href="/docs/css/properties/grid-definition-rows">grid-definition-rows</a></p></li>
+<li><p><a href="/docs/css/properties/height">height</a></p></li>
+<li><p><a href="/docs/css/properties/max-width">max-width</a></p></li>
+<li><p><a href="/docs/css/properties/user-modify">user-modify</a></p></li>
+<li><p><a href="/docs/svg/attributes/baseline-shift">baseline-shift</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/-moz-background-inline-policy">Documentation on -moz-background-inline-policy</a></li>
+<li><a href="http://bricss.net/post/24672339016/box-decoration-break-finally-coming-to-more-browsers">The state of box-decoration-break by Lennart Schoors</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

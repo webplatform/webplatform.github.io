@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>overflow · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="Mixed" />
+    <meta name="description" content="The overflow property controls how extra content exceeding the bounding box of an element is rendered. It can be used in conjunction with an element that has a fixed width and height, to eliminate text-induced page distortion." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/overflow/">overflow</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>overflow</h1>
+<h2>Summary</h2>
+<p>The overflow property controls how extra content exceeding the bounding box of an element is rendered. It can be used in conjunction with an element that has a fixed width and height, to eliminate text-induced page distortion.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>visible</code>
+</dd>
+<dt>Applies to</dt>
+<dd>non-replaced block-level elements and non-replaced ’inline-block’ elements
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>as specified, except ‘visible’
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+<dt><a href="/docs/css/concepts/cssom">CSS Object Model Property</a></dt>
+<dd><code>overflow</code>
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>overflow: &lt;overflow-x&gt; &lt;overflow-y&gt;</code></li>
+<li><code>overflow: auto</code></li>
+<li><code>overflow: hidden</code></li>
+<li><code>overflow: no-content</code></li>
+<li><code>overflow: no-display</code></li>
+<li><code>overflow: scroll</code></li>
+<li><code>overflow: visible</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>visible</dt>
+<dd>The default value for most elements. Content is not clipped and a scroll mechanism is not added.
+</dd>
+<dt>scroll</dt>
+<dd>Content is clipped and a scroll mechanism is added, even if the content does not exceed the dimensions of the object.
+</dd>
+<dt>hidden</dt>
+<dd>Content that exceeds the dimensions of the object is not shown. No scroll mechanism is applied.
+</dd>
+<dt>auto</dt>
+<dd>Content is clipped and scrolling is added only when necessary.
+</dd>
+<dt>no-display</dt>
+<dd>When the content doesn’t fit in the content box, the whole box is removed, as if ‘display: none’ were specified.
+</dd>
+<dt>no-content</dt>
+<dd>When the content doesn’t fit in the content box, the whole content is hidden, as if ‘visibility: hidden’ were specified.
+</dd>
+<dt>&lt;overflow-x&gt; &lt;overflow-y&gt;</dt>
+<dd>Set <strong>overflow-x</strong> and <strong>overflow-y</strong> separately.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>Add different behavior for paragraphs via the <code>overflow</code> property.</p>
+<pre><code class="css"><span class="hljs-class">.hidden</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> hidden</span></span>;
+}</span>
+<span class="hljs-class">.scroll</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> scroll</span></span>;
+}</span>
+<span class="hljs-class">.auto</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> auto</span></span>;
+}</span>
+<span class="hljs-class">.visible</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> visible</span></span>;
+}</span>
+
+<span class="hljs-comment">/* Helper for paragraphes */</span>
+<span class="hljs-tag">p</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">60px</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6365118">View live example</a></p>
+<p>Clearing floats with overflow</p>
+<pre><code class="css"><span class="hljs-class">.clear</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> hidden</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> green</span></span>;
+}</span>
+
+<span class="hljs-comment">/* A floating element that is bigger than its non-floating neighbor */</span>
+<span class="hljs-class">.floating</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">200px</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6365403">View live example</a></p>
+<p>Two values for <code>overflow</code>.</p>
+<pre><code class="css"><span class="hljs-class">.overflow-y</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">overflow</span>:<span class="hljs-value"> hidden auto</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">30px</span></span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6366211">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> The overflow CSS property specifies whether to clip content, render scroll bars or display overflow content of a block-level element.
+</code></pre>
+<p>The <code>overflow</code> property takes up to two values. If given one value, both <code>overflow-x</code> and <code>overflow-y</code> are set to that value. If given two values, the first value applies to <code>overflow-x</code> and the second applies to <code>overflow-y</code>.</p>
+<p>Using the overflow property with a value different than visible, its default, will create a new block formatting context. This is technically necessary as if a float would intersect with the scrolling element it would force to rewrap the content of the scrollable element around intruding floats. The rewrap would happen after each scroll step and would be lead to a far too slow scrolling experience. Note that, by programmatically setting scrollTop to the relevant HTML element, even when overflow has the hidden value an element may need to scroll.</p>
+<h2>Notes</h2>
+<p>The default value for the <code>html</code> element is <code>auto</code>. Setting the <code>overflow</code> property to <code>visible</code> causes the content to clip to the size of the window or frame that contains the object.</p>
+<h3>CSS basic box model</h3>
+<p>Specifying two values is currently not supported by browsers.</p>
+<h3>Firefox (Gecko) Notes</h3>
+<p>Through Firefox 3.6 (Gecko 1.9.2), the overflow property is incorrectly applied to table-group elements (&lt;thead&gt; , &lt;tbody&gt; , &lt;tfoot&gt;). This behavior is corrected in later versions.</p>
+<h3>Internet Explorer Notes</h3>
+<p>Internet Explorer 4 to 6 enlarges an element with <code>overflow: visible</code> (default value) to fit the content in it. height/width behaves like min-height/min-width.</p>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=203757">CSS 2.1</a>, Section 11.1.1</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/CSS2/visufx.html#overflow">CSS Level 2 (Revision 1)</a></dt>
+<dd>Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/2002/WD-css3-box-20021024/#overflow">CSS3 module: The box model</a></dt>
+<dd>Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/css3-box/#overflow1">CSS basic box model</a></dt>
+<dd>Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related Properties</h3>
+<ul>
+<li><a href="/docs/css/properties/overflow-x">overflow-x</a></li>
+<li><a href="/docs/css/properties/overflow-y">overflow-y</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

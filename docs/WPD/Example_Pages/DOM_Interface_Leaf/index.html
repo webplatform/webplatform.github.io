@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Node.appendChild() · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Example_Pages/">WPD/Example Pages</a></li><li><a href="/docs/WPD/Example_Pages/DOM_Interface Leaf/">DOM Interface Leaf</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Node.appendChild()</h1>
+<p><strong>This is a temporary page to pull together an example of what the ideal end state will be. It includes some content from MDN that is not compatible with the WPD license, and should be removed soon.</strong></p>
+<p>Based on: <a href="https://developer.mozilla.org/en-US/docs/DOM/Node.appendChild">https://developer.mozilla.org/en-US/docs/DOM/Node.appendChild</a> and <a href="http://msdn.microsoft.com/en-us/library/ie/ms535934(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/ie/ms535934(v=vs.85).aspx</a></p>
+<h2>Summary</h2>
+<p>Node.appendChild() adds a node to the end of the list of children of a specified parent node. If the node already exists it is removed from current parent node, then added to new parent node.</p>
+<h2>Syntax</h2>
+<pre><code>var child=element.appendChild(child);
+</code></pre>
+<h3>Parameters</h3>
+<ul>
+<li><code>element</code> is the parent element.</li>
+<li><code>child</code> is the node to append underneath <code>parent</code>. Also returned.</li>
+</ul>
+<h3>Return Value</h3>
+<p>Returns <code>child</code>, the element that was appended.</p>
+<h2>Examples</h2>
+<p><a href="/w/index.php?title=DOM/interfaces/examples/appendChild&amp;action=edit&amp;redlink=1">View live examples</a></p>
+<pre><code class="html">//LANGUAGE-TAG: JavaScript
+//Create a div and append it to the body.
+var oDiv=document.createElement("DIV");
+document.body.appendChild(oDiv);
+</code></pre>
+<h2>Usage</h2>
+<p>If <code>child</code> is a reference to an existing node in the document, <code>appendChild</code> moves it from its current position to the new position (i.e. there is no requirement to remove the node from its parent node before appending it to some other node).</p>
+<p>This also means that a node can’t be in two points of the document simultaneously. So if the node already has a parent, it is first removed, then appended at the new position.</p>
+<p>You can use <strong>cloneNode</strong> to make a copy of the node before appending it under the new parent. (Note that the copies made with <strong>cloneNode</strong> will not be automatically kept in sync.)</p>
+<p>This method is not allowed to move nodes between different documents. If you want to <strong>appendNode</strong> from a different document (for example to display results from AJAX request) you must first use <strong>importNode</strong>.</p>
+<p><strong>appendChild()</strong> is one of the fundamental methods of web programming using the DOM. The <strong>appendChild()</strong> method inserts a new node into the DOM structure of a document, and is the second part of the one-two, create-and-append process so central to building web pages programmatically.</p>
+<p>This method is accessible at run time. If elements are removed at run time, before the closing tag is parsed, areas of the document might not render.</p>
+<h2>Specifications</h2>
+<table>
+<thead>
+<tr><th style="text-align:left">Specification</th><th style="text-align:left">Status</th><th style="text-align:left">Relevant changes</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-184E7107">DOM Level 3 Core</a></td><td style="text-align:left">Recommendation</td><td style="text-align:left">Original specification</td></tr>
+</tbody>
+</table>
+<h2>Browser Compatibility</h2>
+<p><strong>Implementation Note</strong>: Would have the Compatibility_Incomplete flag</p>
+<p><strong>Implementation Note:</strong> : Supported (when?) should ideally be a template or something we can query on, low priority.</p>
+<h3>Desktop</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">Feature</th><th style="text-align:left">Chrome</th><th style="text-align:left">Firefox (Gecko)</th><th style="text-align:left">Internet Explorer</th><th style="text-align:left">Opera</th><th style="text-align:left">Safari</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Basic support</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported(when?)</td><td style="text-align:left">Supported(when?)</td></tr>
+</tbody>
+</table>
+<h3>Mobile</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">Feature</th><th style="text-align:left">Android</th><th style="text-align:left">Firefox Mobile (Gecko)</th><th style="text-align:left">IE Phone</th><th style="text-align:left">Opera Mobile</th><th style="text-align:left">Safari Mobile</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Basic support</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported (when?)</td><td style="text-align:left">Supported (when?)</td></tr>
+</tbody>
+</table>
+<h3>Compatibility Notes</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">Browser</th><th style="text-align:left">Version</th><th style="text-align:left">Note</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Internet Explorer</td><td style="text-align:left">6+</td><td style="text-align:left">This method now applies to the attribute object.</td></tr>
+<tr><td style="text-align:left">Internet Explorer</td><td style="text-align:left">9+</td><td style="text-align:left">Exceptions are only supported when webpages are displayed in IE9 Standards mode.</td></tr>
+</tbody>
+</table>
+<h2>See Also</h2>
+<p><strong>Implementation Note</strong>: These should be auto-generated via tags.</p>
+<h3>Related DOM Methods</h3>
+<ul>
+<li><code>insertBefore</code></li>
+<li><code>replaceChild</code></li>
+<li><code>removeChild</code></li>
+</ul>
+<h3>Related DOM Concepts</h3>
+<ul>
+<li><a href="/w/index.php?title=DOM/concepts/document-model&amp;action=edit&amp;redlink=1">About the DOM object model</a></li>
+</ul>
+<p>&lt;details&gt; &lt;summary&gt;This article contains content originally from external sources, including ones licensed under the CC-BY-SA license.&lt;/summary&gt;</p>
+<p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: &lt;a href=&quot;<a href="http://developer.mozilla.org/foo">http://developer.mozilla.org/foo</a>&quot; target=&quot;_blank&quot;&gt;Foo&lt;/a&gt;</p>
+<p>Portions of this content come from Foo.org: &lt;a href=&quot;<a href="http://foo.org/baz">http://foo.org/baz</a>&quot; target=&quot;_blank&quot;&gt;Baz&lt;/a&gt;</p>
+<p>&lt;/details&gt;</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

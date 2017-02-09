@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Adapt Firefox Accounts for WebPlatform · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/Adapt_Firefox Accounts for WebPlatform/">Adapt Firefox Accounts for WebPlatform</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Adapt Firefox Accounts for WebPlatform</h1>
+<h2>Summary</h2>
+<p>Firefox Accounts (“FxA”) is an Identity Provider system made by Mozilla that has been rolled out with Firefox 29 released in May 2014. It will eventually be the centerpiece for their Marketplace and other services, the first components are about authentication, and to serve as a Resource Provider.</p>
+<p>WebPlatform is using its own fork of FxA to serve as a SSO and this document describes the changes that has been made to it.</p>
+<h2>What is Firefox Accounts, and why?</h2>
+<p>The choice of using FxA for our authentication service is due to our interest to limit our technology stack as much as its sane to do so. But FxA also supports other requirements we have, such as:</p>
+<ul>
+<li>Use of JavaScript/NodeJS</li>
+<li>Supports multiple languages</li>
+<li>Maintained by an active community who also happens to be <a href="/stewards/mozilla">one of our Stewards, Mozilla</a></li>
+</ul>
+<p>FxA provides has a set of loosely coupled components. Namely, a <a href="https://github.com/webplatform/fxa-js-client">JavaScript client (“fxa-js-client”)</a>, a <a href="https://github.com/webplatform/fxa-content-server">Content server (“fxa-content-server”)</a> that’s taking care of the Web UI but also email templates. The Content server also <a href="https://github.com/webplatform/fxa-content-server-l10n">supports Localization (“fxa-content-server-l10n”)</a> allowing us to support multi-lingual content. In the backend side, FxA exposes <a href="https://github.com/webplatform/fxa-auth-server">an API (“fxa-auth-server”)</a>, and last but not least, an <a href="https://github.com/webplatform/fxa-oauth-server">OAuth2 resource provider (“fxa-oauth-server”)</a>.</p>
+<p>Our use of FxA will be limited to a minimum to suit our needs. In the future, we might consider using other components managed by the FxA community, such as: <a href="https://github.com/mozilla/fxa-customs-server">customs-server</a> that’s taking care to validate emails, manage bounces and help prevent spam, and also <a href="https://github.com/mozilla/fxa-auth-db-server">auth-db-server</a> that will provide a REST/HTTP frontend to the database servers, and many other components available on <a href="https://github.com/mozilla?query=fxa-">their GitHub projects</a>.</p>
+<h2>Components</h2>
+<p>We forked the following components based on recommended version/tags from the Mozilla fxa team.</p>
+<ul>
+<li><a href="https://github.com/webplatform/fxa-content-server">fxa-content-server</a>, using branch master</li>
+<li><a href="https://github.com/webplatform/fxa-content-server-l10n">fxa-content-server-l10n</a>, adjusting content based off of the same branch as fxa-content-server</li>
+<li><a href="https://github.com/webplatform/fxa-js-client">fxa-js-client</a>, that is installed within fxa-content-server via the bower.json file</li>
+<li><a href="https://github.com/webplatform/fxa-auth-server">fxa-auth-server</a>, branch webplatform-customizations</li>
+<li><a href="https://github.com/webplatform/fxa-oauth-server">fxa-oauth-server</a></li>
+</ul>
+<h2>Changes</h2>
+<h3>Accept username field, and allow to force creation date</h3>
+<ol>
+<li>Accept two fields [username, fullName] and allow forcing createdAt
+<ol>
+<li><a href="https://github.com/webplatform/fxa-auth-server/issues/1">fxa-auth-server issue #1</a>, patch <a href="/File:fxa-auth-server-patch-0001-Adressing-1-for-fxa-auth-server.txt">File:fxa-auth-server-patch-0001-Adressing-1-for-fxa-auth-server.txt</a></li>
+<li><a href="https://github.com/webplatform/fxa-js-client/issues/1">fxa-js-client issue #1</a></li>
+<li><a href="https://github.com/webplatform/fxa-content-server/issues/1">fxa-content-server issue #1</a></li>
+</ol></li>
+</ol>
+<h3>On login, also support using username instead of email</h3>
+<p><strong>Status: In analysis</strong></p>
+<p>The idea is that we would like to not change behavior for users when they login with their username.</p>
+<p><strong>Limitations</strong></p>
+<ul>
+<li>we do not want to change FxA too much (i.e. not break updates).</li>
+<li>since the <a href="https://github.com/mozilla/fxa-auth-server/wiki/onepw-protocol#login-obtaining-the-sessiontoken">way to validate user uses cryptography based on the email</a>, we cannot just fake emails in the field, we will need it at many places such as confirming the user email and it would be a too big change</li>
+</ul>
+<p><strong>Proposed solution</strong></p>
+<p>Since we already implemented to accept username in <a href="#Accept_username_field.2C_and_allow_to_force_creation_date">#Accept username field, and allow to force creation date</a>, we can create a set of API mirroring the original, but to find by username.</p>
+<p>What we can do:</p>
+<ul>
+<li>Create a distinct:
+<ul>
+<li>login screen in content-server (e.g. /signin2) that shows username+password fields</li>
+<li>login API endpoint to api-server to accept those two fields</li>
+<li>Adjust API endpoint to use a different SELECT query to find user to make crypto checks. i.e. will continue as usual, but instead of searching user entry in database by provided email, we will allow to use username.</li>
+</ul></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tables · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Style_Guide/">WPD/Style Guide</a></li><li><a href="/docs/WPD/Style_Guide/Tables/">Tables</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Tables</h1>
+<h2>Syntax</h2>
+<p>For consistency and compatibility of tables, please use the following table syntax styles. These rules are required to ensure that tables print correctly in all contexts, including when they are part of a form field.</p>
+<h3>Normal pages</h3>
+<pre><code>{|
+! head 1
+! head 2
+! head 3
+|-
+| column a1
+| column a2
+| column a3
+|-
+| column b1
+| column b2
+| column b3
+|}
+</code></pre>
+<p>This results in the following table:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">head 1</th><th style="text-align:left">head 2</th><th style="text-align:left">head 3</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">column a1</td><td style="text-align:left">column a2</td><td style="text-align:left">column a3</td></tr>
+<tr><td style="text-align:left">column b1</td><td style="text-align:left">column b2</td><td style="text-align:left">column b3</td></tr>
+</tbody>
+</table>
+<h3>Form-based pages</h3>
+<p>Tables in a template or form-based page must use the <a href="/docs/WPD/Manual_Of_Style/Gotchas#The_dreaded_pipe_character">“pipe hack”</a> instead of the <code>|</code> character:</p>
+<pre><code>{{!}}
+</code></pre>
+<p>Thus, the same table in a form would use the following (ugly) syntax:</p>
+<pre><code>{{{!}}
+! head 1
+! head 2
+! head 3
+{{!}}-
+{{!}} column a1
+{{!}} column a2
+{{!}} column a3
+{{!}}-
+{{!}} column b1
+{{!}} column b2
+{{!}} column b3
+{{!}}}
+</code></pre>
+<h3>Do not do this!</h3>
+<p>Do not use the single-line row syntax.</p>
+<pre><code>{|
+| head 1    !! column 2  !! column 3
+|-
+| column a1 || column a2 || column a3
+|-
+| column b1 || column b2 || column b3
+|}
+</code></pre>
+<h2>Sortable tables</h2>
+<p>MediaWiki has the ability to create <a href="http://www.mediawiki.org/wiki/Help:Sorting">sortable tables</a>, simply by adding the class <code>sortable</code>:</p>
+<pre><code>{| class=&quot;sortable&quot;
+! head 1
+! head 2
+! head 3
+|-
+| apple a1
+| peach a2
+| blueberry a3
+|-
+| ape b1
+| dog b2
+| fish b3
+|}
+</code></pre>
+<p>This results in the following table:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">head 1</th><th style="text-align:left">head 2</th><th style="text-align:left">head 3</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">apple 1</td><td style="text-align:left">peach 2</td><td style="text-align:left">blueberry 3</td></tr>
+<tr><td style="text-align:left">ape 1</td><td style="text-align:left">dog 2</td><td style="text-align:left">zebra 3</td></tr>
+</tbody>
+</table>
+<h2>Other, less styled variant</h2>
+<p>This variant has been found by mix-matching class names. Consider this as a hack if you really need to put data in a table without being forced to use first row as the table heading cell.</p>
+<pre><code>{| class=&quot;mw-datatable os-suggest-results filehistory&quot;
+|+Unstyled table, and showing table caption cell syntax
+|-
+|Column one
+|Column two
+|Column three
+|-
+|'''Column one and row one'''
+|Column two:
+* Lists
+* works
+* that way
+|Column three
+|-
+|'''Column one and row two'''
+|Column two, row two
+|Column three, row two
+|}
+</code></pre>
+<p>This results in the following table:</p>
+<table>
+<caption>Unstyled table, and showing table caption cell syntax</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<tbody>
+<tr class="odd">
+<td align="left">Column one</td>
+<td align="left">Column two</td>
+<td align="left">Column three</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Column one and row one</strong></td>
+<td align="left">Column two:
+<ul>
+<li>Lists</li>
+<li>works</li>
+<li>that way</li>
+</ul></td>
+<td align="left">Column three</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Column one and row two</strong></td>
+<td align="left">Column two, row two</td>
+<td align="left">Column three, row two</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

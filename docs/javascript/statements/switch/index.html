@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>switch · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Enables the execution of one or more statements when a specified expression&#x27;s value matches a label." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/statements/">statements</a></li><li><a href="/docs/javascript/statements/switch/">switch</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>switch</h1>
+<h2>Summary</h2>
+<p>Enables the execution of one or more statements when a specified expression’s value matches a label.</p>
+<h2>Syntax</h2>
+<pre><code>switch ( expression ) {
+     case label:
+         statementlist
+     case label:
+     default:
+         statementlist
+}
+</code></pre>
+<dl>
+<dt><strong>expression</strong></dt>
+<dd>The expression to be evaluated.
+</dd>
+<dt><strong>label</strong></dt>
+<dd>An identifier to be matched against expression. If label is an expression , execution starts with the statementlist immediately after the colon, and continues until it encounters either a break statement, which is optional, or the end of the switch statement.
+</dd>
+<dt><strong>statementlist</strong></dt>
+<dd>One or more statements to be executed.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example tests an object for its type.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyObjectType</span>(<span class="hljs-params">obj</span>) </span>{
+     <span class="hljs-keyword">switch</span> (obj.constructor) {
+         <span class="hljs-keyword">case</span> <span class="hljs-built_in">Date</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is a Date."</span>);
+             <span class="hljs-keyword">break</span>;
+         <span class="hljs-keyword">case</span> <span class="hljs-built_in">Number</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is a Number."</span>);
+             <span class="hljs-keyword">break</span>;
+         <span class="hljs-keyword">case</span> <span class="hljs-built_in">String</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is a String."</span>);
+             <span class="hljs-keyword">break</span>;
+         <span class="hljs-keyword">default</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is unknown."</span>);
+     }
+ }
+
+ <span class="hljs-comment">// Output when obj is a Date:</span>
+ <span class="hljs-comment">// Object is a Date.</span>
+
+ <span class="hljs-comment">// Output when obj is a Number:</span>
+ <span class="hljs-comment">// Object is a Number.</span>
+
+ <span class="hljs-comment">// Output when obj is a String:</span>
+ <span class="hljs-comment">// Object is a String.</span>
+
+ <span class="hljs-comment">// Output when obj is something other than a Date, Number, or String:</span>
+ <span class="hljs-comment">// Object is unknown.</span>
+</code></pre>
+<p>The following code shows what happens if you do not use a break statement.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyObjectType</span>(<span class="hljs-params">obj</span>) </span>{
+     <span class="hljs-keyword">switch</span> (obj.constructor) {
+         <span class="hljs-keyword">case</span> <span class="hljs-built_in">Date</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is a Date."</span>);
+         <span class="hljs-keyword">case</span> <span class="hljs-built_in">Number</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is a Number."</span>);
+         <span class="hljs-keyword">case</span> <span class="hljs-built_in">String</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is a String."</span>);
+         <span class="hljs-keyword">default</span>:
+             <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Object is unknown."</span>);
+     }
+ }
+
+ <span class="hljs-comment">// Output when obj is a Date:</span>
+ <span class="hljs-comment">// Object is a Date.Object is a Number.Object is a String.Object is unknown.</span>
+
+ <span class="hljs-comment">// Output when obj is a Number:</span>
+ <span class="hljs-comment">// Object is a Number.Object is a String.Object is unknown.</span>
+
+ <span class="hljs-comment">// Output when obj is a String:</span>
+ <span class="hljs-comment">// Object is a String.Object is unknown.</span>
+
+ <span class="hljs-comment">// Output when obj is something other than a Date, Number, or String:</span>
+ <span class="hljs-comment">// Object is unknown.</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>Use the default clause to provide a statement to be executed if none of the label values matches expression. It can appear anywhere within the switch code block.</p>
+<p>Zero or more label blocks may be specified. If no label matches the value of expression , and a default case is not supplied, no statements are executed.</p>
+<p>Execution flows through a switch statement as follows:</p>
+<ul>
+<li>Evaluate expression and look at label in order until a match is found.</li>
+<li>If a label value equals expression , execute its accompanying statementlist.Continue execution until a break statement is encountered, or the switch statement ends. This means that multiple label blocks are executed if a break statement is not used.</li>
+<li>If no label equals expression , go to the default case. If there is no default case, go to last step.</li>
+<li>Continue execution at the statement following the end of the switch code block.</li>
+</ul>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/statements/break">break Statement</a></li>
+<li><a href="/docs/javascript/statements/if_else">if…else Statement</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hzc6t81t(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

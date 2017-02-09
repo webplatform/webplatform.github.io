@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>An introduction to the Web Audio API · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="The Web Audio API is a way of creating and manipulating audio within the browser. It’s a specification proposed by Google, and as such is currently only available in Chrome, with the hope other browsers adopting it and it becoming a standard.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/audio/">audio</a></li><li><a href="/tutorials/audio/an_introduction to the web audio api/">an introduction to the web audio api</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>An introduction to the Web Audio API</h1>
+<p><strong>By <a href="http://stuartmemo.com">Stuart Memo</a></strong><br>
+Originally published June 13th, 2012</p>
+<h2>Summary</h2>
+<p>The Web Audio API is a way of creating and manipulating audio within the browser. It’s a specification proposed by Google, and as such is currently only available in Chrome, with the hope other browsers adopting it and it becoming a standard.</p>
+<p>The actual audio processing itself is done with Assembly/C/C++ code within the browser, but the API gives us a nice high-level way of interacting with this code using JavaScript.</p>
+<p><strong>This article is part of a three articles series; see <a href="/docs/tutorials/audio/intro_web_audio_api_1">tutorials/audio/intro_web_audio_api_1</a>.</strong></p>
+<h3>AudioContext</h3>
+<p>In order to start using the API, we must first create an AudioContext. Think of this as a canvas for sound. It’s a container for all the playback and manipulation of audio we’re going to be doing. We create it by simply doing this:</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">new</span> webkitAudioContext();
+    <span class="hljs-comment">// We use the "webkit" prefix as the API isn't a standard yet</span>
+</code></pre>
+<p>Now that we’ve created this container, what do we put in it? Well, this is where the concept of nodes and modular routing comes in.</p>
+<h2>Nodes and modular routing</h2>
+<p>Imagine a guitar player who has an electric guitar, a distortion pedal and an amp. When the guitar player strums her guitar, the sound travels from the guitar, down a cable, through the distortion pedal, and down another cable before finally coming out the speaker of the guitar amp. This chain is very similar to the nodes and modular routing model of the Web Audio API. The guitar, distortion pedal and the amp are all nodes, which we’ve routed in the correct order using cables.</p>
+<h2>Playing a sound file</h2>
+<p>Ok, time to stop mucking about with concepts and learn how to play an audio file using the Web Audio API. Let’s start coding by declaring a couple of variables:</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">new</span> webkitAudioContext(),
+        buffer;
+</code></pre>
+<p>We already know about <code>context</code>, but what are we going to use <code>buffer</code> for? Well, audio buffers are essentially a holding place in memory for sound data. We read data into a buffer from an audio file using an &lt;a href=&quot;<a href="http://www.html5rocks.com/en/tutorials/file/xhr2/">http://www.html5rocks.com/en/tutorials/file/xhr2/</a>&quot;&gt;XMLHttpRequest&lt;/a&gt; like so:</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> loadAudioFile = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">url</span>) </span>{
+        <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> XMLHttpRequest();
+
+        request.open(<span class="hljs-string">'get'</span>, <span class="hljs-string">'path/my-audio.wav'</span>, <span class="hljs-literal">true</span>);
+        request.responseType = <span class="hljs-string">'arraybuffer'</span>;
+
+        request.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            context.decodeAudioData(request.response,
+                <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">incomingBuffer</span>) </span>{
+                    playAudioFile(incomingBuffer); <span class="hljs-comment">// Not declared yet</span>
+                 }
+            );
+        };
+
+        request.send();
+    };
+</code></pre>
+<p>Using an XMLHttpRequest allows us to tell the browser that we’re not loading a normal text file. By specifying <code>arraybuffer</code>, we’re flagging up the fact that we’re expecting binary data. Once we receive that chunk of data from the server, and because we know it’s an audio file (audiophile! ha!), we decode this data using <code>context.decodeAudioData</code> and specify an anonymous function as the callback that is passed the decoded data in a handy audio buffer that’s ready to be played. To do so though, we need to write a playback function.</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> playAudioFile = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">buffer</span>) </span>{
+        <span class="hljs-keyword">var</span> source = context.createBufferSource();
+
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.noteOn(<span class="hljs-number">0</span>); <span class="hljs-comment">// Play sound immediately</span>
+    };
+</code></pre>
+<p>In the above code <code>source</code> is the guitar in our analogy. It’s the very first node in our chain, and in this case we’re telling it that the source of the audio is from the buffer we just loaded. We then use <code>source.connect(context.destination)</code> to use a lead to connect the sound source to the speakers, <code>context.destination</code>, and <code>source.noteOn(0)</code> to play the sound after 0 seconds.&lt;/p&gt;</p>
+<p>Let’s put all of this together and see what we get:</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">new</span> webkitAudioContext(),
+        buffer;
+
+    <span class="hljs-keyword">var</span> playAudioFile = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">buffer</span>) </span>{
+        <span class="hljs-keyword">var</span> source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.noteOn(<span class="hljs-number">0</span>); <span class="hljs-comment">// Play sound immediately</span>
+    };
+
+    <span class="hljs-keyword">var</span> loadAudioFile = (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">url</span>) </span>{
+        <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> XMLHttpRequest();
+
+        request.open(<span class="hljs-string">'get'</span>, <span class="hljs-string">'path/my-audio.wav'</span>, <span class="hljs-literal">true</span>);
+        request.responseType = <span class="hljs-string">'arraybuffer'</span>;
+
+        request.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                context.decodeAudioData(request.response,
+                     <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">incomingBuffer</span>) </span>{
+                         playAudioFile(incomingBuffer);
+                     }
+                );
+        };
+
+        request.send();
+    }());
+</code></pre>
+<p>Reference this in an HTML file, make a cup of tea and relax while you enjoy the sounds of your choosing in the browser.</p>
+<p>I wouldn’t have been able to write this article without <a href="http://smus.com">Boris Smus</a>’ code examples on <a href="http://www.html5rocks.com/en/tutorials/webaudio/intro/">HTML5 Rocks</a> so check it out!</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

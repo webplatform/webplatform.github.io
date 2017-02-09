@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>rules · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="The collection of rules in a stylesheet." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/cssom/">cssom</a></li><li><a href="/docs/css/cssom/rules/">rules</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>rules</h1>
+<h2>Summary</h2>
+<p>The collection of rules in a stylesheet.</p>
+<h2>Properties</h2>
+<p><a href="/docs/css/cssom/rules/item">item</a><br>
+:</p>
+<h2>Methods</h2>
+<p><em>No methods.</em></p>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Examples</h2>
+<p>This example shows how to use the <strong>rules</strong> collection to identify the color specified in style sheet rules.</p>
+<pre><code class="js">&lt;HTML&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ruleColor</span>(<span class="hljs-params">ruleIndex</span>) </span>{
+    alert(<span class="hljs-string">"The color of rule "</span> + ruleIndex + <span class="hljs-string">" is "</span> +
+        <span class="hljs-built_in">document</span>.styleSheets[<span class="hljs-number">0</span>].rules.item(ruleIndex).style.color + <span class="hljs-string">"."</span>);
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">STYLE</span>&gt;</span><span class="css">
+<span class="hljs-class">.rule0</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-string">"red"</span></span></span></span>}
+<span class="hljs-class">.rule1</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-string">"blue"</span></span></span></span>}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">STYLE</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">P</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"rule0"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oRule0Span"</span>&gt;</span>
+    Rule 0 is applied to this line.
+<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">P</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"rule1"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oRule1Span"</span>&gt;</span>
+    Rule 1 is applied to this line.
+<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BUTTON</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"ruleColor(0)"</span>&gt;</span>Color of Rule 0<span class="hljs-tag">&lt;/<span class="hljs-title">BUTTON</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BUTTON</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"ruleColor(1)"</span>&gt;</span>Color of Rule 1<span class="hljs-tag">&lt;/<span class="hljs-title">BUTTON</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HTML</span>&gt;</span>
+</span></code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/rules_1.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>This collection is always accessible, even if the style sheet is not enabled. Rules are added to the <strong>rules</strong> collection with the <a href="/docs/css/cssom/methods/addRule"><strong>addRule</strong></a> method on the individual style sheet. A rule that is added to a <a href="/docs/html/attributes/disabled"><strong>disabled</strong></a> style sheet does not apply to the document unless the style sheet is enabled. Rules are deleted with the <a href="/docs/css/cssom/methods/removeRule"><strong>removeRule</strong></a> method. The rules in this collection are in the source order of the document. As rules are added or deleted through the Cascading Style Sheets (CSS) Object Model, a rule’s absolute position in the <strong>rules</strong> collection might change, but its position relative to other rules remains the same. When you add rules without specifying an index, the rule gets added to the document last. If you specify an index, however, the rule is inserted before the rule currently in that ordinal position in the collection. If the specified index is greater than the number of rules in the collection, the rule is added to the end.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

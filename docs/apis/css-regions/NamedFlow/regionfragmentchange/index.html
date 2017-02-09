@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>regionfragmentchange · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Fires on the  NamedFlow object when there is a change in how content flows through a region chain." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/css-regions/">css-regions</a></li><li><a href="/apis/css-regions/NamedFlow/">NamedFlow</a></li><li><a href="/apis/css-regions/NamedFlow/regionfragmentchange/">regionfragmentchange</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>regionfragmentchange</h1>
+<h2>Summary</h2>
+<p>Fires on the NamedFlow object when there is a change in how content flows through a region chain.</p>
+<h2>Overview Table</h2>
+<table class="wikitable">
+<tr>
+<th>
+Synchronous
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Bubbles
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Target
+</th>
+<td>
+[**NamedFlow**](/apis/css-regions/NamedFlow)
+</td>
+</tr>
+<tr>
+<th>
+Cancelable
+</th>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<th>
+Default action
+</th>
+<td>
+none
+</td>
+</tr>
+</table>
+Fires on the [**NamedFlow**](/apis/css-regions/NamedFlow) object when there is 'any' change in how content flows through a [region chain](/css/concepts/region_chain), even minor changes that don't affect the total number of [regions](/css/concepts/region) the content requires.
+<h2>Examples</h2>
+<p>This simple example logs each time content reflows among regions, and works with the CSS and JavaScript that follow. Define layout and content elements:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"page"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #1<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #2<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">aside</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">aside</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Sample CSS Regions Layout<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Riverrun, past Eve and Adam's, from swerve of shore to bend of bay, brings us by a commodius vicus of recirculation back to Howth Castle and Environs.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/region_fragmentchange.html">View live example</a></p>
+<p>Flow the content into the layout:</p>
+<pre><code class="css"><span class="hljs-tag">body</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#aaa</span></span></span>; }</span>
+<span class="hljs-tag">article</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">flow-into</span>:<span class="hljs-value"> main</span></span>; }</span>
+
+<span class="hljs-tag">div</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">flow-from</span>:<span class="hljs-value"> main</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">region-fragment</span>:<span class="hljs-value"> break</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">5%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">40%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">75%</span></span></span>;
+}</span>
+
+<span class="hljs-tag">div</span>, <span class="hljs-tag">aside</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fff</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border-radius</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+}</span>
+
+<span class="hljs-tag">aside</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">min-width</span>:<span class="hljs-value"> <span class="hljs-number">40%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">90%</span></span></span>;
+}</span>
+
+<span class="hljs-tag">div</span><span class="hljs-pseudo">:first-of-type</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">5%</span></span></span>; }</span>
+<span class="hljs-tag">div</span><span class="hljs-pseudo">:last-of-type</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">55%</span></span></span>; }</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/region_fragmentchange.html">View live example</a></p>
+<p>Log to console any shifts of content from one region to another that result when resizing the window, and thus the layout elements.</p>
+<pre><code class="js"><span class="hljs-built_in">document</span>.getNamedFlows().namedItem(<span class="hljs-string">'main'</span>).addEventListener(
+    <span class="hljs-string">'regionfragmentchange'</span>,
+    <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(inc++); }
+);
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/region_fragmentchange.html">View live example</a></p>
+<h2>Notes</h2>
+<p>The event fires when content shifts ‘in any way’ within the <a href="/docs/css/concepts/region_chain">region chain</a>, such as when linebreaks change. That is, when any <a href="/docs/css/concepts/region">region’s</a> <a href="/docs/apis/css-regions/Region/getRegionFlowRanges">collection of DOM Range fragments</a> changes their dimensions or offsets. (Compare with the <a href="/docs/apis/css-regions/NamedFlow/regionoversetchange"><strong>regionoversetchange</strong></a> event, which fires much less frequently in response to changing content or dimensions.)</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-regions/">CSS Regions Module Level 1</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Regions</h4>
+<ul>
+<li><p><a href="/docs/apis/css-regions">CSS Regions API</a></p></li>
+<li><p><a href="/docs/apis/css-regions/CSSRegionStyleRule">CSSRegionStyleRule</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow">NamedFlow</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/firstEmptyRegionIndex">firstEmptyRegionIndex</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getContent">getContent()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getRegions">getRegions()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/getRegionsByContent">getRegionsByContent()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/name">name</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/overset">overset</a></p></li>
+<li><p><strong>regionfragmentchange</strong></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlow/regionoversetchange">regionoversetchange</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlowCollection">NamedFlowCollection</a></p></li>
+<li><p><a href="/docs/apis/css-regions/NamedFlowCollection/namedItem">namedItem()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region">Region</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/getComputedRegionStyle">getComputedRegionStyle()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/getRegionFlowRanges">getRegionFlowRanges()</a></p></li>
+<li><p><a href="/docs/apis/css-regions/Region/regionOverset">regionOverset</a></p></li>
+<li><p><a href="/docs/css/atrules/@region">@region</a></p></li>
+<li><p><a href="/docs/css/concepts/fragment">content fragments</a></p></li>
+<li><p><a href="/docs/css/concepts/named_flow">named flows</a></p></li>
+<li><p><a href="/docs/css/concepts/overset">overset content</a></p></li>
+<li><p><a href="/docs/css/concepts/region">regions</a></p></li>
+<li><p><a href="/docs/css/concepts/region_chain">region chains</a></p></li>
+<li><p><a href="/docs/css/properties/break-after">break-after</a></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/break-inside">break-inside</a></p></li>
+<li><p><a href="/docs/css/properties/flow-from">flow-from</a></p></li>
+<li><p><a href="/docs/css/properties/flow-into">flow-into</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li>W3C editor’s draft: <a href="http://dev.w3.org/csswg/css3-regions/">CSS Regions Module Level 3</a></li>
+<li>Adobe Web Standards: <a href="http://html.adobe.com/webstandards/cssregions">CSS Regions</a></li>
+<li>Adobe Developer’s Network: <a href="http://www.adobe.com/devnet/html5/articles/css3-regions.html">CSS3 Regions: Rich page layout with HTML and CSS3</a></li>
+<li><a href="http://adobe.github.com/web-platform/samples/css-regions">Sample pages</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

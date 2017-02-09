@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript functions · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article discusses JavaScript functions, or how we create reusable pockets of code that we can call over and over again as we need." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/javascript_functions/">javascript functions</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>JavaScript functions</h1>
+<h2>Summary</h2>
+<p>This article discusses JavaScript functions, or how we create reusable pockets of code that we can call over and over again as we need.</p>
+<h2>Introduction</h2>
+<p>In this part of the <a href="http://www.w3.org/wiki/Web_Standards_Curriculum">Web Standards Curriculum</a>, we will discuss functions. Functions lie at the core of practically everything <em>useful</em> that you will do with JavaScript. Broadly speaking, they offer the ability to break a program into logical chunks, each implementing a specific piece of functionality. They are a central feature of the language, and a good chunk of JavaScript’s attractiveness is due to the particular ways in which it enables you to use and create functions. If you have done some programming before in languages like PHP or Java, you will feel right at home with functions in JavaScript; if not, do not worry. Functions are <em>critical</em>, but they are not hard to wrap your head around. This article explains why you will want to understand functions, then dives into their syntax and shows you how to create and use them.</p>
+<p>Note that the <a href="http://dev.opera.com/articles/view/javascript-functions/functions_code.zip">functions examples are available for download</a>, as well as being linked to at appropriate places in the article below.</p>
+<h2>What and why</h2>
+<p>You certainly do not want to reach for your specifications to refresh your memory each time you need to perform a specific calculation; it is much better to simply code the calculation’s steps <strong>once</strong>, bundle that up as a <code>calculateSomething</code> function, and then point to that implementation next time you need to perform the same activity. This simple act of bundling up a set of commands means that you can concentrate on the <em>activities</em> that your code implements instead of the intimate details of those activities’ internal steps. You can think of the functions you write as a layer sitting on top of JavaScript’s built-in core; you are creating <em>new commands</em> that are more expressive and more understandable in the context of your particular application.</p>
+<p>With that in mind, the “why?” of functions has a very straightforward answer: they are the basic building blocks that allow you to structure your code to enhance understanding of its purpose, and to reuse the functions you have written to avoid writing the same bits of code in multiple places. Your program will be easier to write and test if you break it into small pieces, each with a defined task.</p>
+<p>Moreover, breaking your code up into well thought-out functions makes maintaining your code much easier. Imagine, for example, that the rules for daylight savings time are changed again next year. If you have done that calculation eighty-five times throughout your project, you <em>will</em> introduce new bugs when you update the code in each of those locations; it is repetitive, manual, and failure-prone. On the other hand, changing a single <code>calculateDaylightSavings</code> function allows you to cascade that single change down through the rest of your program with a single fix, much the same as the CSS cascade of style down through the page. In this way, functions make maintenance much less error-prone, and easier to implement successfully.</p>
+<h2>A function’s syntax</h2>
+<p>Defining your own function is a simple task. As an example, let’s build a <a href="http://dev.opera.com/articles/view/javascript-functions/functions_1.html">function that generates a random background color for an element</a> on a page:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setElementBackground</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> red = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> green = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> blue = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+
+  <span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'element_to_change'</span>);
+  <span class="hljs-keyword">if</span> ( obj ) {
+    obj.style.background = <span class="hljs-string">'rgb('</span> + red + <span class="hljs-string">','</span> + green + <span class="hljs-string">','</span> + blue + <span class="hljs-string">')'</span>;
+  }
+}
+</code></pre>
+<p>Without worrying too much about the code executed by the function, let us focus on four important features of the function’s syntax:</p>
+<ol>
+<li>A function declaration always begins with the keyword <code>function</code>, which makes sense.</li>
+<li>The next bit is the function’s name, in this case <code>setElementBackground</code> (I generally use <a href="http://en.wikipedia.org/wiki/CamelCase">camelCase</a> for function names). The name of the function is important, as it is the bit you have to remember in order to use and reuse the code. Make sure it is an accurate description of what the function does; <code>setElementBackground</code> is a <strong>much</strong> better, more descriptive function name than something like <code>coloursAreNice</code> or <code>crazySetter</code>.</li>
+<li>Directly after the function’s name come a pair of parentheses. Inside these come the functions <strong>argument list</strong>, which enables you to make your functions more generic, and thus more reusable—you can apply them to more situations more easily. This is a powerful concept, but optional, so it will be discussed in more detail in the next section.</li>
+<li>Finally comes a pair of curly-brackets containing some code: these signify a <strong>block</strong> of code in JavaScript. Everything inside this block will be executed when the function is called, in order, just like any other bit of JavaScript code you have written.</li>
+</ol>
+<h3>Using the function</h3>
+<p>Now we have defined the function, to call it somewhere in your code you would simply write:</p>
+<pre><code class="js">setElementBackground();
+</code></pre>
+<p>That is all there is to it! You no longer have to concern yourself with the difficult internal details of <code>setElementBackground</code>; you have already written the code, so now you are able to use it with ease wherever you like, and reap the (random) rewards of reuse.</p>
+<p>Now, the function above is completely self-contained. It performs some activity, then exits; it neither needs input from the code that called it, nor does it give any information back to its caller about what happened. JavaScript, of course, allows us to write code that is a bit more talkative and flexible than that, so let us have a look at how we deal with information input to and output from functions.</p>
+<h3>Arguments</h3>
+<p>Passing information into a function in order to influence its behavior is a great way to make it more flexible and useful in a variety of situations. For example, I have hard-coded the <code>id</code> of the element whose background is changed inside <code>setElementBackground</code>; it would be nice to be able to specify different elements on the page whenever I call the function so that I could <em>reuse</em> this function for different elements, instead of duplicating all that code. <strong>Arguments</strong> are the solution.</p>
+<p>Earlier, I noted that the function’s definition contains a set of parentheses directly after the function’s name. This is the function’s <strong>argument list</strong>. To accept input from the caller, just specify a comma-separated list of variables that your function would like to receive. You can specify as many or as few as you like, and the names you use in the argument list can be referenced inside the function’s body just like with any other variable. The updated <code>setElementBackground</code> function looks like so (<a href="http://dev.opera.com/articles/view/javascript-functions/functions_2.html">check out the first example improvement</a> live):</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setElementBackground</span>(<span class="hljs-params"> elementID </span>) </span>{
+  <span class="hljs-keyword">var</span> red = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> green = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> blue = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+
+  <span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">document</span>.getElementById( elementID );
+  <span class="hljs-keyword">if</span> ( obj ) {
+    obj.style.background = <span class="hljs-string">'rgb('</span> + red + <span class="hljs-string">','</span> + green + <span class="hljs-string">','</span> + blue + <span class="hljs-string">')'</span>;
+  }
+}
+</code></pre>
+<p>Calling this function with an element ID passed in as an argument is straightforward:</p>
+<pre><code class="js">setElementBackground( <span class="hljs-string">'element_to_change'</span> );
+</code></pre>
+<p>If you accidentally call the function without passing in an argument, it takes the value <code>undefined</code>. You can test for this inside your function body to provide a bit of defense against unintentional misuse:</p>
+<pre><code class="js"><span class="hljs-keyword">if</span> ( <span class="hljs-keyword">typeof</span> elementID === <span class="hljs-string">"undefined"</span>) {
+  <span class="hljs-comment">// This will evaluate to `true` if the `elementID`</span>
+  <span class="hljs-comment">// variable wasn't provided by the caller.</span>
+  <span class="hljs-comment">// You can then write some code inside this</span>
+  <span class="hljs-comment">//if statement to stop the code from erroring.</span>
+}
+</code></pre>
+<p>The confusing, but nice, bit about function arguments is that the names of variables in the argument list have <em>nothing</em> to do with the name of variables passed into the function. If <code>elementID</code> is defined as the function’s argument, JavaScript creates a variable <em>inside</em> the function named <code>elementID</code> that has no effect on any variables outside the function — you can have another function outside the function of the same name, and its value would not be altered as a result of any statements inside the function. For example:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> elementID = <span class="hljs-string">"No change!"</span>;
+setElementBackground( <span class="hljs-string">'element_to_change'</span> );
+alert( elementID ); <span class="hljs-comment">// Alerts "No change!";</span>
+</code></pre>
+<p>This has a very important side effect. JavaScript creates a new variable inside the function, meaning that any changes it makes to its internal argument has <em>no effect</em> on any variable passed in. This concept (called <strong>scope</strong>) will be discussed further in the <a href="http://dev.opera.com/articles/view/objects-in-javascript/">Objects</a> and <a href="http://www.w3.org/wiki/JavaScript_best_practices">JavaScript best practices</a> articles, but for now, here is a quick example. This is a <code>substring</code> function accepting a string and a starting point:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">substring</span>(<span class="hljs-params"> obj, start </span>) </span>{
+  obj = obj.substring(start);
+}
+
+<span class="hljs-keyword">var</span> myString = <span class="hljs-string">"This is a string!"</span>;
+substring(myString, <span class="hljs-number">8</span>);
+alert(myString); <span class="hljs-comment">// Alerts "This is a string!"</span>
+</code></pre>
+<p>Even though the <code>obj</code> variable is reassigned inside the function to the result of the built-in <code>substring</code> method, <code>myString</code> is not affected at all; only the <em>copy</em> of <code>myString</code> sitting inside <code>substring</code> was changed. The external variable has no idea at all that anything has happened.</p>
+<p>This raises the question of communication: if changing arguments’ values has no effect outside the function, how do you pass information back from a function to its caller? Let’s look at this now.</p>
+<h3>Return values</h3>
+<p>It is very common for a function to do some calculation, and give the result of that work back to its caller to be used elsewhere. It might be useful, for example, for our <code>setElementBackground</code> function to <em>return</em> an array of the color values for use elsewhere. That is a simple matter of using the <code>return</code> keyword JavaScript provides, as shown here:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setElementBackground</span>(<span class="hljs-params"> elementID </span>) </span>{
+  <span class="hljs-keyword">var</span> red = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> green = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> blue = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+
+  <span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">document</span>.getElementById( elementID );
+  <span class="hljs-keyword">if</span> ( obj ) {
+    obj.style.background = <span class="hljs-string">'rgb('</span> + red + <span class="hljs-string">','</span> + green + <span class="hljs-string">','</span> + blue + <span class="hljs-string">')'</span>;
+  }
+
+  <span class="hljs-keyword">return</span> [ red, green, blue ];
+}
+</code></pre>
+<p><a href="http://dev.opera.com/articles/view/javascript-functions/functions_3.html">Check out the second example improvement</a> in action.</p>
+<p>That simple addition means that you can now call the function in such a way as to capture its result in a variable:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> my_result = setElementBackground(<span class="hljs-string">'element_to_change'</span>);
+</code></pre>
+<p>Even if your function does not need to return a value, or has no real value to return, it is good practice to indicate success or failure by returning <code>true</code> or <code>false</code>, respectively. With that in mind, I will change <code>setElementBackground</code> to return <code>false</code> if the <code>elementID</code> that was passed in does not actually exist:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setElementBackground</span>(<span class="hljs-params"> elementID </span>) </span>{
+  <span class="hljs-keyword">var</span> red = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> green = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+  <span class="hljs-keyword">var</span> blue = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">256</span>);
+
+  <span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">document</span>.getElementById( elementID );
+  <span class="hljs-keyword">if</span> ( obj ) {
+    obj.style.background = <span class="hljs-string">'rgb('</span> + red + <span class="hljs-string">','</span> + green + <span class="hljs-string">','</span> + blue + <span class="hljs-string">')'</span>;
+    <span class="hljs-keyword">return</span> [ red, green, blue ];
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+}
+</code></pre>
+<p><a href="http://dev.opera.com/articles/view/javascript-functions/functions_4.html">Check out the third example improvement</a> in action.</p>
+<p>This allows you to check that the code executed properly by testing its return value, for example:</p>
+<pre><code class="js"><span class="hljs-keyword">if</span> ( !setElementBackground(<span class="hljs-string">'element_does_not_exist'</span>) ) {
+  alert(<span class="hljs-string">"Something went wrong!  `element_does_not_exist` doesn't exist!"</span>);
+}
+</code></pre>
+<p>Additionally, please note that the <code>return</code> keyword actually ends execution of your function right when it is called, <em>returning</em> execution to the place at which your function was called. Code sitting below the call to <code>return</code> is not executed — it’s simply ignored.</p>
+<h2>Summary</h2>
+<p>With that, you now know pretty much everything you need to in order to begin sprinkling your code full of functions. They are a foundation of good JavaScript code and your programs will be better organized, clearer, more readable, and easier to comprehend if you take the opportunity to wrap code up in well-named functions for reuse.</p>
+<h3>Exercise questions</h3>
+<ul>
+<li>What are functions? Why are they useful?</li>
+<li>How do you define a function?</li>
+<li>How do you pass information into a function? Why would you want to? Conversely, how can you get information out of a function?</li>
+<li>Wouldn’t it be nice if you could pass a color array into `setElementBackground`? Try modifying the code to accept another argument, and use that variable inside the function to override the random background colour.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

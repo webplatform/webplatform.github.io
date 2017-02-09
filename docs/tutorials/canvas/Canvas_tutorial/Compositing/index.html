@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Compositing · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Here we explain how to combine shapes. There are examples about how to logically add/subtract/layer shapes and about how to use clipping paths." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/canvas/">canvas</a></li><li><a href="/tutorials/canvas/Canvas_tutorial/">Canvas tutorial</a></li><li><a href="/tutorials/canvas/Canvas_tutorial/Compositing/">Compositing</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Compositing</h1>
+<h2>Summary</h2>
+<p>Here we explain how to combine shapes. There are examples about how to logically add/subtract/layer shapes and about how to use clipping paths.</p>
+<h2>Introduction</h2>
+<p>In all of our previous examples, shapes were always drawn one on top of the other. This is more than adequate for most situations. This, for instance, limits in what order composite shapes are built up. We can however change this behaviour by setting the <code>globalCompositeOperation</code> property.</p>
+<h2><code>globalCompositeOperation</code></h2>
+<p>We can not only draw new shapes behind existing shapes but we can also use it to mask off certain areas, clear sections from the canvas (not limited to rectangles like the <code>clearRect</code> method does) and more.</p>
+<p><code>globalCompositeOperation = type</code></p>
+<p><code>type</code> is a string representing any one of twelve compositing operations. Each of the available types is described below.</p>
+<p><strong>Note:</strong> In all of the examples below the blue square is drawn first and referred to as 'existing canvas content’. The red circle is drawn second and referred to as 'new shape’.</p>
+<table>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<tbody>
+<tr class="odd">
+<td align="left"><p><strong>source-over</strong> (default)<br /> This is the default setting and draws new shapes on top of the existing canvas content.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/7/70/Canvas_composite_srcovr.png" alt="Canvas with a red circle over a blue square" /></p></td>
+<td align="left"><p><strong>destination-over</strong><br /> New shapes are drawn behind the existing canvas content.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/9/93/Canvas_composite_destovr.png" alt="Canvas with a blue square in front of a red circle" /></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><strong>source-in</strong><br /> The new shape is drawn only where both the new shape and the destination canvas overlap. Everything else is made transparent</p></td>
+<td align="left"><p><img src="//static.webplatform.org/3/3d/Canvas_composite_srcin.png" alt="Canvas showing only the northwest quadrant of a red circle" /></p></td>
+<td align="left"><p><strong>destination-in</strong><br /> The existing canvas content is kept where both the new shape and existing canvas content overlap. Everything else is made transparent.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/c/c1/Canvas_composite_destin.png" alt="Canvas showing only the northwest quadrant of a blue circle" /></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><strong>source-out</strong><br /> The new shape is drawn where it doesn't overlap the existing canvas content.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/6/60/Canvas_composite_srcout.png" alt="Canvas with a red circle that has a white square blocking out the northwest section of the circle" /></p></td>
+<td align="left"><p><strong>destination-out</strong><br /> The existing content is kept where it doesn't overlap the new shape.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/5/54/Canvas_composite_destout.png" alt="Canvas with a blue square that has a semicircle of white in the southwest corner" /></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><strong>source-atop</strong><br /> The new shape is only drawn where it overlaps the existing canvas content.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/2/2b/Canvas_composite_srcatop.png" alt="Canvas with a blue square that has a red circle overlapping the southwest quadrant of the square" /></p></td>
+<td align="left"><p><strong>destination-atop</strong><br /> The existing canvas is only kept where it overlaps the new shape. The new shape is drawn behind the canvas content.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/c/ca/Canvas_composite_destatop.png" alt="Canvas with a red circle that has a blue square over the northwest quadrant" /></p></td>
+</tr>
+<tr class="odd">
+<td align="left"><p><strong>lighter</strong><br /> Where both shapes overlap the color is determined by adding color values.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/f/f2/Canvas_composite_lighten.png" alt="Canvas with an overlapping blue square and red circle. Where the shapes overlap, the color is light pink." /></p></td>
+<td align="left"><p><strong>darker</strong> <span class="unimplementedInline">Unimplemented</span><br /> Where both shapes overlap the color is determined by subtracting color values.</p>
+<p>This value is supported until (Firefox 3.6 / Thunderbird 3.1 / Fennec 1.0). Support has been removed from later versions (due to removal from the canvas specification).</p></td>
+<td align="left"><p><img src="//static.webplatform.org/1/18/Canvas_composite_darken.png" alt="Canvas with an overlapping blue square and red circle. Where the shapes overlap, the color is very dark brown" /></p></td>
+</tr>
+<tr class="even">
+<td align="left"><p><strong>xor</strong><br /> Shapes are made transparent where both overlap and drawn normal everywhere else.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/a/a1/Canvas_composite_xor.png" alt="Canvas with an overlapping blue square and red circle. Where the shapes overlap, the color is transparent, showing the white canvas behind." /></p></td>
+<td align="left"><p><strong>copy</strong><br /> Only draws the new shape and removes everything else.</p></td>
+<td align="left"><p><img src="//static.webplatform.org/1/15/Canvas_composite_copy.png" alt="A red circle on a white canvas" /></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: Currently the <code>copy</code> setting doesn’t do anything in the Gecko 1.8 based browsers (Firefox 1.5 betas, etc).</p>
+<h2>Clipping paths</h2>
+<p><img src="//static.webplatform.org/7/77/Canvas_clipping_path.png" alt="Canvas with a checkered image and a star-shaped clipping path"></p>
+<p>A clipping path is like a normal canvas shape but it acts as a mask to hide unwanted parts of shapes. This is visualized in the image on the right. The red star shape is our clipping path. Everything that falls outside of this path won’t get drawn on the canvas.</p>
+<p>If we compare clipping paths to the <code>globalCompositeOperation</code> property we’ve seen above; settings that achieve more or less the same effect are <code>source-in</code> and <code>source-atop</code>. The most important differences between the two are that clipping paths are never actually drawn to the canvas and the clipping path is never affected by adding new shapes. This makes clipping paths ideal for drawing multiple shapes in a restricted area.</p>
+<p>In the chapter about [canvas/tutorial/Canvas tutorial/Drawing shapes] I only mentioned the <code>stroke</code> and <code>fill</code> methods, but there’s a third method we can use with paths, called <code>clip</code>.</p>
+<p><code>clip()</code></p>
+<p>We use the <code>clip</code> method to create a new clipping path. By default the canvas element has a clipping path that’s the exact same size as the canvas itself (i.e. no clipping occurs).</p>
+<h4>A <code>clip</code> example</h4>
+<p><img src="//static.webplatform.org/d/d4/Canvas_clip.png" alt="Canvas with an image of stars and a circular clipping shape"></p>
+<p>In this example I’ll be using a circular clipping path to restrict the drawing of a set of random stars to a particular region.</p>
+<p>In the first few lines of code I draw a black rectangle the size of the canvas as a backdrop and translate the origin to the center. Below this I create the circular clipping path by drawing an arc. By calling the <code>clip</code> method the clipping path is created. Clipping paths are also part of the canvas save state. If we wanted to keep the original clipping path we could have saved the canvas state before creating the new one.</p>
+<p>Everything that’s drawn after creating the clipping path will only appear inside that path. You can see this clearly in the linear gradient that’s drawn next. After this a set of 50 randomly positioned and scaled stars is drawn (I’m using a custom function for this). Again the stars only appear inside the defined clipping path.</p>
+<p><strong>Note</strong>: Need a link to a sample page, as done on the original site</p>
+<pre><code>function draw() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+  ctx.fillRect(0,0,150,150);
+  ctx.translate(75,75);
+
+  // Create a circular clipping path
+  ctx.beginPath();
+  ctx.arc(0,0,60,0,Math.PI*2,true);
+  ctx.clip();
+
+  // draw background
+  var lingrad = ctx.createLinearGradient(0,-75,0,75);
+  lingrad.addColorStop(0, '#232256');
+  lingrad.addColorStop(1, '#143778');
+
+  ctx.fillStyle = lingrad;
+  ctx.fillRect(-75,-75,150,150);
+
+  // draw stars
+  for (var j=1;j&lt;50;j++){
+    ctx.save();
+    ctx.fillStyle = '#fff';
+    ctx.translate(75-Math.floor(Math.random()*150),
+                  75-Math.floor(Math.random()*150));
+    drawStar(ctx,Math.floor(Math.random()*4)+2);
+    ctx.restore();
+  }
+
+}
+function drawStar(ctx,r){
+  ctx.save();
+  ctx.beginPath()
+  ctx.moveTo(r,0);
+  for (var i=0;i&lt;9;i++){
+    ctx.rotate(Math.PI/5);
+    if(i%2 == 0) {
+      ctx.lineTo((r/0.525731)*0.200811,0);
+    } else {
+      ctx.lineTo(r,0);
+    }
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+</code></pre>
+<p><a href="/docs/tutorials/canvas/Canvas_tutorial/Transformations">&lt;&lt;Previous ||</a><a href="/docs/tutorials/canvas/Canvas_tutorial/Basic_animations">Next&gt;&gt;</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Canvas_tutorial/Compositing">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

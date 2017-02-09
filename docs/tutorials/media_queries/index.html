@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Targeting styles with media queries · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Media queries offer an easy way for the client browser to assign different mobile, tablet, and desktop interfaces." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/media_queries/">media queries</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Targeting styles with media queries</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>Media queries offer an easy way for the client browser to assign different mobile, tablet, and desktop interfaces.</p>
+<p>CSS <em>media queries</em> offers an easy way to target custom interfaces to more than one kind of device. This tutorial shows how to use them to optimize a site for mobile handsets and tablet devices in addition to desktop browsers.</p>
+<p>The media query feature provides a way for a client browser to respond based on inherent characteristics of the device on which it runs. This avoids the need for server-side <em>device detection</em>, which responds to the <em>User-Agent</em> header the browser transmits with each HTTP request, but which itself only hints at the handset’s size or capabilities.</p>
+<h2>Assigning alternative interfaces</h2>
+<p>Media <em>queries</em> extend an older CSS specification known as <em>media</em> types<em>, which assigned browsers to high-level categories such as</em> <strong>screen</strong> and <strong>handheld</strong>, or <strong>print</strong> to re-style a web page’s printed output. The original set of mobile browsers were assigned with the <strong>handheld</strong> type. Their much lower capabilities meant they could safely be presented with far more simplified content than <strong>screen</strong> content. However, the introduction of higher-capability touch-based browsers led to a problem: their larger screens and flexible zoom controls allowed them to display complex page layouts intended for desktop browsers. To allow access to richer content, these browsers had to be categorized, somewhat confusingly, as the <strong>screen</strong> media type.</p>
+<p>Unlike media types, media <em>queries</em> offer more details about the device. Most modern touch-based browsers have 320 pixel-wide screens, which can be expressed with the following media query:</p>
+<pre><code>screen and (max-width: 320px)
+</code></pre>
+<p>Media queries are enclosed in parentheses and associated with media types with the <strong>and</strong> keyword. Otherwise, commas separate more than one set of criteria. This specifies a media type and query combination along with an additional media type.</p>
+<pre><code>screen and (max-width: 320px), handheld
+</code></pre>
+<p>There are three ways to specify media queries:</p>
+<ul>
+<li>As part of <strong>link</strong> tags within the HTML’s <strong>head</strong> region. This example targets CSS to tablet and touch browsers, along with lower-end legacy mobile browsers:</li>
+</ul>
+<!-- -->
+<pre><code>&lt;link media=&quot;screen&quot;
+    href=&quot;/path/to/global.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;link media=&quot;only screen and (max-width: 320px)&quot;
+    href=&quot;/path/to/touch.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;link media=&quot;only screen and (max-width: 1024px)&quot;
+    href=&quot;/path/to/tablet.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;link media=&quot;handheld&quot;
+    href=&quot;/path/to/mobile.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;/&gt;
+</code></pre>
+<ul>
+<li>As part of <strong>@import</strong> rules within CSS files or <strong>style</strong> regions:</li>
+</ul>
+<!-- -->
+<pre><code>@import url(&quot;/path/to/touch.css&quot;) only screen and (max-width: 320px);
+</code></pre>
+<ul>
+<li>As part of <strong>@media</strong> rules that define regions of custom style sheets within a single CSS file or <strong>style</strong> region. This example styles a sidebar element, but hides it from the mobile interface:</li>
+</ul>
+<!-- -->
+<pre><code>aside.sidebar { float: right; }
+@media only screen and (max-width: 320px) {
+    aside.sidebar { display: none }
+}
+</code></pre>
+<p>The first two approaches allow you to conditionally load entire CSS files, while the third may be easier to maintain core style sheets alongside custom variations.</p>
+<p><strong>Note:</strong> In the examples above, the <strong>only</strong> keyword filters out the shrinking number of legacy browsers that interpret media types ('<em>screen</em>) but not the accompanying media query syntax. A similar <strong>not</strong> keyword reverses what a media query matches. This example detects optional features, excluding any browser that is sensitive to orientation:</p>
+<pre><code>not all and (orientation)
+</code></pre>
+<h2>Example: Adaptive screen layout</h2>
+<p>The best thing you can do with media queries is design alternate screen layouts. This skeletal layout relies on a single set of HTML tags:</p>
+<pre><code>&lt;body&gt;
+  &lt;section class=&quot;page&quot;&gt;
+    &lt;header&gt;    HEADER       &lt;/header&gt;
+    &lt;section class=&quot;content&quot;&gt;
+      &lt;nav&gt;     NAV          &lt;/nav&gt;
+      &lt;article&gt; MAIN CONTENT &lt;/article&gt;
+      &lt;aside&gt;   SIDEBAR      &lt;/aside&gt;
+    &lt;/section&gt;
+    &lt;footer&gt;    FOOTER       &lt;/footer&gt;
+  &lt;/section&gt;
+&lt;/body&gt;
+</code></pre>
+<p>Media queries allow you to specify much different layouts depending on available screen width:</p>
+<p><img src="//static.webplatform.org/f/f3/mq_layout.png" alt="mq layout.png"></p>
+<p>The core set of style sheets specifies a desktop-facing layout using flexible box CSS properties:</p>
+<pre><code>body {
+    background      : #ddd;
+    text-align      : center;
+}
+section.page {
+    display         : flex;   /* use flexbox */
+    flex-wrap       : wrap;
+    flex-direction  : column; /* nested items stack vertically */
+    justify-content : space-between;
+    align-items     : stretch;
+    align-content   : stretch;
+    min-height      : 40em;
+}
+section.content {
+    display         : flex;
+    flex            : 1;      /* item expands to fill space within larger flexbox */
+    flex-direction  : row;    /* nested items arranged horizontally */
+    align-items     : stretch;
+    align-content   : stretch;
+    justify-content : space-between;
+}
+header, article, nav, aside, footer {
+    border          : thin solid #777;
+}
+article {
+    flex            : 1;      /* item expands to fill space within larger flexbox */
+}
+nav, aside {
+    min-width       : 150px;
+}
+header, article, nav, aside, footer {
+    border-radius   : 0.5em;
+    padding         : 0.5em;
+    margin          : 0.25em;
+}
+/* colors to clarify layout */
+header  { background-color  : pink;       }
+article { background-color  : lightgreen; }
+nav     { background-color  : lightblue;  }
+aside   { background-color  : plum;       }
+footer  { background-color  : gold;       }
+</code></pre>
+<p>As of this writing, this standardized flexbox syntax is not yet widely supported even on desktop browsers. Otherwise you can use floats to achieve the same layout.</p>
+<p>The mobile interface is encapsulated within a @media rule, which only applies when the screen is narrow. In a desktop browser, resizing the window allows you to preview the mobile interface. The CSS replaces flexbox with conventional stacked block formatting. It also suppresses the sidebar element, and places the header and navigation elements side-by-side at the top of the screen:</p>
+<pre><code>@media only screen and (max-width:480px) {
+    section.page, section.content {
+        display    : block;     /* override flexbox */
+        min-height : inherit;
+    }
+    section.page {
+        padding    : 0.5em 0.25em 0.5em 0.25em;
+    }
+    aside {
+        display    : none;      /* hide sidebar */
+    }
+    article {
+        min-height : 20em;
+        margin     : 4em 0 1em 0;
+    }
+    header, nav {               /* compress header &amp; nav */
+        min-height : 2em;
+        position   : absolute;
+        top        : 0.5em;
+    }
+    header {
+        left       : 0.5em;
+        width      : 60%;
+    }
+    nav {
+        right      : 0.5em;
+        width      : 20%;
+        min-width  : inherit;
+    }
+}
+</code></pre>
+<p>Within each layout, you can apply more CSS to re-style elements for each interface. If re-styling them in place becomes too complex, you can instead toggle the display of alternative interface items. However, note that maintaining separate sets of markup may increase the footprint of the HTML served to mobile browsers, potentially over relatively slow or expensive data networks.</p>
+<h2>Example: High-resolution images</h2>
+<p>Along with screen size, knowing screen resolution can help improve the appearance of a mobile site. Mobile browsers operate on handsets with increasingly high-resolution <em>retina</em> screens. By default, these screens would render content far too small than in desktop browsers, and there is significant variation among handsets as their resolutions increase. To standardize sizing, browsers rely on an abstract grid of <em>CSS pixels</em> to calculate measurements. This lower-resolution grid undergoes a translation to each handset’s set of higher-resolution device screen pixels. The typical ratio of device pixels to CSS pixels ranges from 1.5 to 2 along either axis. So if your CSS specifies the same dimensions to match the image, the handset may use up to 4 pixels to represent each of the image’s pixels.</p>
+<p>Using <strong>device-pixel-ratio</strong> media queries, you can target images to each handset so that they scale to display at the best possible resolution. The following example shows three differently sized icons set to fit as a background image within a 64-pixel-wide block:</p>
+<pre><code>nav:last-of-type {
+    width            : 64px;
+    height           : 64px;
+    background-image : url(&quot;img/webkit64.png&quot;);
+}
+@media all and (min-device-pixel-ratio:1.5) {
+    nav:last-of-type { background-image : url(&quot;img/webkit96.png&quot;); }
+}
+@media all and (min-device-pixel-ratio:2) {
+    nav:last-of-type { background-image : url(&quot;img/webkit128.png&quot;); }
+}
+</code></pre>
+<p>The icon on the left below shows the distortion that occurs when viewed at the same nominal size on a browser whose <strong>device-pixel-ratio</strong> is 2. As you go to the right, you see a crisper image appropriate for the actual screen resolution:</p>
+<p><img src="//static.webplatform.org/7/72/mq_resolution.png" alt="mq resolution.png"></p>
+<h2>Media Queries from JavaScript</h2>
+<p>If media queries only allowed you to assign style sheets, there would be no way to align your JavaScript with your CSS. The <strong>matchMedia</strong> interface solves that problem.</p>
+<p>The following function specifies screen-width criteria to test whether the application is being run on browsers classified <em>desktop</em> <em>tablet</em>, <em>touch</em>, or unlikely low-end <em>mobile</em>:</p>
+<pre><code>function isDesign(str) {
+    var design;
+    if (window.matchMedia('only screen and (max-device-width: 320px)').matches) {
+        design = 'touch';
+    } else if (window.matchMedia('only screen and (max-device-width: 1024px)').matches) {
+        design = 'tablet';
+    } else if (window.matchMedia('screen').matches) {
+        design = 'desktop';
+    } else if (window.matchMedia('handheld').matches) {
+        design = 'mobile';
+    }
+    return(str == design);
+}
+</code></pre>
+<p>This technique is useful, especially when deploying a hybrid site’s content over potentially low-bandwidth mobile networks. The following example changes references to high-resolution video files to lower-bandwidth variants, based on their file prefixes:</p>
+<pre><code>var sources = document.querySelector(&quot;video&quot;).querySelectorAll(&quot;source&quot;);
+if (isDesign(&quot;touch&quot;)) {
+    for (i = 0, l = sources.length; i &lt; l ; i++ ) {
+        sources[i].src = sources[i].src.replace(/hi_/, &quot;lo_&quot;);
+    }
+}
+</code></pre>
+<p>High-bandwidth content that is appropriate for desktop browsers may lead to poor performance on mobile browsers, and costly network traffic. If you deploy a hybrid site using separate interfaces for desktop and mobile browsers as described above, a sidebar element that appears in the desktop interface may be suppressed from the mobile interface:</p>
+<pre><code>.sidebar { display: block }
+@media only screen and (max-device-width: 320px) {
+    .sidebar { display: none }
+}
+</code></pre>
+<p>In that case, it would be inefficient to load a great deal of markup from the server that never actually displays on mobile browsers. Instead, the full markup may load conditionally, depending on which design is in effect:</p>
+<pre><code>&lt;section class=&quot;sidebar&quot;&gt;&lt;!-- empty node --&gt;&lt;/section&gt;
+
+if (isDesign(&quot;desktop&quot;)) {
+    $(&quot;.sidebar&quot;).load(&quot;sidebar_innerHTML.html&quot;);
+}
+</code></pre>
+<p>Alternately, if you want to deploy a site’s various interfaces via separate access points (such as <em>m.website.com</em>, <em>touch.website.com</em>, or <em>website.mobi</em>), you can use such tests to prompt mobile users who land on a desktop page if they would rather view the corresponding mobile page instead.</p>
+<h2>Media Query Listeners</h2>
+<p>Unlike the conditional tests shown above, media query <em>listeners</em> allow an application to dynamically respond whenever there is a change in a media query expression’s matching state.</p>
+<p>As of this writing, there’s not yet widespread support for media query listeners among mobile browsers, and not many supported properties that might be expected to change as an application executes. Screen orientation may change, but that can also be detected with the <strong>orientationchange</strong> event. This shows both ways to implement an orientation handler:</p>
+<pre><code>if (!!window.matchMedia.addListener) {
+    window.matchMedia(&quot;(orientation:landscape)&quot;).addListener(orientationHandler);
+} else {
+    window.addEventListener('orientationchange', function(e){
+        if (window.orientation == 'portrait') {
+            // portrait
+        } else {
+            // landscape
+        }
+    });
+}
+</code></pre>
+<p>The handler is passed a <strong>MediaQueryList</strong> object, whose <strong>matches</strong> property effectively determines orientation:</p>
+<pre><code>function orientationHandler(mql) {
+    if(mql.matches) {
+        // landscape
+    } else {
+        // portrait
+    }
+}
+</code></pre>
+<p>For an example of a custom landscape layout using the <strong>orientation</strong> media query, see <a href="/docs/tutorials/mobile_viewport">The Mobile Viewport and Orientation</a>.</p>
+<h2>What can you find out about a browser?</h2>
+<p>You can use media queries to test for any of the following device properties:</p>
+<ul>
+<li><p><strong>width</strong>, <strong>min-width</strong>, <strong>max-width</strong>, <strong>device-width</strong>, <strong>min-device-width</strong>, <strong>max-device-width</strong>: integer measurements specify pixels. The <em>device</em> keyword specifies the latent width of the non-resizable window used by mobile browsers, a value that doesn’t apply to resizable desktop browser windows.</p></li>
+<li><p><strong>height</strong>, <strong>min-height</strong>, <strong>max-height</strong>, <strong>device-height</strong>, <strong>min-device-height</strong>, <strong>max-device-height</strong>: same as above, yet vertical. Note that a mobile browser’s interface items often use some of this vertical space, so widths offer a more reliable figure.</p></li>
+<li><p><strong>aspect-ratio</strong>, <strong>min-aspect-ratio</strong>, <strong>max-aspect-ratio</strong>, <strong>device-aspect-ratio</strong>, <strong>min-device-aspect-ratio</strong>, <strong>max-device-aspect-ratio</strong>: accepts pairs of <em>width</em>/<em>height</em> integers, such as <strong>3/4</strong>.</p></li>
+<li><p><strong>resolution</strong>, <strong>min-resolution</strong>, <strong>max-resolution</strong>: screen resolution expressed in dots per inch.</p></li>
+<li><p><strong>device-pixel-ratio</strong>, <strong>min-device-pixel-ratio</strong>, <strong>max-device-pixel-ratio</strong>: the number of device screen pixels that correspond to each CSS pixel, typically ranging from 1 for desktop browsers to 2 for the highest-resolution mobile screens. (On WebKit and Opera, this information is also available via <strong>window.devicePixelRatio</strong>.)</p></li>
+<li><p><strong>color</strong>, <strong>min-color</strong>, <strong>max-color</strong>: color depth, expressed as the number of bits used to represent each color.</p></li>
+<li><p><strong>color-index</strong>, <strong>min-color-index</strong>, <strong>max-color-index</strong>: number of different colors that may display at once.</p></li>
+<li><p><strong>orientation</strong>: either <strong>portrait</strong> or <strong>landscape</strong>.</p></li>
+</ul>
+<p>Webkit-based browsers may also test for the presence of high-level CSS animation features: <strong>(transform-2d)</strong>, <strong>(transform-3d)</strong>, <strong>(transition)</strong>, and <strong>(animation)</strong>. (To extend functionality to earlier browser versions, specify <strong>webkit</strong> as a vendor prefix: <strong>(-webkit-transform-3d)</strong>.)</p>
+<p>Most important remaining browser features can be tested using JavaScript-based <em>object detection</em>. The following tests support for various HTML5-related features:</p>
+<pre><code>var supportsLocation = !!navigator.geolocation;
+var supportsVideo    = !!document.createElement(&quot;video&quot;).canPlayType;
+var supportsStorage  = !!window.localStorage;
+</code></pre>
+<h2>When should you use media queries?</h2>
+<p>Media queries and other client-side tests enable <em>responsive web</em> design<em>, allowing a single site to adapt its design to each kind of</em> device. It’s a simple yet powerful technique that is especially appropriate for the vast number of desktop-facing websites that are not adapted for mobile, and that can benefit from a marginally better viewport-based layout. It avoids the need for separate mobile websites or compiled mobile applications. Media queries make sense in the following scenarios:</p>
+<ul>
+<li><p>If it makes sense to deploy a set of web pages on more than one kind of device. A game that requires tilting a handset, for example, makes no sense within a desktop browser.</p></li>
+<li><p>If the overall user interface should be perceived similarly on each device. For example, a desktop site might prompt users to access content via hierarchical categories or search queries, while a mobile site might provide a narrower range of location-specific or recently published content.</p></li>
+<li><p>If the basic mechanism to deploy each interface matches. For example, if a desktop interface relies on conventional hyperlinks to a shifting set of web pages, while a cached mobile web application loads data dynamically via Ajax from a fixed set of files, the difference between the two approaches is more substantial than the content’s appearance on the screen.</p></li>
+</ul>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Media Queries</h4>
+<ul>
+<li><p><a href="/docs/concepts/mobile_web/responsive_design">Responsive Web Design</a></p></li>
+<li><p><a href="/docs/css/data_types/resolution">&lt;resolution&gt;</a></p></li>
+<li><p><a href="/docs/css/media_queries/accelerator">accelerator</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/MediaQueryList">MediaQueryList</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/MediaQueryListListener">MediaQueryListListener</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/StyleMedia">StyleMedia</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/addListener">addListener</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/handleChange">handleChange</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matchMedia">matchMedia</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matchMedium">matchMedium</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matches">matches</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/media">media</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/properties/type">type</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/removeListener">removeListener</a></p></li>
+<li><p><a href="/docs/css/media_queries/colors_by">Colors by</a></p></li>
+<li><p><a href="/docs/css/media_queries/device-height">device-height</a></p></li>
+<li><p><a href="/docs/css/media_queries/filter">filter</a></p></li>
+<li><p><a href="/docs/css/media_queries/ms-interpolation-mode">ms-interpolation-mode</a></p></li>
+<li><p><a href="/docs/css/properties/behavior">behavior</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OAuth2 handshake process in a few cURL calls · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/OAuth2_handshake process in a few cURL calls/">OAuth2 handshake process in a few cURL calls</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>OAuth2 handshake process in a few cURL calls</h1>
+<p>What is the OAuth2 handshake after all? It seems magical, but in fact, it can be reproduced by a few command line calls.</p>
+<p>The following describes the steps to retrieve your own profile user data from our profile server.</p>
+<p>It doesn’t matter that we expose some secrets in this web page, all you will get access from this process is your own data anyway.</p>
+<p>There is also a longer, in depth, version available at <a href="/docs/WPD/Projects/SSO/How_we_implemented_it">WPD/Projects/SSO/How_we_implemented_it</a></p>
+<h3>Requirements</h3>
+<ol>
+<li>An account created on <a href="https://accounts.webplatform.org/">accounts.webplatform.org</a></li>
+<li>A command-line terminal with access to cURL (MacOS has one)</li>
+<li>A client_id: <code>e2aa7a52c84b396d</code></li>
+<li>A client_secret: <code>e2d1f060cb9e15e7452fe907abb214d32290df72bf954a6149de966378b996fb</code></li>
+<li>An OAuth server, and an OAuth protected API (see below)</li>
+</ol>
+<p>Note: The both client_id, and client_secret are configured on WebPlatform OAuth server and, provided you finish the handshake, will redirect you to <code>http://127.0.0.1:5000/login</code>.</p>
+<h3>TL;DR</h3>
+<p>This process is about getting a one time code that you exchange for a &quot;Bearer token&quot;. Once the steps are done, you will get redirected to <code>http://127.0.0.1:5000/login?code=WHAT_WE_WANT</code>.</p>
+<p>Each steps along the way requires cURL, but one of them will have you If you have no web server on your own machine, it will just hang, but will have you what you seek for to finish off the steps.</p>
+<h2>Steps</h2>
+<p>Here are the steps of the OAuth handshake all through cURL. Except the login, that will make you use your own web browser and <a href="https://accounts.webplatform.org/">account details</a>, of course.</p>
+<p>Also, if we want to have a <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering_remember_my_session">WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering remember my session</a> and prevent us to ask for a password again, I pointed out where we could make it happen. Unfortunately for us, its not possible as it is right now.</p>
+<h3>1. Get handshake starting point details</h3>
+<p>Basically, its asking what data is related to this OAuth client so we can start the handshake.</p>
+<p>Its a way to know if the service exists for the relying party, it lets you ask for name, image to represent that service, etc.</p>
+<pre><code>  <span class="hljs-title">curl</span> <span class="hljs-string">'https://oauth.accounts.webplatform.org/v1/client/e2aa7a52c84b396d'</span>
+</code></pre>
+<p>And the response body:</p>
+<pre><code> {"<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">"Annotator (local)"</span></span>,
+  "<span class="hljs-attribute">image_uri</span>":<span class="hljs-value"><span class="hljs-string">"..."</span></span>,
+  "<span class="hljs-attribute">redirect_uri</span>":<span class="hljs-value"><span class="hljs-string">"http://127.0.0.1:5000/login"</span></span>}
+</code></pre>
+<p>Note that it gives the <code>redirect_uri</code>. As in, we don’t trust ANY data sent by the client, we’ll send it there ourselves.</p>
+<h3>2. Start the handshake</h3>
+<p>This step makes your browser go around through Response <code>Location:</code> header and change the browser location to that address.</p>
+<p>An important aspect is that this HTTP call allows you to ask what you need (&quot;<code>scope</code>&quot;), and how to get back where you were afterwards (&quot;<code>state</code>&quot;).</p>
+<p>The state identifier is useful because since you are leaving your own application you might want to save the state somewhere else (e.g. Memcached) and give a key (&quot;<code>state</code>&quot;) so we can resume it later.</p>
+<p>The scope is a coma separated list of things the api exposes. This is very liberal, but this is how relying parties and providers gets ask the user to approve what he’s letting the APIs to communicate about him. In our case, our SSO accepts &quot;session&quot;, we might have more later.</p>
+<p>The request is very similar as <a href="#1._Get_handshake_starting_point_details_step_1">#1. Get handshake starting point details step 1</a>, but this time, we will get redirected around. Remember that this URL is called by the relying site and the browser follows the <code>Location:</code> response header.</p>
+<pre><code>  curl -v 'https://oauth.accounts.webplatform.org/v1/authorization?scope=session&amp;action=signin&amp;<span class="hljs-keyword">state</span>=<span class="hljs-number">8888</span>&amp;client_id=e2aa7a52c84b396d'
+</code></pre>
+<p><strong>NOTE</strong>: That the scope, state, and action can by anything. Those are simply declared at the beginning of the proces, and adds entropy to the crypto stuff happening behind the scenes. The <code>action=signin</code> is a helper for the accounts server to know if we want to login or register. As for the <code>scope=session</code>, you can ask anything, only <code>session</code> will allow you to get things back in the end anyway.</p>
+<p>In the response headers…</p>
+<pre><code>&lt; HTTP/<span class="hljs-number">1.1</span> <span class="hljs-number">302</span> Moved Temporarily
+&lt; Server: nginx/<span class="hljs-number">1.4</span><span class="hljs-number">.6</span> (Ubuntu)
+&lt; Date: Fri, <span class="hljs-number">18</span> Jul <span class="hljs-number">2014</span> <span class="hljs-number">00</span>:<span class="hljs-number">14</span>:<span class="hljs-number">23</span> GMT
+&lt; Content-Length: <span class="hljs-number">0</span>
+&lt; Location:
+https:<span class="hljs-comment">//accounts.webplatform.org/oauth/signin?scope=session&amp;state=8888&amp;client_id=e2aa7a52c84b396d</span>
+&lt; access-control-allow-origin: *
+&lt; access-control-max-age: <span class="hljs-number">86400</span>
+&lt; access-control-allow-methods: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS
+&lt; access-control-allow-headers: Authorization, Content-Type, If-None-Match
+&lt; access-control-expose-headers: WWW-Authenticate, Server-Authorization
+&lt; cache-control: no-cache
+</code></pre>
+<p>Location is there, let’s copy that, and paste it in your own web browser. You will need to sign-in.</p>
+<p>Instead of doing like <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering_remember_my_session">WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering remember my session</a>, if <a href="/docs/WPD/Projects/SSO/Adapt_Firefox_Accounts_for_WebPlatform">our version of FxA</a> <a href="/docs/WPD/Projects/SSO/Improvements_roadmap#Leveraging_completely_OAuth2">had handled remember session</a>, we could get right through. If that part was complete, it would “remember” you signed in already and we would already get to <a href="#4._Exchange_the_code_for_what_we_need">#4. Exchange the code for what we need</a> with a code in hand!</p>
+<h3>3. Go to the Location and ask the code</h3>
+<p>Use your web browser, and sign in.</p>
+<pre><code> https://accounts.webplatform.org/oauth/signin?scope=session&amp;state=8888&amp;client_id=e2aa7a52c84b396d
+</code></pre>
+<p><strong>NOTE</strong>: Replace &quot;WebPlatform Test&quot;, in the following image, for &quot;Annotator (local)&quot;</p>
+<p><img src="//static.webplatform.org/3/31/sso_steps_login_dialog.png" alt="sso steps login dialog.png"></p>
+<p>Once its done, you should be redirected with a <code>code=...</code> visible in the address bar:</p>
+<pre><code> http://127.0.0.1:5000/login?state=8888&amp;code=a6373251b8a61808633cfe32f3518b01bad01a9010d3c18ed2072d5335b421bb
+</code></pre>
+<p><strong>NOTE</strong>: The code is no longer valid (its a one time, remember), you will have to get your own.</p>
+<p>Like previously said about the feature miss. We wouldn’t had needed to ask the user to login if it was complete, we would have had gotten back to the initiating web app, the notes server here, the code and could start a session in his own web app.</p>
+<h3>4. Exchange the code for what we need</h3>
+<p>This is done by the backend of the relying party site. The <code>callback_uri</code> expects a <code>GET</code> request with a <code>&amp;code=...</code> string that it’ll communicate <strong>Off the band</strong> (i.e. from the web app server to the OAuth server, without passing through the visitor web browser).</p>
+<p>Its an important concept because we are sending around the client secret. Even though we are using SSL, we want to be sure that the client_secret is sent to the network as less as possible. In this case, only registered relying parties and OAuth servers will see this data being passed around.</p>
+<pre><code>  curl -v -XPOST
+    -H 'Content-Type: application/json'
+    'https://oauth.accounts.webplatform.org/v1/token'
+    -d '{"client_id":"e2aa<span class="hljs-number">7a52c84b39</span>6d", \
+        "client_secret":"e<span class="hljs-number">2d1f060</span>cb<span class="hljs-number">9e15e7452</span>fe907abb<span class="hljs-number">214d32290</span>df72bf<span class="hljs-number">954a6149</span>de<span class="hljs-number">966378b99</span>6fb", \
+         "code":"a<span class="hljs-number">6373251b8</span>a<span class="hljs-number">61808633</span>cfe<span class="hljs-number">32f3518b01</span>bad<span class="hljs-number">01a9010d3</span>c18ed<span class="hljs-number">2072d5335</span>b421bb"}'
+</code></pre>
+<p>We get the token we wanted in the response body:</p>
+<pre><code class="js">
+{<span class="hljs-string">"access_token"</span>:<span class="hljs-string">"f787622b3a7f818bceb9a7793f77afb669d72579325a7a9a3c853e540e5f5544"</span>,
+  <span class="hljs-string">"token_type"</span>:<span class="hljs-string">"bearer"</span>,
+  <span class="hljs-string">"scope"</span>:<span class="hljs-string">"session"</span>}
+</code></pre>
+<p><strong>NOTE</strong>: That bearer token is invalid (i changed it), you will have to get your own ;)</p>
+<h3>5. Ask stuff to an OAuth2 protected API</h3>
+<p>So far, only a few are available, the profile server which gives us back data for our own users.</p>
+<pre><code>  curl -H "Authorization: Bearer f<span class="hljs-number">787622b3</span>a7f818bceb<span class="hljs-number">9a7793f77</span>afb<span class="hljs-number">669d72579</span><span class="hljs-number">325a7a9</span>a<span class="hljs-number">3c853e54</span><span class="hljs-number">0e5f5544</span>"\
+      "https://profile.accounts.webplatform.org/v1/session/read"
+</code></pre>
+<p>And the response body would look like this:</p>
+<pre><code class="js">{<span class="hljs-string">"username"</span>: <span class="hljs-string">"jdoe"</span>,
+ <span class="hljs-string">"fullName"</span>: <span class="hljs-string">"John Doe"</span>,
+ <span class="hljs-string">"email"</span>: <span class="hljs-string">"hi@example.org"</span>,
+ <span class="hljs-string">"uid"</span>: <span class="hljs-string">"3E09D6DF843341BC921A25423AB83BAF"</span> }
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

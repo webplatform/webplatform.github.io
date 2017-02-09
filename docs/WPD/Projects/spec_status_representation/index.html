@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Representing the status of a spec · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/spec_status representation/">spec status representation</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Representing the status of a spec</h1>
+<p>One problem we currently have on WebPlatform is that we lack a decent representation of how usable a feature is in the real world. Currently we show an entry for W3C spec status at the top of each feature’s page, and we also have a section further down called &quot;Related specifications&quot;, which shows what specifications the feature is defined in, what W3C rec level these are at, etc. See <a href="/docs/css/properties/font-size">/docs/css/properties/font-size</a> for an example</p>
+<p>The problem is that recommendation status is not immediately useful to the average developer on the street, who just wants to know if they can use this feature in their real world projects now. There are plenty of features defined in W3C recommendations that are not supported across all browsers! The current way of doing things is also repetitious.</p>
+<p>These pieces of data are related, but definitely separate.</p>
+<h2>A potential solution</h2>
+<p>So we need a solution that will fulfil both aims:</p>
+<ol>
+<li>Give developers a definite measure of whether they can use a feature now in their production work</li>
+<li>Inform developers as to what specs the feature is defined in, so they can find out more information from the specs if needed</li>
+</ol>
+<p>I think the current page features we have in place solve number 2 nicely, but I think we should get rid of the W3C spec status that appears at the top of the page. It is repetitious, and looks fugly!</p>
+<p>For number 1, I think we should have an easily defined metric that indicates whether developers should and could use each feature now. This should go up the top of each page, in the same place that the W3C rec status currently is (or perhaps as an entry in the details table just below that). We should use a nice bedging system like they use on <a href="http://html5please.com/">http://html5please.com/</a></p>
+<p>I would call it something like</p>
+<ul>
+<li>canuse?</li>
+<li>stability</li>
+<li>production ready?</li>
+</ul>
+<p>And the values I’d give it are as follows:</p>
+<ul>
+<li>“Proprietary: Used in XXXX” (where XXXX is the proprietary browser feature. So for example “Used in Chrome extensions” or “Used in styling Windows 8 apps”)</li>
+<li>“Avoid” (where the feature is only supported across one or two browsers, and/or no easy way of Polyfilling or fallback exists and/or the spec is unstable so the syntax is likely to change 4 times in the next 3 months)</li>
+<li>“Use with polyfill” (where the feature is supported across all modern browsers, and polyfills exist for providing support in older browsers)</li>
+<li>“Use with fallback” (where the feature is supported across all modern browsers, and it is easy to create a fallback for older browsers, and/or the feature gracefully degrades)</li>
+<li>“Use” (the feature is as old as the hills, and supported everywhere)</li>
+</ul>
+<p>So in this classification, we are not explicitly saying anything about a feature’s spec status or stability, just if it is usable now or not. Stability, etc. can be gotten from the related specs. If we wanted to give more details, we could give a further info box where we can say why the feature is “Avoid” or &quot;Use with Polyfill&quot;. A link to the Polyfill might be nice in the latter case.</p>
+<p>Related bug: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=20386">https://www.w3.org/Bugs/Public/show_bug.cgi?id=20386</a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>map · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Calls a defined callback function on each element of an array, and returns an array that contains the results." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Array/">Array</a></li><li><a href="/docs/javascript/Array/map/">map</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>map</h1>
+<h2>Summary</h2>
+<p>Calls a defined callback function on each element of an array, and returns an array that contains the results.</p>
+<h2>Syntax</h2>
+<pre><code>map( callbackfn [, thisArg ])
+</code></pre>
+<dl>
+<dt><strong>callbackfn</strong></dt>
+<dd>Required. A function that accepts up to three arguments. The <strong>map</strong> method calls the callbackfn function one time for each element in the array.
+</dd>
+<dt><strong>thisArg</strong></dt>
+<dd>Optional. An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>A new array in which each element is the callback function return value for the associated original array element.</p>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the <strong>map</strong> method.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the callback function.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AreaOfCircle</span>(<span class="hljs-params">radius</span>) </span>{
+     <span class="hljs-keyword">var</span> area = <span class="hljs-built_in">Math</span>.PI * (radius * radius);
+     <span class="hljs-keyword">return</span> area.toFixed(<span class="hljs-number">0</span>);
+ }
+
+ <span class="hljs-comment">// Create an array.</span>
+ <span class="hljs-keyword">var</span> radii = [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>];
+
+ <span class="hljs-comment">// Get the areas from the radii.</span>
+ <span class="hljs-keyword">var</span> areas = radii.map(AreaOfCircle);
+
+ <span class="hljs-built_in">document</span>.write(areas);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// 314,1257,2827</span>
+</code></pre>
+<p>The following example illustrates the use of the thisArg argument, which specifies an object to which the this keyword can refer.</p>
+<pre><code class="js"><span class="hljs-comment">// Define an object that contains a divisor property and</span>
+ <span class="hljs-comment">// a remainder function.</span>
+ <span class="hljs-keyword">var</span> obj = {
+     divisor: <span class="hljs-number">10</span>,
+     remainder: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+         <span class="hljs-keyword">return</span> value % <span class="hljs-keyword">this</span>.divisor;
+     }
+ }
+
+ <span class="hljs-comment">// Create an array.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">6</span>, <span class="hljs-number">12</span>, <span class="hljs-number">25</span>, <span class="hljs-number">30</span>];
+
+ <span class="hljs-comment">// Get the remainders.</span>
+ <span class="hljs-comment">// The obj argument specifies the this value in the callback function.</span>
+ <span class="hljs-keyword">var</span> result = numbers.map(obj.remainder, obj);
+ <span class="hljs-built_in">document</span>.write(result);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// 6,2,5,0</span>
+</code></pre>
+<p>In the following example, a built-inJavaScript method is used as the callback function.</p>
+<pre><code class="js"><span class="hljs-comment">// Apply Math.sqrt(value) to each element in an array.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">9</span>, <span class="hljs-number">16</span>];
+ <span class="hljs-keyword">var</span> result = numbers.map(<span class="hljs-built_in">Math</span>.sqrt);
+
+ <span class="hljs-built_in">document</span>.write(result);
+ <span class="hljs-comment">// Output: 3,4</span>
+</code></pre>
+<p>The <strong>map</strong> method can be applied to a string. The following example illustrates this.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the callback function.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">threeChars</span>(<span class="hljs-params">value, index, str</span>) </span>{
+     <span class="hljs-comment">// Create a string that contains the previous, current,</span>
+     <span class="hljs-comment">// and next character.</span>
+     <span class="hljs-keyword">return</span> str.substring(index - <span class="hljs-number">1</span>, index + <span class="hljs-number">2</span>);
+ }
+
+ <span class="hljs-comment">// Create a string.</span>
+ <span class="hljs-keyword">var</span> word = <span class="hljs-string">"Thursday"</span>;
+
+ <span class="hljs-comment">// Apply the map method to the string.</span>
+ <span class="hljs-comment">// Each array element in the result contains a string that</span>
+ <span class="hljs-comment">// has the previous, current, and next character.</span>
+ <span class="hljs-comment">// The commented out statement shows an alternative syntax.</span>
+ <span class="hljs-keyword">var</span> result = [].map.call(word, threeChars);
+ <span class="hljs-comment">// var result = Array.prototype.map.call(word, threeChars);</span>
+
+ <span class="hljs-built_in">document</span>.write(result);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// Th,Thu,hur,urs,rsd,sda,day,ay</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The <strong>map</strong> method calls the callbackfn function one time for each element in the array, in ascending index order. The callback function is not called for missing elements of the array.</p>
+<p>In addition to array objects, the <strong>map</strong> method can be used by any object that has a length property and that has numerically indexed property names.</p>
+<p>The syntax of the callback function is as follows:</p>
+<p><code>function callbackfn(value, index, array1)</code></p>
+<p>You can declare the callback function by using up to three parameters.</p>
+<p>The following table lists the callback function parameters.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Callback argument</th><th style="text-align:left">Definition</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">value</td><td style="text-align:left">The value of the array element.</td></tr>
+<tr><td style="text-align:left">index</td><td style="text-align:left">The numeric index of the array element.</td></tr>
+<tr><td style="text-align:left">array1</td><td style="text-align:left">The array object that contains the element.</td></tr>
+</tbody>
+</table>
+<p>The array object can be modified by the callback function.</p>
+<p>The following table describes the results of modifying the array object after the <strong>map</strong> method starts.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Condition after the <strong>map</strong> method starts</th><th style="text-align:left">Element passed to callback function?</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Element is added beyond the original length of the array.</td><td style="text-align:left">No.</td></tr>
+<tr><td style="text-align:left">Element is added to fill in a missing element of the array.</td><td style="text-align:left">Yes, if that index has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is changed.</td><td style="text-align:left">Yes, if that element has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is deleted from the array.</td><td style="text-align:left">No, unless that element has already been passed to the callback function.</td></tr>
+</tbody>
+</table>
+<h2>Exceptions</h2>
+<p>If the callbackfn argument is not a function object, a <strong>TypeError</strong> exception is thrown.</p>
+<h2>See also</h2>
+<h3>Specification</h3>
+<p>[15.4.4.19 Array.prototype.map ( callbackfn <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.19"> , thisArg</a> )] ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff679976(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

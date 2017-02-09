@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>for in · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Executes one or more statements for each property of an object, or each element of an array." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/statements/">statements</a></li><li><a href="/docs/javascript/statements/for_in/">for in</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>for in</h1>
+<h2>Summary</h2>
+<p>Executes one or more statements for each property of an object, or each element of an array.</p>
+<h2>Syntax</h2>
+<pre><code>for ( variable in [ object | array ]) {
+    statements
+}
+</code></pre>
+<dl>
+<dt><strong>variable</strong></dt>
+<dd>Required. A variable that can be any property name of object or any element index of an array.
+</dd>
+<dt><strong>object , array</strong></dt>
+<dd>Optional. An object or array over which to iterate.
+</dd>
+<dt><strong>statements</strong></dt>
+<dd>Optional. One or more statements to be executed for each property of object or each element of array. Can be a compound statement.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the for…in statement with an object used as an associative array.</p>
+<pre><code class="js"><span class="hljs-comment">// Initialize object.</span>
+ a = {<span class="hljs-string">"a"</span> : <span class="hljs-string">"Athens"</span> , <span class="hljs-string">"b"</span> : <span class="hljs-string">"Belgrade"</span>, <span class="hljs-string">"c"</span> : <span class="hljs-string">"Cairo"</span>}
+
+ <span class="hljs-comment">// Iterate over the properties.</span>
+ <span class="hljs-keyword">var</span> s = <span class="hljs-string">""</span>
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> a) {
+     s += key + <span class="hljs-string">": "</span> + a[key];
+     s += <span class="hljs-string">"&lt;br /&gt;"</span>;
+ }
+ <span class="hljs-built_in">document</span>.write (s);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// a: Athens</span>
+ <span class="hljs-comment">// b: Belgrade</span>
+ <span class="hljs-comment">// c: Cairo</span>
+</code></pre>
+<p>This example illustrates the use of the for … in statement to iterate though an <strong>Array</strong> object that has expando properties.</p>
+<pre><code class="js"><span class="hljs-comment">// Initialize the array.</span>
+ <span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"zero"</span>,<span class="hljs-string">"one"</span>,<span class="hljs-string">"two"</span>);
+
+ <span class="hljs-comment">// Add a few expando properties to the array.</span>
+ arr[<span class="hljs-string">"orange"</span>] = <span class="hljs-string">"fruit"</span>;
+ arr[<span class="hljs-string">"carrot"</span>] = <span class="hljs-string">"vegetable"</span>;
+
+ <span class="hljs-comment">// Iterate over the properties and elements.</span>
+ <span class="hljs-keyword">var</span> s = <span class="hljs-string">""</span>;
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> arr) {
+     s += key + <span class="hljs-string">": "</span> + arr[key];
+     s += <span class="hljs-string">"&lt;br /&gt;"</span>;
+ }
+
+ <span class="hljs-built_in">document</span>.write (s);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">//   0: zero</span>
+ <span class="hljs-comment">//   1: one</span>
+ <span class="hljs-comment">//   2: two</span>
+ <span class="hljs-comment">//   orange: fruit</span>
+ <span class="hljs-comment">//   carrot: vegetable</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>At the beginning of each iteration of a loop, the value of variable is the next property name of object or the next element index of array. You can then use variable in any of the statements inside the loop to reference the property of object or the element of array.</p>
+<p>The properties of an object are not assigned in a determinate manner. You cannot specify a particular property by its index, only by the name of the property.</p>
+<p>Iterating through an array is performed in element order, that is, 0, 1, 2.</p>
+<h2>Notes</h2>
+<p>Use the <strong>Enumerator</strong> object to iterate over the members of a collection.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/statements/for">for Statement</a></li>
+<li><a href="/docs/javascript/statements/while">while Statement</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/55wb2d34(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

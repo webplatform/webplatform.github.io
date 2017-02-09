@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login workflows · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/Login_Workflows/">Login Workflows</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Login workflows</h1>
+<p>Both of these scenarios assume that the Annotator sidebar is loaded on the target page load via an explicit script reference; both use the same instance of Hypothes.is Annotator, hosted on WebPlatform.org (specifically, notes.webplatform.org).</p>
+<h2>User facing</h2>
+<h3>WebPlatform.org</h3>
+<ol>
+<li><p>User arrives on content page <em>X</em> on WebPlatform.org</p>
+<ul>
+<li>User wishes to edit or annotate page</li>
+</ul></li>
+<li><p>User clicks login link</p>
+<ul>
+<li>Main login link on top of wiki page</li>
+<li>Optional login link in Annotator sidebar</li>
+</ul></li>
+<li><p>User navigated to login page on WebPlatform.org (accounts.webplatform.org, using FxA)</p></li>
+<li><p>User logs in via FxA</p></li>
+<li><p>User redirected back to content page <em>X</em></p></li>
+<li><p>MediaWiki and Annotator both reloaded with user logged in via authentication token</p>
+<ul>
+<li>Option 1: MediaWiki and Annotator both use token from FxA</li>
+<li>Option 2: MediaWiki uses token from FxA, and Annotator uses token from MediaWiki</li>
+</ul></li>
+<li><p>User now able to edit wiki or leave annotation</p></li>
+</ol>
+<p>No popup needed?</p>
+<h3>W3C Specs</h3>
+<ol>
+<li><p>User arrives on specification page <em>Y</em> on W3.org</p>
+<ul>
+<li>User wishes to annotate specification</li>
+</ul></li>
+<li><p>User clicks login link in Annotator sidebar</p></li>
+<li><p>User logs in with WebPlatform.org account through the Annotator sidebar</p>
+<ul>
+<li>If browser has cross-site cookies enabled, user logs in directly in sidebar</li>
+<li>If browser does not have cross-site cookies enabled, user logs in via a pop-up dialog</li>
+</ul></li>
+<li><p>Annotator sidebar obtains authentication token from accounts.webplatform.org, using FxA</p></li>
+<li><p>Sidebar reloaded?</p></li>
+<li><p>User now able to annotate specification page <em>Y</em></p></li>
+</ol>
+<p>Popup may be needed?</p>
+<h2>How the code has to behave</h2>
+<h3>Functionnal workflows</h3>
+<p>Those are the functional requirements to enable SSO. Each workflow is detailed in <a href="/docs/WPD/Projects/SSO/How_we_implemented_it">WPD/Projects/SSO/How we implemented it</a></p>
+<p>In order to fulfill the given <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#Stories">WPD/Projects/SSO/How we implemented it#Stories</a> and workflows, we needed to implement a SSO solution covers the following:</p>
+<ul>
+<li>Get authenticated through a single authority (see <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#Delegating_authentication">WPD/Projects/SSO/How we implemented it#Delegating authentication</a>)</li>
+<li><a href="/docs/WPD/Projects/SSO/How_we_implemented_it#Read_user_data">WPD/Projects/SSO/How we implemented it#Read user data</a> from an API,</li>
+<li>Let each configured web applications to detect a session on the authority (see <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering">WPD/Projects/SSO/How we implemented it#SSO and remembering</a>)</li>
+<li>handle their local users and session (see <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#Initialize_local_web_application_session">WPD/Projects/SSO/How we implemented it#Initialize local web application session</a>), and</li>
+<li>Detect automatically if there is a session in the accounts server, and start it automatically (see [[<a href="/docs/WPD/Projects/SSO/How_we_implemented_it#JavaScript_shared_module:_Detect_and_start_automatically_a_session">WPD/Projects/SSO/How we implemented it#JavaScript shared module: Detect and start automatically a session</a>)</li>
+</ul>
+<h3>Starting a session by communicating with accounts server</h3>
+<p>This section covers what the <em>front-end</em> does to detect if a session is opened on the accounts server. To see the <em>back-end</em> part, refer to <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#1.2_Possibility:_Resuming_a_session_confirmed_by_the_accounts_server">WPD/Projects/SSO/How we implemented it#1.2 Possibility: Resuming a session confirmed by the accounts server</a>, detailed in the section <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering">WPD/Projects/SSO/How we implemented it#SSO and remembering</a></p>
+<ul>
+<li>In the accounts server:
+<ul>
+<li>Accept framing (i.e. accept to create iframe from other domain names that we control) through appropriate CSP policies.</li>
+<li>Create an event handler that replies with a JSON object that reads the sessionToken in current localStorage. (Note that in the returned object, we rename the key <em>sessionToken</em> to <em>recoveryPayload</em>) (e.g. <code>{recoveryPayload: &quot;e73f75c00115f45416b121e274fd77b60376ce4084267ed76ce3ec7c0a9f4f1f&quot;, hasSession: true}</code>)</li>
+</ul></li>
+<li>Through JavaScript, on a web application relying on the SSO (details in <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#JavaScript_shared_module:_Detect_and_start_automatically_a_session">WPD/Projects/SSO/How we implemented it#JavaScript shared module: Detect and start automatically a session</a>):
+<ul>
+<li>Check if web application has a session locally, if not, continue</li>
+<li>Create a communication channel as an hidden iframe, if the accounts server doesn’t forbid due to CSP policy, continue.</li>
+<li>Use <code>postMessage</code> to communicate through the iframe opened to the accounts server</li>
+<li>Handle response from <code>postMessage</code>, use the returned data (i.e. <code>sessionToken</code> value) into a POST body member called “recoveryPayload”</li>
+<li>Make a <code>POST</code> request to the current web app callback (e.g. <code>/wiki/Special:AccountsHandler/callback</code>) with “recoveryPayload”</li>
+</ul></li>
+<li>In the backend code (details in <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#Initialize_local_web_application_session">WPD/Projects/SSO/How we implemented it#Initialize local web application session</a>):
+<ul>
+<li>Accept <code>POST</code> requests with a “recoveryPayload” parameter, make sure it’s 64 hexadecimal characters.</li>
+<li>Rename the “recoveryPayload” as “sessionToken”</li>
+<li>Make an off-the-band call over SSL to the profile server</li>
+<li>Read a JSON object with the user data</li>
+<li>Create a session without further validation</li>
+<li>Return an HTTP status code: <code>204</code> if it worked, <code>4xx</code> if it didn’t, <code>5xx</code> if an unexpected backend error happened. (see <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#1.2.4_Return_an_HTTP_response">WPD/Projects/SSO/How we implemented it#1.2.4 Return an HTTP response</a>)</li>
+</ul></li>
+</ul>
+<p><strong>NOTE</strong>: This workflow is subject to change, the details is described in <a href="/docs/WPD/Projects/SSO/Improvements_roadmap#Recovering_session_data">WPD/Projects/SSO/Improvements roadmap#Recovering session data</a>.</p>
+<h2>Reference</h2>
+<ul>
+<li><a href="http://www.whatcodecraves.com/posts/2012/01/11/backbonejs-sessions-and-authentication">Sessions and authentication</a> describes how a session works, you can ignore what is specific to backbone.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

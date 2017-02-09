@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>XDomainRequest · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/xhr/">xhr</a></li><li><a href="/apis/xhr/objects/">objects</a></li><li><a href="/apis/xhr/objects/XDomainRequest/">XDomainRequest</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>XDomainRequest</h1>
+<h2>Properties</h2>
+<p><em>No properties.</em></p>
+<h2>Methods</h2>
+<p><a href="/docs/apis/xhr/methods/open_(XDomainRequest)">open (XDomainRequest)</a><br>
+:</p>
+<p><a href="/docs/apis/xhr/methods/send_(XDomainRequest)">send (XDomainRequest)</a><br>
+:</p>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Examples</h2>
+<p>The following example sends an empty message to a server of your choice. You can select a <a href="/docs/apis/xhr/events/timeout"><strong>timeout</strong></a> value (default 10000 msec) when sending the request. When you click the <strong>Get</strong> button, the script creates a <strong>XDomainRequest</strong>, assigns event handlers, and initiates the request. Script alerts indicate how the request is progressing. Click the <strong>Stop</strong> button to cancel the request, or the <strong>Read</strong> button to view additional properties of the response, such as <strong>contentType</strong> and <strong>responseText</strong>.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="undefined">
+    var xdr;
+    function readdata()
+    {
+        var dRes = document.getElementById('dResponse');
+        dRes.innerText = xdr.responseText;
+        alert("Content-type: " + xdr.contentType);
+        alert("Length: " + xdr.responseText.length);
+    }
+
+    function err()
+    {
+        alert("XDR onerror");
+    }
+    function timeo()
+    {
+        alert("XDR ontimeout");
+    }
+    function loadd()
+    {
+        alert("XDR onload");
+        alert("Got: " + xdr.responseText);
+    }
+    function progres()
+    {
+        alert("XDR onprogress");
+        alert("Got: " + xdr.responseText);
+    }
+    function stopdata()
+    {
+        xdr.abort();
+    }
+    function mytest()
+    {
+        var url = document.getElementById('tbURL');
+        var timeout = document.getElementById('tbTO');
+        if (window.XDomainRequest)
+        {
+            xdr = new XDomainRequest();
+            if (xdr)
+            {
+                xdr.onerror = err;
+                xdr.ontimeout = timeo;
+                xdr.onprogress = progres;
+                xdr.onload = loadd;
+                xdr.timeout = tbTO.value;
+                xdr.open("get", tbURL.value);
+                xdr.send();
+            }
+            else
+            {
+                alert('Failed to create');
+            }
+        }
+        else
+        {
+            alert('XDR doesn't exist');
+        }
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>XDomainRequest<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tbURL"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"http://www.contoso.com/xdr.txt"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"width:300px"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tbTO"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"10000"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"mytest()"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Get"</span>&gt;</span>&amp;nbsp;&amp;nbsp;&amp;nbsp;
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"stopdata()"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Stop"</span>&gt;</span>&amp;nbsp;&amp;nbsp;&amp;nbsp;
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"readdata()"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Read"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dResponse"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>XDomainRequest</strong> object is a safe, reliable, and lightweight data service that allows script on any document to anonymously connect to any server and exchange data. Developers can use the <strong>XDomainRequest</strong> object when cross-site security is not an issue. **Security Warning:  ** Cross-domain requests (“XDRs”) are anonymous to protect user data. This means that servers cannot easily determine who is requesting data. To protect user privacy, respond with cross-domain data that is neither sensitive nor personally identifiable. To help prevent intranet data from being leaked to malicious Internet sites, we discourage intranet sites from making XDR data available. Cross-domain requests require mutual consent between the document and the server. You can initiate a cross-domain request by creating an <strong>XDomainRequest</strong> (XDR) object with the <strong>window</strong> object, and opening a connection to a domain. The document will request data from the domain’s server by sending an <strong>Origin</strong> header with the value of the origin. It will only complete the connection if the server responds with an <strong>Access-Control-Allow-Origin</strong> header of either <strong>*</strong> or the exact URL of the requesting document. This behavior is part of the World Wide Web Consortium (W3C)'s Web Application Working Group’s draft framework on client-side cross-domain communication that the <strong>XDomainRequest</strong> object integrates with. For example, a server’s Active Server Pages (ASP) page might include the following response header:</p>
+<pre><code>&lt;% Response.AddHeader(&quot;Access-Control-Allow-Origin&quot;,&quot;*&quot;) %&gt;
+</code></pre>
+<p>Cross domain requests can only be sent and received from a document to URLs in the following zones: {</p>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li><code>window</code></li>
+<li><code>XMLHttpRequest</code></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

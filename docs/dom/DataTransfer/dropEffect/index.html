@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>dropEffect · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="Gets the type of drag-and-drop operation currently selected or sets the operation to a new type." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/DataTransfer/">DataTransfer</a></li><li><a href="/dom/DataTransfer/dropEffect/">dropEffect</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>dropEffect</h1>
+<h2>Summary</h2>
+<p>Gets the type of drag-and-drop operation currently selected or sets the operation to a new type.</p>
+<p>Property of <a href="/docs/dom/DataTransfer">dom/DataTransfer</a><a href="/docs/dom/DataTransfer">dom/DataTransfer</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> dropEffect = event.dataTransfer.dropEffect;
+event.dataTransfer.dropEffect = newDropEffect;
+</code></pre>
+<h2>Return Value</h2>
+<p>Returns an object of type StringString</p>
+<p>One of the following values:</p>
+<ul>
+<li>none</li>
+<li>copy</li>
+<li>link</li>
+<li>move</li>
+</ul>
+<h2>Examples</h2>
+<p>This example uses the <strong>dropEffect</strong> and <a href="/docs/dom/DataTransfer/effectAllowed">effectAllowed</a> properties of the <a href="/docs/dom/DataTransfer">DataTransfer</a> object to display the move cursor.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example of the effectAllowed and dropEffect Properties<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+<span class="hljs-id">#oTarget</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> beige</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">200px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> solid black <span class="hljs-number">1px</span></span></span>;
+}</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-comment">// This function is called when the user</span>
+<span class="hljs-comment">// initiates a drag-and-drop operation.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnHandleDragStart</span>(<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-keyword">var</span> oData = e.dataTransfer;
+  <span class="hljs-comment">// Set the effectAllowed on the source object.</span>
+  oData.effectAllowed = <span class="hljs-string">"move"</span>;
+}
+
+<span class="hljs-comment">// This function is called by the target</span>
+<span class="hljs-comment">// object in the ondrop event.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnHandleDrop</span>(<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-keyword">var</span> oTarg = e.target;
+  <span class="hljs-keyword">var</span> oData = e.dataTransfer;
+
+  <span class="hljs-comment">// Cancel default action.</span>
+  fnCancelDefault(e);
+
+  <span class="hljs-comment">// Set the content of the oTarget to the information stored</span>
+  <span class="hljs-comment">// in the data transfer object in the desired format.</span>
+  oTarg.textContent += oData.getData(<span class="hljs-string">"Text"</span>);
+}
+
+<span class="hljs-comment">// This function sets the dropEffect when the user moves the</span>
+<span class="hljs-comment">// mouse over the target object.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnHandleDragEnter</span>(<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-keyword">var</span> oData = e.dataTransfer;
+
+  <span class="hljs-comment">// Cancel default action.</span>
+  fnCancelDefault(e);
+
+  <span class="hljs-comment">// Set the dropEffect for the target object.</span>
+  oData.dropEffect = <span class="hljs-string">"move"</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnCancelDefault</span>(<span class="hljs-params">e</span>) </span>{
+  <span class="hljs-comment">// Cancel default action.</span>
+  e.preventDefault();
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span>(<span class="hljs-params"></span>) </span>{
+ <span class="hljs-keyword">var</span> target = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"oTarget"</span>);
+ <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"oSource"</span>).addEventListener(<span class="hljs-string">"dragstart"</span>, fnHandleDragStart, <span class="hljs-literal">false</span>);
+ target.addEventListener(<span class="hljs-string">"drop"</span>, fnHandleDrop, <span class="hljs-literal">false</span>);
+ target.addEventListener(<span class="hljs-string">"ondragover"</span>, fnCancelDefault, <span class="hljs-literal">false</span>);
+ target.addEventListener(<span class="hljs-string">"ondragenter"</span>, fnHandleDragEnter, <span class="hljs-literal">false</span>);
+}
+
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"load"</span>, initialize, <span class="hljs-literal">false</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Example of the effectAllowed and dropEffect Properties<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The code in this example sets the <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>effectAllowed<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span> property
+to <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"literal"</span>&gt;</span>move<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>. It sets the <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>dropEffect<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>
+property to display the move cursor. The default action must be canceled in all events that are handled&amp;#151;in this example,
+<span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>ondragstart<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>ondragover<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>ondragenter<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>, and
+<span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>ondrop<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>
+  [not this text]
+<span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oSource"</span>&gt;</span>
+  [select and drag this text]
+<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  [not this text]
+<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"oTarget"</span>&gt;</span>
+[drop text here]
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<p>The <strong>dropEffect</strong> property must be used with the <a href="/docs/dom/DataTransfer/effectAllowed"><strong>effectAllowed</strong></a> property. These properties are set on the source object of a drag-and-drop operation. The <strong>effectAllowed</strong> property determines which drag-and-drop operations are available from the source object. The <strong>dropEffect</strong> property determines which drag-and-drop operations are allowed on the target object. For example, the source object might set the <strong>effectAllowed</strong> property to <strong>all</strong> drag-and-drop operations, while the target object specifies that the <strong>dropEffect</strong> allows only <strong>copy</strong> operations.</p>
+<p>The recommended technique for dropping text is to set the <strong>dropEffect</strong> in the target object’s event handler function for the following events: <a href="/docs/dom/DragEvent/dragenter"><strong>ondragenter</strong></a>, <a href="/docs/dom/DragEvent/dragover"><strong>ondragover</strong></a>, and <a href="/dom/DragEvent/drop"><strong>ondrop</strong></a>. The <a href="/dom/DataTransfer/effectAllowed"><strong>effectAllowed</strong></a> property must be set in one of the source object’s drag-and-drop event handlers, such as the <a href="/dom/DragEvent/dragstart"><strong>ondragstart</strong></a> event.</p>
+<p>The target object of a drag-and-drop operation can set the <strong>dropEffect</strong> during the following events: <a href="/docs/dom/DragEvent/dragenter"><strong>ondragenter</strong></a>, <a href="/docs/dom/DragEvent/dragover"><strong>ondragover</strong></a>, and <a href="/dom/DragEvent/drop"><strong>ondrop</strong></a>. To display the cursor until the final drop, the default action of the following events must be canceled: <strong>ondragenter</strong>, <strong>ondragover</strong>, and <strong>ondrop</strong>: and the <strong>dropEffect</strong> must be set. Otherwise, the copy cursor, move cursor, or link cursor set by this property displays only until the first valid drop target is intersected, at which point the cursor is replaced by the drop/no-drop cursor for the rest of the drag operation.</p>
+<p>There is a default drag-and-drop functionality for the following elements: <a href="/docs/html/elements/a"><strong>a</strong></a>, <a href="/html/elements/img"><strong>img</strong></a>, <a href="/html/elements/textarea"><strong>textarea</strong></a>, and <a href="/html/elements/input"><strong>input type=text</strong></a>. When one of these objects is the source element, the default drop effect cannot be overridden by setting the <strong>dropEffect</strong> property of the target element. Instead, the default behavior of the source object must be canceled.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html5/editing.html">HTML5</a></dt>
+<dd>Candidate Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

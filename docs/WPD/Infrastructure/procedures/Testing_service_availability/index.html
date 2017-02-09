@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Testing service availability · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Testing_service availability/">Testing service availability</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Testing service availability</h1>
+<h2>Summary</h2>
+<p>Collection of small shell scripts that will be used to test components of the infrastructure.</p>
+<h2>By technology</h2>
+<h3>PHP Memcache library connection to Memcache cluster</h3>
+<pre><code>   $params = array(
+            'class'      =&gt; 'MemcachedPeclBagOStuff',
+            'serializer' =&gt; 'php',
+            'servers'    =&gt; array(
+                    '10.1.1.1:11211',
+                    '10.2.2.2:11211',
+            ),
+            'timeout' =&gt; 250000,
+            'connect_timeout' =&gt; 300
+   );
+   $client = new Memcached;
+   $client-&gt;setOption( Memcached::OPT_CONNECT_TIMEOUT, $params['connect_timeout'] * 1000 );
+   $client-&gt;setOption( Memcached::OPT_SEND_TIMEOUT, $params['timeout'] );
+   $client-&gt;setOption( Memcached::OPT_RECV_TIMEOUT, $params['timeout'] );
+   $client-&gt;setOption( Memcached::OPT_POLL_TIMEOUT, $params['timeout'] / 1000 );
+   $client-&gt;setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+   $client-&gt;setOption( Memcached::OPT_SERIALIZER, Memcached::SERIALIZER_PHP );
+   //require('/srv/webplatform/wiki/current/includes/GlobalFunctions.php');
+   require('/srv/webplatform/wiki/current/includes/IP.php');
+   //require('/srv/webplatform/wiki/current/includes/objectcache/MemcachedPeclBagOStuff.php');
+   $servers = array();
+   foreach ( $params['servers'] as $host ) {
+       $servers[] = IP::splitHostAndPort( $host ); // (ip, port)
+   }
+   $client-&gt;addServers( $servers );
+   $tmp_object = new stdClass;
+   $tmp_object-&gt;str_attr = 'test';
+   $tmp_object-&gt;int_attr = 123;
+   $tmp_object-&gt;date = new DateTime();
+   $client-&gt;add('key1', $tmp_object, 10) or die (&quot;Failed to save data at the server&quot;);
+   var_dump($client-&gt;get('key1'));
+   var_dump($client-&gt;get('wpwiki:user:stats:359'));
+</code></pre>
+<h3>Website vhost</h3>
+<ul>
+<li>One per vhost</li>
+<li>Grep if a string exist</li>
+<li>Return non zero if it fails</li>
+<li>See for <a href="http://nagiosplugins.org/man/check_http">Nagios check_http</a></li>
+</ul>
+<pre><code class="html">    #!/bin/bash
+    curl -I -H 'Host: docs.webplatform.org' http://15.185.116.171/wiki/Main_Page?t=cli-renoirb
+</code></pre>
+<h3>Adding pages through MediaWiki API</h3>
+<p><strong>Dependencies</strong>:</p>
+<ul>
+<li>Varnish configuration do not send cached documents as a reply to a POST request, see <a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">WPD/Infrastructure/procedures/Maintaining Varnish or Fastly configuration</a></li>
+</ul>
+<pre><code><span class="hljs-shebang">#! /bin/sh</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-comment"># author: Max Polk</span>
+<span class="hljs-comment">#</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"TEST connecting to a wiki and editing using the api.php interface"</span>
+
+<span class="hljs-comment"># Edit these variables</span>
+<span class="hljs-built_in">export</span> WIKI_USERNAME=<span class="hljs-string">'ZZZ'</span>
+<span class="hljs-built_in">export</span> WIKI_PASSWORD=<span class="hljs-string">'ZZZ'</span>
+<span class="hljs-built_in">export</span> WIKI_API=<span class="hljs-string">'/docs/t/api.php'</span>
+
+<span class="hljs-comment"># Under mac OS, option dry-run doesn't exist, you can do `cat temporaryfile.txt`  and fill a file with test data</span>
+<span class="hljs-built_in">export</span> CONTENT=<span class="hljs-string">'Sample page contents: '</span>$(mktemp --dry-run)
+
+<span class="hljs-built_in">export</span> PAGE=<span class="hljs-string">'Tests/javascript-a'</span>
+<span class="hljs-built_in">export</span> PAGE_URLENCODED=<span class="hljs-string">'Tests%2Fjavascript-a'</span>
+<span class="hljs-built_in">export</span> SUMMARY=<span class="hljs-string">'Automated test edit'</span>
+<span class="hljs-built_in">export</span> LOG_FILE=<span class="hljs-string">'LOG.txt'</span>
+<span class="hljs-built_in">export</span> RESULT_FILE=<span class="hljs-string">'RESULT.txt'</span>
+<span class="hljs-built_in">export</span> COOKIE_FILE=<span class="hljs-string">'COOKIES.txt'</span>
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">append</span></span> ()
+{
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> &gt;&gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">appendfile</span></span> ()
+{
+    cat <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> &gt;&gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">showbanner</span></span> ()
+{
+    <span class="hljs-built_in">echo</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"----------------------------------------------------------------------"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"----------------------------------------------------------------------"</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">showoutput</span></span> ()
+{
+    cat <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+}
+
+<span class="hljs-comment">#======================================================================</span>
+<span class="hljs-comment"># Login</span>
+<span class="hljs-comment">#======================================================================</span>
+
+<span class="hljs-comment"># New log file for this request</span>
+showbanner <span class="hljs-string">"Login request"</span>
+<span class="hljs-built_in">echo</span> -n &gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+
+<span class="hljs-comment"># Empty the cookie file</span>
+<span class="hljs-built_in">echo</span> -n &gt; <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span>
+append <span class="hljs-string">"EMPTIED cookie jar"</span>
+append <span class="hljs-string">""</span>
+
+<span class="hljs-comment"># Post request</span>
+append <span class="hljs-string">"POST to <span class="hljs-variable">$WIKI_API</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"PARAMETERS:"</span>
+append <span class="hljs-string">"    action=login"</span>
+append <span class="hljs-string">"    lgname=<span class="hljs-variable">$WIKI_USERNAME</span>"</span>
+append <span class="hljs-string">"    lgpassword=<span class="hljs-variable">$WIKI_PASSWORD</span>"</span>
+append <span class="hljs-string">"    format=json"</span>
+append <span class="hljs-string">""</span>
+curl <span class="hljs-operator">-s</span> --show-error -i <span class="hljs-string">"<span class="hljs-variable">$WIKI_API</span>"</span> <span class="hljs-operator">-d</span> action=login <span class="hljs-operator">-d</span> <span class="hljs-string">"lgname=<span class="hljs-variable">$WIKI_USERNAME</span>"</span> <span class="hljs-operator">-d</span> <span class="hljs-string">"lgpassword=<span class="hljs-variable">$WIKI_PASSWORD</span>"</span> <span class="hljs-operator">-d</span> format=json -b <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> -c <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">"HTTP dump:"</span>
+append <span class="hljs-string">""</span>
+appendfile <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">""</span>
+
+<span class="hljs-comment"># Verify last result</span>
+<span class="hljs-keyword">if</span> ! grep -q <span class="hljs-string">'"result":"NeedToken"'</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>; <span class="hljs-keyword">then</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'FAILURE, did not find: "result":"NeedToken"'</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'EXPECTED something like: {"login":{"result":"NeedToken"'</span>
+    showoutput
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+<span class="hljs-comment"># Get token from last result</span>
+<span class="hljs-built_in">export</span> TOKEN=$(grep <span class="hljs-string">"^{"</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span> | sed <span class="hljs-string">'s/^.*"token":"\([^"]*\)".*$/\1/'</span>)
+<span class="hljs-keyword">if</span> [ -z <span class="hljs-string">"<span class="hljs-variable">$TOKEN</span>"</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Unable to find token"</span>
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"EXTRACTED TOKEN:"</span>
+append <span class="hljs-string">"    <span class="hljs-variable">$TOKEN</span>"</span>
+showoutput
+
+<span class="hljs-comment">#======================================================================</span>
+<span class="hljs-comment"># Verify login using login/token from previous output</span>
+<span class="hljs-comment">#======================================================================</span>
+
+<span class="hljs-comment"># New log file for this request</span>
+showbanner <span class="hljs-string">"Login verification"</span>
+<span class="hljs-built_in">echo</span> -n &gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+
+<span class="hljs-comment"># Post verification</span>
+append <span class="hljs-string">"POST to <span class="hljs-variable">$WIKI_API</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"PARAMETERS:"</span>
+append <span class="hljs-string">"    action=login"</span>
+append <span class="hljs-string">"    lgname=<span class="hljs-variable">$WIKI_USERNAME</span>"</span>
+append <span class="hljs-string">"    lgpassword=<span class="hljs-variable">$WIKI_PASSWORD</span>"</span>
+append <span class="hljs-string">"    lgtoken=<span class="hljs-variable">$TOKEN</span>"</span>
+append <span class="hljs-string">"    format=json"</span>
+append <span class="hljs-string">""</span>
+curl <span class="hljs-operator">-s</span> --show-error -i <span class="hljs-string">"<span class="hljs-variable">$WIKI_API</span>"</span> <span class="hljs-operator">-d</span> action=login <span class="hljs-operator">-d</span> <span class="hljs-string">"lgname=<span class="hljs-variable">$WIKI_USERNAME</span>"</span> <span class="hljs-operator">-d</span> <span class="hljs-string">"lgpassword=<span class="hljs-variable">$WIKI_PASSWORD</span>"</span> <span class="hljs-operator">-d</span> <span class="hljs-string">"lgtoken=<span class="hljs-variable">$TOKEN</span>"</span> <span class="hljs-operator">-d</span> format=json -b <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> -c <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">"HTTP dump:"</span>
+append <span class="hljs-string">""</span>
+appendfile <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">""</span>
+
+<span class="hljs-comment"># Verify last result</span>
+<span class="hljs-keyword">if</span> ! grep -q <span class="hljs-string">'"result":"Success"'</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>; <span class="hljs-keyword">then</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'FAILURE, did not find: "result":"Success"'</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'EXPECTED something like: {"login":{"result":"Success"'</span>
+    showoutput
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"SUCCESSFULLY VERIFIED LOGIN"</span>
+showoutput
+
+<span class="hljs-comment">#======================================================================</span>
+<span class="hljs-comment"># Get an edit token</span>
+<span class="hljs-comment">#======================================================================</span>
+
+<span class="hljs-comment"># New log file for this request</span>
+showbanner <span class="hljs-string">"Obtain edit token"</span>
+<span class="hljs-built_in">echo</span> -n &gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+
+<span class="hljs-comment"># Query for edit token</span>
+append <span class="hljs-string">"GET from <span class="hljs-variable">$WIKI_API</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"PARAMETERS:"</span>
+append <span class="hljs-string">"    action=query"</span>
+append <span class="hljs-string">"    prop=info"</span>
+append <span class="hljs-string">"    intoken=edit"</span>
+append <span class="hljs-string">"    titles=<span class="hljs-variable">${PAGE}</span>"</span>
+append <span class="hljs-string">"    format=json"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"ACTUAL URL:"</span>
+append <span class="hljs-string">"    <span class="hljs-variable">${WIKI_API}</span>?action=query&amp;prop=info&amp;intoken=edit&amp;titles=<span class="hljs-variable">${PAGE_URLENCODED}</span>&amp;format=json"</span>
+append <span class="hljs-string">""</span>
+curl <span class="hljs-operator">-s</span> --show-error -i <span class="hljs-string">"<span class="hljs-variable">${WIKI_API}</span>?action=query&amp;prop=info&amp;intoken=edit&amp;titles=<span class="hljs-variable">${PAGE_URLENCODED}</span>&amp;format=json"</span> -b <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> -c <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">"HTTP dump:"</span>
+append <span class="hljs-string">""</span>
+appendfile <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">""</span>
+
+<span class="hljs-comment"># Verify last result</span>
+<span class="hljs-keyword">if</span> ! grep -q <span class="hljs-string">'{"query":{"pages"'</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>; <span class="hljs-keyword">then</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'FAILURE, did not find: {"query":{"pages"'</span>
+    append <span class="hljs-string">""</span>
+    showoutput
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># Get edit token from last result (unescape JSON "\\" into "\")</span>
+<span class="hljs-built_in">export</span> EDIT_TOKEN=$(grep <span class="hljs-string">"^{"</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span> | sed <span class="hljs-string">'s/^.*"edittoken":"\([^"]*\)".*$/\1/'</span> | sed <span class="hljs-string">'s/\\\\/\\/g'</span>)
+<span class="hljs-keyword">if</span> [ -z <span class="hljs-string">"<span class="hljs-variable">$EDIT_TOKEN</span>"</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Unable to find edit token"</span>
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"EXTRACTED EDIT TOKEN:"</span>
+append <span class="hljs-string">"    <span class="hljs-variable">$EDIT_TOKEN</span>"</span>
+showoutput
+
+<span class="hljs-comment">#======================================================================</span>
+<span class="hljs-comment"># Perform actual page edit</span>
+<span class="hljs-comment">#======================================================================</span>
+
+<span class="hljs-comment"># New log file for this request</span>
+showbanner <span class="hljs-string">"Perform page edit"</span>
+<span class="hljs-built_in">echo</span> -n &gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+
+<span class="hljs-comment"># Post edit</span>
+append <span class="hljs-string">"POST to <span class="hljs-variable">$WIKI_API</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"PARAMETERS:"</span>
+append <span class="hljs-string">"    action=edit"</span>
+append <span class="hljs-string">"    title=<span class="hljs-variable">${PAGE}</span>"</span>
+append <span class="hljs-string">"    summary=<span class="hljs-variable">${SUMMARY}</span>"</span>
+append <span class="hljs-string">"    text=<span class="hljs-variable">${CONTENT}</span>"</span>
+append <span class="hljs-string">"    bot=1"</span>
+append <span class="hljs-string">"    watchlist=nochange"</span>
+append <span class="hljs-string">"    token=<span class="hljs-variable">${EDIT_TOKEN}</span>"</span>
+append <span class="hljs-string">"    format=json"</span>
+append <span class="hljs-string">""</span>
+curl <span class="hljs-operator">-s</span> --show-error -i <span class="hljs-string">"<span class="hljs-variable">${WIKI_API}</span>"</span> <span class="hljs-operator">-d</span> action=edit <span class="hljs-operator">-d</span> <span class="hljs-string">"title=<span class="hljs-variable">$PAGE</span>"</span> <span class="hljs-operator">-d</span> <span class="hljs-string">"summary=<span class="hljs-variable">$SUMMARY</span>"</span> <span class="hljs-operator">-d</span> <span class="hljs-string">"text=<span class="hljs-variable">$CONTENT</span>"</span> <span class="hljs-operator">-d</span> bot=<span class="hljs-number">1</span> <span class="hljs-operator">-d</span> watchlist=nochange --data-urlencode <span class="hljs-string">"token=<span class="hljs-variable">$EDIT_TOKEN</span>"</span> <span class="hljs-operator">-d</span> format=json -b <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> -c <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">"HTTP dump:"</span>
+append <span class="hljs-string">""</span>
+appendfile <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">""</span>
+
+<span class="hljs-comment"># Verify last result</span>
+<span class="hljs-keyword">if</span> ! grep -q <span class="hljs-string">'"result":"Success"'</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>; <span class="hljs-keyword">then</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'FAILURE, did not find: "result":"Success"'</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">'EXPECTED something like: {"login":{"result":"Success"'</span>
+    showoutput
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+
+showoutput
+
+<span class="hljs-comment">#======================================================================</span>
+<span class="hljs-comment"># Logout</span>
+<span class="hljs-comment">#======================================================================</span>
+
+<span class="hljs-comment"># New log file for this request</span>
+showbanner <span class="hljs-string">"Logout"</span>
+<span class="hljs-built_in">echo</span> -n &gt; <span class="hljs-string">"<span class="hljs-variable">$LOG_FILE</span>"</span>
+
+<span class="hljs-comment"># Post logout</span>
+append <span class="hljs-string">"POST to <span class="hljs-variable">$WIKI_API</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"PARAMETERS:"</span>
+append <span class="hljs-string">"    action=logout"</span>
+append <span class="hljs-string">"    format=json"</span>
+append <span class="hljs-string">""</span>
+curl <span class="hljs-operator">-s</span> --show-error -i <span class="hljs-string">"<span class="hljs-variable">$WIKI_API</span>"</span> <span class="hljs-operator">-d</span> action=<span class="hljs-built_in">logout</span> <span class="hljs-operator">-d</span> format=json -b <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> -c <span class="hljs-string">"<span class="hljs-variable">$COOKIE_FILE</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">"HTTP dump:"</span>
+append <span class="hljs-string">""</span>
+appendfile <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">""</span>
+
+<span class="hljs-comment"># Verify last result</span>
+<span class="hljs-keyword">if</span> ! grep -q <span class="hljs-string">"\[\]"</span> <span class="hljs-string">"<span class="hljs-variable">$RESULT_FILE</span>"</span>; <span class="hljs-keyword">then</span>
+    append <span class="hljs-string">""</span>
+    append <span class="hljs-string">"FAILURE, did not find: \[\]"</span>
+    append <span class="hljs-string">""</span>
+    showoutput
+    <span class="hljs-built_in">exit</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">fi</span>
+
+append <span class="hljs-string">""</span>
+append <span class="hljs-string">"SUCCESSFULLY LOGGED OUT"</span>
+showoutput
+
+<span class="hljs-comment">#======================================================================</span>
+<span class="hljs-comment"># Success</span>
+<span class="hljs-comment">#======================================================================</span>
+
+showbanner <span class="hljs-string">"SUCCESS"</span>
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

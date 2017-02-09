@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>open · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Opens a new window and loads the document specified by a given URL." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Window/">Window</a></li><li><a href="/dom/Window/open/">open</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>open</h1>
+<h2>Summary</h2>
+<p>Opens a new window and loads the document specified by a given URL.</p>
+<p>Method of <a href="/docs/dom/Window">dom/Window</a><a href="/docs/dom/Window">dom/Window</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> newwindow = <span class="hljs-built_in">window</span>.open(<span class="hljs-comment">/* see parameter list */</span>);
+</code></pre>
+<h2>Parameters</h2>
+<h3>url</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>BSTR
+</dd>
+</dl>
+<p><strong>String</strong> that specifies the URL of the document to display. If no URL is specified, a new window with <strong>about:blank</strong> is displayed.</p>
+<h3>name</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>BSTR
+</dd>
+</dl>
+<p><strong>String</strong> that specifies the name of the window. This name is used as the value for the <a href="/docs/html/attributes/target"><strong>TARGET</strong></a> attribute on a <strong>form</strong> or an <a href="/html/elements/a"><strong>anchor</strong></a> element.</p>
+<h3>features</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>BSTR
+</dd>
+</dl>
+<p><strong>String</strong> that contains a list of items separated by commas. Each item consists of an option and a value, separated by an equals sign (for example, “fullscreen=yes, toolbar=yes”). The following values are supported.</p>
+<h3>replace</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<p><strong>Boolean</strong> that specifies whether the <em>url</em> creates a new entry or replaces the current entry in the window’s history list. This parameter only takes effect if the <em>url</em> is loaded into the same window.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type DOM NodeDOM Node</p>
+<p><strong>IHTMLWindow2</strong></p>
+<p>Returns a reference to the new <strong>window</strong> object. Use this reference to access properties and methods on the new window.</p>
+<p><strong>Internet Explorer 7 on Windows Vista:</strong> Opening a new window from an application (other than the Internet Explorer process) may result in a null return value. This restriction occurs because Internet Explorer runs in protected mode, by default. One facet of protected mode prevents applications from having privileged access to Internet Explorer when that access spans process boundaries. Opening a new window by using this method generates a new process. For more information about protected mode, see Understanding and Working in Protected Mode Internet Explorer. This commonly occurs for applications that host the WebBrowser control.</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>open</strong> method to create a new window that contains Sample.htm. The new window is 200 pixels by 400 pixels and has a status bar, but it does not have a toolbar, menu bar, or address field.</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.open(<span class="hljs-string">"Sample.htm"</span>,<span class="hljs-literal">null</span>,
+    <span class="hljs-string">"height=200,width=400,status=yes,toolbar=no,menubar=no,location=no"</span>);
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>By default, the <strong>open</strong> method creates a window that has a default width and height and the standard menu, toolbar, and other features of Internet Explorer. You can alter this set of features by using the <em>features</em> parameter. This parameter is a string consisting of one or more feature settings. When the <em>features</em> parameter is specified, the features that are not defined in the parameter are disabled. Therefore, when using the <em>features</em> parameter, it is necessary to enable all the features that are to be included in the new window. If the <em>features</em> parameter is not specified, the window features maintain their default values. In addition to enabling a feature by setting it to a specific value, simply listing the feature name also enables that feature for the new window. Most of the <em>features</em> specified in the window.open method are ignored if user has selected, “Always open pop-ups in a new tab” setting in the Internet options control panel. When a function fired by an event on any object calls the <strong>open</strong> method, the window.<strong>open</strong> method is implied.</p>
+<pre><code>&lt;script language=&quot;JScript&quot;&gt;
+function myOpen() {
+    open('about:blank');}
+&lt;/script&gt;
+&lt;body onclick=&quot;myOpen();&quot;&gt;
+Click this page and window.open() is called.
+&lt;/body&gt;
+</code></pre>
+<p>When an event on any object calls the <strong>open</strong> method, the document.<strong>open</strong> method is implied.</p>
+<pre><code>&lt;button onclick=&quot;open('Sample.htm');&quot;&gt;
+Click this button and document.open() is called.
+&lt;/button&gt;
+</code></pre>
+<p>Windows Internet Explorer 8. New windows and pop-ups always inherit the zoom level of the parent window. Internet Explorer 7. The <strong>Back</strong>, <strong>Forward</strong>, and <strong>Stop</strong> commands are now located in the Navigation bar of the user interface. Prior to Internet Explorer 7 navigation commands were located in the toolbar. Internet Explorer 7 on Windows Vista. Opening a new window from an application other than the Internet Explorer process may result in a NULL return value. This occurs because Internet Explorer runs in protected mode by default. Protected mode prevents applications from privileged access to Internet Explorer when that access spans process boundaries. Because this method opens windows in a new process, protected mode restricts access to the new window. For more information, please see Understanding and Working in Protected Mode Internet Explorer. Internet Explorer 6 for Windows XP SP2 places several restrictions on windows created with this method. For several of the parameter values listed in the Parameters table, these restrictions are indicated by the minimum value. For more information, see About Window Restrictions. This method must use a user-initiated action, such as clicking on a link or tabbing to a link and pressing enter, to open a pop-up window. The Pop-up Blocker feature in Internet Explorer 6 blocks windows that are opened without being initiated by the user. The Pop-up Blocker also prevents windows from appearing if you call this method from an <a href="/docs/dom/Element/unload"><strong>onunload</strong></a> event. In Internet Explorer 6, the <strong>_media</strong> value of the <em>name</em> parameter specifies that this method loads a URL into the HTML content area of the Media Bar. Internet Explorer 5 allows further control over windows through the implementation of <code>title</code> in the <em>features</em> parameter of the <strong>open</strong> method. Turn off the title bar by opening the window from a trusted application, such as Microsoft Visual Basic or an HTML Application (HTA). These applications are considered trusted, because each uses Internet Explorer interfaces instead of the browser. In Windows CE, the <a href="/docs/dom/Document">Document</a> object is not available through scripting for a <strong>window</strong> opened using the <strong>open</strong> method.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.open">open</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/ms536651(v=vs.85).aspx">open Method</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

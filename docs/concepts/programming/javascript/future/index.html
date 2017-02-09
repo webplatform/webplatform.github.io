@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>future · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/future/">future</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>future</h1>
+<p><strong>Note</strong>: Please note that this document is currently under development, if you have anything to add please use the Comments to share.</p>
+<h3>Next Release</h3>
+<p>ECMAScript 6 is the next draft version of the standard, code-named <strong>“Harmony”</strong> or <strong>“ES.next”</strong>. Draft 12 was released November 22, 2012.<sup><a href="#cite_note-md-1">[1]</a></sup></p>
+<h3>Syntax</h3>
+<p>There has been a wide range of changes in regards to syntax, below are some examples of syntax additions and changes.</p>
+<h4>let</h4>
+<p>Let and const are new ways to declare variables, firstly <code>let</code> is exactly the same as <code>var</code> apart from it bounds the declared variable to the inner-most scope. example:</p>
+<pre><code> //Testing var scope
+ function scope()
+ {
+   for(var i = 0; i != 10; i++)
+   {
+      //(i) is available here
+   }
+   //(i) is also available here
+ }
+
+ //Testing let scope
+ function scope()
+ {
+   for(let i = 0; i != 10; i++)
+   {
+      //(i) is available here
+   }
+   //(i) is *not* available here!
+ }
+</code></pre>
+<p>This may not seem like a huge change but it’s actually a much needed feature. An example of ES3/5 would be:</p>
+<pre><code> for(var i = 0; i &lt; 10; i++)
+ {
+    setTimeout(function(){
+      alert(i);
+    }, 20);
+ }
+</code></pre>
+<p>The above statement will alert the number 10, ten times. this is because the loop iterations finish before the execution of the time-out, so the value of <code>i</code> will be the last possible value in the loop.</p>
+<p>Using <code>let</code> allows you to scope the variable to the <strong>current</strong> iteration scope, meaning that the example below act’s like your creating an anonymous function for every iteration.</p>
+<pre><code> for(let i = 0; i &lt; 10; i++)
+ {
+    let k = i;
+    setTimeout(function(){
+      alert(k);
+    });
+ }
+</code></pre>
+<h4>const</h4>
+<p><code>const</code> is similar to <code>let</code> and <code>var</code> apart from the variable is marked as read-only.</p>
+<h4>for…of</h4>
+<p><code>for(x of y)</code> loops allow you to iterate over arrays in the same way you iterate over object’s key. an example usage would be:</p>
+<pre><code> let array = [0,2,4,8,16,32,64];
+ for(num of array)
+ {
+ }
+</code></pre>
+<h3>Features</h3>
+<p>TODO: List some of the EMCAScript 6 features such as Syntax, Structures and Library implementations</p>
+<h3>Concepts</h3>
+<p>Describe concepts such as Classes, Private Names, Inheritance and Abstraction.</p>
+<h2>References</h2>
+<ol>
+<li><span class="mw-cite-backlink"><a href="#cite_ref-md_1-0">↑</a></span> <span class="reference-text">ECMAScript 6 Draft 12 <span class="citation web"><a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts#current_working_draft">“harmony:specification_drafts”</a>. 17-Dec-2004<span class="printonly">. <a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts#current_working_draft">http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts#current_working_draft</a></span>.</span><span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=bookitem&amp;rft.btitle=harmony%3Aspecification_drafts&amp;rft.atitle=&amp;rft.date=17-Dec-2004&amp;rft_id=http%3A%2F%2Fwiki.ecmascript.org%2Fdoku.php%3Fid%3Dharmony%3Aspecification_drafts%23current_working_draft&amp;rfr_id=info:sid/en.wikipedia.org:concepts/programming/javascript/future"><span style="display: none;"> </span></span></span></li>
+</ol>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

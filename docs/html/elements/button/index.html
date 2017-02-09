@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>button · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The button element represents a clickable button." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/button/">button</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>button</h1>
+<h2>Summary</h2>
+<p>The button element represents a clickable button.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLButtonElement">HTMLButtonElement</a>
+</dd>
+</dl>
+<p>You can put text or images inside a button element. If the element is not disabled, the user can activate the button.</p>
+<p>By default, the button element is used to submit <a href="/docs/html/elements/form"><strong>form</strong></a> data. Modifying the type attribute can change this behavior.</p>
+<h3>Attributes (HTML 4)</h3>
+<dl>
+<dt>name</dt>
+<dd>The name of the button. This can be used to identify which button was used to submit a form.<br>
+type
+</dd>
+<dd>This specifies the type of the button. If omitted, the type is <code>submit</code>. The following types are possible:
+<ul>
+<li><code>submit</code>: the button submits the form it is associated with and sends the form data to the server. This is the default value.</li>
+<li><code>reset</code>: the button resets the form it is associated with. This will set the containing fields to their initial values.</li>
+<li><code>button</code>: the button has no default behavior. Useful to bind JavaScript <a href="/docs/dom/MouseEvent/click"><strong>click</strong></a> events</li>
+</ul>
+</dd>
+<dt>value</dt>
+<dd>The initial value of the button.<br>
+disabled
+</dd>
+<dd>This Boolean attribute indicates that the user cannot interact with the button. If this attribute is not specified, the button inherits its setting from the containing element, for example <strong>fieldset</strong> if there is no containing element with the disabled attribute set, then the button is enabled. A disabled button isn’t clickable.
+</dd>
+</dl>
+<h3>Additional attributes (HTML 5, candidate specification)</h3>
+<dl>
+<dt>autofocus</dt>
+<dd><p>When this attribute is set to “true” the button will have input focused after the page loads, unless the user overrides it, for example by typing in a different control. Only one form-associated element in a document can have this attribute specified.<br>
+form</p>
+</dd>
+<dd><p>Specifies which form the button is associated with. The value of the attribute must be the id attribute of the form. If this attribute is not specified, the button must be a descendant of the form itself to be able to submit form data. This attribute enables you to place <strong>button</strong> elements anywhere within a document, not just as descendants of their <strong>form</strong> elements.<br>
+formaction</p>
+</dd>
+<dd><p>The URI of a program that processes the information from the form. When present, it will override the action attribute of the associated form.<br>
+formmethod</p>
+</dd>
+<dd><p>The HTTP method to send the form data. This can either be <code>post</code> or <code>get</code>. If specified, it will override the method attribute of the associated form. Possible values are:</p>
+<ul>
+<li><code>post</code>: The data from the form is included in the body of the form and is sent to the server.</li>
+<li><code>get</code>: The data from the form are appended to the form attribute URI, with a ‘?’ as a separator, and the resulting URI is sent to the server. Use this method when the form has no side-effects and contains only ASCII characters.</li>
+</ul>
+</dd>
+<dt>formnovalidate</dt>
+<dd><p>If the button is a submit button, this attribute specifies whether the form should be validated or not. It overrides the <strong>novalidate</strong> attribute of the form it belongs to.<br>
+formtarget</p>
+</dd>
+<dd><p>This attribute is a keyword, indicating where to display the response that is received after submitting the form. This can be one of the following:</p>
+<ul>
+<li><code>_self</code>: load the response into the same context as the form itself. This is the default value.</li>
+<li><code>_blank</code>: load the response into a new, unnamed context (Browser window)</li>
+<li><code>_parent</code>: loads the response into the parent context. If there is no parent, it will behave the same as _self.</li>
+<li><code>_top</code>: loads the response into the top-most context. This is the browsing context of an ancestor of the current context. If there is no parent, it will behave the same as _self.</li>
+</ul>
+</dd>
+</dl>
+<p>All these attributes, except <code>name</code>, have default values and can be omitted.</p>
+<h2>Examples</h2>
+<p>This examples uses the <code>&lt;button&gt;</code> element to display a clickable button with out sending or reseting a form.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"myButton"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/b08191a8d5915621a5e1">View live example</a></p>
+<p>This example shows how to use a submit <code>&lt;button&gt;</code> to send a form. Read about the <a href="/docs/html/elements/form"><strong>form</strong></a> element to get further information about how to use forms.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">action</span>=<span class="hljs-value">"dataReceiverURI"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"name"</span>&gt;</span>Name:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_name"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"mySubmitButton"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/ceb6531b1b86fb0b21d0">View live example</a></p>
+<p>This example shows how to reset a form with use of <code>&lt;button=&quot;reset&quot;&gt;</code>. Read about the <a href="/docs/html/elements/form"><strong>form</strong></a> element to get further information about how to use forms.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">form</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"name"</span>&gt;</span>Name:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_name"</span> &gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"myResetButton"</span>&gt;</span>reset<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/c579515bcd4378bfd634">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> Generally, the button element can be used whenever there should be a button clickable by the user.
+</code></pre>
+<p>The ending tag is mandatory. The button should have a descriptive text inside it, otherwise the button will be empty and the user won’t know what the button will do.</p>
+<p>Please note that styling a submit button using the &lt;button&gt; element is easier than styling an <a href="/docs/html/elements/input"><strong>input</strong></a> element with type <code>submit</code>.</p>
+<h2>Notes</h2>
+<p>Since the default for the <code>type</code> attribute is <code>submit</code>, the type can be omitted if no other type needs to be used. Historical browser versions may have different standard <code>type</code> values.</p>
+<p>Firefox for Android, by default, sets a <code>background-image</code> gradient on all <strong>button</strong> elements. This can be disabled using <code>background-image: none</code>.</p>
+<p>Firefox will, unlike other browsers, by default, <a href="http://stackoverflow.com/questions/5985839/bug-with-firefox-disabled-attribute-of-input-not-resetting-when-refreshing">persist the dynamic disabled state</a> of a <strong>button</strong> across page loads. Setting the value of the <code>autocomplete</code> attribute to <code>off</code> disables this feature. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=654072">Mozilla Bug #654072</a>.</p>
+<h3>Clicking and focus</h3>
+<p>Whether clicking on a <strong>button</strong> causes it to (by default) become focused varies by browser and OS.</p>
+<p>Does clicking on a <strong>button</strong> give it the focus?:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Desktop Browsers</th><th style="text-align:left">Windows 8.1</th><th style="text-align:left">OS X 10.9</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Firefox 30.0</td><td style="text-align:left">Yes</td><td style="text-align:left">No (even with a <a href="/docs/html/attributes/tabIndex"><code>tabindex</code></a>)</td></tr>
+<tr><td style="text-align:left">Chrome 35</td><td style="text-align:left">Yes</td><td style="text-align:left">Yes</td></tr>
+<tr><td style="text-align:left">Safari 7.0.5</td><td style="text-align:left">N/A</td><td style="text-align:left">No (even with a <a href="/docs/html/attributes/tabIndex"><code>tabindex</code></a>)</td></tr>
+<tr><td style="text-align:left">Internet Explorer 11</td><td style="text-align:left">Yes</td><td style="text-align:left">N/A</td></tr>
+<tr><td style="text-align:left">Presto (Opera 12)</td><td style="text-align:left">Yes</td><td style="text-align:left">???</td></tr>
+</tbody>
+</table>
+<p>Does tapping on a <strong>button</strong> give it the focus?:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Mobile Browsers</th><th style="text-align:left">iOS 7.1.2</th><th style="text-align:left">Android 4.4.4</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Safari Mobile</td><td style="text-align:left">No (even with a <a href="/docs/html/attributes/tabIndex"><code>tabindex</code></a>)</td><td style="text-align:left">N/A</td></tr>
+<tr><td style="text-align:left">Chrome 35</td><td style="text-align:left">???</td><td style="text-align:left">Yes</td></tr>
+</tbody>
+</table>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/forms.html#the-button-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/forms.html#the-button-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/interact/forms.html#edef-BUTTON">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Document Structure</h4>
+<ul>
+<li><p><strong>button</strong></p></li>
+<li><p><a href="/docs/html/elements/button/ja">button</a></p></li>
+<li><p><a href="/docs/html/elements/footer">footer</a></p></li>
+<li><p><a href="/docs/html/elements/head">head</a></p></li>
+<li><p><a href="/docs/html/elements/main">main</a></p></li>
+<li><p><a href="/docs/html/elements/nav">nav</a></p></li>
+<li><p><a href="/docs/html/elements/p">p</a></p></li>
+<li><p><a href="/docs/html/elements/section">section</a></p></li>
+</ul>
+<h4>HTML</h4>
+<ul>
+<li><p><a href="/docs/css/properties/user-modify">user-modify</a></p></li>
+<li><p><a href="/docs/dom/HTMLTextAreaElement/textLength">textLength</a></p></li>
+<li><p><a href="/docs/dom/HTMLTextAreaElement/value">value</a></p></li>
+<li><p><a href="/docs/html/attributes/accept">accept</a></p></li>
+<li><p><a href="/docs/html/attributes/action">action</a></p></li>
+<li><p><a href="/docs/html/attributes/alt">alt</a></p></li>
+<li><p><a href="/docs/html/attributes/autocomplete">autocomplete</a></p></li>
+<li><p><a href="/docs/html/attributes/autofocus">autofocus</a></p></li>
+<li><p><a href="/docs/html/attributes/checked">checked</a></p></li>
+<li><p><a href="/docs/html/attributes/crossorigin">crossorigin</a></p></li>
+<li><p><a href="/docs/html/attributes/form">form</a></p></li>
+<li><p><a href="/docs/html/attributes/formEnctype">formEnctype</a></p></li>
+<li><p><a href="/docs/html/attributes/height">height</a></p></li>
+<li><p><a href="/docs/html/attributes/list">list</a></p></li>
+<li><p><a href="/docs/html/attributes/max_(HTMLInputElement)">max (HTMLInputElement)</a></p></li>
+<li><p><a href="/docs/html/attributes/maxLength">maxLength</a></p></li>
+<li><p><a href="/docs/html/attributes/min">min</a></p></li>
+<li><p><a href="/docs/html/attributes/multiple">multiple</a></p></li>
+<li><p><a href="/docs/html/attributes/readonly">readonly</a></p></li>
+<li><p><a href="/docs/html/attributes/size">size</a></p></li>
+<li><p><a href="/docs/html/attributes/standby">standby</a></p></li>
+<li><p><a href="/docs/html/attributes/step">step</a></p></li>
+<li><p><a href="/docs/html/elements">HTML Elements</a></p></li>
+<li><p><a href="/docs/html/elements/!DOCTYPE">!DOCTYPE</a></p></li>
+<li><p><a href="/docs/html/elements/!DOCTYPE/ja">!DOCTYPE</a></p></li>
+<li><p><a href="/docs/html/elements/acronym">acronym</a></p></li>
+<li><p><a href="/docs/html/elements/b">b</a></p></li>
+<li><p><a href="/docs/html/elements/b/ja">b</a></p></li>
+<li><p><a href="/docs/html/elements/br">br</a></p></li>
+<li><p><a href="/docs/html/elements/br/ja">br</a></p></li>
+<li><p><strong>button</strong></p></li>
+<li><p><a href="/docs/html/elements/button/ja">button</a></p></li>
+<li><p><a href="/docs/html/elements/caption">caption</a></p></li>
+<li><p><a href="/docs/html/elements/cite">cite</a></p></li>
+<li><p><a href="/docs/html/elements/code">code</a></p></li>
+<li><p><a href="/docs/html/elements/col">col</a></p></li>
+<li><p><a href="/docs/html/elements/colgroup">colgroup</a></p></li>
+<li><p><a href="/docs/html/elements/datalist">datalist</a></p></li>
+<li><p><a href="/docs/html/elements/del">del</a></p></li>
+<li><p><a href="/docs/html/elements/dfn">dfn</a></p></li>
+<li><p><a href="/docs/html/elements/div">div</a></p></li>
+<li><p><a href="/docs/html/elements/em">em</a></p></li>
+<li><p><a href="/docs/html/elements/embed">EMBED</a></p></li>
+<li><p><a href="/docs/html/elements/fieldset">fieldset</a></p></li>
+<li><p><a href="/docs/html/elements/font">font</a></p></li>
+<li><p><a href="/docs/html/elements/footer">footer</a></p></li>
+<li><p><a href="/docs/html/elements/head">head</a></p></li>
+<li><p><a href="/docs/html/elements/hn">hn</a></p></li>
+<li><p><a href="/docs/html/elements/hr">hr</a></p></li>
+<li><p><a href="/docs/html/elements/html">html</a></p></li>
+<li><p><a href="/docs/html/elements/i">i</a></p></li>
+<li><p><a href="/docs/html/elements/img">img</a></p></li>
+<li><p><a href="/docs/html/elements/input">input</a></p></li>
+<li><p><a href="/docs/html/elements/ins">ins</a></p></li>
+<li><p><a href="/docs/html/elements/kbd">kbd</a></p></li>
+<li><p><a href="/docs/html/elements/legend">legend</a></p></li>
+<li><p><a href="/docs/html/elements/mark">mark</a></p></li>
+<li><p><a href="/docs/html/elements/option">option</a></p></li>
+<li><p><a href="/docs/html/elements/p">p</a></p></li>
+<li><p><a href="/docs/html/elements/samp">samp</a></p></li>
+<li><p><a href="/docs/html/elements/script">script</a></p></li>
+<li><p><a href="/docs/html/elements/span">span</a></p></li>
+<li><p><a href="/docs/html/elements/strong">strong</a></p></li>
+<li><p><a href="/docs/html/elements/table">table</a></p></li>
+<li><p><a href="/docs/html/elements/tbody">tbody</a></p></li>
+<li><p><a href="/docs/html/elements/td">td</a></p></li>
+<li><p><a href="/docs/html/elements/tfoot">tfoot</a></p></li>
+<li><p><a href="/docs/html/elements/th">th</a></p></li>
+<li><p><a href="/docs/html/elements/time">time</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/html/elements/input/type/button"><strong>input type=&quot;button&quot;</strong></a></li>
+<li><a href="/docs/html/elements/input/type/submit"><strong>input type=&quot;submit&quot;</strong></a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button">&amp;lt;button&amp;gt; on MDN</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create new database credentials and configure a web application to use it · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Create_new database credentials configure a web application to use it/">Create new database credentials configure a web application to use it</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Create new database credentials and configure a web application to use it</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><strong>Create new database credentials and configure a web application to use it</strong></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>… or <strong>“How to change database configuration and ensure every affected web application gets the new passswords”</strong>.</p>
+<p>The concept of states are ideal to manage many aspects of a running system. But one of the “gray zones” are about database credentials, or whether or not we should send commands to set database credentials at every deployment system “apply configuration” run. For this reason we do not enforce them in the salt states.</p>
+<p>But what if we want to change the database details? Here’s how.</p>
+<p>In this example, we’ll create a new database for our WordPress blog instance, import an existing snapshot and apply the new database configuration and deploy it. In this tutorial we will focus solely on the use of the deployment system (“salt stack”) and the deployment itself.</p>
+<h2>Procedure</h2>
+<ul>
+<li>Create a new database</li>
+</ul>
+<!-- -->
+<pre><code> salt -G 'roles:masterdb' mysql.db_create wpblog utf8 utf8_general_ci
+</code></pre>
+<ul>
+<li>Add a new database user and privileges</li>
+</ul>
+<!-- -->
+<pre><code> salt -G 'roles:masterdb' mysql.user_create user_blog '%' somepassword
+ salt -G 'roles:masterdb' mysql.grant_add 'ALL' 'wpblog.*' 'user_blog' '%'
+</code></pre>
+<ul>
+<li>Check if the secondary database replication servers are in good state</li>
+</ul>
+<!-- -->
+<pre><code> salt -G 'roles:db' mysql.get_slave_status
+</code></pre>
+<p>The following details of the output means &quot;<em>all is OK!</em>&quot;</p>
+<pre><code>   Seconds_Behind_Master:
+       0
+   Slave_IO_Running:
+       Yes
+   Slave_IO_State:
+       Waiting for master to send event
+   Slave_SQL_Running:
+       Yes
+</code></pre>
+<ul>
+<li>Check if Monit says the database servers are fine too. If everything says &quot;<em>running</em>&quot; its all great!</li>
+</ul>
+<!-- -->
+<pre><code> salt -G 'roles:db' monit.summary
+ db2:
+   ----------
+   Process:
+       ----------
+       exim4:
+           Running
+       mysql:
+           Running
+       openssh-server:
+           Running
+       salt-minion:
+           Running
+   System:
+       ----------
+       db2.production.wpdn:
+           Running
+ db1-masterdb:
+   ----------
+   Process:
+       ----------
+       exim4:
+           Running
+       mysql:
+           Running
+       openssh-server:
+           Running
+       salt-minion:
+           Running
+   System:
+       ----------
+       db1-masterdb.production.wpdn:
+           Running
+</code></pre>
+<ul>
+<li>Import the previous database snapshot
+<ul>
+<li><em>scp</em> the database backup file to the current <strong>masterdb</strong> VM</li>
+<li>import the database into the server (e.g. <strong>mysql wpblog &lt; wpblog.sql</strong>)</li>
+<li>the other VMs with the role db (the ones that doesn’t have “masterdb” in their name) should catch up automatically with the replication</li>
+</ul></li>
+<li>Change the database details you just created in the pillar file. If the command was run from production, the file to change would be <strong>/srv/private/pillars/accounts/production.sls</strong></li>
+<li>To review what’s going to be applied will be <em>/srv/salt/vm/blog.sls</em>. That is because the role we are working on at this moment is &quot;blog&quot;. If you want to review why, take a look at the <a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">section about roles</a> and the <a href="/docs/WPD/Infrastructure/architecture/VM_roles">details of each roles</a>.</li>
+<li>Make the configuration file to be applied on top of the web app configuration.</li>
+</ul>
+<!-- -->
+<pre><code> wpd-deploy blog
+</code></pre>
+<p>It should look like in this image, with all &quot;green&quot;, but of course with the mention of “blog” instead of &quot;app&quot;.</p>
+<p><img src="//static.webplatform.org/0/0d/Running_wpd-deploy.png" alt="Running wpd-deploy.png"></p>
+<ul>
+<li>Last step is to apply <em>state.highstate</em>. Its OK to run it more than once, the configuration are written to enforce a state and can be applied in any order, the important is to get all &quot;green&quot;.</li>
+</ul>
+<!-- -->
+<pre><code> salt blog state.highstate
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

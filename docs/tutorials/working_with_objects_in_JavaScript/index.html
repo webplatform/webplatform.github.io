@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Working with objects in JavaScript · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Objects are integral to javascript development and understanding how objects are generated and used is essential." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/working_with objects in JavaScript/">working with objects in JavaScript</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Working with objects in JavaScript</h1>
+<h2>Summary</h2>
+<p>Objects are integral to javascript development and understanding how objects are generated and used is essential.</p>
+<p>JavaScript is designed on a simple object-based paradigm: An object represents a collection of properties; each property is an association between a name/value pair. A value of property can be a function, which is then known as the object’s <em>method</em>. In addition to objects that are predefined in the browser, you can define your own objects.</p>
+<p>This chapter describes how to use objects, properties, functions, and methods, and how to create your own objects.</p>
+<h2>Objects overview</h2>
+<p>Objects in JavaScript, just as many other programming languages, can be compared to objects in real life. The concept of objects in JavaScript can be understood with real life, tangible objects.</p>
+<p>In JavaScript, an object is a standalone entity, with properties and type. Compare it with a cup for example. A cup is an object, with properties. A cup has a colour, a design, weight, a material it is made of, etc. The same way, JavaScript objects can have properties, which define their characteristics.</p>
+<h2>Objects and properties</h2>
+<p>A JavaScript object has properties associated with it. A property of an object can be explained as variables that are attached to the object. Object properties are basically the same with ordinary JavaScript variables, except for the attachment to objects. The properties of an object define the characteristics of the object. You access the properties of an object with a simple dot-notation:</p>
+<pre><code class="js"> objectName.propertyName
+</code></pre>
+<p>Like all JavaScript variables, both the object name (which could be a normal variable) and property name are case sensitive. You define a property by assigning it a value. For example, let’s create an object named <code>myCar</code> and give it properties named <code>make</code>, <code>model</code>, and <code>year</code> as follows:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> myCar = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+ myCar.make = <span class="hljs-string">"Ford"</span>;
+ myCar.model = <span class="hljs-string">"Mustang"</span>;
+ myCar.year = <span class="hljs-number">1969</span>;
+</code></pre>
+<p>Properties of JavaScript objects can also be accessed or set using a bracket notation. Objects are sometimes called <em>associative arrays</em>, since each property is associated with a string value that can be used to access it. So, for example, you could access the properties of the <code>myCar</code> object as follows:</p>
+<pre><code class="js"> myCar[<span class="hljs-string">"make"</span>] = <span class="hljs-string">"Ford"</span>;
+ myCar[<span class="hljs-string">"model"</span>] = <span class="hljs-string">"Mustang"</span>;
+ myCar[<span class="hljs-string">"year"</span>] = <span class="hljs-number">1969</span>;
+</code></pre>
+<p>Object properties names can be valid JavaScript string, or anything that can be converted to string, including the empty string. However, any property name that is not a valid JavaScript identifier (for example, a property name that has space or dash, or starts with a number) can only be accessed using the square bracket notation. This notation is also very useful when property names are to be dynamically determined (when the property name is not determined until runtime). Examples are as follows:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> myObj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>(),
+     str = <span class="hljs-string">"myString"</span>,
+     rand = <span class="hljs-built_in">Math</span>.random(),
+     obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+
+ myObj.type = <span class="hljs-string">"Dot syntax"</span>;
+ myObj[<span class="hljs-string">"date created"</span>] = <span class="hljs-string">"String with space"</span>;
+ myObj[str] = <span class="hljs-string">"String value"</span>;
+ myObj[rand] = <span class="hljs-string">"Random Number"</span>;
+ myObj[obj] = <span class="hljs-string">"Object"</span>;
+ myObj[<span class="hljs-string">""</span>] = <span class="hljs-string">"Even an empty string"</span>;
+
+ <span class="hljs-built_in">console</span>.log(myObj);
+</code></pre>
+<p>You can also access properties by using a string value that is stored in a variable:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> propertyName = <span class="hljs-string">"make"</span>;
+ myCar[propertyName] = <span class="hljs-string">"Ford"</span>;
+
+ propertyName = <span class="hljs-string">"model"</span>;
+ myCar[propertyName] = <span class="hljs-string">"Mustang"</span>;
+</code></pre>
+<p>You can use the bracket notation with <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/for...in">for…in</a> to iterate over all the enumerable properties of an object. To illustrate how this works, the following function displays the properties of the object when you pass the object and the object’s name as arguments to the function:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showProps</span>(<span class="hljs-params">obj, objName</span>) </span>{
+   <span class="hljs-keyword">var</span> result = <span class="hljs-string">""</span>;
+   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> obj) {
+     <span class="hljs-keyword">if</span> (obj.hasOwnProperty(i)) {
+         result += objName + <span class="hljs-string">"."</span> + i + <span class="hljs-string">" = "</span> + obj[i] + <span class="hljs-string">"\n"</span>;
+     }
+   }
+   <span class="hljs-keyword">return</span> result;
+ }
+</code></pre>
+<p>So, the function call <code>showProps(myCar, &quot;myCar&quot;)</code> would return the following:</p>
+<pre><code class="js"> myCar.make = Ford
+ myCar.model = Mustang
+ myCar.year = <span class="hljs-number">1969</span>
+</code></pre>
+<h2>Object everything</h2>
+<p>In JavaScript, almost everything is an object. All primitive types except <code>null</code> and <code>undefined</code> are treated as objects. They can be assigned properties (assigned properties of some types are not persistent), and they have all characteristics of objects.</p>
+<h2>Enumerating all properties of an object</h2>
+<p>Starting with ECMAScript 5, there are three native ways to list/traverse object properties:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/for...in">for…in</a> loops: this method traverses all enumerable properties of an object and its prototype chain</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys(o)</a>: this method returns an array with all the own (not in the prototype chain) enumerable properties names (“keys”) of an object <code>o</code>.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames(o)</a>: this method returns an array containing all own properties names (enumerable or not) of an object <code>o</code>.</li>
+</ul>
+<p>In ECMAScript 5, there is no native way to list all properties of an object. However, this can be achieved with the following function:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">listAllProperties</span>(<span class="hljs-params">o</span>)</span>{
+    <span class="hljs-keyword">var</span> objectToInspect;
+    <span class="hljs-keyword">var</span> result = [];
+
+    <span class="hljs-keyword">for</span>(objectToInspect = o; objectToInspect !== <span class="hljs-literal">null</span>; objectToInspect = <span class="hljs-built_in">Object</span>.getPrototypeOf(objectToInspect)){
+        result = result.concat(<span class="hljs-built_in">Object</span>.getOwnPropertyNames(objectToInspect));
+    }
+
+    <span class="hljs-keyword">return</span> result;
+ }
+</code></pre>
+<p>This can be useful to reveal “hidden” properties (properties in the prototype chain which are not accessible through the object, because another property has the same name earlier in the prototype chain). Listing accessible properties only can easily be done by removing duplicates in the array.</p>
+<h2>Creating new objects</h2>
+<p>JavaScript has a number of predefined objects. In addition, you can create your own objects. In JavaScript 1.2 and later, you can create an object using an object initializer. Alternatively, you can first create a constructor function and then instantiate an object using that function and the <code>new</code> operator.</p>
+<h3>Using object initializers</h3>
+<p>In addition to creating objects using a constructor function, you can create objects using an object initializer. Using object initializers is sometimes referred to as creating objects with literal notation. “Object initializer” is consistent with the terminology used by C++.</p>
+<p>The syntax for an object using an object initializer is:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> obj = { property_1:   value_1,   <span class="hljs-comment">// property_# may be an identifier...</span>
+             <span class="hljs-number">2</span>:            value_2,   <span class="hljs-comment">// or a number...</span>
+             <span class="hljs-comment">// ...,</span>
+             <span class="hljs-string">"property n"</span>: value_n }; <span class="hljs-comment">// or a string</span>
+</code></pre>
+<p>where <code>obj</code> is the name of the new object, each <code>property_i</code> is an identifier (either a name, a number, or a string literal), and each <code>value_i</code> is an expression whose value is assigned to the <code>property_i</code>. The <code>obj</code> and assignment is optional; if you do not need to refer to this object elsewhere, you do not need to assign it to a variable. (Note that you may need to wrap the object literal in parentheses if the object appears where a statement is expected, so as not to have the literal be confused with a block statement.)</p>
+<p>If an object is created with an object initializer in a top-level script, JavaScript interprets the object each time it evaluates an expression containing the object literal. In addition, an initializer used in a function is created each time the function is called.</p>
+<p>The following statement creates an object and assigns it to the variable <code>x</code> if and only if the expression <code>cond</code> is true.</p>
+<pre><code class="js"> <span class="hljs-keyword">if</span> (cond) <span class="hljs-keyword">var</span> x = {hi: <span class="hljs-string">"there"</span>};
+</code></pre>
+<p>The following example creates <code>myHonda</code> with three properties. Note that the <code>engine</code> property is also an object with its own properties.</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> myHonda = {color: <span class="hljs-string">"red"</span>, wheels: <span class="hljs-number">4</span>, engine: {cylinders: <span class="hljs-number">4</span>, size: <span class="hljs-number">2.2</span>}};
+</code></pre>
+<p>You can also use object initializers to create arrays. See <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Values%2C_variables%2C_and_literals#Array_literals">array literals</a>.</p>
+<p>In JavaScript 1.1 and earlier, you cannot use object initializers. You can create objects only using their constructor functions or using a function supplied by some other object for that purpose. See <a href="#Using_a_constructor_function">Using a constructor function</a>.</p>
+<h3>Using a constructor function</h3>
+<p>Alternatively, you can create an object with these two steps:</p>
+<ol>
+<li>Define the object type by writing a constructor function. There is a strong convention, with good reason, to use a capital initial letter.</li>
+<li>Create an instance of the object with <code>new</code>.</li>
+</ol>
+<p>To define an object type, create a function for the object type that specifies its name, properties, and methods. For example, suppose you want to create an object type for cars. You want this type of object to be called <code>car</code>, and you want it to have properties for make, model, and year. To do this, you would write the following function:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Car</span>(<span class="hljs-params">make, model, year</span>) </span>{
+   <span class="hljs-keyword">this</span>.make = make;
+   <span class="hljs-keyword">this</span>.model = model;
+   <span class="hljs-keyword">this</span>.year = year;
+ }
+</code></pre>
+<p>Notice the use of <code>this</code> to assign values to the object’s properties based on the values passed to the function.</p>
+<p>Now you can create an object called <code>mycar</code> as follows:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> mycar = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">"Eagle"</span>, <span class="hljs-string">"Talon TSi"</span>, <span class="hljs-number">1993</span>);
+</code></pre>
+<p>This statement creates <code>mycar</code> and assigns it the specified values for its properties. Then the value of <code>mycar.make</code> is the string &quot;Eagle&quot;, <code>mycar.year</code> is the integer 1993, and so on.</p>
+<p>You can create any number of <code>car</code> objects by calls to <code>new</code>. For example,</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> kenscar = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">"Nissan"</span>, <span class="hljs-string">"300ZX"</span>, <span class="hljs-number">1992</span>);
+ <span class="hljs-keyword">var</span> vpgscar = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">"Mazda"</span>, <span class="hljs-string">"Miata"</span>, <span class="hljs-number">1990</span>);
+</code></pre>
+<p>An object can have a property that is itself another object. For example, suppose you define an object called <code>person</code> as follows:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params">name, age, sex</span>) </span>{
+   <span class="hljs-keyword">this</span>.name = name;
+   <span class="hljs-keyword">this</span>.age = age;
+   <span class="hljs-keyword">this</span>.sex = sex;
+ }
+</code></pre>
+<p>and then instantiate two new <code>person</code> objects as follows:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> rand = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">"Rand McKinnon"</span>, <span class="hljs-number">33</span>, <span class="hljs-string">"M"</span>);
+ <span class="hljs-keyword">var</span> ken = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">"Ken Jones"</span>, <span class="hljs-number">39</span>, <span class="hljs-string">"M"</span>);
+</code></pre>
+<p>Then, you can rewrite the definition of <code>car</code> to include an <code>owner</code> property that takes a <code>person</code> object, as follows:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Car</span>(<span class="hljs-params">make, model, year, owner</span>) </span>{
+   <span class="hljs-keyword">this</span>.make = make;
+   <span class="hljs-keyword">this</span>.model = model;
+   <span class="hljs-keyword">this</span>.year = year;
+   <span class="hljs-keyword">this</span>.owner = owner;
+ }
+</code></pre>
+<p>To instantiate the new objects, you then use the following:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> car1 = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">"Eagle"</span>, <span class="hljs-string">"Talon TSi"</span>, <span class="hljs-number">1993</span>, rand);
+ <span class="hljs-keyword">var</span> car2 = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">"Nissan"</span>, <span class="hljs-string">"300ZX"</span>, <span class="hljs-number">1992</span>, ken);
+</code></pre>
+<p>Notice that instead of passing a literal string or integer value when creating the new objects, the above statements pass the objects <code>rand</code> and <code>ken</code> as the arguments for the owners. Then if you want to find out the name of the owner of car2, you can access the following property:</p>
+<pre><code class="js"> car2.owner.name
+</code></pre>
+<p>Note that you can always add a property to a previously defined object. For example, the statement</p>
+<pre><code class="js"> car1.color = <span class="hljs-string">"black"</span>;
+</code></pre>
+<p>adds a property <code>color</code> to car1, and assigns it a value of “black.” However, this does not affect any other objects. To add the new property to all objects of the same type, you have to add the property to the definition of the <code>car</code> object type.</p>
+<h3>Using the Object.create method</h3>
+<p>Objects can also be created using the <code>Object.create</code> method. This method can be very useful, because it allows you to choose the prototype object for the object you want to create, without having to define a constructor function. For more detailed information on the method and how to use it, see <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create method</a></p>
+<h3>Inheritance</h3>
+<p>All objects in JavaScript inherit from at least one other object. The object being inherited from is known as the prototype, and the inherited properties can be found in the <code>prototype</code> object of the constructor.</p>
+<h3>Indexing object properties</h3>
+<p>In JavaScript 1.0, you can refer to a property of an object either by its property name or by its ordinal index. In JavaScript 1.1 and later, however, if you initially define a property by its name, you must always refer to it by its name, and if you initially define a property by an index, you must always refer to it by its index.</p>
+<p>This restriction applies when you create an object and its properties with a constructor function (as we did previously with the <code>Car</code> object type) and when you define individual properties explicitly (for example, <code>myCar.color = &quot;red&quot;</code>). If you initially define an object property with an index, such as <code>myCar[5] = &quot;25 mpg&quot;</code>, you can subsequently refer to the property only as <code>myCar[5]</code>.</p>
+<p>The exception to this rule is objects reflected from HTML, such as the <code>forms</code> array. You can always refer to objects in these arrays by either their ordinal number (based on where they appear in the document) or their name (if defined). For example, if the second <code>&lt;FORM&gt;</code> tag in a document has a <code>NAME</code> attribute of &quot;myForm&quot;, you can refer to the form as <code>document.forms[1]</code> or <code>document.forms[&quot;myForm&quot;]</code> or <code>document.myForm</code>.</p>
+<h3>Defining properties for an object type</h3>
+<p>You can add a property to a previously defined object type by using the <code>prototype</code> property. This defines a property that is shared by all objects of the specified type, rather than by just one instance of the object. The following code adds a <code>color</code> property to all objects of type <code>car</code>, and then assigns a value to the <code>color</code> property of the object <code>car1</code>.</p>
+<pre><code class="js"> Car.prototype.color = <span class="hljs-literal">null</span>;
+ car1.color = <span class="hljs-string">"black"</span>;
+</code></pre>
+<p>See the <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/prototype"><code>prototype</code> property</a> of the <code>Function</code> object for more information.</p>
+<h3>Defining methods</h3>
+<p>A <em>method</em> is a function associated with an object, or, simply put, a method is a property of an object that is a function. Methods are defined the way normal functions are defined, except that they have to be assigned as the property of an object. Examples are:</p>
+<pre><code class="js"> objectName.methodname = function_name;
+
+ <span class="hljs-keyword">var</span> myObj = {
+   myMethod: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">params</span>) </span>{
+     <span class="hljs-comment">// ...do something</span>
+   }
+ };
+</code></pre>
+<p>where <code>objectName</code> is an existing object, <code>methodname</code> is the name you are assigning to the method, and <code>function_name</code> is the name of the function.</p>
+<p>You can then call the method in the context of the object as follows:</p>
+<pre><code class="js"> object.methodname(params);
+</code></pre>
+<p>You can define methods for an object type by including a method definition in the object constructor function. For example, you could define a function that would format and display the properties of the previously-defined <code>car</code> objects; for example,</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">displayCar</span>(<span class="hljs-params"></span>) </span>{
+   <span class="hljs-keyword">var</span> result = <span class="hljs-string">"A Beautiful "</span> + <span class="hljs-keyword">this</span>.year + <span class="hljs-string">" "</span> + <span class="hljs-keyword">this</span>.make
+     + <span class="hljs-string">" "</span> + <span class="hljs-keyword">this</span>.model;
+   pretty_print(result);
+ }
+</code></pre>
+<p>where <code>pretty_print</code> is a function to display a horizontal rule and a string. Notice the use of <code>this</code> to refer to the object to which the method belongs.</p>
+<p>You can make this function a method of <code>car</code> by adding the statement</p>
+<pre><code class="js"> <span class="hljs-keyword">this</span>.displayCar = displayCar;
+</code></pre>
+<p>to the object definition. So, the full definition of <code>car</code> would now look like</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Car</span>(<span class="hljs-params">make, model, year, owner</span>) </span>{
+   <span class="hljs-keyword">this</span>.make = make;
+   <span class="hljs-keyword">this</span>.model = model;
+   <span class="hljs-keyword">this</span>.year = year;
+   <span class="hljs-keyword">this</span>.owner = owner;
+   <span class="hljs-keyword">this</span>.displayCar = displayCar;
+ }
+</code></pre>
+<p>Then you can call the <code>displayCar</code> method for each of the objects as follows:</p>
+<pre><code class="js"> car1.displayCar();
+ car2.displayCar();
+</code></pre>
+<p>This produces the output shown in the following figure.</p>
+<p><img src="//static.webplatform.org/d/dd/obja.gif" alt="Two lines saying: &quot;a beautiful 1993 Eagle Talon TSi&quot; and &quot;a beautiful 1992 Nissan 300ZX&quot;"></p>
+<p><small><strong>Figure 7.1: Displaying method output.</strong></small></p>
+<h3>Using <code>this</code> for object references</h3>
+<p>JavaScript has a special keyword, <code>this</code>, that you can use within a method to refer to the current object. For example, suppose you have a function called <code>validate</code> that validates an object’s <code>value</code> property, given the object and the high and low values:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validate</span>(<span class="hljs-params">obj, lowval, hival</span>) </span>{
+   <span class="hljs-keyword">if</span> ((obj.value &lt; lowval) || (obj.value &gt; hival))
+     alert(<span class="hljs-string">"Invalid Value!"</span>);
+ }
+</code></pre>
+<p>Then, you could call <code>validate</code> in each form element’s <code>onchange</code> event handler, using <code>this</code> to pass it the element, as in the following example:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"age"</span> <span class="hljs-attribute">size</span>=<span class="hljs-value">"3"</span>
+   <span class="hljs-attribute">onChange</span>=<span class="hljs-value">"validate(this, 18, 99)"</span>&gt;</span>
+</code></pre>
+<p>In general, <code>this</code> refers to the calling object in a method.</p>
+<p>When combined with the <code>form</code> property, <code>this</code> can refer to the current object’s parent form. In the following example, the form <code>myForm</code> contains a <code>Text</code> object and a button. When the user clicks the button, the value of the <code>Text</code> object is set to the form’s name. The button’s <code>onclick</code> event handler uses <code>this.form</code> to refer to the parent form, <code>myForm</code>.</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"myForm"</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>Form name:<span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"text1"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Beluga"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"button1"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Show Form Name"</span>
+      <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"this.form.text1.value = this.form.name"</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+</code></pre>
+<h3>Defining getters and setters</h3>
+<p>A <em>getter</em> is a method that gets the value of a specific property. A <em>setter</em> is a method that sets the value of a specific property. You can define getters and setters on any predefined core object or user-defined object that supports the addition of new properties. The syntax for defining getters and setters uses the object literal syntax.</p>
+<p><strong>Note</strong>: Starting in <a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.8.1">JavaScript 1.8.1</a>, setters are no longer called when setting properties in object and array initializers.</p>
+<p>The following <a href="https://developer.mozilla.org/en-US/docs/SpiderMonkey/Introduction_to_the_JavaScript_shell">JS shell</a> session illustrates how getters and setters could work for a user-defined object <code>o</code>. The JS shell is an application that allows developers to test JavaScript code in batch mode or interactively.</p>
+<pre><code class="js"> js&gt; <span class="hljs-keyword">var</span> o = {a: <span class="hljs-number">7</span>, get b() {<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.a + <span class="hljs-number">1</span>;}, set c(x) {<span class="hljs-keyword">this</span>.a = x / <span class="hljs-number">2</span>}};
+ [object <span class="hljs-built_in">Object</span>]
+ js&gt; o.a;
+ <span class="hljs-number">7</span>
+ js&gt; o.b;
+ <span class="hljs-number">8</span>
+ js&gt; o.c = <span class="hljs-number">50</span>;
+ js&gt; o.a;
+ <span class="hljs-number">25</span>
+</code></pre>
+<p>The <code>o</code> object’s properties are:</p>
+<ul>
+<li><code>o.a</code> — a number</li>
+<li><code>o.b</code> — a getter that returns <code>o.a</code> plus 1</li>
+<li><code>o.c</code> — a setter that sets the value of <code>o.a</code> to half of the value <code>o.c</code> is being set to</li>
+</ul>
+<p>Please note that function names of getters and setters defined in an object literal using &quot;[gs]et <em>property</em>()&quot; (as opposed to <code>__define[GS]etter__</code> below) are not the names of the getters themselves, even though the <code>[gs]et propertyName(){ }</code> syntax may mislead you to think otherwise. To name a function in a getter or setter using the &quot;[gs]et <em>property</em>()&quot; syntax, define an explicitly named function programmatically using <code>Object.defineProperty</code> (or the <code>Object.prototype.__defineGetter__</code> legacy fallback).</p>
+<p>This JavaScript shell session illustrates how getters and setters can extend the <code>Date</code> prototype to add a <code>year</code> property to all instances of the predefined <code>Date</code> class. It uses the <code>Date</code> class’s existing <code>getFullYear</code> and <code>setFullYear</code> methods to support the <code>year</code> property’s getter and setter.</p>
+<p>These statements define a getter and setter for the year property:</p>
+<pre><code class="js"> js&gt; <span class="hljs-keyword">var</span> d = <span class="hljs-built_in">Date</span>.prototype;
+ js&gt; d.__defineGetter__(<span class="hljs-string">"year"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.getFullYear(); });
+ js&gt; d.__defineSetter__(<span class="hljs-string">"year"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">y</span>) </span>{ <span class="hljs-keyword">this</span>.setFullYear(y); });
+</code></pre>
+<p>These statements use the getter and setter in a <code>Date</code> object:</p>
+<pre><code class="js"> js&gt; <span class="hljs-keyword">var</span> now = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>;
+ js&gt; print(now.year);
+ <span class="hljs-number">2000</span>
+ js&gt; now.year = <span class="hljs-number">2001</span>;
+ <span class="hljs-number">987617605170</span>
+ js&gt; print(now);
+ Wed Apr <span class="hljs-number">18</span> <span class="hljs-number">11</span>:<span class="hljs-number">13</span>:<span class="hljs-number">25</span> GMT-<span class="hljs-number">0700</span> (Pacific Daylight Time) <span class="hljs-number">2001</span>
+</code></pre>
+<h4>Obsolete syntaxes</h4>
+<p>In the past, JavaScript supported several other syntaxes for defining getters and setters. None of these syntaxes were supported by other engines, and support has been removed in recent versions of JavaScript. See <a href="http://bugsalert.com/Jeff-Walden-SpiderMonkey-ancient-esoteric-rarely-syntax-creating-getters-setters-removed_46423.html">this dissection of the removed syntaxes</a> for further details on what was removed and how to adapt to those removals.</p>
+<h4>Summary</h4>
+<p>In principle, getters and setters can be either</p>
+<ul>
+<li>defined using <a href="#Using_object_initializers">object initializers</a>, or</li>
+<li>added later to any object at any time using a getter or setter adding method.</li>
+</ul>
+<p>When defining getters and setters using <a href="#Using_object_initializers">object initializers</a> all you need to do is to prefix a getter method with <code>get</code> and a setter method with <code>set</code>. Of course, the getter method must not expect a parameter, while the setter method expects exactly one parameter (the new value to set). For instance:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> o = {
+   a: <span class="hljs-number">7</span>,
+   <span class="hljs-string">''</span><span class="hljs-string">'get'</span><span class="hljs-string">''</span> b() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.a + <span class="hljs-number">1</span>; },
+   <span class="hljs-string">''</span><span class="hljs-string">'set'</span><span class="hljs-string">''</span> c(x) { <span class="hljs-keyword">this</span>.a = x / <span class="hljs-number">2</span>; }
+ };
+</code></pre>
+<p>Getters and setters can also be added to an object at any time after creation using two special methods called <code>__defineGetter__</code> and <code>__defineSetter__</code>. Both methods expect the name of the getter or setter as their first parameter, in the form of a string. The second parameter is the function to call as the getter or setter. For instance (following the previous example):</p>
+<pre><code class="js"> o.__defineGetter__(<span class="hljs-string">"b"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.a + <span class="hljs-number">1</span>; });
+ o.__defineSetter__(<span class="hljs-string">"c"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>{ <span class="hljs-keyword">this</span>.a = x / <span class="hljs-number">2</span>; });
+</code></pre>
+<p>Which of the two forms to choose depends on your programming style and task at hand. If you already go for the object initializer when defining a prototype you will probably most of the time choose the first form. This form is more compact and natural. However, if you need to add getters and setters later — because you did not write the prototype or particular object — then the second form is the only possible form. The second form probably best represents the dynamic nature of JavaScript — but it can make the code hard to read and understand.</p>
+<p><strong>Note</strong>: Prior to Firefox 3.0, getter and setter are not supported for DOM Elements. Older versions of Firefox silently fail. If exceptions are needed for those, changing the prototype of HTMLElement <code>(HTMLElement.prototype.__define[SG]etter__)</code> and throwing an exception is a workaround.</p>
+<p>With Firefox 3.0, defining getter or setter on an already-defined property will throw an exception. The property must be deleted beforehand, which is not the case for older versions of Firefox.</p>
+<h4>See also</h4>
+<ul>
+<li><code>__defineGetter__</code></li>
+<li><code>__defineSetter__</code></li>
+<li><code>get</code></li>
+<li><code>set</code></li>
+</ul>
+<h3>Deleting properties</h3>
+<p>You can remove a property by using the <code>delete</code> operator. The following code shows how to remove a property.</p>
+<pre><code class="js"> <span class="hljs-comment">//Creates a new object, myobj, with two properties, a and b.</span>
+ <span class="hljs-keyword">var</span> myobj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>;
+ myobj.a = <span class="hljs-number">5</span>;
+ myobj.b = <span class="hljs-number">12</span>;
+
+ <span class="hljs-comment">//Removes the a property, leaving myobj with only the b property.</span>
+ <span class="hljs-keyword">delete</span> myobj.a;
+</code></pre>
+<p>You can also use <code>delete</code> to delete a global variable if the <code>var</code> keyword was not used to declare the variable:</p>
+<pre><code class="js"> g = <span class="hljs-number">17</span>;
+ <span class="hljs-keyword">delete</span> g;
+</code></pre>
+<p>See <code>delete</code> for more information.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="http://es5.github.com/#x4.2">ECMAScript 5.1 spec: Language Overview</a></li>
+<li><a href="http://dmitrysoshnikov.com/ecmascript/javascript-the-core">JavaScript. The core. (Dmitry A. Soshnikov ECMA-262 article series)</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>bdo · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="bdo要素はページ上のテキスト表記の方向を定義することができます。（”BDO”とはBi-Directional Override（双方向オーバーライド）の略です。）" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/bdo/">bdo</a></li><li><a href="/html/elements/bdo/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>bdo</h1>
+<h2>Summary</h2>
+<p>bdo要素はページ上のテキスト表記の方向を定義することができます。（”BDO”とはBi-Directional Override（双方向オーバーライド）の略です。）</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLElement">HTMLElement</a>
+</dd>
+</dl>
+<p><code>bdo</code>に関連する国際化トピック:</p>
+<ul>
+<li><a href="http://www.w3.org/International/techniques/authoring-html#bdo">Overriding the Unicode bidirectional algorithm</a></li>
+<li><a href="http://www.w3.org/International/techniques/authoring-html#inline">Mixing text direction inline</a></li>
+</ul>
+<h2>Examples</h2>
+<p>ここではテキストを正しく読める向きに表示するために<strong>bdo</strong>要素を使います。</p>
+<p>以下のテキストには英語のように左から右に書いた文字列とヘブライ語のように右から左に書いた文字列が含まれています。</p>
+<p>この文は英語です、すで語イラブヘは文のこ。 （「すで語イラブヘは文のこ」はひっくり返っていますが、ヘブライ語として正しい向きで表示されていると考えてください。）</p>
+<p>この文章に対してUnicodeの双方向アルゴリズムを適用しようとする場合、テキストは2回ひっくり返されて右から左ではなく左から右に、正しくないない表示になってしまいます。ここで正しく読める順番で書いたテキストを<a href="/w/index.php?title=html/attributes/dir/ja&amp;action=edit&amp;redlink=1"><strong>dir</strong></a>属性に<strong>ltr</strong>を指定した<strong>bdo</strong>タグの間に記述することで双方向アルゴリズムを無効化することができます。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">BDO</span> <span class="hljs-attribute">DIR</span>=<span class="hljs-value">"ltr"</span>&gt;</span>この文は英語です、
+    すで語イラブヘは文のこ。<span class="hljs-tag">&lt;/<span class="hljs-title">BDO</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>備考</h3>
+<p>Unicodeの双方向アルゴリズムでは文字列はもともと埋め込まれていた方向に自動的に変換されますが、<strong>bdo</strong>要素ではテキストの表示方向を制御することができます。</p>
+<p>例えば、英語文書は基本的に左から右(ltr)に書かれます。 しかし、右から左(rtl)に書かれる言語を含む文節がドキュメント内にある場合、双方向アルゴリズムを用いて方向を変換しなければいけません。 通常埋め込まれた方向を変えるのには双方向アルゴリズムと<a href="/docs/html/attributes/dir"><strong>dir</strong></a>属性で十分です。 しかし双方向アルゴリズムで、フォーマットされたテキストを表示しようとしても、正しく表示されない場合があります。 例えば、英語とヘブライ語を含む段落で正しく逆方向にされていないメールアドレスなどがある場合などです。 これはメールアドレスが双方向アルゴリズムによってヘブライ語の方向で2回逆にされるためです。</p>
+<p>bdo要素は双方向アルゴリズムを無効化し、表示順を制御します。 bdo要素を使う上で<a href="/docs/html/attributes/dir"><strong>dir</strong></a>属性は必須です。 bdo要素はInternet Explorer 5以上で利用可能です。</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/text-level-semantics.html#the-bdo-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-bdo-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/dirlang.html#edef-BDO">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li>direction<a href="/docs/css/properties/direction">direction</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

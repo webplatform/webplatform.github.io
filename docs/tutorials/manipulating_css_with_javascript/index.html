@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Manipulating CSS with JavaScript · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="In this article we look at the basics of how to manipulate CSS styles using JavaScript." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/manipulating_css with javascript/">manipulating css with javascript</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Manipulating CSS with JavaScript</h1>
+<h2>Summary</h2>
+<p>In this article we look at the basics of how to manipulate CSS styles using JavaScript.</p>
+<h3>Information: JavaScript</h3>
+<p>JavaScript is a <em>programming language</em>. JavaScript is widely used to provide interactivity in web sites and applications. JavaScript can interact with stylesheets, allowing you to write programs that change a document’s style dynamically.</p>
+<p>There are three ways to do this:</p>
+<ul>
+<li>By working with the document’s list of stylesheets—for example: adding, removing or modifying a stylesheet.</li>
+<li>By working with the rules in a stylesheet—for example: adding, removing or modifying a rule.</li>
+<li>By working with an individual element in the DOM—modifying its style independently of the document’s stylesheets</li>
+</ul>
+<h3>Action: A JavaScript demonstration</h3>
+<ol>
+<li><p>Make a new HTML document, <code>doc5.html</code>. Copy and paste the content from here, making sure that you scroll to get all of it:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Mozilla CSS Getting Started - JavaScript demonstration<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"style5.css"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"script5.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>JavaScript sample<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"square"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"clickMe"</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre></li>
+<li><p>Make a new CSS file, <code>style5.css</code>. Copy and paste the content from here:</p>
+<pre><code class="css"><span class="hljs-id">#square</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">20em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">20em</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> inset gray</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin-bottom</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+}</span>
+
+<span class="hljs-tag">button</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> .<span class="hljs-number">5em</span> <span class="hljs-number">2em</span></span></span>;
+}</span>​
+</code></pre></li>
+<li><p>Make a new text file, <code>script5.js</code>. Copy and paste the content from here:</p>
+<pre><code class="js"><span class="hljs-comment">// JavaScript demonstration</span>
+
+<span class="hljs-keyword">var</span> square = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"square"</span>),
+    clickMe = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'clickMe'</span>); <span class="hljs-comment">//Keeping it unobstrusive</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doDemo</span> (<span class="hljs-params"></span>) </span>{
+
+  <span class="hljs-keyword">var</span> button = <span class="hljs-keyword">this</span>;
+  square.style.backgroundColor = <span class="hljs-string">"#fa4"</span>;
+  button.setAttribute(<span class="hljs-string">"disabled"</span>, <span class="hljs-string">"true"</span>);
+  setTimeout(clearDemo, <span class="hljs-number">2000</span>, button);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clearDemo</span> (<span class="hljs-params">button</span>) </span>{
+  <span class="hljs-keyword">var</span> square = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"square"</span>);
+  square.style.backgroundColor = <span class="hljs-string">"transparent"</span>;
+  button.removeAttribute(<span class="hljs-string">"disabled"</span>);
+}
+
+clickMe.onclick = doDemo; <span class="hljs-comment">//Onclick call. Pass no arguments.​​​​​</span>
+</code></pre></li>
+<li><p>Open the document in your browser and press the button.</p></li>
+</ol>
+<p>What this code does, is that it changes the background color of the <code>#square</code> to <code>#ffaa44</code>. Here’s a <a href="http://jsfiddle.net/namanyayg/Angmu/1/">JSFiddle</a> so you can see it working live.</p>
+<p>Notes on what is happening in the above example:</p>
+<ul>
+<li>The HTML document links the stylesheet as usual, and it also links the script.</li>
+<li>The script works with individual elements in the DOM. It modifies the square’s style directly. It modifies the button’s style indirectly by changing an attribute.</li>
+<li>In JavaScript, <code>document.getElementById(&quot;square&quot;)</code> is similar in function to to the CSS selector <code>#square</code> and in a similar way, <code>document.getElementById('clickMe')</code> is similar to <code>#clickMe</code>.</li>
+<li>In JavaScript, <code>backgroundColor</code> corresponds to the CSS property <code>background-color</code>. JavaScript does not allow hyphens in names, so “camelCase” is used instead.</li>
+<li>Your browser has a built-in CSS rule for <code>button</code> that changes the button’s appearance when it is disabled.</li>
+</ul>
+<h2>See also</h2>
+<h2>Exercise question</h2>
+<p>Change the script so that the square jumps to the right by 20 em when its color changes, and jumps back afterwards.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/JavaScript">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

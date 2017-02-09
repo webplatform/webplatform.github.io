@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>javaEnabled · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="Non-Standard" />
+    <meta name="description" content="This method indicates whether the current browser is Java Run Time Environment-enabled or not." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Navigator/">Navigator</a></li><li><a href="/dom/Navigator/javaEnabled/">javaEnabled</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>javaEnabled</h1>
+<p>
+</p>
+<h2>Summary</h2>
+<p>
+This method indicates whether the current browser is Java Run Time Environment-enabled or not.</p><p>Method of <a href="/docs/dom/Navigator">dom/Navigator</a><a href="/docs/dom/Navigator">dom/Navigator</a>
+</p>
+<h2>Syntax</h2>
+<pre class="js">
+var result = navigator.javaEnabled();
+</pre>
+<p><br/></p>
+<h2>Return Value</h2>
+<p>Returns an object of type  BooleanBoolean
+</p><p>Boolean
+</p><p><b>Boolean</b>. Returns one of the following possible values:
+</p>
+<table class="wikitable"><tr><th>Return value
+</th>
+<th>Description
+</th></tr><tr><td>true
+</td>
+<td>Java JRE is enabled.
+</td></tr><tr><td>false
+</td>
+<td>Java JRE is not enabled.
+</td></tr></table><p> 
+</p>
+<h2>Examples</h2>
+<p>Feature test for Java JRE. Negative results do not mean that Java JRE is not installed on the client. It can also indicate that the Java JRE has been disabled by the client Addons Manager or the Java JRE control panel.
+</p>
+<div class="example">
+<pre class="js">
+if (window.navigator.javaEnabled()) {
+   // browser has java JRE and it is enabled.
+}
+</pre>
+<p><br/></p>
+</div>
+<h2>Usage</h2>
+<pre> Feature testing for Java JRE support.
+</pre>
+<p>This usage scenario can be unreliable as the client may have disabled JRE.
+</p><p>Alternatively use text fallbacks for your applet and object tags that are using Java JRE.
+eg.
+</p><p>&lt;applet&gt;
+your browser does not have Java JRE installed or it has been disabled.
+&lt;/applet&gt;
+</p><p>&lt;object&gt;
+your browser does not have Java JRE installed or it has been disabled.
+&lt;/object&gt;
+</p><p>Note that the &lt;applet&gt; tag has been depreciated in html5. Use the &lt;object&gt; tag instead.
+</p>
+<h2>Notes</h2>
+<p>This method does NOT determine if javascript or active scripting is enabled in the web browser or not.
+To detect if active scripting is enabled in a web browser add &lt;noscript&gt; tags to your web page.
+</p><p>The return value for this method indicates whether the preference that controls Java Run Time Environment is on or off - not whether the browser offers Java support in general.
+</p><p>Java JRE can also be disabled from the web browser's Addons manager or the Java JRE control panel.
+</p><p><br/></p><p><br/></p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<p><a rel="nofollow" class="external text" href="http://java.com">Download Java JRE from java.com</a>
+</p><p><a rel="nofollow" class="external text" href="http://javatester.org">JavaTester.org - All about Java JRE </a>
+</p><p><a rel="nofollow" class="external text" href="http://javatester.org/version.html">Test the version of Java JRE your browser is using</a>
+</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/Web/API/NavigatorPlugins.javaEnabled">javaEnabled Method</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/ms536610(v=vs.85).aspx">javaEnabled Method</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

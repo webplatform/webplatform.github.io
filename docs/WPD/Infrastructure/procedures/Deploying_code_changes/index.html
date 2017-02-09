@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Deploying code changes · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code changes/">Deploying code changes</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Deploying code changes</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish">Things to consider when we expose service via Fastly and Varnish</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><strong>Deploying code changes</strong></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>This document describes how to apply code changes on managed web applications that runs <em>webplatform.org</em>.</p>
+<p>The way we update code is handled from the salt master and apply changes where it applies. To see the detail of what every VM has in common, refer to <a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">WPD/Infrastructure/architecture/Base_configuration_of_a_VM</a>.</p>
+<p>The process of deploying is going to change into something that will allow us to ensure that we can revert to the same state the web app was built from without any risks of broken external dependencies. <a href="https://github.com/webplatform/ops/issues?milestone=1">see the project <em>webplatform/ops</em> milestone</a> that has this objective.</p>
+<h2>Procedure</h2>
+<p>This procedure will take into account that you have an existing set of VMs already installed <a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">WPD/Infrastructure/architecture/Base_configuration_of_a_VM</a> and managed by the <a href="/docs/WPD/Infrastructure/architecture/The_salt_master">WPD/Infrastructure/architecture/The_salt_master</a>.</p>
+<p>In this example we’ll update the code on all VMs that fills the <em>role</em> of <strong>app</strong>.</p>
+<p><strong>Related</strong>; if you want to see how to update a database password and apply the changes to a managed web application, go to <a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></p>
+<ul>
+<li>First, make sure the role you want to target touches the VMs you want</li>
+</ul>
+<!-- -->
+<pre><code> salt app\* grains.get roles
+ app1-jobrunner:
+   - app
+   - jobrunner
+ app2:
+   - app
+ app3:
+   - app
+</code></pre>
+<h3>Running a code update</h3>
+<p>Deploying code on VMs of a given role:</p>
+<pre><code> salt app\* state.sls code
+</code></pre>
+<p>You can also target the same set of VM using salt <em>grains</em> <a href="http://docs.saltstack.com/en/latest/topics/targeting/grains.html">targeting variant</a>;</p>
+<pre><code> salt -G 'roles:app' state.sls code
+</code></pre>
+<p>Which is basically what the following command do;</p>
+<pre><code> wpd-deploy app
+</code></pre>
+<p>The latter is an alias for the comfort of everyday use and can be done without being root.</p>
+<p>Output should look like this;</p>
+<p><img src="//static.webplatform.org/0/0d/Running_wpd-deploy.png" alt="Running wpd-deploy.png"></p>
+<h2>Deploying/updating a web app</h2>
+<p>ANY deployment is made through Salt Stack. The deployment code is publicly available on <em>GitHub</em> as <a href="https://github.com/webplatform/salt-states"><strong>webplatform/salt-states</strong></a>.</p>
+<p>Each role name states are defined in an <em>sls</em> file in <code>/srv/salt/roles</code> and from there, you’ll see any rsync scripts it uses to copy code the salt master hosts in <em>/srv/code/foo/repo</em>.</p>
+<p><strong>NOTE</strong> the command <em>wpd-deploy foo</em> <strong>ISN’T LIMITED</strong> to copying files from folders in <em>/srv/code/foo/bar</em>, its also about ensuring that some configuration are applied. Its prudent to double check what will happen always check the matching state (e.g. <em>wpd-deploy foo</em>) in the matching <em>sls</em> file (e.g. <em>/srv/salt/roles/foo.sls</em>)</p>
+<p>To update a webapp, run the following commands. Salt will know which VM has to get the code:</p>
+<dl>
+<dt>app</dt>
+<dd><code>wpd-deploy app</code>  ['’/srv/code/www/repo’’, '’/srv/code/compat/repo’’, '’/srv/code/dabblet/repo’’, ‘’/srv/code/wiki/repo’’]<br>
+blog
+</dd>
+<dd><code>wpd-deploy blog</code>  [‘’/srv/code/blog/repo’’]<br>
+notes
+</dd>
+<dd><code>wpd-deploy notes</code>  [‘’/srv/code/notes-server/repo’’]<br>
+piwik
+</dd>
+<dd><code>wpd-deploy piwik</code>  [‘’/srv/code/piwik/repo’’]<br>
+project
+</dd>
+<dd><code>wpd-deploy project</code>  [‘’/srv/code/buggenie/repo’’]<br>
+accounts
+</dd>
+<dd><code>wpd-deploy accounts</code>
+</dd>
+</dl>
+<h2>Related</h2>
+<ul>
+<li>The detail of what each roles does is described in <a href="/docs/WPD/Infrastructure/architecture/VM_roles">WPD/Infrastructure/architecture/VM_roles</a>.</li>
+<li>How to replace a VM has details on how to deploy code too <a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">WPD/Infrastructure/procedures/Replacing_a_VM</a>.</li>
+<li>To know what code is going to be deployed, refer to <a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">WPD/Infrastructure/architecture/Roles_and_environment_level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands#Create_a_database.2C_a_user.2C_set_new_privileges_and_update_a_web_application">How to update database details in a web application</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

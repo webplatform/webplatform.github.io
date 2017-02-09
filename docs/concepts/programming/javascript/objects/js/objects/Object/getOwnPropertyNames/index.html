@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>getOwnPropertyNames · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/objects/">objects</a></li><li><a href="/concepts/programming/javascript/objects/js/">js</a></li><li><a href="/concepts/programming/javascript/objects/js/objects/">objects</a></li><li><a href="/concepts/programming/javascript/objects/js/objects/Object/">Object</a></li><li><a href="/concepts/programming/javascript/objects/js/objects/Object/getOwnPropertyNames/">getOwnPropertyNames</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>getOwnPropertyNames</h1>
+<p>This is a method of <a href="/docs/javascript/objects">Object</a> which was implemented in ECMAScript 5th Edition.</p>
+<h2>Overview</h2>
+<p>This method returns an <a href="/docs/concepts/programming/javascript/core_objects">Array</a> of the string names of all properties ( <em>both enumerable and non-enumerable</em> ) of a given Object. This does not include the properties in the prototype chain.</p>
+<p>Should the given object not be of type <em>Object</em>, a TypeError exception is thrown. If the given object is an instance of <em>String</em> ( having been created via the String’s constructor, which is thus of type <em>Object</em>, ), the properties that will be processed will correspond to the character positions within the object’s PrimitiveValue string.</p>
+<p>To obtain only the enumerable properties of an Object, use <a href="/w/index.php?title=concepts/programming/javascript/objects/js/objects/Object/keys&amp;action=edit&amp;redlink=1">Object.keys</a>, should all properties, both enumerable and non-enumerable, of the object and it’s prototype chain be required, use a <a href="/w/index.php?title=concepts/programming/javascript/objects/js/statements/for...in&amp;action=edit&amp;redlink=1">for…in loop</a>.</p>
+<h2>Syntax</h2>
+<p>Object.getOwnPropertyNames( <em>objectToInspect</em> )</p>
+<p><em>where “objectToInspect” is an Object whose properties are required</em></p>
+<h3>Example</h3>
+<pre><code class="js"><span class="hljs-comment">// basic example</span>
+<span class="hljs-keyword">var</span> objectToInspect = {
+      foo: <span class="hljs-string">'Hello World!'</span>,
+      bar: <span class="hljs-string">'Welcome To'</span>,
+      baz: <span class="hljs-string">'WebPlatform Docs'</span>
+    };
+
+<span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Object</span>.getOwnPropertyNames( objectToInspect ) );
+<span class="hljs-comment">// this will log [ "foo" , "bar" , "baz" ]</span>
+
+<span class="hljs-comment">/*
+  A slightly more complex example with non-enumerable properties.
+  In this example, we will also show the difference between Object.getOwnPropertyNames() and Object.keys().
+  Also note, by default, Object.create treats properties as non-enumerable unless otherwise stated.
+  As with baz in the below example.
+*/</span>
+
+<span class="hljs-keyword">var</span> objectToInspect = <span class="hljs-built_in">Object</span>.create( <span class="hljs-built_in">Object</span>.prototype , {
+      foo: {
+          enumerable : <span class="hljs-literal">true</span> ,
+          value : <span class="hljs-string">'Hello World!'</span>
+      } ,
+      bar : {
+          enumerable : <span class="hljs-literal">false</span> ,
+          value : <span class="hljs-string">'Welcome To'</span>
+      } ,
+      baz : {
+          value : <span class="hljs-string">'WebPlatform Docs'</span>
+      }
+    });
+
+<span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Object</span>.getOwnPropertyNames( objectToInspect ) );
+<span class="hljs-comment">/*
+  this will log [ "foo" , "bar" , "baz" ]
+  where as Object.keys will only log "foo"
+*/</span>
+
+<span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Object</span>.keys( objectToInspect ) );
+<span class="hljs-comment">// this will log [ "foo" ] due to "bar" and "baz" being non-enumerable.</span>
+
+<span class="hljs-comment">// another example, dealing with the prototype chain</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">WebPlatform</span>(<span class="hljs-params"> section </span>) </span>{
+
+    <span class="hljs-comment">// non prototype property</span>
+    <span class="hljs-keyword">this</span>.section = section;
+
+}
+
+<span class="hljs-comment">// prototype method</span>
+WebPlatform.prototype.methodToInherit = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+};
+
+<span class="hljs-keyword">var</span> wpDocs = <span class="hljs-keyword">new</span> WebPlatform( <span class="hljs-string">'Documents'</span> );
+
+wpDocs.ownMethod = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+};
+
+<span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Object</span>.getOwnPropertyNames( objectToInspect ) );
+<span class="hljs-comment">/*
+    this will log [ "section" , "ownMethod" ] as methodToInherit is not a direct property of wpDocs
+    but instead is part of it's prototype chain ( inherited from WebPlatform )
+*/</span>
+</code></pre>
+<h2>Extract From Specification</h2>
+<blockquote>
+<pre><code>15.2.3.4 Object.getOwnPropertyNames ( O )
+    When the getOwnPropertyNames function is called, the following steps are taken:
+        1. If Type(O) is not Object throw a TypeError exception.
+        2. Let array be the result of creating a new object as if by the expression new Array ()
+           where Array is the standard built-in constructor with that name.
+        3. Let n be 0.
+        4. For each named own property P of O
+            a. Let name be the String value that is the name of P.
+            b. Call the [[DefineOwnProperty]] internal method of array with arguments ToString(n),
+               the PropertyDescriptor {[[Value]]: name, [[Writable]]: true, [[Enumerable]]: true,
+               [[Configurable]]: true}, and false.
+            c. Increment n by 1.
+        5. Return array.
+
+NOTE If O is a String instance, the set of own properties processed in step 4 includes the implicit
+properties defined in 15.5.5.2 that correspond to character positions within the
+object‘s [[PrimitiveValue]] String.
+</code></pre>
+</blockquote>
+<h2>External resources</h2>
+<ul>
+<li><a href="http://es5.github.com/#x15.2.3.4">ECMAScript Language Specification 5.1 Edition</a></li>
+<li><a href="http://kangax.github.com/es5-compat-table/">ES5 Compatibility Table</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>area · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Represents either a hyperlink with some text and a corresponding area on an image map, or a dead area on an image map." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/area/">area</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>area</h1>
+<h2>Summary</h2>
+<p>Represents either a hyperlink with some text and a corresponding area on an image map, or a dead area on an image map.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLAreaElement">HTMLAreaElement</a>
+</dd>
+</dl>
+<h2>HTML Attributes</h2>
+<dl>
+<dt>Global attributes: accesskey, class, contenteditable, dir, hidden, id, lang, spellcheck, style, tabindex, title, translate</dt>
+<dd>See <a href="/docs/html/global_attributes">global attributes</a>.<br>
+<code>alt</code> = fallback content for the image map
+</dd>
+<dd>If the area element has a href attribute, the alt attribute must be present.<br>
+The alt attribute may be left blank if there is another area element in the same image map that points to the same resource and has a non-blank alt attribute.<br>
+<code>coords</code> = valid list of integers
+</dd>
+<dd>This attribute gives the coordinates for the shape described by the shape attribute. The processing for this attribute is described as part of the image map processing model.
+<ul>
+<li>In the circle state<br>
+The area elements must have a coords attribute present, with three integers, the last of which must be non-negative.
+<ul>
+<li>distance in CSS pixels from the left edge of the image to the center of the circle</li>
+<li>distance in CSS pixels from the top edge of the image to the center of the circle</li>
+<li>radius of the circle</li>
+</ul></li>
+<li>In the polygon state<br>
+The area elements must have a coords attribute with at least six integers, and the number of integers must be even. Each pair of integers must represent a coordinate given as the distances from the left and the top of the image in CSS pixels respectively, and all the coordinates together must represent the points of the polygon, in order.</li>
+<li>In the rectangle state<br>
+The area elements must have a coords attribute with exactly four integers. the first of which must be less than the third, and the second of which must be less than the fourth.
+<ul>
+<li>distance from the left edge of the image to the left side of the rectangle</li>
+<li>distance from the top edge to the top side</li>
+<li>distance from the left edge to the right side</li>
+<li>distance from the top edge to the bottom side</li>
+</ul></li>
+</ul>
+</dd>
+<dt><code>shape</code> = “circle” / “poly” / “rect” / “default”</dt>
+<dd><ul>
+<li><code>circle</code>: Circle keyword represents circle state.</li>
+<li><code>poly</code>: Poly keyword represents polygon state.</li>
+<li><code>rect</code>: Rect keyword represents rectangle state.</li>
+<li><code>default</code>: The area is the whole image. area elements must not have a coords attribute.</li>
+</ul>
+</dd>
+<dt><code>href</code> = URL potentially surrounded by spaces</dt>
+<dd>A URL that provides the destination of the hyperlink. If the href attribute is not specified, the element represents a placeholder hyperlink.<br>
+<code>target</code> = browsing-context name or keyword
+</dd>
+<dd>A name or keyword giving a browsing context for UAs to use when following the hyperlink.<br>
+The target attribute on the a element was deprecated in a previous version of HTML, but is no longer deprecated, as it is useful in Web applications, particularly in combination with the iframe element.<br>
+Any string that is either of the following:
+<ul>
+<li>a browsing-context name</li>
+<li>any case-insensitive match for one of the following literal strings: &quot;_blank&quot;, &quot;_self&quot;, &quot;_parent&quot;, or &quot;_top&quot;.</li>
+</ul>
+</dd>
+<dt><code>rel</code> = set of space-separated tokens</dt>
+<dd>A list of tokens that specify the relationship between the document containing the hyperlink and the destination indicated by the hyperlink.<br>
+<code>hreflang</code> = language tag
+</dd>
+<dd>The language of the destination of the hyperlink.<br>
+A valid language tag, as defined in [BCP47].<br>
+<code>media</code> = media-query list
+</dd>
+<dd>The media for which the destination of the hyperlink was designed.<br>
+A valid media query list, as defined in [MediaQueries].<br>
+<code>type</code> = MIME type
+</dd>
+<dd>The MIME type of the destination of the hyperlink.<br>
+A string that identifies a valid MIME media type, as defined in [RFC2046].
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example uses the <strong>area</strong> element inside a parent <strong>map</strong> element to create an image map of the solar system. Each <strong>area</strong> element defines and provides a link to an image on the <strong>map</strong> using the <a href="/docs/html/attributes/coords"><strong>coords</strong></a> and <a href="/docs/html/attributes/shape"><strong>shape</strong></a> attributes to specify its dimensions and shape, respectively; and the <a href="/html/attributes/title"><strong>title</strong></a> attribute to provide a descriptive pop-up tooltip when pointed to with the mouse. A tooltip is especially useful if the image file is missing or cannot be displayed for whatever reason.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"X-UA-Compatible"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"IE=8"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Image Map Example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://samples.msdn.microsoft.com"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/workshop/graphics/solarsys.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">504</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">126</span> <span class="hljs-attribute">border</span>=<span class="hljs-value">0</span>
+    <span class="hljs-attribute">title</span>=<span class="hljs-value">"Solar System"</span> <span class="hljs-attribute">usemap</span>=<span class="hljs-value">"#SystemMap"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">map</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"SystemMap"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"rect"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"0,0,82,126"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/sun.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Sun"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"90,58,3"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/merglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Mercury"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"124,58,8"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/venglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Venus"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"162,58,10"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/earglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Earth"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"203,58,8"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/marglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Mars"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"221,34,238,37,257,32,278,44,284,60,
+        281,75,288,91,267,87,253,89,237,81,229,64,228,54"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/jupglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Jupiter"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"288,19,316,39,330,37,348,47,351,66,
+        349,74,367,105,337,85,324,85,307,77,303,60,307,50"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/satglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Saturn"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"405,39,408,50,411,57,410,71,404,78,
+        393,80,383,86,381,75,376,69,376,56,380,48,393,44"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/uraglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Uranus"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"445,38,434,49,431,53,427,62,430,72,
+        435,77,445,92,456,77,463,72,463,62,462,53,455,47"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/nepglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Neptune"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"479,66,3"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/pluglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Pluto"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/imagemap.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>Any number of <strong>area</strong> elements can be contained within the same <strong>map</strong> element. The format of the <a href="/docs/html/attributes/coords"><strong>coords</strong></a> value depends on the value of the <a href="/docs/html/attributes/shape"><strong>shape</strong></a> attribute. Windows Internet Explorer 8 and later. In IE8 Standards mode, the <a href="/html/attributes/title"><strong>title</strong></a> attribute is preferred over the <a href="/html/attributes/alt"><strong>alt</strong></a> attribute when specified as a pop-up tooltip for an <strong>img</strong> or a <strong>map</strong> element. In addition, the value of the <a href="/html/attributes/href"><strong>href</strong></a> attribute depends on the current document compatibility mode. This element is not rendered. This element does not require a closing tag.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/embedded-content.html#the-area-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-area-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/objects.html#edef-AREA">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

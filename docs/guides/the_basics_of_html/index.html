@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Basics of HTML · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="In this article, you will learn the basics of HTML and gain some insight into the structure and content of an HTML
+    document.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/the_basics of html/">the basics of html</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>The Basics of HTML</h1>
+<h2>Summary</h2>
+<p>In this article, you will learn the basics of HTML and gain some insight into the structure and content of an HTML document.</p>
+<h2>Introduction</h2>
+<p>This article summarises the purpose and structure of HTML in a very high-level fashion, including how elements work, and what character references are. The articles that follow will go into more detail on specific parts of the HTML language.</p>
+<h2>What is HTML?</h2>
+<p>Most desktop applications that read and write files use specific file formats. For example, Microsoft Word uses “.doc” files and Microsoft Excel uses &quot;.xls&quot;. These files contain the instructions on how to build the documents when they are opened, the contents of the document, and <em>metadata</em> about the document such as the author, the last modified date, and possibly even a list of changes.</p>
+<p><a href="/docs/html">HTML (<em>HyperText Markup Language</em>)</a> is a language used to describe the contents of web documents. It uses a syntax containing markers (called <em>elements</em>) that are wrapped around content in the document to indicate how user agents (e.g., web browsers) should interpret that portion of the document.</p>
+<p>A <em>user agent</em> is any software that is used to access web pages on behalf of users. There is an important distinction to be made here — all types of desktop browsers (such as Internet Explorer, Opera, Firefox, Safari, and Chrome) as well as alternative browsers for other devices (such as the Wii Internet channel, and mobile phone browsers like Opera Mini and WebKit on the iPhone) are user agents, but not all user agents are browsers. For example, the automated programs that Google and Yahoo! use to index the web for their search engines are user agents, but no human being is controlling them directly.</p>
+<h2>What HTML looks like</h2>
+<p>HTML is a plain textual representation of content and its general meaning. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"example"</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>The <code>&lt;p&gt;</code> part is a marker, commonly called a <em>tag</em>, that means &quot;what follows should be considered as a paragraph&quot;. Because it is at the start of the content it affects, it is an &quot;opening tag&quot;. Likewise, the <code>&lt;/p&gt;</code> tag indicates the end of the paragraph, and is thus a &quot;closing tag&quot;. The opening tag, closing tag, and everything in between is called an <em>element</em>. Note: Many people use the terms “element” and “tag” interchangeably, which is incorrect. (The <code>id=&quot;example&quot;</code> is an <em>attribute-value pair</em>; we’ll come back to these later.)</p>
+<p>In most browsers there is a “Source” or “View Source” option, commonly under the “View” menu. Try this now: go to a web site, choose this option, and spend some time looking at the HTML that makes up the page.</p>
+<h2>The structure of an HTML document</h2>
+<p>A typical HTML document might look like this:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Example page<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Hello world<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>That document might look like this when rendered in a web browser:</p>
+<p><img src="//static.webplatform.org/a/ab/HTMLrender.png" alt="HTMLrender.png"></p>
+<p>The document starts with a document type element, or <em>doctype</em>, in this case the HTML5 doctype. This mainly serves to get the browser to render the HTML in what is called &quot;standards mode&quot;, so it will work correctly. It also lets validation software know what version of HTML to validate your code against.</p>
+<p>Next, you can see the opening tag of the <code>&lt;html&gt;</code> element. This is a wrapper around the entire document. The closing <code>&lt;/html&gt;</code> tag is the last thing in any HTML document. The <code>html</code> element should always have a <code>lang</code> attribute. This specifies the primary language for the page. For example, <code>en</code> means &quot;English&quot;, <code>fr</code> means &quot;French&quot;. There are tools available to help you find the right language tag, such as Richard Ishida’s <a href="http://rishida.net/utils/subtags/">Language Subtag Lookup tool</a>.</p>
+<p>Inside the <code>html</code> element, there is the <code>head</code> element. This is a wrapper that contains other information about the document such as internal or external styles and scripts. This is described in more detail in <a href="/docs/html/elements/head">The HTML head element</a>. Inside the <code>head</code> is the <code>title</code> element, which defines the “Example page” heading in the brower’s title bar. The <code>head</code> element should always contain a <code>meta</code> element with a <code>charset</code> attribute that identifies the character encoding of the page. (The one exception is when the page is encoded in UTF-16, but you should avoid that encoding anyway.) You should use UTF-8 whenever possible. See <a href="http://www.w3.org/International/getting-started/characters">this W3C article</a> for more about character encodings.</p>
+<p>After the <code>head</code> element there is a <code>body</code> element, which is the wrapper that surrounds the actual content of the page — in this case, a level-one heading (<code>h1</code>) element, which contains the text &quot;Hello world&quot;.</p>
+<p>And that’s our document in full.</p>
+<h2>The syntax of HTML elements</h2>
+<p>A basic element in HTML consists of two markers around a block of content. Elements also often contain other elements, referred to as <em>nested elements</em>. The body of a document invariably contains many nested elements. Structural elements such as <code>article</code>, <code>header</code>, and <code>div</code> create the overall structure of the document, and will themselves contain headings, paragraphs, lists, and other elements. Paragraphs can contain elements that create links to other documents, quotes, emphasis, and so on. Nearly any element can contain nested elements, although there are exceptions: some elements do not contain either text or nested elements, for example <code>img</code>.</p>
+<p>An element within another element is also referred to as a “child” element. So in the below example, <code>abbr</code> is a child of <code>h1</code>, which is itself a child of <code>header</code>. Conversely, the <code>header</code> element would be referred to as the “parent” of the <code>h1</code> element, which is the parent of <code>abbr</code>. This parent/child concept is important, as it forms the basis of CSS (Cascading Stylesheet Specification) and is heavily used in JavaScript.</p>
+<p>Elements can also have attributes, which can modify the appearance and/or behaviour of the element and introduce extra meaning. Let’s look at another example.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>The Basics of
+    <span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Hypertext Markup Language"</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+</code></pre>
+<p>This looks like so when rendered in a browser:</p>
+<p><img src="//static.webplatform.org/7/71/htmlrender2.png" alt="htmlrender2.png"></p>
+<p>In this example, a <code>header</code> element contains an <code>h1</code> heading element, which in turn contains some text. Part of that text is wrapped in an <code>abbr</code> element (used to specify the expansion of abbreviations), which has a <code>title</code> attribute, the value of which is <code>Hypertext Markup Language</code>.</p>
+<p>Many attributes in HTML are common to all elements, though some are specific to certain elements. They are always of the form <code>keyword=&quot;value&quot;</code>. The value is often surrounded by single or double quotes. While this is not required in HTML5 (except when the attribute value has multiple words separated by white space), you should always quote values, as it is good practice and can make the code easier to read. In addition, some HTML dialects do require quoting of attributes, for example XHTML 1.0, and it doesn’t hurt to do so in dialects that don’t require it.</p>
+<p>Attributes and their possible values are mostly defined by the <a href="http://www.w3.org/TR/html401/index/attributes.html">W3C HTML specifications</a>. You cannot make up your own attributes without invalidating the HTML, and this can confuse user agents and cause problems interpreting the web page correctly.</p>
+<h2>Block and inline elements</h2>
+<p>There are two general categories of elements in HTML, which correspond to the types of content and structure they represent: <em>block</em> elements and <em>inline</em> elements.</p>
+<p>Block elements are at a higher level, normally helping to define the structure of the document. It may help to think of block elements as those that start on a new line, breaking away from the previous content. Some common block level elements include paragraphs, lists, headings, and tables.</p>
+<p>Inline elements are are contained within block elements and typically surround only small parts of the document’s content. Inline elements do not cause a new line to appear in the document; rather, they appear inside a line of text. Some common inline elements include hypertext links, bold or italic text, spans, and short quotations.</p>
+<p>Note: HTML5 redefines the element categories in HTML: see <a href="http://www.whatwg.org/specs/web-apps/current-work/complete/section-index.html#element-content-categories">Element content categories</a>. While these definitions are more accurate and less ambiguous, they are more difficult to understand than “block” and &quot;inline&quot;. We will therefore stick with these terms in this course.</p>
+<h2>Character references</h2>
+<p>One last item to mention in an HTML document is how to include special characters. In HTML the characters <code>&lt;</code>, <code>&gt;</code> and <code>&amp;</code> are special. They start and end parts of the HTML document, rather than representing the printable less-than, greater-than, and ampersand characters. For this reason they must always be coded in a special way in document content.</p>
+<p>One of the easiest mistakes to make in a web page is to use &lt; and &gt; signs in text and have the browser render your content in an unexpected way. For example, if you write &quot;The paragraph tag (&lt;p&gt;) is very common.&quot;, intending for it to look just like that, the browser will render it as</p>
+<p>The paragraph tag (</p>
+<p>) is very common.</p>
+<p>This is clearly not what you wanted or expected.</p>
+<p>The solution to this problem is to encode, or &quot;escape&quot;, the two signs by representing them with character references. The character reference for less-than is &quot;&lt;&quot;, and the character reference for greater-than is &quot;&gt;&quot;. Thus, to get that line to look the way you want, you would write &quot;The paragraph tag (&lt;p&gt;) is very common&quot;, which the browser would render as &quot;The paragraph tag (&lt;p&gt;) is very common&quot;, as you intended. In these encodings, the ampersand (&amp;) starts the reference and the semicolon (;) ends it.</p>
+<p>Character references can also be numeric. For example, you can escape an ampersand character with either its shorthand word <code>&amp;amp;</code> or its numeric reference <code>&amp;#38;</code>.</p>
+<p>Web Platform Docs includes a <a href="/docs/html/entities#HTML_Entities_Table">Table of Common HTML Entities</a> for reference.</p>
+<p>Other than these characters, you should try to avoid using character references unless you are dealing with an invisible or ambiguous character. If you use the UTF-8 character encoding you can represent any character (other than those mentioned above) without escaping them.</p>
+<p>For more information about working with character escapes, see <a href="http://www.w3.org/International/questions/qa-escapes">Using character escapes in markup and CSS</a>.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

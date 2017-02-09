@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to the web audio API, part 2 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to the web audio API: inserting processor nodes between source and destination." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/audio/">audio</a></li><li><a href="/tutorials/audio/intro_web audio api 2/">intro web audio api 2</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Introduction to the web audio API, part 2</h1>
+<p><strong>By <a href="/User:Dgash">Dave Gash</a></strong><br>
+Originally published November 7, 2012</p>
+<h2>Summary</h2>
+<p>An introduction to the web audio API: inserting processor nodes between source and destination.</p>
+<h2>Introduction</h2>
+<p>Web-based audio is becoming more robust all the time, and necessarily so. As the web evolves in stylistic and presentational features, web applications also require a higher degree of sophistication in audio manipulation. Gone are the days of <code>&lt;embed&gt;</code>, <code>&lt;object&gt;</code>, and <code>&lt;bgsound&gt;</code>, when the best you could hope for was static playback of a fixed music track.</p>
+<p>Today, diverse web apps such as games, audio editors, playlist managers, ringtone stores, musicians’ utilities, and more have a need for subtlety and finesse in their use of audio, and users deserve—and have come to expect—power and flexibility in those apps.</p>
+<p>The web audio API is not to be confused with the HTML5 <code>&lt;audio&gt;</code> element. For information on that element, see <a href="http://www.w3.org/wiki/HTML/Elements/audio">this W3C article</a> or <a href="http://www.html5rocks.com/en/tutorials/audio/quick/">this HTML5Rocks! tutorial</a>. As useful as the <code>&lt;audio&gt;</code> element is in terms of encapsulating the load-decode-play sequence (more about that later), it doesn’t include capabilities to precisely control sounds, time them, or fine-tune their playback characteristics. Enter the <em>web audio API</em>.</p>
+<p>The web audio API is high-level JavaScript interface that is about much more than just playing sounds. With it, you can process, synthesize, mix, visualize, filter, and otherwise manipulate audio data with extreme precision to accomplish tasks and achieve results previously found only in high-end commercial audio applications.</p>
+<p>In <a href="/docs/tutorials/intro_web_audio_api_1">Part 1</a> of this tutorial, we explored the basics of the API; in this part, we’ll learn how to insert a processor node in the audio path and use it to modify the sound between the source and destination nodes.</p>
+<h2>A quick recap of part 1</h2>
+<p>First, recall that all API sound manipulation takes place within an <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section">AudioContext</a>. A context can be thought of as a master container inside which your web page does all of its audio processing. A major benefit of this “sandbox” approach is that it isolates all the audio work—even the most complex and demanding processes—into an independent, high-priority thread and thus prevents this CPU-intensive work from interfering with other events (visual or aural) and marring the user experience.</p>
+<p>Second, the audio context allows for the creation of one or more <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioNode-section">AudioNode</a>s, all of which reside in the context. Nodes are the building blocks of audio processing, and may be <em>input</em>, <em>processor</em>, or <em>output</em> types.</p>
+<p>Finally, nodes may have input and/or output connections, which are used to string them together into a sequence. An audio signal makes its way through the nodes via the various connections, or <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#ModularRouting-section">modular routing</a>, from one node to the next, terminating at the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioDestinationNode-section">AudioDestinationNode</a>—essentially, the speaker output through which a user hears the final result.</p>
+<p>The simplest connection case, then, consists of a web app with a context that contains one source node (a previously-loaded sound in this case) whose output is connected directly to the input of one destination node (the speakers), as shown below. That’s the case we covered in Part 1.</p>
+<p><em>A context with one source and one destination</em> <img src="//static.webplatform.org/6/6e/wap1b-basic-trans.gif" alt="wap1b-basic-trans.gif"></p>
+<h2>In part 2</h2>
+<p>The next reasonable step is a connection case that consists of a web app with a context that contains a source node and a destination node, but with one or more processing nodes between them. A processing node modifies the sound in some way—volume, EQ, pitch, phase, etc.—after it is output from the source node but before it is input to the destination node, as shown below. That’s the case we’ll cover in this part.</p>
+<p><em>A context with a processor between the source and destination</em> <img src="//static.webplatform.org/7/7a/wap2b-basic-trans.gif" alt="wap2b-basic-trans.gif"></p>
+<p>Be sure you understand how the nodes are created and linked together as described in <a href="/docs/tutorials/intro_web_audio_api_1">Part 1</a> before proceeding with this part of the tutorial.</p>
+<h2>A simple processor node</h2>
+<p>One of the most common (and useful) things we might do to a sound is control its volume during playback, either programmatically, via user interaction, based on timing, etc. We can do this by inserting a gain node into the audio path.</p>
+<p>Interestingly, this is a very simple procedure. First, we create a gain node within the audio context using the <code>createGainNode</code> method.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> gainNode = context.createGainNode();
+</code></pre>
+<p>Bear in mind that a gain node is just one of the many built-in processor node types available to an audio context. Other processors are available to control delay, pan, spatialization, splitting, merging, compression, filtering, and more. See the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">W3C Web Audio API specification</a> for a complete list.</p>
+<h2>The new connection</h2>
+<p>This time, rather than connecting the source node directly to the destination node, we route the source into the gain node, and from there to the destination node. That is, instead of this:</p>
+<pre><code class="js">source.connect(context.destination);
+</code></pre>
+<p>we do this:</p>
+<pre><code class="js">source.connect(gainNode);
+gainNode.connect(context.destination);
+</code></pre>
+<p>Then, it’s just a matter of setting the gain node’s value to something less than 1.0 to achieve a lower volume prior to playback. Again, this might be accomplished via a user interface element, a timing mechanism, or, as done here, a simple JavaScript statement.</p>
+<pre><code class="js">gainNode.gain.value = <span class="hljs-number">0.5</span>;
+</code></pre>
+<p>And the sound is ready to play at half volume.</p>
+<h2>The modified function</h2>
+<p>Using the function from Step 5 (Play the audio) in Part 1, we add the four lines above to create a modified function, <code>playSoundHalf()</code> (let’s call it Step 5.5), that might look like this.</p>
+<pre><code class="js"><span class="hljs-comment">//Step 5.5</span>
+<span class="hljs-keyword">var</span> source = <span class="hljs-literal">null</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSoundHalf</span>(<span class="hljs-params">anybuffer</span>) </span>{
+  source = context.createBufferSource();
+  source.buffer = anybuffer;
+
+  <span class="hljs-keyword">var</span> gainNode = context.createGainNode();
+  source.connect(gainNode);
+  gainNode.connect(context.destination);
+  gainNode.gain.value = <span class="hljs-number">0.5</span>;
+
+  source.start();
+  <span class="hljs-comment">//source.noteOn(0); //see note in Step 6</span>
+}
+</code></pre>
+<p>Like the other functions in our example, we’ll call this new function from a button.</p>
+<blockquote>
+<p><em><strong>Note:</strong> The <code>noteOn(0)</code> and <code>noteOff(0)</code> method names are slated to change to</em></p>
+<p><code>start()</code> and <code>stop()</code>, as noted in the examples’ comments, but as of this writing (November 2012) this change has not been fully implemented. See the web audio specification’s <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#deprecation-section">deprecation section</a> for more</p>
+<p>information, and always test applications to ensure that they use the currently supported syntax.</p>
+</blockquote>
+<h2>The completed example</h2>
+<p>Having examined the required steps in bits and pieces, let’s now take a look at a complete, working page that loads, decodes, and plays a sound, including a new button that plays it at half volume. In this example, we assume that the file “mysound.mp3” exists in the same location as the page, and that the page and the sound reside on a server (either local or remote) so that the XHR will work.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
+<span class="hljs-comment">//Step 1</span>
+<span class="hljs-keyword">var</span> context;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initContext</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">try</span> {
+    context = <span class="hljs-keyword">new</span> webkitAudioContext();
+    alert(<span class="hljs-string">"context created"</span>); <span class="hljs-comment">//test</span>
+  }
+  <span class="hljs-keyword">catch</span>(e) {
+    alert(<span class="hljs-string">'Sorry, your browser does not support the Web Audio API.'</span>);
+  }
+}
+
+<span class="hljs-comment">//Step 2</span>
+<span class="hljs-keyword">var</span> myAudioBuffer = <span class="hljs-literal">null</span>;
+
+<span class="hljs-comment">//Steps 3 and 4</span>
+<span class="hljs-keyword">var</span> url = <span class="hljs-string">"mysound.mp3"</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadSound</span><span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> XMLHttpRequest();
+  request.open(<span class="hljs-string">'GET'</span>, url, <span class="hljs-literal">true</span>);
+  request.responseType = <span class="hljs-string">'arraybuffer'</span>;
+  <span class="hljs-comment">// . . . step 3 code above this line, step 4 code below</span>
+  request.onload = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    alert(<span class="hljs-string">"sound loaded"</span>); <span class="hljs-comment">//test</span>
+    context.decodeAudioData(request.response, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer)</span> </span>{
+      myAudioBuffer = buffer;
+      alert(<span class="hljs-string">"sound decoded"</span>); <span class="hljs-comment">//test</span>
+    });
+  }
+  request.send();
+}
+
+<span class="hljs-comment">//Step 5</span>
+<span class="hljs-keyword">var</span> source = <span class="hljs-literal">null</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSound</span><span class="hljs-params">(anybuffer)</span> </span>{
+  source = context.createBufferSource();
+  source.buffer = anybuffer;
+  source.connect(context.destination);
+  source.start();
+  <span class="hljs-comment">//source.noteOn(0); //see note in Step 6 text</span>
+}
+
+
+<span class="hljs-comment">//Step 5.5</span>
+<span class="hljs-keyword">var</span> source = <span class="hljs-literal">null</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSoundHalf</span><span class="hljs-params">(anybuffer)</span> </span>{
+  source = context.createBufferSource();
+  source.buffer = anybuffer;
+  <span class="hljs-keyword">var</span> gainNode = context.createGainNode();
+  source.connect(gainNode);
+  gainNode.connect(context.destination);
+  gainNode.gain.value = <span class="hljs-number">0.5</span>;
+  source.start();
+  <span class="hljs-comment">//source.noteOn(0); //see note in Step 6 text</span>
+}
+
+<span class="hljs-comment">//Step 6</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stopSound</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">if</span> (source) {
+    source.stop();
+    <span class="hljs-comment">//source.noteOff(0); //see note in Step 6 text</span>
+  }
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Web audio API example: load a sound file and play/stop it on a button click.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"initContext()"</span>&gt;</span>Init<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"loadSound(url)"</span>&gt;</span>Load<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"playSound(myAudioBuffer)"</span>&gt;</span>Play<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"playSoundHalf(myAudioBuffer)"</span>&gt;</span>Play half volume<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"stopSound()"</span>&gt;</span>Stop<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>In this page, we set up five buttons—intended to be clicked in order—that perform, respectively, steps 1, 3 &amp; 4, 5, 5.5, and 6. (Step 2, declaring the audio buffer, is performed inline as the scripts load.) To see the page in action:</p>
+<ol>
+<li>Save the code to an HTML5 (.htm, .html) file.</li>
+<li>Place the page file and an audio file of your choice into a folder on a web server. Either name the file “mysound.mp3” or change the value of the <code>url</code> variable in the first line of the “Steps 3 and 4” code block to match your file name.</li>
+<li>Open the page on the server in a webkit-compatible browser.</li>
+<li>Click the <strong>Init</strong> button. The “context created” alert appears. Click <strong>OK</strong>.</li>
+<li>Click the <strong>Load</strong> button. The “sound loaded” alert appears. Click <strong>OK</strong>.</li>
+<li>Immediately, the “sound decoded” alert appears. Click <strong>OK</strong>.</li>
+<li>Click the <strong>Play</strong> button. The sound plays.</li>
+<li>Click the <strong>Play half volume</strong> button. The sound plays at half its full volume.</li>
+<li>Optional: During playback (assuming the sound plays long enough), click the <strong>Stop</strong> button. The sound stops.</li>
+</ol>
+<h2>Adding processors</h2>
+<p>As a final example, let’s modify the Step 5.5 <code>playSoundHalf()</code> function to include a low-pass filter as a second inline processor. First, we create a filter node within the audio context using the <code>createBiquadFilter()</code> method and set its filter type to 0 (low-pass) and cutoff value to 440 Hz (A4). (See the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#BiquadFilterNode-section">Biquad filter section</a> of the specs for more information on this filter.)</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> filterNode = context.createBiquadFilter();
+filterNode.type = <span class="hljs-number">0</span>;
+filterNode.frequency.value = <span class="hljs-number">440</span>;
+</code></pre>
+<p>Then, we insert the filter between the gain node and the destination. That is, instead of this:</p>
+<pre><code class="js">gainNode.connect(context.destination);
+</code></pre>
+<p>we do this:</p>
+<pre><code class="js">gainNode.connect(filterNode);
+filterNode.connect(context.destination);
+</code></pre>
+<p>The sound’s path is now <strong>audio buffer &gt; gain node &gt; filter node &gt; destination</strong>, and the modified function looks like this:</p>
+<pre><code class="js"><span class="hljs-comment">//Step 5.5</span>
+<span class="hljs-keyword">var</span> source = <span class="hljs-literal">null</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSoundHalf</span>(<span class="hljs-params">anybuffer</span>) </span>{
+  source = context.createBufferSource();
+  source.buffer = anybuffer;
+  <span class="hljs-keyword">var</span> gainNode = context.createGainNode();
+  source.connect(gainNode);
+  gainNode.gain.value = <span class="hljs-number">0.5</span>;
+
+  <span class="hljs-keyword">var</span> filterNode = context.createBiquadFilter();
+  filterNode.type = <span class="hljs-number">0</span>;
+  filterNode.frequency.value = <span class="hljs-number">440</span>;
+  gainNode.connect(filterNode);
+  filterNode.connect(context.destination);
+
+  source.start();
+  <span class="hljs-comment">//source.noteOn(0); //see note in Step 6 text</span>
+}
+</code></pre>
+<p>The sound will now play at half its original volume <em>and</em> frequencies above 440 Hz will be attenuated.</p>
+<h2>Summary</h2>
+<p>As you can see, adding one or more processors to the sound stream is a fairly simple matter of defining the processor(s) and then connecting the inputs and outputs. In this way, you can construct audio paths that include serial (sequential) and/or parallel (simultaneous) processors to achieve sophisticated audio effects.</p>
+<h2>References</h2>
+<ul>
+<li>Chris Wilson’s <a href="https://developers.google.com/events/io/sessions/gooio2012/221/">Google I/O 2012 session video</a></li>
+<li>The W3C’s <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">web audio specification</a></li>
+<li>Eric Bidelman’s <a href="http://ericbidelman.tumblr.com/post/13471195250/web-audio-api-how-to-playing-audio-based-on-user">how-to article</a></li>
+<li>Boris Smus’s <a href="http://www.html5rocks.com/en/tutorials/webaudio/intro/">getting started article</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

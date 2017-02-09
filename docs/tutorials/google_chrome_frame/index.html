@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rendering HTML5 in older browsers with Google Chrome Frame · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to rendering HTML5 in older browsers with Google Chrome Frame." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/google_chrome frame/">google chrome frame</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Rendering HTML5 in older browsers with Google Chrome Frame</h1>
+<p><strong>By <a href="http://www.html5rocks.com/en/profiles/#malteubl">Malte Ubl</a></strong></p>
+<h2>Summary</h2>
+<p>An introduction to rendering HTML5 in older browsers with Google Chrome Frame.</p>
+<h2>Introduction</h2>
+<p>HTML5 adds a multitude of new and awesome tools to the web developer toolbox, including:</p>
+<ul>
+<li>New, more powerful JavaScript APIs</li>
+<li>SVG for vector graphics</li>
+<li>Canvas for 2D and with WebGL 3D graphics</li>
+<li>CSS3 for rounded corners, gradients, etc.</li>
+<li>More expressive markup</li>
+</ul>
+<p>This list is, of course, not comprehensive; the web platform has moved forward massively, and the gap between old browsers and modern ones is widening every day. Every major desktop browser supports significant parts of HTML5, and increases its support with each new version. However, old browsers continue to linger and create a challenge for adopting the latest and greatest features today.</p>
+<p><a href="http://www.google.com/chromeframe">Google Chrome Frame</a> can help you build state-of-the-art HTML5 pages while still allowing people using older browsers to see your content.</p>
+<h2>What is Google Chrome Frame?</h2>
+<p>Google Chrome Frame is a plugin for Internet Explorer that enables rendering the full browser canvas using Google Chrome’s rendering engine. It seamlessly integrates all the HTML5 features supported by Chrome into the Internet Explorer user experience. Chrome Frame is available for Internet Explorer 6, 7, 8, and 9. Chrome Frame is certainly more useful when supporting old browser such as IE6 to IE8, but can be useful for IE9 users, as well.</p>
+<p>Even if your site does not need HTML5 features, using Chrome Frame can still provide a better user experience. For example, page rendering is generally faster in Chrome Frame.</p>
+<p>Alternatively, HTML5 polyfills provide another way to smooth out the transition to newer browsers. Unfortunately, they cannot emulate every feature, and they slow down your page in old browsers (which are already slower than the new generation) even more.</p>
+<h2>Opting in</h2>
+<p>You can enable Chrome Frame to render a page by adding an HTML meta tag or using an HTTP header. By using one of these two methods, no site will break if a user has Chrome Frame installed, because the site is in full control of using the plugin or default rendering. The following two code snippets show how a site can opt into being rendered by Chrome Frame.</p>
+<p>Option 1: HTTP-Header (you can add this to your <a href="http://www.chromium.org/developers/how-tos/chrome-frame-getting-started#TOC-Making-Your-Pages-Work-With-Google-">HTTP server (e.g., Apache) configuration)</a>:</p>
+<pre><code>X-UA-Compatible: chrome=1
+</code></pre>
+<p>Option 2: Meta-tag (just paste this into your HTML &lt;head&gt; section)</p>
+<pre><code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;chrome=1&quot;&gt;
+</code></pre>
+<p>Once you have added either of these to your site, pages are rendered using Chrome Frame if it is installed on the user’s machine.</p>
+<h2>Prompting for Google Chrome Frame</h2>
+<p>You may decide to fully deprecate support for old browsers for many reasons, such as:</p>
+<ul>
+<li>Your site requires modern features such as HTML5 video, canvas, WebGL, or CSS3</li>
+<li>Development time spent on old browsers is too high</li>
+<li>Speed up development time for new features</li>
+</ul>
+<p>Chrome Frame may provide a strategy to continue giving users of old browsers a way to still use your site, while continuing to enhance your site with HTML5 features.</p>
+<p>Chrome Frame indicates that it is available by extending the host’s User-Agent header with the string &quot;chromeframe&quot;. For more information see <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.chromium.org%2Fdevelopers%2Fhow-tos%2Fchrome-frame-getting-started%2Funderstanding-chrome-frame-user-agent">Chrome Frame User Agent</a>.</p>
+<p>Use server-side detection to look for this token and determine whether Chrome Frame can be used for a page. If Chrome Frame is present, you can insert the required meta tag; if not, you can redirect users to a page that explains how to install Chrome Frame. As an alternative to server-side sniffing, you can use the CFInstall.js script to detect Chrome Frame and prompt users to install the plug-in without restarting their browsers. Using the script is straightforward; just add the script tags and optional styles to your page, as shown in the following example:</p>
+<pre><code>&lt;html&gt;
+&lt;body&gt;
+&lt;script type=&quot;text/javascript&quot;
+      src=&quot;http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js&quot;&gt;
+&lt;/script&gt;
+
+&lt;style&gt;
+   /*
+   CSS rules to use for styling the overlay:
+      .chromeFrameOverlayContent
+      .chromeFrameOverlayContent iframe
+      .chromeFrameOverlayCloseBar
+      .chromeFrameOverlayUnderlay
+   */
+&lt;/style&gt;
+
+&lt;script&gt;
+   // You may want to place these lines inside an onload handler
+   CFInstall.check({
+      mode: &quot;overlay&quot;,
+      destination: &quot;http://www.waikiki.com&quot;
+   });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Then, display a button to prompt users to install Chrome Frame:</p>
+<pre><code>&lt;button onclick=&quot;GCF_Install()&quot;&gt;Install Chrome Frame
+(for IE only)&lt;/button&gt;
+</code></pre>
+<h3>Prompt yourself</h3>
+<p>You may also decide to build a landing page or layer yourself. To do so:</p>
+<ul>
+<li>Send users to this URL: <a href="http://www.google.com/chromeframe/">http://www.google.com/chromeframe/</a> which you can place in an IFRAME.</li>
+<li>Append a redirect parameter to the URL to send users back to your site after installation is complete: <a href="http://www.google.com/chromeframe/?redirect=http://www.google.com/">http://www.google.com/chromeframe/?redirect=http://www.google.com/</a></li>
+<li>Instead of going to the Chrome Frame landing page, you can also send the users directly to the EULA thus saving one step in the installation process: <a href="http://www.google.com/chromeframe/eula.html">http://www.google.com/chromeframe/eula.html</a></li>
+</ul>
+<h3>No administrator rights needed</h3>
+<p>To enable users to install Chrome Frame without having administrative privileges on their machines, append the <code>user=true</code> parameter to enable user level installation of Chrome Frame, as shown here:</p>
+<pre><code>http://www.google.com/chromeframe/?user=true
+</code></pre>
+<h3>Enterprise installation</h3>
+<p>Enterprises can deploy Chrome Frame company-wide using the MSI installer which you can download here: <a href="http://www.google.com/chromeframe/eula.html?msi=true">http://www.google.com/chromeframe/eula.html?msi=true</a>.</p>
+<p>For more information on Chrome and enterprise deployments see <a href="http://www.chromium.org/administrators">http://www.chromium.org/administrators</a>.</p>
+<h2>Adoption</h2>
+<p>Many major websites such as <a href="http://yahoo.com">yahoo.com</a>, <a href="http://wordpress.com">wordpress.com</a> and several Google properties have adopted Google Chrome Frame. Besides giving their users access to a more modern web experience for many sites, Chrome Frame also presents a significant improvement in initial load time. You can check whether Chrome Frame helps your site get faster rendering by going to <a href="http://webpagetest.org">webpagetest.org</a> and selecting Chrome Frame as the browser.</p>
+<h2>More information</h2>
+<p>For more information see the <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.chromium.org%2Fdevelopers%2Fhow-tos%2Fchrome-frame-getting-started">Getting Started Guide</a> or watch <a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=3YkEUpJQP3o">this video</a> from Google IO 2011.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/google-chrome-frame/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

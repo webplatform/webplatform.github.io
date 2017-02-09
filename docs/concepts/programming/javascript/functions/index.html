@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript Functions · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Functions are one of the fundamental building blocks in JavaScript. A function is a JavaScript procedure—a set of statements that performs a task or calculates a value. To use a function, you must define it somewhere in the scope from which you wish to call it." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/functions/">functions</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>JavaScript Functions</h1>
+<h2>Summary</h2>
+<p>Functions are one of the fundamental building blocks in JavaScript. A function is a JavaScript procedure—a set of statements that performs a task or calculates a value. To use a function, you must define it somewhere in the scope from which you wish to call it.</p>
+<h2>Defining functions</h2>
+<p>A <strong>function definition</strong> (also called a <strong>function declaration</strong>) consists of the <code>function</code> keyword, followed by</p>
+<ul>
+<li>The name of the function.</li>
+<li>A list of arguments to the function, enclosed in parentheses and separated by commas.</li>
+<li>The JavaScript statements that define the function, enclosed in curly braces, <code>{ }</code>.</li>
+</ul>
+<p>For example, the following code defines a simple function named <code>square</code>:</p>
+<pre><code>function square(number) {
+  return number * number;
+}
+</code></pre>
+<p>The function <code>square</code> takes one argument, called <code>number</code>. The function consists of one statement that says to return the argument of the function (that is, <code>number</code>) multiplied by itself. The <code>return</code> statement specifies the value returned by the function.</p>
+<pre><code>return number * number;
+</code></pre>
+<p>Primitive parameters (such as a number) are passed to functions <strong>by value</strong>; the value is passed to the function, but if the function changes the value of the parameter, this change is not reflected globally or in the calling function.</p>
+<p>If you pass an object (i.e. a <a href="/w/index.php?title=concepts/programming/javascript/functions/glossary/non-primitive_value&amp;action=edit&amp;redlink=1">non-primitive value</a>, such as <code>Array</code> or a user-defined object) as a parameter, and the function changes the object’s properties, that change is visible outside the function, as shown in the following example:</p>
+<pre><code>function myFunc(theObject) {
+  theObject.make = &quot;Toyota&quot;;
+}
+
+var mycar = {make: &quot;Honda&quot;, model: &quot;Accord&quot;, year: 1998},
+    x,
+    y;
+
+x = mycar.make;     // x gets the value &quot;Honda&quot;
+
+myFunc(mycar);
+y = mycar.make;     // y gets the value &quot;Toyota&quot;
+                    // (the make property was changed by the function)
+</code></pre>
+<p>Note that assigning a new object to the parameter will <strong>not</strong> have any effect outside the function, because this is changing the value of the parameter rather than the value of one of the object’s properties:</p>
+<pre><code>function myFunc(theObject) {
+  theObject = {make: &quot;Ford&quot;, model: &quot;Focus&quot;, year: 2006};
+}
+
+var mycar = {make: &quot;Honda&quot;, model: &quot;Accord&quot;, year: 1998},
+    x,
+    y;
+
+x = mycar.make;     // x gets the value &quot;Honda&quot;
+
+myFunc(mycar);
+y = mycar.make;     // y still gets the value &quot;Honda&quot;
+</code></pre>
+<p>In the first case, the object <code>mycar</code> was passed to the function <code>myFunc</code>, which altered it. In the second case, the function did not alter the object that was passed; instead, it created a new local variable that happens to have the same name as the global object passed in, so there is no effect on the global object that was passed in.</p>
+<p>In JavaScript, a function can be defined based on a condition. For example, the following function definition defines <code>myFunc</code> only if <code>num</code> equals 0:</p>
+<pre><code>if (num == 0){
+  function myFunc(theObject) {
+    theObject.make = &quot;Toyota&quot;
+  }
+}
+</code></pre>
+<p>If <code>num</code> does not equal 0, the function is not defined, and any attempt to execute it will fail.</p>
+<p>Note that ECMAScript does not allow functions to appear in such contexts such as this, only directly inside other functions or at the top level of a program, so this example is invalid as ECMAScript.</p>
+<p><strong>Note</strong>: Different implementations of JavaScript handle this non-standard construct differently, so it is best avoided when writing portable code. Otherwise, your code may work in some browsers but not in others.</p>
+<p>In addition to defining functions as described here, you can also use the <code>Function</code> constructor to create functions from a string at runtime, much like <code>eval()</code>.</p>
+<p>A <strong>method</strong> is a function that is a property of an object. Read more about objects and methods in <a href="/w/index.php?title=concepts/programming/javascript/functions/guides/JavaScript/Working_with_Objects&amp;action=edit&amp;redlink=1">Working with Objects</a>.</p>
+<p>While the function declarations above are all syntactically statements, functions can also be created by a <strong>function expression</strong>. Such a function can be <strong>anonymous</strong>; it does not have to have a name. For example, the function <code>square</code> could have been defined as:</p>
+<pre><code>var square = function(number) {return number * number};
+</code></pre>
+<p>However, a name can be provided with a function expression, and can be used inside the function to refer to itself, or in a debugger to identify the function in stack traces:</p>
+<pre><code>var factorial = function fac(n) {return n&lt;2 ? 1 : n*fac(n-1)};
+
+print(factorial(3));
+</code></pre>
+<p>Function expressions are convenient when passing a function as an argument to another function. The following example shows a <code>map</code> function being defined and then called with an anonymous function as its first parameter:</p>
+<pre><code>function map(f,a) {
+  var result = [], // Create a new Array
+      i;
+  for (i = 0; i != a.length; i++)
+    result[i] = f(a[i]);
+  return result;
+}
+</code></pre>
+<p>The following code:</p>
+<pre><code>map(function(x) {return x * x * x}, [0, 1, 2, 5, 10]);
+</code></pre>
+<p>returns [0, 1, 8, 125, 1000].</p>
+<h2>Calling functions</h2>
+<p>Defining a function does not execute it. Defining the function simply names the function and specifies what to do when the function is called. <strong>Calling</strong> the function actually performs the specified actions with the indicated parameters. For example, if you define the function <code>square</code>, you could call it as follows:</p>
+<pre><code>square(5);
+</code></pre>
+<p>The preceding statement calls the function with an argument of 5. The function executes its statements and returns the value 25.</p>
+<p>Functions must be in scope when they are called, but the function declaration can be below the call, as in this example:</p>
+<pre><code>print(square(5));
+/* ... */
+function square(n){return n*n}
+</code></pre>
+<p>The scope of a function is the function in which it is declared, or the entire program if it is declared at the top level. Note that this works only when defining the function using the above syntax (i.e. <code>function funcName(){}</code>). The code below will not work.</p>
+<pre><code>print(square(5));
+square = function (n) {
+  return n * n;
+}
+</code></pre>
+<p>The arguments of a function are not limited to strings and numbers. You can pass whole objects to a function, too. The <code>show_props</code> function (defined in <a href="/w/index.php?title=concepts/programming/javascript/functions/guides/JavaScript/Working_with_Objects&amp;action=edit&amp;redlink=1">Working with Objects</a>) is an example of a function that takes an object as an argument.</p>
+<p>A function can be recursive; that is, it can call itself. For example, here is a function that computes factorials recursively:</p>
+<pre><code>function factorial(n){
+  if ((n == 0) || (n == 1))
+    return 1;
+  else
+    return (n * factorial(n - 1));
+}
+</code></pre>
+<p>You could then compute the factorials of one through five as follows:</p>
+<pre><code>var a, b, c, d, e;
+a = factorial(1); // a gets the value 1
+b = factorial(2); // b gets the value 2
+c = factorial(3); // c gets the value 6
+d = factorial(4); // d gets the value 24
+e = factorial(5); // e gets the value 120
+</code></pre>
+<p>There are other ways to call functions. There are often cases where a function needs to be called dynamically, or the number of arguments to a function vary, or in which the context of the function call needs to be set to a specific object determined at runtime. It turns out that functions are, themselves, objects, and these objects in turn have methods (see the <code>Function</code> object). One of these, the <code>apply()</code> method, can be used to achieve this goal.</p>
+<h2>Function scope</h2>
+<p>Like Scheme, JavaScript has lexical scoping, meaning the scope of variables is restricted and determined by their placement. Additionally, in the case of JavaScript, only function definitions will create new scopes. The behavior of variables, therefore, may be determined by simply reading the code because the scope is entirely independent of the runtime (unlike dynamic scoping).</p>
+<p>Variables defined inside a function cannot be accessed from anywhere outside the function, because the variable is defined only in the scope of the function. However, a function can access all variables and functions defined inside the scope in which it is defined. In other words, a function defined in the global scope can only access variables defined in the global scope (i.e. global variables). A function defined inside another function can also access all variables defined in its parent function and any other variable to which the parent function has access.</p>
+<pre><code>// The following variables are defined in the global scope
+var num1 = 20,
+    num2 = 3,
+    name = &quot;Chamahk&quot;;
+
+// This function is defined in the global scope
+function multiply() {
+  return num1 * num2;
+}
+
+multiply(); // Returns 60
+
+// A nested function example
+function getScore () {
+  var num1 = 2,
+      num2 = 3;
+
+  function add() {
+    return name + &quot; scored &quot; + (num1 + num2);
+  }
+
+  return add();
+}
+
+getScore(); // Returns &quot;Chamahk scored 5&quot;
+</code></pre>
+<h2>Closures</h2>
+<p>Closures are one of the most powerful features of JavaScript. JavaScript allows for the nesting of functions and, in addition, grants the inner function full access to all the variables and functions defined inside the outer function (and all other variables and functions that the outer function has access to). However, the outer function does not have access to the variables and functions defined inside the inner function. This provides a sort of security for the variables of the inner function. Also, since the inner function has access to the scope of the outer function, the variables and functions defined in the outer function will live longer than the outer function itself, if the inner function manages to survive beyond the life of the outer function. A closure is created when the inner function is somehow made available to any scope outside the outer function.</p>
+<pre><code>var pet = function(name) {          // The outer function defines a variable called &quot;name&quot;
+      var getName = function() {
+        return name;                // The inner function has access to the &quot;name&quot; variable of the outer function
+      }
+
+      return getName;               // Return the inner function, thereby exposing it to outer scopes
+    },
+    myPet = pet(&quot;Vivie&quot;);
+
+myPet();                            // Returns &quot;Vivie&quot;
+</code></pre>
+<p>It can be much more complex than the code above. An object containing methods for manipulating the inner variables of the outer function can be returned.</p>
+<pre><code>var createPet = function(name) {
+  var sex;
+
+  return {
+    setName: function(newName) {
+      name = newName;
+    },
+
+    getName: function() {
+      return name;
+    },
+
+    getSex: function() {
+      return sex;
+    },
+
+    setSex: function(newSex) {
+      if(typeof newSex == &quot;string&quot; &amp;&amp; (newSex.toLowerCase() == &quot;male&quot; || newSex.toLowerCase() == &quot;female&quot;)) {
+        sex = newSex;
+      }
+    }
+  }
+}
+
+var pet = createPet(&quot;Vivie&quot;);
+pet.getName();                  // Vivie
+
+pet.setName(&quot;Oliver&quot;);
+pet.setSex(&quot;male&quot;);
+pet.getSex();                   // male
+pet.getName();                  // Oliver
+</code></pre>
+<p>In the codes above, the <code>name</code> variable of the outer function is accessible to the inner functions, and there is no other way to access the inner variables except through the inner functions. The inner variables of the inner function act as safe stores for the inner functions. They hold &quot;persistent&quot;, yet secure, data for the inner functions to work with. The functions do not even have to be assigned to a variable, or have a name.</p>
+<pre><code>var getCode = (function(){
+  var secureCode = &quot;0]Eal(eh&amp;2&quot;;    // A code we do not want outsiders to be able to modify...
+
+  return function () {
+    return secureCode;
+  };
+})();
+
+getCode();    // Returns the secret code
+</code></pre>
+<p>There are, however, a number of pitfalls to watch out for when using closures. If an enclosed function defines a variable with the same name as the name of a variable in the outer scope, there is no way to refer to the variable in the outer scope again.</p>
+<pre><code>var createPet = function(name) {  // Outer function defines a variable called &quot;name&quot;
+  return {
+    setName: function(name) {    // Enclosed function also defines a variable called &quot;name&quot;
+      name = name;               // ??? How do we access the &quot;name&quot; defined by the outer function ???
+    }
+  }
+}
+</code></pre>
+<p>The magical <code>this</code> variable is very tricky in closures. They have to be used carefully, as what <code>this</code> refers to depends completely on where the function was called, rather than where it was defined. An excellent and elaborate article on closures can be found <a href="http://jibbering.com/faq/notes/closures/">here</a>.</p>
+<h2>Using the arguments object</h2>
+<p>The arguments of a function are maintained in an array-like object. Within a function, you can address the arguments passed to it as follows:</p>
+<pre><code>arguments[i]
+</code></pre>
+<p>where <code>i</code> is the ordinal number of the argument, starting at zero. So, the first argument passed to a function would be <code>arguments[0]</code>. The total number of arguments is indicated by <code>arguments.length</code>.</p>
+<p>Using the <code>arguments</code> object, you can call a function with more arguments than it is formally declared to accept. This is often useful if you don’t know in advance how many arguments will be passed to the function. You can use <code>arguments.length</code> to determine the number of arguments actually passed to the function, and then access each argument using the <code>arguments</code> object.</p>
+<p>For example, consider a function that concatenates several strings. The only formal argument for the function is a string that specifies the characters that separate the items to concatenate. The function is defined as follows:</p>
+<pre><code>function myConcat(separator) {
+   var result = &quot;&quot;, // initialize list
+       i;
+   // iterate through arguments
+   for (i = 1; i &lt; arguments.length; i++) {
+      result += arguments[i] + separator;
+   }
+   return result;
+}
+</code></pre>
+<p>You can pass any number of arguments to this function, and it concatenates each argument into a string &quot;list&quot;:</p>
+<pre><code>// returns &quot;red, orange, blue, &quot;
+myConcat(&quot;, &quot;, &quot;red&quot;, &quot;orange&quot;, &quot;blue&quot;);
+
+// returns &quot;elephant; giraffe; lion; cheetah; &quot;
+myConcat(&quot;; &quot;, &quot;elephant&quot;, &quot;giraffe&quot;, &quot;lion&quot;, &quot;cheetah&quot;);
+
+// returns &quot;sage. basil. oregano. pepper. parsley. &quot;
+myConcat(&quot;. &quot;, &quot;sage&quot;, &quot;basil&quot;, &quot;oregano&quot;, &quot;pepper&quot;, &quot;parsley&quot;);
+</code></pre>
+<p>Please note that the <code>arguments</code> variable is &quot;array-like&quot;, but not an array. It is array-like in that is has a numbered index and a <code>length</code> property. However, it does not possess all of the array-manipulation methods.</p>
+<p>See the <code>Function</code> object in the JavaScript Reference for more information.</p>
+<h2>Predefined functions</h2>
+<p>JavaScript has several top-level predefined functions:</p>
+<ul>
+<li><a href="#eval_function">eval</a></li>
+<li><a href="#isFinite_function">isFinite</a></li>
+<li><a href="#isNaN_function">isNaN</a></li>
+<li><a href="#parseInt_and_parseFloat_functions">parseInt and parseFloat</a></li>
+<li><a href="#Number_and_String_functions">Number and String</a></li>
+<li><a href="#escape_and_unescape_functions">encodeURI, decodeURI, encodeURIComponent, and decodeURIComponent</a> (all available with Javascript 1.5 and later).</li>
+</ul>
+<p>The following sections introduce these functions. See the <a href="/w/index.php?title=concepts/programming/javascript/functions/js&amp;action=edit&amp;redlink=1">JavaScript Reference</a> for detailed information on all of these functions.</p>
+<h3>eval Function</h3>
+<p>The <code>eval</code> function evaluates a string of JavaScript code without reference to a particular object. The syntax of <code>eval</code> is:</p>
+<pre><code>eval(expr);
+</code></pre>
+<p>where <code>expr</code> is a string to be evaluated.</p>
+<p>If the string represents an expression, <code>eval</code> evaluates the expression. If the argument represents one or more JavaScript statements, eval performs the statements. The scope of <code>eval</code> code is identical to the scope of the calling code. Do not call <code>eval</code> to evaluate an arithmetic expression; JavaScript evaluates arithmetic expressions automatically.</p>
+<h3>isFinite function</h3>
+<p>The <code>isFinite</code> function evaluates an argument to determine whether it is a finite number. The syntax of <code>isFinite</code> is:</p>
+<pre><code>isFinite(number);
+</code></pre>
+<p>where <code>number</code> is the number to evaluate.</p>
+<p>If the argument is <code>NaN</code>, positive infinity or negative infinity, this method returns <code>false</code>, otherwise it returns <code>true</code>.</p>
+<p>The following code checks client input to determine whether it is a finite number.</p>
+<pre><code>if(isFinite(ClientInput)){
+   /* take specific steps */
+}
+</code></pre>
+<h3>isNaN function</h3>
+<p>The <code>isNaN</code> function evaluates an argument to determine if it is “NaN” (not a number). The syntax of <code>isNaN</code> is:</p>
+<pre><code>isNaN(testValue);
+</code></pre>
+<p>where <code>testValue</code> is the value you want to evaluate.</p>
+<p>The <code>parseFloat</code> and <code>parseInt</code> functions return “NaN” when they evaluate a value that is not a number. <code>isNaN</code> returns true if passed “NaN,” and false otherwise.</p>
+<p>The following code evaluates <code>floatValue</code> to determine if it is a number and then calls a procedure accordingly:</p>
+<pre><code>var floatValue = parseFloat(toFloat);
+
+if (isNaN(floatValue)) {
+   notFloat();
+} else {
+   isFloat();
+}
+</code></pre>
+<h3>parseInt and parseFloat functions</h3>
+<p>The two “parse” functions, <code>parseInt</code> and <code>parseFloat</code>, return a numeric value when given a string as an argument.</p>
+<p>The syntax of <code>parseFloat</code> is</p>
+<pre><code>parseFloat(str);
+</code></pre>
+<p>where <code>parseFloat</code> parses its argument, the string <code>str</code>, and attempts to return a floating-point number. If it encounters a character other than a sign (+ or -), a numeral (0-9), a decimal point, or an exponent, then it returns the value up to that point and ignores that character and all succeeding characters. If the first character cannot be converted to a number, it returns “NaN” (not a number).</p>
+<p>The syntax of <code>parseInt</code> is</p>
+<pre><code>parseInt(str [, radix]);
+</code></pre>
+<p><code>parseInt</code> parses its first argument, the string <code>str</code>, and attempts to return an integer of the specified <code>radix</code> (base), indicated by the second, optional argument, <code>radix</code>. For example, a radix of ten indicates to convert to a decimal number, eight octal, sixteen hexadecimal, and so on. For radixes above ten, the letters of the alphabet indicate numerals greater than nine. For example, for hexadecimal numbers (base 16), A through F are used.</p>
+<p>If <code>parseInt</code> encounters a character that is not a numeral in the specified radix, it ignores it and all succeeding characters and returns the integer value parsed up to that point. If the first character cannot be converted to a number in the specified radix, it returns “NaN.” The <code>parseInt</code> function truncates the string to integer values.</p>
+<h3>Number and String functions</h3>
+<p>The <code>Number</code> and <code>String</code> functions let you convert an object to a number or a string. The syntax of these functions is:</p>
+<pre><code>var objRef;
+objRef = Number(objRef);
+objRef = String(objRef);
+</code></pre>
+<p>where <code>objRef</code> is an object reference. Number uses the valueOf() method of the object; String uses the toString() method of the object.</p>
+<p>The following example converts the <code>Date</code> object to a readable string.</p>
+<pre><code>var D = new Date(430054663215),
+    x;
+x = String(D); // x equals &quot;Thu Aug 18 04:37:43 GMT-0700 (Pacific Daylight Time) 1983&quot;
+</code></pre>
+<p>The following example converts the <code>[/js/objects/String</code></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Functions">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Debugging CSS · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This article lists utilities to help analyze situations where a CSS style we think should be applied is not." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/debugging_css/">debugging css</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Debugging CSS</h1>
+<p><strong>By <a href="https://renoirboulanger.com/">Renoir Boulanger</a></strong></p>
+<h2>Summary</h2>
+<p>This article lists utilities to help analyze situations where a CSS style we think should be applied is not.</p>
+<h2>Content Needed</h2>
+<p>This topic is in progress, we just ran out of time. If you have the time to write it up, please do. We’re all pitching in here at WPD. Thanks!</p>
+<p>Methods for debugging CSS are essential, since CSS errors will not output any error message indicating the source of the issue at hand.</p>
+<h2>Avoiding problems in the first place</h2>
+<h3>Cross browser Idiosyncrasies</h3>
+<p>As mentioned in previous tutorials Web Browsers come with inbuilt CSS. This default CSS may differ between browsers and hence when viewing a site, unless the site CSS cancels out the browser’s CSS there is a chance that the page is displayed differently across browsers, which most often than not it is undesirable.</p>
+<p>This problem is avoided by normalizing the browser. This is done by using a set of CSS rules to cancel the web browser default CSS before applying custom CSS. There exist a couple of CSS normalizing files on the net freely available.</p>
+<h2>CSS to debug CSS</h2>
+<p>One of the things that could help in identifying a layout issue or perhaps some complex structure like a CSS based menu one would want to see what is really going on in terms of boxes.</p>
+<pre><code class="css">*<span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">outline</span>:<span class="hljs-value"><span class="hljs-number">1px</span> red solid</span></span>;
+}</span>
+</code></pre>
+<p>Using the above will display an outline around each element on the page indicating the structure, which could help in identifying where certain problems are.</p>
+<h2>Isolate the issue</h2>
+<p>If the problem is in a fully blown site with plenty of HTML/CSS, start commenting out the HTML and CSS rules and try to isolate the issue and perhaps even replicate it and try to find the offending rules.</p>
+<h2>WebBrowser tools</h2>
+<p>At the time of writing Google Chrome/Mozilla Firefox and Internet Explorer come with inbuilt developer tools that could help with debugging. These tools allow to inspect elements and view the CSS applied on them. Furthermore one could disable rules, remove properties, add rules and add properties and view the changes in the browser.</p>
+<h2>Notes</h2>
+<ul>
+<li>Need to make summary</li>
+<li>Need to list more relevant and credible resources</li>
+</ul>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://24ways.org/2005/debugging-css-with-the-dom-inspector/">24 ways: Debugging CSS with the DOM inspector</a></li>
+<li><a href="http://bigemployee.com/4-simple-techniques-to-quickly-debug-and-fix-your-css-code-in-almost-any-browser/">Debugging HTML and CSS with the developer tools</a></li>
+<li><a href="http://www.w3.org/TR/CSS2/cascade.html#cascade">CSS Level 2 : The cascade</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>localStorage · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Proposed Recommendation" />
+    <meta name="description" content="Provides a Storage object for an origin, that remains persistent even after restarting the browser. The storage can be cleared by the user with browser functionalities. If you need a temporary storage, use apis/web-storage/Storage/sessionStorage" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/web-storage/">web-storage</a></li><li><a href="/apis/web-storage/Storage/">Storage</a></li><li><a href="/apis/web-storage/Storage/localStorage/">localStorage</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>localStorage</h1>
+<h2>Summary</h2>
+<p>Provides a Storage object for an origin, that remains persistent even after restarting the browser. The storage can be cleared by the user with browser functionalities. If you need a temporary storage, use apis/web-storage/Storage/sessionStorage</p>
+<p>Property of <a href="/docs/apis/web-storage/Storage">apis/web-storage/Storage</a><a href="/docs/apis/web-storage/Storage">apis/web-storage/Storage</a></p>
+<h2>Syntax</h2>
+<p><strong>Note</strong>: This property is read-only.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> result = object.localStorage;
+</code></pre>
+<h2>Return Value</h2>
+<p>Returns an object of type ObjectObject</p>
+<h2>Examples</h2>
+<pre><code class="js"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.localStorage) { <span class="hljs-comment">// checks if browser support localStorage</span>
+  <span class="hljs-keyword">if</span> (localStorage[<span class="hljs-string">'testKey'</span>]) { <span class="hljs-comment">// checks if value exists</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Value exist on page load in localstorage for key testKey : '</span>, localStorage[<span class="hljs-string">'testKey'</span>]);
+  }
+  localStorage[<span class="hljs-string">'testKey'</span>] = <span class="hljs-string">'Hi again!'</span>; <span class="hljs-comment">// stores value in localstorage</span>
+}
+<span class="hljs-keyword">else</span> {
+ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'your browser dont support localstorage'</span>);
+}
+</code></pre>
+<p>Fields and buttons for saving, reading and clearing localStorage items.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">section</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"key"</span>&gt;</span>Key:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"key"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"r2d2"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"value"</span>&gt;</span>Value:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"value"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"C-3PO"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"set-local"</span>&gt;</span>Save to localStorage<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">hr</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"get-key"</span>&gt;</span>Key:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"get-key"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"r2d2"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"get-local"</span>&gt;</span>Get from localStorage<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">output</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"output"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">output</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">hr</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"clear"</span>&gt;</span>Clear localStorage<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+<p><a href="http://jsfiddle.net/DM6hB/6/">View live example</a></p>
+<p>Functions and event handlers for saving, reading and clearing localStorage items.</p>
+<pre><code class="js"><span class="hljs-comment">/* global document, window */</span>
+<span class="hljs-keyword">var</span> valueSetHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">/** read the values from the form */</span>
+    <span class="hljs-keyword">var</span> key = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'key'</span>).value,
+        value = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'value'</span>).value;
+
+    <span class="hljs-comment">/** save value under key in localStorage */</span>
+    <span class="hljs-built_in">window</span>.localStorage.setItem(key, value);
+},
+valueGetHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">/** read the value from the form */</span>
+    <span class="hljs-keyword">var</span> key = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'get-key'</span>).value,
+
+        <span class="hljs-comment">/** read the value from the localStorage */</span>
+        value = <span class="hljs-built_in">window</span>.localStorage.getItem(key);
+
+    <span class="hljs-comment">/** write the value in output */</span>
+    <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'output'</span>).innerText = value;
+},
+clearStorageHandler = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">window</span>.localStorage.clear();
+};
+
+<span class="hljs-comment">/** register event Listeners for button clicks */</span>
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'set-local'</span>).addEventListener(<span class="hljs-string">'click'</span>, valueSetHandler);
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'get-local'</span>).addEventListener(<span class="hljs-string">'click'</span>, valueGetHandler);
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'clear'</span>).addEventListener(<span class="hljs-string">'click'</span>, clearStorageHandler);
+</code></pre>
+<h2>Usage</h2>
+<pre><code> Use via the methods setItem, getItem, removeItem and clear provided by apis/web-storage/Storage.
+</code></pre>
+<p>Listen to the storage event on <a href="/docs/dom/Window">dom/Window</a> to catch changes in the storage (example: <a href="http://jsfiddle.net/A6tuM/1/">http://jsfiddle.net/A6tuM/1/</a>).</p>
+<h2>Notes</h2>
+<p>The <strong>localStorage</strong> “property” provides an instance of a storage area object, to which the <strong>Storage</strong> object’s properties and methods are applied.</p>
+<p>The amount of storage is limited by the browser on a per location basis (e.g. per domain). An error message is thrown, when the quota is exceed.</p>
+<p>See for an example of the error message here (the example shows the error message for when the <a href="/docs/apis/web-storage/Storage/sessionStorage">sessionStorage</a> quota is exceeded. The behavior is similar for localStorage): <a href="http://jsfiddle.net/wkDc6/1/">http://jsfiddle.net/wkDc6/1/</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/webstorage/">W3C Web Storage Specification</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Off-line Storage</h4>
+<ul>
+<li><p><a href="/docs/apis/appcache">appcache</a></p></li>
+<li><p><a href="/docs/apis/appcache/ApplicationCache/status">status</a></p></li>
+<li><p><a href="/docs/apis/file">file</a></p></li>
+<li><p><a href="/docs/apis/filesystem">File System API</a></p></li>
+<li><p><a href="/docs/apis/quota_management">quota management</a></p></li>
+<li><p><a href="/docs/apis/quota_management/queryUsageAndQuota">queryUsageAndQuota</a></p></li>
+<li><p><a href="/docs/apis/quota_management/requestQuota">requestQuota</a></p></li>
+<li><p><strong>localStorage</strong></p></li>
+<li><p><a href="/docs/tutorials/appcache_beginner">Introduction to using the application cache</a></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

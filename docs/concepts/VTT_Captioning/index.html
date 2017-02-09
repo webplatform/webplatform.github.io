@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introducing VTT · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/VTT_Captioning/">VTT Captioning</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Introducing VTT</h1>
+<p>WebVTT (Web Video Text Tracks), formerly known as WebSRT, is a W3C community proposal for synchronized video caption playback. It is a time-indexed file format and it is referenced by HTML5 video <strong>and</strong> audio elements.</p>
+<p>As with many assistive technologies, it would be a mistake to assume that they are only meant as a way to provide for accessibility accomodations. We can enable captions when the ambient noise is too loud to listen to a recorded presentation, we can use chapters to navigate through a long lecture video just like DVD or Blue Ray movies.</p>
+<p>Captions can also improve our movies’ discoverability. Google indexes the content of our captions. Both YouTube and Google search can report results based on the video captions available for a given file.</p>
+<p>WebVTT files provide open captions, independent of the audio or video files they are attached to, they are not “hard coded” into pixels. This also means that creating VTT files requires nothing more than a text editor; although there are more specialized tools to create the captions.</p>
+<h1>Browser support</h1>
+<p>Based on Silvia Pfeiffer’s <a href="http://www.w3.org/community/texttracks/2012/08/23/webvtt-support-in-browsers/">post to the VTT community group</a> dated August, 2012, and updated with new information about Firefox, the following browsers support VTT tracks for video and audio:</p>
+<table>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr class="header">
+<th align="left">Browser</th>
+<th align="left">First supported</th>
+<th align="left">Format Supported</th>
+<th align="left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Internet Explorer</td>
+<td align="left">Version 10</td>
+<td align="left">VTT and TML</td>
+<td align="left"><ul>
+<li><a href="http://ie.microsoft.com/testdrive/Graphics/VideoCaptions/">Test Page</a></li>
+<li><a href="http://html5labs.interoperabilitybridges.com/prototypes/video-captioning/video-captioning/info">Documentation</a></li>
+<li><a href="http://ie.microsoft.com/testdrive/Graphics/CaptionMaker">HTML5 Video Caption Maker</a></li>
+<li><a href="http://msdn.microsoft.com/library/ie/bg123962.aspxTimed">Text Track Information</a></li>
+<li><a href="http://samples.msdn.microsoft.com/iedevcenter/TextTrack/default.html">Timed Text Tracks examples</a></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td align="left">Google Chrome</td>
+<td align="left">Version 18</td>
+<td align="left">VTT</td>
+<td align="left"><ul>
+<li>Basic tutorial hosted at <a href="http://www.html5rocks.com/en/tutorials/track/basics/">HTML5 Rocks</a></li>
+<li>Based on Webkit's implementation</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td align="left">Apple Safari</td>
+<td align="left">Version 6</td>
+<td align="left">VTT</td>
+<td align="left"><ul>
+<li>Based on Webkit's implementation</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td align="left">Opera</td>
+<td align="left">Since August, 2012</td>
+<td align="left">VTT</td>
+<td align="left"><ul>
+<li>Documentation at <a href="http://dev.opera.com/articles/view/an-introduction-to-webvtt-and-track/">dev.opera</a></li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td align="left">Firefox</td>
+<td align="left">Nightly</td>
+<td align="left">VTT</td>
+<td align="left"><ul>
+<li>Tested with version 29.0a1 (12/14/2013)</li>
+<li>See the <a href="http://developer.mozilla.org/en-US/docs/HTML/WebVTT">Mozilla Developer Documentation</a> for more information</li>
+<li>Feature enabled by default in nightly builds</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<h2>Polyfills and alternatives</h2>
+<p>I will use one of the many polyfils available for HTML5 Video Tracks. <a href="http://www.delphiki.com/html5/playr/">Playr</a> seems to be the most feature complete polyfill for HTML5 video tracks. The downside is 2 more files (one CSS and one JavaScript) to download for the video page but until VTT is widely supported the extra files are worth the effort to create accessible content.</p>
+<p>One way to ensure that we only load our polyfill if the browser doesn’t support tracks natively is to use Modernizr.load to conditionally load Playr’s CSS and JavaScript when the browser does not support HTML5 video tag natively.</p>
+<pre><code class="js">Modernizr.load([
+  {
+    <span class="hljs-comment">// test whether we support video</span>
+    test : Modernizr.video,
+    <span class="hljs-comment">// Load the corresponding assetts for the polyfill you want to use</span>
+    <span class="hljs-comment">// in this case we are using the playr polyfill</span>
+    nope : [<span class="hljs-string">'playr.js'</span>, <span class="hljs-string">'playr.css'</span>]
+  },
+ ])
+</code></pre>
+<p>The code below uses plain JavaScript to test if a browser supports HTML5 video by creating an empty video element and testing for the video’s canPlayType property. It will not load the code for a polyfill like the Modernizr example.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> canPlay = <span class="hljs-literal">false</span>;
+  <span class="hljs-keyword">var</span> h, plink, pscript;
+
+  <span class="hljs-comment">// Create an empty video element</span>
+  <span class="hljs-keyword">var</span> v = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'video'</span>);
+  <span class="hljs-comment">// If the video can playType and can play MP4 video</span>
+  <span class="hljs-keyword">if</span>(v.canPlayType) {
+    <span class="hljs-comment">// Set canPlay to true</span>
+    canPlay = <span class="hljs-literal">true</span>;
+    <span class="hljs-comment">// Display an alert telling them so</span>
+    alert(<span class="hljs-string">'Can Play HTML5 video'</span>)
+  }
+  <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Append Playr CSS and JS to the head of the page to</span>
+    <span class="hljs-comment">// provide a fallback</span>
+    h = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">'head'</span>)[<span class="hljs-number">0</span>];
+    plink = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'link'</span>);
+    plink.setAttribute(<span class="hljs-string">'href'</span>, <span class="hljs-string">'css/playr.css'</span>);
+    plink.setAttribute(<span class="hljs-string">'media'</span>, <span class="hljs-string">'screen'</span>);
+    h.appendChild(plink);
+    pscript = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'script'</span>);
+    pscript.setAttribute(<span class="hljs-string">'src'</span>, <span class="hljs-string">'js/playr.js'</span>);
+    h.append(<span class="hljs-string">'pscript'</span>);
+  }
+</code></pre>
+<p>This is the simplest test for video support; a more elaborate version can include support for specific formats and write the &lt;source&gt; tags only for the supported formats. The example below makes the following assumptions:</p>
+<ul>
+<li>You have encoded a video in all three formats (webm, mp4 and ogg)</li>
+<li>You are testing for support for HTML5 video in general and specific formats</li>
+<li>If HTML5 video is not supported you have a flash-based fallback solution</li>
+</ul>
+<pre><code class="js">var canPlay = false;
+  // Get the video by selecting the video tag
+  var v = document.getElementsByTagName('video');
+  // Optionally add video attribtues as needed
+  // At a minimum set height, width and controls
+  // as shown below
+  v.setAttribute('height', '640');
+  v.setAttribute('width', '480');
+  v.setAttribute('control', 'control');
+
+  // If the video can playType and can play MP4 video
+  if (v.canPlayType &amp;&amp; v.canPlayType('video/webm'; codecs="vp8, vorbis"').replace(/no/, '')){
+    // append the appropriate source track
+    var webm = v.appendChild(source);
+    webm.setAttribute("source", "myvideo.webm");
+    webm.setAttribute("type", "video/webm");
+  }
+  else if (v.canPlayType &amp;&amp; v.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"').replace(/no/, '')){
+    // append the appropriate source track
+    var mp4 = v.appendChild(source);
+    mp4.setAttribute("source", "myvideo.mp4");
+    mp4.setAttribute("type", "'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'");
+  }
+</code></pre>
+<p>Also note that we’re testing for specific audio and video codec combinations. WebM supports a single combination of video and audio codecs but MP4 supports multiple profiles, not all of which are supported in HTML5 video. See <a href="http://mpeg.chiariglione.org/faq/what-are-different-profiles-supported-mpeg-4-video">http://mpeg.chiariglione.org/faq/what-are-different-profiles-supported-mpeg-4-video</a> for an introduction to the different profiles supported by MPEG4.</p>
+<h3>Players and Polyfills</h3>
+<p>Playr is by no means the only polyfil or the only player that supports VTT. It is the one that I found the most feature complete for what I needed. The selection below represents a set of players and polyfills available.</p>
+<ul>
+<li><a href="http://videojs.com/docs/tracks/">video.js player</a></li>
+<li><a href="http://www.longtailvideo.com/addons/plugins/84/Captions">jwplayer</a></li>
+<li><a href="http://mediaelementjs.com/">MediaElementJS player</a></li>
+<li><a href="http://leanbackplayer.com/">LeanBack player</a></li>
+<li><a href="http://www.storiesinflight.com/js_videosub/">js_videosub polyfill</a></li>
+<li><a href="http://github.com/cgiffard/Captionator">Captionator polyfill</a></li>
+<li><a href="http://github.com/mozilla/vtt.js">vtt.js</a> by the Mozilla Foundation</li>
+</ul>
+<h2>Different types of VTT tracks and their structures</h2>
+<h3>Captioning Tracks</h3>
+<dl>
+<dd>
+Captioning is text that appears on a video, which contains dialogue and audio cues such as music or sound effects that occur off-screen. The purpose of captioning is to make video content accessible to those who are deaf or hard of hearing, and for other situations in which the audio cannot be heard due to noise or a need for silence.
+</dd>
+<dd>
+</dd>
+<dd>
+Captions can be either open (always visible, aka "burned in") or closed, but closed is more common because it lets each viewer decide whether they want the captions to be turned on or off.
+</dd>
+<dd>
+</dd>
+<dd>
+From <http://www.cpcweb.com/faq/>
+</dd>
+</dl>
+The simplest and most often used type of text track, captions provide alternative text content for people with visual dissabilities, for people who choose to play the video without audio, and others.
+<p>Depending on the player you may have open captions, where the captions are always visible on screen, or closed captions where you have to manually activate the display of captions; Either open or closed, the captions are independent of the content they are attached to.</p>
+<pre><code>WEBVTT (1)
+
+railroad (2)
+00:00:10.000 --&gt; 00:00:12.500 (3) [Optional Settings] (4)
+Left uninspired by the crust of railroad earth (5)
+
+manuscript
+00:00:13.200 --&gt; 00:00:16.900
+that touched the lead to the pages of your manuscript.
+</code></pre>
+<p><strong>Explanation of the cue above:</strong></p>
+<ol>
+<li>WEBVTT must be the first item on the file, on the first line and in a line of its own. Optionally there may be lines of metadata. This section must be followed by a blank line</li>
+<li>The name of the cue. This is also optional</li>
+<li>Immediately below the name of the cue come the beginning and end time for the cue expressed in hours:minutes:seconds:milliseconds format. <strong>Hours, Minutes and Seconds must have 2 digits and be padded with zeros if necessary. Miliseconds must have 3 digits and be zero padded if not long enough</strong></li>
+<li>Optional Cue Settings separated from the time one or more SPACE or TAB characters</li>
+<li>The text for the cue</li>
+</ol>
+<h3>Subtitles Tracks</h3>
+<p>Subtitle Tracks are similar to Caption Tracks but are not meant to address accessibility issues as Captions are. Subtitle tracks are used primarily to convey the dialogue in a language other than the one being spoken in the video. Take, for example a Japanese movie where the subtitles translate the content to English.</p>
+<p>Subtitles are not expected to convey additional non-verbal cues. Once again, subtitles are only meant to provide a translation of the words being spoken although some delivery formats such as Blue Ray do not follow this recommendation.</p>
+<p><strong>What’s the difference between captions and subtitles?</strong></p>
+<dl>
+<dd>
+The main difference is that subtitles usually only transcribe the spoken dialog, and are mainly aimed at people who are not hearing impaired, but lack fluency in the spoken language. Closed captions are aimed at the deaf and hearing impaired, who need additional non-verbal audio cues (such as "GUN SHOT" or "SPOOKY MUSIC") to be transcribed in the text. Closed captions are also useful for situations in which video is being shown but the sound is muted or difficult to hear, such as for a noisy bar, convention floor, video signage & billboards, etc.
+</dd>
+<dd>
+</dd>
+<dd>
+From <http://www.cpcweb.com/faq/>
+</dd>
+</dl>
+Other than the content for each type of track, HTML5 video structures the track element the same way. In the example below, the only difference are the kind attributes for each track.
+<pre><code class="html"><span class="hljs-comment">&lt;!-- This is the captions track --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"English"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel.vtt"</span> /&gt;</span>
+<span class="hljs-comment">&lt;!-- This is the subtitles track for Spanish --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"subtitles"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Español"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-es.vtt"</span> /&gt;</span>
+</code></pre>
+<h3>Chapter Tracks</h3>
+<p>Chapter tracks help you navigate through the video by associating certain “chapters” with time codes. This will let you navigate to different sections of your video using some sort of visual cue.</p>
+<p>In the example below, chapter 1 is 10 second long and titled Introduction to HTML5.</p>
+<pre><code>WEBVTT (1)
+
+Chapter 1 (2)
+00:00:01.000 --&gt; 00:00:10.000 (3)
+Introduction to HTML5(4)
+
+Chapter 2
+00:00:10.001 --&gt; 00:00:15.000
+Introduction to HTML5
+</code></pre>
+<p><strong>Explanation of the chapter above:</strong></p>
+<ol>
+<li>WEBVTT must be the first item on the file, on the first line and in a line of its own. It must be followed by a blank line 2. The name of the chapter 3. Immediately below the name of the chapter come the beginning and end time expressed in hours:minutes:seconds:milliseconds format. <strong>Hours, Minutes and Seconds must have 2 digits and be padded with zeros if necessary. Miliseconds must have 3 digits and be zero padded if not long enough</strong> 4. The title of the chapter</li>
+</ol>
+<h3>Description Tracks</h3>
+<p>Description tracks are used primarily as an assistive technology helper, these tracks will be read by assistive technology devices for people with visual disabilities (blind or low vission). The cues can be arbitrarily long as long as they don’t contain empty lines (they would signal the beginning of a new cue)</p>
+<pre><code>VTT - Description for Sintel trailer
+
+Sintel's Search -- beginning of the search
+00:00:01.000 --&gt; 00:00:52.000
+Woman walks up a mountain
+Fights an unknown man
+Smoking man (covering full frame) speaks
+Little dragon flies towards the woman before a larger dragon snatches it and flies away. The woman screams trying to grab the smaller flying creature
+</code></pre>
+<h3>Metadata Tracks</h3>
+<p>Metadata Tracks are used to convey any additional information (such as base64 encoded images, JSON, additional text or any additional text-based file format) the developer needs to include in the page based on time indexes. A web app can listen for cue events, extract the text of each cue as it fires, parse the data and then use the results to make DOM changes (or perform other JavaScript or CSS tasks) synchronised with media playback.</p>
+<pre><code>WEBVTT - Example metadata track containing JSON payload
+
+multiCell
+00:01:15.200 --&gt; 00:02:18.800
+{
+&quot;title&quot;: &quot;Multi-celled organisms&quot;,
+&quot;description&quot;: &quot;Multi-celled organisms have different types of cells that perform specialised functions.
+  Most life that can be seen with the naked eye is multi-cellular. These organisms are though to have evolved around 1 billion years ago with plants, animals and fungi having independent evolutionary paths.&quot;,
+&quot;src&quot;: &quot;multiCell.jpg&quot;,
+&quot;href&quot;: &quot;http://en.wikipedia.org/wiki/Multicellular&quot;
+}
+
+insects
+00:02:18.800 --&gt; 00:03:01.600
+{
+&quot;title&quot;: &quot;Insects&quot;,
+&quot;description&quot;: &quot;Insects are the most diverse group of animals on the planet with estimates for the total
+  number of current species range from two million to 50 million. The first insects appeared around
+  400 million years ago, identifiable by a hard exoskeleton, three-part body, six legs, compound eyes
+  and antennae.&quot;,
+&quot;src&quot;: &quot;insects.jpg&quot;,
+&quot;href&quot;: &quot;http://en.wikipedia.org/wiki/Insects&quot;
+}
+</code></pre>
+<p>We can then use Javascript to parse the track content and do something with the track’s content.</p>
+<pre><code class="js">textTrack.oncuechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+  <span class="hljs-comment">// "this" is a textTrack</span>
+  <span class="hljs-keyword">var</span> cue = <span class="hljs-keyword">this</span>.activeCues[<span class="hljs-number">0</span>]; <span class="hljs-comment">// assuming there is only one active cue</span>
+  <span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">JSON</span>.parse(cue.text);
+  <span class="hljs-comment">// do something</span>
+}
+</code></pre>
+<h2>Building the tracks</h2>
+<p>We can build our caption file using the text above as an example, and this is the most common way to caption a video for accessibility.</p>
+<p>We can also build multiple caption tracks as well as a variety of other tracks. Most polyfills will support a subset of the full VTT specification, Playr, the polyfill I’ve selected for these examples, supports captions, descriptions and chapter tracks.</p>
+<h2>Getting the captions to work</h2>
+<h3>Building the tracks</h3>
+<p>(built with information from <a href="http://demosthenes.info/blog/584/Creating-And-Validating-WebVTT-Subtitles">http://demosthenes.info/blog/584/Creating-And-Validating-WebVTT-Subtitles</a>)</p>
+<p>There are no programs that support VTT as a native captioning format. However there are plenty of programs that will create SRT captions, which is very similar to VTT (we’ll discuss the differences later in this section).</p>
+<p>Choose whatever tool will work best for you to generate the SRT file; then follow the instructions below to convert them to VTT files.</p>
+<h4>Converting SRT to VTT</h4>
+<p>Due to their close relationship, conversion from .srt into .vtt is very simple. A typical .srt file will look something like this:</p>
+<pre><code>1
+00:01:21,700 --&gt; 00:01:24,675
+Life on the road is something
+I was raised to embrace.
+</code></pre>
+<p>The process is little more than a find-and-replace:</p>
+<ol>
+<li><p>Add WEBVTT to the first line of the file</p></li>
+<li><p>Convert the comma before the millisecond mark in every timestamp to a decimal point</p></li>
+<li><p>Add styling markup to the subtitle text if needed</p>
+<ol>
+<li>Special characters must be escaped as in HTML (&amp;, &gt;, &lt;)</li>
+<li>You can use CSS classes defined in your CSS file by using &gt;c.XXX&lt;</li>
+</ol></li>
+<li><p>See the section [Cue Payload Tags | #payload] for more information about the specific tags you can use to style your content</p></li>
+</ol>
+<p>The resulting VTT file will look like this:</p>
+<pre><code>WEBVTT
+
+Life
+01:21.700 --&gt; 01:24.675
+Life on the road is something
+I was &lt;i&gt;raised&lt;/i&gt; to embrace.
+</code></pre>
+<p>Save the file with a .vtt extension and link to it from a &lt;track&gt; element in your video.</p>
+<h4>Validating A VTT File</h4>
+<p>It is not hard to make mistakes when creating a VTT track fille. Fortunately there is an <a href="http://quuz.org/webvtt/">online validator</a> to help with authoring.</p>
+<p><img src="//static.webplatform.org/b/b3/vtt-validator.png" alt="Online VTT Validator"></p>
+<p>It is essentially a two step process:</p>
+<ul>
+<li>Paste the text of your VTT file</li>
+<li>Select the type of track you’re working on</li>
+</ul>
+<p>The results will display automatically.</p>
+<h4>Optional Cue Settings</h4>
+<p>Cues can also be styled and moved around the screen relative to the borders of the video. The table below summarizes the settings avalable for cues.</p>
+<h5>Vertical Alignment</h5>
+<p>Name: vertical</p>
+<p>Values: rl (right to left) - lr (left to right)</p>
+<p>What is used for: Vertical text alignment for languages that can be read from top to bottom</p>
+<p>Example: vertical:lr (makes the cue display vertically from left to right)</p>
+<h5>Line Placement / Top Alignment</h5>
+<p>Name: line</p>
+<p>Value [-][0 or larger] (negative or possitive number) or [0-100]%</p>
+<p>What is used for: Absolute references to a particular line number the cue is to be displayed on.</p>
+<p>What is used for: Percentage value indicating the position relative to the top of the frame (when using percentages)</p>
+<ul>
+<li>Line numbers are based on the size of the first line of the cue.</li>
+<li>A negative number counts from the bottom of the frame* Positive numbers from the top</li>
+</ul>
+<h5>Cue Box Size</h5>
+<p>Name: size</p>
+<p>Value: [0-100]%</p>
+<p>What it’s used for: Indicates the size of the cue box. The value is given as a percentage of the width of the frame</p>
+<h5>Text Align</h5>
+<p>Name: align</p>
+<p>Values: start | middle | end</p>
+<p>What it’s used for: Specifies the alignment of the text within the cue. The keywords are relative to the text direction and are the same alignment keywords used in SVG</p>
+<p>The alignment values are similar to those used in SVG. For users of CSS that uses a different terminology, the equivalency is:</p>
+<ul>
+<li>Start alignment: The cue box’s left side (for horizontal cues) or top side (otherwise) is aligned at the text position.</li>
+<li>Middle alignment: The cue box is centered at the text position.</li>
+<li>End alignment: The cue box’s right side (for horizontal cues) or bottom side (otherwise) is aligned at the text position.</li>
+</ul>
+<p><strong>Note: if no cue settings are set, the positioning default to the middle, at the bottom of the frame.</strong></p>
+<h5>Cue positioning</h5>
+<p>Name: position</p>
+<p>Value [0-100]%</p>
+<p>What is used for:</p>
+<p>Percentage value indicating the horizontal alignment relative to the edge of the frame where the text begins (e.g. the left edge in English)</p>
+<p>The value is dependent on the alignment of the cue:</p>
+<ul>
+<li>For left aligned or start aligned cues: 0%.</li>
+<li>For middle aligned cues: 50%.</li>
+<li>For right aligned or end aligned cues: 100%.</li>
+</ul>
+<p>Note: Since the default value of the text track cue text alignment is middle, if there is no text track cue text alignment setting for a cue, the text track cue text position defaults to 50%.</p>
+<p>Note: Even for horizontal cues with right-to-left paragraph direction text, the cue box is positioned from the left edge of the video frame. This allows defining a rendering space template which can be filled with either left-to-right or right-to-left paragraph direction text. If you define such a cue box template with start or end aligned text, make sure to control its size unless you want text to flip from one side of the video frame to the other.</p>
+<h4>Cue Payload Tags</h4>
+<p>These are additional tracks that will allow you to customize the appearance of your tracks. <strong>You cannot use payload tags with chapter tracks</strong></p>
+<h5>Timestamp Tags (Karaoke Style and Paint On Caption Text)</h5>
+<p>Using timestamp tags can build Karaoke Style tracks. You build the track by inserting the correct time stamp where you want the text to change, subject to the following restrictions:</p>
+<ul>
+<li>The timestamp must be greater that the cue’s start timestamp, greater than any previous timestamp in the cue payload, and less than the cue’s end timestamp.</li>
+</ul>
+<!-- -->
+<pre><code>VTT - Example Karaoke Style Track
+
+1
+00:16.500 --&gt; 00:18.500
+When the moon &lt;00:17.500&gt;hits your eye
+
+2
+00:00:18.500 --&gt; 00:00:20.500
+Like a &lt;00:19.000&gt;big-a &lt;00:19.500&gt;pizza &lt;00:20.000&gt;pie
+
+3
+00:00:20.500 --&gt; 00:00:21.500
+That's &lt;00:00:21.000&gt;amore
+</code></pre>
+<p>In the example above:</p>
+<ul>
+<li>The active text is the text between the timestamp and the next timestamp or to the end of the payload if there is not another timestamp in the payload.</li>
+<li>Any text before the active text in the payload is previous text .</li>
+<li>Any text beyond the active text is future text. We can use the previous and future tracks to create the Kraoke experience.</li>
+</ul>
+<p>A possible CSS rule to style the content looks like this.</p>
+<pre><code class="css"><span class="hljs-pseudo">::cue</span><span class="hljs-pseudo">:past</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value">yellow
+</span></span></span>}
+
+<span class="hljs-pseudo">::cue</span><span class="hljs-pseudo">:future</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-shadow</span>:<span class="hljs-value"> black <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">1px</span></span></span>;
+}</span>
+</code></pre>
+<p>Timestamp tags can also be used for Paint On captions, which placed independently from each other and don’t erase what was already on the screen. They are written one letter at a time and they appear to ‘paint on’ the screen.</p>
+<h5>Speaker Semantics</h5>
+<p>You can use a combination of cue positioning and specific markup on individual cues to further emphazise who is speaking in a given caption or subtitle where appropriate.</p>
+<pre><code>WEBVTT - Sintel Caption File With Speaker Semantics
+
+Sage
+00:00:12.000 --&gt; 00:00:15.000 A:middle T:10%
+&lt;v.gatekeeper&gt;What brings you to the land
+of the gatekeepers?
+
+Searching
+00:00:18.500 --&gt; 00:00:20.500 A:middle T:80%
+&lt;v.sintel&gt;I'm searching for someone.
+</code></pre>
+<p>We can style the speaker semantic classes using CSS. For example we can add a different color for each speaker, something like the example below:</p>
+<pre><code class="css"><span class="hljs-tag">video</span><span class="hljs-pseudo">::cue(v</span><span class="hljs-class">.gatekeeper</span>) <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value">lime</span></span>;
+}</span>
+
+<span class="hljs-tag">video</span><span class="hljs-pseudo">::cue(v</span><span class="hljs-class">.sintel</span>) <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#ff00ff</span></span></span>;
+}</span>
+</code></pre>
+<h5>Addtional Style tags</h5>
+<p>The following tags require opening and closing tags.</p>
+<p><strong>Class tag</strong></p>
+<p>Style the contained text using a CSS class.</p>
+<pre><code>Cue 14 - Class tag example
+&lt;c.classname&gt;text&lt;/c&gt;
+</code></pre>
+<p><strong>Italics tag</strong></p>
+<p>Italicize the contained text.</p>
+<pre><code>Example 15 - Italics tag
+&lt;i&gt;text&lt;/i&gt;
+</code></pre>
+<p><strong>Bold tag</strong></p>
+<p>Bold the contained text.</p>
+<pre><code>Example 16 - Bold tag
+&lt;b&gt;text&lt;/b&gt;
+</code></pre>
+<p><strong>Underline tag</strong></p>
+<p>Underline the contained text.</p>
+<pre><code>Example 17 - Underline tag
+&lt;u&gt;text&lt;/u&gt;
+</code></pre>
+<p><strong>Ruby tag / Ruby text tag</strong></p>
+<p>Used together to display ruby characters (i.e. small annotative characters above other characters). Ruby annotations are primarily used in languages with logographic alphabets (Japanese, Chinese, Korean) where a single character may represent a complete word and where the meaning of the character may not be familiar to the reader.</p>
+<dl>
+<dd>
+Ruby characters are small, annotative glosses that can be placed above or to the right of a Chinese character when writing languages with logographic characters such as Chinese or Japanese to show the pronunciation. Typically called just ruby or rubi, such annotations are used as pronunciation guides for characters that are likely to be unfamiliar to the reader.
+</dd>
+<dd>
+</dd>
+<dd>
+From [Wikipedia](http://en.wikipedia.org/wiki/Ruby_character)
+</dd>
+</dl>
+<pre><code>Example 18 - Ruby tag and Ruby text tag
+&lt;ruby&gt;WWW&lt;rt&gt;World Wide Web&lt;/rt&gt;oui&lt;rt&gt;yes&lt;/rt&gt;&lt;/ruby&gt;
+</code></pre>
+<h3>Adding the tracks to the video</h3>
+<p>Either in a supported browser or using one of the polyfills available (like we’ve chosen to do with Playr) we add &lt;track&gt; elements, one for each language of captions that we make available.</p>
+<p>There is one non-standard attribute we will add to the video to make it work with Playr. The code below shows what a video track looks with associated an associated caption track for English.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Sample Captioned Video<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"playr.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"playr.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">video</span>
+  <span class="hljs-attribute">id</span>=<span class="hljs-value">"myvideo"</span>
+  <span class="hljs-attribute">controls</span>=<span class="hljs-value">"controls"</span>
+  <span class="hljs-attribute">class</span>=<span class="hljs-value">"playr_video"</span>
+  <span class="hljs-attribute">width</span>=<span class="hljs-value">"640"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"480"</span>
+  <span class="hljs-attribute">poster</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/poster.png"</span>
+&gt;</span>
+<span class="hljs-comment">&lt;!--
+  These are the three sources. This should cover most of our
+  deployed player base
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.mp4"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/mp4"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.webm"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/webm"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.ogv"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/ogg"</span> /&gt;</span>
+<span class="hljs-comment">&lt;!--
+  This is the captions track
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"English"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel.vtt"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">video</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The working example is located at <a href="http://labs.rivendellweb.net/vtt-demos/basic.html">http://labs.rivendellweb.net/vtt-demos/basic.html</a> and an example without a polyfill (meant to test native browser support) is located at <a href="http://labs.rivendellweb.net/vtt-demos/basic-plain.html">http://labs.rivendellweb.net/vtt-demos/basic-plain.html</a></p>
+<p>The same example without polyfill support and supporting captions in English and Spanish with the English caption being the default. The default attribute will also display the captions automatically</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Sample Captioned Video<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">video</span>
+  <span class="hljs-attribute">id</span>=<span class="hljs-value">"myvideo"</span>
+  <span class="hljs-attribute">controls</span>=<span class="hljs-value">"controls"</span>
+  <span class="hljs-attribute">width</span>=<span class="hljs-value">"640"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"480"</span>
+  <span class="hljs-attribute">poster</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/poster.png"</span>
+&gt;</span>
+<span class="hljs-comment">&lt;!--
+  These are the three sources. This should cover most of our
+  deployed player base
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.mp4"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/mp4"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.webm"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/webm"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.ogv"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/ogg"</span> /&gt;</span>
+<span class="hljs-comment">&lt;!--
+  This is the captions track
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"English"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-en.vtt"</span> <span class="hljs-attribute">default</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Spanish"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-es.vtt"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">video</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The final example contains multiple caption tracks, subtitles in Spanish and descriptions for the video.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Sample Captioned Video<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">video</span>
+  <span class="hljs-attribute">id</span>=<span class="hljs-value">"myvideo"</span>
+  <span class="hljs-attribute">controls</span>=<span class="hljs-value">"controls"</span>
+  <span class="hljs-attribute">width</span>=<span class="hljs-value">"640"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"480"</span>
+  <span class="hljs-attribute">poster</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/poster.png"</span>
+&gt;</span>
+<span class="hljs-comment">&lt;!--
+  These are the three sources. This should cover most of our
+  deployed player base
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.mp4"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/mp4"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.webm"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/webm"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">source</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://media.w3.org/2010/05/sintel/trailer.ogv"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"video/ogg"</span> /&gt;</span>
+<span class="hljs-comment">&lt;!--
+  These are the captions track
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"English"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-en.vtt"</span> <span class="hljs-attribute">default</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Spanish"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-es.vtt"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"de"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"de"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Spanish"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-de.vtt"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">video</span>&gt;</span>
+<span class="hljs-comment">&lt;!--
+  This is the subtitles track
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"subtitles"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"es"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Subtitulos en Español"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-es-subtitles.vtt"</span> /&gt;</span>
+<span class="hljs-comment">&lt;!--
+  These are the description tracks
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">track</span> <span class="hljs-attribute">kind</span>=<span class="hljs-value">"captions"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">srclang</span>=<span class="hljs-value">"en"</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"English"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"sintel-en.vtt"</span> <span class="hljs-attribute">default</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Text tracks and audio</h2>
+<p>Text tracks are not limited to working with just video. They work just the same with audio. The example below (taken from <a href="http://mattcrouch.net/experiments/music-sync/">http://mattcrouch.net/experiments/music-sync/</a>) provides synchronized captions to an audio track.</p>
+<p>Using jQuery, an extract of the audio for the Sintel video and the same captions that we used for the video examples, we change the cues programatically using the video API to display the cues at the matching time.</p>
+<p>As you can see, description tracks would be particularly useful in this case as they would provide a more complete context to the audio.</p>
+<pre><code class="js">jQuery(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// Step below is optional. I don't like taking</span>
+    <span class="hljs-comment">// the option from the user and autoplay the video</span>
+    $(<span class="hljs-string">'audio'</span>).trigger(<span class="hljs-string">"play"</span>);
+    <span class="hljs-keyword">var</span> audio = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"audio"</span>);
+    <span class="hljs-comment">// log the name of the track we're working with</span>
+    <span class="hljs-built_in">console</span>.log(audio.textTracks[<span class="hljs-number">0</span>]);
+
+    audio.textTracks[<span class="hljs-number">0</span>].oncuechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+      $(<span class="hljs-string">"#output"</span>).html(<span class="hljs-string">""</span>); <span class="hljs-comment">// Clear the content of our output region</span>
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.activeCues !== <span class="hljs-literal">null</span>) {
+          <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-keyword">this</span>.activeCues.length;i++) {
+            <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.activeCues[i] !== <span class="hljs-literal">undefined</span>) {
+              $(<span class="hljs-string">"#output"</span>).append(<span class="hljs-keyword">this</span>.activeCues[i].text+<span class="hljs-string">"&lt;br&gt;"</span>);
+            }
+          }
+        }
+      }
+    });
+</code></pre>
+<h2>Additional Tutorials And Tools</h2>
+<ul>
+<li><a href="http://dev.opera.com/articles/view/an-introduction-to-webvtt-and-track/">Opera: An introduction to webvtt and track</a></li>
+<li><a href="http://developer.mozilla.org/en-US/docs/HTML/WebVTT">Mozilla Developer Docs: WebVTT</a></li>
+<li><a href="http://blogs.msdn.com/b/ie/archive/2011/10/12/html5-video-captioning.aspx">MSDN: HTML5 Video Captioning</a></li>
+<li><a href="http://www.delphiki.com/webvtt/">http://www.delphiki.com/webvtt/</a></li>
+<li><a href="http://demosthenes.info/blog/580/Make-Online-Video-Accessible-And-Searchable-With-WebVTT">http://demosthenes.info/blog/580/Make-Online-Video-Accessible-And-Searchable-With-WebVTT</a></li>
+<li><a href="http://www.accessiq.org/news/features/2013/03/webvtt-and-captioning-on-the-web">http://www.accessiq.org/news/features/2013/03/webvtt-and-captioning-on-the-web</a></li>
+<li><a href="http://ie.microsoft.com/testdrive/Graphics/VideoCaptions/">Test Drive Video Captions</a></li>
+<li><a href="http://html5labs.interoperabilitybridges.com/prototypes/video-captioning/video-captioning/info">http://html5labs.interoperabilitybridges.com/prototypes/video-captioning/video-captioning/info</a></li>
+<li><a href="http://ie.microsoft.com/testdrive/Graphics/CaptionMaker/">Microsoft Caption Maker</a></li>
+<li><a href="http://msdn.microsoft.com/library/ie/bg123962.aspx">Timed Text Track Information</a></li>
+<li><a href="http://samples.msdn.microsoft.com/iedevcenter/TextTrack/default.html">Timed Text Tracks examples</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

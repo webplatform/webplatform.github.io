@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>unicode-range · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="unicode-range allows you to set a specific range of characters to be downloaded from a font (embedded using @font-face) and made available for use on the current page." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/unicode-range/">unicode-range</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>unicode-range</h1>
+<h2>Summary</h2>
+<p>unicode-range allows you to set a specific range of characters to be downloaded from a font (embedded using @font-face) and made available for use on the current page.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>U+0-10FFFF</code>
+</dd>
+<dt>Applies to</dt>
+<dd>The <code>@font-face</code> block the property is included inside.
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>Same as the inputted value
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+<dt><a href="/docs/css/concepts/cssom">CSS Object Model Property</a></dt>
+<dd><code>unicodeRange</code>
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>unicode-range: codepoint range</code></li>
+<li><code>unicode-range: multiple value declarations</code></li>
+<li><code>unicode-range: single codepoint</code></li>
+<li><code>unicode-range: wildcard range</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>single codepoint</dt>
+<dd>A single unicode character codepoint, for example <code>unicode-range: U+26</code>.
+</dd>
+<dt>codepoint range</dt>
+<dd>A range of unicode codepoints. So for example, <code>unicode-range: U+0025-00FF</code> means “include all characters in the range U+0025 to U+00FF.”
+</dd>
+<dt>wildcard range</dt>
+<dd>You can specify wildcard characters using the “?” character, so for example <code>unicode-range: U+4??</code> would mean “include all characters in the range U+400 to U+4FF.”
+</dd>
+<dt>multiple value declarations</dt>
+<dd>You can specify multiple single codepoints and/or codepoint groups, delimiting them using commas. For example, <code>unicode-range: U+00-FF, U+980-9FF</code>.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>A single paragraph of HTML, including an ampersand. We have wrapped the ampersand in a <code>&lt;span&gt;</code> element because we want to use a different ampersand from a different font.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Me &amp; You = Us<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/6366676">View live example</a></p>
+<p>The CSS for the example above: you can see that we are in effect defining a completely separate <code>@font-face</code> that only includes a single character in it, meaning that we don’t need to download the entire font to get what we want if it is a hosted font, and if it is a local font as in this example, we can at least cut down on extra markup and styles (we could also do this by wrapping the ampersand in a <code>&lt;span&gt;</code> and applying a different font just to that, but that is an extra element and ruleset!)</p>
+<p>Be aware that Firefox does not yet support <code>unicode-range</code> properly, hence the reason for the second <code>@font-face</code> block. Here we are pointing to an obscure unicode codepoint that will likely never be used in our document, causing Firefox to stop applying the posh Eccentric font to the whole paragraph (definitely not what we want.) — just helvetica is a better fallback.</p>
+<pre><code class="css"><span class="hljs-at_rule">@<span class="hljs-keyword">font-face</span></span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">'Ampersand'</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">local</span>(<span class="hljs-string">'Eccentric STD'</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">unicode-range</span>:<span class="hljs-value"> U+<span class="hljs-number">26</span></span></span>;
+}</span>
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">font-face</span></span> <span class="hljs-rules">{
+    <span class="hljs-comment">/* Ampersand fallback font */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">'Ampersand'</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">local</span>(<span class="hljs-string">'helvetica'</span>)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">unicode-range</span>:<span class="hljs-value"> U+<span class="hljs-number">270</span>C</span></span>;
+}</span>
+
+<span class="hljs-tag">p</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#faf</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">letter-spacing</span>:<span class="hljs-value"> -<span class="hljs-number">0.05em</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">64px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> Ampersand, helvetica, sans-serif</span></span>;
+}</span>
+</code></pre>
+<h2>Usage</h2>
+<pre><code> * As the examples above show, you can use unicode-range to create a custom @font-face that contains only the characters you need to be downloaded, saving on bandwidth.
+</code></pre>
+<ul>
+<li>You should always include a fallback font that is acceptable in case your <code>unicode-range @font-face</code> is not supported.</li>
+<li>Support for <code>unicode-range</code> is currently limited; Chrome and Safari supports it well, Internet Explorer supports is as of version 9, Opera supports it, Firefox <em>doesn’t</em> support it.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css-fonts-3/#descdef-unicode-range">CSS Fonts Module Level 3</a></dt>
+<dd>Candidate Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://24ways.org/2011/creating-custom-font-stacks-with-unicode-range/">Creating custom font stacks with unicode-range</a></li>
+<li><a href="http://www.rishida.net/tools/conversion/">Unicode code converter</a></li>
+<li><a href="http://rishida.net/scripts/uniview/">UniView</a> web-based tool for viewing and working with Unicode codepoints</li>
+<li><a href="http://rishida.net/blog/?p=760">Using unicode-range in @font-face in CSS</a></li>
+<li><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters">List of Unicode Characters</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

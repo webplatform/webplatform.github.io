@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MSEPrimer · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Note: this article is in progress.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/MSEPrimer/">MSEPrimer</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>MSEPrimer</h1>
+<p><strong>By Jay Munro [msft]</strong></p>
+<h2>Summary</h2>
+<p>Note: this article is in progress.</p>
+<p>This guide gives you a basic look at Media Source Extensions(MSE), what they are, and how to use them to create add-on free video streaming. An example is presented that uses MSE and MPEG-DASH file to stream content from a single video file as source and used XMLHttpRequest to get segments. This is just one of several ways to stream content.</p>
+<h3>Introduction</h3>
+<p><a href="http://www.w3.org/TR/media-source/">Media Source Extensions (MSE)</a> as adds buffer-based source options to HTML5 media for streaming support. Previously, you had to download a complete video file to play, or use an add-on like Silverlight or Adobe Flash to stream media. With MSE, no client add-ons are required for streaming. Additionally, you can stream video from a standard HTTP server. A special media server is not required. The <a href="http://code.webplatform.org/gist/9144919/">example</a> described here uses un-prefixed APIs, and runs in Internet Explorer 11. The sample loads in the latest Chrome, but won’t load the video, possibly because the source video is MP4.</p>
+<h3>MSE Overview</h3>
+<p>The primary addition to HTML5 media is the MediaSource object. The MediaSource object takes the place of a file URL as the src on a video object.</p>
+<pre><code class="js">   mediaSource = <span class="hljs-keyword">new</span> <span class="hljs-built_in">window</span>.MediaSource();  <span class="hljs-comment">// Create a new object</span>
+   <span class="hljs-keyword">var</span> url = URL.createObjectURL(mediaSource); <span class="hljs-comment">// Make a URL from it</span>
+   videoElement.src = url; <span class="hljs-comment">// Video is now pointing at the mediaSource object</span>
+</code></pre>
+<p>Source buffers are added to the MediaSource object and filled with media data from segmented files. The HTML5 audio or video element does not know whether it’s playing a file or a buffer.</p>
+<pre><code class="js">   mediaSource.addEventListener(<span class="hljs-string">'sourceopen'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-keyword">var</span> videoSource = mediaSource.addSourceBuffer(<span class="hljs-string">'video/mp4'</span>);
+   videoSource.appendBuffer(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>([video content]));
+   }, <span class="hljs-literal">false</span>);
+</code></pre>
+<p>Once the sourceBuffer is added, media content can be appended into the buffer. Content can be from a single source, or several sources or files. You can store files of different quality or resolution on different servers to provide load balancing or better connections.</p>
+<p>With the MediaSource object connected to the video object, you can append data to the buffers using any number of file request schemes. The example shown here uses a single video file, with a segment list defined in a Media Presentation Description (mpd) file. The buffer can be loaded using separate files. The only requirement is that when video starts, you must “prime the pump” so to speak by loading an initialization segment. The video initialization segment sets up codec, bitrate, resolution, and other parameters.</p>
+<p>If you’re serving from a single video file like the example here, or all of your individual file segments have the exact same codec, bitrate, etc, then you just need to initialize once. If you change bitrates, or insert a commercial with different parameters, you’ll need to load the initialization segment for the new stream. When you return to your regular content, you’ll also have to re-initialize the video object.</p>
+<h3>Using MSE on your page</h3>
+<p>The MSE API itself is a simple concept and basically follows these steps:</p>
+<ol>
+<li>Define an HTML5 video element in the HTML section of a page.</li>
+<li>Create a MediaSource object in JavaScript.</li>
+<li>Create a virtual URL using createObjectURL with the MediaSource object as the source.</li>
+<li>Assign the virtual URL to the video element’s src property.</li>
+<li>Create a SourceBuffer using addSourceBuffer with the mime type of the video you’re adding.</li>
+<li>Get the video initialization segment from the media file online and add it to the SourceBuffer with appendBuffer.</li>
+<li>Get the segments of video data from the media file, append them to the SourceBuffer with appendBuffer.</li>
+<li>Call the play method on the video element.</li>
+<li>Repeat step 7 until done.</li>
+<li>. Clean up.</li>
+</ol>
+<p>These are the basic list of steps for using MSE. However your player needs to know where files are located, what kind of video file is coming (MP4 or WebM), and what the segments are. If it’s a single segmented file, what the segments are, usually in a byte range.</p>
+<p>For the example here, we’re going to use a single file that’s segmented, and uses a Media Presentation Description file for the list of segments. We’ll go through how to setup the demo, and then discuss how the MPD file is built later. Since an MPD file is XML, to get around some server issues, we’ve renamed the file .xml in the <a href="http://code.webplatform.org/gist/9144919/">example</a>.</p>
+<p>Since MSE is fairly basic, the majority of the example here is about getting video segments and handling the UI of the page. This example could be simplified by creating a segment list array, and hard-coding the file names and ranges.</p>
+<h3>The HTML5 video element</h3>
+<p>The HTML that you need to use with MSE is very simple. It consists of a video element with any associated fall back code. The snippet below includes an Input Element field to define an MPD file, a play button, and some</p>
+<p>areas to display results we get from the MPD file. The video element has the autoplay attribute set, but no src or controls attributes. The source for the video element is set in the script code by the information we’ll get from the MPD file, and the play/pause control is done with the Play button. The Play button’s click event is later handled in the JavaScript code with an addEventListener() rather than using the onclick() event on the element itself. In the online example, you can also click the video control to play or pause.</p>
+<pre><code class="js">   &lt;label&gt;Enter .mpd file:
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"filename"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"di_dash.mpd"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"load"</span>&gt;</span>Play<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- some areas to display info and content --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"videoInfo"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Index: <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"curIndex"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span> of <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"numIndexes"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Segment length: <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"segLength"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Video time: <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"curTime"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">video</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"myVideo"</span> <span class="hljs-attribute">autoplay</span>=<span class="hljs-value">"autoplay"</span> &gt;</span>No video available<span class="hljs-tag">&lt;/<span class="hljs-title">video</span>&gt;</span>
+</span></code></pre>
+<p>The architecture of the page puts the &lt;script&gt; tags below the HTML code in the &lt;body&gt; of the page. This adds efficiency by ensuring that the HTML elements have finished loading before the script starts.</p>
+<h3>Handling play and pause</h3>
+<p>In the example, to play a DASH file click the Play button. Because the intrinsic controls are turned off on the video element, the play button code event handler plays or pauses the current video. The play button’s behavior is conditional:</p>
+<ul>
+<li>If the video element is paused (its initial state), and the MPD file hasn’t been loaded before, the getData() function is called to load and parse the MPD file.</li>
+<li>If the video is paused, but the file was loaded and hasn’t changed, only the play method is called.</li>
+<li>If the file name in the input field has changed, and the video is paused, the new file is loaded and then played.</li>
+<li>If the video is playing, the pause method is called so the user can stop and start the video.</li>
+</ul>
+<pre><code class="js">    playButton.addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">//  If video is paused then check for file change</span>
+      <span class="hljs-keyword">if</span> (videoElement.paused == <span class="hljs-literal">true</span>) {
+        <span class="hljs-comment">// Retrieve mpd file, and set up video</span>
+        <span class="hljs-keyword">var</span> curMpd = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"filename"</span>).value;
+        <span class="hljs-comment">//  If current mpd file is different then last mpd file, load it.</span>
+        <span class="hljs-keyword">if</span> (curMpd != lastMpd) {
+          <span class="hljs-comment">//  Cancel display of current video position</span>
+          <span class="hljs-built_in">window</span>.cancelAnimationFrame(requestId);
+          lastMpd = curMpd;
+          getData(curMpd);
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-comment">//  No change, just play</span>
+          videoElement.play();
+        }
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">//  Video was playing, now pause it</span>
+        videoElement.pause();
+      }
+    }, <span class="hljs-literal">false</span>);
+</code></pre>
+<p>To keep the button labels in sync with the state of the video element, the paused and playing events are used to handle switching the button’s label between Play and Pause.</p>
+<pre><code class="js"><span class="hljs-comment">// handler to switch button text to Play</span>
+videoElement.addEventListener(<span class="hljs-string">"pause"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  playButton.innerText = <span class="hljs-string">"Play"</span>;
+}, <span class="hljs-literal">false</span>);
+</code></pre>
+<pre><code class="js"><span class="hljs-comment">// handler to switch button text to pause</span>
+videoElement.addEventListener(<span class="hljs-string">"playing"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  playButton.innerText = <span class="hljs-string">"Pause"</span>;
+}, <span class="hljs-literal">false</span>);
+</code></pre>
+<h3>Getting the .mpd file and DASH parameters</h3>
+<p>The Media Presentation Description is an XML file that describes how the media is segmented, the type and codec (MP4 here), the bit rate, length, and basic segment size of the video. Some MPD files include audio info, and you can split content into separate streams for the video and audio players. The example shown here only uses a single buffer for both video and audio.</p>
+<pre><code class="js"><span class="hljs-comment">// gets the mpd file and parses it</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getData</span>(<span class="hljs-params">url</span>) </span>{
+  <span class="hljs-keyword">if</span> (url !== <span class="hljs-string">""</span>) {
+    <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest(); <span class="hljs-comment">// Set up xhr request</span>
+    xhr.open(<span class="hljs-string">"GET"</span>, url, <span class="hljs-literal">true</span>); <span class="hljs-comment">// Open the request</span>
+    xhr.responseType = <span class="hljs-string">"text"</span>; <span class="hljs-comment">// Set the type of response expected</span>
+    xhr.send();
+
+    <span class="hljs-comment">//  Asynchronously wait for the data to return</span>
+    xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">if</span> (xhr.readyState == xhr.DONE) {
+        <span class="hljs-keyword">var</span> tempoutput = xhr.response;
+        <span class="hljs-keyword">var</span> parser = <span class="hljs-keyword">new</span> DOMParser(); <span class="hljs-comment">//  create a parser object</span>
+
+        <span class="hljs-comment">//  create an xml doc from .mpd file for searching</span>
+        <span class="hljs-keyword">var</span> xmlData = parser.parseFromString(tempoutput, <span class="hljs-string">"text/xml"</span>, <span class="hljs-number">0</span>);
+        log(<span class="hljs-string">"parsing mpd file"</span>);
+
+        <span class="hljs-comment">// Get and display the parameters of the .mpd file</span>
+        getFileType(xmlData);
+
+        <span class="hljs-comment">// set up video object, buffers, etc</span>
+        setupVideo();
+
+        <span class="hljs-comment">// initialize a few variables on reload</span>
+        clearVars();
+      }
+    }
+
+    <span class="hljs-comment">//  Report errors if they happen during xhr</span>
+    xhr.addEventListener(<span class="hljs-string">"error"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+      log(<span class="hljs-string">"Error: "</span> + e + <span class="hljs-string">" Could not load url."</span>);
+    }, <span class="hljs-literal">false</span>);
+  }
+}
+</code></pre>
+<p>This example uses the XMLHttpRequest object to retrieve the MPD file into the response attribute, tempoutput. We create a DOMParser object and parse the MPD file data into an XML document. We want an XML document (xmlData) to use querySelectorAll and getAttribute methods to extract the value of the XML nodes in the file.</p>
+<p>The following code queries our new XML document and pulls out the individual data points we want to display. The byte range segments are loaded into an array called segments. With the help of an index, we’ll use the segments[] array to download the video segments.</p>
+<pre><code class="js"><span class="hljs-comment">// retrieve parameters from our stored .mpd file</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFileType</span>(<span class="hljs-params">data</span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    adaptationSet = data.querySelectorAll(<span class="hljs-string">"AdaptationSet"</span>);
+
+    bitSwitch = data.querySelectorAll(<span class="hljs-string">"bitstreamSwitching"</span>); <span class="hljs-comment">//adaptationSet[0].getAttribute("bitstreamSwitching");</span>
+
+
+    file = data.querySelectorAll(<span class="hljs-string">"BaseURL"</span>)[<span class="hljs-number">0</span>].textContent.toString();
+    <span class="hljs-keyword">var</span> rep = data.querySelectorAll(<span class="hljs-string">"Representation"</span>);
+    type = rep[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"mimeType"</span>);
+    codecs = rep[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"codecs"</span>);
+    width = rep[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"width"</span>);
+    height = rep[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"height"</span>);
+    bandwidth = rep[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"bandwidth"</span>);
+
+    <span class="hljs-keyword">var</span> ini = data.querySelectorAll(<span class="hljs-string">"Initialization"</span>); <span class="hljs-comment">// get the initialization</span>
+    initialization = ini[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"range"</span>);
+    segments = data.querySelectorAll(<span class="hljs-string">"SegmentURL"</span>);
+
+    <span class="hljs-comment">// get the length of the video per the .mpd file</span>
+    <span class="hljs-comment">//   since the video.duration will always say infinity</span>
+    <span class="hljs-keyword">var</span> period = data.querySelectorAll(<span class="hljs-string">"Period"</span>);
+    <span class="hljs-keyword">var</span> vidTempDuration = period[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"duration"</span>);
+    parseDuration(vidTempDuration); <span class="hljs-comment">// display length</span>
+
+    <span class="hljs-keyword">var</span> segList = data.querySelectorAll(<span class="hljs-string">"SegmentList"</span>);
+    segDuration = segList[<span class="hljs-number">0</span>].getAttribute(<span class="hljs-string">"duration"</span>);
+  } <span class="hljs-keyword">catch</span> (er) {
+    log(er);
+    <span class="hljs-keyword">return</span>;
+  }
+  showTypes();  <span class="hljs-comment">// Display parameters</span>
+}
+
+<span class="hljs-comment">// Display parameters from the .mpd file</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showTypes</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> display = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"mydiv"</span>);
+  display.innerHTML = <span class="hljs-string">""</span>; <span class="hljs-comment">// clear display first</span>
+  display.innerHTML += <span class="hljs-string">"&lt;br/&gt;Media file: "</span> + file + <span class="hljs-string">"&lt;br/&gt;"</span>;
+  display.innerHTML += <span class="hljs-string">"Type: "</span> + type + <span class="hljs-string">"&lt;br/&gt;"</span>;
+  display.innerHTML += <span class="hljs-string">"Codecs: "</span> + codecs + <span class="hljs-string">"&lt;br/&gt;"</span>;
+  display.innerHTML += <span class="hljs-string">"Width: "</span> + width + <span class="hljs-string">" -- "</span>;
+  display.innerHTML += <span class="hljs-string">"Height: "</span> + height + <span class="hljs-string">"&lt;br/&gt;"</span>;
+  display.innerHTML += <span class="hljs-string">"Bandwidth: "</span> + bandwidth + <span class="hljs-string">"&lt;br/&gt;"</span>;
+  display.innerHTML += <span class="hljs-string">"Initialization Range: "</span> + initialization + <span class="hljs-string">"&lt;br/&gt;"</span>;
+  display.innerHTML += <span class="hljs-string">"Segment length: "</span> + segDuration / <span class="hljs-number">1000</span> + <span class="hljs-string">" seconds"</span>;
+  <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"numIndexes"</span>).innerText = segments.length;
+
+}
+</code></pre>
+<p>The <code>getData()</code> function calls <code>getFileType()</code> function fills global variables with the information from the MPD file. We then call the <code>showTypes()</code> function to display the parameters to the screen.</p>
+<h3>Setting up video and buffers</h3>
+<p>After the MPD file has been parsed, the media content pointed to in the MPD file is retrieved and played. When getting and playing video data, timing is very important. In an app that only plays a single resolution, the number of segments in the buffer isn’t a big concern; however, you don’t want to use up too much memory. If you’re playing low resolution because of a slow network, you’ll want to be ready to download a higher resolution video segment the next time the network speeds increases. In this case, you might not want to get too far ahead of the current playing segment.</p>
+<p>The play process goes like this:</p>
+<ol>
+<li>Download the video’s initialization segment to the buffer and play it.</li>
+<li>Download a segment of video to the buffer, and play it.</li>
+<li>Repeat step 2 until all segments have been played.</li>
+</ol>
+<p>DASH media segments are downloaded and appended to the buffer, which is then played by the HTML5 video element. The MediaSource buffer takes the place of a file URL for the src of these elements. The addSourceBuffer method creates and adds a buffer to the MediaSource object. The removeSourceBuffer removes an existing SourceBuffer from the MediaSource object. The appendBuffer method adds media data to a SourceBuffer.</p>
+<pre><code class="js">      <span class="hljs-comment">//  Create the media source</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.MediaSource) {
+        mediaSource = <span class="hljs-keyword">new</span> <span class="hljs-built_in">window</span>.MediaSource();
+       } <span class="hljs-keyword">else</span> {
+        log(<span class="hljs-string">"mediasource or syntax not supported"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">var</span> url = URL.createObjectURL(mediaSource);
+      videoElement.pause();
+      videoElement.src = url;
+      videoElement.width = width;
+      videoElement.height = height;
+
+      <span class="hljs-comment">// Wait for event that tells us that our media source object is</span>
+      <span class="hljs-comment">//   ready for a buffer to be added.</span>
+      mediaSource.addEventListener(<span class="hljs-string">'sourceopen'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-keyword">try</span> {
+          videoSource = mediaSource.addSourceBuffer(<span class="hljs-string">'video/mp4'</span>);
+          initVideo(initialization, file);
+        } <span class="hljs-keyword">catch</span> (e) {
+          log(<span class="hljs-string">'Exception calling addSourceBuffer for video'</span>, e);
+          <span class="hljs-keyword">return</span>;
+        }
+      },<span class="hljs-literal">false</span>);
+</code></pre>
+<p>To get individual segments from a single video file, we use setRequestHeader to specify a byte range for each segment in the file. These byte ranges are specified in the segment list we get from the MPD file. The XHR response property is typecast to a Uint8Array and appended to the source buffer.</p>
+<p>The <code>initVideo()</code> function in the example downloads the initialization segment from the video file and puts it into the SourceBuffer.</p>
+<p>The XHR request are asynchronous. To ensure functions are called at the right time, the readystatechange event is used. When readystatechange fires, the readyState property is checked. If it’s equal to xhr.DONE, the response attribute (media data) is added to the source buffer as a Uint8Array.</p>
+<pre><code class="js">    <span class="hljs-comment">//  Load video's initialization segment</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initVideo</span>(<span class="hljs-params">range, url</span>) </span>{
+      <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+      <span class="hljs-keyword">if</span> (range || url) { <span class="hljs-comment">// make sure we've got incoming params</span>
+
+        <span class="hljs-comment">// Set the desired range of bytes we want from the mp4 video file</span>
+        xhr.open(<span class="hljs-string">'GET'</span>, url);
+        xhr.setRequestHeader(<span class="hljs-string">"Range"</span>, <span class="hljs-string">"bytes="</span> + range);
+        segCheck = (timeToDownload(range) * <span class="hljs-number">.8</span>).toFixed(<span class="hljs-number">3</span>); <span class="hljs-comment">// use .8 as fudge factor</span>
+        xhr.send();
+        xhr.responseType = <span class="hljs-string">'arraybuffer'</span>;
+        <span class="hljs-keyword">try</span> {
+          xhr.addEventListener(<span class="hljs-string">"readystatechange"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+             <span class="hljs-keyword">if</span> (xhr.readyState == xhr.DONE) { <span class="hljs-comment">// wait for video to load</span>
+              <span class="hljs-comment">// Add response to buffer</span>
+              <span class="hljs-keyword">try</span> {
+                videoSource.appendBuffer(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(xhr.response));
+                <span class="hljs-comment">// Wait for the update complete event before continuing</span>
+                videoSource.addEventListener(<span class="hljs-string">"update"</span>,updateFunct, <span class="hljs-literal">false</span>);
+
+              } <span class="hljs-keyword">catch</span> (e) {
+                log(<span class="hljs-string">'Exception while appending initialization content'</span>, e);
+              }
+            }
+          }, <span class="hljs-literal">false</span>);
+        } <span class="hljs-keyword">catch</span> (e) {
+          log(e);
+        }
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-comment">// No value for range or url</span>
+      }
+    }
+</code></pre>
+<p>The sourceBuffer’s update event is used to see when the data has finished loading. When the media has finished loading into the SourceBuffer, the bufferUpdated flag is set. This flag is used later to check that the initialization content from the MP4 file is actually completed first.</p>
+<h3>Feeding the buffer</h3>
+<p>After the initialization data is loaded, the media segments start to load and play. In this example, the first segment of data is loaded outside of the regular play loop. This is a small hack to get the video started because the main loop that drives the segment request and buffer maintenance is based on the video playing, and at initialization, the video is paused. After the first segment is loaded and is playing, the video update method is called and the loop starts.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateFunct</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">//  This is a one shot function, when init segment finishes loading,</span>
+      <span class="hljs-comment">//    update the buffer flag, call getStarted, and then remove this event.</span>
+      bufferUpdated = <span class="hljs-literal">true</span>;
+      getStarted(file); <span class="hljs-comment">// Get video playback started</span>
+      <span class="hljs-comment">//  Now that video has started, remove the event listener      videoSource.removeEventListener("update", updateFunct);</span>
+    }
+
+    <span class="hljs-comment">//  Play our file segments</span>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getStarted</span>(<span class="hljs-params">url</span>) </span>{
+
+      <span class="hljs-comment">//  Start by loading the first segment of media</span>
+      playSegment(segments[index].getAttribute(<span class="hljs-string">"mediaRange"</span>).toString(), url);
+
+      <span class="hljs-comment">// Start showing video time</span>
+      requestId = <span class="hljs-built_in">window</span>.requestAnimationFrame(render);
+
+      <span class="hljs-comment">// Display current index</span>
+      curIndex.textContent = index + <span class="hljs-number">1</span>;
+      index++;
+
+      <span class="hljs-comment">//  Continue in a loop where approximately every x seconds reload the buffer</span>
+      videoElement.addEventListener(<span class="hljs-string">"timeupdate"</span>, fileChecks, <span class="hljs-literal">false</span>);
+
+    }
+</code></pre>
+<p>To keep the video element playing, media segments are requested based on the time length of the current segment. The example uses a 20% fudge factor to ensure the content gets downloaded in time. If the current segment has 10 seconds of video, the next segment is requested after 8 seconds, or 80% of the segment total. This gives a small amount of extra time to request the segment, but doesn’t eat up memory so quickly. This example gets the length of the segment (timeToDownload(range)) and multiplies it by .8, or 80%. The result is stored in the segCheck global variable used to calculate when to get the next segment.</p>
+<pre><code class="js">          xhr.addEventListener(<span class="hljs-string">"readystatechange"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">if</span> (xhr.readyState == xhr.DONE) { <span class="hljs-comment">//wait for video to load</span>
+              <span class="hljs-comment">//  Calculate when to get next segment based on time of current one</span>
+                segCheck = (timeToDownload(range) * <span class="hljs-number">.8</span>).toFixed(<span class="hljs-number">3</span>); <span class="hljs-comment">// Use .8 as fudge factor</span>
+                segLength.textContent = segCheck;
+              <span class="hljs-comment">// Add received content to the buffer</span>
+              <span class="hljs-keyword">try</span> {
+                videoSource.appendBuffer(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(xhr.response));
+              } <span class="hljs-keyword">catch</span> (e) {
+                log(<span class="hljs-string">'Exception while appending'</span>, e);
+              }
+            }
+          }, <span class="hljs-literal">false</span>);
+</code></pre>
+<p>To calculate the time length of the current segment, we use the formula: time = (size * 8) / bitrate. The byte range is stored in the MPD file as xxxx-yyyy, or start-end. The example splits the string and subtracts the start from the end to get the size in bytes of the current segment. That value is multiplied by 8 to convert bytes to bits, and then divided by the bitrate. The bitrate of the media file is specified by the MPD file as bandwidth. The result is the time in seconds that the current segment takes to play.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timeToDownload</span>(<span class="hljs-params">range</span>) </span>{
+  <span class="hljs-keyword">var</span> vidDur = range.split(<span class="hljs-string">"-"</span>);
+  <span class="hljs-comment">// time = size * 8 / bitrate</span>
+  <span class="hljs-keyword">return</span> (((vidDur[<span class="hljs-number">1</span>] - vidDur[<span class="hljs-number">0</span>]) * <span class="hljs-number">8</span>) / bandwidth)
+}
+</code></pre>
+<p>It might seem like overkill to calculate the length in time of each segment when the MPD file gives us the duration of the segments as a parameter. Unfortunately, the duration parameter seems to be only a suggestion. In practice, the segments are often shorter or longer than the stated duration. The actual value depends on how the DASH MP4 file was segmented. The DASH tool tries to make segment breaks on keyframes, so the time depends on how often the video compression sets a keyframe. In a compressed video codec like MP4, a keyframe is a fully rendered frame, and is followed by a series of frames that contain only the changes for movement in the frame. The frequency of keyframes vary based on the amount of change, either action within a frame, or a scene change.</p>
+<p>The playback loop uses the video element’s timeupdate event to drive when to get the next segment. When the event fires, it calls the fileChecks() function. fileChecks() first compares the current index with the total elements of the array of segments and continues if there are still segments left. Next, fileChecks() calculates the amount of time that the current segment has been playing. If this value is greater or equal to the total time we calculated for the segment, then the next segment of media data is requested.</p>
+<p>This loop continues until all the segments have been loaded and played. When the index matches the number of segments, the removeEventListener method is called to stop the timeupdate event.</p>
+<pre><code class="js"><span class="hljs-comment">//  get video segments</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fileChecks</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (bufferUpdated == <span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">if</span> (index &lt; segments.length) {
+      <span class="hljs-comment">//  loads next segment when time is close to the end of the last loaded segment</span>
+      <span class="hljs-keyword">if</span> ((videoElement.currentTime - lastTime) &gt;= segCheck) {
+        playSegment(segments[index].getAttribute(<span class="hljs-string">"mediaRange"</span>).toString(), file);
+        lastTime = videoElement.currentTime;
+        curIndex.textContent = index + <span class="hljs-number">1</span>;<span class="hljs-comment">// display current index</span>
+        index++;
+      }
+    } <span class="hljs-keyword">else</span> {
+      videoElement.removeEventListener(<span class="hljs-string">"timeupdate"</span>, fileChecks, <span class="hljs-literal">false</span>);
+    }
+  }
+}
+</code></pre>
+<p>The PlaySegment() function downloads the media data and puts it into the source buffer. The function is called with a media byte range for the segment and the URL of the MP4 file.</p>
+<pre><code class="js"><span class="hljs-comment">//  Play segment plays a byte range (format nnnn-nnnnn) of a media file</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSegment</span>(<span class="hljs-params">range, url</span>) </span>{
+  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+  <span class="hljs-keyword">if</span> (range || url) { <span class="hljs-comment">// make sure we've got incoming params</span>
+    xhr.open(<span class="hljs-string">'GET'</span>, url);
+    xhr.setRequestHeader(<span class="hljs-string">"Range"</span>, <span class="hljs-string">"bytes="</span> + range);
+    xhr.send();
+    xhr.responseType = <span class="hljs-string">'arraybuffer'</span>;
+    <span class="hljs-keyword">try</span> {
+      xhr.addEventListener(<span class="hljs-string">"readystatechange"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">if</span> (xhr.readyState == xhr.DONE) { <span class="hljs-comment">// wait for video to load</span>
+          <span class="hljs-comment">//  Calculate when to get next segment based on time of current one</span>
+          <span class="hljs-comment">//    Use .8 as fudge factor</span>
+            segCheck = (timeToDownload(range) * <span class="hljs-number">.8</span>).toFixed(<span class="hljs-number">3</span>);
+            segLength.textContent = segCheck;
+          <span class="hljs-comment">// add response to buffer</span>
+          <span class="hljs-keyword">try</span> {
+            videoSource.appendBuffer(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(xhr.response));
+            videoSource.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+              <span class="hljs-keyword">if</span> (videoSource.readyState == videoSource.done) {
+                videoElement.play();
+              }
+            };
+          } <span class="hljs-keyword">catch</span> (e) {
+            log(<span class="hljs-string">'Exception while appending'</span>, e);
+          }
+        }
+      }, <span class="hljs-literal">false</span>);
+    } <span class="hljs-keyword">catch</span> (e) {
+      log(e);
+      <span class="hljs-keyword">return</span> <span class="hljs-comment">// no value for range</span>
+    }
+  }
+}
+</code></pre>
+<p>To sum up, after the initialization process is complete, the timeupdate event drives the download and playback of segments. When the current segment has played approximately 90% of the way through, another segment is downloaded and added to the buffer and the play method is called.</p>
+<h3>Making DASH and Media presentation description (MPD) files</h3>
+<p>The MPEG-DASH spec describes a how media files are segmented, and is relatively agnostic on codecs. MPEG-DASH is a container which can contain WebM or MP4 files. Segmented files can consist of a series of small single files, or a large file with indexed sections that are downloaded and played sequentially. When you use short segments of video, rather than long pieces, it’s easier to do other tasks like inserting ads or changing quality.</p>
+<p>The W3C spec on MSE doesn’t state a specific codec, but in general, video file support can be WebM or ISO BMFF (segmented MP4) and can vary with browser.</p>
+<p>The MPEG-DASH MPD is an XML file that contains a description of all the info you’ll need to play a video file. To get started, you need the video mime type, the list of segment urls, or the list of segment offsets (in bytes) if in a single file. Depending on what you’re showing, you might want</p>
+<p>One way to make an MPD file is with the MP4box command line utility. MP4Box is an open source multimedia packaging tool by GPAC that can create a DASH segmented MP4 and associated MPD file. For more info about MP4Box and to download binaries, see GPAC MP4Box or view documentation.</p>
+<p>To create a single segmented MP4 and associated MPD file, start by installing MP4Box. Then, call MP4Box on the command line with this syntax:</p>
+<p><code>mp4box -dash 10000 -frag 1000 -rap path\yourfile.mp4</code></p>
+<p>MP4Box creates two files with _dash appended to the name, an MP4 and an MPD file. In this example, it creates yourfile_dash.mp4 and yourfile_dashs.mpd with 10 second segments and 1 second fragments. The -rap flag tells MP4Box to try to make segments break on a keyframe or start of a decoding sequence. While we’re asking for 10 second segments, the actual duration of each segment may vary. For more info about MPD files, see MPEG-DASH Tutorial.</p>
+<h3>Where to go from here</h3>
+<p>The example presented here shows how to create and attach buffers to the HTML5 video element and read one type of MPD file to get segments of video from a single file. As we’ve said, you can also use an MPD file to describe a number of small video files rather than segments in a single larger file. To work with that type of MPD setup, you can modify the code that reads the segment section of the MPD file to get individual URLs. This eliminates the need to use setRequestHeader because you’d be getting the whole file with XHR.</p>
+<p>The code here uses only Media Source Extensions and HTML5 video elements. You might want to provide a fallback such as Adobe Flash or Silverlight for browsers that don’t support HTML5 video and MSE.</p>
+<p>Rather than writing all this code yourself, take a look at the dash.js library and reference player. Dash.js is an opensource library and player that is supported by many industry media companies, including Microsoft. Dash.js is a modular library with components that can be replaced or rewritten as needed. For large companies, this gives the flexibility of creating modules that handle special needs. For more info see dash.js on GitHub.</p>
+<h2>Usage</h2>
+<pre><code> The sample runs in Internet Explorer 11, loads in Chrome but the video won't play (not WebM?)
+</code></pre>
+<p>The example needs a DASH WebM mpd and video file.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Video</h4>
+<ul>
+<li><p><a href="/docs/apis/audio-video">audio-video</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/enabled">enabled</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/language">language</a></p></li>
+<li><p><a href="/docs/concepts/Internet_and_Web/webrtc">WebRTC</a></p></li>
+<li><p><a href="/docs/css/properties/object-fit">object-fit</a></p></li>
+<li><p><a href="/docs/html/elements/embed">EMBED</a></p></li>
+<li><p><a href="/docs/html/elements/video">video</a></p></li>
+<li><p><strong>MSEPrimer</strong></p></li>
+<li><p><a href="/docs/tutorials/video_others">HTML5 Video and Other Recommendations</a></p></li>
+<li><p><a href="/docs/tutorials/webrtc_resources">WebRTC Resources</a></p></li>
+</ul>
+<h4>XHR</h4>
+<ul>
+<li><p><a href="/docs/apis/xhr">XMLHttpRequest (XHR) API</a></p></li>
+<li><p><a href="/docs/apis/xhr/XMLHttpRequest">XMLHttpRequest</a></p></li>
+<li><p><a href="/docs/dom/FormData">FormData</a></p></li>
+<li><p><strong>MSEPrimer</strong></p></li>
+<li><p><a href="/docs/tutorials/file_xhr">file xhr</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/media-source/">W3C Media Source Extensions</a></li>
+<li><a href="http://samples.msdn.microsoft.com/Workshop/samples/media/mpdExampleWP.html">Simple MPEG-DASH streaming player</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

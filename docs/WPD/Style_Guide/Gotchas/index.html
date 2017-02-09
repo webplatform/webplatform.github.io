@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gotchas · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Style_Guide/">WPD/Style Guide</a></li><li><a href="/docs/WPD/Style_Guide/Gotchas/">Gotchas</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Gotchas</h1>
+<p>Gotchas, gaaks, traps, pratfalls, syntax errors - every language is full of them, and MediaWiki markup is no exception. This article lists those that we’ve discovered as we build this site and work with content. Wherever possible, a work-around is provided.</p>
+<h1>The dreaded pipe character</h1>
+<blockquote>
+<p>“You wanna come over? It’s pipe night!” -Kramer on <em>Seinfeld</em></p>
+</blockquote>
+<p><strong>What happens</strong></p>
+<p>The content you’ve entered in the <strong>Content</strong> text field contains a pipe character (<strong>|</strong>). When you click <strong>Save page</strong> all of the text including and following the pipe character disappears.</p>
+<p>A pipe character in a Semantic MediaWiki form gets interpreted as a parameter separator for the template call. When you edit a page via <strong>Edit</strong> (&amp;action=formedit in the URL) everything you enter in the <strong>Content</strong> text field is contained in a form that calls a template to render the content. So the rendering engine hits the pipe and stops generating the form (unless the characters following the pipe happen to match a named parameter, but hey, what are the chances?).</p>
+<dl>
+<dd>
+**Note:** The pipe character works just fine in internal links, like [[WPD/Style\_Manual**|**Style manual]] and in subsequent template calls, as in {{template**|**parameter}}. This is just a bug in the situations described below.
+</dd>
+</dl>
+**What to do**
+<p>Yes, you can get your content back. It’s still there. Deep breath.</p>
+<ol>
+<li><p>From the <strong>Edit</strong> menu, select <strong>Edit Source</strong>.</p>
+<ul>
+<li>Alternatively, in the URL for the page you can replace <strong>&amp;action=formedit</strong> with <strong>&amp;action=edit</strong>.</li>
+</ul></li>
+<li><p>Find the offending pipe character, <strong>|</strong>.</p></li>
+<li><p>Replace the pipe character with <strong>{{!}}</strong> or <strong>&amp;#124;</strong>.</p></li>
+</ol>
+<p><strong>{{!}}</strong> is a transclusion of a template named <strong>!</strong> which contains a single pipe character. Luckily, the rendering engine evaluatates template transclusions after producing the form, so the pipe character does not get interpreted as a parameter separator. The &amp;#124; escape is even stronger because only the browser will render the pipe character from it.</p>
+<h2>Tables with pipe characters</h2>
+<p>To create tables, you have to avoid pipes completely. See <a href="/docs/WPD/Manual_Of_Style/Tables">Tables</a> for details.</p>
+<h2>Pre sections with pipe characters</h2>
+<p>It’s even worse to use pipes in an explicit &lt;pre&gt; section. The rendering engine is supposed to ignore everything in a &lt;pre&gt; section and reproduce it as is. But no. For this you have to use the <strong>&amp;#124;</strong> Here’s an example:</p>
+<p><code>&lt;pre&gt;if (moodQuery==checkin.mood&amp;#124;&amp;#124;moodQuery) handler(checkin);&lt;/pre&gt;</code></p>
+<p>This code renders as follows.</p>
+<pre><code>if (moodQuery==checkin.mood||moodQuery) handler(checkin);
+</code></pre>
+<p>In lines of code designated by a leading single space (implicit pre-formatted sections, let’s call 'em), you may use the {{!}} template. Here’s an example:</p>
+<p><code>if (moodQuery==checkin.mood{{!}}{{!}}moodQuery) handler(checkin);</code></p>
+<p>(With a leading space), this code renders as follows.</p>
+<pre><code>if (moodQuery==checkin.mood||moodQuery) handler(checkin);
+</code></pre>
+<p>And just to beat this topic to death, pipes in &lt;code&gt;-encoded text must also be substituted with the {{!}} template. The rendering engine treats such sections only for style considerations (with CSS), it still evaluates the characters.</p>
+<h2>Parser functions with pipe characters</h2>
+<p>But wait, there’s more! However, you don’t have to worry about this unless you’re editing the templates and forms used to build the wiki itself. You won’t encounter parser functions, typically, in your day-to-day content editing.</p>
+<p>Parser functions also gaak when they encounter pipes. So, when you combine a parser function like #if with a table, you have to use the {{!}} template instead of pipes for the table.</p>
+<p>Here’s the normal #if syntax:</p>
+<pre><code class="html">{{#if: condition | value | else-value}}
+</code></pre>
+<p>Here’s the normal syntax for a table:</p>
+<pre><code class="html">{| class="wikitable"
+! Header-value 1
+! Header-value-2
+|-
+| Row-value 1
+| Row-value-2
+|}
+</code></pre>
+<p>The problem is that in the #if block, every pipe character the rendering engine encounters will be interpreted literally. So if you try to include pipe characters for the table syntax as part of the value or else-value, it just won’t work. Here’s an example where we use the {{!}} template hack:</p>
+<pre><code class="html">{{#if: {{{Specifications|}}} |
+==Related Specifications==
+{{{!}} class="wikitable"
+! Specification
+! Status
+! Related Changes
+{{!}}-
+{{{Specifications|}}}
+{{!}}} | }}
+</code></pre>
+<h1>Escaping characters</h1>
+<p>If you include certain characters in your article, like the pipe character, the Semantic MediaWiki will interpret these as part of the template processing instructions and the result is usually a break in the rendering at the point where the character appears. See <a href="#The_dreaded_pipe_character">The dreaded pipe character</a> above. For these characters, use their HTML entity tags, shown in this table.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Character</th><th style="text-align:left">Description</th><th style="text-align:left">HTML Entity</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">[</td><td style="text-align:left">Left square bracket</td><td style="text-align:left">&amp;#91;</td></tr>
+<tr><td style="text-align:left">]</td><td style="text-align:left">Right square bracket</td><td style="text-align:left">&amp;#93;</td></tr>
+<tr><td style="text-align:left">{</td><td style="text-align:left">Left curly bracket</td><td style="text-align:left">&amp;#123;</td></tr>
+<tr><td style="text-align:left">}</td><td style="text-align:left">Right curly bracket</td><td style="text-align:left">&amp;#125;</td></tr>
+<tr><td style="text-align:left"></td><td style="text-align:left"></td><td style="text-align:left">Pipe</td><td>&amp;#124;</td></tr>
+<tr><td style="text-align:left">'</td><td style="text-align:left">Apostrophe</td><td style="text-align:left">&amp;#124;</td></tr>
+</tbody>
+</table>
+<h1>Unclosed brackets</h1>
+<p>When you include either curly or straight brackets in your article, the wiki will choke if you don’t pair a left bracket with a matching right bracket. The form will stop rendering and you’ll see an error message like this:</p>
+<p><img src="//static.webplatform.org/2/28/open_bracket.png" alt="open bracket.png"></p>
+<p>If the text incudes a single bracket that should not be paired, as when the text describes a bracket character as part of a code example, use an HTML entity instead of the keyboard character. See <a href="#Escaping_characters">Escaping characters</a> for more information.</p>
+<h1>URL containing special characters in notes or other tags</h1>
+<p>Certain links contain special characters, such as the equal sign (=) in a link to a YouTube video (for example, <a href="http://www.youtube.com/watch?v=me3BviH3nZc">http://www.youtube.com/watch?v=me3BviH3nZc</a>). When these links are inside other wiki references, such as the Note tag, the special character needs to be escaped. Two ways to do so are:</p>
+<ul>
+<li>Replace every = with =, as in:</li>
+</ul>
+<pre><code class="html">{{Note|[http://www.youtube.com/watch?v{{=}}me3BviH3nZc Watch Erik's entire WebGL video tutorial] for free on YouTube. Over 2 and a half hours of WebGL tuition! }}
+</code></pre>
+<p>OR</p>
+<ul>
+<li>Prefix the note-text with 1=, as in:</li>
+</ul>
+<pre><code class="html">{{Note|1=[http://www.youtube.com/watch?v=me3BviH3nZc Watch Erik's entire WebGL video tutorial] for free on YouTube. Over 2 and a half hours of WebGL tuition! }}
+</code></pre>
+<h1>Spaces in template calls</h1>
+<p>This applies only if you are editing the templates and forms used to build this wiki. MediaWiki is very weird about spaces. In particular, a line that starts with a single space is interpreted as a pre-formatted line of characters, and a group of such lines are then formatted as a &lt;pre&gt; block in the HTML output. This can bite you in template calls where you might have added spaces for readability. Most of the times they get trimmed off, but sometimes they don’t. In general <strong>do not use spaces</strong> around parameter values. Most of the times everything will work fine, but some times it will break without warning. See the <a href="/Template:External_Attribution_Block">External Attribution Block template</a> for an example.</p>
+<h1>HTML code</h1>
+<p>Because HTML markup is interpreted by MediaWiki, you must enclose code examples that contain HTML markup in a <code>&lt;syntaxhighlight&gt;</code> block. See <a href="/docs/WPD/Style_Manual#Code_syntax_highlighting">Code syntax highlighting</a> in the style manual for details on using this tag.</p>
+<p>To mention HTML elements in an inline context (in text rather than an example block), use the <code>&amp;lt;</code> and <code>&amp;gt;</code> character entities to represent the left and right angle brackets around the name.</p>
+<p>To refer to a <code>&lt;script&gt;</code> element, use the following:</p>
+<pre><code>&amp;lt;script&amp;gt;
+</code></pre>
+<p>Otherwise, the element is interpreted, and halts processing of the page.</p>
+<h1>Leading colon in page name</h1>
+<p>Pages with a leading colon in their name (e.g. <a href="/Special:FormEdit/Method/first-line?redlink=1">first-line</a>) will display their h1 title incorrectly, because the first colon will be interpreted as starting a dl list.</p>
+<p>To work around this, use an HTML escape of “:” (i.e. &amp;#58;) in the “custom title” field.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code Viewer · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/Components/">Components</a></li><li><a href="/docs/WPD/Infrastructure/Components/Code_Viewer/">Code Viewer</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Code Viewer</h1>
+<p>Among Web Platform Docs features is a live code viewer and pastebin. It allows us to keep in one place all code samples.</p>
+<p>The webapp we are using for this is <a href="http://lea.verou.me">Lea Verou</a>'s <a href="http://dabblet.com/">Dabblet</a> available at <a href="http://code.webplatform.org/"><strong>code.webplatform.org</strong></a> and keeps the code in a <a href="https://gist.github.com/WebPlatformDocs">dedicated GitHub Gists repository</a>.</p>
+<h2>Features</h2>
+<ul>
+<li>Provides a live preview of input HTML, CSS, SVG, JavaScript</li>
+<li>Allows users to share code snippets with each other, as a pastebin <em>(mostly done, still replies on GitHub)</em></li>
+<li>Provides a way to open example code from the wiki in live example without copy-paste <em>(some progress, not done)</em></li>
+</ul>
+<h2>Needs improvement</h2>
+<ul>
+<li>Cannot work directly with raw HTML file and HTTP headers</li>
+<li>Find way to add another file and define its content-type</li>
+</ul>
+<h2>Integration</h2>
+<p>Because integration has many aspects, we will roll out full support for this feature in several steps.</p>
+<h3>Roadmap</h3>
+<h4>Phase 1: Static Live Code Viewer</h4>
+<p><strong>Status:</strong> <em>Done</em></p>
+<h4>Phase 2: Open Examples from Wiki</h4>
+<p><strong>Status:</strong> <em>not started</em></p>
+<h4>Phase 3: Inline Live Examples</h4>
+<p><strong>Status:</strong> <em>not started</em></p>
+<h4>Phase 4: Host Gists on WebPlatform.org</h4>
+<p><strong>Status:</strong> <em>not started</em></p>
+<h3>Other Tasks</h3>
+<h2>Technical Requirements</h2>
+<h3>Dedicated Subdomain</h3>
+<p>The public URL will be <a href="http://code.webplatform.org">code.webplatform.org</a>.</p>
+<h3>Additional Subdomains</h3>
+<p>In addition to the public-facing URL, Dabblet needs two additional subdomains for security reasons:</p>
+<ul>
+<li><strong>Result preview:</strong> This is only used internally and not displayed to the user. It’s a separate domain for security reasons, otherwise people could write dabblets that leak the user’s access token. On dabblet.com, this is called preview.dabblet.com</li>
+<li><strong>Full-page results:</strong> This is for results without any dabblet chrome around them. Separate subdomain for the same security reasons. On dabblet, this is result.dabblet.com. This is not critical, worst case we could just disable this feature.</li>
+</ul>
+<h4>Why are separate subdomains needed?</h4>
+<p>localStorage is local per subdomain. In dabblet, localStorage stores the user’s Github access token. An access token is a unique string Github Oauth sends to dabblet after authentication is succesfull, to identify the current user, and dabblet uses that token in subsequent requests. If executed scripts had access to dabblet’s localStorage info, they could steal the current user’s access token and send it to an arbitrary server so some attacker could use it to log in to Github as the dabblet user that access token belonged to.</p>
+<h3>Github API keys</h3>
+<p><a href="https://github.com/organizations/webplatform/settings/applications/34604">https://github.com/organizations/webplatform/settings/applications/34604</a></p>
+<h3>File edits required</h3>
+<ul>
+<li>code/global.js for Client API key (Done)</li>
+<li>Rename sample.oauth.php to oauth.php</li>
+<li>oauth.php for domain and Client &amp; Secret API keys (Done)</li>
+<li>HTML and JS files, for the domain</li>
+<li>Change .htaccess with the proper domain and subdomains (Partially done)</li>
+</ul>
+<h3>Git</h3>
+<p>Github repo: <a href="https://github.com/webplatform/dabblet">https://github.com/webplatform/dabblet</a></p>
+<p>TODO: Need to be able to have separate git subdirectory with the above as a remote, so we can easily pull changes. Might be a problem if we have a different structure for the subdomains (i.e. completely separate files instead of subfolders).</p>
+<h3>Deploy</h3>
+<p>salt-run deploy.run code.dabblet</p>
+<h2>Branding</h2>
+<ul>
+<li>Logo</li>
+<li>Skinning (colors etc)</li>
+<li>Prism theme (will also be used on WPD)</li>
+<li>Links to WPD sections</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

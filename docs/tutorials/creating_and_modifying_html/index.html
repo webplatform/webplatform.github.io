@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Creating and modifying HTML · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="when you&#x27;ve targetted an HTML element using JavaScript, how do modify it, and create new HTML nearby? This article shows you how." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/creating_and modifying html/">creating and modifying html</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Creating and modifying HTML</h1>
+<h2>Summary</h2>
+<p>when you’ve targetted an HTML element using JavaScript, how do modify it, and create new HTML nearby? This article shows you how.</p>
+<h2>Introduction</h2>
+<p>In this article of the <a href="http://www.w3.org/wiki/Web_Standards_Curriculum">Web Standards Curriculum</a> I’ll explain the basics of using JavaScript to manipulate the content of your pages, including showing and hiding parts of a page, and adding new HTML and removing it. At the end of this you’ll understand that the most fundamental thing we use JavaScript for is to change the contents of pages, and you’ll understand the best ways to do this.</p>
+<h2>Hiding and showing</h2>
+<p>The easiest place to start is with manipulating the HTML you’ve already got, by hiding or showing elements that are already in the page. To do this, you can use JavaScript to change the styles on an element. CSS styles are already a powerful way of describing how an element looks, and one part of how an element looks is whether it’s displayed at all. The CSS <code>display</code> property is the key to showing and hiding an element: setting it to <code>display:none;</code> hides an element. Imagine a paragraph like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mypara"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"display: none"</span>&gt;</span>I am a paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>That paragraph would be invisible on the page. JavaScript allows you to <em>dynamically</em> add that <code>display: none</code> style to that element and take it away.</p>
+<p>JavaScript is designed to allow you to get a <em>reference</em> to an HTML element. For example, <code>var el = document.getElementById(&quot;nav&quot;);</code> will give you a reference to the element with <code>id=&quot;nav&quot;</code>. Once you’ve got a reference to an element, you can change the CSS applied to it by using the <code>style</code> attribute. For example, our above “mypara” paragraph is currently hidden (it has <code>display: none</code> set). To show it, set the style attribute <code>display</code> to <code>block</code>:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> el = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'mypara'</span>);
+el.style.display = <span class="hljs-string">'block'</span>;
+</code></pre>
+<p>And lo, the paragraph appears. Setting CSS on an element through the <code>style</code> attribute does the same thing as setting it in the <code>style</code> attribute in the HTML itself, so the above code setting <code>el.style.display = 'block'</code> achieves the same effect as putting <code>style=&quot;display: block&quot;</code> directly in your HTML. Except that it’s dynamic. Hiding any element is just as simple:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> el = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'mypara'</span>);
+el.style.display = <span class="hljs-string">'none'</span>;
+</code></pre>
+<h3>Hiding and showing example</h3>
+<p>Theory is all good, but a more practical example may be useful here. Imagine a set of tabs, where clicking on the tab itself shows it and hides all the others.</p>
+<p>Here’s an example of a set of tabs:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"tablinks"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#tab1"</span>&gt;</span>Tab 1<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#tab2"</span>&gt;</span>Tab 2<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#tab3"</span>&gt;</span>Tab 3<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ol</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"tab"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tab1"</span>&gt;</span>This is tab 1<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"tab"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tab2"</span>&gt;</span>This is tab 2<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"tab"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tab3"</span>&gt;</span>This is tab 3<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>In the <code>head</code> of the example file (see <a href="http://dev.opera.com/articles/view/creating-and-modifying-html/tabs.html">tabs.html</a> for the live example), you’ll find the following CSS and JavaScript (these would normally be put in external files and imported into the HTML, but I’m keeping everything in one file here to make things simpler to navigate). Some of the code looks intimidating; don’t worry, we’ll go through it.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>&gt;</span><span class="css">
+<span class="hljs-tag">ol</span><span class="hljs-class">.tablinks</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>; <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+<span class="hljs-tag">ol</span><span class="hljs-class">.tablinks</span> <span class="hljs-tag">li</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> solid red</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-width</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">0</span> <span class="hljs-number">2px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#eee</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">list-style</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">5px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+}</span>
+<span class="hljs-tag">ol</span><span class="hljs-class">.tablinks</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> black</span></span>;
+}</span>
+<span class="hljs-tag">div</span><span class="hljs-class">.tab</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">clear</span>:<span class="hljs-value"> left</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> solid red</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">border-width</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span></span></span>;
+}</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+</code></pre>
+<pre><code class="js">&lt;script type=<span class="hljs-string">"text/javascript"</span>&gt;
+<span class="hljs-keyword">var</span> tabify = {
+  hasClass: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el,c</span>) </span>{
+    <span class="hljs-keyword">return</span> el.className.match(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'(\\s|^)'</span>+c+<span class="hljs-string">'(\\s|$)'</span>));
+  },
+  addClass: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el,c</span>) </span>{
+    <span class="hljs-keyword">if</span> (!tabify.hasClass(el,c)) el.className += <span class="hljs-string">" "</span> + c;
+  },
+  removeClass: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">el,c</span>) </span>{
+    <span class="hljs-keyword">if</span> (tabify.hasClass(el,c)) {
+      el.className=el.className.replace(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'(\\s|^)'</span>+c+<span class="hljs-string">'(\\s|$)'</span>),<span class="hljs-string">' '</span>);
+    }
+  },
+  hideAllTabs: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ol</span>) </span>{
+    <span class="hljs-keyword">var</span> links = ol.getElementsByTagName(<span class="hljs-string">"a"</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i &lt; links.length; i++) {
+      tabify.setTabFromLink(links[i], <span class="hljs-string">"none"</span>);
+   }
+  },
+  setTabFromLink: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">link, style</span>) </span>{
+    <span class="hljs-keyword">var</span> dest = link.href.match(<span class="hljs-regexp">/#(.*)$/</span>)[<span class="hljs-number">1</span>];
+    <span class="hljs-built_in">document</span>.getElementById(dest).style.display = style;
+    <span class="hljs-keyword">if</span> (style == <span class="hljs-string">"none"</span>) {
+        tabify.removeClass(link, <span class="hljs-string">"active"</span>);
+    } <span class="hljs-keyword">else</span> {
+        tabify.addClass(link, <span class="hljs-string">"active"</span>);
+    }
+  },
+  addEvent: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, type, fn</span>) </span>{
+    <span class="hljs-keyword">if</span> ( obj.attachEvent ) {
+      obj[<span class="hljs-string">'e'</span>+type+fn] = fn;
+      obj[type+fn] = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{obj[<span class="hljs-string">'e'</span>+type+fn]( <span class="hljs-built_in">window</span>.event );};
+      obj.attachEvent(<span class="hljs-string">'on'</span>+type, obj[type+fn] );
+    } <span class="hljs-keyword">else</span> {
+      obj.addEventListener( type, fn, <span class="hljs-literal">false</span> );
+    }
+  },
+  init: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> ols = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"ol"</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i &lt; ols.length; i++) {
+      <span class="hljs-keyword">var</span> ol = ols[i];
+      <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/(^|\s)tablinks(\s|$)/</span>.test(ol.className)) { <span class="hljs-keyword">continue</span>; }
+      tabify.addEvent(ol, <span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-keyword">var</span> target = <span class="hljs-built_in">window</span>.event ? <span class="hljs-built_in">window</span>.event.srcElement : e.target;
+        <span class="hljs-keyword">if</span> (target.nodeName.toLowerCase() === <span class="hljs-string">"a"</span>) {
+          tabify.hideAllTabs(e.target.parentNode.parentNode);
+          tabify.setTabFromLink(e.target, <span class="hljs-string">"block"</span>);
+          <span class="hljs-keyword">if</span> (e) e.preventDefault();
+          <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.event) <span class="hljs-built_in">window</span>.event.returnValue = <span class="hljs-literal">false</span>;
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+      }, <span class="hljs-literal">true</span>);
+      tabify.hideAllTabs(ol);
+      tabify.setTabFromLink(ol.getElementsByTagName(<span class="hljs-string">"a"</span>)[<span class="hljs-number">0</span>], <span class="hljs-string">"block"</span>);
+    }
+  }
+};
+tabify.addEvent(<span class="hljs-built_in">window</span>, <span class="hljs-string">"load"</span>, tabify.init);
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</span></code></pre>
+<p>Each tab is a link. Each link has an <code>onclick</code> event handler on it. That event handler does two things: it <strong>hides</strong> all the <code>div</code>s (using the <code>display: none</code> approach from above) and then <strong>shows</strong> the <code>div</code> corresponding to that tab, by setting that <code>div</code>’s <code>style</code> to <code>display: block</code>.</p>
+<p>You’ll have noted that the HTML here is set up to still make sense even in the absence of scripting; while clicking a link won’t show or hide a tab, the links jump to the appropriate tab, so the page still operates correctly and makes semantic sense even in a browser without JavaScript. This is important: it’s a technique that you may have heard referred to as “progressive enhancement” (or, in the ancient tongue of three years ago “graceful degradation”, but we don’t call it that any more). It’s important not only for people who are using some modern browser but with JavaScript turned off, but for a host of other user types as well. Assistive technologies such as screen-readers for blind users rely heavily on the structure of your HTML being semantic and meaningful, and their support for JavaScript enhancements is not as good as those for sighted users. Mobile browsers also tend not to have as much useful support for scripting. Search engines also read your HTML and not your script—it could be said that Google is the world’s most voracious blind browser user. This is the meaning of the term “progressive enhancement”: start with a page that makes sense and displays its content in the most simple of environments, such as a text-only web browser, and then gradually add extra functionality to it so that at every step of the way your site is still usable and functional.</p>
+<p>All JavaScript code basically comes in two parts: the part that actually does the work, and the part that hooks up that bit to the HTML. The code that actually does the work in this example is pretty trivial: showing the corresponding tab to a particular link is two lines of JavaScript:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> dest = link.href.match(<span class="hljs-regexp">/#(.*)$/</span>)[<span class="hljs-number">1</span>];
+<span class="hljs-built_in">document</span>.getElementById(dest).style.display = <span class="hljs-string">"block"</span>;
+</code></pre>
+<p>The links, if you remember, look like <code>&lt;a href=&quot;#tab1&quot;&gt;Tab 1&lt;/a&gt;</code> and so the first line uses a regular expression (see the note below) to extract the part of the link that appears after the <code>#</code> symbol; in this example that would be the string <code>tab1</code>. That part of the link is the same as the ID of the corresponding <code>div</code> (because, as mentioned, the page is built to make sense semantically, so a “tab” links to its <code>div</code>). We then fetch a reference to that <code>div</code> with <code>document.getElementById</code>, and set <code>style.display</code> to <code>block</code> as previously discussed.</p>
+<h4>Regular expressions</h4>
+<p>Regular expressions are a sort of mini-programming-language designed to help with the problem of “parsing” text—for example, answering questions like “does this string appear inside this other string?“ and “in the string ‘abc123def’, what are the numbers between ‘c’ and ‘d’?” They’re a very powerful tool, but they’re also pretty complicated. There’s a description below of what the regular expression is for; for now, though, feel free to take how they work on trust and come back to it later.</p>
+<p>The “regex” (short for “regular expression”) used in this example is <code>/#(.*)$/</code>. Each character in a regular expression is designed to match against a sequence of characters in some target string; the idea is to express how a target string is made up, in sections.</p>
+<ul>
+<li><code>/ … /</code> — the slashes denote the start and end of a regex, just like double or single quotes do for a “string”</li>
+<li><code>#</code> — the hash symbol (#) actually means “match a hash symbol”</li>
+<li><code>( … )</code> — brackets mean “here is a section of the string that I’ll be interested in later”</li>
+<li><code>.*</code> — this means “any characters you like”; it’s actually a dot (.), meaning “any one character”, followed by asterisk (*) meaning “repeat as many times as you want”</li>
+<li><code>$</code> — the dollar means “the end of the string”</li>
+</ul>
+<p>So our regex describes a “matching pattern” for a string comprised of “a hash, followed by whatever characters you want”. <code>link.href</code> is the destination of the link we’re looking at (for example, <code>#tab1</code>, and since this <em>is</em> a string described by “a hash followed by whatever characters you want”), the “matching pattern” <em>does</em> apply to this string.</p>
+<p><code>link.href.match(our_regexp)</code>, therefore, will return a true rather than false result; what it actually returns is an array of two things, <code>[&quot;#tab1&quot;, &quot;tab1&quot;]</code>. The first is the text that was matched by the whole regex, and the second is the text matched inside the brackets; this is why the brackets are there—to mark that part of the string as “this is the bit we care about”. That <code>tab1</code> is the string we want, so we can grab it out of the returned array (it’s the second item, so <code>[1]</code> will grab it — arrays start numbering at zero.)</p>
+<h4>Connecting the working code to the page</h4>
+<p>As mentioned above, there are two parts to the code: the part which actually does the work, and the part which hooks up that bit to the HTML. Hooking up the working code to the HTML is what events are for. In this particular example, we care about two events: the <code>window</code>’s <code>load</code> event, which is used to say “start everything off”, and the tab list’s <code>click</code> event, which is fired when the user clicks on a tab. When the page loads, we need to run the connection code, and the connection code should connect the tab <code>click</code> event to the code above, which displays the appropriate tab.</p>
+<p>Running code in response to an event is done with the <code>addEventListener</code> function in most browsers and with the <code>attachEvent</code> function in Internet Explorer. Here we are creating a “wrapper” function, which does the right thing depending on which is supported:</p>
+<pre><code class="js">addEvent: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, type, fn</span>) </span>{
+  <span class="hljs-keyword">if</span> ( obj.attachEvent ) {
+    obj[<span class="hljs-string">'e'</span>+type+fn] = fn;
+    obj[type+fn] = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{obj[<span class="hljs-string">'e'</span>+type+fn]( <span class="hljs-built_in">window</span>.event );};
+    obj.attachEvent(<span class="hljs-string">'on'</span>+type, obj[type+fn] );
+  } <span class="hljs-keyword">else</span> {
+    obj.addEventListener( type, fn, <span class="hljs-literal">false</span> );
+  }
+}
+</code></pre>
+<p>(Don’t worry too much about how this works; just take it on trust for now—you’ll understand it better as you become more experienced in JavaScript.) This function takes three parameters, <code>obj</code>, <code>type</code>, and <code>fn</code>, which are “the object that fires the event”, “the event we care about”, and “the function to run when the event fires”. We need to run our function called <code>tabify.init</code> when the page loads; the <code>tabify.init</code> function will then take care of hooking up each tab’s <code>click</code> event.</p>
+<pre><code class="js">addEvent(<span class="hljs-built_in">window</span>, <span class="hljs-string">"load"</span>, tabify.init);
+</code></pre>
+<p>As you can see from the HTML structure above, a set of tabs are actually expressed as an ordered list with <code>class=&quot;tablinks&quot;</code>. So the <code>tabify.init</code> function needs to do the following:</p>
+<ol>
+<li>Find all the <code>&lt;ol&gt;</code>s on the page with a class of <code>tablinks</code></li>
+<li>Attach to each <code>&lt;ol&gt;</code>’s <code>click</code> event some code that does the following:
+<ol>
+<li>Work out exactly which tab link the user clicked on</li>
+<li>Work out which actual tab corresponds to that tab link</li>
+<li>Show that one tab</li>
+<li>Hide any other tabs</li>
+</ol></li>
+</ol>
+<p>The <code>init</code> function that does all this looks like so:</p>
+<pre><code class="js">init: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> ols = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"ol"</span>);
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;ols.length; i++) {
+    <span class="hljs-keyword">var</span> ol = ols[i];
+    <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/(^|\s)tablinks(\s|$)/</span>.test(ol.className)) { <span class="hljs-keyword">continue</span>; }
+    tabify.addEvent(ol, <span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+      <span class="hljs-keyword">var</span> target = <span class="hljs-built_in">window</span>.event ? <span class="hljs-built_in">window</span>.event.srcElement : e.target;
+      <span class="hljs-keyword">if</span> (target.nodeName.toLowerCase() === <span class="hljs-string">"a"</span>) {
+        tabify.hideAllTabs(e.target.parentNode.parentNode);
+        tabify.setTabFromLink(e.target, <span class="hljs-string">"block"</span>);
+        <span class="hljs-keyword">if</span> (e) e.preventDefault();
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.event) <span class="hljs-built_in">window</span>.event.returnValue = <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+      }
+    }, <span class="hljs-literal">true</span>);
+    tabify.hideAllTabs(ol);
+    tabify.setTabFromLink(ol.getElementsByTagName(<span class="hljs-string">"a"</span>)[<span class="hljs-number">0</span>], <span class="hljs-string">"block"</span>);
+  }
+}
+</code></pre>
+<p>Let’s walk through this function step by step, looking at what each part does in turn:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> ols = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"ol"</span>);
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;ols.length; i++) {
+    <span class="hljs-keyword">var</span> ol = ols[i];
+    <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/(^|\s)tablinks(\s|$)/</span>.test(ol.className)) { <span class="hljs-keyword">continue</span>; }
+  }
+</code></pre>
+<p>This finds all the <code>&lt;ol&gt;</code>s on the page with a class of <code>tablinks</code>—it then pulls up a list of <em>all</em> <code>&lt;ol&gt;</code>s and for each one, says “if this <em>doesn’t</em> have a class of ‘tablinks’, then skip it”. (Checking the class is done with a regular expression; <code>continue</code> means “skip over this one and on to the next”.)</p>
+<pre><code class="js">tabify.addEvent(ol, <span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+  ...
+});
+</code></pre>
+<p>This attaches some code to each <code>&lt;ol&gt;</code>’s <code>click</code> event.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> target = <span class="hljs-built_in">window</span>.event ? <span class="hljs-built_in">window</span>.event.srcElement : e.target;
+</code></pre>
+<p>This works out exactly which tab link the user clicked on…</p>
+<pre><code class="js">tabify.setTabFromLink(e.target, <span class="hljs-string">"block"</span>);
+</code></pre>
+<p>…then this shows that single tab…</p>
+<pre><code class="js">tabify.hideAllTabs(e.target.parentNode.parentNode);
+</code></pre>
+<p>…and finally, this line hides any other tabs.</p>
+<p>The <code>setTabFromLink</code> and <code>hideAllTabs</code> functions are also in the code; they use the techniques above to hide a tab or show it. Take a look at them to see how they work — they’re separate functions because it’s often useful to take a block of code that’s called from more than one place and put it in its own function. (It makes your code easier to understand and reuse in multiple places. People will sometimes refer to this as “breaking out” or “factorising” code into a function.)</p>
+<p>There’s a bit of “extra credit” work in there as well, which neatly demonstrates more adding and removing of attributes. The <code>setTabFromLink</code> function not only displays the appropriate tab but also sets <code>class=&quot;active&quot;</code> on the “active” tab. It does this with the help of three utility functions, <code>hasClass</code>, <code>removeClass</code>, and <code>addClass</code>. In the same way that we hide all the tabs and then show the active one, we use <code>removeClass</code> to remove “active” from the <code>className</code> of all the tablinks and then <code>addClass</code> to add “active” to the one tablink which is actually active. Just adding a class to a link may seem pointless — after all, classes are invisible — but it’s a hook for styling. We can (and have) make links with <code>class=&quot;active&quot;</code> appear differently, by adding extra CSS:</p>
+<pre><code class="css"><span class="hljs-tag">ol</span><span class="hljs-class">.tablinks</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> red</span></span>;
+}</span>
+
+<span class="hljs-tag">ol</span><span class="hljs-class">.tablinks</span> <span class="hljs-tag">li</span> <span class="hljs-tag">a</span><span class="hljs-class">.active</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> white</span></span>;
+}</span>
+</code></pre>
+<p>So now, the “active” tab appears in white, while other tabs appear in red. Using JavaScript to add and remove classes is a very common technique, and one that you should use whenever possible; CSS is good at controlling layout and position and appearance of your HTML elements, and so using JavaScript to alter the classes on those elements means that they can pick up different CSS styles. It’s an ideal unification; JavaScript makes your elements dynamic but doesn’t actually change very much itself. Just add a class and let CSS do the heavy lifting.</p>
+<h2>Creating HTML</h2>
+<p>DOM scripting is much more powerful than simply altering the CSS properties of your existing HTML, though. You can also dynamically create new HTML that was never in your page to begin with. For example, on the tech news site Slashdot, a link in a comment displays the destination of the link in square brackets, so a link like &lt;a href=&quot;<a href="http://opera.com">http://opera.com</a>&quot;&gt;A web browser&lt;/a&gt; will display as <a href="http://opera.com">A web browser</a> [opera.com]. (They did this to stop people being <a href="http://www.youtube.com/watch?v=oHg5SJYRHA0">rickrolled</a>, or worse.) Adding this extra bit of HTML, displaying the destination domain of every link on the page, will be easy to do with JavaScript.</p>
+<p>Creating new HTML elements is done with the <code>document.createElement</code> function. For this example, we only need to add one thing: after each link, we’ll add a <code>span</code> containing text listing the domain of the link (check out <a href="http://dev.opera.com/articles/view/creating-and-modifying-html/linkify.html">linkify.html</a> for a live example). The HTML for the example looks like this:</p>
+<pre><code class="js">&lt;p id="start"&gt;This is some text that has
+&lt;a href="http://www.w3.org/TR/html4/struct/links.html"&gt;links&lt;/a&gt; in it
+to various places, including &lt;a href="http://www.opera.com"&gt;Opera&lt;/a&gt;,
+&lt;a href="http://www.bbc.co.uk/"&gt;the BBC&lt;/a&gt; and an internal link to
+&lt;a href="#start"&gt;the beginning of this section&lt;/a&gt;. All the external links
+should have [domain] after them.&lt;/p&gt;
+</code></pre>
+<p>The JavaScript looks like this:</p>
+<pre><code class="js">&lt;script type=<span class="hljs-string">"text/javascript"</span>&gt;
+<span class="hljs-keyword">var</span> linksuffix = {
+  addEvent: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, type, fn</span>) </span>{
+    <span class="hljs-keyword">if</span> ( obj.attachEvent ) {
+      obj[<span class="hljs-string">'e'</span>+type+fn] = fn;
+      obj[type+fn] = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{obj[<span class="hljs-string">'e'</span>+type+fn]( <span class="hljs-built_in">window</span>.event );};
+      obj.attachEvent(<span class="hljs-string">'on'</span>+type, obj[type+fn] );
+    } <span class="hljs-keyword">else</span> {
+      obj.addEventListener( type, fn, <span class="hljs-literal">false</span> );
+    }
+  },
+  init: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> links = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"linksuffixtext"</span>).getElementsByTagName(<span class="hljs-string">"a"</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;links.length; i++) {
+      <span class="hljs-keyword">var</span> matches = links[i].href.match(<span class="hljs-regexp">/^http:\/\/(.*?)\//</span>);
+      <span class="hljs-keyword">if</span> (matches) {
+        <span class="hljs-keyword">var</span> linkdomain = matches[<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">var</span> span = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"span"</span>);
+        <span class="hljs-keyword">var</span> spantext = <span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">" ["</span>+linkdomain+<span class="hljs-string">"]"</span>);
+        span.appendChild(spantext);
+        links[i].parentNode.insertBefore(span, links[i].nextSibling);
+      }
+    }
+  }
+};
+linksuffix.addEvent(<span class="hljs-built_in">window</span>, <span class="hljs-string">"load"</span>, linksuffix.init);
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</span></code></pre>
+<p>The part of the script that does the work here is as follows:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> links = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"a"</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;links.length; i++) {
+  <span class="hljs-keyword">var</span> matches = links[i].href.match(<span class="hljs-regexp">/^http:\/\/(.*?)\//</span>);
+  <span class="hljs-keyword">if</span> (matches) {
+    <span class="hljs-keyword">var</span> linkdomain = matches[<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">var</span> span = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"span"</span>);
+    <span class="hljs-keyword">var</span> spantext = <span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">" ["</span>+linkdomain+<span class="hljs-string">"]"</span>);
+    span.appendChild(spantext);
+    links[i].parentNode.insertBefore(span, links[i].nextSibling);
+  }
+}
+</code></pre>
+<p>This breaks down like this:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> links = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">"a"</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;links.length; i++) {
+  ...
+}
+</code></pre>
+<p>First, it finds all the links (<code>getElementsByTagName(&quot;a&quot;)</code>) in the document</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> matches = links[i].href.match(<span class="hljs-regexp">/^http:\/\/(.*?)\//</span>);
+<span class="hljs-keyword">if</span> (matches) {
+  ...
+}
+</code></pre>
+<p>This line uses a regular expression on each link to find out whether the destination of the link begins with <code>http://something/</code>. If it does…</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> linkdomain = matches[<span class="hljs-number">1</span>];
+<span class="hljs-keyword">var</span> span = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"span"</span>);
+<span class="hljs-keyword">var</span> spantext = <span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">" ["</span>+linkdomain+<span class="hljs-string">"]"</span>);
+span.appendChild(spantext);
+</code></pre>
+<p>…this next part first gets the “linkdomain”, the <code>www.opera.com</code> part of the link. It next creates a <code>&lt;span&gt;</code> element using <code>document.createElement</code>. Next, it creates a “textNode”. While HTML elements themselves are created with <code>document.createElement</code>, all text in an HTML document is actually contained within “textNode”s, and you have to create those separately. You don’t have to worry about this (or even know about it) when writing actual HTML, but you do have to know about it when creating elements using DOM scripting. The text in the textNode is actually “ [domain]”, created by concatenating (adding together) strings. Finally, this part uses the <code>&lt;span&gt;</code>’s <code>appendChild</code> method to put the textNode inside the span.</p>
+<pre><code class="js">links[i].parentNode.insertBefore(span, links[i].nextSibling);
+</code></pre>
+<p>This line adds the <code>span</code> into the document. At this point, <code>span</code> is a reference to an HTML element that looks like this:</p>
+<pre><code class="html"> [example.com]
+</code></pre>
+<p>That element however isn’t part of the document. It’s not part of any document yet; it’s just floating around in limbo. Adding the element to the document can be done in one of two ways: using <code>appendChild</code> as above, or using <code>insertBefore</code>. The <code>appendChild</code> function adds our new element at the <em>end</em> of an existing element (that’s why it’s called <em>append</em>). Since we want to add it in the middle of an existing element, we need <code>insertBefore</code>. Remember that our current bit of HTML looks something like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>... text that has
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.w3.org/TR/html4/struct/links.html"</span>&gt;</span>links<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span> in it
+to ...
+</code></pre>
+<p>This equates to a DOM tree looking something like Figure 1:</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=create_modify_html_figure1.jpg">IMAGE: DOM tree before the addition of the span element after the link</a></p>
+<p>Figure 1: The DOM tree before the addition of the span element after the link</p>
+<p>We want to insert our new span in between the <code>&lt;a&gt;</code> and the “in it to” textNode, so that it appears after the <code>&lt;a&gt;</code>. This would leave our DOM tree looking like Figure 2:</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=create_modify_html_figure2.jpg">IMAGE: DOM tree after the addition of the span element</a></p>
+<p>Figure 2: The DOM tree after the addition of the span element</p>
+<p>or, more simply, HTML such as</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>... text which has
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.w3.org/TR/html4/struct/links.html"</span>&gt;</span>links<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+ [domain] in it to ...
+</code></pre>
+<p>What would be handy here is to be able to say “insert our new <code>span</code> <em>after</em> the link”. Sadly, there is no <code>insertAfter</code> function. Instead, we need to insert it <em>before</em> the thing after the link (confusing, but think about it and it’ll make sense). A quick shortcut to “the thing after an element labelled <code>el</code>” is <code>el.nextSibling</code>. The <code>insertBefore</code> function needs to be called on the element that you’re inserting into, which is the parent <code>&lt;p&gt;</code> of the link, quickly accessible with <code>link.parentNode</code>. So the full call, as above, is</p>
+<pre><code class="js">links[i].parentNode.insertBefore(span, links[i].nextSibling);
+</code></pre>
+<p>That is, find the parent (<code>&lt;p&gt;</code>) of the link we’re currently processing (<code>links[i]</code>), and insert our created <code>span</code> element (<code>span</code>) before the thing after the link (<code>links[i].nextSibling</code>). Treating HTML as a DOM tree in this way and inserting new elements into it can be confusing at first, but it soon becomes clearer as you get more practice at it.</p>
+<h2>Summary</h2>
+<p>HTML provides the structure of your pages, and CSS provides the description of how it looks. What JavaScript brings is flexibility; your HTML structure and your CSS styles become <em>dynamic</em>. You can change how your pages look and feel and work from moment to moment, based on what your users do. It’s the next step up: from well-thought-out and well-structured information to data that changes depending on what your users need. You can show and hide elements, change styles and appearances, and add new HTML or remove the old in whatever way you need to.</p>
+<h2>See also</h2>
+<h3>Exercise questions</h3>
+<ul>
+<li>How do you set an element’s CSS display property to hide an element?</li>
+<li>What’s the difference between an element and a text node?</li>
+<li>Give two reasons why progressive enhancement is important.</li>
+<li>What’s the difference between <code>appendChild</code> and <code>insertBefore</code>?</li>
+<li>Why do we use an <code>addClass</code> function rather than just concatenating the new class name with an existing element’s <code>className</code> attribute?</li>
+<li>In the following HTML structure, what would <code>document.getElementById(&quot;marker&quot;).nextSibling</code> be?</li>
+</ul>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This is a <span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>block of HTML with <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"marker"</span>&gt;</span>various markup<span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span> in it<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

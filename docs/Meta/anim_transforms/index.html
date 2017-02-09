@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Manipulating content with CSS3 transforms · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="CSS transforms allow you to dynamically manipulate
+    the space in which content elements appear. You can move them around
+    on the screen, shrink or expand them, rotate them, or combine all
+    these effects to produce complex movements.  By themselves, transforms
+    produce static visual effects, but they can be easily combined with
+    CSS transitions and
+    keyframe animations to produce vibrant
+    animated interfaces. This tutorial first introduces simple
+    two-dimensional transforms, then shows you how to extend transforms
+    into three-dimensional space.  It ends with step-by-step instructions
+    to spin a cube in space.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/Meta:anim_transforms/">Meta:anim transforms</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Manipulating content with CSS3 transforms</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>CSS transforms allow you to dynamically manipulate the space in which content elements appear. You can move them around on the screen, shrink or expand them, rotate them, or combine all these effects to produce complex movements. By themselves, transforms produce static visual effects, but they can be easily combined with CSS transitions and keyframe animations to produce vibrant animated interfaces. This tutorial first introduces simple two-dimensional transforms, then shows you how to extend transforms into three-dimensional space. It ends with step-by-step instructions to spin a cube in space.</p>
+<p>These key points serve as reference:</p>
+<ul>
+<li><p>The <a href="/docs/css/properties/transform"><strong>transform</strong></a> property specifies a set of transform functions.</p></li>
+<li><p>2D functions include <a href="/docs/css/functions/translate"><strong>translate()</strong></a>, <a href="/docs/css/functions/scale"><strong>scale()</strong></a>, <a href="/docs/css/functions/rotate"><strong>rotate()</strong></a>, and <a href="/docs/css/functions/skew"><strong>skew()</strong></a>.</p></li>
+<li><p>The <a href="/docs/css/functions/translate"><strong>translate()</strong></a> function accepts standard CSS measurements; <a href="/docs/css/functions/scale"><strong>scale()</strong></a> accepts a decimal value between 0 and 1; both <a href="/docs/css/functions/rotate"><strong>rotate()</strong></a> and <a href="/docs/css/functions/skew"><strong>skew()</strong></a> specify radial <strong>deg</strong> or <strong>rad</strong> measurements. Except for <a href="/docs/css/functions/rotate"><strong>rotate()</strong></a>, each accepts two <em>x</em>/<em>y</em> parameters.</p></li>
+<li><p>Individual <em>x</em>/<em>y</em> functions are available: <a href="/docs/css/functions/translateX"><strong>translateX()</strong></a>, <a href="/docs/css/functions/translateY"><strong>translateY()</strong></a>, <a href="/docs/css/functions/scaleX"><strong>scaleX()</strong></a>, <a href="/docs/css/functions/scaleY"><strong>scaleY()</strong></a>, <a href="/docs/css/functions/skewX"><strong>skewX()</strong></a>, and <a href="/docs/css/functions/skewY"><strong>skewY()</strong></a></p></li>
+<li><p>Combined 2D transforms can be represented with the <a href="/docs/css/functions/matrix"><strong>matrix()</strong></a> function, which uses 6 parameters.</p></li>
+<li><p>3D functions include <a href="/docs/css/functions/rotateX"><strong>rotateX()</strong></a>, <a href="/docs/css/functions/rotateY"><strong>rotateY()</strong></a>, <a href="/docs/css/functions/rotate3d"><strong>rotate3d()</strong></a>, <a href="/docs/css/functions/translateZ"><strong>translateZ()</strong></a>, <a href="/docs/css/functions/translate3d"><strong>translate3d()</strong></a>, <a href="/docs/css/functions/scaleZ"><strong>scaleZ()</strong></a>, and <a href="/docs/css/functions/scale3d"><strong>scale3d()</strong></a>.</p></li>
+<li><p>Combined 3D transforms can be represented with the <a href="/docs/css/functions/matrix3d"><strong>matrix3d()</strong></a> function, which uses 16 parameters.</p></li>
+<li><p>The <a href="/docs/css/properties/transform-origin"><strong>transform-origin</strong></a> property controls what point of an element the transform appears to emanate from. Adding a pixel measurement for a third parameter, or for the alternate <a href="/docs/css/properties/transform-origin-z"><strong>transform-origin-z</strong></a> property, moves the origin point back and forth in 3D space.</p></li>
+<li><p>The <a href="/docs/css/properties/perspective"><strong>perspective</strong></a> property situates a 3D scene relative to the viewer, with distance measured in pixels. To appear correctly, it must be applied to a transformed element’s ancestor.</p></li>
+<li><p>The <a href="/docs/css/properties/perspective-origin"><strong>perspective-origin</strong></a> property allows a 3D scene to be viewed from a diagonal vantage point rather than straight at the center.</p></li>
+<li><p>The <a href="/docs/css/properties/backface-visibility"><strong>backface-visibility</strong></a> property hides elements that rotate away from view, rather than rendering them as a mirror image.</p></li>
+<li><p>Setting <a href="/docs/css/properties/transform-style"><strong>transform-style</strong></a> to <strong>preserve-3d</strong> on a 3D element renders any nested 3D elements within its own transformed space.</p></li>
+</ul>
+<h2>The transform property</h2>
+<p>Transforms alter a block element’s coordinates in several ways so that they vary from where they would ordinarily appear. The <a href="/docs/css/properties/transform"><strong>transform</strong></a> CSS property specifies a handful of transformation <em>functions</em> that can be combined any way you wish: <a href="/docs/css/functions/translate"><strong>translate()</strong></a>, <a href="/docs/css/functions/scale"><strong>scale()</strong></a>, <a href="/docs/css/functions/rotate"><strong>rotate()</strong></a>, and <a href="/docs/css/functions/skew"><strong>skew()</strong></a>. Here is how you specify a combination of most of the two-dimensional transforms discussed below, along with a view of how the effect renders relative to the element’s default position:</p>
+<pre><code>div.card {
+   -moz-transform    : translate(50%, 10%) rotate(20deg) scale(0.75);
+   -o-transform      : translate(50%, 10%) rotate(20deg) scale(0.75);
+   -webkit-transform : translate(50%, 10%) rotate(20deg) scale(0.75);
+   transform         : translate(50%, 10%) rotate(20deg) scale(0.75);
+}
+</code></pre>
+<p><img src="//static.webplatform.org/4/4b/transform_combo.png" alt="transform combo.png"></p>
+<p>Transform properties were implemented recently enough that many browsers only support them with <em>vendor prefixes</em> such as <strong>-moz-</strong>, <strong>-o-</strong>, and <strong>-webkit-</strong> as shown above. Throughout this tutorial, CSS examples only show the un-prefixed property name, but for widest support you should apply all of them.</p>
+<p>Functions are separated by spaces, but any additional arguments are separated by commas.</p>
+<p>While you can specify any number of these functions, values can’t be inherited from other style sheets. So you can’t apply both of these CSS classes to an element at the same time and expect both effects to apply:</p>
+<pre><code>div.spin   { transform: rotate(20deg); }
+div.tabled { transform: translate(100%) scale(0.5); }
+</code></pre>
+<p>Wherever you apply a transformation, any function left unspecified is assigned a default value, so these work out the same as the less verbose examples above:</p>
+<pre><code>div.spin { transform: rotate(20deg) translate(0,0), scale(1) skew(0,0) }
+div.tabled { transform: rotate(0deg) translate(100%,0) scale(0.5) skew(0.0) }
+</code></pre>
+<p>You can also apply transforms directly to an object from JavaScript. Here’s an example in which tilting a mobile handset controls the tilt of a screen element, using the 3D transforms described below:</p>
+<pre><code>var gestural = document.querySelector('#gestural');
+window.addListener('deviceorientation', orientationHandler);
+orientationHandler = function(e) {
+   gestural.style.transform = 'rotateX(' + (e.beta * -1) + 'deg) ' + 'rotateY(' + e.gamma + 'deg)';
+   gestural.style.WebkitTransform = 'rotateX(' + (e.beta * -1) + 'deg) ' + 'rotateY(' + e.gamma + 'deg)';
+}
+</code></pre>
+<p>Several different technologies such as SVG and the <strong>canvas</strong> element implement transforms, and are all conceptually similar despite slight differences in how they are implemented.</p>
+<h2>2D transform functions</h2>
+<p>The following isolates how each 2D function works. The <a href="/docs/css/functions/translate"><strong>translate()</strong></a> function simply moves an element around on the screen, much the same as when using <a href="/docs/css/properties/top"><strong>top</strong></a> and <a href="/docs/css/properties/left"><strong>left</strong></a> to position an element. This example moves the card over to the right more than it moves it downward:</p>
+<pre><code>transform: translate(50%, 10%);
+</code></pre>
+<p><img src="//static.webplatform.org/d/db/transform_translate.png" alt="transform translate.png"></p>
+<p>The <a href="/docs/css/functions/translate"><strong>translate()</strong></a> function accepts up to two <em>x</em> and <em>y</em> values to move to the right and downward. These can specify any CSS measurement, including negative values to move left and upward. Percentages refer to the size of the transformed element. If you specify a single value, it’s interpreted as <em>x</em> and only moves the element horizontally. Otherwise you can specify separate <a href="/docs/css/functions/translateX"><strong>translateX()</strong></a> and <a href="/docs/css/functions/translateY"><strong>translateY()</strong></a> functions. Here’s another way to express the same translation as above:</p>
+<pre><code>transform: translateX(50%) translateY(10%);
+</code></pre>
+<p>The <a href="/docs/css/functions/scale"><strong>scale()</strong></a> function sizes an element in decimal terms relative to a default value of 1. An element whose scale is 2 doubles in size, while a scale of 0 vanishes into a point. A single <strong>scale</strong> value applies to the whole element, but setting two values lets you scale each axis independently, as you can also get with separate <a href="/docs/css/functions/scaleX"><strong>scaleX()</strong></a> and <a href="/docs/css/functions/scaleY"><strong>scaleY()</strong></a> functions. The following pairs offer different ways to produce the effects shown below:</p>
+<pre><code>/* first card */
+transform: scale(0.75);
+transform: scale(0.75, 0.75);
+/* second card */
+transform: scale(0.75, 1.25);
+transform: scaleX(0.75) scaleY(1.25);
+</code></pre>
+<p><img src="//static.webplatform.org/2/20/transform_scale.png" alt="transform scale.png"></p>
+<p>The <a href="/docs/css/functions/rotate"><strong>rotate()</strong></a> function spins an element around its <em>z</em> axis. It accepts a degree (<strong>deg</strong>) or radian (<strong>rad</strong>) measurement. (Radians are equivalent to the number of degrees multiplied by π/180.) Radial measurements can wrap around, so the following values are equivalent:</p>
+<pre><code>transform: rotate(20deg);
+transform: rotate(380deg);  /*   360  + 20 */
+transform: rotate(-340deg); /* (-360) + 20 */
+</code></pre>
+<p><img src="//static.webplatform.org/7/79/transform_rotate.png" alt="transform rotate.png"></p>
+<p>The <a href="/docs/css/functions/skew"><strong>skew()</strong></a> function leans an element over, altering its corner angle relative to the default 90° and transforming the underlying rectangle into a parallelogram. It accepts up to two degree (<strong>deg</strong>) or radian (<strong>rad</strong>) measurements. The separate <a href="/docs/css/functions/skewX"><strong>skewX()</strong></a> function tips the side edges of the element, while <a href="/docs/css/functions/skewY"><strong>skewY()</strong></a> tips the top and bottom. Setting a single <a href="/docs/css/functions/skew"><strong>skew()</strong></a> value affects only the <em>x</em> axis.</p>
+<pre><code>transform: skewX(10deg);               /* 1st */
+transform: skewY(-30deg);              /* 2nd */
+transform: skew(10deg, -30deg);        /* 3rd */
+transform: skewX(10deg) skewY(-30deg); /* 3rd, alternate syntax */
+</code></pre>
+<p><img src="//static.webplatform.org/3/34/transform_skew.png" alt="transform skew.png"></p>
+<p>Note that skewing along both <em>x</em> and <em>y</em> makes the element appear to move into three-dimensional space, but the transformation actually occurs within a flat plane. Skip below for information about 3D transforms.</p>
+<p><strong>Note:</strong> Browsers internally represent all of the transformations described above as a single <em>matrix</em> expression, which for 2D transforms consist of six values. Using the web inspector feature, you can view any transformed element’s computed style for an example, and use the the alternative <a href="/docs/css/functions/matrix"><strong>matrix()</strong></a> function to specify those values. Here is how the ace of spades in the example above is represented as a matrix value:</p>
+<pre><code>transform: matrix(1, -0.577, 0.176, 1, 0, 0);
+</code></pre>
+<h2>Changing the transform origin</h2>
+<p>By default, transforms <em>originate</em> from the center of the element, or 50% along both <em>x</em> and <em>y</em>. If you scale it down, it shrinks towards the center, or else you rotate it around its center point. The <a href="/docs/css/properties/transform-origin"><strong>transform-origin</strong></a> property allows you to place this origin point elsewhere, even outside the element, changing how transforms respond, especially in animations. It accepts a pair of <em>x</em>/<em>y</em> measurements.</p>
+<p>This shows a series of transforms that rotate around a point near the bottom right corner:</p>
+<pre><code>div {
+    transform-origin   : 80% 90% ;
+}
+div:nth-of-type(1) { transform : rotate(10deg) ; }
+div:nth-of-type(2) { transform : rotate(20deg) ; }
+div:nth-of-type(3) { transform : rotate(30deg) ; }
+</code></pre>
+<p><img src="//static.webplatform.org/1/16/origin_rotate.png" alt="origin rotate.png"></p>
+<p>In this example, placing the origin of a skew transform at the bottom makes it appear to tip over:</p>
+<pre><code>div {
+   transform          : skewX(15deg);
+   transform-origin   : bottom;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/6/60/origin_skew.png" alt="origin skew.png"></p>
+<p>The property accepts the keywords <strong>top</strong> and <strong>left</strong> for <strong>0%</strong>, <strong>bottom</strong> and <strong>right</strong> for <strong>100%</strong>, and <strong>center</strong> for <strong>50% 50%</strong>.</p>
+<p>In the first of the following examples, placing the origin of a <a href="/docs/css/functions/scaleX"><strong>scaleX()</strong></a> transform along one edge makes it appear to pivot along that edge. In the second, placing the origin far outside the element’s boundaries moves it across the screen with no need for the <a href="/docs/css/functions/translate"><strong>translate()</strong></a> function:</p>
+<pre><code>div:first-of-type {
+   transform        : scale(0.35, 1);
+   transform-origin : 0%;
+   transform-origin : left; /* same as 0% */
+}
+div:last-of-type {
+   transform-origin : 210% -20%;
+   transform        : scale(0.5);
+}
+</code></pre>
+<p><img src="//static.webplatform.org/0/0f/origin_scale.png" alt="origin scale.png"></p>
+<h2>You need some perspective</h2>
+<p>You really do. Though they often take on the illusion of three dimensions, 2D transforms are strictly superficial, inhabiting the plane of the display screen. Three dimensional transforms allow ordinary web content, which is still inherently flat, to shift onto other planes. But before applying the 3D transform functions discussed below, you need to position the scene relative to the viewer.</p>
+<p>Applying <em>perspective</em> to an an element indicates the viewer’s perceived distance to any transformed descendent elements. The <a href="/docs/css/properties/perspective"><strong>perspective</strong></a> property sets a number of CSS pixels along the <em>z</em> axis that leads from the screen to the viewer. Since ordinary web content is inherently flat, all measurements along the <em>z</em> axis <em>must</em> specify absolute units such as pixels, rather than relative percentages that make sense along <em>x</em> and <em>y</em>.</p>
+<p>The default <a href="/docs/css/properties/perspective"><strong>perspective</strong></a> value of <strong>none</strong> indicates an infinite perspective, which appears flat. A value in the range of 1000 to 2000 mimics the distance at which people typically view their screen. Perspective values of less than 1000 appear increasingly distorted, but may be desirable for immersive virtual reality applications in which the viewer appears to mingle among displaying elements.</p>
+<p>The first scene in the example below shows a 3D rotation that appears flat before applying <a href="/docs/css/properties/perspective"><strong>perspective</strong></a>, while the second shows a distance of 1000. The ancestor element’s <a href="/docs/css/properties/border"><strong>border</strong></a> reveals how the descendant’s plane has shifted.</p>
+<pre><code>.parent {
+    border      : thin solid #000;
+    perspective     : 1000;
+    perspective-origin  : 50% 50%;
+}
+.child {
+    transform       : rotateY(45deg);
+}
+</code></pre>
+<p><img src="//static.webplatform.org/f/fa/transform_perspective.png" alt="transform perspective.png"></p>
+<p>While <a href="/docs/css/properties/perspective"><strong>perspective</strong></a> affects the perceived distance to an object along the <em>z</em> axis, the <a href="/docs/css/properties/perspective-origin"><strong>perspective-origin</strong></a> property allows you to shift the perceived location along <em>x</em> and <em>y</em> from which it is viewed. The second scene reflects the default <strong>center</strong> value in which the viewpoint is centered straight out from the screen. Altering these values positions the viewer diagonally from the scene. The third scene shows the same rotation, but with the viewpoint shifted to the right:</p>
+<pre><code>perspective-origin-x : 500px;
+</code></pre>
+<p>This only affects how the transformed element appears, not the ancestor that specifies the perspective. Note that since percentages refer to the size of the transformed element, pixel units may be easier to use.</p>
+<h2>3D transforms</h2>
+<p>To extend into three-dimensional space, enhanced functions allow rotations around <em>x</em> and <em>y</em>, and translations into <em>z</em> space.</p>
+<p>The <a href="/docs/css/functions/rotateX"><strong>rotateX()</strong></a> and <a href="/docs/css/functions/rotateY"><strong>rotateY()</strong></a> functions spin elements around their horizontal or vertical axis, while the <a href="/docs/css/functions/rotateZ"><strong>rotateZ()</strong></a> function behaves the same as the 2D <a href="/docs/css/functions/rotate"><strong>rotate()</strong></a> function.</p>
+<p>An alternative <a href="/docs/css/functions/rotate3d"><strong>rotate3d()</strong></a> function requires four arguments. The first three measurements specify a point defining a 3D vector in <em>x</em>/<em>y</em>/<em>z</em> terms from the origin of the element. (For example, setting the vector to <strong>-0.2,1,0.2</strong> spins the object as if it were a child’s top leaning slightly forward and to the left, while setting it to <strong>0,1,0</strong> would straighten it.) The fourth argument specifies the angle of rotation around that vector, using <strong>deg</strong> or <strong>rad</strong> measurements.</p>
+<p>The <a href="/docs/css/functions/translate3d"><strong>translate3d()</strong></a> function requires three <em>x</em>, <em>y</em> and <em>z</em> measurements. Otherwise, use any combination of <a href="/docs/css/functions/translateX"><strong>translateX()</strong></a>, <a href="/docs/css/functions/translateY"><strong>translateY()</strong></a>, and <a href="/docs/css/functions/translateZ"><strong>translateZ()</strong></a> functions. The <em>z</em> translation must specify absolute measurements. The perceived movement towards or away from the viewer depends on how much perspective has been applied.</p>
+<p>The <a href="/docs/css/functions/scale3d"><strong>scale3d()</strong></a> function accepts three <em>x</em>, <em>y</em> and <em>z</em> measurements, otherwise they can be specified separately with <a href="/docs/css/functions/scaleX"><strong>scaleX()</strong></a>, <a href="/docs/css/functions/scaleY"><strong>scaleY()</strong></a>, and <a href="/docs/css/functions/scaleZ"><strong>scaleZ()</strong></a>. Scaling along the <em>z</em> axis ordinarily has no effect for flat web content, but does affect the sort of nested 3D objects described in the next section.</p>
+<p>The <a href="/docs/css/properties/transform-origin"><strong>transform-origin</strong></a> property accepts an additional third <strong>z</strong> measurement to place the transformation point behind or in front of where the element displays, in absolute units. (Alternately, specify the <a href="/docs/css/properties/transform-origin-z"><strong>transform-origin-z</strong></a> property.) This example shows a series of elements that rotate to various degrees from an origin point within the gray parent box that is far behind them:</p>
+<p><img src="//static.webplatform.org/4/4a/3d_originZ.png" alt="3d originZ.png"></p>
+<pre><code>.parent {
+   perspective          : 10000;
+   perspective-origin-y : -3000;  /* view from above */
+   background-color     : #aaa;
+}
+.child {
+   transform-origin-z   : -620;
+   transform-origin     : 50% 50% -620;  /* same */
+}
+.child:nth-of-type(1) { transform: rotateY(-50deg); }
+.child:nth-of-type(2) { transform: rotateY(-30deg); }
+.child:nth-of-type(3) { transform: rotateY(-10deg); }
+.child:nth-of-type(4) { transform: rotateY(10deg); }
+.child:nth-of-type(5) { transform: rotateY(30deg); }
+.child:nth-of-type(6) { transform: rotateY(50deg); }
+</code></pre>
+<p>By default, elements that rotate away from view display as a mirror image. Changing the <a href="/docs/css/properties/backface-visibility"><strong>backface-visibility</strong></a> property to <strong>hidden</strong> (from the default <strong>visible</strong>) enables flip-panel effects in which elements only appear if they face the viewer.</p>
+<p>This example shows a pair of child elements positioned at the same coordinates within the parent <em>card</em>, but one of which is rotated to face the other way. As described below, you can rotate the entire card along with its children. In this case, with the backface hidden, only one of the child <em>face</em> elements displays at a time:</p>
+<pre><code class="xml"> <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"jackheart"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/b/b0/3d_backface.png" alt="3d backface.png"></p>
+<pre><code>body {
+    background      : #ddd;
+    perspective     : 1200;
+}
+div {
+    position        : absolute;
+    width       : 280;
+    height      : 400;
+    border      : thin solid #777;
+    border-radius   : 0.5em;
+}
+.card {
+    left        : 0px;
+    transform       : rotateY(45deg);    /* vary this to rotate the entire card */
+    transform-style : preserve-3d;    /* this allows each face to rotate within the card */
+}
+.face {
+    background-size : 100% 100%;
+    backface-visibility : hidden;    /* only display when facing viewer */
+}
+.face:first-of-type {
+    transform       : rotateY(0deg);
+}
+.face:last-of-type {
+    transform       : rotateY(180deg);
+    background-image    : url(cardBack2.jpeg);
+}
+#jackheart {
+    background-image    : url(JackHeart.jpeg);
+}
+</code></pre>
+<p>While 2D transforms can be represented as a 6-element <a href="/docs/css/functions/matrix"><strong>matrix()</strong></a> function, 3D transforms correspond to 16-element <a href="/docs/css/functions/matrix3d"><strong>matrix3d()</strong></a> functions. Here’s how an element might appear within the web inspector’s computed style panel:</p>
+<pre><code>transform: matrix3d(0.642, 0, 0.766, 0, 0, 1, 0, 0, -0.766, 0, 0.642, 0, 0, 0, 0, 1);
+</code></pre>
+<h2>Nested 3D transforms</h2>
+<p>Applying a 3D rotation to an element aligns it to a different plane than that of the viewing screen. Applying 3D translations and scale effects also overrides the default coordinate system. The <a href="/docs/css/properties/transform-style"><strong>transform-style</strong></a> property allows you to transform nested content independently within that already modified space.</p>
+<p>To clarify how to use this feature, this extended example builds a cube representing playing dice that can spin freely. The markup is implemented as a series of nested elements:</p>
+<pre><code class="xml"> <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"scene"</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"dice"</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"centered"</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+             <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"face"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Global styles define absolutely positioned 100-pixel-square boxes. The outlines will help clarify each nested transform:</p>
+<pre><code>div {
+    box-sizing     : border-box;
+    position       : absolute;
+    width          : 100px;
+    height         : 100px;
+    outline-offset : 20px;
+    outline-width  : 3px;
+    outline-style  : solid;
+}
+</code></pre>
+<p>The outermost <em>scene</em> element defines the overall perspective:</p>
+<pre><code>.scene {
+    perspective   : 500;
+    outline-color : pink;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/8/80/3Dnest_scene.png" alt="3Dnest scene.png"></p>
+<p>The next <em>dice</em> element is rotated arbitrarily:</p>
+<pre><code>.dice {
+    transform       : rotateX(30deg) rotateY(50deg) rotateZ(20deg);
+    transform-style : preserve-3d;
+    outline-color   : lightgreen;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/1/18/3Dnest_dice.png" alt="3Dnest dice.png"></p>
+<p>The <strong>preserve-3d</strong> above renders any child element’s transforms in three dimensions relative to the <em>dice</em> element’s own transformed space. Otherwise the default <strong>flat</strong> value would make them appear on the <em>dice</em> element’s surface as if on a display screen.</p>
+<p>In this case, the nested <em>centered</em> element is there simply as a convenience to drop the cube back to accomodate its full volume:</p>
+<pre><code>.centered {
+    transform       : translateZ(-50px);
+    transform-style : preserve-3d;
+    outline-color   : gold;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/e/ee/3Dnest_centered.png" alt="3Dnest centered.png"></p>
+<p>Various properties define the dice’s edges with rounded corners, along with the small dot images that will be arranged to form a pattern on each face. Only one dot displays in the first face’s pattern, and the rest are pushed outside the displaying area:</p>
+<pre><code>.face {
+    border-radius       : 6px;
+    border              : 2px solid #777;
+    background-color    : #fff;
+    background-repeat   : no-repeat;
+    background-image    : url(dot.png), url(dot.png), url(dot.png),
+                          url(dot.png), url(dot.png), url(dot.png);
+    outline-color       : transparent;
+}
+.face:nth-of-type(1) {
+    background-position : 40px 40px, -20px -20px, -20px -20px,
+                         -20px -20px, -20px -20px, -20px -20px;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/4/49/3Dnest_face1.png" alt="3Dnest face1.png"></p>
+<p>The next four faces use <a href="/docs/css/properties/transform-origin"><strong>transform-origin</strong></a> to pivot outward at right angles along each edge of the first face:</p>
+<pre><code>.face:nth-of-type(2) {
+    transform           : rotateY(-90deg);
+    transform-origin    : left;
+    background-position : 10px 10px, -20px -20px, -20px -20px,
+                         -20px -20px, -20px -20px, 70px 70px;
+}
+.face:nth-of-type(3) {
+    transform           : rotateY(90deg);
+    transform-origin    : right;
+    background-position : 10px 10px, 40px 40px, -20px -20px,
+                         -20px -20px, -20px -20px, 70px 70px;
+}
+.face:nth-of-type(4) {
+    transform           : rotateX(90deg);
+    transform-origin    : top;
+    background-position : 10px 10px, -20px -20px, 10px 70px,
+                          70px 10px, -20px -20px, 70px 70px;
+}
+.face:nth-of-type(5) {
+    transform           : rotateX(-90deg);
+    transform-origin    : bottom;
+    background-position : 10px 10px, -20px -20px, 10px 70px,
+                          70px 10px, 40px 40px, 70px 70px;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/d/d9/3Dnest_face5.png" alt="3Dnest face5.png"></p>
+<p>Note that all the backfaces are visible, and only become hidden when other opaque boxes appear in front of them.</p>
+<p>The sixth face simply uses <strong>translateZ()</strong> to drop it back to close off the cube:</p>
+<pre><code>.face:nth-of-type(6) {
+    transform           : translateZ(-100px);
+    transform-origin    : center;
+    background-position : 10px 10px, 10px 40px, 10px 70px,
+                          70px 10px, 70px 40px, 70px 70px;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/b/b7/3Dnest_face6.png" alt="3Dnest face6.png"></p>
+<p>Applying different rotations to the <em>dice</em> element causes nested transform spaces to render relative to it, thus spinning the entire object. Here is how a script can control the spin:</p>
+<pre><code>var diceStyle = document.querySelector('.dice').style;
+diceStyle.transform = 'rotateX(' + spin() + ') ' + 'rotateY(' +
+       spin() + ') ' + 'rotateZ(' + spin() + ') ' ;
+// ...or diceStyle.WebkitTransform, diceStyle.MozTransform, etc.
+
+function spin() { return( Math.floor( Math.random() * 360 ) + 'deg') }
+</code></pre>
+<p><img src="//static.webplatform.org/2/2e/3Dnest_spin.png" alt="3Dnest spin.png"></p>
+<p>Once such a complex 3D object takes up space, the effect of the <a href="/docs/css/functions/scaleZ"><strong>scaleZ()</strong></a> or <a href="/docs/css/functions/scale3d"><strong>scale3d()</strong></a> functions becomes apparent. An animated transition between <strong>scale3d(0,0,0)</strong> and <strong>scale3d(1,1,1)</strong> sizes the object in all three dimensions:</p>
+<p><img src="//static.webplatform.org/a/a1/scaleZ.png" alt="scaleZ.png"></p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Transforms</h4>
+<ul>
+<li><p><a href="/docs/css/cssom/MSCSSMatrix/methods/inverse">inverse</a></p></li>
+<li><p><a href="/docs/css/cssom/MSCSSMatrix/methods/multiply">multiply</a></p></li>
+<li><p><a href="/docs/css/cssom/MSCSSMatrix/methods/rotate">rotate</a></p></li>
+<li><p><a href="/docs/css/functions/rotate3d">rotate3d()</a></p></li>
+<li><p><a href="/docs/css/functions/scale3d">scale3d()</a></p></li>
+<li><p><a href="/docs/css/functions/skew">skew()</a></p></li>
+<li><p><a href="/docs/css/functions/translate">translate()</a></p></li>
+<li><p><a href="/docs/css/functions/translate3d">translate3d()</a></p></li>
+<li><p><a href="/docs/css/functions/translateX">translateX()</a></p></li>
+<li><p><a href="/docs/css/functions/translateY">translateY()</a></p></li>
+<li><p><a href="/docs/css/functions/translateZ">translateZ()</a></p></li>
+<li><p><a href="/docs/css/properties/backface-visibility">backface-visibility</a></p></li>
+<li><p><a href="/docs/css/properties/transform-origin-z">transform-origin-z</a></p></li>
+<li><p><a href="/docs/css/transforms/MSCSSMatrix">MSCSSMatrix</a></p></li>
+<li><p><a href="/docs/css/transforms/MSCSSMatrix/translate">translate</a></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

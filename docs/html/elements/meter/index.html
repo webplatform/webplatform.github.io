@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>meter · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="The HTML &amp;lt;meter&amp;gt; element represents a value within a specified range.  This value can be any real number." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/meter/">meter</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>meter</h1>
+<h2>Summary</h2>
+<p>The HTML &lt;meter&gt; element represents a value within a specified range. This value can be any real number.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/w/index.php?title=dom/HTMLMeterElement&amp;action=edit&amp;redlink=1">HTMLMeterElement</a>
+</dd>
+</dl>
+<table class="wikitable">
+<tr>
+<th style="vertical-align: top" id="permitted-contents">
+Permitted contents
+</th>
+<td style="vertical-align: top; padding-top: 10px">
+Phrasing content, but may not contain any `<meter>` elements itself.
+</td>
+</tr>
+<tr>
+<th id="permitted-parents">
+Permitted parents
+</th>
+<td>
+Any element that can contain phrasing content.
+</td>
+</tr>
+<tr>
+<th id="tag-omission">
+Tag omission
+</th>
+<td>
+A `<meter>` element must have both a start tag and an end tag.
+</td>
+</tr>
+</table>
+ The meter element defines a value between a minimum or maximum. This can be used for fundraisers, test results, or a number of other things. It should not be used as a progress bar. For that, use the [progress element](/html/elements/progress). You should give a description of the meter within the tags, such as `<meter min="0" max="10" value="5">5 out of 10 squares occupied</meter>`. This meter can also have various attributes on it, such as the optimum, high and low values.
+<p>The content of the <strong>meter</strong> element should represent the set min/max/value attributes in human readable form. This will be picked up by assistive technologies as well as act as a fallback for browsers not supporting the element.</p>
+<h3>Attributes</h3>
+<p>This element supports the HTML5 <a href="/docs/html/global_attributes">global attributes</a>.</p>
+<dl>
+<dt>value</dt>
+<dd>The current value of the meter. If there is no value specified, or if the value is incorrectly formatted, it defaults to 0. This value must be between the <a href="#attribute-min">min</a> and <a href="#attribute-max">max</a> values of the element. If not, it will default to the closest available value within the ranges.<br>
+optimum
+</dd>
+<dd>The optimum, or goal value of the meter. For example, on a test score, this would be 100. Or, on a fundraiser, this may be a monetary value. This must be below the <a href="#attribute-max">max</a> value and above the <a href="#attribute-min">min</a> value.<br>
+min
+</dd>
+<dd>The minimum value of the meter. This must be less than the <a href="#attribute-max">max</a> attribute value. If this attribute is not present, it defaults to 0.<br>
+max
+</dd>
+<dd>The maximum value of the meter. This must be greater than the <a href="#attribute-min">min</a> attribute value. If this attribute is not present, it defaults to 1.<br>
+low
+</dd>
+<dd>The low value is what is considered a low range for the meter. In the example of a fundraiser, it may be near the starting value. This must be greater than the <a href="#attribute-min">min</a> and less than the <a href="#attribute-max">max</a> and <a href="#attribute-high">high</a> values. If unspecified, it defaults to 0.<br>
+high
+</dd>
+<dd>The high value is what is considered a high range for the meter. In the example of a fundraiser, it may be near the goal value. This must be less than the <a href="#attribute-max">max</a> and greater than the <a href="#attribute-min">min</a> and <a href="#attribute-low">low</a> values. If unspecified, it defaults to 1.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>A basic example of the meter element</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">meter</span> <span class="hljs-attribute">min</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">max</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"5"</span>&gt;</span>5 out of 10<span class="hljs-tag">&lt;/<span class="hljs-title">meter</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/5281236">View live example</a></p>
+<p>An example of the meter element using all of its attributes</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">meter</span> <span class="hljs-attribute">min</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">max</span>=<span class="hljs-value">"1000"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"500"</span> <span class="hljs-attribute">low</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">high</span>=<span class="hljs-value">"800"</span> <span class="hljs-attribute">optimum</span>=<span class="hljs-value">"900"</span>&gt;</span>$500 raised<span class="hljs-tag">&lt;/<span class="hljs-title">meter</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/5281393">View live example</a></p>
+<p>Styling options for the meter bar</p>
+<pre><code class="css"><span class="hljs-tag">meter</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">-webkit-appearance</span>:<span class="hljs-value"> none</span></span>;
+}</span>
+
+<span class="hljs-tag">meter</span><span class="hljs-pseudo">::-webkit-meter-bar</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">2px</span> solid black</span></span>;
+}</span>
+
+<span class="hljs-tag">meter</span><span class="hljs-pseudo">::-webkit-meter-bar</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> lightblue</span></span>;
+}</span>
+
+<span class="hljs-tag">meter</span><span class="hljs-pseudo">::-webkit-meter-optimum-value</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> green</span></span>;
+}</span>
+
+<span class="hljs-tag">meter</span><span class="hljs-pseudo">::-webkit-meter-suboptimum-value</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> orange</span></span>;
+}</span>
+
+<span class="hljs-tag">meter</span><span class="hljs-pseudo">::-webkit-meter-even-less-good-value</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> red</span></span>;
+}</span>
+</code></pre>
+<p><a href="http://jsbin.com/ometoTE/4/edit">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> The meter element is intended to have descriptive text inside of it, similar to the alt tag of the image element.
+</code></pre>
+<p>The title attribute may be used to specify a unit.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/forms.html#the-meter-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/forms.html#the-meter-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/html/elements/progress">HTML5 progress element</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/HTML/Element/meter">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

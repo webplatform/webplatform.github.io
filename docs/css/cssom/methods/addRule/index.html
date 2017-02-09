@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>addRule · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/cssom/">cssom</a></li><li><a href="/docs/css/cssom/methods/">methods</a></li><li><a href="/docs/css/cssom/methods/addRule/">addRule</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>addRule</h1>
+<p>Method of <a href="/docs/css/cssom/methods">css/cssom/methods</a><a href="/docs/css/cssom/methods">css/cssom/methods</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> object = object.addRule(Selector, Style, Index);
+</code></pre>
+<h2>Parameters</h2>
+<h3>Selector</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>String</strong> that specifies the selector for the new rule. Single contextual selectors are valid. For example, &quot;<strong>div</strong> <strong>p</strong> <strong>b</strong>&quot; is a valid contextual selector.</p>
+<h3>Style</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>String</strong> that specifies the style assignments for this style rule. This style takes the same form as an inline style specification. For example, &quot;<code>color:blue</code>&quot; is a valid style parameter.</p>
+<h3>Index</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>Number
+</dd>
+</dl>
+<p><strong>Integer</strong> that specifies the zero-based position in the <strong>rules</strong> collection where the new style rule should be placed. Default is <strong>-1</strong>, which specifies that the rule is added to the end of the collection.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type</p>
+<p>Reserved. Always returns -1.</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>addRule</strong> method to add a rule that sets all bold text appearing in a DIV to the color blue.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">STYLE</span>&gt;</span><span class="css">
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">STYLE</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">DIV</span>&gt;</span>
+Internet Explorer makes <span class="hljs-tag">&lt;<span class="hljs-title">B</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">B</span>&gt;</span> dynamic.
+<span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span>&gt;</span><span class="javascript">
+   <span class="hljs-keyword">var</span> new_rule;
+   new_rule = <span class="hljs-built_in">document</span>.styleSheets[<span class="hljs-number">0</span>].addRule(<span class="hljs-string">"DIV B"</span>, <span class="hljs-string">"color:blue"</span>, <span class="hljs-number">0</span>);
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>You can add up to 4095 style rules with the <strong>addRule</strong> method. After that, the method returns an “Invalid Argument” exception. You can apply rules to a disabled <a href="/docs/css/cssom/styleSheet"><strong>styleSheet</strong></a>, but they do not apply to the document until you enable the <strong>styleSheet</strong>.</p>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li><code>IHTMLStyleSheet</code></li>
+<li>styleSheet<a href="/docs/css/cssom/styleSheet">styleSheet</a></li>
+<li><code>Reference</code></li>
+<li>removeRule<a href="/docs/css/cssom/methods/removeRule">removeRule</a></li>
+<li>rules<a href="/docs/css/cssom/rules">rules</a></li>
+<li>styleSheets<a href="/docs/css/cssom/styleSheets">styleSheets</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

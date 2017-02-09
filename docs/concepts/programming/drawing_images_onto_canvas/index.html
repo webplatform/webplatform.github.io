@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Drawing an Image onto a Canvas · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="In this article we will explore how to draw Images onto a Canvas. 
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/drawing_images onto canvas/">drawing images onto canvas</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Drawing an Image onto a Canvas</h1>
+<h2>Summary</h2>
+<p>In this article we will explore how to draw Images onto a Canvas.</p>
+<p>We will start with a simple example and then explore some issues you might encounter. We’ll look at how to load the image from various sources, how to display the image on “retina” displays without bluriness, and at some compatibility and performance problems.</p>
+<h2>A simple example</h2>
+<p>A simple html layout with both the image and the canvas already loaded as DOM elements in our page.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Image drawing<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"draw.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"html5"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://www.w3.org/html/logo/img/mark-word-icon.png"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Here is the javascript that will draw the image on to the canvas.</p>
+<pre><code class="js"><span class="hljs-comment">/** draw.js **/</span>
+
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> image  = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"html5"</span>);
+    <span class="hljs-keyword">var</span> canvas = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"canvas"</span>);
+    <span class="hljs-built_in">document</span>.body.appendChild(canvas);
+
+    canvas.width  = image.width;
+    canvas.height = image.height;
+
+    <span class="hljs-keyword">var</span> context = canvas.getContext(<span class="hljs-string">"2d"</span>);
+
+    context.drawImage(image, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+});
+</code></pre>
+<h2>The drawImage function</h2>
+<p>The function we use for drawing an image onto a canvas is the <em>drawImage()</em> function. This function draws an image, canvas, or video onto the canvas. It can also draw parts of an image, and/or increase/reduce the image size.</p>
+<p>Position the image on the canvas:</p>
+<pre><code class="js">context.drawImage(img,x,y);
+</code></pre>
+<p>Position the image on the canvas, and specify width and height of the image:</p>
+<pre><code class="js">context.drawImage(img,x,y,width,height);
+</code></pre>
+<p>Clip the image and position the clipped part on the canvas:</p>
+<pre><code class="js">context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+</code></pre>
+<table>
+<thead>
+<tr><th style="text-align:left">Parameter</th><th style="text-align:left">Required</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">img</td><td style="text-align:left">*</td><td style="text-align:left">Specifies the image, canvas, or video element to use</td></tr>
+<tr><td style="text-align:left">sx</td><td style="text-align:left"></td><td style="text-align:left">The x coordinate where to start clipping</td></tr>
+<tr><td style="text-align:left">sy</td><td style="text-align:left"></td><td style="text-align:left">The y coordinate where to start clipping</td></tr>
+<tr><td style="text-align:left">swidth</td><td style="text-align:left"></td><td style="text-align:left">The width of the clipped image</td></tr>
+<tr><td style="text-align:left">sheight</td><td style="text-align:left"></td><td style="text-align:left">The height of the clipped image</td></tr>
+<tr><td style="text-align:left">x</td><td style="text-align:left">*</td><td style="text-align:left">The x coordinate where to place the image on the canvas</td></tr>
+<tr><td style="text-align:left">y</td><td style="text-align:left">*</td><td style="text-align:left">The y coordinate where to place the image on the canvas</td></tr>
+<tr><td style="text-align:left">width</td><td style="text-align:left"></td><td style="text-align:left">The width of the image to use (stretch or reduce the image)</td></tr>
+<tr><td style="text-align:left">height</td><td style="text-align:left"></td><td style="text-align:left">The height of the image to use (stretch or reduce the image)</td></tr>
+</tbody>
+</table>
+<h2>Loading the image programmatically</h2>
+<p>If the image we want to draw is not in the <a href="/w/index.php?title=DOM&amp;action=edit&amp;redlink=1">DOM</a> already (we might not even want to add it), we can load an image directly from a URL with a few lines of javascript.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadAndDrawImage</span>(<span class="hljs-params">url</span>)
+</span>{
+    <span class="hljs-comment">// Create an image object. This is not attached to the DOM and is not part of the page.</span>
+    <span class="hljs-keyword">var</span> image = <span class="hljs-keyword">new</span> Image();
+
+    <span class="hljs-comment">// When the image has loaded, draw it to the canvas</span>
+    image.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)
+    </span>{
+        <span class="hljs-comment">// draw image...</span>
+    }
+
+    <span class="hljs-comment">// Now set the source of the image that we want to load</span>
+    image.src = url;
+}
+loadAndDrawImage(<span class="hljs-string">"http://www.w3.org/html/logo/img/mark-word-icon.png"</span>);
+</code></pre>
+<h2>Reading the Image from the File System</h2>
+<p>In order to read an arbitrary file from the user’s file system we have to let the user choose the file. We do this using a file select input. Let’s add one to our HTML.</p>
+<pre><code>    &lt;label for=&quot;fileChooser&quot;&gt;Choose an image to display&lt;/label&gt;&lt;input type=&quot;file&quot; name=&quot;fileChooser&quot; id=&quot;fileChooser&quot; accept=&quot;image/jpeg&quot;&gt;
+</code></pre>
+<p>Then we have to detect when the user has chosen a file</p>
+<pre><code>    // Get a reference to the file select input field
+    var fileChooser = document.getElementById('fileChooser');
+
+    // When a selection is made the &quot;change&quot; event will be fired
+    fileChooser.addEventListener('change', handleFileSelect, false);
+
+    function handleFileSelect(event)
+    {
+        // Get the FileList object from the file select event
+        var files = event.target.files;
+
+        // Check if there are files in the FileList
+        if(files.length === 0)
+        {
+            return;
+        }
+
+        // For this example we only want one image. We'll take the first.
+        var file = files[0];
+
+        // Check that the file is an image
+        if(file.type !== '' &amp;&amp; !file.type.match('image.*'))
+        {
+            return;
+        }
+</code></pre>
+<p>Now let’s turn this file’s content into a data URL that we can use as the source for our image. After the image has loaded, we don’t need the data URL any more and we will free the memory.</p>
+<pre><code>        // The URL API is vendor prefixed in Chrome
+        window.URL = window.URL || window.webkitURL;
+
+        // Create a data URL from the image file
+        var imageURL = window.URL.createObjectURL(file);
+
+        loadAndDrawImage(imageURL);
+    }
+</code></pre>
+<p><strong>TODO:</strong></p>
+<ul>
+<li>draw scaled on Canvas (mention mobile Safari 2MB limit/issue - <a href="https://github.com/SunboX/ios-imagefile-megapixel">https://github.com/SunboX/ios-imagefile-megapixel</a>)</li>
+</ul>
+<h2>“Retina” Canvas</h2>
+<p>As mentioned in the introduction, “Retina”-Displays will show blurry images by default. This is because of …</p>
+<ul>
+<li>Explain “retina” Canvas drawing (<a href="http://html5-mobile.de/blog/retina-display-html-canvas-optimieren">http://html5-mobile.de/blog/retina-display-html-canvas-optimieren</a>)</li>
+<li>Two types of retina Canvas, retina Canvas on iOS and on new MacBook Pro</li>
+<li>window.devicePixelRatio</li>
+<li>context.webkitBackingStorePixelRatio</li>
+<li>context.scale(2, 2)</li>
+</ul>
+<h2>Alternatives</h2>
+<ul>
+<li>FileReader.readAsDataURL(file) instead of window.URL.createObject(file) - pros/cons</li>
+</ul>
+<h2>Using WebWorker for Drawing?</h2>
+<ul>
+<li>Draw inside a Worker so the drawing doesn´t block User interactions</li>
+</ul>
+<p><strong>Comment:</strong> <em>Is this even possible considering that we cannot pass dom elements to a worker? I’ve tried this and I get exceptions. We should mention web workers since they can do work for a canvas, but not drawing work I’m afraid. Or…?</em></p>
+<p><strong>Comment:</strong> <em>You are right. We cant draw onto a canvas using a worker. But we should mention, that workers can be used to manipulate the pixel data of a canvas. We can pass the pixel data to a worker, do some work with it and pass it back</em></p>
+<h2>Using WebGL for Drawing?</h2>
+<ul>
+<li>WebGL is a 2D API!</li>
+<li>How does it work? (context webgl, shader)</li>
+<li>pros/cons (contra: no easy way to modify image pixels)</li>
+<li>Link to WebGL Convolution Matrix, Extended ColorTransform Matrix “best practices”</li>
+</ul>
+<h2>Browser Compatibility</h2>
+<h2>Links to used Object, Function Docs</h2>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

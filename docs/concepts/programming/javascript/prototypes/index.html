@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Prototypes · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="JavaScript is a little confusing for developers experienced in class-based languages (like Java or C++), as it&#x27;s dynamic and does not provide a class implementation (although the keyword class is a reserved keyword and cannot be used as a variable name).
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/prototypes/">prototypes</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Prototypes</h1>
+<h2>Summary</h2>
+<p>JavaScript is a little confusing for developers experienced in class-based languages (like Java or C++), as it’s dynamic and does not provide a class implementation (although the keyword class is a reserved keyword and cannot be used as a variable name).</p>
+<p>JavaScript is still an Object Orientated Language (OOP), meaning you can construct class like structures and instantiate them into objects that are used in the same way as class-based languages.</p>
+<p>An object has an internal link to another object (or <code>null</code>) called its <strong>prototype</strong>. This object has a prototype as well and so on, until one object has <code>null</code> as its prototype. This <em>chain</em> of objects being prototypes of one another is called the <strong>prototype chain</strong>.</p>
+<h2>Inheritance with the prototype chain</h2>
+<h3>Inheriting properties</h3>
+<p>JavaScript objects are dynamic “bags” of properties (referred as <strong>own properties</strong>) and have a link to a prototype object (or <code>null</code>). Here is what happens when trying to access a property:</p>
+<pre><code>// Let's assume we have an object o with its prototype chain looking like:
+ // {a:1, b:2} ---&gt; {b:3, c:4} ---&gt; null
+ // 'a' and 'b' are o own properties.
+
+ // In this example, someObject.[[Prototype]] will designate the prototype of someObject.
+ // This is a pure notation (based on the one used in the ECMAScript standard) and cannot be used in scripts
+
+ console.log(o.a); // 1
+ // Is there an 'a' own property on o? Yes and its value is 1
+
+ console.log(o.b); // 2
+ // Is there a 'b' own property on o? Yes and its value is 2
+ // The prototype also has a 'b' property, but it's not visited. This is called &quot;property shadowing&quot;
+
+ console.log(o.c); // 4
+ // Is there a 'c' own property on o? No, check its prototype
+ // Is there a 'c' own property on o.[[Prototype]]? Yes, its value is 4
+
+ console.log(o.d); // undefined
+ // Is there a 'd' own property on o? No, check its prototype
+ // Is there a 'd' own property on o.[[Prototype]]? No, check it prototype
+ // o.[[Prototype]].[[Prototype]] is null, stop searching, no property found, return undefined
+</code></pre>
+<p>Setting a property to an object creates an own property. The only exception to the getting and setting behavior rules is when there is an inherited property with a <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters">defining getters and setters</a> getter or a setter.</p>
+<h3>Inheriting “methods”</h3>
+<p>JavaScript does not have “methods” per se. JavaScript has functions and these functions can be used as property values. The inheritance of functions works the same way that any value, including property shadowing as shown above (which is a form of <em>method overriding</em>).</p>
+<p>The only thing that changes when functions are object properties (own or inherited) is the value of <a href="/docs/en/JavaScript/Reference/Operators/this"><code>this</code></a> when the function is executed.</p>
+<pre><code>var o = {
+   a: 2,
+   m: function(b){
+     return this.a + 1;
+   }
+ };
+
+ console.log(o.m()); // 3
+ // When calling o.m in this case, 'this' refers to o.
+
+ var p = Object.create(o);
+ // p is an object and p.[[Prototype]] is o
+
+ p.a = 12; // creates an own 'a' property on p.
+ console.log(p.m()); // 13
+ // when p.m is called, 'this' refers to p. 'this.a' is p own property
+</code></pre>
+<h2>Different ways to create objects and the resulting prototype chain</h2>
+<h3>Objects created with syntax constructs</h3>
+<pre><code>var o = {a: 1};
+
+ // This object is created with Object.prototype as its [[Prototype]]
+ // This is what allows to call o.hasOwnProperty('a').
+ // hasOwnProperty is an own property of Object.prototype
+ // Object.prototype has null as its prototype.
+ // o ---&gt; Object.prototype ---&gt; null
+
+ var a = [&quot;yo&quot;, &quot;whadup&quot;, &quot;?&quot;];
+
+ // Arrays inherits from Array.prototype (which has methods like indexOf, forEach, etc.).
+ // The prototype chain looks like:
+ // a ---&gt; Array.prototype ---&gt; Object.prototype ---&gt; null
+
+ function f(){
+   return 2;
+ }
+
+ // Functions inherit from Function.prototype (which has methods like call, bind, etc.):
+ // f ---&gt; Function.prototype ---&gt; Object.prototype ---&gt; null
+</code></pre>
+<h3>With a constructor</h3>
+<p>A “constructor” in JavaScript is “just” a function that happens to be called with the <a href="/docs/en/JavaScript/Reference/Operators/new">new operator</a>.</p>
+<pre><code>function Graph() {
+   this.vertexes = [];
+   this.edges = [];
+ }
+
+ Graph.prototype = {
+   addVertex: function(v){
+     this.vertexes.push(v);
+   }
+ };
+
+ var g = new Graph();
+ // g is an object with own properties 'vertexes' and 'edges'.
+ // g.[[Prototype]] is value of Graph.prototype at time of instantiation.
+</code></pre>
+<h3>With Object.create</h3>
+<p>ECMAScript 5 introduced a new method: <a href="/docs/en/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>. Calling this method creates a new object. The prototype of this object is the first argument of the function:</p>
+<pre><code>var a = {a: 1};
+// a ---&gt; Object.prototype ---&gt; null
+
+var b = Object.create(a);
+// b ---&gt; a ---&gt; Object.prototype ---&gt; null
+console.log(b.a); // 1 (inherited)
+
+var c = Object.create(b);
+// c ---&gt; b ---&gt; a ---&gt; Object.prototype ---&gt; null
+
+var d = Object.create(null);
+// d ---&gt; null
+console.log(d.hasOwnProperty); // undefined, because d doesn't inherit from Object.prototype
+</code></pre>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Inheritance_and_the_prototype_chain">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

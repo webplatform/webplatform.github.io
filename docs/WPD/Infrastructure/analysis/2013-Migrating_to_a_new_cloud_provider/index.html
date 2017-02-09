@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>2013 - Migrating to a new cloud provider · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/analysis/">analysis</a></li><li><a href="/docs/WPD/Infrastructure/analysis/2013-Migrating_to a new cloud provider/">2013-Migrating to a new cloud provider</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>2013 - Migrating to a new cloud provider</h1>
+<h2>Introduction</h2>
+<p>This document follows <a href="/docs/WPD/Infrastructure/analysis/2013-Usage_and_future_state">WPD/Infrastructure/analysis/2013-Usage and future state</a> and should help with the <a href="/docs/WPD/Infrastructure/analysis/2013-Usage_and_future_state#3._Refactored_infrastructure">WPD/Infrastructure/analysis/2013-Usage and future state#3. Refactored infrastructure</a> objectives.</p>
+<p>While we were running on original deployment infrastructure, configuration was built empirically to suit the site visitors demand.</p>
+<p>If you are searching for detailed technical requirements, they are <a href="/docs/WPD/Infrastructure/analysis/2013-Hardware_and_software_requirements">WPD/Infrastructure/analysis/2013-Hardware and software requirements</a></p>
+<h2>Phases</h2>
+<h3>Phase 0: Prepare upcoming migration</h3>
+<h4>Dry run some salt stack states in HPCloud</h4>
+<p>Just to run Salt state scripts to test if all is fine. We never know if things broke along the changes made on the master branch.</p>
+<h4>Create a temporary MySQL replication node on selected provider</h4>
+<p>Will help speed up when it is time to flip the switch.</p>
+<p>A Read-Only Database server; basically a slave of db1 in production (HPCloud), that other VMs in selected provider’s infrastructure will read from.</p>
+<h3>Phase 1: Getting access to selected provider’s to prepare new environment</h3>
+<h4>Getting access to selected provider’s OpenStack controller</h4>
+<p>So we can start working.</p>
+<h4>Make a new ‘deployment’ node on the selected provider infrastructure</h4>
+<p>So we can start working.</p>
+<ol>
+<li>Move configuration files from /srv/code, /srv/salt, /srv/pillar and other important files.</li>
+</ol>
+<h4>Re-create the environment on the selected provider infrastructure</h4>
+<p>Instantiate nodes with the same specs (or as close as possible) to what we have.</p>
+<ol>
+<li>Test locally by overriding host names in own hosts file</li>
+<li>Ensure the new configuration match new private IP addresses</li>
+<li>Read from MySQL replication node on the selected provider VPS node. In read-only mode.</li>
+<li>New database nodes to read data from the MySQL replication node on selected provider VPS node</li>
+</ol>
+<h4>Create a copy of each Fastly services to point on nodes within selected provider infrastructure</h4>
+<p>Will be used through the reinstallation on the new environment and allow us to test prior to flipping the switch.</p>
+<h3>Phase 2: Testing phase</h3>
+<h4>Ask people to test the new infrastructure</h4>
+<p>Local database nodes will be read-only and getting synced from production.</p>
+<p>Warn community that it is to test, and they will not be able to edit pages there.</p>
+<h4>Prepare flipping the switch</h4>
+<p>Script to make what is described in “Flip the switch” below as quick as possible.</p>
+<h3>Phase 3: Flip the switch</h3>
+<p>This has to be scripted to be as quick as possible.</p>
+<p>Assuming we have a sign-off from previous phase.</p>
+<p>This step is leveraging the fact that Fastly configuration can be changed quickly. This will ensure us that in case of a problem, we can easily revert and therefore ease the pressure during the actual change.</p>
+<h4>Executing</h4>
+<p>In HPCloud environment:</p>
+<ol>
+<li>Make db1 (master) read only</li>
+<li>Make show a ‘Migration in progress’ note so users are not surprised if they cannot save</li>
+</ol>
+<p>In selected provider environment:</p>
+<ol>
+<li>Make new db1 the master, disconnect from replication node</li>
+<li>Make new db2 the slave of db1, disconnect from replication node</li>
+</ol>
+<p>In fastly:</p>
+<ol>
+<li>Change each ‘service’ to use new backend nodes from dream host, deploy them</li>
+</ol>
+<h4>Clean up</h4>
+<p>Assuming all is fine.</p>
+<ol>
+<li>Delete MySQL replication node on selected provider VPS node</li>
+<li>Delete Fastly temporary services</li>
+<li>Deprecate HPCloud</li>
+</ol>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

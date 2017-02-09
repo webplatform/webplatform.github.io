@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>srcset · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="The srcset attribute is an extension of the image element. It provides  additional image related information to the browser to help decide the most appropriate image to load. Most commonly used for delivering the best image for high device pixel ratio and responsive images." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/attributes/">attributes</a></li><li><a href="/html/attributes/srcset/">srcset</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>srcset</h1>
+<h2>Summary</h2>
+<p>The srcset attribute is an extension of the image element. It provides additional image related information to the browser to help decide the most appropriate image to load. Most commonly used for delivering the best image for high device pixel ratio and responsive images.</p>
+<table class="wikitable">
+<tr>
+<th>
+Applies to
+</th>
+<td>
+dom/HTMLImageElement
+</td>
+</tr>
+</table>
+As attribute of the [image element](/html/elements/img) element, **srcset** provides webpages the ability to inform the browser on size and pixel density information about the image before it begins the prefetch process.
+<p><strong>srcset</strong> submits the preferred size of the image with the corresponding viewport <strong><a href="/docs/html/attributes/sizes">sizes</a></strong> informing the browser the best image to use for the best viewport. Alternatively you can also omit the <strong><a href="/docs/html/attributes/sizes">sizes</a></strong> attribute and just use the <strong>srcset</strong> attribute to target images for specific device pixel ratios.</p>
+<p>Targeting images based on device pixel ratio only can be accomplished by using the <code>x</code> descriptor.</p>
+<p>The standard <strong><a href="/docs/html/attributes/src_(input,_img)">src</a></strong> attribute is always used to provide a fallback for all browsers that do not support <strong>srcset</strong></p>
+<pre><code>   &lt;img srcset=&quot;small.jpg 1x, large.jpg 2x&quot;
+   src=&quot;small.jpg&quot; /&gt;
+</code></pre>
+<p>The <strong>srcset</strong> attribute can also take a comma separated list of URL’s for each of the available image sizes. The image widths are defined using <strong>w</strong> descriptor. If you save out three different sizes of your image at 300px, 600px, 1024px this is what your code would look like.</p>
+<pre><code>   &lt;img srcset=&quot;large.jpg 1024w,
+           medium.jpg 600w,
+           small.jpg 300w&quot;
+           src=&quot;small.jpg&quot;
+           alt=&quot;A picture of a small thing&quot; /&gt;
+</code></pre>
+<h2>Examples</h2>
+<p>Example of srcset using only device pixel ratio</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">img</span>
+      <span class="hljs-attribute">srcset</span>=<span class="hljs-value">"http://placehold.it/600x250&amp;text=1x+Medium.jpg 1x,
+              http://placehold.it/1024x500&amp;text=2x+Large.jpg 2x"</span>
+      <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://placehold.it/300x150&amp;text=Small.jpg+No+Picture+Support"</span>
+      <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Picture SRCSET"</span> /&gt;</span>
+</code></pre>
+<p><a href="http://codepen.io/justincavery/pen/tliGE">View live example</a></p>
+<p>Example of the SRCSET and SIZES attributes</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">img</span>
+      <span class="hljs-attribute">srcset</span>=<span class="hljs-value">"http://placehold.it/1024x500&amp;text=1024+Large.jpg 1024w,
+              http://placehold.it/600x250&amp;text=600+Medium.jpg 600w,
+          http://placehold.it/300x150&amp;text=500+Small.jpg 500w"</span>
+      <span class="hljs-attribute">sizes</span>=<span class="hljs-value">"(min-width:500px) 33.3vw,
+             (min-width:1000px) 50vw,
+             100vw"</span>
+      <span class="hljs-attribute">src</span>=<span class="hljs-value">"http://placehold.it/300x150&amp;text=Small.jpg+No+Picture+Support"</span>
+      <span class="hljs-attribute">alt</span>=<span class="hljs-value">"Picture SRCSET"</span> /&gt;</span>
+</code></pre>
+<p><a href="http://codepen.io/justincavery/full/osDGt/">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> When using srcset with the w descriptor you must also include the sizes attribute.
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">HTML5 APIs</a></dt>
+<dd>Editor’s Draft
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

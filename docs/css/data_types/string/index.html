@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>&lt;string&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The &amp;lt;string&amp;gt; CSS data type represents character data surrounded with either single (&#x27;) or double (&amp;quot;) quote characters.  Any unicode characters can be included in the string, but many need to be expressed with escape sequences." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/data_types/">data types</a></li><li><a href="/docs/css/data_types/string/">string</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>&lt;string&gt;</h1>
+<h2>Summary</h2>
+<p>The &lt;string&gt; CSS data type represents character data surrounded with either single (') or double (&quot;) quote characters. Any unicode characters can be included in the string, but many need to be expressed with escape sequences.</p>
+<p>The CSS escape character is the backslash (<strong>\</strong>). There are two ways to create an escape sequence:</p>
+<ul>
+<li>as a backslash followed by the special character (e.g., <strong>\&quot;</strong> for a double quote or <strong>\\</strong> for a backslash);</li>
+<li>as a backslash followed by a hexadecimal number representing the unicode value (e.g., <strong>\22</strong> for a double quote, <strong>\263A</strong> for a smiley face or <strong>\a</strong> for a line break); either lowercase or uppercase letters may be used for the hexadecimal digits.</li>
+</ul>
+<p>Unicode characters may also be entered directly, if the file is saved with the correct encoding and a <a href="/docs/css/atrules/@charset"><code>@charset</code> rule</a> is declared at the top of the stylesheet file (for embedded style blocks, an equivalent charset declaration must be made in the HTML/XML).</p>
+<p>The following characters always need to be escaped:</p>
+<ul>
+<li>quotation marks of the same type used to delimit the string (but single quotes can be used unescaped in a double-quoted string and vice versa);</li>
+<li>the backslash character;</li>
+<li>line breaks (see below).</li>
+</ul>
+<p>If you wish to break a long string of text across multiple lines in your source code, you can insert a <strong>\</strong> escape character immediately before the line break. The escaped linebreak is <strong>not</strong> included in the resulting string. To include a line break character in the final string value, you will also need to add a <strong>\a</strong> escape sequence.</p>
+<h2>Examples</h2>
+<p><strong>Escape characters in strings</strong></p>
+<pre><code class="css"><span class="hljs-tag">body</span><span class="hljs-pseudo">::before</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">"Don't you just \A \"\2665\22 \a the live \
+              code examples?"</span></span></span>;
+<span class="hljs-comment">/* Displays as:
+Don't you just
+"♥"
+the live code examples?
+*/</span>
+
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value">block</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">white-space</span>:<span class="hljs-value">pre-line</span></span>;
+     <span class="hljs-comment">/* preserve line breaks but collapse spaces */</span>
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/10608944">View live example</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-values/#strings">CSS Values and Units Module Level 3</a></dt>
+<dd>W3C Candidate Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/CSS21/syndata.html#strings">CSS 2.1</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

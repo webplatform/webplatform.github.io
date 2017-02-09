@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using CORS · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to Cross Origin Resource Sharing (CORS)." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/using_cors/">using cors</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using CORS</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#monsurhossain">Monsur Hossain</a></strong><br>
+Originally published Oct 26, 2011</p>
+<h2>Summary</h2>
+<p>An introduction to Cross Origin Resource Sharing (CORS).</p>
+<h2>Introduction</h2>
+<p>APIs comprise the threads that enable you to stitch together a rich web experience. However, it’s difficult to translate this experience to the browser, where the options for cross-domain requests are limited to techniques like <a href="http://en.wikipedia.org/wiki/JSONP">JSON-P</a> (which has limited use due to security concerns) or setting up a custom proxy (which can be a pain to set up and maintain).</p>
+<p><a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (CORS) is a W3C spec that allows cross-domain communication from the browser. By building on top of the XmlHttpRequest object, CORS allows developers to work with the same idioms as same-domain requests.</p>
+<p>The use case for CORS is simple. Imagine the site <strong>alice.com</strong> has some data that the site <strong>bob.com</strong> wants to access. This type of request traditionally wouldn’t be allowed under a browser’s <a href="http://en.wikipedia.org/wiki/Same_origin_policy">same origin policy</a>. However, by supporting CORS requests, <strong>alice.com</strong> can add a few special response headers that allow <strong>bob.com</strong> to access the data.</p>
+<p>As you will see in this tutorial, CORS support requires coordination between both the server and client. Luckily, if you are a client-side developer, you are shielded from most of these details. The rest of this article shows how clients can make cross-origin requests, and how servers can be configured to support CORS.</p>
+<h2>Making a CORS Request</h2>
+<p>This section shows how to make a cross-domain request in JavaScript.</p>
+<h3>Creating the XmlHttpRequest object</h3>
+<p>To get started, you will first need to create the appropriate request object. Nicholas Zakas wrote <a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/">a simple helper method</a> to help sort out the browser differences:</p>
+<pre><code class="js"> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createCORSRequest</span>(<span class="hljs-params">method, url</span>) </span>{
+   <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+   <span class="hljs-keyword">if</span> (<span class="hljs-string">"withCredentials"</span> <span class="hljs-keyword">in</span> xhr) {
+
+     <span class="hljs-comment">// Check if the XMLHttpRequest object has a "withCredentials" property.</span>
+     <span class="hljs-comment">// "withCredentials" only exists on XMLHTTPRequest2 objects.</span>
+     xhr.open(method, url, <span class="hljs-literal">true</span>);
+
+   } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> XDomainRequest != <span class="hljs-string">"undefined"</span>) {
+
+     <span class="hljs-comment">// Otherwise, check if XDomainRequest.</span>
+     <span class="hljs-comment">// XDomainRequest only exists in IE, and is IE's way of making CORS requests.</span>
+     xhr = <span class="hljs-keyword">new</span> XDomainRequest();
+     xhr.open(method, url);
+
+   } <span class="hljs-keyword">else</span> {
+
+     <span class="hljs-comment">// Otherwise, CORS is not supported by the browser.</span>
+     xhr = <span class="hljs-literal">null</span>;
+
+   }
+   <span class="hljs-keyword">return</span> xhr;
+ }
+
+ <span class="hljs-keyword">var</span> xhr = createCORSRequest(<span class="hljs-string">'GET'</span>, url);
+ <span class="hljs-keyword">if</span> (!xhr) {
+   <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'CORS not supported'</span>);
+ }
+</code></pre>
+<h3>Event handlers</h3>
+<p>The original XmlHttpRequest object had only one event handler, <code>onreadystatechange</code>, which handled all responses. Although <code>onreadystatechange</code> is still available, XmlHttpRequest2 introduces a bunch of new event handlers. Here is a complete list:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Event Handler</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">onloadstart*</td><td style="text-align:left">When the request starts.</td></tr>
+<tr><td style="text-align:left">onprogress</td><td style="text-align:left">While loading and sending data.</td></tr>
+<tr><td style="text-align:left">onabort*</td><td style="text-align:left">When the request has been aborted. For instance, by invoking the abort() method.</td></tr>
+<tr><td style="text-align:left">onerror</td><td style="text-align:left">When the request has failed.</td></tr>
+<tr><td style="text-align:left">onload</td><td style="text-align:left">When the request has successfully completed.</td></tr>
+<tr><td style="text-align:left">ontimeout</td><td style="text-align:left">When the author specified timeout has passed before the request could complete.</td></tr>
+<tr><td style="text-align:left">onloadend*</td><td style="text-align:left">When the request has completed (either in success or failure).</td></tr>
+</tbody>
+</table>
+<ul>
+<li>starred items are not supported by IE’s XDomainRequest<br>
+source: <a href="http://www.w3.org/TR/XMLHttpRequest2/#events">http://www.w3.org/TR/XMLHttpRequest2/#events</a></li>
+</ul>
+<p>For most cases, you will at least want to handle the <code>onload</code> and <code>onerror</code> events:</p>
+<pre><code class="js"> xhr.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> responseText = xhr.responseText;
+  <span class="hljs-built_in">console</span>.log(responseText);
+  <span class="hljs-comment">// process the response.</span>
+ };
+
+ xhr.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'There was an error!'</span>);
+ };
+</code></pre>
+<p>Browsers don’t do a good job of reporting what went wrong when there is an error. Browsers also report an error message to the console log, but this message cannot be accessed from JavaScript. When handling <code>onerror</code>, you will know that an error occurred, but not much else.</p>
+<h3>withCredentials</h3>
+<p>Standard CORS requests do not send or set any cookies by default. In order to include cookies as part of the request, you need to set the XmlHttpRequest’s <code>.withCredentials</code> property to true:</p>
+<pre><code class="js"> xhr.withCredentials = <span class="hljs-literal">true</span>;
+</code></pre>
+<p>In order for this to work, the server must also enable credentials by setting the Access-Control-Allow-Credentials response header to “true”. See the “Adding CORS support to the server” section below for details.</p>
+<pre><code class="js"> Access-Control-Allow-Credentials: <span class="hljs-literal">true</span>
+</code></pre>
+<p>The <code>.withCredentials</code> property will include any cookies from the remote domain in the request, and it will also set any cookies from the remote domain. Note that these cookies still honor same-origin policies, so your JavaScript code can’t access the cookies from document.cookie or the response headers. They can only be controlled by the remote domain.</p>
+<h3>Making the request</h3>
+<p>Now that your CORS request is configured, you are ready to make the request. To do so, call the <code>send()</code> method:</p>
+<pre><code class="js"> xhr.send();
+</code></pre>
+<p>If the request has a body, it can be specified as an argument to <code>send()</code>.</p>
+<p>And that’s it! Assuming the server is properly configured to respond to CORS requests, your <code>onload</code> handler will fire with the response, just like the standard same-domain XHR you are so familiar with.</p>
+<h3>End-to-End Example</h3>
+<p>Here is a full working sample of a CORS request.</p>
+<pre><code class="js"> <span class="hljs-comment">// Create the XHR object.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createCORSRequest</span>(<span class="hljs-params">method, url</span>) </span>{
+   <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+   <span class="hljs-keyword">if</span> (<span class="hljs-string">"withCredentials"</span> <span class="hljs-keyword">in</span> xhr) {
+     <span class="hljs-comment">// XHR for Chrome/Safari/Firefox.</span>
+     xhr.open(method, url, <span class="hljs-literal">true</span>);
+   } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> XDomainRequest != <span class="hljs-string">"undefined"</span>) {
+     <span class="hljs-comment">// XDomainRequest for IE.</span>
+     xhr = <span class="hljs-keyword">new</span> XDomainRequest();
+     xhr.open(method, url);
+   } <span class="hljs-keyword">else</span> {
+     <span class="hljs-comment">// CORS not supported.</span>
+     xhr = <span class="hljs-literal">null</span>;
+   }
+   <span class="hljs-keyword">return</span> xhr;
+ }
+
+ <span class="hljs-comment">// Helper method to parse the title tag from the response.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTitle</span>(<span class="hljs-params">text</span>) </span>{
+   <span class="hljs-keyword">return</span> text.match(<span class="hljs-string">'&lt;title&gt;(.*)?&lt;/title&gt;'</span>)[<span class="hljs-number">1</span>];
+ }
+
+ <span class="hljs-comment">// Make the actual CORS request.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeCorsRequest</span>(<span class="hljs-params"></span>) </span>{
+   <span class="hljs-comment">// bibliographica.org supports CORS.</span>
+   <span class="hljs-keyword">var</span> url = <span class="hljs-string">'http://bibliographica.org/'</span>;
+
+   <span class="hljs-keyword">var</span> xhr = createCORSRequest(<span class="hljs-string">'GET'</span>, url);
+   <span class="hljs-keyword">if</span> (!xhr) {
+     alert(<span class="hljs-string">'CORS not supported'</span>);
+     <span class="hljs-keyword">return</span>;
+   }
+
+   <span class="hljs-comment">// Response handlers.</span>
+   xhr.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+     <span class="hljs-keyword">var</span> text = xhr.responseText;
+     <span class="hljs-keyword">var</span> title = getTitle(text);
+     alert(<span class="hljs-string">'Response from CORS request to '</span> + url + <span class="hljs-string">': '</span> + title);
+   };
+
+   xhr.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+     alert(<span class="hljs-string">'Woops, there was an error making the request.'</span>);
+   };
+
+   xhr.send();
+ }
+</code></pre>
+<h2>Adding CORS support to the server</h2>
+<p>Most of the heavy lifting for CORS is handled between the browser and the server. The browser adds some additional headers, and sometimes makes additional requests, during a CORS request on behalf of the client. These additions are hidden from the client (but can be discovered using a packet analyzer such as <a href="http://www.wireshark.org/">Wireshark</a>).</p>
+<p><img src="//static.webplatform.org/9/9e/cors_flow.png" alt="CORS flow"></p>
+<p>Browser manufacturers are responsible for the browser-side implementation. This section explains how a server can configure its headers to support CORS.</p>
+<h3>Types of CORS requests</h3>
+<p>Cross-origin requests come in two flavors:</p>
+<ol>
+<li>simple requests</li>
+<li>not-so-simple requests (a term I just made up)</li>
+</ol>
+<p>Simple requests are requests that meet the following criteria:</p>
+<ul>
+<li>HTTP Method matches (case-sensitive) one of:
+<ul>
+<li>HEAD</li>
+<li>GET</li>
+<li>POST</li>
+</ul></li>
+<li>HTTP Headers matches (case-insensitive):
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Last-Event-ID</li>
+<li>Content-Type, but only if the value is one of:
+<ul>
+<li>application/x-www-form-urlencoded</li>
+<li>multipart/form-data</li>
+<li>text/plain</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Simple requests are characterized as such because they can already be made from a browser without using CORS. For example, a JSON-P request can issue a cross-domain GET request. Or HTML could be used to do a form POST.</p>
+<p>Any request that does not meet the criteria above is a not-so-simple request, and requires a little extra communication between the browser and the server (called a preflight request), which we’ll get into below.</p>
+<h3>Handling a simple request</h3>
+<p>Lets start by examining a simple request from the client. The table below shows the JavaScript code for a simple GET request on the left, along with the actual HTTP request that the browser emits; CORS specific headers are in bold.</p>
+<p>JavaScript:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> url = <span class="hljs-string">'http://api.alice.com/cors'</span>;
+ <span class="hljs-keyword">var</span> xhr = createCORSRequest(<span class="hljs-string">'GET'</span>, url);
+ xhr.send();
+</code></pre>
+<p>HTTP Request:</p>
+<pre><code class="yaml"> GET <span class="hljs-regexp">/cors HTTP/</span><span class="hljs-number">1.1</span>
+<span class="hljs-label"> Origin:</span> <span class="hljs-string">http:</span><span class="hljs-comment">//api.bob.com</span>
+<span class="hljs-label"> Host:</span> api.alice.com
+ Accept-<span class="hljs-string">Language:</span> en-US
+<span class="hljs-label"> Connection:</span> keep-alive
+ User-<span class="hljs-string">Agent:</span> Mozilla/<span class="hljs-number">5.0</span>...
+</code></pre>
+<p>The first thing to note is that a valid CORS request <em>always</em> contains an Origin header. This <a href="http://tools.ietf.org/html/draft-abarth-origin-09">Origin header</a> is added by the browser, and can not be controlled by the user. The value of this header is the scheme (e.g. http), domain (e.g. bob.com) and port (included only if it is not a default port, e.g. 81) from which the request originates; for example: <a href="http://api.alice.com">http://api.alice.com</a>.</p>
+<p>Here’s a valid server response; the CORS-specific headers are bolded</p>
+<p>HTTP Response:</p>
+<pre><code class="yaml"> <span class="hljs-attribute">Access-Control-Allow-Origin</span>: <span class="hljs-string">http://api.bob.com</span>
+ <span class="hljs-attribute">Access-Control-Allow-Credentials</span>: <span class="hljs-string">true</span>
+ <span class="hljs-attribute">Access-Control-Expose-Headers</span>: <span class="hljs-string">FooBar</span>
+ <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/html; charset=utf-8</span>
+</code></pre>
+<p>All CORS related headers are prefixed with &quot;Access-Control-&quot;. Here are some more details about each header.</p>
+<p><code>Access-Control-Allow-Origin</code> (required) - This header must be included in all valid CORS responses; omitting the header will cause the CORS request to fail. The value of the header can either echo the Origin request header (as in the example above), or be a ‘*’ to allow requests from any origin. If you’d like any site to be able to access your data, using ‘*’ is fine. But if you’d like finer control over who can access your data, use an actual value in the header.</p>
+<p><code>Access-Control-Allow-Credentials</code> (optional) - By default, cookies are not included in CORS requests. Use this header to indicate that cookies should be included in CORS requests. The only valid value for this header is <code>true</code> (all lowercase). If you don’t need cookies, don’t include this header (rather than setting its value to <code>false</code>).</p>
+<p>The Access-Control-Allow-Credentials header works in conjunction with the <a href="#withCredentials">withCredentials property</a> on the XmlHttpRequest2 object. Both these properties must be set to <code>true</code> in order for the CORS request to succeed. If .withCredentials is <code>true</code>, but there is no <code>Access-Control-Allow-Credentials</code> header, the request will fail (and vice versa).</p>
+<p>It’s recommended that you don’t set this header unless you are sure you want cookies to be included in CORS requests.</p>
+<p><code>Access-Control-Expose-Headers</code> (optional) - The XmlHttpRequest2 object has a getResponseHeader() method that returns the value of a particular response header. During a CORS request, the getResponseHeader() method can only access simple response headers. Simple response headers are defined as follows:</p>
+<ul>
+<li>Cache-Control</li>
+<li>Content-Language</li>
+<li>Content-Type</li>
+<li>Expires</li>
+<li>Last-Modified</li>
+<li>Pragma</li>
+</ul>
+<p>If you want clients to be able to access other headers, you have to use the <code>Access-Control-Expose-Headers</code> header. The value of this header is a comma-delimited list of response headers you want to expose to the client.</p>
+<p>As of this writing, most browsers have buggy <code>getRequestHeader()</code> implementations, so the headers may not be accessible to clients even after you set the Access-Control-Expose-Headers header. See the Known bugs section below for more details.</p>
+<h3>Handling a not-so-simple request</h3>
+<p>That takes care of a simple GET request, but what if you want to do something more? Maybe you want to support other HTTP verbs like PUT or DELETE, or you want to support JSON using Content-Type: application/json. Then you need to handle what we’re calling a not-so-simple request.</p>
+<p>A not-so-simple request looks like a single request to the client, but it actually consists of two requests under the hood. The browser first issues a preflight request, which is like asking the server for permission to make the actual request. Once permissions have been granted, the browser makes the actual request. The browser handles the details of these two requests transparently. The preflight response can also be cached so that it is not issued on every request.</p>
+<p>Here’s an example of a not-so-simple request:</p>
+<p>JavaScript:</p>
+<pre><code class="js"> <span class="hljs-keyword">var</span> url = <span class="hljs-string">'http://api.alice.com/cors'</span>;
+ <span class="hljs-keyword">var</span> xhr = createCORSRequest(<span class="hljs-string">'PUT'</span>, url);
+ xhr.setRequestHeader(
+     <span class="hljs-string">'X-Custom-Header'</span>, <span class="hljs-string">'value'</span>);
+ xhr.send();
+</code></pre>
+<p>Preflight Request:</p>
+<pre><code>OPTIONS /cors HTTP/1.1
+Origin: http://api.bob.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: X-Custom-Header
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+</code></pre>
+<p>Like the simple request, the browser adds the Origin header to every request, including the preflight. The preflight request is made as an HTTP OPTIONS request (so be sure your server is able to respond to this method). It also contains a few additional headers:</p>
+<p><code>Access-Control-Request-Method</code> - The HTTP method of the actual request. This request header is always included, even if the HTTP method is a simple HTTP method as defined earlier (GET, POST, HEAD).</p>
+<p><code>Access-Control-Request-Headers</code> - A comma-delimited list of non-simple headers that are included in the request.</p>
+<p>The preflight request is a way of asking permissions for the actual request, before making the actual request. The server should inspect the two headers above to verify that both the HTTP method and the requested headers are valid and accepted.</p>
+<p>If the HTTP method and headers are valid, the server should respond with the following:</p>
+<p>Preflight Request:</p>
+<pre><code class="yaml"> OPTIONS /cors HTTP/<span class="hljs-number">1.1</span>
+ Origin: http:<span class="hljs-comment">//api.bob.com</span>
+ Access-Control-Request-<span class="hljs-function"><span class="hljs-keyword">Method</span>:</span> PUT
+ Access-Control-Request-Headers: X-Custom-Header
+ Host: api.alice.com
+ Accept-Language: en-US
+ Connection: keep-alive
+ User-Agent: Mozilla/<span class="hljs-number">5.0</span>...
+</code></pre>
+<p>Preflight Response:</p>
+<pre><code class="yaml"> <span class="hljs-attribute">Access-Control-Allow-Origin</span>: <span class="hljs-string">http://api.bob.com</span>
+ <span class="hljs-attribute">Access-Control-Allow-Methods</span>: <span class="hljs-string">GET, POST, PUT</span>
+ <span class="hljs-attribute">Access-Control-Allow-Headers</span>: <span class="hljs-string">X-Custom-Header</span>
+ <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/html; charset=utf-8</span>
+</code></pre>
+<p><code>Access-Control-Allow-Origin</code> (required) - Like the simple response, the preflight response must include this header.</p>
+<p><code>Access-Control-Allow-Methods</code> (required) - Comma-delimited list of the supported HTTP methods. Note that although the preflight request only asks permisions for a single HTTP method, this reponse header can include the list of all supported HTTP methods. This is helpful because the preflight response may be cached, so a single preflight response can contain details about multiple request types.</p>
+<p><code>Access-Control-Allow-Headers</code> (required if the request has an <code>Access-Control-Request-Headers</code> header) - Comma-delimited list of the supported request headers. Like the <code>Access-Control-Allow-Methods</code> header above, this can list all the headers supported by the server (not only the headers requested in the preflight request).</p>
+<p><code>Access-Control-Allow-Credentials</code> (optional) - Same as simple request.</p>
+<p><code>Access-Control-Max-Age</code> (optional) - Making a preflight request on *every* request becomes expensive, since the browser is making two requests for every client request. The value of this header allows the preflight response to be cached for a specified number of seconds.</p>
+<p>Once the preflight request gives permissions, the browser makes the actual request. The actual request looks like the simple request, and the response should be processed in the same way:</p>
+<p>Actual Request:</p>
+<pre><code class="yaml"> PUT <span class="hljs-regexp">/cors HTTP/</span><span class="hljs-number">1.1</span>
+<span class="hljs-label"> Origin:</span> <span class="hljs-string">http:</span><span class="hljs-comment">//api.bob.com</span>
+<span class="hljs-label"> Host:</span> api.alice.com
+ X-Custom-<span class="hljs-string">Header:</span> value
+ Accept-<span class="hljs-string">Language:</span> en-US
+<span class="hljs-label"> Connection:</span> keep-alive
+ User-<span class="hljs-string">Agent:</span> Mozilla/<span class="hljs-number">5.0</span>...
+</code></pre>
+<p>Actual Response:</p>
+<pre><code class="yaml"> Access-Control-Allow-<span class="hljs-string">Origin:</span> <span class="hljs-string">http:</span><span class="hljs-comment">//api.bob.com</span>
+ Content-<span class="hljs-string">Type:</span> text/html; charset=utf-<span class="hljs-number">8</span>
+</code></pre>
+<p>If the server wants to deny the CORS request, it can just return a generic response (like HTTP 200), without any CORS header. The server may want to deny the request if the HTTP method or headers requested in the preflight are not valid. Since there are no CORS-specific headers in the response, the browser assumes the request is invalid, and doesn’t make the actual request:</p>
+<p>Preflight Request:</p>
+<pre><code class="js"> Origin: http:<span class="hljs-comment">//api.bob.com</span>
+ Access-Control-Request-Method: PUT
+ Access-Control-Request-Headers: X-Custom-Header
+ Host: api.alice.com
+ Accept-Language: en-US
+ Connection: keep-alive
+ User-Agent: Mozilla/<span class="hljs-number">5.0</span>...
+</code></pre>
+<p>Preflight Response:</p>
+<pre><code>// ERROR - No CORS headers, this is an invalid request!
+Content-Type: text/html; charset=utf-8
+</code></pre>
+<p>If there is an error in the CORS request, the browser will fire the client’s <code>onerror</code> event handler. It will also print the following error to the console log:</p>
+<p><code>XMLHttpRequest cannot load http://api.alice.com. Origin http://api.bob.com is not allowed by Access-Control-Allow-Origin.</code></p>
+<p>The browser doesn’t give you a lot of details on why the error occurred, it only tells you that something went wrong.</p>
+<h3>A word about security</h3>
+<p>While CORS lays the groundwork for making cross-domain requests, the CORS headers are not a substitute for sound security practices. You shouldn’t rely on the CORS header for securing resources on your site. Use the CORS headers to give the browser directions on cross-domain access, but use some other security mechanism, such as cookies or <a href="http://oauth.net/2/">OAuth2</a>, if you need additional security restrictions on your content.</p>
+<h2>Cross-domain from Chrome Extensions</h2>
+<p>Chrome extensions support cross-domain requests in a two different ways:</p>
+<ol>
+<li>Include domain in manifest.json - Chrome extensions can make cross-domain requests to any domain <em>if</em> the domain is included in the “permissions” section of the manifest.json file:<br>
+<code>&quot;permissions&quot;: [ &quot;http://*.html5rocks.com&quot;]</code><br>
+The server doesn’t need to include any additional CORS headers or do any more work in order for the request to succeed.</li>
+<li>CORS request - If the domain is not in the manifest.json file, then the Chrome extension makes a standard CORS request. The value of the Origin header is &quot;chrome-extension://[CHROME EXTENSION ID]&quot;. This means requests from Chrome extensions are subject to the same CORS rules described in this article.</li>
+</ol>
+<h2>Known bugs</h2>
+<p>CORS support is still being actively developed in all browsers; here’s a list of known bugs (as of 11/13/2011):</p>
+<ol>
+<li>XMLHttpRequest’s getAllResponseHeaders() doesn’t honor Access-Control-Expose-Headers — The getAlLResponseHeaders() method on the XMLHttpRequest object should return all simple response headers and any response header included in the Access-Control-Expose-Headers response header. In Chrome/Safari, only simple response headers are included, while Firefox doesn’t return ANY response headers (Link to: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=608735">Firefox bug</a>, <a href="https://bugs.webkit.org/show_bug.cgi?id=41210">WebKit bug</a>).</li>
+<li>Non-simple headers on GET/POST requests bypass preflight request — In Safari, a request with a simple HTTP method (GET or POST), but non-simple request headers, do not issue a preflight request, and the non-simple header is not included as part of the request (Link to: <a href="https://bugs.webkit.org/show_bug.cgi?id=50773">WebKit bug</a>).</li>
+<li>No error information provided to onerror handler — When the onerror handler is fired, the status code is 0, and there is no statusText. This may be by design, but it can be confusing when trying to debug why CORS requests are failing.</li>
+</ol>
+<h2>CORS server flowchart</h2>
+<p>The flowchart below shows how a server should make the decisions as to which headers to add to a CORS response.</p>
+<p><img src="//static.webplatform.org/8/80/cors_server_flowchart.png" alt="CORS Server Flowchart"></p>
+<h2>Resources</h2>
+<p>Here are some resources if you’d like to learn more about CORS:</p>
+<ul>
+<li><a href="http://www.w3.org/TR/cors/">The CORS Spec</a></li>
+<li>A <a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/">good intro</a> to CORS from Nicholas Zakas</li>
+<li><a href="http://enable-cors.org/">enable-cors.org</a> - More details on how to enable CORS on your server.</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/en/tutorials/cors/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

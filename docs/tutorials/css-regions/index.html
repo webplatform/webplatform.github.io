@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using CSS Regions to flow content through a layout · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="The CSS Regions feature provides a way to implement complex
+    magazine-style designs in which content flows through freely
+    positioned layout elements. It allows you to dynamically flow content
+    from one layout element to another, but does not specify how those
+    elements are presented. For that, use whatever CSS technique is most
+    appropriate: flexible boxes, multi-column layout, grid layout, floats,
+    or even absolute positioning. This guide shows you how to flow text, but
+    does not discuss these various layout techniques. See
+    this page
+    for the results, using one of the supporting browsers listed at the
+    end of the article.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/css-regions/">css-regions</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using CSS Regions to flow content through a layout</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>The CSS Regions feature provides a way to implement complex magazine-style designs in which content flows through freely positioned layout elements. It allows you to dynamically flow content from one layout element to another, but does not specify how those elements are presented. For that, use whatever CSS technique is most appropriate: flexible boxes, multi-column layout, grid layout, floats, or even absolute positioning. This guide shows you how to flow text, but does not discuss these various layout techniques. See this page for the results, using one of the supporting browsers listed at the end of the article.</p>
+<h2>Arranging a layout</h2>
+<p>Before you flow text through a layout, you need to set up a layout. Here’s one that demonstrates various features of CSS regions:</p>
+<p><img src="//static.webplatform.org/thumb/1/11/region_layout.png/500px-region_layout.png" alt="region layout.png"></p>
+<p>The HTML markup looks like this, and contains placeholder text indicating how the content is supposed to flow:</p>
+<pre><code class="xml"> <span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"page"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"title"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #1<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"intro"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #2<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"col1"</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #3<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"col2a"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #4<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"pull"</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>(Separate Region)<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"col2b"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Region #5<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>         <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+<p>Here is the CSS for the layout, which for the sake of illustration uses a lot of absolute positioning and fixed heights, a fairly inflexible technique that’s generally not recommended:</p>
+<pre><code>section.page           { width: 8.5in; height: 11in; position: absolute; }
+section.page &gt; div     { border: #777 medium solid }
+#title                 { height: 2.5em; }
+#intro, #col1, #col2a, #col2b, #pull
+                       { width: 45%; position: absolute; }
+#intro, #col2a         { top: 5em; height: 3em; }
+#col1                  { top: 10em; height: 52em; }
+#col2a, #col2b, #pull  { left: 51%; }
+#col2a                 { top: 5em; height: 23em; }
+#col2b                 { top: 40em; height: 22em; }
+#pull                  { top: 30em; height: auto; }
+</code></pre>
+<p>At this point, these layout elements are standard boxes that may contain their own independent content, but that will soon change.</p>
+<h2>Enabling a named flow</h2>
+<p>To flow text through a document, you need a set of layout elements as you see above, an element that contains content, and a pair of CSS properties to flow the content into the layout. In this example, the <strong>article</strong> tag contains the content, and the main set of numbered boxes provides the layout:</p>
+<pre><code>article {
+    flow-into: main;
+}
+section.page &gt; div:not(#pull) {
+    flow-from: main;
+}
+</code></pre>
+<p>The <a href="/docs/css/properties/flow-into"><strong>flow-into</strong></a> and <a href="/docs/css/properties/flow-from"><strong>flow-from</strong></a> properties must both specify the same <a href="/docs/css/concepts/named_flow"><em>named flow</em></a> for the feature to work, in this case <em>main</em>. Once that is in place, elements assigned with <a href="/docs/css/properties/flow-from"><strong>flow-from</strong></a> behave as <a href="/docs/css/concepts/region"><em>regions</em></a> that flow content. The series of regions through which content flows is called the <a href="/docs/css/concepts/region_chain"><em>region chain</em></a>:</p>
+<p><img src="//static.webplatform.org/thumb/d/d0/region_basic.png/500px-region_basic.png" alt="region basic.png"></p>
+<p>Notice the shaded box that interrupts the text, and the remaining short layout box that interrupts the subheading. As you will see below, these problems can be fixed.</p>
+<h2>How flows work</h2>
+<p>Flowing content into regions encourages you to keep <em>semantic</em> content elements separate from the <em>presentational</em> elements in which they appear. Even without a corresponding region chain in which to flow, applying <a href="/docs/css/properties/flow-into"><strong>flow-into</strong></a> makes the content element disappear from view, just as if you had assigned <a href="/docs/css/properties/display"><strong>display:none</strong></a>. It reappears only when a corresponding <a href="/docs/css/properties/flow-from"><strong>flow-from</strong></a> is applied to presentational elements.</p>
+<p>While defining regions dramatically changes how content appears in the document, it is implemented entirely as CSS, and does not affect the underlying content of DOM elements. In the example above, the <a href="/docs/dom/HTMLElement/innerHTML"><strong>innerHTML</strong></a> of the first <strong>div</strong> is still the <em>Region #1</em> placeholder text.</p>
+<p>Regions may be positioned arbitrarily around the screen, but content flows through regions strictly according to the order in which they appear in the document. In the HTML example above, there’s no way to shuffle regions #1 and #2 and make content follow the same order as labeled. Regions can be scattered across the document and interrupted by other flows’ regions or non-region elements, but the only way to modify their flow order is to rearrange them in the DOM tree.</p>
+<p>You may also specify more than one source of content, in which case again their order within the document determines the order in which they flow. The example below flows content sources #1-3 into the same chain of regions. Rearranging the <em>article</em> nodes within the document shuffles their order within the output region:</p>
+<pre><code class="xml"> <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+   <span class="hljs-tag">article</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">flow-into</span>:<span class="hljs-value"> articles </span></span></span>}
+   <span class="hljs-tag">div</span><span class="hljs-class">.region</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">flow-from</span>:<span class="hljs-value"> articles </span></span></span>}
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span> source #1 <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span> source #2 <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span> source #3 <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"region"</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<h2>Controlling region breaks</h2>
+<p>With content flowing through complex layouts, web developers need to confront design problems traditionally reserved for desktop publishing applications. While most of an article’s text can be allowed to flow from one region to another, some elements such as headings should not be allowed to <em>break</em> so freely:</p>
+<p><img src="//static.webplatform.org/3/36/region_badbreak.png" alt="region badbreak.png"></p>
+<p>Use the <a href="/docs/css/properties/break-before"><strong>break-before</strong></a>, <a href="/docs/css/properties/break-after"><strong>break-after</strong></a>, and <a href="/docs/css/properties/break-inside"><strong>break-inside</strong></a> properties to control how content is placed relative to region breaks. This CSS forces headings into a new region:</p>
+<pre><code>h1, h2, h3 {
+    break-before: always;
+}
+</code></pre>
+<p><img src="//static.webplatform.org/6/60/region_goodbreak.png" alt="region goodbreak.png"></p>
+<p>In many cases, that approach may result in far too much white space within the previous region. This alternative approach keeps headings within a single region, and binds to subsequent content so that headings do not appear by themselves at the bottom of a region:</p>
+<pre><code>h1, h2, h3 {
+    break-after  : avoid;
+    break-inside : avoid;
+}
+</code></pre>
+<p>Note that this sample layout mimics the appearance of print-style pages, but does not rely on any paged media features, so in this case you cannot use the various break properties to force content onto a new page rather than a new region.</p>
+<p>Check your target browsers’ support for CSS3’s <a href="/docs/css/properties/widows"><strong>widows</strong></a> and <a href="/docs/css/properties/orphans"><strong>orphans</strong></a> properties. They offer finer control over how many <em>lines</em> of text are allowed to break into another region. By default, individual lines may break into separate regions.</p>
+<h2>Diverting content from a flow</h2>
+<p>The various <em>break</em> properties shown above do not address a common layout problem. Sometimes content needs to be diverted from a flow and moved somewhere else so that other content can flow in to take its place. In this example, <strong>aside</strong> tags represent <em>pull-quote</em> content that needs to be diverted from the main flow:</p>
+<pre><code class="xml"> <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>    Sample CSS Regions Layout                                      <span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>     Riverrun, past Eve and Adam's...                               <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>     Sir Tristram, violer d'amores...                               <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>     The fall... of a once wallstrait oldparr...                    <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">aside</span>&gt;</span> The oaks of ald now they lie in peat...                        <span class="hljs-tag">&lt;/<span class="hljs-title">aside</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>     What clashes here of wills gen wonts...                        <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>    Bygmester Finnegan, of the Stuttering Hand...                  <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>     ...freemen's maurer, lived in the broadest way immarginable... <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>     He addle liddle phifie Annie...                                <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   ...
+ <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+</code></pre>
+<p>Thankfully to address this problem, there can be more than one named flow in a document, and thus more than one series of regions. Defining a separate flow for the nested <strong>aside</strong> content removes it from the parent <strong>article</strong> content and allows it to be placed independently as part of a separate flow. This CSS diverts the pull-quote content:</p>
+<pre><code>/* main flow */
+article {
+    flow-into: main;
+}
+section.page &gt; div {
+    flow-from: main;
+}
+
+/* pullquote flow */
+article &gt; aside {
+    flow-into: pullquote;
+}
+section.page &gt; div#pull {
+    flow-from: pullquote;
+}
+</code></pre>
+<p>The pull-quote now appears in its own dedicated layout region, of which it is the only one in the chain:</p>
+<p><img src="//static.webplatform.org/thumb/6/6f/region_pull.png/500px-region_pull.png" alt="region pull.png"></p>
+<p>In this case, the region’s <strong>height</strong> is specified as <strong>auto</strong>, which makes it expand vertically to accommodate the content that flows into it. This can be useful when designing <em>flexbox</em>-based layouts in which a more flexible column shrinks to accommodate neighboring content such as the pull-quote.</p>
+<p>In this example, the parent <strong>article</strong> element is assigned to the <em>main</em> flow, while its child <strong>aside</strong> elements are assigned to a different flow named <em>pullquote</em>. You can use the same technique to assign descendant elements to the <em>same</em> flow, effectively un-nesting them from within content. In this example, endnotes are extracted from wherever they happen to appear within the main flow of content, and appear instead appended to the content, with no need to modify the content’s semantic structure:</p>
+<pre><code class="xml"> <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+   <span class="hljs-tag">article</span>, <span class="hljs-tag">aside</span><span class="hljs-class">.endnote</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">flow-into</span>:<span class="hljs-value"> main </span></span></span>}
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+
+ <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+   ...
+   <span class="hljs-tag">&lt;<span class="hljs-title">aside</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"endnote"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">aside</span>&gt;</span>
+   ...
+   <span class="hljs-tag">&lt;<span class="hljs-title">aside</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"endnote"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">aside</span>&gt;</span>
+   ...
+   <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Endnotes<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-comment">&lt;!-- endnotes appear here --&gt;</span>
+</code></pre>
+<p>However, descendant elements that are defined as the default <strong>flow-into:none</strong> cannot be prevented from flowing along with an ancestor that is assigned to a named flow.</p>
+<h2>Styling region fragments</h2>
+<p>Portions of content that break across regions are referred to as <a href="/docs/css/concepts/fragment"><em>fragments</em></a>. Using the <a href="/docs/css/atrules/@region"><strong>@region</strong></a> rule, fragments of content that flow into specified regions can receive custom CSS styles.</p>
+<p>In this example, only the portion of paragraph text that flows into the <em>intro</em> region has its text color inverted:</p>
+<pre><code>@region #intro {
+    p {
+        color          : #fff;
+    }
+}
+</code></pre>
+<p><img src="//static.webplatform.org/b/be/region_rule.png" alt="region rule.png"></p>
+<p>To achieve the combined effect shown above, the region itself can specify its own styles. This CSS applies a different design to the <em>intro</em> element regardless of whether its <a href="/docs/css/properties/flow-from"><strong>flow-from</strong></a> specifies that it behaves as a region:</p>
+<pre><code>#intro {
+    background-color   : #777;
+}
+</code></pre>
+<p>While it is possible to style the region as a block element, CSS that is ordinarily inherited by child elements does not apply to content that flows into the region from elsewhere in the document. The content’s styling is still determined by standard CSS cascading and inheritance. So the following CSS does <em>not</em> work, and cannot be used as an alternative to the <a href="/docs/css/atrules/@region"><strong>@region</strong></a> rule:</p>
+<pre><code>#intro {
+    color : #fff;
+}
+</code></pre>
+<p>Not all CSS properties can be manipulated in content that flows within a region. See <a href="/docs/css/atrules/@region"><strong>@region</strong></a> for details.</p>
+<h2>Trimming overset content</h2>
+<p>When flowing content through a layout, there may not be enough space available in the region chain to display all of it. In that case, the flow is in an <a href="/docs/css/concepts/overset"><em>overset</em></a> state. By default, the last available region in the chain displays overset content according to its <a href="/docs/css/properties/overflow"><strong>overflow</strong></a> setting. Still, even using <strong>overflow:hidden</strong> can lead to unfortunate visual artifacts along the bottom edge:</p>
+<p><img src="//static.webplatform.org/4/48/region_overset_bad.png" alt="region overset bad.png"></p>
+<p>The <a href="/docs/css/properties/region-fragment"><strong>region-fragment</strong></a> CSS property controls how content displays in this situation. Setting it to <strong>break</strong> causes the last overset region to display only the fragment of content that can fit within it, just as if subsequent content had been able to flow into another region:</p>
+<pre><code>div.region {
+    region-fragment: break;
+    /* overflow is irrelevant within regions when above is specified... */
+    overflow: none;
+}
+</code></pre>
+<p>This presents a much cleaner bottom edge on the overset region, and should be applied to region chains if the layout can get into an overset state:</p>
+<p><img src="//static.webplatform.org/9/9d/region_overset_good.png" alt="region overset good.png"></p>
+<p>Note: The CSS Regions feature offers <a href="/docs/apis/css-regions">API interfaces</a> that can help detect when a flow’s content exceeds available layout regions, or falls short and leaves some of them empty. See the <a href="/apis/css-regions/NamedFlow"><strong>NamedFlow</strong></a> API’s <a href="/apis/css-regions/NamedFlow/overset"><strong>overset</strong></a> and <a href="/apis/css-regions/NamedFlow/firstEmptyRegionIndex"><strong>firstEmptyRegionIndex</strong></a> properties, as well as its <a href="/apis/css-regions/NamedFlow/regionoversetchange"><strong>regionoversetchange</strong></a> event.</p>
+<h2>Adaptive layouts with media queries</h2>
+<p>CSS <a href="/docs/tutorials/media_queries">media queries</a> allow you to target different designs to browsers on differently sized devices. Such <em>responsive</em> web pages should target complex CSS region-based layouts only on larger-screen tablet or desktop browser interfaces. Mobile devices should rely on a much simpler one-column layout.</p>
+<p>In the following example, large-screen browsers pour the article’s content into the section’s layout elements, using all the complex layout options described above. Small-screen browsers avoid the CSS Region feature altogether, suppressing the section element that would have displayed the complex layout, and also suppressing content elements (such as the pull-quote) that do not need to be presented within the simpler layout:</p>
+<pre><code>/* tablet &amp;amp; desktop browsers */
+@media screen and (min-width: 480px){
+
+    /* pour article into section */
+    article            { flow-into : main; }
+    section.page &gt; div { flow-from : main; }
+
+    /* custom flow for pull quotes */
+    aside    { flow-into : pullquote; }
+    div#pull { flow-from : pullquote; }
+
+    /* @region rules can be nested within @media rules */
+    @region #intro {
+        p:first-of-type { color : #fff; }
+    }
+}
+
+/* mobile browsers */
+@media screen and (max-width: 480px){
+
+    /* suppress layout based on CSS Regions */
+    section.page { display : none; }
+
+    /* suppress content inappropriate for mobile */
+    aside { display : none; }
+
+    /* style content simply for mobile */
+    article {
+        margin        : 1em 1em 10em 1em;
+        padding       : 1em;
+        border-radius : 1em;
+        background    : #fff;
+    }
+    body {
+        background    : #aaa;
+        padding       : 0;
+    }
+
+    /* useful commentary */
+    h1:first-of-type::after {
+        display       : block;
+        content       : &quot; (but without the regions)&quot;;
+    }
+}
+</code></pre>
+<p>This produces an alternate mobile interface:</p>
+<p><img src="//static.webplatform.org/4/49/region_mobile.png" alt="region mobile.png"></p>
+<p>See <a href="http://letmespellitoutforyou.com/samples/region_mq_sample.html">this page</a> for the results, using one of the supporting browsers listed below.</p>
+<h2>Where to go from here</h2>
+<p>Once you become accustomed to using regions, you can rely on a wide variety of techniques to customize layouts for your content. However, the more you want to set up rules to automate layout from various content sources, the more you should familiarize yourself with CSS3’s <a href="/docs/tutorials/flexbox">flexible box properties</a>, which allow you to position layout elements fairly independently of how they are ordered within the DOM. Support for CSS Exclusions allows control over how content within some layout elements flows around others. Also familiarize yourself with the <a href="/docs/apis/css-regions">API interfaces</a> that allow JavaScript applications to control how content flows.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li>W3C editor’s draft: <a href="http://dev.w3.org/csswg/css3-regions/">CSS Regions Module Level 3</a></li>
+<li>Adobe Web Standards: <a href="http://html.adobe.com/webstandards/cssregions">CSS Regions</a></li>
+<li>Adobe Developer’s Network: <a href="http://www.adobe.com/devnet/html5/articles/css3-regions.html">CSS3 Regions: Rich page layout with HTML and CSS3</a></li>
+<li><a href="http://adobe.github.com/web-platform/samples/css-regions">Sample pages</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

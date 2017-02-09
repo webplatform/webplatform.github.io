@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MSStreamReader · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    <meta property="standardization" content="Non-Standard" />
+    <meta name="description" content="Creates random access data (Blob) from an MSStream object." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/file/">file</a></li><li><a href="/apis/file/MSStreamReader/">MSStreamReader</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>MSStreamReader</h1>
+<h2>Summary</h2>
+<p>Creates random access data (Blob) from an MSStream object.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/file/MSStreamReader/onabort">onabort</a></dt>
+<dd>Indicates that the read has been aborted (for example, by calling <strong>abort()</strong>).
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/file/MSStreamReader/readAsBlob">readAsBlob</a></dt>
+<dd>Performs an asynchronous read of an <a href="/w/index.php?title=apis/file/MSStream&amp;action=edit&amp;redlink=1">MSStream</a> object in order to create a <a href="/docs/apis/file/Blob">Blob</a> object.
+</dd>
+<dt><a href="/docs/apis/file/MSStreamReader/readAsText">readAsText</a></dt>
+<dd>Returns partial Blob data representing the number of bytes currently loaded (as a fraction of the total), decoded into memory according to the encoding determination.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Notes</h2>
+<p><strong>MSStreamReader</strong> is a constructor function producing an object that provides methods to asynchronously read an <a href="/w/index.php?title=apis/file/MSStream&amp;action=edit&amp;redlink=1">MSStream</a>, and an event model to obtain the results of these reads. MSStreamReader lets you read and interact with MSStream objects. MSStreamReader performs the conversion of multimedia that is in a C++ file format into a format that can be accessed by JavaScript. The original file is accessed as an MSStream that overlays a Blob object. MSStreamReader uses the <em>readAsBlob</em> method to perform an asynchronous read of data from the MSStream when converting it to a Blob. A series of events is used to track the progress of the read and any errors that occur. The MSStreamReader can be in one of three states. The <em>readyState</em> returns the current state. The state is one of the following values:</p>
+<ul>
+<li>EMPTY. The MSStreamReader object has been created and there are no pending reads. This is the default state of a new MSStreamReader object until the <em>readAsBlob</em> method is called.</li>
+<li>LOADING. An MSStream is being read. The <em>readAsBlob</em> method is running and no error has occurred during the read.</li>
+<li>DONE. The entire MSStream has been read into memory, a file error occurred during the read, or the read was aborted using the <em>abort</em> method. The MSStreamReader is no longer reading an MSStream. If <em>readyState</em> is set to <code>DONE</code>, it means that the <em>readAsBlob</em> method has been called at least once.</li>
+</ul>
+<p>When the MSStreamReader read operation is done on the MSStream, the <em>result</em> property returns the Blob object that contains the data buffered from the MSStream. The <em>result</em> is returned after the <em>onloadend</em> event has fired.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

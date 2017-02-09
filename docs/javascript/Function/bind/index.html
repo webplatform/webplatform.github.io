@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>bind · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="For a given function, creates a bound function that has the same body as the original function. In the bound function, the this object resolves to the passed in object. The bound function has the specified initial parameters." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Function/">Function</a></li><li><a href="/docs/javascript/Function/bind/">bind</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>bind</h1>
+<h2>Summary</h2>
+<p>For a given function, creates a bound function that has the same body as the original function. In the bound function, the this object resolves to the passed in object. The bound function has the specified initial parameters.</p>
+<h2>Syntax</h2>
+<pre><code>function.bind( thisArg [, arg1 [, arg2 [, argN ]]])
+</code></pre>
+<dl>
+<dt><strong>function</strong></dt>
+<dd>Required. A function object.
+</dd>
+<dt><strong>thisArg</strong></dt>
+<dd>Required. An object to which the this keyword can refer inside the new function.
+</dd>
+<dt><strong>arg1 [, arg2 [, argN ]]]</strong></dt>
+<dd>Optional. A list of arguments to be passed to the new function.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>A new function that is the same as the function function, except for the thisArg object and the initial arguments.</p>
+<h2>Examples</h2>
+<p>The following code shows how to use the <strong>bind</strong> method.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the original function.</span>
+ <span class="hljs-keyword">var</span> checkNumericRange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'number'</span>)
+         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     <span class="hljs-keyword">else</span>
+         <span class="hljs-keyword">return</span> value &gt;= <span class="hljs-keyword">this</span>.minimum &amp;&amp; value &lt;= <span class="hljs-keyword">this</span>.maximum;
+ }
+
+ <span class="hljs-comment">// The range object will become the this value in the callback function.</span>
+ <span class="hljs-keyword">var</span> range = { minimum: <span class="hljs-number">10</span>, maximum: <span class="hljs-number">20</span> };
+
+ <span class="hljs-comment">// Bind the checkNumericRange function.</span>
+ <span class="hljs-keyword">var</span> boundCheckNumericRange = checkNumericRange.bind(range);
+
+ <span class="hljs-comment">// Use the new function to check whether 12 is in the numeric range.</span>
+ <span class="hljs-keyword">var</span> result = boundCheckNumericRange (<span class="hljs-number">12</span>);
+ <span class="hljs-built_in">document</span>.write(result);
+
+ <span class="hljs-comment">// Output: true</span>
+</code></pre>
+<p>In the following example, the thisArg object is different from the object that contains the original method.</p>
+<pre><code class="js"><span class="hljs-comment">// Create an object that contains the original function.</span>
+ <span class="hljs-keyword">var</span> originalObject = {
+     minimum: <span class="hljs-number">50</span>,
+     maximum: <span class="hljs-number">100</span>,
+     checkNumericRange: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'number'</span>)
+             <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+         <span class="hljs-keyword">else</span>
+             <span class="hljs-keyword">return</span> value &gt;= <span class="hljs-keyword">this</span>.minimum &amp;&amp; value &lt;= <span class="hljs-keyword">this</span>.maximum;
+     }
+ }
+
+ <span class="hljs-comment">// Check whether 10 is in the numeric range.</span>
+ <span class="hljs-keyword">var</span> result = originalObject.checkNumericRange(<span class="hljs-number">10</span>);
+ <span class="hljs-built_in">document</span>.write(result + <span class="hljs-string">" "</span>);
+ <span class="hljs-comment">// Output: false</span>
+
+ <span class="hljs-comment">// The range object supplies the range for the bound function.</span>
+ <span class="hljs-keyword">var</span> range = { minimum: <span class="hljs-number">10</span>, maximum: <span class="hljs-number">20</span> };
+
+ <span class="hljs-comment">// Create a new version of the checkNumericRange function that uses range.</span>
+ <span class="hljs-keyword">var</span> boundObjectWithRange = originalObject.checkNumericRange.bind(range);
+
+ <span class="hljs-comment">// Check whether 10 is in the numeric range.</span>
+ <span class="hljs-keyword">var</span> result = boundObjectWithRange(<span class="hljs-number">10</span>);
+ <span class="hljs-built_in">document</span>.write(result);
+ <span class="hljs-comment">// Output: true</span>
+</code></pre>
+<p>The following code shows how to use the arg1[,arg2[,argN]]] arguments. The bound function uses the parameters specified in the <strong>bind</strong> method as the first and second parameters. Any parameters specified when the bound function is called are used as the third, fourth (and so on) parameters.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the original function with four parameters.</span>
+ <span class="hljs-keyword">var</span> displayArgs = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">val1, val2, val3, val4</span>) </span>{
+     <span class="hljs-built_in">document</span>.write(val1 + <span class="hljs-string">" "</span> + val2 + <span class="hljs-string">" "</span> + val3 + <span class="hljs-string">" "</span> + val4);
+ }
+
+ <span class="hljs-keyword">var</span> emptyObject = {};
+
+ <span class="hljs-comment">// Create a new function that uses the 12 and "a" parameters</span>
+ <span class="hljs-comment">// as the first and second parameters.</span>
+ <span class="hljs-keyword">var</span> displayArgs2 = displayArgs.bind(emptyObject, <span class="hljs-number">12</span>, <span class="hljs-string">"a"</span>);
+
+ <span class="hljs-comment">// Call the new function. The "b" and "c" parameters are used</span>
+ <span class="hljs-comment">// as the third and fourth parameters.</span>
+ displayArgs2(<span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>);
+ <span class="hljs-comment">// Output: 12 a b c</span>
+</code></pre>
+<h2>Exceptions</h2>
+<p>If the specified function is not a function, a <strong>TypeError</strong> exception is thrown.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/Function">Function Object</a></li>
+<li><a href="/docs/javascript/Array/filter">filter Method (Array)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff841995(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

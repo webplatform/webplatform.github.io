@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>methods · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/http/">http</a></li><li><a href="/docs/http/methods/">methods</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>methods</h1>
+<p><a href="/docs/concepts/protocols/http">HTTP</a> is a stateless application level protocol. An HTTP client constructs requests <a href="/w/index.php?title=messages&amp;action=edit&amp;redlink=1">messages</a> to communicate specific intentions. The <strong>method</strong> token indicates the purpose for which the client has made this request.</p>
+<p>Associating the method with compatible <a href="/docs/http/headers">HTTP headers</a>, a client may further specialize the request to the server. It may trigger different answers from the server.</p>
+<p>The HTTP/1.1 Specification defines a number of <a href="http://tools.ietf.org/html/rfc7231#section-4.1">standardized methods</a>. Some other methods are standardized in different documents.</p>
+<h2>Standardized Methods</h2>
+<p>The minimum requirement for <a href="/w/index.php?title=http/servers&amp;action=edit&amp;redlink=1">HTTP servers</a> is to support the methods GET and HEAD.</p>
+<h3>GET</h3>
+<p>GET requests an information resource from the HTTP server. A GET request &quot;safe&quot;: it is read only, and must not change the state of the server (except to the extent the very act of the request is logged, etc).</p>
+<p>A GET request can be paired with an <code>If-Match</code> header if the user agent has a cached version with an ETag value, and only wishes for a response if there’s a newer version available.</p>
+<h3>HEAD</h3>
+<p>A HEAD request is identical to a GET request, except the response body is excluded. It is used for testing headers and metadata about a resource.</p>
+<h3>POST</h3>
+<p>POST is used to execute a script on the server. The result might be to e.g. make a purchase of an item, and so is not safe to re-make.</p>
+<p>If specified in the response, POST requests are cachable.</p>
+<p>Most POST requests are made by Web browsers, and respond with 303 (See Other) to redirect the browser to the modified resource, or some form of landing page, after successful execution.</p>
+<h3>PUT</h3>
+<p>PUT stores a resource at the given URI, creating it if necessary.</p>
+<p>Two PUT requests in succession have the same effect as one, so the method is <em>idempotent</em> (safe to re-send). PUT requests should be sent with an <code>If-Match: etag</code> so modifications are not inadvertently overwritten; or <code>If-None-Match: *</code> if the resource is to only be created (but not overwritten if it exists).</p>
+<h3>DELETE</h3>
+<p>A DELETE on a resource removes it from the server. Further GET requests will likely return 410 (Gone) or 404 (Not Found).</p>
+<p>Like PUT, two DELETE requests in succession have the same effect as one, and so the method is <em>idempotent</em> (safe to re-send). DELETE requests should be paired with an <code>If-Match</code> header so that if the resource is re-created or modified, the modifications are not unknowingly deleted.</p>
+<h3>CONNECT</h3>
+<p>CONNECT effectively ends HTTP communications and starts two-way communications with the resource identified in the request-line (the URI, or server:port). It is a hop-by-hop method.</p>
+<h3>OPTIONS</h3>
+<p>An OPTIONS request on a resource requests information about that resource.</p>
+<p>OPTIONS is required by CORS to enable cross-domain <a href="/docs/apis/xhr">XMLHttpRequest</a> requests.</p>
+<h3>TRACE</h3>
+<p>TRACE is a meta-request that replies with the HTTP headers used to make the request. It is defined primarily for debugging.</p>
+<p>TRACE in many situations can expose confidential cookie and authorization headers to an attacker, and so is disabled on many HTTP servers. See <a href="http://www.kb.cert.org/vuls/id/867593">[1]</a>.</p>
+<h3>PATCH</h3>
+<p>PATCH instructs the server to apply a change to the identified resource using some diff or patch format, like a Patch file or JSON Patch.</p>
+<p>Though PATCH is not idempotent by default, it can be issued with an <code>If-Match</code> header so as to only be successful one time.</p>
+<h3>Other Methods</h3>
+<p>Several HTTP extensions like WebDAV define other methods. A complete list is maintained at the IANA’s <a href="http://www.iana.org/assignments/http-methods/http-methods.xhtml">HTTP Method Registry</a>.</p>
+<h2>Method Properties</h2>
+<p>@@TODO: add something about safe, idempotent and cacheable. Probably make a table@@</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Summary</th><th style="text-align:left">Safe</th><th style="text-align:left">Idempotent</th><th style="text-align:left">Cachable</th><th style="text-align:left">Reference</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">GET</td><td style="text-align:left">Retrieve a resource</td><td style="text-align:left">Yes</td><td style="text-align:left">Yes</td><td style="text-align:left">Yes</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.1">RFC7231, Section 4.3.1</a></td></tr>
+<tr><td style="text-align:left">HEAD</td><td style="text-align:left">As GET, but headers only</td><td style="text-align:left">Yes</td><td style="text-align:left">Yes</td><td style="text-align:left">Yes</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.2">RFC7231, Section 4.3.2</a></td></tr>
+<tr><td style="text-align:left">POST</td><td style="text-align:left">Execute/perform an action</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left">Yes</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.3">RFC7231, Section 4.3.3</a></td></tr>
+<tr><td style="text-align:left">PUT</td><td style="text-align:left">Store a resource</td><td style="text-align:left">No</td><td style="text-align:left">Yes</td><td style="text-align:left">No</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.4">RFC7231, Section 4.3.4</a></td></tr>
+<tr><td style="text-align:left">DELETE</td><td style="text-align:left">Delete a resource</td><td style="text-align:left">No</td><td style="text-align:left">Yes</td><td style="text-align:left">No</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.6">RFC7231, Section 4.3.6</a></td></tr>
+<tr><td style="text-align:left">CONNECT</td><td style="text-align:left">Open a tunnel</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.6">RFC7231, Section 4.3.6</a></td></tr>
+<tr><td style="text-align:left">OPTIONS</td><td style="text-align:left">Get communication information</td><td style="text-align:left">No</td><td style="text-align:left">Yes</td><td style="text-align:left">No</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc7231#section-4.3.7">RFC7231, Section 4.3.7</a></td></tr>
+<tr><td style="text-align:left">PATCH</td><td style="text-align:left">Apply a modification</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left">No</td><td style="text-align:left"><a href="http://tools.ietf.org/html/rfc5789">RFC5789</a></td></tr>
+</tbody>
+</table>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

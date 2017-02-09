@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Importing data into MediaWiki · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Importing_data into MediaWiki/">Importing data into MediaWiki</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Importing data into MediaWiki</h1>
+<h2>Summary</h2>
+<p><em>This documentation was initially created by Yaron Koren on August 12, 2012. Feel free to write me with any questions about it, at yaron57@gmail.com.</em></p>
+<p>Importing content into the wiki involves several steps. For each page to be imported, you need to:</p>
+<ol>
+<li>scrape the HTML/XML content of that page</li>
+<li>create wikitext to hold that information</li>
+<li>figure out the name for the corresponding page in the wiki</li>
+<li>save the wikitext to the wiki page of that name.</li>
+</ol>
+<p>All of this assumes that there’s a one-to-one correspondence between the source documents and pages in the wiki, which is not necessarily true: there could be source HTML pages that need to get split up into multiple wiki pages, or multiple HTML pages that need to get combined into one wiki page (this seems less likely), or even more complex combinations. And there could be HTML pages in more than set of documentation corresponding to the same concept - the data from these multiple sources would need to be synthesized in some way; or at the very least you would need to choose which data to use. This documentation won’t explain how to do any of that, but this sort of action would essentially have to be done between steps 1 and 2 in the code.</p>
+<h2>Scraping contents</h2>
+<p>There is nothing MediaWiki-specific about this step; you just need to create code that gets the relevant data from each page in a reliable way. There are many libraries that can help with HTML and XML parsing.</p>
+<h2>Wikitext</h2>
+<p>Every page in MediaWiki is defined by its source text, which is in a syntax called “wikitext” (though it’s generic-sounding, the name “wikitext” is only used for MediaWiki’s syntax). You can view the wikitext for any page by clicking on the tab that’s labeled either “Edit” or &quot;View source&quot;, depending on whether you’re allowed to edit it.</p>
+<p>In the WebPlatform wiki, every page is meant to have the same basic structure: one or more template calls at the top, and then sections (if any) for the rest of the page. Here are the contents of the page “css/properties/font-size” (which you can also see <a href="http://webplatform.org/d/index.php?title=css/properties/font-size&amp;action=edit">here</a>):</p>
+<pre><code>{{Flags
+|High-level issues=Stub
+|Content=Outdated, Incomplete, Needs Best Practices
+|Compatibility=Missing
+|Examples=Examples have errors
+}}
+{{CSS Property
+|Initial value=medium
+|Applies to=all elements
+|Inherited=Yes
+|Media=visual
+|Computed value=absolute length
+|Animatable=No
+|Values={{CSS Property Value
+|Data Type=xx-small, x-small, small, medium, large, x-large, xx-large
+|Description=A set of absolute size keywords based on the user's default font size (which is medium). Similar to presentational HTML's &lt;font size=&quot;1&quot;&gt; through &lt;font size=&quot;7&quot;&gt; where the user's default font size is &lt;font size=&quot;3&quot;&gt;.
+}}{{CSS Property Value
+|Data Type=larger, smaller
+|Description=Larger or smaller than the parent element's font size, by roughly the ratio used to separate the absolute size keywords above.
+}}{{CSS Property Value
+|Data Type=length
+|Description=A positive length. When the units are specified in em or ex,  the size is defined relative to the size of the font on the parent element of the element in question. For example, 0.5em is half the font size of the parent of the current element.
+}}{{CSS Property Value
+|Data Type=percentage
+|Description=A positive percentage of the parent element's font size.
+}}
+|Syntax=font-size: xx-small
+|Value_Name=percentage
+}}
+</code></pre>
+<p>There are no sections on this page; just calls to templates. There are two main templates on this page: “Flags” and &quot;CSS Property&quot;. The “Flags” template is here at this point mostly still as a test, so it can safely be ignored at this point. The “CSS Property” template is the important one, holding the real content for the page. Hopefully the basic syntax of template calls makes sense from this example - it takes in a set of parameters, which can be passed in any order. Each parameter is of the form &quot;|<em>field name</em>=<em>value</em>&quot;.</p>
+<p>Interestingly, you can see that the “Values” parameter of this template is itself taking in a set of calls to the template &quot;CSS Property Value&quot;. This is how “two-dimensional” data will be handled in this wiki - data that’s essentially a table, instead of a single value. Any such table of data should be structured as a series of calls to the same template (one for each row), which are in turn all one value for a parameter in the larger template.</p>
+<p>There should only ever be two dimensions at most in a page - not three or more. In other words, a template call can contain calls to other templates, but those template calls should not contain any additional calls.</p>
+<p>What if you’re trying to import data of a type that doesn’t have an example on the wiki? Don’t worry too much about this - feel free to come up with arbitrary names for the templates, and parameters for those templates, to store on the page. Even if there’s a problem with one or more of those fields, or the names get changed later on, you will still have done 90% of the work needed for the import.</p>
+<p>(Please don’t worry about actually creating or modifying the templates in question, unless you think it will be useful for the import. It’s alright if the page itself, when viewed, looks nonsensical - the key is for the wikitext to be correct.)</p>
+<h3>Sections</h3>
+<p>And what about sections? They’re ideal for semi-structured content that differs from page to page. For instance, if there’s some page where you want to have some content specific to memory leaks, but it’s only relevant to that one page, then it probably doesn’t make sense to create a template parameter for it. Instead, you should have a section called “Memory leaks” in the page, under the template call(s). Section headers are defined by putting “==” around the header text. So here is how such a section could look:</p>
+<pre><code>==Memory leaks==
+Calling this function has been know to generate memory leaks when...
+</code></pre>
+<h2>Page naming</h2>
+<p>Page names on the WebPlatform wiki are all lowercase, and they’re of the form &quot;<em>language, API or framework</em>/<em>type of entity</em>/<em>name of entity</em>&quot;. “css/properties/font-size” is one example, obviously, while another could be &quot;jquery/methods/append&quot;. The full naming system for this wiki has not been fully established, as far as I know - hopefully it is something that will for the most part fall into place during the import process.</p>
+<h2>Saving the page</h2>
+<p>Saving the wiki page is actually possibly the easiest part of the process. MediaWiki has a URL-based (i.e. RESTful) API that can be used to perform a lot of actions, including saving pages. You can see a listing and explanation of the API <a href="http://webplatform.org/d/api.php">here</a>. The API is built around &quot;actions&quot;, and the two important actions in this case are “action=login” and &quot;action=edit&quot;. In order to save a page, you need to first call the “login” action, then the “edit” action.</p>
+<p>The API can either be accessed directly via the URLs, or using a library that serves as a wrapper around the API. The latter is probably easier to do, though you do have to install the library (which is usually not that hard to do). There are libraries available for a large number of programming languages; you can see a fairly complete list <a href="http://en.wikipedia.org/wiki/Wikipedia:Creating_a_bot#Programming_languages_and_libraries">&quot; here</a>. Some of these are Wikipedia-specific; you should only use libraries that are generic to any MediaWiki installation.</p>
+<p>If you want to access the API URLs directly, you can do that; the API page (<a href="http://webplatform.org/d/api.php">here it is again</a>) gives examples for the “login” and “edit” actions, and there’s a full explanation of the MediaWiki API <a href="http://www.mediawiki.org/wiki/API:Main_page">here</a>.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

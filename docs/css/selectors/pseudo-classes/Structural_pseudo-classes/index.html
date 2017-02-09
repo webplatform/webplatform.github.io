@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Structural pseudo-classes · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/selectors/">selectors</a></li><li><a href="/docs/css/selectors/pseudo-classes/">pseudo-classes</a></li><li><a href="/docs/css/selectors/pseudo-classes/Structural_pseudo-classes/">Structural pseudo-classes</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Structural pseudo-classes</h1>
+<p>Selectors introduces the concept of structural pseudo-classes to permit selection based on extra information that lies in the document tree but cannot be represented by other simple selectors or combinators.</p>
+<p>Standalone text and other non-element nodes are not counted when calculating the position of an element in the list of children of its parent. When calculating the position of an element in the list of children of its parent, the index numbering starts at 1.</p>
+<h2><code>:root</code> pseudo-class</h2>
+<p>The <code>:root</code> pseudo-class represents an element that is the root of the document. In HTML 4, this is always the <code>HTML</code> element.</p>
+<h2><code>:nth-child()</code> pseudo-class</h2>
+<p>The <code>:nth-child(an+b)</code> pseudo-class notation represents an element that has an+b-1 siblings before it in the document tree, for any positive integer or zero value of n, and has a parent element. For values of a and b greater than zero, this effectively divides the element’s children into groups of a elements (the last group taking the remainder), and selecting the bth element of each group. For example, this allows the selectors to address every other row in a table, and could be used to alternate the color of paragraph text in a cycle of four. The a and b values must be integers (positive, negative, or zero). The index of the first child of an element is 1.</p>
+<p>In addition to this, <code>:nth-child()</code> can take ‘<code>odd</code>’ and ‘<code>even</code>’ as arguments instead. ‘<code>odd</code>’ has the same signification as 2n+1, and ‘<code>even</code>’ has the same signification as 2n.</p>
+<p>The argument to <code>:nth-child()</code> must match the grammar below, where INTEGER matches the token [0-9]+ and the rest of the tokenization is given by the Lexical scanner in section 10.2:</p>
+<pre><code>nth
+  : S* [ ['-'|'+']? INTEGER? {N} [ S* ['-'|'+'] S* INTEGER ]? |
+         ['-'|'+']? INTEGER | {O}{D}{D} | {E}{V}{E}{N} ] S*
+  ;
+</code></pre>
+<h3>Examples:</h3>
+<pre><code class="css"><span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-child(2n+1)</span> <span class="hljs-comment">/* represents every odd row of an HTML table */</span>
+<span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-child(odd)</span>  <span class="hljs-comment">/* same */</span>
+<span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-child(2n+0)</span> <span class="hljs-comment">/* represents every even row of an HTML table */</span>
+<span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-child(even)</span> <span class="hljs-comment">/* same */</span>
+
+<span class="hljs-comment">/* Alternate paragraph colours in CSS */</span>
+<span class="hljs-tag">p</span><span class="hljs-pseudo">:nth-child(4n+1)</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> navy</span></span>; }</span>
+<span class="hljs-tag">p</span><span class="hljs-pseudo">:nth-child(4n+2)</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> green</span></span>; }</span>
+<span class="hljs-tag">p</span><span class="hljs-pseudo">:nth-child(4n+3)</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> maroon</span></span>; }</span>
+<span class="hljs-tag">p</span><span class="hljs-pseudo">:nth-child(4n+4)</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> purple</span></span>; }</span>
+</code></pre>
+<p>When the value b is preceded by a negative sign, the &quot;<code>+</code>&quot; character in the expression must be removed (it is effectively replaced by the &quot;<code>-</code>&quot; character indicating the negative value of b).</p>
+<pre><code class="css"><span class="hljs-pseudo">:nth-child(10n-1)</span>  <span class="hljs-comment">/* represents the 9th, 19th, 29th, etc, element */</span>
+<span class="hljs-pseudo">:nth-child(10n+9)</span>  <span class="hljs-comment">/* Same */</span>
+<span class="hljs-pseudo">:nth-child(10n+-1)</span> <span class="hljs-comment">/* Syntactically invalid, and would be ignored */</span>
+</code></pre>
+<p>When a=0, the an part need not be included (unless the b part is already omitted). When an is not included and b is non-negative, the + sign before b (when allowed) may also be omitted. In this case the syntax simplifies to :nth-child(b).</p>
+<pre><code class="css"><span class="hljs-tag">foo</span><span class="hljs-pseudo">:nth-child(0n+5)</span>   <span class="hljs-comment">/* represents an element foo that is the 5th child of its parent element */</span>
+<span class="hljs-tag">foo</span><span class="hljs-pseudo">:nth-child(5)</span>      <span class="hljs-comment">/* same */</span>
+</code></pre>
+<p>When a=1, or a=-1, the number may be omitted from the rule. The following selectors are therefore equivalent:</p>
+<pre><code class="css"><span class="hljs-tag">bar</span><span class="hljs-pseudo">:nth-child(1n+0)</span>   <span class="hljs-comment">/* represents all bar elements, specificity (0,1,1) */</span>
+<span class="hljs-tag">bar</span><span class="hljs-pseudo">:nth-child(n+0)</span>    <span class="hljs-comment">/* same */</span>
+<span class="hljs-tag">bar</span><span class="hljs-pseudo">:nth-child(n)</span>      <span class="hljs-comment">/* same */</span>
+<span class="hljs-tag">bar</span>                   <span class="hljs-comment">/* same but lower specificity (0,0,1) */</span>
+</code></pre>
+<p>If b=0, then every ath element is picked. In such a case, the +b (or -b) part may be omitted unless the a part is already omitted.</p>
+<pre><code class="css"><span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-child(2n+0)</span> <span class="hljs-comment">/* represents every even row of an HTML table */</span>
+<span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-child(2n)</span> <span class="hljs-comment">/* same */</span>
+</code></pre>
+<p>Whitespace is permitted after the &quot;<code>(</code>&quot;, before the &quot;<code>)</code>&quot;, and on either side of the &quot;<code>+</code>&quot; or &quot;<code>-</code>&quot; that separates the an and b parts when both are present. Valid Examples with white space:</p>
+<pre><code class="css"><span class="hljs-pseudo">:nth-child(</span> 3<span class="hljs-tag">n</span> + 1 )
+<span class="hljs-pseudo">:nth-child(</span> +3<span class="hljs-tag">n</span> <span class="hljs-tag">-</span> 2 )
+<span class="hljs-pseudo">:nth-child(</span> <span class="hljs-tag">-n</span>+ 6)
+<span class="hljs-pseudo">:nth-child(</span> +6 )
+</code></pre>
+<p>Invalid Examples with white space:</p>
+<pre><code class="css"><span class="hljs-pseudo">:nth-child(3</span> <span class="hljs-tag">n</span>)
+<span class="hljs-pseudo">:nth-child(+</span> 2<span class="hljs-tag">n</span>)
+<span class="hljs-pseudo">:nth-child(+</span> 2)
+</code></pre>
+<p>If both a and b are equal to zero, the pseudo-class represents no element in the document tree.</p>
+<p>The value a can be negative, but only the positive values of an+b, for n≥0, may represent an element in the document tree.</p>
+<pre><code class="css">html|tr:nth-child(-n+6)  /* represents the 6 first rows of XHTML tables */
+</code></pre>
+<h2><code>:nth-last-child()</code> pseudo-class</h2>
+<p>The <code>:nth-last-child(an+b)</code> pseudo-class notation represents an element that has an+b-1 siblings after it in the document tree, for any positive integer or zero value of n, and has a parent element. See <code>:nth-child()</code> pseudo-class for the syntax of its argument. It also accepts the ‘<code>even</code>’ and ‘<code>odd</code>’ values as arguments.</p>
+<h3>Examples:</h3>
+<pre><code class="css"><span class="hljs-tag">tr</span><span class="hljs-pseudo">:nth-last-child(-n+2)</span>    <span class="hljs-comment">/* represents the two last rows of an HTML table */</span>
+
+<span class="hljs-tag">foo</span><span class="hljs-pseudo">:nth-last-child(odd)</span>    <span class="hljs-comment">/* represents all odd foo elements in their parent element,
+counting from the last one */</span>
+</code></pre>
+<h2><code>:nth-of-type()</code> pseudo-class</h2>
+<p>The <code>:nth-of-type(an+b)</code> pseudo-class notation represents an element that has an+b-1 siblings with the same expanded element name before it in the document tree, for any zero or positive integer value of n, and has a parent element. See <code>:nth-child()</code> pseudo-class for the syntax of its argument. It also accepts the ‘<code>even</code>’ and ‘<code>odd</code>’ values.</p>
+<p>This allows an author to alternate the position of floated images:</p>
+<pre><code class="css"><span class="hljs-tag">img</span><span class="hljs-pseudo">:nth-of-type(2n+1)</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> right</span></span>; }</span>
+<span class="hljs-tag">img</span><span class="hljs-pseudo">:nth-of-type(2n)</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>; }</span>
+</code></pre>
+<h2><code>:nth-last-of-type()</code> pseudo-class</h2>
+<p>The <code>:nth-last-of-type(an+b)</code> pseudo-class notation represents an element that has an+b-1 siblings with the same expanded element name after it in the document tree, for any zero or positive integer value of n, and has a parent element. See <code>:nth-child()</code> pseudo-class for the syntax of its argument. It also accepts the ‘<code>even</code>’ and ‘<code>odd</code>’ values.</p>
+<p>To represent all h2 children of an XHTML body except the first and last, one could use the following selector:</p>
+<pre><code class="css"><span class="hljs-tag">body</span> &gt; <span class="hljs-tag">h2</span><span class="hljs-pseudo">:nth-of-type(n+2)</span><span class="hljs-pseudo">:nth-last-of-type(n+2)</span>
+</code></pre>
+<p>In this case, one could also use :not(), although the selector ends up being just as long:</p>
+<pre><code class="css"><span class="hljs-tag">body</span> &gt; <span class="hljs-tag">h2</span><span class="hljs-pseudo">:not(</span><span class="hljs-pseudo">:first-of-type)</span><span class="hljs-pseudo">:not(</span><span class="hljs-pseudo">:last-of-type)</span>
+</code></pre>
+<h2><code>:first-child</code> pseudo-class</h2>
+<p>Same as <code>:nth-child(1)</code>. The <code>:first-child</code> pseudo-class represents an element that is the first child of some other element.</p>
+<p>The following selector represents a p element that is the first child of a div element:</p>
+<pre><code class="css"><span class="hljs-tag">div</span> &gt; <span class="hljs-tag">p</span><span class="hljs-pseudo">:first-child</span>
+</code></pre>
+<p>This selector can represent the p inside the div of the following fragment:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> The last P before the note.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"note"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> The first P inside the note.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>but cannot represent the second p in the following fragment:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> The last P before the note.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"note"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span> Note <span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> The first P inside the note.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>The following two selectors are usually equivalent:</p>
+<pre><code class="css">* &gt; <span class="hljs-tag">a</span><span class="hljs-pseudo">:first-child</span> <span class="hljs-comment">/* a is first child of any element */</span>
+<span class="hljs-tag">a</span><span class="hljs-pseudo">:first-child</span> <span class="hljs-comment">/* Same (assuming a is not the root element) */</span>
+</code></pre>
+<h2><code>:last-child</code> pseudo-class</h2>
+<p>Same as <code>:nth-last-child(1)</code>. The <code>:last-child</code> pseudo-class represents an element that is the last child of some other element.</p>
+<p>The following selector represents a list item li that is the last child of an ordered list ol.</p>
+<pre><code class="css"><span class="hljs-tag">ol</span> &gt; <span class="hljs-tag">li</span><span class="hljs-pseudo">:last-child</span>
+</code></pre>
+<h2><code>:first-of-type</code> pseudo-class</h2>
+<p>Same as <code>:nth-of-type(1)</code>. The <code>:first-of-type</code> pseudo-class represents an element that is the first sibling of its type in the list of children of its parent element.</p>
+<p>The following selector represents a definition title <code>dt</code> inside a definition list <code>dl</code>, this <code>dt</code> being the first of its type in the list of children of its parent element.</p>
+<pre><code class="css"><span class="hljs-tag">dl</span> <span class="hljs-tag">dt</span><span class="hljs-pseudo">:first-of-type</span>
+</code></pre>
+<p>It is a valid description for the first two <code>dt</code> elements in the following example but not for the third one:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">dl</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>gigogne<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">dl</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>fusée<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>multistage rocket<span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">dt</span>&gt;</span>table<span class="hljs-tag">&lt;/<span class="hljs-title">dt</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">dd</span>&gt;</span>nest of tables<span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">dl</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">dd</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dl</span>&gt;</span>
+</code></pre>
+<h2><code>:last-of-type</code> pseudo-class</h2>
+<p>Same as <code>:nth-last-of-type(1)</code>. The <code>:last-of-type</code> pseudo-class represents an element that is the last sibling of its type in the list of children of its parent element.</p>
+<p>The following selector represents the last data cell td of a table row <code>tr</code>.</p>
+<pre><code class="css"><span class="hljs-tag">tr</span> &gt; <span class="hljs-tag">td</span><span class="hljs-pseudo">:last-of-type</span>
+</code></pre>
+<h2><code>:only-child</code> pseudo-class</h2>
+<p>Represents an element that has a parent element and whose parent element has no other element children. Same as <code>:first-child:last-child</code> or <code>:nth-child(1):nth-last-child(1)</code>, but with a lower specificity.</p>
+<h2><code>:only-of-type</code> pseudo-class</h2>
+<p>Represents an element that has a parent element and whose parent element has no other element children with the same expanded element name. Same as <code>:first-of-type:last-of-type</code> or <code>:nth-of-type(1):nth-last-of-type(1)</code>, but with a lower specificity.</p>
+<h2><code>:empty</code> pseudo-class</h2>
+<p>The <code>:empty</code> pseudo-class represents an element that has no children at all. In terms of the document tree, only element nodes and content nodes (such as DOM [<a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#DOM-LEVEL-3-CORE">DOM-LEVEL-3-CORE</a>] text nodes, CDATA nodes, and entity references) whose data has a non-zero length must be considered as affecting emptiness; comments, processing instructions, and other nodes must not affect whether an element is considered empty or not.</p>
+<p>p:empty is a valid representation of the following fragment:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>foo:empty is not a valid representation for the following fragments:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">foo</span>&gt;</span>bar<span class="hljs-tag">&lt;/<span class="hljs-title">foo</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">foo</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">bar</span>&gt;</span>bla<span class="hljs-tag">&lt;/<span class="hljs-title">bar</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">foo</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">foo</span>&gt;</span>this is not <span class="hljs-tag">&lt;<span class="hljs-title">bar</span>&gt;</span>:empty<span class="hljs-tag">&lt;/<span class="hljs-title">bar</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">foo</span>&gt;</span>
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 のフォーム機能 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/html5_form features/">html5 form features</a></li><li><a href="/guides/html5_form features/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML5 のフォーム機能</h1>
+<h2>はじめに</h2>
+<p>HTML5 は、もっと書きやすく、ずっと強力で、そして一貫性のある、新しい Web フォーム機能を数多くもりこんでいます。この記事では導入された新しいフォームコントロールや新しいフォーム関連機能について概要を紹介します。</p>
+<h2>どうして新しいフォーム機能が必要なの？</h2>
+<p>はっきり言いましょう。HTML のフォームはとても厄介なものでした。マークアップは楽しくなく、スタイルも ― とくにサイトのルック＆フィールに合わせながら、クロスブラウザで見た目を一貫させる作業は困難でした。フォームを使いやすく、アクセシブルにしようと丁寧に作ったところで、エンドユーザーにとって入力しづらく、いらいらするものになる可能性だってあるのです。良いフォームをつくることは、気持ちのよいユーザーエクスペリエンスよりも、悪影響を抑えることにあるのです。</p>
+<p>HTML 4.01 が勧告されたとき、Web はほとんど静的な場所でした。もちろん、コメントフォームやゲストブックなどはありましたが、当時の Web サイトは一般的に、読み物としての性質しかありませんでした。それから Web は進化しました。ブラウザはすでに多くの人にとって、デスクトップアプリケーションのような体験を提供する、複雑な Web ベースのアプリケーションへの窓口になっています。</p>
+<p><img src="//static.webplatform.org/e/e1/html5formfig1.png" alt="html5formfig1.png"></p>
+<p>図1: JavaScript で作られた、ネイティブではない複雑なフォームコントロール</p>
+<p>複雑な Web アプリケーションには、より洗練されたフォームコントロールが欠かせません。開発者は JavaScript ライブラリや JavaScript フレームワーク（jQuery UI や YUI）を利用してきました。JavaScript によるフォームコントロールは成熟しましたが、これらは本質的に、HTML フォームの限界を埋め合わせするだけのワークアラウンドなのです。デートピッカーやスライダーなど複雑なウィジェットは、必ずしも意味が通るわけではない、付加的なマークアップと、多くの JavaScript をページに被せた「にせもの」なのです。</p>
+<p>HTML5 は広く使われているリッチなフォームコントロールを標準化し、ブラウザによってネイティブに表示されるようにします。これにより、スクリプトを多用するワークアラウンドを減らせます。</p>
+<h2>この記事で使うサンプル</h2>
+<p>新しい機能を紹介するため、この記事では <a href="http://devfiles.myopera.com/articles/4582/html5-forms-example.html">HTML5 フォームのサンプル</a> を用意しました。このサンプルは「リアル」なフォームを意図していません。この記事で紹介するすべての機能を詰め込んだフォームが存在するなんて、想像がつきませんよね。しかし、新しい機能がどう見えて、どう動くのかを知るにはとてもよいサンプルです。</p>
+<p>注：フォームコントロールやバリデーションメッセージのルック＆フィールはブラウザごとに違います。ですから、新しいフォームを一貫した見た目にするにあたり、十分に考えないといけません。</p>
+<h2>新しいフォームコントロール</h2>
+<p>フォームは Web アプリケーションの主要なデータ入力ツールです。得たいデータがより複雑になるにつれ、より高機能なフォーム入力要素の必要性が叫ばれるようになりました。加えて、より深い意味と良い定義を持つデータの収集方法、易しくより効果的なエラー管理と検証機能も求められました。</p>
+<h3>&lt;input type=&quot;number&quot;&gt;</h3>
+<p>最初に取り上げる新しい input 型は <code>type=&quot;number&quot;</code> です。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"number"</span> … &gt;</span>
+</code></pre>
+<p>この新しい型は、数値入力のための入力フィールドを生成します。この型をサポートするブラウザの多くでは、テキスト入力フィールドに値を増減できるスピナーコントロールが組み合わされたものが表示されます。</p>
+<p><img src="//static.webplatform.org/a/ac/html5formfig2.png" alt="html5formfig2.png"></p>
+<p>図2: <code>number</code> 型</p>
+<h3>&lt;input type=&quot;range&quot;&gt;</h3>
+<p>スライダーコントロールは、ある範囲内の値を選択させる際に使われますが、これは複雑で、マークアップに意味が伴ってないものでした。しかし HTML5 では簡単です。<code>range</code> 型を使えばいいだけですから。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"range"</span> … &gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/e/e2/html5formfig3.png" alt="html5formfig3.png"></p>
+<p>図3: <code>range</code> 型</p>
+<p>注意したいのが、このコントロールは通常、現在選択されている値をはおろか、値の選択範囲も表示してくれません。このため制作者は他の手法でそれらを提供しなければいけません。たとえば、現在の値を表示するのであれば、<code>&lt;output&gt;</code> 要素と JavaScript を使用し、ユーザーがフォームを更新した際に表示を更新する、といったことができるでしょう。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">output</span> <span class="hljs-attribute">onforminput</span>=<span class="hljs-value">"value=weight.value"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">output</span>&gt;</span>
+</code></pre>
+<h3>&lt;input type=&quot;date&quot;&gt; と他の日付・時刻コントロール</h3>
+<p>HTML5 は日付・時刻を選択する input 型を数多く用意しています。たとえば、デートピッカーは飛行機や電車の予約サイトなどで必ずといっていいほど見るものです。しかしこれらのコントロールの実装はこれまで、マークアップが意味をなさないその場しのぎな方法で作られていました。標準的な方法が用意され、簡単に実現できるようになったことは歓迎すべきでしょう。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"date"</span> … &gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"time"</span> … &gt;</span>
+</code></pre>
+<p>上記のコードはそれぞれ、完全に機能するデートピッカーと、時分秒の区切りを持ち時刻を入力するためのテキストフィールドを表示します（時分秒の区切りは <code>step</code> 属性の値によって変化します）。</p>
+<p><img src="//static.webplatform.org/8/86/html5formfig4.png" alt="html5formfig4.png"></p>
+<p>図4: 日付と時刻の input 型</p>
+<p>日付・時刻関連の input 型はこれだけにとどまりません。他にもいくつかの型が用意されています。</p>
+<ul>
+<li><code>datetime</code>: 上で説明した機能が組み合わさったもの、つまり日付と時刻どちらをも選択します。</li>
+<li><code>month</code>: 年と月を選択します。内部的には 2013-03 といった形で値が保持されますが、ブラウザによっては凝ったデザインの入力方法を用意しているかもしれません。たとえば、年と月をそれぞれスクロールさせるようなものです。</li>
+<li><code>week</code>: 週を選択します。内部的には 2010-W37 といったフォーマット（2010年の第37週を表します）として保持され、日付選択のデートピッカーによく似たインターフェースで選択します。</li>
+</ul>
+<h3>&lt;input type=&quot;color&quot;&gt;</h3>
+<p>この input 型はカラーピッカーを呼び出します。Opera の実装ではユーザーがあらかじめ用意された色から選択できたり、テキストフィールドに16進数値を入力できたり、OS ネイティブなカラーピッカーを呼び出せたりします。</p>
+<p><img src="//static.webplatform.org/0/00/html5formfig5.png" alt="html5formfig5.png"></p>
+<p>図5: <code>color</code> 型と、Windows, OS X のネイティブなカラーピッカー</p>
+<h3>&lt;input type=&quot;search&quot;&gt;</h3>
+<p><code>search</code> 型は基本的に、見た目が違うテキストフィールドでしかありません。ブラウザはこの型に、OS 固有の検索機能と同じ見た目を提供することが期待されています。しかし、見た目が違うこと以外にも重要性はあるでしょう。検索フィールドだと明示的に示すことで、ブラウザや支援技術、クローラーが何か賢いことをしてくれるかもしれません。たとえば、ブラウザがユーザーにサイト内検索のためのカスタムサーチ機能を提供できたりもするでしょう。</p>
+<p><img src="//static.webplatform.org/b/b3/html5formfig6.png" alt="html5formfig6.png"></p>
+<p>図6: <code>search</code> 型の OS X での見た目</p>
+<h3>&lt;datalist&gt; 要素と list 属性</h3>
+<p>これまで、ユーザーに何か選択させたいときは、<code>&lt;select&gt;</code> 要素と <code>&lt;option&gt;</code> 要素でドロップダウンリストを作るしかありませんでした。では、おすすめの選択肢が提示され、さらにユーザーが自由に入力できるリストはどうでしょうか？これを実現するには、細々としたスクリプトが必要でした。しかし、HTML5 では <code>list</code> 属性を使って、<code>&lt;datalist&gt;</code> 要素内に定義した選択肢のリストをフォームコントロールに結びつけられるようになりました。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">list</span>=<span class="hljs-value">"mydata"</span> … &gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">datalist</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mydata"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Mr"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Mister"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Mrs"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Mistress"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span> <span class="hljs-attribute">label</span>=<span class="hljs-value">"Ms"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Miss"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">datalist</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/3/31/html5formfig7.png" alt="html5formfig7.png"></p>
+<p>図7: <code>datalist</code> 要素によるプリセットオプションつきの <code>input</code> 要素をつくる</p>
+<h3>&lt;input type=&quot;tel&quot;&gt;, &lt;input type=&quot;email&quot;&gt;, &lt;input type=&quot;url&quot;&gt;</h3>
+<p>名前が示す通り、これらの input 型はそれぞれ、電話番号、メールアドレス、URL に関するものです。ブラウザはこれらを普通のテキストフィールドのように表示しますが、これらのフィールドがどのようなテキストを求めているかは、クライアントサイドのフォーム検証において重要な役割を果たします。加えて、いくつかのモバイルデバイスにおいて、ブラウザはテキスト入力のためのオンスクリーンキーボードを、通常のものから、より状況に即したキーボードに変更します。さっきも言いましたが、未来のブラウザはこれら明示的な意味を持った入力フィールドをいま以上に有効活用した機能を追加するのではないでしょうか。たとえば、ユーザーの連絡帳を元にしたメールアドレスや電話番号のオートコンプリートなどが考えられます。</p>
+<h2>新しい属性</h2>
+<p>HTML5 は新しい input 型に加えて、新しい属性もいくつか追加しています。新しい属性によって、フォームでよく使われる行いをシンプルにしたり、入力フィールドの想定する値を指定できもします。</p>
+<h3>placeholder 属性</h3>
+<p>Web フォームでよく見られるユーザビリティの飾りとして、テキストフィールドのプレースホルダがあります。プレースホルダはたとえば、ユーザーに入力してほしい情報の種類についてより詳しく説明したい場合などに使われます。プレースホルダは、フォームに何か入力されたとき、もしくはフォームコントロールがフォーカスされた時に消えます。このテクニックはこれまで、JavaScript を使用し、ユーザーが何も入力していない際はテキストを表示しておいて、フォーカス時にテキストフィールドの内容を空にするといった方法で実現されていました。これからは、<code>placeholder</code> 属性にテキストを書くだけです。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span><span class="hljs-value">…</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"John Doe"</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/8/87/html5formfig8.png" alt="html5formfig8.png"></p>
+<p>図8: <code>placeholder</code> 属性でプレースホルダが指定されたテキストフィールド</p>
+<h3>autofocus 属性</h3>
+<p>スクリプトに頼らざるを得なかった機能は他にもあります。ページが読み込まれた時に、自動的にフォームフィールドにフォーカスを当てるものです。これからは、<code>autofocus</code> 属性を書くだけでよくなります。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">autofocus</span> … &gt;</span>
+</code></pre>
+<p><code>autofocus</code> はひとつのページに一箇所でしか使えないことに注意してください。また、この機能を使うかどうかも、慎重に検討してください。この属性は、ページの主要となる領域でフォームが使われてるような状況でつかうべきです。たとえば、検索ページが良い例です。内容や、説明的なテキストが少ないため、検索フォームのテキストフィールドへ自動的にフォーカスさせるのは理にかなっていると言えます。</p>
+<h3>min 属性と max 属性</h3>
+<p>名前が示すとおり、これらの属性は数値を入力するフィールドに対し、その下限と上限を指定する属性です。数値を入力するフィールドには number 型、range 型、time や date 型などがあります（そう、日付にも上限と下限を指定できるんです。たとえば旅行予約フォームで、未来の日付しか選択できないようにさせられます）。<code>range</code> 型において、<code>min</code> と <code>max</code> は必要です。なぜなら、フォームが送信された時の値を決定する際にこれらの値が欠かせないからです。属性の指定はとても簡単で、コードを見れば一目瞭然です。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"number"</span> … <span class="hljs-attribute">min</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">max</span>=<span class="hljs-value">"10"</span>&gt;</span>
+</code></pre>
+<h3>step 属性</h3>
+<p><code>step</code> 属性は数値を入力するフィールドに対し、入力できる値の細かさを設定します。たとえば、時刻を入力するフォームで、30分単位で入力させたいとします。このとき使うのが <code>step</code> 属性です。ひとつ注意したいのが、<code>time</code> 型は値を秒で指定することでしょうか。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"time"</span> … <span class="hljs-attribute">step</span>=<span class="hljs-value">"1800"</span>&gt;</span>
+</code></pre>
+<h2>新しい表示の仕組み</h2>
+<p>HTML5 では、操作するようなフォームコントロールではなく、情報を視覚的に表示するための新しい要素もいくつか定義されています。</p>
+<h3>&lt;output&gt;</h3>
+<p><code>range</code> 型を紹介した際にこの <code>&lt;output&gt;</code> 要素について触れましたが、この要素は計算結果を表示するため、あるいはスクリプトの出力結果を明示的に提供するための要素です（ただむやみに <code>span</code> や <code>div</code> にテキストを突っ込んだりしないということです）。ある <code>&lt;output&gt;</code> がどのフォームコントロールに関連しているかをさらに明示的にするため、<code>&lt;label&gt;</code> と同じように、要素の <code>for</code> 属性に、関連するフォーム要素の <code>ID</code> を列挙できます。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"range"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"rangeexample"</span> … &gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">output</span> <span class="hljs-attribute">onforminput</span>=<span class="hljs-value">"value=rangeexample.value"</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"rangeexample"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">output</span>&gt;</span>
+</code></pre>
+<h3>&lt;progress&gt; と &lt;meter&gt;</h3>
+<p>これら2つの新要素はとても似ています。どちらもユーザーに対し、ゲージもしくはバーを表示します。違いは、その利用目的です。名前が示す通り、<code>&lt;progress&gt;</code> はプログレスバーを表し、何らかのタスクの進行状況をパーセンテージで示します。一方、<code>&lt;meter&gt;</code> は、一般的なscalar measrement or fractional value を表します。</p>
+<p><img src="//static.webplatform.org/e/e9/html5formfig9.png" alt="html5formfig9.png"></p>
+<p>図9: 進行状況を示すプログレスバー</p>
+<h2>フォームの検証</h2>
+<p>フォームの検証はクライアントサイド、サーバーサイド共にとても重要です。ユーザーがフォームの入力で間違えないように手助けし、また悪意のあるユーザーがアプリケーションに害を及ぼすデータを送信できないようにしなければいけません。HTML5 によりブラウザは、フォームコントロールがどのような値が想定されているかをコントロール自身から（<code>type</code> や数値、日付、時刻などに設定された上限・下限を通して）知ることができるようになりました。あわせて、フォーム検証機能をブラウザ側で提供できるようになりました。これによって、これまで行なっていた、大量の JavaScript を書くことや、できあいの検証スクリプト/ライブラリを使うといった、うんざりするようなことから離れられます。</p>
+<p>注：フォームへ入力された値を検証させるには、コントロールに <code>name</code> 属性が必要です。<code>name</code> 属性がない場合、そのコントロールに入力されたデータはフォームの情報とならず、送信されません。</p>
+<h3>required 属性</h3>
+<p>フォームの検証で最も多く使われるもののひとつに、入力必須フィールドがあります。特定の情報が入力されなければフォームを送信させないというものです。この入力必須フィールドも、HTML5 では <code>required</code> 属性をつけるだけで済みます。この属性は <code>input</code>, <code>select</code>, <code>textarea</code> 要素に指定できます。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">...</span> <span class="hljs-attribute">required</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/8/88/html5formfig10.png" alt="html5formfig10.png"></p>
+<p>図10: Opera のクライアントサイドフォーム検証。何も入力されていない入力必須フィールドにエラーを表示している。</p>
+<h3>type 属性と pattern 属性</h3>
+<p>HTML5 の新しい型によって、フォームフィールドがどのような種類の情報を期待しているかを指定できるようになりました。ただのテキストフィールドではなく、数値、メールアドレス、URL といったものを指定できます。クライアントサイドの検証機能のひとつとして、ブラウザはユーザーが入力した内容が、そのフィールドが固有に持つ、期待された値の構造にマッチするかを調べられるようになりました。ブラウザは入力された値を、フィールドが valid となると定義された組み込みのパターンに対して評価し、条件にマッチしない入力項目に対してはユーザにその旨を提示します。</p>
+<p><img src="//static.webplatform.org/0/0c/html5formfig11.png" alt="html5formfig11.png"></p>
+<p>図11: <code>email</code> 型のフィールドに、適切でない値を入れた際に Opera が表示するエラーメッセージ。</p>
+<p>ただのテキストフィールドでも、特定の構造にマッチさせたい場合があるでしょう。たとえば、ログインフォームにおいて、ユーザ名は小文字と数値の限定的な組み合わせしか使えないといった場合です。このような場合には、<code>pattern</code> 属性に正規表現を指定すれば、独自の検証内容を設けられます。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">...</span> <span class="hljs-attribute">pattern</span>=<span class="hljs-value">"[a-z]{3}[0-9]{3}"</span>&gt;</span>
+</code></pre>
+<h2>ブラウザのサポート状況</h2>
+<p>PC ブラウザでは、<a href="http://www.opera.com">Opera</a> が新しい input 型、ネイティブクライアントサイド検証に最も多く対応しています。しかし、他の主要ブラウザでもサポートが進んでいる最中ですので、パワフルなこれらの新しい機能をプロジェクトで使えるまでにはそこまで時間がかからないでしょう。では、古いブラウザについてはどうでしょうか？</p>
+<p>ブラウザはその設計において、input 型を理解できない場合は、ふつうのテキストフィールドとして扱うようになっています。HTML5 の機能と比べると、ユーザーにやさしくはありませんが、フォームに値を入力できないといったことはありません。</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create a public download archive repository stored directly in DreamObjects · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Create_a public download archive repository stored directly in DreamObjects/">Create a public download archive repository stored directly in DreamObjects</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Create a public download archive repository stored directly in DreamObjects</h1>
+<p><strong>Status: INCOMPLETE</strong>, <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/121">webplatform/ops#121</a></strong></p>
+<p>The purpose is twofold:</p>
+<ol>
+<li>Allow download of packages in a public repository so that anybody could download archives the infrastructure generates for its maintenance</li>
+<li>Leverage our provider infrastructure so we do not move around archives but fetch them from a common location</li>
+</ol>
+<p>This would be ideal since we already use a Swift endpoint to store our backups, we could also have it store our web application and Debian (.deb) packages too.</p>
+<h2>SCRATCHPAD</h2>
+<p>It assumes:</p>
+<ol>
+<li>You have a Swift compatible Object storage</li>
+<li>You have a Varnish frontend and can add your own VCL settings</li>
+</ol>
+<h3>Create a bucket</h3>
+<p>Make sure the bucket has defaults to public. In this example we’ll call the bucket &quot;apt&quot;, along with a Swift key of the name “wpd-assets:wpd-assets-user” installed.</p>
+<p>Also, the bucket will have an alias to be called as “apt.webplatform.org” in DreamObjects, but our DNS won’t point to it directly.</p>
+<p>Instead, it’ll use Varnish as a frontend to Proxy the requests for us and keep a cache for us in case the DreamObjects becomes unavailable.</p>
+<h3>Install your bucket credentials in your shell environment</h3>
+<p>Generally in `/etc/profile.d/*.sh`</p>
+<pre><code> cat /etc/profile.d/swift.sh
+ # WebPlatform.org uses DreamHosts and their cloud services DreamObjects,
+ # here’s how their config looks like.
+ export ST_AUTH=&quot;https://objects.dreamhost.com:443/auth&quot;
+ export ST_USER=&quot;wpd-assets:wpd-assets-user&quot;
+ export ST_KEY=&quot;...&quot;
+</code></pre>
+<h3>Configure from the Swift API to allow the public to read your bucket</h3>
+<p>This requires python-swift client and your shell environment variables installed. If you havent´t restarted a shell session, you can source the shell environment variables yourself like so:</p>
+<pre><code> source /etc/profile.d/swift.sh
+</code></pre>
+<p>Send the following commands:</p>
+<pre><code> swift post -r '.r:*' apt
+</code></pre>
+<p>Technically the <a href="http://docs.openstack.org/user-guide/content/managing-openstack-object-storage-with-swift-cli.html">OpenStack Swift documentation</a>, at “Create static website” asks to do the following, but we´ll make Varnish do it for us.</p>
+<pre><code> swift post -m 'web-index: index.html' apt
+ swift post -m 'web-listings: true' apt
+</code></pre>
+<h3>Configure your Varnish frontend</h3>
+<p>In the case of WebPlatform, we are using Fastly as a Varnish frontend server.</p>
+<p>All you need to do on the DNS side is to have a CNAME point to Fastly’s edges servers like so:</p>
+<pre><code> ; In webplatform.org bind9 zone file
+ apt.webplatform.org IN CNAME webplatform.map.fastly.net.
+</code></pre>
+<p>In Fastly, create a service with the following details:</p>
+<ul>
+<li>Host: apt.objects.dreamhost.com</li>
+<li>Port: 443</li>
+</ul>
+<p>Once created, adjust the service configuration, with the following:</p>
+<p>Note that its in YAML here by habit of the author and isn’t copy-pasateable, the VCL will be below:</p>
+<pre><code> Domains:
+   - apt.webplatform.org
+ Hosts:
+   Backends:
+     - Address: apt.objects.dreamhost.com
+       Port: 443
+       Shielding: (anything goes here)
+   Settings:
+     Default Settings:
+       Default Host: apt.objects.dreamhost.com
+     Request Settings:
+       - Default host: apt.objects.dreamhost.com
+       - X-Forwarded-For: Append
+       - Max stale age: 3600
+       - Force SSL: Yes
+     Content:
+       Headers:
+         - Type/Action: Request Set
+           Destination: url
+           Source: &quot;/index.html&quot;
+           Request Conditions:
+             - Apply If: req.request ~ &quot;GET&quot; &amp;&amp; req.url ~ &quot;^/$&quot;
+        - Type/Action: Request Delete
+          Destination: http.cookie
+          Ignore If Set: Yes
+</code></pre>
+<p>… should generate a similar VCL configuration:</p>
+<pre><code>  sub vcl_recv {
+<span class="hljs-comment">  #FASTLY recv</span>
+
+     <span class="hljs-keyword">if</span> (!req.<span class="hljs-keyword">http</span>.Fastly-SSL) {
+       <span class="hljs-keyword">error</span> <span class="hljs-number">801</span> <span class="hljs-string">"Force SSL"</span>;
+     }
+
+     <span class="hljs-keyword">if</span> (!req.<span class="hljs-keyword">http</span>.Fastly-FF) {
+       <span class="hljs-keyword">if</span> (req.<span class="hljs-keyword">http</span>.X-Forwarded-For) {
+         <span class="hljs-keyword">set</span> req.<span class="hljs-keyword">http</span>.Fastly-Temp-XFF = req.<span class="hljs-keyword">http</span>.X-Forwarded-For <span class="hljs-string">", "</span> client.ip;
+       } else {
+         <span class="hljs-keyword">set</span> req.<span class="hljs-keyword">http</span>.Fastly-Temp-XFF = client.ip;
+       }
+     } else {
+       <span class="hljs-keyword">set</span> req.<span class="hljs-keyword">http</span>.Fastly-Temp-XFF = req.<span class="hljs-keyword">http</span>.X-Forwarded-For;
+     }
+
+     <span class="hljs-keyword">set</span> req.grace = <span class="hljs-number">3600</span>s;
+     <span class="hljs-keyword">set</span> req.<span class="hljs-keyword">http</span>.host = <span class="hljs-string">"apt.objects.dreamhost.com"</span>;
+
+<span class="hljs-comment">     # Remove ANY cookies, we dont need them at all!</span>
+     remove req.<span class="hljs-keyword">http</span>.Cookie;
+<span class="hljs-comment">     # Request Condition: If no file requested, make DirectoryIndex ish Prio: 10</span>
+     <span class="hljs-keyword">if</span>( req.request ~ <span class="hljs-string">"GET"</span> &amp;&amp; req.url ~ <span class="hljs-string">"^/$"</span> ) {
+<span class="hljs-comment">        # Header rewrite to get our own hardcoded directory index file.</span>
+<span class="hljs-comment">        # ... anyway we change directory contents very rarely.</span>
+        <span class="hljs-keyword">set</span> req.url = <span class="hljs-string">"/index.html"</span>;
+     }
+  }
+
+  sub vcl_error {
+<span class="hljs-comment">  #FASTLY error</span>
+
+    <span class="hljs-keyword">if</span> (obj.status == <span class="hljs-number">801</span>) {
+       <span class="hljs-keyword">set</span> obj.status = <span class="hljs-number">301</span>;
+       <span class="hljs-keyword">set</span> obj.response = <span class="hljs-string">"Moved Permanently"</span>;
+       <span class="hljs-keyword">set</span> obj.<span class="hljs-keyword">http</span>.Location = <span class="hljs-string">"https://"</span> req.<span class="hljs-keyword">http</span>.host req.url;
+       synthetic {<span class="hljs-string">""</span>};
+       <span class="hljs-keyword">return</span> (deliver);
+    }
+  }
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

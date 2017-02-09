@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to the web audio API, part 1 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to the web audio API: loading and playing an external sound file." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/audio/">audio</a></li><li><a href="/tutorials/audio/intro_web audio api 1/">intro web audio api 1</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Introduction to the web audio API, part 1</h1>
+<p><strong>By <a href="/User:Dgash">Dave Gash</a></strong><br>
+Originally published October 19, 2012</p>
+<h2>Summary</h2>
+<p>An introduction to the web audio API: loading and playing an external sound file.</p>
+<p><strong>This article is part of a three articles series; see <a href="/docs/tutorials/audio/intro_web_audio_api_2">tutorials/audio/intro_web_audio_api_2</a>.</strong></p>
+<h2>Introduction</h2>
+<p>Web-based audio is becoming more robust all the time, and necessarily so. As the web evolves in stylistic and presentational features, web applications also require a higher degree of sophistication in audio manipulation. Gone are the days of <code>&lt;embed&gt;</code>, <code>&lt;object&gt;</code>, and <code>&lt;bgsound&gt;</code>, when the best you could hope for was static playback of a fixed music track.</p>
+<p>Today, diverse web apps such as games, audio editors, playlist managers, ringtone stores, musicians’ utilities, and more have a need for subtlety and finesse in their use of audio, and users deserve—and have come to expect—power and flexibility in those apps.</p>
+<p>The web audio API is not to be confused with the HTML5 <code>&lt;audio&gt;</code> element. For information on that element, see <a href="http://www.w3.org/wiki/HTML/Elements/audio">this W3C article</a> or <a href="http://www.html5rocks.com/en/tutorials/audio/quick/">this HTML5Rocks! tutorial</a>. As useful as the <code>&lt;audio&gt;</code> element is in terms of encapsulating the load-decode-play sequence (more about that later), it doesn’t include capabilities to precisely control sounds, time them, or fine-tune their playback characteristics. Enter the <em>web audio API</em>.</p>
+<p>The web audio API is high-level JavaScript interface that is about much more than just playing sounds. With it, you can process, synthesize, mix, visualize, filter, and otherwise manipulate audio data with extreme precision to accomplish tasks and achieve results previously found only in high-end commercial audio applications.</p>
+<p>In this tutorial, we’ll explore the basics of the API and learn how to load, start, and stop a sound before moving on to more complex tasks.</p>
+<h2>Prerequisite concepts</h2>
+<p>To effectively use the web audio API, certain things must happen in a certain order; it’s that sequence of events we’ll explore next. But first, we need to understand a couple of concepts, called <em>context</em> and <em>nodes</em>, and how they relate to each other.</p>
+<p>API sound manipulation takes place within an <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section">AudioContext</a>. A context can be thought of as a master container inside which your web page does all of its audio processing. A major benefit of this “sandbox” approach is that it isolates all the audio work—even the most complex and demanding processes—into an independent, high-priority thread and thus prevents this CPU-intensive work from interfering with other events (visual or aural) and marring the user experience.</p>
+<p>It is important to note that an audio context, when created in software, represents the physical hardware context in which the application is running, and thus implements its characteristics—operating at a fixed sample rate, for example.</p>
+<p>The audio context allows for the creation of one or more <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioNode-section">AudioNode</a>s, all of which reside in the context. Nodes are the building blocks of audio processing, and may be <em>input</em>, <em>processor</em>, or <em>output</em> types.</p>
+<p>Nodes may have input and/or output connections, which are used to string them together into a sequence. An audio signal makes its way through the nodes via the various connections, or <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#ModularRouting-section">modular routing</a>, from one node to the next.</p>
+<p>Regardless of how many nodes exist and how they are connected, the signal always terminates at the <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioDestinationNode-section">AudioDestinationNode</a>—essentially, the speaker output through which a user hears the final result.</p>
+<p>The simplest connection case, then, consists of a web app with a context that contains one source node (a previously-loaded sound in this case) whose output is connected directly to the input of one destination node (the speakers), as shown below. That’s the case we’re going to cover in this tutorial.</p>
+<p><em>A context with one source and one destination</em> <img src="//static.webplatform.org/6/6e/wap1b-basic-trans.gif" alt="wap1b-basic-trans.gif"></p>
+<h2>Producing a sound</h2>
+<h3>Step 1: Create a context</h3>
+<p>As stated above, each web page/app needs only one context within which to process audio. The context is declared with a JavaScript statement.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> context = <span class="hljs-keyword">new</span> webkitAudioContext();
+</code></pre>
+<p><strong>Note:</strong> We’re using the <em>webkit</em> prefix because, so far, the web audio API has only limited support in modern browsers. See the compatibility tables at the end of this article for the latest information.</p>
+<p>Typically, we would create the context as a global variable so that it’s available to later functions. We could simply declare the variable and assign an audio context to it in one statement as shown above or, more elegantly, we could declare it first and then assign the audio context to it later via a function called from a button click or other event, so we can check for errors.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> context;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initcontext</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    context = <span class="hljs-keyword">new</span> webkitAudioContext();
+  }
+  <span class="hljs-keyword">catch</span>(e) {
+    alert(<span class="hljs-string">'Sorry, your browser does not support the Web Audio API.'</span>);
+  }
+}
+</code></pre>
+<p>Having created the audio context for the page, we’re ready to move on.</p>
+<h3>Step 2: Define a buffer</h3>
+<p>External sounds (i.e., audio files) must be loaded into the app in preparation for playing. The storage location used for the audio is an <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioBuffer-section">AudioBuffer</a>. For simplicity and ease of access, we’ll again declare the buffer as a global variable with an initial value of <code>null</code>.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myAudioBuffer = <span class="hljs-literal">null</span>;
+</code></pre>
+<p>That’s all we have to do; the buffer is now defined and ready to receive audio data.</p>
+<p><strong>Note:</strong> Bear in mind that you don’t <em>have</em> to use a buffer as a source node. In this example, we use one because we’re loading the audio from an external sound file. You can also use other input sources such as oscillators, JavaScript nodes, and <a href="http://updates.html5rocks.com/2012/09/Live-Web-Audio-Input-Enabled">live input</a> to acquire an audio stream to be processed and played.</p>
+<h3>Step 3: Load a sound</h3>
+<p>The load process is typically accomplished with an <a href="https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest">XMLHttpRequest</a> (often just called an XHR). The XHR can be called programmatically based on page load status, timing, or user interaction such as a button click (as we’ll do later).</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> url = <span class="hljs-string">"mysound.mp3"</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadSound</span>(<span class="hljs-params">url</span>) </span>{
+  <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> XMLHttpRequest();
+  request.open(<span class="hljs-string">'GET'</span>, url, <span class="hljs-literal">true</span>);
+  request.responseType = <span class="hljs-string">'arraybuffer'</span>;
+  <span class="hljs-comment">// . . . step 3 code above this line, step 4 code below</span>
+  request.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    context.decodeAudioData(request.response, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">buffer</span>) </span>{
+      myAudioBuffer = buffer;
+    });
+  }
+  request.send();
+}
+</code></pre>
+<p>In the first part of the function (above the comment line), the URL of the sound to be loaded is set into a global variable called <code>url</code>. The <code>loadSound()</code> function sets up an XHR and uses the <code>open</code> method to request a <code>GET</code> of the file, defining the <code>responseType</code> property as <code>arraybuffer</code> (this allows the XHR to load the audio as binary data).</p>
+<p><strong>Note:</strong> XHRs don’t work on a local machine—they must be executed on a server, e.g., <code>http://localhost/~myserver/</code> or <code>http://www.mysite.com/</code>, etc.</p>
+<p>But, loading the file only gets us halfway there; next, it must be <em>decoded</em>.</p>
+<h3>Step 4: Decode the audio</h3>
+<p>In the second part of the function (below the comment line), the audio data is decoded so that it can be used in the page. This is accomplished by passing an anonymous function (<code>function()</code>) to the XHR’s <code>onload</code> method.</p>
+<p>This anonymous function uses the context’s <code>decodeAudioData</code> method to decode the data, which resides in the request’s <code>response</code> property. It then executes a <em>callback</em> function (the second parameter, <code>function(buffer)</code>). (A callback is a function passed as an argument to another function, which forces it to execute <em>asynchronously</em>, that is, to postpone its own execution until after its parent function has completed.) The callback, having waited for the audio stream to be decoded, now simply assigns it to our previously defined buffer.</p>
+<p>Finally, the XHR’s <code>send()</code> method is used to send the task to the server for execution and thus wrap up the function. Our audio file is now loaded and decoded, and the decoded data is stored in an audio buffer, ready for use.</p>
+<h3>Step 5: Play the audio</h3>
+<p>At last we’re ready to play the sound. This is achieved through the “connect the nodes” process described and diagrammed earlier. We can define a single function to play our new sound, or any other, as long as we pass it a buffer containing the decoded audio (or other valid source node). Let’s assume we’ll execute the <code>playSound()</code> function on a button click.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> source = <span class="hljs-literal">null</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSound</span>(<span class="hljs-params">anybuffer</span>) </span>{
+  source = context.createBufferSource();
+  source.buffer = anybuffer;
+  source.connect(context.destination);
+  source.start();
+  <span class="hljs-comment">//source.noteOn(0); //see note in Step 6</span>
+}
+</code></pre>
+<p>Recall that to produce sound we need <em>source</em> and <em>destination</em> nodes, and that the former must be connected to the latter. As before, we first declare a global variable, <code>source</code>, for the node. In the function, the source node is created first, using the context’s <code>createBufferSource()</code> method. Next, the source node’s <code>buffer</code> property is loaded with the <code>anybuffer</code> parameter which we’ll pass as an argument into the function (in this case, the buffer containing our decoded audio, <code>myAudioBuffer</code>).</p>
+<p>We don’t have to explicitly create the context’s <code>destination</code> node—it’s present by default—but we do have to connect the source to it. This is done using the source node’s <code>connect()</code> method, passing it the <code>context.destination</code> node. The sequence is complete: we now have a source node containing a sound whose output is connected to the input of a destination node representing the speakers.</p>
+<p>Finally, we can play the sound (hooray!) using the source node’s <code>start()</code> method, which plays the audio data from beginning to end unless stopped programmatically. And how, you might ask, would that be done? With the source node’s complementary <code>stop()</code> method, of course.</p>
+<h3>Step 6: Stop the audio</h3>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stopSound</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (source) {
+    source.stop();
+    <span class="hljs-comment">//source.noteOff(0); //see note below</span>
+  }
+}
+</code></pre>
+<blockquote>
+<p><em><strong>Note:</strong> The <code>noteOn(0)</code> and <code>noteOff(0)</code> method names are slated to change to <code>start()</code> and <code>stop()</code>, as noted in the examples’ comments, but as of this writing (October 2012) this change has not been fully implemented. See the web audio specification’s <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#deprecation-section">deprecation section</a> for more information, and always test applications to ensure that they use the currently supported syntax.</em></p>
+</blockquote>
+<h2>The completed example</h2>
+<p>Having examined the required steps in bits and pieces, let’s now take a look at a complete, working page that loads, decodes, and plays a sound. In this example, we assume that the file “mysound.mp3” exists in the same location as the page, and that the page and the sound reside on a server (either local or remote) so that the XHR will work.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="actionscript">
+<span class="hljs-comment">//Step 1</span>
+<span class="hljs-keyword">var</span> context;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initContext</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">try</span> {
+    context = <span class="hljs-keyword">new</span> webkitAudioContext();
+    alert(<span class="hljs-string">"context created"</span>); <span class="hljs-comment">//test</span>
+  }
+  <span class="hljs-keyword">catch</span>(e) {
+    alert(<span class="hljs-string">'Sorry, your browser does not support the Web Audio API.'</span>);
+  }
+}
+
+<span class="hljs-comment">//Step 2</span>
+<span class="hljs-keyword">var</span> myAudioBuffer = <span class="hljs-literal">null</span>;
+
+<span class="hljs-comment">//Steps 3 and 4</span>
+<span class="hljs-keyword">var</span> url = <span class="hljs-string">"mysound.mp3"</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadSound</span><span class="hljs-params">(url)</span> </span>{
+  <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> XMLHttpRequest();
+  request.open(<span class="hljs-string">'GET'</span>, url, <span class="hljs-literal">true</span>);
+  request.responseType = <span class="hljs-string">'arraybuffer'</span>;
+  <span class="hljs-comment">// . . . step 3 code above this line, step 4 code below</span>
+  request.onload = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    alert(<span class="hljs-string">"sound loaded"</span>); <span class="hljs-comment">//test</span>
+    context.decodeAudioData(request.response, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer)</span> </span>{
+      myAudioBuffer = buffer;
+      alert(<span class="hljs-string">"sound decoded"</span>); <span class="hljs-comment">//test</span>
+    });
+  }
+  request.send();
+}
+
+<span class="hljs-comment">//Step 5</span>
+<span class="hljs-keyword">var</span> source = <span class="hljs-literal">null</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playSound</span><span class="hljs-params">(anybuffer)</span> </span>{
+  source = context.createBufferSource();
+  source.buffer = anybuffer;
+  source.connect(context.destination);
+  source.start();
+  <span class="hljs-comment">//source.noteOn(0); //see note in Step 6 text</span>
+}
+
+<span class="hljs-comment">//Step 6</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stopSound</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">if</span> (source) {
+    source.stop();
+    <span class="hljs-comment">//source.noteOff(0); //see note in Step 6 text</span>
+  }
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Web audio API example: load a sound file and play/stop it on a button click.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"initContext()"</span>&gt;</span>Init<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"loadSound(url)"</span>&gt;</span>Load<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"playSound(myAudioBuffer)"</span>&gt;</span>Play<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"stopSound()"</span>&gt;</span>Stop<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>In this page, we set up four buttons—intended to be clicked in order—that perform, respectively, steps 1, 3 &amp; 4, 5, and 6. (Step 2, declaring the audio buffer, is performed inline as the scripts load.) To see the page in action:</p>
+<ol>
+<li>Save the code to an HTML5 (.htm, .html) file.</li>
+<li>Place the page file and an audio file of your choice into a folder on a web server. Either name the file “mysound.mp3” or change the value of the <code>url</code> variable in the first line of the “Steps 3 and 4” code block to match your file name.</li>
+<li>Open the page on the server in a webkit-compatible browser.</li>
+<li>Click the <strong>Init</strong> button. The “context created” alert appears. Click <strong>OK</strong>.</li>
+<li>Click the <strong>Load</strong> button. The “sound loaded” alert appears. Click <strong>OK</strong>.</li>
+<li>Immediately, the “sound decoded” alert appears. Click <strong>OK</strong>.</li>
+<li>Click the <strong>Play</strong> button. The sound plays.</li>
+<li>Optional: During playback (assuming the sound plays long enough), click the <strong>Stop</strong> button. The sound stops.</li>
+</ol>
+<h2>Not the end</h2>
+<p>This concludes part 1 of the tutorial. <a href="/docs/tutorials/intro_web_audio_api_2">Part 2 continues with inserting processor nodes between the source and destination to modify the audio before it is played</a>.</p>
+<h2>References</h2>
+<ul>
+<li>Chris Wilson’s <a href="https://developers.google.com/events/io/sessions/gooio2012/221/">Google I/O 2012 session video</a></li>
+<li>The W3C’s <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">web audio specification</a></li>
+<li>Eric Bidelman’s <a href="http://ericbidelman.tumblr.com/post/13471195250/web-audio-api-how-to-playing-audio-based-on-user">how-to article</a></li>
+<li>Boris Smus’s <a href="http://www.html5rocks.com/en/tutorials/webaudio/intro/">getting started article</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

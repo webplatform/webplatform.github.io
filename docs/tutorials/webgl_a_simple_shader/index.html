@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebGL: a simple shader · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article explains how to create a simple shader, building on the example created in the getting started with WebGL article." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/webgl_a simple shader/">webgl a simple shader</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WebGL: a simple shader</h1>
+<p><strong>By Erik Möller, Chris Mills</strong><br>
+Originally published June 27, 2012</p>
+<h2>Summary</h2>
+<p>This article explains how to create a simple shader, building on the example created in the getting started with WebGL article.</p>
+<h2>Introduction</h2>
+<p>In the last part of this article series — <a href="/docs/tutorials/getting_started_with_webgl">getting started with WebGL</a>, we introduced you to the world of writing raw WebGL (look ma, no libraries). We got you set up and showed you how to create a couple of very basic examples along with some simple error handling, and we explained basic concepts such as the WebGL rendering pipeline.</p>
+<p>In this article, we will carry on where we left off, going further with the same example file and building up a simple shader. This article is a transcript of <a href="http://www.youtube.com/watch?v=me3BviH3nZc&amp;t=22m26s">time 22:26 to 32.36</a> in Erik Möller’s <a href="http://www.youtube.com/watch?v=me3BviH3nZc">WebGL 101</a> tutorial, available on YouTube.</p>
+<p><strong>Note</strong>: <a href="https://github.com/emoller/WebGL101">Access the full WebGL 101 code example set</a> and links to see the examples running live, at Github</p>
+<h2>Making a rectangle out of our triangle</h2>
+<p>To build up this example step by step, start with the minimal draw code from the last article and follow the steps below. You can also view the minimal draw example from <a href="https://github.com/emoller/WebGL101">the full WebGL 101 code example set</a> to see what the code so far does, and view the minimal shader example 03-minimal-shader.html also from <a href="https://github.com/emoller/WebGL101">the full WebGL 101 code example set</a> to see what the end result from this tutorial will be.</p>
+<p>First of all, make a copy of the 02-minimal-draw.html file, and save it as 03-minimal-shader.html (or something else of your choosing). In this tutorial we are going to forget about triangles, and instead draw a rectangle that will cover the canvas. To show what we will draw, replace the ascii triangle we currently have in our code with a square, like this:</p>
+<p><code>/*</code></p>
+<pre><code>2 ___ 3
+ |\  |
+ | \ |
+0|__\|1
+
+*/
+</code></pre>
+<p>Note that in this context we are always using clip space coordinates, hence the values always ranging from -1 to 1. The next thing we want to do is input this data into our vertices array. Change the <code>var vertices</code> line (the fifth line of script) to read like so:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> vertices = [-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>];
+</code></pre>
+<p>Next, we take our <code>gl.drawArrays</code> line (the bottom line of script) and change it to use <code>TRIANGLE_STRIP</code> to dictate the shape to be drawn, instead of <code>TRIANGLES</code> — this works for our purposes here because the shape we are drawing is made from a strip of triangles. We will give <code>TRIANGLE_STRIP</code> four vertices, so the last number needs to be changed from 3 to 4.</p>
+<pre><code class="js">gl.drawArrays(gl.TRIANGLE_STRIP, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>);
+</code></pre>
+<p>These changes will result in our exciting green triangle being changed into an even more exciting green rectangle — see Figure 1!</p>
+<p><img src="//static.webplatform.org/f/f4/figure4luzc.png" alt="A WebGL-rendered green rectangle"></p>
+<p>Figure 1: An exciting green rectangle, rendered using WebGL.</p>
+<h2>Making our example more flexible</h2>
+<p>At the moment, we have some hard-coded data to define features of the shape, such as the colour, size and number of items. Let’s make this more flexible, defining these in the buffer instead. First of all, add the following lines below the <code>gl.bufferData</code> line (just above the ascii square):</p>
+<pre><code class="js">vertexPosBuffer.itemSize = <span class="hljs-number">2</span>;
+ vertexPosBuffer.numItems = <span class="hljs-number">4</span>;
+</code></pre>
+<p>Now, replace the hard coded values from the last two lines of script with these properties:</p>
+<pre><code class="js">gl.vertexAttribPointer(program.vertexPosAttrib, vertexPosBuffer.itemSize, gl.FLOAT, <span class="hljs-literal">false</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+ gl.drawArrays(gl.TRIANGLE_STRIP, <span class="hljs-number">0</span>, vertexPosBuffer.numItems);
+</code></pre>
+<p>This is good, as it makes the code more generic, and able to handle drawing a wider variety of shapes more easily.</p>
+<h2>Improving the shaders</h2>
+<p>The shaders are currently written inside strings, which is awkward to work with. To improve this, we will put them inside their own &lt;script&gt; elements. Put two new <code>&lt;script&gt;</code> elements in between the two existing ones, one for the vertex shader and one for the fragment shader. Give them <code>id</code>s and <code>type</code>s as shown:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"vshader"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/plain"</span>&gt;</span><span class="undefined">
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"fshader"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/plain"</span>&gt;</span><span class="undefined">
+ </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Now let’s add the code for our shaders inside each <code>&lt;script&gt;</code> element. First, put this inside the vertex shader element:</p>
+<pre><code class="js">attribute vec2 aVertexPosition;
+ varying vec2 vTexCoord;
+ <span class="hljs-keyword">void</span> main() {
+   vTexCoord = aVertexPosition;
+   gl_Position = vec4(aVertexPosition, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+ }
+</code></pre>
+<p>The first two lines declare the optional input and output to the shader. <code>gl_Position</code> is the mandatory output from a vertex shader — this contains the clip space vertices passed on to the rasterization step. In <code>main()</code> we just pass the input vertex positions on to the two outputs. Bear in mind that <code>gl_Position</code> is a <code>vec4</code> therefore we need to add two components.</p>
+<p>Now let’s build the fragment shader, inside the second <code>&lt;script&gt;</code> element:</p>
+<pre><code class="js">precision mediump float;
+ varying vec2 vTexCoord;
+ <span class="hljs-keyword">void</span> main() {
+   gl_FragColor = vec4(vTexCoord, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+ }
+</code></pre>
+<p>Here we set the precision of any float variables in the shader. Like the <code>gl_Position</code> in the vertex shader, the fragment shader has a mandatory output called <code>gl_FragColor</code> that tells the graphic library which colour to draw the fragment in. Here we use the two components of <code>vTexCoord</code> for the red and green components, set the blue component to 0, and the alpha component to 1.</p>
+<p>Because we’ve moved our shaders out to different element positions, we need to change references to them in the main code. Delete the two old lines that contain the shaders as strings (the ones that start <code>var vs</code> and <code>var fs</code>) and replace them with the following code:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> vs = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'vshader'</span>).textContent;
+ <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'fshader'</span>).textContent;
+</code></pre>
+<p>these just grab the content of the <code>&lt;script&gt;</code> elements containing the shaders as strings. We also need to change the <code>program.vertexPosAttrib</code> line a couple of lines below to read like so:</p>
+<pre><code class="js">program.vertexPosAttrib = gl.getAttribLocation(program, <span class="hljs-string">'aVertexPosition'</span>);
+</code></pre>
+<p>This makes our program use the information from the shaders.</p>
+<p>Now try testing your code — you should end up with an altogether more colourful rectangle, as shown in Figure 2:</p>
+<p><img src="//static.webplatform.org/5/57/figure2luzc.png" alt="A WebGL-rendered rectangle with a colourful gradient"></p>
+<p>Figure 2: Our rectangle now has a much more exciting look to it.</p>
+<h2>Offsetting the texture coordinates</h2>
+<p>Now let’s look at how to offset our texture coordinates. To start with, we will add a uniform to our vertex shader — this is a constant that is passed into the shader. Add the following line into the <code>vshader</code> <code>&lt;script&gt;</code> element, below the <code>varying...</code> line:</p>
+<pre><code class="js">uniform vec2 uOffset;
+</code></pre>
+<p>Unlike the attributes, which are per vertex data, the uniform is just a constant that is passed into the program. To pass this in, let’s create an offset array, just below the 2nd line of the main program (the <code>var gl</code> line):</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> offset = [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>];
+</code></pre>
+<p>we will add this to the texture coord of each vertex, meaning that they now go between 0 and 1, not -1 and 1. We now need to reference the location of the <code>uniform</code>, just like we already reference the attribute location with <code>Program.vertexPosAttrib</code>. Below the <code>Program.vertexPosAttrib</code> line near the bottom of the code, add the following:</p>
+<pre><code class="js">program.offsetUniform = gl.getUniformLocation(program, <span class="hljs-string">'uOffset'</span>);
+</code></pre>
+<p>We’ll then set that uniform, using <code>uniform2f</code> — add the following line just above the <code>gl.drawArrays</code> line in the main code:</p>
+<pre><code class="js">gl.uniform2f(program.offsetUniform, offset[<span class="hljs-number">0</span>], offset[<span class="hljs-number">1</span>]);
+</code></pre>
+<p>The <code>offsetUniform</code> identifies which variable from inside the shaders the values should be tied to: in this case the <code>uOffset</code>, which is a <code>vec2</code>. The last step is to add the <code>uOffset</code> to the first line inside your <code>void main()</code> function:</p>
+<pre><code class="js">vTexCoord = aVertexPosition + uOffset;
+</code></pre>
+<p>This should now offset the gradient and give us an altogether more yellowy look, as seen in Figure 3:</p>
+<p><img src="//static.webplatform.org/3/32/figure5_luzc.png" alt="A WebGL-rendered rectangle with a colourful gradient, the texture offset for a more colourful effect"></p>
+<p>Figure 3: Offsetting the gradient texture gives us a nicer, more yellowy effect.</p>
+<h2>Reusing code</h2>
+<p>Now let’s have a look at putting some of our reusable code into a utility file so we can make it available easily wherever we need. Take the whole of the following code chunk that generates our Quad:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> vertexPosBuffer = gl.createBuffer();
+ gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer);
+ <span class="hljs-keyword">var</span> vertices = [-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>];
+ gl.bufferData(gl.ARRAY_BUFFER, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Float32Array</span>(vertices), gl.STATIC_DRAW);
+ vertexPosBuffer.itemSize = <span class="hljs-number">2</span>;
+ vertexPosBuffer.numItems = <span class="hljs-number">4</span>;
+</code></pre>
+<pre><code>/*
+
+2 ___ 3
+ |\  |
+ | \ |
+0|__\|1
+
+*/
+</code></pre>
+<p>and put it into your <code>webgl-utils.js</code> file, at the bottom, wrapped in a function called <code>screenQuad() { ... }</code>. At the bottom of this function, return <code>vertexPosBuffer</code>, like this:</p>
+<pre><code class="js"><span class="hljs-keyword">return</span> vertexPosBuffer;
+</code></pre>
+<p>Where the quad generation code once sat once sat in your main code, put the following line to reference it:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> vertexPosBuffer = screenQuad();
+</code></pre>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This content was originally published on <a href="http://dev.opera.com">DevOpera</a>, Opera's Developer Network. .</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

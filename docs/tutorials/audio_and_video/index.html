@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 &lt;audio&gt; and &lt;video&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="HTML5 has improved embedding of audio and video by providing native support for many different file types. In this guide, we&#x27;ll cover the various ways to embed audio and video, including browser compatibility and frameworks to streamline cross-browser compatibility." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/audio_and video/">audio and video</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML5 &lt;audio&gt; and &lt;video&gt;</h1>
+<h2>Summary</h2>
+<p>HTML5 has improved embedding of audio and video by providing native support for many different file types. In this guide, we’ll cover the various ways to embed audio and video, including browser compatibility and frameworks to streamline cross-browser compatibility.</p>
+<h2>Playing Audio</h2>
+<p>HTML5 introduced <code>&lt;audio&gt;</code> tag, as well as the JavaScript APIs, which allow the browser to play audio without the need for an external plugin. The most supported codecs for playing audio in HTML5 are Ogg Vorbis, MP3, and Wav. There is currently no single codec that plays across all browsers. To get around the potential for codec incompatibility, HTML5 allows you to specify multiple source files. The browser looks for the first mime-type it knows it can support.</p>
+<p>A simple implementation with only one source looks like this:</p>
+<pre><code>&lt;audio src=&quot;file.mp3&quot;&gt; &lt;/audio&gt;
+</code></pre>
+<p>An implementation with multiple sources looks like this:</p>
+<pre><code>&lt;audio controls&gt;
+    &lt;source src=&quot;song.ogg&quot;&gt;
+    &lt;source src=&quot;song.mp3&quot;&gt;
+    Sorry, but your browser doesn't support audio.
+&lt;/audio&gt;
+</code></pre>
+<p>If the browser doesn’t support the audio element, then it will display the message, “Sorry, but your browser doesn’t support audio.”</p>
+<h3>Helpful Libraries</h3>
+<p>Unfortunately, despite the inclusion of the HTML5 <code>&lt;audio&gt;</code> tag, there is still some friction in embedding audio and having that work seamlessly across all browsers and devices.</p>
+<p>Handling multiple devices and browsers is made easier by using a library such as <a href="http://www.schillmania.com/projects/soundmanager2/">Sound Manager 2</a> or <a href="http://buzz.jaysalvat.com/">Buzz</a>.</p>
+<p>These libraries handle most of the inconsistencies around embedding audio, and let you focus on creating awesome web applications. Both of them provide graceful degradation to handle non-HTML5 browsers.</p>
+<h3>Javascript API</h3>
+<p>The HTML5 Audio Javascript API allows for programmatic control of loading and playing audio files. The API is very straightforward, and provides a robust way to control embedded audio.</p>
+<p>Here’s a simple example. In this example, we’ll add a song, jump to 30 seconds into the song, and play it.</p>
+<pre><code>var audioElem = document.createElement('audio');
+audioElem.setAttribute('src', 'Crystal Castles - Untrust Us.ogg');
+audioElem.currentTime = 30;
+audioElem.play();
+</code></pre>
+<p>Retrieve the filename and duration:</p>
+<pre><code>audioElement.src;
+audioElement.duration;
+</code></pre>
+<h3>Additional Reading</h3>
+<p>For a great tutorial with sample code that explains how to work with audio in the browser, see the <a href="http://thinkvitamin.com/code/html5-audio-unplugged/">ThinkVitamin audio tutorial</a>. Also, HTML5Rocks’ Playground has <a href="http://playground.html5rocks.com/#audio_tag">sample code</a> to help you get started.</p>
+<h2>Playing Video</h2>
+<p>Similar to audio, the <code>&lt;video&gt;</code> tag has been introduced in the HTML5 spec, allowing web developers to harness the ability to play video without relying on third-party plugins. Support for various video/audio codecs varies from browser to browser, so it is imperative that you plan for all potential browsers and devices when creating your web application.</p>
+<p>Browser compatibility information for <a href="http://caniuse.com/#search=ogg">Ogg/Theora</a>, <a href="http://caniuse.com/#search=webm">WebM/VP8</a>, and <a href="http://caniuse.com/#search=mpeg">H.264</a> can be found at <a href="http://caniuse.com/#search=video">CanIUse.com</a>.</p>
+<p>Apple has <a href="http://www.apple.com/html5/showcase/video/">launched a site</a> that showcases the possibilities of HTML5 Video. More demos are available at <a href="http://html5video.org/blog/demos/">html5video.org</a>.</p>
+<p>At its simplest form, an HTML5 video embed looks much like the audio example from above. Here’s how to add a video to your web app.</p>
+<pre><code>&lt;video src=&quot;fb.ogv&quot;&gt;&lt;video&gt;
+</code></pre>
+<p>Since there is no single codec and container combination that is supported across all browsers, you will need to specify multiple sources. The browser will start at the first stream listed and go through all of them until it can successfully play one. It is important to specify the <code>type</code> field when embedding video. This tells the browser what the container type is, along with information about the video and audio codecs. If you do not specify the type field, the browser has to download a portion of each video until it can find one that it can successfully play.</p>
+<pre><code>&lt;video controls&gt;
+  &lt;source src=&quot;fb.ogv&quot; type='video/ogg; codecs=&quot;theora, vorbis&quot;'&gt;
+  &lt;source src=&quot;fb.mp4&quot; type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;'&gt;
+  &lt;source src=&quot;fb.webm&quot; type='video/webm; codecs=&quot;vp8, vorbis&quot;'&gt;
+&lt;/video&gt;
+</code></pre>
+<p>A more in-depth discussion of types and syntax is available at <a href="http://diveintohtml5.org/video.html#markup">Dive Into HTML5</a>.</p>
+<h3>Flash Fallback</h3>
+<p>A fallback to Flash should be included, as it allows you to embed video on browsers that may not support your video source types. Adding in support to fallback to Flash is straightforward. Using the example above, we can add in support for Flash by adding it as a last option:</p>
+<pre><code>&lt;video controls width=&quot;640&quot; height=&quot;480&quot;&gt;
+  &lt;source src=&quot;fb.ogv&quot; type='video/ogg; codecs=&quot;theora, vorbis&quot;'&gt;
+  &lt;source src=&quot;fb.mp4&quot; type='video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;'&gt;
+  &lt;source src=&quot;fb.webm&quot; type='video/webm; codecs=&quot;vp8, vorbis&quot;'&gt;
+  &lt;object type=&quot;application/x-shockwave-flash&quot; data=&quot;player.swf&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;
+    &lt;param name=&quot;allowfullscreen&quot; value=&quot;true&quot;&gt;
+    &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot;&gt;
+    &lt;param name=&quot;flashvars&quot; value=&quot;file=fb.mp4&quot;&gt;
+    &lt;!--[if IE]&gt;&lt;param name=&quot;movie&quot; value=&quot;player.swf&quot;&gt;&lt;![endif]--&gt;
+  &lt;/object&gt;
+&lt;/video&gt;
+</code></pre>
+<h3>Browser Compatibility</h3>
+<p>For maximum compatibility it is advisable to include:</p>
+<ul>
+<li>A video source that uses H.264 baseline video and AAC “low complexity” audio in an MP4 container.</li>
+<li>A video source that uses WebM (VP8 + Vorbis)</li>
+<li>A video source that uses Theora video and Vorbis audio in an Ogg container.</li>
+<li>Fallback to Flash-based video player.</li>
+</ul>
+<p>Most developers wanting to leverage the power of HTML5 video will need to consider not only the browser differences, but also backwards compatibility for browsers that do not support HTML5 specs.</p>
+<p>Fortunately, libraries such as <a href="http://www.videojs.com">VideoJS</a> and <a href="http://www.mediaelementjs.com/">MediaElement.js</a> simplify and streamline the process of embedding video on the web.</p>
+<h3>Additional Reading</h3>
+<p>For tutorials on how the <code>&lt;video&gt;</code> tag works and how you can get started, check out <a href="http://diveintohtml5.info/video.html">diveintohtml5</a>. If you’d like to jump right in, HTML5Rocks’ Playground has great <a href="http://playground.html5rocks.com/#video_tag">sample code</a>.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Facebook HTML5 Resource Center.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

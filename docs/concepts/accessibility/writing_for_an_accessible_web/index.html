@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Writing for an Accessible Web · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="
+    Do you have a cool idea for a website that you want to share with everyone? Excellent! People with disabilities tend to feel left out of websites, so try following these tips to share your website with them, too.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/accessibility/">accessibility</a></li><li><a href="/concepts/accessibility/writing_for an accessible web/">writing for an accessible web</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Writing for an Accessible Web</h1>
+<h2>Summary</h2>
+<p>Do you have a cool idea for a website that you want to share with everyone? Excellent! People with disabilities tend to feel left out of websites, so try following these tips to share your website with them, too.</p>
+<p>With several browsers available and a continuing history of incompatibility between them, many website designers have been satisfied to produce robust websites that work in a certain selection of those browsers. Sometimes, website designers will choose a single browser and design the site to work with that one; sometimes, the designer will choose a selection of browsers (usually what the designer already has installed). With the amount of effort trying to design a website to work well in the browser or browsers the designer has selected, it feels like making the site accessible to people with disabilities is the straw that broke the camel’s back.</p>
+<p>Fortunately, making a website accessible to people with disabilities doesn’t have to be difficult. Some basic principles apply and many of these principles make a site accessible and usable for people without disabilities, too.</p>
+<h2>Who is my audience?</h2>
+<p>There is a whole spectrum of people who may visit your website, regardless of what brought them there. This includes a wide range of “typical” people, people who have not been diagnosed with a disability, as well as people with <a href="/docs/concepts/accessibility/definitions/audio_impairment">audio</a>, <a href="/docs/concepts/accessibility/definitions/cognitive_impairment">cognitive</a>, <a href="/concepts/accessibility/definitions/mobility_impairment">mobility</a>, and <a href="/concepts/accessibility/definitions/visual_impairment">visual</a> impairments. Many of the affordances made for people with disabilities actually underline sound web design and make a site easier to use for people without disabilities.</p>
+<h2>How do I reach my audience?</h2>
+<p>One of the first things to remember when designing a website that is intended to be accessible is that your site should not rely on JavaScript to operate. Since JavaScript is a core technology for AJAX (it’s the J in AJAX), your site should not rely on AJAX, either. Does this mean your site cannot use JavaScript or AJAX? No! It means that your site should be just as usable without JavaScript and AJAX as it is with those technologies. It may not be as flashy, but people should be able to perform the same tasks with JavaScript turned off as they could with everything enabled and working.</p>
+<p>Because the Web is predominantly a visual medium, <a href="/docs/concepts/accessibility/definitions/visual_impairment">visual impairments</a> seem to require more accommodations than any other type of impairment. While <a href="/docs/concepts/accessibility/definitions/cognitive_impairment">cognitive impairments</a> and the accommodations afforded them may also seem daunting, many of these accommodations are actually part of good usability design.</p>
+<h2>Remember</h2>
+<p>Disabilities are not mutually exclusive. Someone with a cognitive impairment may also have audio, mobility, and visual impairments.</p>
+<h2>What do I need to do?</h2>
+<p>Here are some guidelines (yes, there are a lot of them) to follow when building websites.</p>
+<h3>JavaScript &amp; Plugins</h3>
+<ul>
+<li>Provide a <code>noscript</code> version of your website.
+<ul>
+<li>This version should be as functional as the JavaScript-enabled version of your website. You will lose visitors (and not just people with disabilities) if your <code>noscript</code> version is entirely non-functional (<em>i.e.</em>, “You must enable JavaScript to view this page.”).</li>
+<li>Screen readers can have trouble processing changes to the content of a page and some browsers do not support JavaScript.</li>
+<li>Changing content can also be perceived as “noise” and interfere with a person’s ability to understand the content of your website.</li>
+</ul></li>
+<li>If a hyperlink fires a JavaScript function (<em>e.g.</em>, <code>href=&quot;javascript:doSomething()&quot;</code>), use the text of the hyperlink or the <code>alt</code> tag of the image in the hyperlink to describe what the function does.
+<ul>
+<li>A screen reader can understandably have difficulty trying to read the name of a JavaScript function. Just as the text of a hyperlink would ease the understanding of a typical browser, so the text of the hyperlink or <code>alt</code> text of the image ease the understanding of someone using a screen reader.</li>
+</ul></li>
+<li>Avoid making functionality dependent on events other than onLoad, onUnload, and onClick.
+<ul>
+<li>Besides inconsistent implementation of certain events (<em>e.g.</em>, onChange), screen readers may never fire certain events. Events such as onMouseOver and onMouseOut may not be fired by someone who uses a screen reader or touch screen.</li>
+<li>If you decide to attach handlers to other events, make sure that the functionality is available through accessible means (<em>e.g.</em>, hyperlinks).</li>
+</ul></li>
+<li>Link to accessible sites for any plugins that are required to render your website properly.
+<ul>
+<li>If you have anything other than plain text or simple web pages on your site, chances are that plugins are required to render your website properly. Don’t make the browser search for an accessible site where the plugins are available; find the sites and provide the links yourself.</li>
+</ul></li>
+</ul>
+<h3>Images</h3>
+<ul>
+<li>Provide text alternatives for any content images (<em>e.g.</em>, the <code>alt</code> attribute of the <code>img</code> tag) that are not simply placeholders. Set the <code>alt</code> attribute to an empty string for a placeholder image.
+<ul>
+<li>Screen readers will use the <code>alt</code> text in an attempt to describe the import of your images.</li>
+</ul></li>
+<li>When providing a text alternative for an image with text in it, make sure the image text is reflected exactly in the text alternative, particularly if the image is used as a button or link. <strong>Example</strong>: A green button with the text “Start” could use “Green Start button” as its <code>alt</code> text.
+<ul>
+<li>Screen readers cannot read the text in the image itself. If written or spoken instructions refer to the text of the image, the person using a screen reader should be able to identify that image through the <code>alt</code> text.</li>
+</ul></li>
+<li>Whenever possible, use client-side image maps.
+<ul>
+<li>A server-side image map hides the destination from the user and prevents a screen reader from seeing what areas of the image are active and where each area would direct the user.</li>
+</ul></li>
+<li>Provide textual alternatives to all image maps, particularly server-side image maps.
+<ul>
+<li>Navigation should not rely on the ability to click on certain points in an image map. If necessary due to the number of links, you can provide this alternative on another page so long as it is clear how to get to that page.</li>
+<li>Every area in an image map should have <code>alt</code> text to assist someone using a screen reader.</li>
+</ul></li>
+<li>Avoid flickering images.
+<ul>
+<li>People who suffer from epileptic seizures can be sensitive to flickering lights. If your website presents a flickering image, it may cause a seizure for someone prone to have them.</li>
+</ul></li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li>Provide text to explain the function of any frames in your website.
+<ul>
+<li>Screen readers will use the <code>alt</code> text for a <code>frame</code> tag to describe the function of that frame.</li>
+</ul></li>
+<li>If you have navigation links, provide a link to skip to the main content of your website.
+<ul>
+<li>Someone using a screen reader and already familiar with the navigation of your website can use this link to skip to the content without having to listen to the list of navigation links again.</li>
+</ul></li>
+<li><em>See the guidelines under “Images” regarding image maps.</em></li>
+</ul>
+<h3>Tables</h3>
+<ul>
+<li>Provide a summary and caption for any tables on your website.
+<ul>
+<li>This will help someone using a screen reader get a quick grasp of the layout and content of your tables, much like a person without a visual disability will scan over a table to determine its layout and import before delving into the details of the content.</li>
+</ul></li>
+<li>Define row and column headers.
+<ul>
+<li>Use the <code>scope</code> attribute for <code>th</code> elements to indicate when the header applies to a column, row, column group, or row group. This helps a screen reader associate the header with the appropriate data cells.</li>
+<li>Use the <code>id</code> attribute for <code>th</code> elements and <code>headers</code> attribute for <code>td</code> elements to associated data cells with the appropriate header cells. This also helps a screen reader associate the appropriate headers with their associated data cells.</li>
+</ul></li>
+</ul>
+<h3>Forms</h3>
+<ul>
+<li>Break forms into semantically related input groups using the <code>fieldset</code> tag.
+<ul>
+<li>Provide a caption for the <code>fieldset</code> that will make the form easier to understand. Some screen readers will read the <code>fieldset</code> caption with each form element contained therein. Used properly, fieldsets also break form elements into semantically related groups, aiding people with or without cognitive and visual disabilities.</li>
+</ul></li>
+<li>Active form elements must be explicitly labeled.
+<ul>
+<li>Someone using a screen reader may not understand what to provide in a form element without having a label to describe it.</li>
+<li>Labels provide another landing point for the cursor, making it easier for someone to select the form element. This helps everyone, not just people with mobility or visual impairments.</li>
+<li>Use explicit labels for form elements. Some screen readers are unable to handle implicit labels properly. Explicit labels include the associated form element’s <code>id</code> attribute as the label’s <code>for</code> attribute and wrap only the text identifying the form element, not the form element itself. Implicit labels do not necessarily include the <code>for</code> attribute, but wrap the form element itself.</li>
+</ul></li>
+<li>If describing the purpose of an element might take too much space for a label, use the <code>title</code> attribute for that description.
+<ul>
+<li>Screen readers may not support or otherwise have difficulty if the value of the element is originally used to describe its purpose. The <code>title</code> text will appear as a tooltip for most browsers.</li>
+</ul></li>
+</ul>
+<h3>Media</h3>
+<ul>
+<li>Provide captioning for multimedia elements (<em>e.g.</em>, videos with audio) and transcripts for audio media (<em>e.g.</em>, podcasts).
+<ul>
+<li>A multimedia presentation should include captioning, allowing someone with an audio impairment (or muted sound) to understand the video without hearing the audio.</li>
+<li>A transcript is sufficient for audio-only presentations.</li>
+</ul></li>
+</ul>
+<h3>Colors &amp; Styles</h3>
+<ul>
+<li>Color may be used to convey information, but do not rely on color alone.
+<ul>
+<li>Color cannot translate well to some people with a visual impairment, like color blindness. Make sure that whatever information the color conveys (<em>e.g.</em>, valid or invalid) is also conveyed in another way (boldface, italics, descriptive context).</li>
+</ul></li>
+<li>Stylesheets may be used to organize information, but do not rely on stylesheets alone.
+<ul>
+<li>Someone with a visual impairment may need to override the stylesheets of websites they visit with a personal stylesheet (<em>e.g.</em>, high-contrast) in order to read the content. Make sure your website is understandable when any stylesheets are disabled.</li>
+</ul></li>
+</ul>
+<h3>General</h3>
+<ul>
+<li>If it is otherwise impossible or terribly intrusive to provide textual alternatives inline with non-textual elements, provide a text-only version of your website.
+<ul>
+<li>It can be difficult to make a site “cool” and accessible at the same time, to be all things to all people at all times. If you decide to provide a text-only version, make sure that it is always current with the version that has dynamic or non-textual elements.</li>
+</ul></li>
+<li>If your website is time-sensitive, <em>e.g.</em>, it logs the user out after a certain period of inactivity, give the user an opportunity to request more time.
+<ul>
+<li>While you might think 15 minutes is plenty of time for someone to fill out a form, people for whom your site is in a non-native language or people with disabilities may need more time to complete it. This helps people who do not have disabilities, too. Make sure that someone can request more time without losing the work already completed.</li>
+</ul></li>
+</ul>
+<h2>Section 508 and Beyond</h2>
+<p>If you follow the guidelines above, you will go a long ways in making your site accessible and compliant with Section 508 Standards for Electronic and Information Technology. The following guidelines are inteneded to make your site accessible by people with cognitive impairments, but can make your website easier to use by anybody.</p>
+<h3>Use of Language</h3>
+<ul>
+<li>Use simple sentence structures.
+<ul>
+<li>It doesn’t take a cognitive impairment to have difficulty with complex sentences or complex structures.</li>
+</ul></li>
+<li>Use simple language where possible.
+<ul>
+<li>Informal writing guidelines suggest that non-technical writing should be readable at the fifth-grade level. Where possible or expedient, avoid using language a grade-school child would have trouble understanding.</li>
+</ul></li>
+<li>Define abbreviations, acronyms and jargon.
+<ul>
+<li>Make sure that you define abbreviations, acronyms and jargon in plain text (not exclusively a tooltip or <code>title</code> text) with the first use.</li>
+<li>HTML 4.0 added the <code>abbr</code> and <code>acronym</code> tags. Whenever you use an abbreviation, acronym or jargon, wrap the term in an <code>abbr</code> or <code>acronym</code> tag, whichever is appropriate, and include the definition as the <code>title</code> attribute. When the user hovers a mouse over the term, the definition will appear as a tooltip. (Some browsers will display the term specially because of the tag; you can set up a style definition to accomplish the same thing.) When a screen reader encounters the item, the definition will be read with it.</li>
+</ul></li>
+<li>Keep paragraphs short.
+<ul>
+<li>Long blocks of text will make even accomplished readers want to stop reading. If you keep your paragraphs short, even people interested in a bit of light reading will get more out of your content.</li>
+</ul></li>
+<li>Summarize your paragraphs.
+<ul>
+<li>Include a summary of the paragraph as either the first or last sentence. Use the rest of the paragraph to back up the statement of the summary.</li>
+</ul></li>
+<li>Write clearly and unambiguously.
+<ul>
+<li>Unless you intend for your writing to have dual meaning, be unambiguous. The only exception to this rule is when unambiguous writing would result in a lengthy explanation that reduces the clarity of an otherwise simple sentence.</li>
+<li>Some people with cognitive impairments have trouble with fuzzy logic. Some sites offer security questions for which the user provides identifying answers. Make sure some absolute, time-independent, unambiguous questions are available for items like this.
+<ul>
+<li>“Where did you go to high school?” can be ambiguous: the user may have attended multiple high schools. “Which high school did you graduate from?” is not as ambiguous. “What school did you go to for sixth grade?” will have a larger audience.</li>
+<li>“What is your grandmother’s maiden name?” can be ambiguous: most people have two grandmothers. “What is your maternal grandmother’s maiden name?” is not as ambiguous.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3>Memory and Decision Making</h3>
+<ul>
+<li>Use whitespace.
+<ul>
+<li>Maybe your paragraphs are short, but if they are all jumbled together, they still look foreboding.</li>
+<li>Whitespace also allows people to group things together and break apart a page into manageable pieces.</li>
+</ul></li>
+<li>Don’t make me think.
+<ul>
+<li>If your website isn’t intended to be a problem-solving game, don’t make it one. Keep your navigation clear and simple. It doesn’t take someone with a cognitive impairment to give up on a site because they can’t make it work. (It sometimes takes a cognitive impairment like autism to stay on a challenging page long enough to figure out how to make it work.)</li>
+</ul></li>
+<li>Break tasks down into incremental pieces.
+<ul>
+<li>Write your instructions to be detailed, yet skimmable. Write high-level instructions for experts. Break them down incrementally until a novice can follow your instructions.</li>
+</ul></li>
+<li>Jog your user’s memory.
+<ul>
+<li>If the user gave you information, give it back to the user when it is needed.</li>
+<li>If the user needs to look something up for future use, provide space to store it so it can be presented when needed.</li>
+</ul></li>
+<li>Track your user’s progress.
+<ul>
+<li>If the user is going through a lengthy process on your website, let the user know what has been done and what is left.</li>
+<li>Provide affordances for the user so information isn’t lost. If possible, automatically save information along the way. Let the user know that information entered will not be lost if something happens.</li>
+</ul></li>
+<li>Keep the selection of choices small and provide defaults where possible.
+<ul>
+<li>Some people, whether due to a cognitive impairment or simple fatigue, are unable to concentrate enough to make a rational decision. If possible, provide default behavior and selections that will neither hinder nor frustrate the user.</li>
+<li>Some people, whether due to a cognitive impairment or simple fatigue, are unable to decide between more than a certain number of choices.</li>
+<li>Try to guide the user through the selection process and make sure all the possible choices and choice combinations are valid and any invalid choices or choice combinations are unavailable.</li>
+<li>If possible, break complex decisions into simpler decisions.</li>
+</ul></li>
+</ul>
+<h3>Usability</h3>
+<ul>
+<li>Use form elements as intended.
+<ul>
+<li>Users become confused when familiar actions have unexpected results.</li>
+<li>Drop-down boxes should be used to make a single choice on a form. They were not intended for navigation.</li>
+<li>Radio buttons were intended to make a choice from mutually exclusive options. They were not intended for navigation.</li>
+<li>Radio buttons perform a function similar to drop-down boxes, but take up more space. Use radio buttons when the space makes them easier to use and understand; use drop-down boxes when radio buttons would take up too much space.</li>
+<li>Check boxes were intended to make choices from potential combinations. They were not intended to be used when radio buttons are more appropriate.</li>
+<li>Buttons were intended to perform actions against forms (<em>e.g.</em>, submit, set defaults, reset). They were not intended for browsing or choice selections.</li>
+</ul></li>
+<li>Make matches and searches case-insensitive when possible and appropriate.
+<ul>
+<li>Children, elders, people with cognitive impairments, and people with mobility impairments can have trouble with capitalization. Passwords would be one of a very few exceptions.</li>
+</ul></li>
+</ul>
+<h2>See also</h2>
+<h3>External resources</h3>
+<p><a href="http://www.access-board.gov/sec508/guide/">http://www.access-board.gov/sec508/guide/</a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

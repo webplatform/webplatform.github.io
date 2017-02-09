@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>How we implemented SSO · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/How_we implemented it/">How we implemented it</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>How we implemented SSO</h1>
+<p>The objective of this document is to describe how we implemented a SSO solution for WebPlatform.org. It is meant to give an idea of the various moving parts.</p>
+<p>If you want to see the high level description, refer to <a href="/docs/WPD/Projects/SSO/Login_Workflows">WPD/Projects/SSO/Login Workflows</a> or if you want a shorter version, go to <a href="/docs/WPD/Projects/SSO/OAuth2_handshake_process_in_a_few_cURL_calls">WPD/Projects/SSO/OAuth2_handshake_process_in_a_few_cURL_calls</a>.</p>
+<p>The authentication portal is using our own fork of Mozilla Firefox Accounts (“FxA”) deployed on WebPlatform.org infrastructure. Details of the adaptations are described in <a href="/docs/WPD/Projects/SSO/Adapt_Firefox_Accounts_for_WebPlatform">WPD/Projects/SSO/Adapt_Firefox_Accounts_for_WebPlatform</a>.</p>
+<h3>Stories</h3>
+<p>The present document describe how we address a set of user stories but it should be noted that the final result is expected to use the SSO across ALL WebPlatform.org services and participating W3C Specifications.</p>
+<ul>
+<li>As a non authenticated person, I want to edit in the <a href="/docs/css/properties/border">a page on docs.webplatform.org/wiki/</a> (“A”).</li>
+<li>As a non authenticated person, I want to add annotations on a participating <a href="http://www.w3.org/2014/annotation/experiment/webaudio.html">W3C spec that supports annotations</a> (“B”)</li>
+<li>As a non authenticated person, I want to experiment with Docs features in the <a href="/docs/test/css/properties/border">WebPlatform Docs “test” wiki</a> (“C”).</li>
+<li>As a non authenticated person, I want to be allowed to edit in the <a href="http://docs.mroftalpbew.org/wiki/Main_Page">WebPlatform Docs Staging wiki</a> (“D”) and see if the upcoming deployment will work</li>
+<li>As a non authenticated visitor, I want to start a session and be allowed to perform [A, B, C, D] without authenticating myself more than once</li>
+</ul>
+<h3>Workflows</h3>
+<p>Repeating what was described in <a href="/docs/WPD/Projects/SSO/Login_Workflows">WPD/Projects/SSO/Login Workflows</a>, to be detailed in this page.</p>
+<p>In order to fulfill the given <a href="#Stories">#Stories</a>, we needed to implement a SSO solution covers the following:</p>
+<ul>
+<li>Get authenticated through a single authority (see <a href="#Delegating_authentication">#Delegating authentication</a>)</li>
+<li><a href="#Read_user_data">#Read user data</a> from an API,</li>
+<li>Let each configured web applications to detect a session on the authority (see <a href="#SSO_and_remembering">#SSO and remembering</a>)</li>
+<li>handle their local users and session (see <a href="#Initialize_local_web_application_session">#Initialize local web application session</a>), and</li>
+<li>Detect automatically if there is a session in the accounts server, and start it automatically (see <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a>)</li>
+</ul>
+<hr>
+<h2>Delegating authentication</h2>
+<p>This step is meant to address the <strong>Get authenticated through a single authority</strong> workflow.</p>
+<h3>0. Preamble</h3>
+<p>In this implementation we are passing through authentication to get an OAuth2 Bearer authorization token so that we can get data on the behalf of the authenticated user.</p>
+<p>The following makes use of the generated Authorization token to read a profile server and read associated user data (i.e. email address, full name, username, etc.) that will be used in all web applications.</p>
+<p><em>NOTE</em> At the moment, the Authorization token is used only once. In future development, we might want to add features and will need to store securely that token to make other actions on the behalf of the user.</p>
+<h3>1. Configure the OAuth server to accept requests from a client</h3>
+<p>In OAuth terminology, a client is a consumer that is authorized to rely on the OAuth server. A client can be a web application, but its not only limited to that.</p>
+<p>In this example, we are going to show how the <a href="/docs/test/css/properties/border">WebPlatform Docs “test” wiki</a> (“C”) gets data from the various layers.</p>
+<p>Client configuration is described in the project documentation available in the <a href="https://github.com/webplatform/fxa-oauth-server/blob/master/docs/clients.md">WebPlatform’s fork of FxA OAuth Server in <em>docs/clients.md</em></a>.</p>
+<p>Within FxA OAuth server configuration, a <code>client: [/* array of clients */]</code> entry looks like this:</p>
+<pre><code class="js">{
+  <span class="hljs-string">"id"</span>: <span class="hljs-string">"7e7e11299d95d789"</span>,
+  <span class="hljs-string">"secret"</span>: <span class="hljs-string">"a331e8a8f3e553a430d7e5b904c6132b2722633af9f03128029201d24a97f2aa"</span>,
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"WebPlatform Test"</span>,
+  <span class="hljs-string">"image_uri"</span>: <span class="hljs-string">"..."</span>,
+  <span class="hljs-string">"redirectUri"</span>:<span class="hljs-string">"/docs/test/Special:AccountsHandler/callback"</span>,
+  <span class="hljs-string">"whitelisted"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+<ul>
+<li><code>id</code>: Is a 8 byte hexadecimal string that you will need to have on the client configuration</li>
+<li><code>secret</code>: Is a 32 byte hexadecimal string that you will also need on the client configuration.</li>
+<li><code>redirectUri</code>: Is where you should send the users to when they successfully authenticated.</li>
+</ul>
+<p>To continue with our example, we are connecting to a MediaWiki installation that has the <a href="/docs/WPD/Projects/SSO/MediaWikiExtension">WPD/Projects/SSO/MediaWikiExtension</a> available. In the case of that particular extension, it expects that we send authenticated users back to <code>Special:AccountsHandler/callback</code>.</p>
+<h3>2. Configure client</h3>
+<p>Configuring a client to use our OAuth server can be different depending on how the extension implements OAuth2.</p>
+<p>Regardless of the exact configuration lines or code, every OAuth2 clients has similar configuration lines.</p>
+<p>Such as:</p>
+<ul>
+<li>Start the process</li>
+<li>Generate an Authorization token</li>
+</ul>
+<p>In the case of our implementation, we also added (<code>fxa_profile</code>) so that we can read user data from somewhere.</p>
+<p>Our MediaWiki extension has similar configuration in its <code>Settings.php</code> file:</p>
+<pre><code>require_once( "$IP/extensions/WebPlatformAuth/WebPlatformAuth.php" );
+$wgWebPlatformAuth[<span class="hljs-link_label">'client'</span>][<span class="hljs-link_reference">'id'</span>]             = '7e7e11299d95d789';
+$wgWebPlatformAuth[<span class="hljs-link_label">'client'</span>][<span class="hljs-link_reference">'secret'</span>]         = 'a331e8a8f3e553a430d7e5b904c6132b2722633af9f03128029201d24a97f2aa';
+$wgWebPlatformAuth[<span class="hljs-link_label">'endpoints'</span>][<span class="hljs-link_reference">'fxa_oauth'</span>]   = 'https://oauth.accounts.webplatform.org/v1/';
+$wgWebPlatformAuth[<span class="hljs-link_label">'endpoints'</span>][<span class="hljs-link_reference">'fxa_profile'</span>] = 'https://profile.accounts.webplatform.org/v1/';
+$wgWebPlatformAuth[<span class="hljs-link_label">'methods'</span>][<span class="hljs-link_reference">'authorize'</span>]     = 'authorization';
+$wgWebPlatformAuth[<span class="hljs-link_label">'methods'</span>][<span class="hljs-link_reference">'token'</span>]         = 'token';
+</code></pre>
+<p>While configuration can be different depending on the client extension, a few endpoints are required to be used in our installation.</p>
+<ul>
+<li><code>GET https://oauth.accounts.webplatform.org/v1/authorization</code></li>
+<li><code>POST https://oauth.accounts.webplatform.org/v1/authorization</code></li>
+<li><code>POST https://oauth.accounts.webplatform.org/v1/token</code></li>
+<li><code>GET https://profile.accounts.webplatform.org/v1/session/read</code>, with scope '<code>session</code>'</li>
+</ul>
+<p>Most of these requests aren’t made through the browser but through a server-side HTTP client. In the MediaWiki extension, we are using Guzzle.</p>
+<p><em>NOTE</em> Even though the calls are aimed at endpoints under SSL, it feels safer to have those requests made outside of the reach of the visitor web browser.</p>
+<h3>3. Possibility: Detected a session</h3>
+<p>On page load, a non blocking <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a> attempts to read from the <a href="https://accounts.webplatform.org/">accounts server</a> to see whether a session is already opened or not.</p>
+<p>The outline of what’s happening is described in <a href="#SSO_and_remembering">#SSO and remembering</a>.</p>
+<p>If no session is detected, the module does nothing.</p>
+<h3>4. From a page, when you click login</h3>
+<p>The MediaWiki extension detects the click and sends you to <code>Special:AccountsHandler/start</code>. Its an internal process to generate a redirect to the OAuth2 authentication flow.</p>
+<p>The web application generates and sends user to the OAuth authentication endpoint, with some data:</p>
+<ul>
+<li>The client identifier (&quot;<code>client_id</code>&quot;)</li>
+<li>What the application wants (&quot;<code>scope</code>&quot;)</li>
+<li>What state it was in (&quot;<code>state</code>&quot;), this is a random key used to store inside a key store such as Memcache so we can retrieve the state data after the authentication process.</li>
+</ul>
+<p><strong>NOTE</strong> In Mozilla Firefox Accounts, the <code>callbackUri</code> is configured in the server configuration directly. This is considered safer to trust only the configuration file in contrast to common OAuth2 server implementation where they also want the <code>callbackUri</code> as part of the first redirect. This is a way to address a security breach in original OAuth2 specification.</p>
+<p>Since the OAuth server knows who is the client, it adjusts the title to &quot;Sign in to WebPlatform Test&quot;.</p>
+<p><img src="//static.webplatform.org/3/31/sso_steps_login_dialog.png" alt="sso steps login dialog.png"></p>
+<p><strong>NOTE</strong> In the screenshot above, you see <em>scope=profile</em>. Since that snapshot, we changed the scope name to <em>session</em> because we needed to differentiate web application that will use OAuth to create local sessions from future use cases.</p>
+<p>Once the authentication worked the <a href="https://accounts.webplatform.org/">accounts server</a> sends you to the <code>callbackUri</code> (e.g. <code>Special:AccountsHandler/callback</code> for Media Wiki).</p>
+<h3>5. Redirected the callback URI</h3>
+<p>From that callback, we get two keys:</p>
+<ul>
+<li><code>state</code>: Is that string we gave in the previous step, we get it back so we can resume where we were before the authentication process. If the state data (e.g. previous page visited) was serialized and sent to Memcache, we can ask it once again and resume.</li>
+<li><code>code</code>: This is a one-time token that we can use to get an OAuth2 Token. In this example, its “SOMETHING_LONG”</li>
+</ul>
+<p>The callback URI looks like this:</p>
+<p><code>/wiki/Special:AccountsHandler/callback?code=SOMETHING_LONG&amp;state=5a72cd23b1b5feb8</code></p>
+<p>Based on the received data, we can continue with the OAuth2 handshake.</p>
+<h3>6. Get an Authorization token</h3>
+<p>From the <code>callbackUri</code> handler, with the expected data (<code>state</code>, <code>code</code>) we make a few HTTP calls server to server (i.e. invisible to the web browser).</p>
+<p>The call to get the Authorization token contains:</p>
+<ul>
+<li><code>client_id</code>: The identifier we configured in both OAuth server and the client</li>
+<li><code>client secret</code>: The shared secret</li>
+<li><code>code</code>: The one-time code we got when redirected to the <code>callbackUri</code>.</li>
+</ul>
+<p>The request is similar to this cURL call:</p>
+<pre><code>curl -XPOST -<span class="hljs-keyword">H</span> 'Content-<span class="hljs-keyword">Type</span>: application/json' \
+     'https:<span class="hljs-comment">//oauth.accounts.webplatform.org/v1/token' \</span>
+     -<span class="hljs-keyword">d</span> '{<span class="hljs-string">"client_id"</span>:<span class="hljs-string">"7e7e11299d95d789"</span>,
+          <span class="hljs-string">"client_secret"</span>:<span class="hljs-string">"a331e8a8f3e553a430d7e5b904c6132b2722633af9f03128029201d24a97f2aa"</span>,
+          <span class="hljs-string">"code"</span>:<span class="hljs-string">"SOMETHING_LONG"</span>}'
+</code></pre>
+<p>We get in exchange the Authorization token in a response that looks like this:</p>
+<pre><code class="js">{<span class="hljs-string">"access_token"</span>:<span class="hljs-string">"6243bbcf3f1f451cc5b3f47e662568b90863995a4e675a3073eb72434ab2ba31"</span>,
+ <span class="hljs-string">"token_type"</span>:<span class="hljs-string">"bearer"</span>,
+ <span class="hljs-string">"scope"</span>:<span class="hljs-string">"session"</span>}
+</code></pre>
+<p>The <code>access_token</code> is what we needed to act on the behalf of the logged in user.</p>
+<p>At the time, the only protected service is the profile server, but we might want to protect other components later down the road.</p>
+<p><strong>NOTE</strong> An OAuth Authorization token is basically a key to make actions on the behalf of a valid user. In this regard, it is of the utmost importance to have it sent only through SSL, and, ideally, always outside of the reach of the web browser.</p>
+<h3>7. Finsish off things</h3>
+<p>Continued in <a href="#Read_user_data">#Read user data</a>, and then <a href="#Initialize_local_web_application_session">#Initialize local web application session</a> workflow.</p>
+<hr>
+<h2>Read user data</h2>
+<p>This step is meant to address the <strong>Read user data through an API</strong> workflow.</p>
+<p>Assuming our web application has a valid <em>Authorization token</em>, OR <em>session token</em>, we can get the account data we need from the profile server.</p>
+<p>The profile server <strong>MUST return the same data</strong> regardless of whether it got an <em>Authorization token</em> or a <em>session token</em>.</p>
+<p>The Profile server has two distinct methods to provide user data.</p>
+<ul>
+<li>One to <em>read</em> the user data for the first time, requiring a valid OAuth2 Authorization token</li>
+<li>One to <em>recover</em> the user data, meaning the server already has a session opened on the <a href="https://accounts.webplatform.org/">accounts server</a> and we want to use the same data.</li>
+</ul>
+<p>To read more about recovering a session, refer to <a href="#SSO_and_remembering">#SSO and remembering</a> workflow.</p>
+<p>The call to the profile server looks like the following cURL calls:</p>
+<p><strong>With an Authorization token</strong>:</p>
+<pre><code>curl -H <span class="hljs-string">'Content-Type: application/json'</span> <span class="hljs-string">\</span>
+     -H <span class="hljs-string">"Authorization: Bearer 6243bbcf3f1f451cc5b3f47e662568b90863995a4e675a3073eb72434ab2ba31"</span> <span class="hljs-string">\</span>
+     <span class="hljs-string">'https://profile.accounts.webplatform.org/v1/session/read'</span>
+</code></pre>
+<p><strong>With a session token</strong>:</p>
+<p><strong>NOTE</strong>; The <code>sessionToken</code> is available from the <a href="https://accounts.webplatform.org/settings">Accounts server settings view</a> only once a user is logged in. To access it, we are using cross-frame communication and read the token from localStorage API.</p>
+<pre><code class="js"><span class="hljs-comment">// URI https://accounts.webplatform.org/settings</span>
+<span class="hljs-keyword">var</span> obj = <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">window</span>.localStorage.getItem(<span class="hljs-string">'__fxa_session'</span>)) || {};
+<span class="hljs-built_in">console</span>.log(obj); <span class="hljs-comment">// if there is a session, obj.sessionToken will have what we need</span>
+</code></pre>
+<p>Use the <code>obj.sessionToken</code> after <code>Session</code> in the following cURL:</p>
+<pre><code>curl -v -H <span class="hljs-string">'Content-Type: application/json'</span> <span class="hljs-string">\</span>
+        -H <span class="hljs-string">"Authorization: Session 095dc99de03e99c6d93211aced561c6a28800cdd20fe2ff55ef4626401a04045"</span> <span class="hljs-string">\</span>
+        <span class="hljs-string">'https://profile.accounts.webplatform.org/v1/session/recover'</span>
+</code></pre>
+<p>If the profile server accepted either methods, we get a JSON object looking like this:</p>
+<pre><code class="js">{<span class="hljs-string">"username"</span>: <span class="hljs-string">"jdoe"</span>,
+ <span class="hljs-string">"fullName"</span>: <span class="hljs-string">"John Doe"</span>,
+ <span class="hljs-string">"email"</span>: <span class="hljs-string">"hi@example.org"</span>,
+ <span class="hljs-string">"uid"</span>: <span class="hljs-string">"3E09D6DF843341BC921A25423AB83BAF"</span> }
+</code></pre>
+<p>We can now start the session in the client web application.</p>
+<p><strong>NOTE</strong> Authorization headers is functionally the same as what the web browser does with cookies. In fact, during a browsing session that has cookies, they are sent along with every HTTP requests. And that is, regardless of whether its an image, a CSS file, or a web page. The cookie is therefore a way to tell the application server to tell who the visitor is and potentially change the returned resource.</p>
+<hr>
+<h2>Initialize local web application session</h2>
+<p>This step is meant to address the <strong>handle their local users and session</strong> workflow and what the backend code MUST implement.</p>
+<p>One of the key behavior in a SSO system is that each configured application relies on an authority to provide common user data (e.g. email, username, fullName), but also to confirm if it can start a session locally and overriding its own user validation system.</p>
+<h3>0. Preamble</h3>
+<p>The following MUST be done in the backend code answering at the what is refered to as &quot;<strong>callback</strong>&quot; (e.g. <code>Special:AccountsHandler/callback</code>) on each relying parties who wants to use the SSO.</p>
+<p>It handles the following steps:</p>
+<ul>
+<li>Read data from profile server</li>
+<li>Find matching user, and/or create a new one</li>
+<li>Start a session</li>
+<li>Return a status code for the <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a></li>
+</ul>
+<p>This component answers in two different scenarios:</p>
+<ul>
+<li>GET request with two parameters (e.g. <code>Special:AccountsHandler/callback?code=aaa&amp;state=bbb</code>), &quot;<a href="#1.1_Possibility:_Completing_an_OAuth2_handshake">#1.1 Possibility: Completing an OAuth2 handshake</a>&quot;</li>
+<li>POST request with <code>recoveryPayload</code> data, &quot;<a href="#1.2_Possibility:_Resuming_a_session_confirmed_by_the_accounts_server">#1.2 Possibility: Resuming a session confirmed by the accounts server</a>&quot;.</li>
+</ul>
+<p>In both <em>Behavior forks</em>, the returned data from the profile server MUST be in the following format:</p>
+<pre><code class="js">{<span class="hljs-string">"username"</span>: <span class="hljs-string">"jdoe"</span>,
+ <span class="hljs-string">"fullName"</span>: <span class="hljs-string">"John Doe"</span>,
+ <span class="hljs-string">"email"</span>: <span class="hljs-string">"hi@example.org"</span>,
+ <span class="hljs-string">"uid"</span>: <span class="hljs-string">"3E09D6DF843341BC921A25423AB83BAF"</span> }
+</code></pre>
+<p>Since each web application can have different database and ways to refer to a given user, we are using this information to find if a user already exists in the local database, or we create one with the default details for the user.</p>
+<p>Based on the data received from the profile server, we initialize a session locally.</p>
+<h3>1. Behavior forks</h3>
+<p>Here is how the backend code MUST behave in both cases.</p>
+<p>The steps are basically the same, but acts differently depending of what initiated the process.</p>
+<p>Here are the differences in both cases.</p>
+<h4>1.1 Possibility: Completing an OAuth2 handshake</h4>
+<p>This section covers what the backend does when it got called during an OAuth2 workflow during <a href="#Delegating_authentication">#Delegating authentication</a> and mentionned in <a href="#5._Redirected_the_callback_URI">#5. Redirected the callback URI</a>.</p>
+<p>In this case, we are provided with TWO keys through a <code>GET</code> request to our callback (e.g. <code>Special:AccountsHandler/callback</code>)</p>
+<ul>
+<li><code>code</code>: The one-time token that is the last step to get an Authorization token</li>
+<li><code>state</code>: A key identifier that we got when we saved away in a key store (e.g. Memcache) the state before signing in.</li>
+</ul>
+<h5>1.1.1 Get an OAuth2 authorization token</h5>
+<p>With the <code>code</code> in hand, we can <a href="#6._Get_an_Authorization_token">#6. Get an Authorization token</a>, then ask the profile server the user data.</p>
+<p>As described in <a href="#6._Get_an_Authorization_token">#6. Get an Authorization token</a>.</p>
+<h5>1.1.2 Read data from profile server</h5>
+<p>As described in <a href="#Read_user_data">#Read user data</a> <em>With an Authorization token</em> (OAuth2).</p>
+<h5>1.1.3 Find matching user, and/or create a new one</h5>
+<p>This is specific to each web application, for MediaWiki you can refer to <a href="/docs/WPD/Projects/SSO/MediaWikiExtension">WPD/Projects/SSO/MediaWikiExtension</a>.</p>
+<h5>1.1.4 Start a session</h5>
+<p>This is specific to each web application, for MediaWiki you can refer to <a href="/docs/WPD/Projects/SSO/MediaWikiExtension">WPD/Projects/SSO/MediaWikiExtension</a>.</p>
+<h5>1.1.5 Resume previous state</h5>
+<p>During previous OAuth2 workflow steps, we saved some data in a key store (“state”) and we can use it to send the user where he was in.</p>
+<p>In the case of the <a href="/docs/WPD/Projects/SSO/MediaWikiExtension">WPD/Projects/SSO/MediaWikiExtension</a>, we currently store the previous page the user visited and would look like this:</p>
+<pre><code class="html">{return_to:"/docs/WPD/Projects/SSO/Login_Workflows"}
+</code></pre>
+<p>Based on that information, we issue a redirect and the user is back where he was.</p>
+<h4>1.2 Possibility: Resuming a session confirmed by the accounts server</h4>
+<p>This section covers what the backend does when we detected a session through the frontend discovery mechanism <a href="/docs/WPD/Projects/SSO/Login_Workflows#Starting_a_session_by_communicating_with_accounts_server">WPD/Projects/SSO/Login Workflows#Starting a session by communicating with accounts server</a>.</p>
+<p>In this case, we are provided with ONE key through a <code>POST</code> request to our callback (e.g. <code>Special:AccountsHandler/callback</code>)</p>
+<ul>
+<li><code>recoveryPayload</code>: Containing the data used to ask the profile server</li>
+</ul>
+<p><strong>NOTE</strong> This step is currently getting directly the <code>sessionToken</code> and will eventually changed, see reasons in <a href="/docs/WPD/Projects/SSO/Improvements_roadmap#Recovering_session_data">WPD/Projects/SSO/Improvements roadmap#Recovering session data</a>.</p>
+<h5>1.2.1 Make a request with the received data</h5>
+<p>As described in <a href="#SSO_and_remembering">#SSO and remembering</a>, in the step <a href="#4._Read_data_from_the_profile_server_with_a_recoveryPayload">#4. Read data from the profile server with a recoveryPayload</a>.</p>
+<h5>1.2.1 Read data from profile server</h5>
+<p>As described in <a href="#Read_user_data">#Read user data</a> <em>With a session token</em>.</p>
+<h5>1.2.2 Find matching user, and/or create a new one</h5>
+<p>This is specific to each web application, for MediaWiki you can refer to <a href="/docs/WPD/Projects/SSO/MediaWikiExtension">WPD/Projects/SSO/MediaWikiExtension</a>.</p>
+<h5>1.2.3 Start a session</h5>
+<p>This is specific to each web application, for MediaWiki you can refer to <a href="/docs/WPD/Projects/SSO/MediaWikiExtension">WPD/Projects/SSO/MediaWikiExtension</a>.</p>
+<h5>1.2.4 Return an HTTP response</h5>
+<p>This step is required by the <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a> so it knows whether it should reload or not the page and let the user use the current site as an authenticated user.</p>
+<ul>
+<li><code>204</code>: All went fine, reload!</li>
+<li><code>4xx</code>: Stop there, no valid session was found</li>
+<li><code>5xx</code>: Stop there, an unexpected error happened</li>
+</ul>
+<p>If the status is not an error (e.g. 4xx, 5xx), we can send an error message in the response body with a <code>Content-type: text/plain</code> HTTP header.</p>
+<hr>
+<h2>SSO and remembering</h2>
+<p>This step is meant to address the <strong>Let each configured web applications to detect a session on the authority</strong> workflow.</p>
+<p>As described in <a href="#Stories">#Stories</a>, the following describes how we can get the same data from <a href="#Read_user_data">#Read user data</a>, but without asking for the user to authenticate again.</p>
+<p>To have the system to not ask the user to authenticate again we needed to find a way to check if a session is opened, and get the user data so I can create a local session from that trusted source.</p>
+<p>Most of the following would happen at <a href="#3._Possibility:_Detected_a_session">#3. Possibility: Detected a session</a> then <a href="#Read_user_data">#Read user data</a> using a <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a> that handles the checks and makes the local web application to <a href="#Initialize_local_web_application_session">#Initialize local web application session</a> automatically for the user.</p>
+<h3>0. Preamble</h3>
+<p>This is what’s currently implemented. Ideally it should leverage what’s proposed in the previous section. A high level description is available at <a href="/docs/WPD/Projects/SSO/Login_Workflows#Starting_a_session_by_communicating_with_accounts_server">WPD/Projects/SSO/Login Workflows#Starting a session by communicating with accounts server</a></p>
+<p>While this implementation proposal is some sort of workaround, it is designed to provide the same data we would get if the issue <a href="/docs/WPD/Projects/SSO/Improvements_roadmap#Leveraging_completely_OAuth2">WPD/Projects/SSO/Improvements roadmap#Leveraging completely OAuth2</a>.</p>
+<p>In either case, we first need to discover whether a session is already opened using Content Security Policies and Cross Frame communication through a hidden iframe via JavaScript.</p>
+<p><strong>Story</strong>: A person signed in to work on testing a feature in the SSO enabled <a href="http://docs.mroftalpbew.org/wiki/Main_Page">WebPlatform Docs Staging wiki</a> (“D”). Later in his browsing session, the user wants to add an comment to a <a href="http://www.w3.org/2014/annotation/experiment/webaudio.html">W3C spec that supports annotations</a> (“B”). Without having to enter his credentials more than once.</p>
+<p>The workflow in this code proposal should be run before <a href="#4._From_a_page.2C_when_you_click_login">#4. From a page, when you click login</a>.</p>
+<p>The following is separated in two parts:</p>
+<ul>
+<li><a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a></li>
+<li><a href="#Initialize_local_web_application_session">#Initialize local web application session</a></li>
+</ul>
+<h4>1. Sign in to (“D”)</h4>
+<p>Continuing our scenario, let’s use the <a href="http://docs.mroftalpbew.org/wiki/Main_Page">WebPlatform Docs Staging wiki</a> (“D”)</p>
+<p>Complete signin in process through the accounts server (the OAuth way), and you should get back to the staging wiki with a session opened.</p>
+<p><strong>NOTE</strong>: Once you passed this step, you can see on the <a href="https://accounts.webplatform.org/">accounts server</a> that it no loger prompts you to authenticate.</p>
+<h4>2. Go to (“B”), another web app that also uses the accounts server</h4>
+<p>Continuing our scenario, we will want to add a comment on a <a href="http://www.w3.org/2014/annotation/experiment/webaudio.html">W3C spec that supports annotations</a> (“B”)</p>
+<p>The following JavaScript happen.</p>
+<h5>2.1. From B, prepare to handle confirmation</h5>
+<p>This is where we listen to what we get from the accounts server, validate if a session exists, and trigger the calls to the profile server and handle the returned data.</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"message"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">returned</span>)</span>{<span class="hljs-built_in">console</span>.log(returned.data)}, <span class="hljs-literal">false</span>);
+</code></pre>
+<p>NOTE: This is handled in file <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a></p>
+<h5>2.2. From B, open a iframe to (“C”)</h5>
+<p>For this to work, we have to make sure that the Content server sends appropriate CSP headers on the FxA content server.</p>
+<pre><code class="js">    <span class="hljs-comment">// See 0.2</span>
+    app.use(helmet.csp({<span class="hljs-string">"script-src"</span>:[<span class="hljs-string">"'self'"</span>, <span class="hljs-string">"*.webplatform.org"</span>, <span class="hljs-string">"*.mroftalpbew.org"</span>, <span class="hljs-string">"*.global.ssl.fastly.net"</span>, <span class="hljs-string">"*.w3.org"</span>]}));
+</code></pre>
+<p>Create the iframe</p>
+<pre><code class="js">    <span class="hljs-keyword">var</span> authChecker=<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'iframe'</span>);authChecker.src=<span class="hljs-string">'https://accounts.webplatform.org/'</span>;authChecker.frameworder=<span class="hljs-number">0</span>;authChecker.width=<span class="hljs-number">0</span>;authChecker.height=<span class="hljs-number">0</span>;authChecker.id=<span class="hljs-string">'authChecker'</span>;<span class="hljs-built_in">document</span>.body.appendChild(authChecker);
+</code></pre>
+<p>NOTE: This is handled in file <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a> at the</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.sso.init(closure, <span class="hljs-string">'/wiki/Special:AccountsHandler/callback'</span>);
+</code></pre>
+<h5>2.3. From B, Send trigger to ask confirmation from the iframe</h5>
+<p>Since the iframe has reloaded fully the document and would behave the same as if the user went to <a href="https://accounts.webplatform.org/">https://accounts.webplatform.org/</a> with an opened session, we can ask that iframe document to send us details of the session.</p>
+<p>To do so, we are sending a request for confirmation, like this:</p>
+<pre><code class="js">authChecker.contentWindow.postMessage(<span class="hljs-string">'hi'</span>, <span class="hljs-string">'https://accounts.webplatform.org/'</span>);
+</code></pre>
+<p>NOTE: This is handled in file <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a>. The trigger would be lauched from <code>window.sso.doCheck()</code> and handles the next steps until the backend comes in.</p>
+<h4>3. From B, handle the response from the iframe</h4>
+<p>Provided a session is already open, we should get something similar to:</p>
+<pre><code class="js">{hasSession: <span class="hljs-literal">true</span>,
+ recoveryPayload: <span class="hljs-string">"e73f75c00115f45416b121e274fd77b60376ce4084267ed76ce3ec7c0a9f4f1f"</span>}
+</code></pre>
+<p>If there is no session, or in case of failure, we would get:</p>
+<pre><code class="js">{hasSession: <span class="hljs-literal">false</span>,
+ recoveryPayload: <span class="hljs-literal">null</span>}
+</code></pre>
+<p>Since the iframe and the communication would had failed from any non trusted source. If we are from a trusted source as described in 2.2, it is safe to assume that we are a legitimate relying party to the SSO system.</p>
+<p>This is where the non blocking <a href="#JavaScript_shared_module:_Detect_and_start_automatically_a_session">#JavaScript shared module: Detect and start automatically a session</a> finish its lifecycle. Upon detecting an object that has <code>hasSession: true</code> AND a 64 character long string for <code>sessionToken</code>, it MUST send an Ajax POST to the local web application <code>callbackUri</code> with the token.</p>
+<p>NOTE: This is know to bring a problem. The isussue is that if we use an unaltered sessionToken as the sole proof, anybody could know this and hijack a session on the relying party. This needs to be improved.</p>
+<h4>4. Read data from the profile server with a recoveryPayload</h4>
+<p>The following happens at <a href="#Initialize_local_web_application_session">#Initialize local web application session</a>.</p>
+<p>This endpoint will be available ONLY through the internal network of WebPlatform and the W3C.</p>
+<p>Compared to a call with an OAuth Authorization token, we are going to call a different endpoint that will correlate the data attached to the user session.</p>
+<p>The special endpoint, only available through a limited set of IP address answers to <code>/v1/session/recover</code> and requires an “Authorization” header similar to OAuth, but with a Session token instead.</p>
+<pre><code>curl -v -H 'Content-Type: application/json' \
+        -H "Authorization: Session e<span class="hljs-number">73f75c00115</span>f<span class="hljs-number">45416b121e27</span>4fd<span class="hljs-number">77b60376</span>ce<span class="hljs-number">4084267</span>ed76ce3ec<span class="hljs-number">7c0a9f4</span>f1f" \
+        'https://profile.accounts.webplatform.org/v1/session/recover'
+</code></pre>
+<p><em>NOTE</em> This endpoint is available at the moment but might not be accessible anymore by end of June 2014.</p>
+<p>Here are the HTTP Response body the endpoint would return:</p>
+<ul>
+<li>200 OK, with JSON object containing data when session exist (shown above)</li>
+<li>410 GONE, with error JSON object, when session doesn’t exist</li>
+<li>401 UNAUTHORIZED, with error JSON object, when request is malformed</li>
+</ul>
+<h5>4.1. Under the hood</h5>
+<p>Under the hood, the profile server endpoint at <code>GET /v1/session/recover</code> makes database queries similar to:</p>
+<pre><code><span class="hljs-operator"><span class="hljs-keyword">SELECT</span>
+  <span class="hljs-keyword">HEX</span>(s.uid) <span class="hljs-keyword">AS</span> uid,
+  a.normalizedEmail <span class="hljs-keyword">AS</span> email,
+  a.username <span class="hljs-keyword">AS</span> username,
+  a.fullName <span class="hljs-keyword">AS</span> fullName
+<span class="hljs-keyword">FROM</span>
+  sessionTokens <span class="hljs-keyword">AS</span> s,
+  accounts <span class="hljs-keyword">AS</span> a
+<span class="hljs-keyword">WHERE</span>
+  s.uid = a.uid
+<span class="hljs-keyword">AND</span>
+  tokenData = <span class="hljs-keyword">unhex</span>(<span class="hljs-string">'e73f75c00115f45416b121e274fd77b60376ce4084267ed76ce3ec7c0a9f4f1f'</span>);</span>
+</code></pre>
+<p>The database should either return an empty result, or user data:</p>
+<pre><code>   +----------------------------------+----------------+----------+--------------+
+   | uid                              | email          | username | fullName     |
+   +----------------------------------+----------------+----------+--------------+
+   | 3E09D6DF843341BC921A25423AB83BAF | hi@example.org | jdoe     | John Doe     |
+   +----------------------------------+----------------+----------+--------------+
+</code></pre>
+<h4>5. Returning the data to the server</h4>
+<p>If the web application could get a response from <code>session/recover</code>, and finds a result, it returns a JSON object:</p>
+<pre><code class="js">  {<span class="hljs-string">"username"</span>: <span class="hljs-string">"jdoe"</span>,
+   <span class="hljs-string">"fullName"</span>: <span class="hljs-string">"John Doe"</span>,
+   <span class="hljs-string">"email"</span>: <span class="hljs-string">"hi@example.org"</span>,
+   <span class="hljs-string">"uid"</span>: <span class="hljs-string">"3E09D6DF843341BC921A25423AB83BAF"</span> }
+</code></pre>
+<p>In the case of an invalid or expired <code>sessionToken</code>, an error should be returned. See possible errors at <a href="#4._Read_data_from_the_profile_server_with_a_recoveryPayload">#4. Read data from the profile server with a recoveryPayload</a></p>
+<p>The rest MUST comply to what’s described in <a href="#Initialize_local_web_application_session">#Initialize local web application session</a>.</p>
+<hr>
+<h2>JavaScript shared module: Detect and start automatically a session</h2>
+<p>This step is meant to address the <strong>Detect automatically if there is a session in the accounts server, and start it automatically</strong> workflow.</p>
+<p>It describes the behavior of a non blocking JavaScript module meant to detect and start automatically a session for the user.</p>
+<p>Client code is available in <a href="https://gist.github.com/WebPlatformDocs/fe3149c60d6ed95c7e16">JavaScript SsoHandler class in this gist</a></p>
+<h3>1. Event handler to validate a session</h3>
+<p><strong>NOTE</strong>: This event handler is about answering what’s triggered bye the module and is installed in the accounts server code.</p>
+<p>In our own fork and branch of <code>fxa-content-server</code>, in <a href="https://github.com/webplatform/fxa-content-server/blob/webplatform-customizations/app/scripts/views/base.js">app/scripts/views/base.js</a></p>
+<pre><code class="js">      <span class="hljs-comment">// WebPlatform Specific ===============================</span>
+      <span class="hljs-comment">// file: app/scripts/views/base.js</span>
+      <span class="hljs-comment">// line: 40</span>
+      <span class="hljs-comment">// See: /docs/WPD/Projects/SSO/How_we_implemented_it#JavaScript_shared_module:_Detect_and_start_automatically_a_session</span>
+      <span class="hljs-keyword">var</span> fxaC = <span class="hljs-keyword">this</span>.fxaClient;
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readAndReplyHasSession</span>(<span class="hljs-params"> e </span>) </span>{
+        <span class="hljs-keyword">var</span> b = <span class="hljs-built_in">window</span>.localStorage.getItem(<span class="hljs-string">'__fxa_session'</span>);
+        <span class="hljs-keyword">var</span> sessionData = <span class="hljs-built_in">JSON</span>.parse(b);
+
+        fxaC.isSignedIn(sessionData.sessionToken)
+            .done(
+              <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> promised </span>)</span>{
+                <span class="hljs-comment">// Will eventually change, as decribed in</span>
+                <span class="hljs-comment">//   /docs/WPD/Projects/SSO/Improvements_roadmap#Recovering_session_data</span>
+                e.source.postMessage({hasSession: promised, recoveryPayload: sessionData.sessionToken || <span class="hljs-literal">null</span>}, e.origin);
+              }
+            );
+      }
+      <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"message"</span>, readAndReplyHasSession, <span class="hljs-literal">false</span>);
+      <span class="hljs-comment">// /WebPlatform Specific ==============================</span>
+</code></pre>
+<h3>2. And adjust the CSP policies</h3>
+<p><strong>NOTE</strong>: The Content Security Policy changes here is about letting the module to communicate with the accounts server.</p>
+<p>In our own fork and branch of <code>fxa-content-server</code>, in <a href="https://github.com/webplatform/fxa-content-server/blob/webplatform-customizations/server/bin/fxa-content-server.js">server/bin/fxa-content-server.js</a></p>
+<pre><code class="js">  <span class="hljs-comment">// WebPlatform Specific ===============================</span>
+  <span class="hljs-comment">// File: server/bin/fxa-content-server.js</span>
+  <span class="hljs-comment">// Line: 62</span>
+  <span class="hljs-comment">// Adjust helmet to accept xss from specific hosts</span>
+  <span class="hljs-comment">// see: https://github.com/evilpacket/helmet</span>
+  <span class="hljs-comment">// Comment, this:</span>
+  <span class="hljs-comment">//app.use(helmet.xframe('deny'));</span>
+  <span class="hljs-comment">// Instead:</span>
+  app.use(helmet.csp({<span class="hljs-string">"script-src"</span>:[<span class="hljs-string">"'self'"</span>, <span class="hljs-string">"*.webplatform.org"</span>, <span class="hljs-string">"*.mroftalpbew.org"</span>, <span class="hljs-string">"*.global.ssl.fastly.net"</span>, <span class="hljs-string">"*.w3.org"</span>]}));
+  <span class="hljs-comment">// /WebPlatform Specific ==============================</span>
+</code></pre>
+<h3>3. JavaScript client to handle automatic sign in</h3>
+<p>This section describes what the module actually does.</p>
+<ul>
+<li>Make sure it doesn’t try to do things if local web app already has a session</li>
+<li>Provide a way to tell whether it already has a session opened</li>
+<li>Make sure it works without any external library; to be deployed on all SSO relying parties</li>
+<li>Handle creation of iframe and the <code>postMessage()</code></li>
+<li>Handle reply from cross-frame request</li>
+<li>Cross-frame response, validate returned values has keys: <code>[hasSession, sessionToken]</code></li>
+<li>Make async call to local web application callback through POST</li>
+<li>If return response of local callback is successful, reload page</li>
+</ul>
+<p>It exposes two methods to the <code>window.sso</code> object:</p>
+<ul>
+<li><code>window.sso.init(hasSessionClosure, localCallbackEndpoint);</code> To initialize (see below)</li>
+<li><code>window.sso.doCheck()</code>, to bootstrap the process (should be done once the iframe is loaded).</li>
+</ul>
+<pre><code class="js">    <span class="hljs-built_in">window</span>.sso.init(
+      <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-comment">/*
+           Provide a closure that
+           will tell the JavaScript
+           handler whether the current
+           visitor has a session or
+           not.
+
+           MUST RETURN a bool
+
+           false === no session, please start the checks
+         */</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+      },
+      <span class="hljs-string">'/wiki/Special:AccountsHandler/callback'</span>
+    );
+</code></pre>
+<p>Once the iframe is loaded:</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.sso.doCheck();
+</code></pre>
+<p><strong>NOTE</strong>: If we had a session, the communication triggered at <code>window.sso.doCheck();</code>, would had provided us the required data to start automatically and resume at <a href="#Initialize_local_web_application_session">#Initialize local web application session</a>.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

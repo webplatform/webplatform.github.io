@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fills and strokes in SVG · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="This article shows how to add fills and strokes to the SVG shapes you have drawn." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/fills_and strokes in svg/">fills and strokes in svg</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Fills and strokes in SVG</h1>
+<h2>Summary</h2>
+<p>This article shows how to add fills and strokes to the SVG shapes you have drawn.</p>
+<p>So now with your knowledge of how to draw all sorts of shapes, your next goal is probably coloring them in. There are several ways to do this, including specifying attributes on the object, using inline CSS, using an embedded CSS section, or using an external CSS file. Most SVG you’ll find around the web uses inline CSS, but there are advantages and disadvantages for all the types.</p>
+<h2>Fill and Stroke Attributes</h2>
+<h3>Painting</h3>
+<p>It’s been a bit difficult to avoid putting some of this in your face up until now, but in case you haven’t noticed, most basic coloring can be done by setting two attributes on the node: <code>fill</code> and <code>stroke</code>. Fill sets the color inside the object and stroke sets the color of the line drawn around the object. You can use the same css color naming schemes that you use in HTML, whether that’s color names (that is <em>red</em>), rgb values (that is <em>rgb(255,0,0)</em>), hex values, rgba values, etc.</p>
+<pre><code> &lt;rect x=&quot;10&quot; y=&quot;10&quot; width=&quot;100&quot; height=&quot;100&quot; stroke=&quot;blue&quot; fill=&quot;purple&quot;
+       fill-opacity=&quot;0.5&quot; stroke-opacity=&quot;0.8&quot;/&gt;
+</code></pre>
+<p>In addition, you can specify the opacity of either the fill or stroke separately in SVG. These are controlled by the <code>fill-opacity</code> and <code>stroke-opacity</code> attributes.</p>
+<pre><code> Note, in Firefox 3+ rgba values are also allowed, and will give the same effect, but for compatibility with other viewers, its often best to specify the fill/stroke opacity separately. If you specify both an rgba value and a fill/stroke opacity value, both will be applied.
+</code></pre>
+<h3>Stroke</h3>
+<p>In addition to just its color properties, there are a few other attributes available to control the way a stroke is drawn on a line.</p>
+<p><img src="//static.webplatform.org/2/28/SVG_Stroke_Linecap_Example.png" alt="SVG Stroke Linecap Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;160&quot; height=&quot;140&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;line x1=&quot;40&quot; x2=&quot;120&quot; y1=&quot;20&quot; y2=&quot;20&quot; stroke=&quot;black&quot; stroke-width=&quot;20&quot; stroke-linecap=&quot;butt&quot;/&gt;
+  &lt;line x1=&quot;40&quot; x2=&quot;120&quot; y1=&quot;60&quot; y2=&quot;60&quot; stroke=&quot;black&quot; stroke-width=&quot;20&quot; stroke-linecap=&quot;square&quot;/&gt;
+  &lt;line x1=&quot;40&quot; x2=&quot;120&quot; y1=&quot;100&quot; y2=&quot;100&quot; stroke=&quot;black&quot; stroke-width=&quot;20&quot; stroke-linecap=&quot;round&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Before I discuss these, I just want to note that strokes are drawn so that they are centered around the path, that is, in the example above the path is shown in pink, and the stroke in black. The <code>stroke-width</code> property defines the width of this stroke. As you can see the stroke is distributed evenly on both sides of the path.</p>
+<p>The second of these is the <code>stroke-linecap</code> property, demoed above. This controls the shape shown at the end of lines. There are three possible values for it. <code>butt</code> closes the line off with a straight edge that’s normal (at 90 degrees to) the direction of the stroke and crosses its end. <code>square</code> has essentially the same appearance, but stretches the stroke slightly beyond the actual path. The distance that the stroke goes beyond the path is controlled by the <code>stroke-width</code> property. <code>round</code> produces a rounded effect on the end of the stroke, The radius of this curve is, again, controlled by the stroke width.</p>
+<p>There is also a property, <code>stroke-linejoin</code> to control how the line is drawn at the joint between two line segments.</p>
+<p><img src="//static.webplatform.org/a/ad/SVG_Stroke_Linejoin_Example.png" alt="SVG Stroke Linejoin Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;160&quot; height=&quot;280&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;polyline points=&quot;40 60 80 20 120 60&quot; stroke=&quot;black&quot; stroke-width=&quot;20&quot;
+      stroke-linecap=&quot;butt&quot; fill=&quot;none&quot; stroke-linejoin=&quot;miter&quot;/&gt;
+
+  &lt;polyline points=&quot;40 140 80 100 120 140&quot; stroke=&quot;black&quot; stroke-width=&quot;20&quot;
+      stroke-linecap=&quot;round&quot; fill=&quot;none&quot; stroke-linejoin=&quot;round&quot;/&gt;
+
+  &lt;polyline points=&quot;40 220 80 180 120 220&quot; stroke=&quot;black&quot; stroke-width=&quot;20&quot;
+      stroke-linecap=&quot;square&quot; fill=&quot;none&quot; stroke-linejoin=&quot;bevel&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Each of these polylines have two segments. The joint where the two meet is controlled by the <code>stroke-linejoin</code> attribute. There are three possible values for this attribute. <code>miter</code> will extend the line slightly beyond its normal width to create a square corner where only one angle is used. <code>round</code>, again draws a rounded line segment. <code>bevel</code> will create a new angle to aid in the transition between the two segments.</p>
+<p>Finally, you can also use dashed line types on a stroke, by specifying the <code>stroke-dasharray</code> attribute.</p>
+<p><img src="//static.webplatform.org/4/4a/SVG_Stroke_Dasharray_Example.png" alt="SVG Stroke Dasharray Example.png"></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;200&quot; height=&quot;150&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;path d=&quot;M 10 75 Q 50 10 100 75 T 190 75&quot; stroke=&quot;black&quot;
+    stroke-linecap=&quot;round&quot; stroke-dasharray=&quot;5,10,5&quot; fill=&quot;none&quot;/&gt;
+  &lt;path d=&quot;M 10 75 L 190 75&quot; stroke=&quot;red&quot;
+    stroke-linecap=&quot;round&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;5,5&quot; fill=&quot;none&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>The <code>stroke-dasharray</code> attribute takes as an argument a series of comma separated numbers. Note, unlike paths these numbers <em>must</em> be comma separated. You can insert whitespace, too, if you want, but the numbers must have commas in between them. Each of the numbers specifies a distance for first the filled area, and then for the unfilled area. So in the above example, the second path fills 5 pixel units, then leaves 5 blank, then fills 5 again. You can specify more numbers if you would like a more complicated dash pattern. The first example specifies three numbers, in which case the renderer loops the numbers twice to create an even pattern. So the first path renders 5 filled, 10 empty, 5 filled, and then loops back to create 5 empty, 10 filled, 5 empty. The pattern then loops again.</p>
+<p>There are a few additional stroke and fill properties available, including <code>fill-rule</code> which specifies how to color in shapes that overlap themselves, <code>stroke-miterlimit</code> which deals with a stroke should draw miters and when it shouldn’t, and <code>stroke-dashoffset</code> which specifies where to start a dasharray on a line.</p>
+<h2>Using CSS</h2>
+<p>In addition to setting attributes on objects, you can also use CSS to style fills and strokes on them. The syntax for this is the same as CSS used in normal HTML, except you’ll be setting values like <code>fill</code> and <code>stroke</code> instead of <code>background-color</code> or <code>border</code>. I should note that not all attributes can be set via CSS. Things that deal with painting and filling are usually available, so <code>fill</code>, <code>stroke</code>, <code>stroke-dasharray</code>, etc. can all be set this way, in addition to the gradient and pattern versions of those shown below. Things like <code>width</code>, <code>height</code>, or path commands, <code>d</code>, can’t be set through CSS. Its easiest just to test and find out what is available and what isn’t.</p>
+<p>The <a href="/w/index.php?title=SVG_specification&amp;action=edit&amp;redlink=1">SVG specification</a> decides strictly between attributes, that are <em>properties</em> and other attributes. The former can be modified with CSS, the latter not. CSS can be inserted inline with the element via the style attribute:</p>
+<pre><code>&lt;rect x=&quot;10&quot; height=&quot;180&quot; y=&quot;10&quot; width=&quot;180&quot; style=&quot;stroke: black; fill: red;&quot;/&gt;
+</code></pre>
+<p>or can be moved to a special style section that you include. Instead of shoving such a section into a <code>&lt;head&gt;</code> like you do in HTML though, its included in an area called [[&lt;defs&gt;]]. <code>&lt;defs&gt;</code> stands for definitions, and its here where you can create elements that don’t appear in the SVG directly, but are used by other elements.</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;200&quot; height=&quot;200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;style type=&quot;text/css&quot;&gt;&lt;![CDATA[
+       #MyRect {
+         stroke: black;
+         fill: red;
+       }
+    ]]&gt;&lt;/style&gt;
+  &lt;/defs&gt;
+  &lt;rect x=&quot;10&quot; height=&quot;180&quot; y=&quot;10&quot; width=&quot;180&quot; id=&quot;MyRect&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Moving styles to an area like this can make it easier to adjust properties on large groups of elements. You can also use things like the <strong>hover pseudo classes</strong> to create rollover effects:</p>
+<pre><code>#MyRect:hover {
+   stroke: black;
+   fill: blue;
+}
+</code></pre>
+<p>The list could go on and on, but you’re better off reading a CSS tutorial to learn about it. Some things that work in normal HTML won’t work, like the <code>before</code> and <code>after</code> pseudo classes, so a bit of experimentation is needed to sort everything out.</p>
+<p>You can also specify an external style sheet for your CSS rules through <a href="/w/index.php?title=normal_XML-stylesheet_syntax&amp;action=edit&amp;redlink=1">normal XML-stylesheet syntax</a>:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;style.css&quot;?&gt;
+
+&lt;svg width=&quot;200&quot; height=&quot;150&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;rect height=&quot;10&quot; width=&quot;10&quot; id=&quot;MyRect&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>where style.css looks something like:</p>
+<pre><code>#MyRect {
+  fill: red;
+  stroke: black;
+}
+</code></pre>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/Fills_and_Strokes">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

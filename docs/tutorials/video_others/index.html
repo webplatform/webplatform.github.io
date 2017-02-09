@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Video and Other Recommendations · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Overview about HTML5 Video interaction with other web standards and technologies" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/video_others/">video others</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML5 Video and Other Recommendations</h1>
+<p><strong>By <a href="http://carlos.rivendellweb.net/">Carlos Araya</a></strong><br>
+Originally published April 4, 2013</p>
+<h2>Summary</h2>
+<p>Overview about HTML5 Video interaction with other web standards and technologies</p>
+<h2>The Fun Part</h2>
+<p>The main advantage of the video tag being a member of the HTML5 family is its integration with the other layers of web development stack. In the following examples we’ll give you an overview of what’s possible to do with it.</p>
+<h3>Video + other HTML</h3>
+<p>All the common HTML attributes can now be used in the video player. For instance, in the following snippet we are using <code>tabindex</code> to make the player keyboard accessible. There are new attributes that can be used in the video tag that are also common to the audio tag such as <code>loop</code> and <code>autoplay</code>, both self-explanatory. The attribute <code>poster</code> indicates what image will be shown while the video is initially loading and, finally, <code>controls</code> is used to indicate that instead of building our custom controls we want the browser to render ones automatically for us. There’s also a <code>preload</code> attribute we can use to download the video in the background as soon as the page loads, even if it hasn’t started playing.</p>
+<pre><code> &lt;video poster=&quot;star.png&quot; autoplay loop controls tabindex=&quot;0&quot;&gt;
+   &lt;source src=&quot;movie.webm&quot; type=&quot;video/webm&quot;; codecs=&quot;vp8, vorbis&quot; /&gt;
+   &lt;source src=&quot;movie.ogv&quot; type=&quot;video/ogg&quot;; codecs=&quot;theora, vorbis&quot; /&gt;
+ &lt;/video&gt;
+</code></pre>
+<p>The full level of integration of the video tag as a native browser element avoids some issues you might have had in the past with third-party embedded players such as dropdown menus and iframes overlaying on the player or weird layout behavior when the other HTML elements surrounding the video were dynamically resized.</p>
+<p>Because the video is not treated as an embedded foreign object, there are some other benefits that affect the user experience. For instance, even if the focus is on the player itself, actions like page scrolling or keystrokes will be completely functional.</p>
+<p><em>Note:</em> If you are trying to write <a href="http://dev.w3.org/html5/html-author/#polyglot-documents">polyglot documents</a> to keep the XHTML syntax in the context of HTML5, then the attributes in your code should look like this:</p>
+<pre><code> &lt;video poster=&quot;star.png&quot; autoplay=&quot;autoplay&quot; loop=&quot;loop&quot; controls=&quot;controls&quot; tabindex=&quot;0&quot;'&gt;
+   &lt;source src=&quot;movie.webm&quot; type=&quot;video/webm&quot;; codecs=&quot;vp8, vorbis&quot; /&gt;
+   &lt;source src=&quot;movie.ogv&quot; type=&quot;video/ogg&quot;; codecs=&quot;theora, vorbis&quot; /&gt;
+ &lt;/video&gt;
+</code></pre>
+<h3>Video + JS</h3>
+<p>The video tag comes with a set of attributes and methods that give you fine control of your video from your JS code. You can see them in real time in <a href="http://www.w3.org/2010/05/video/mediaevents.html">this example</a>.</p>
+<p>As with any other HTML element, you can attach common events to the video tag such as drag events, mouse events, focus events, etc. But the video element comes with a bunch of new events to detect (and control) when the video is playing, paused, or finished. Because loading a video resource can have many caveats, there are equally as many events to allow control of the loading process, both at network level (<code>loadstart, progress, suspend, abort, error, emptied, stalled</code>) and at buffering level (<code>loadedmetadata, loadeddata, waiting, playing, canplay, canplaythrough</code>).</p>
+<p>At its simplest level, you can attach the <code>canplay</code> event to start doing stuff with the video.</p>
+<pre><code> video.addEventListener('canplay', function(e) {
+   this.volume = 0.4;
+   this.currentTime = 10;
+   this.play();
+ }, false);
+</code></pre>
+<p>There are several custom player controls available on the internet right now. In <a href="http://www.html5rocks.com/en/tutorials/video/basics/">this HTML5Rocks! article</a> you can see an example that uses some elements to control two videos simultaneously and also to emulate the fast forward effect with the <code>playbackRate</code> attribute. Use the slider to toggle the volume between the videos.</p>
+<h3>Video + CSS</h3>
+<p>As you may have guessed, the video tag can be styled using traditional CSS properties (e.g., border, opacity, etc.) because it is a first-class citizen in the DOM. But the cool thing is that you can also style it with the latest CSS3 properties like reflections, masks, gradients, transforms, transitions, and animations.</p>
+<p>In <a href="http://www.html5rocks.com/en/tutorials/video/basics/">this HTML5Rocks! article</a> you can see an example. Hover over the video to see some of these properties in action. The CSS for this example is shown below.</p>
+<pre><code> #video-css.enhanced {
+   border: 1px solid white;
+   -moz-box-shadow: 0px 0px 4px #ffffff; /* FF3.5+ */
+   -webkit-box-shadow: 5px 44px 28px #333; /* Saf3.0+, Chrome */
+   box-shadow: 0px 0px 4px #ffffff; /* Opera 10.5, IE 9.0 */
+
+   -moz-transform: translate(0, 10px);  /* FF3.5+ */
+   -o-transform: translate(0, 10px);  /* Opera 10.5 */
+   -webkit-transform: translate(0, 10px);  /* Saf3.1+, Chrome */
+ }
+</code></pre>
+<h3>Video + canvas</h3>
+<p>Canvas is yet another HTML5 element with many possibilities when used in conjunction with the video tag.</p>
+<p>In the next example in <a href="http://www.html5rocks.com/en/tutorials/video/basics/">the same HTML5Rocks! article</a> we are taking advantage of two features of the &lt;canvas&gt; element to import and export images. The first one is the <code>drawImage&lt;code&gt; method which lets you import images from three different sources: an image element, another canvas element, and a &lt;code&gt;&lt;video&gt;</code> element! This means that every time we run this method, the current frame in the video will be imported and rendered onto the canvas.</p>
+<p>The second feature of the <code>&lt;canvas&gt;</code> tag we are using is the <code>toDataURL</code> method which lets you export the content of the canvas to an image. Click play in the video to see how an image is created from the video every 1.5 seconds. The canvas we use to import/export is actually <code>hidden</code>.</p>
+<p>You can see in the following code how we are simply creating an interval that runs every 1.5 seconds with the drawImage method which takes the video element as the source.</p>
+<pre><code> video_dom.addEventListener('play', function() {
+   video_dom.width = canvas_draw.width = video_dom.offsetWidth;
+   video_dom.height = canvas_draw.height = video_dom.offsetHeight;
+   var ctx_draw = canvas_draw.getContext('2d');
+   draw_interval = setInterval(function() {
+     // import the image from the video
+     ctx_draw.drawImage(video_dom, 0, 0, video_dom.width, video_dom.height);
+     // export the image from the canvas
+     var img = new Image();
+     img.src = canvas_draw.toDataURL('image/png');
+     img.width = 40;
+     frames.appendChild(img);
+   }, 1500)
+ }, false);
+</code></pre>
+<p>In the next example, available in <a href="http://www.html5rocks.com/en/tutorials/video/basics/">the same article</a> we are going another step further. If you increase the frequency at which you import and render the image from the video you can really emulate the same video frame rate in the canvas. This lets you do all sorts of fancy transforms in the canvas as if you were doing it in the video.</p>
+<p>On the left side you can see the original video playing. In the middle there’s a canvas we are using to import the images every 33 milliseconds. On the right side there’s a second canvas which will “suffer” all the transforms at the same time as it imports the images from the first canvas. The only reason we are using two canvases is because the performance is much better than using a single one which imports the images and transforms at the same time.</p>
+<p>The same technique of importing images can be also applied to <a href="https://cvs.khronos.org/svn/repos/registry/trunk/public/webgl/doc/spec/WebGL-spec.html">WebGL</a>. With WebGL you would be able, for instance, to import the frames of a video and render them on a spinning 3D cube. There are more details about such implementation on the <a href="https://developer.mozilla.org/en/WebGL/Animating_textures_in_WebGL">MDC website</a>.</p>
+<h3>Video + SVG</h3>
+<p>SVG provides a programmatic way to render and manipulate vector graphics, but it also comes with more features such as <a href="http://en.wikipedia.org/wiki/SVG_filter_effects">SVG filter effects</a>. With these filters you can target a specific DOM element and apply some out-of-the-box effects such as blur, composite, tiles, etc. In the following sample we are using JavaScript and canvas to make it also work for browsers which don’t support inline SVG yet:</p>
+<pre><code> &lt;svg id='image' version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+   &lt;defs&gt;
+     &lt;filter id=&quot;myblur&quot;&gt;
+       &lt;feGaussianBlur stdDeviation=&quot;1&quot; /&gt;
+     &lt;/filter&gt;
+   &lt;/defs&gt;
+ &lt;/svg&gt;
+ &lt;style&gt;
+   video { filter:url(#myblur); border: 2px solid red; }
+ &lt;/style&gt;
+</code></pre>
+<p>One more example can be found in <a href="http://www.html5rocks.com/en/tutorials/video/basics/">the HTML5Rocks! article</a>. Click the video to toggle the blur filter.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Video</h4>
+<ul>
+<li><p><a href="/docs/apis/audio-video">audio-video</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/enabled">enabled</a></p></li>
+<li><p><a href="/docs/apis/audio-video/AudioTrack/language">language</a></p></li>
+<li><p><a href="/docs/concepts/Internet_and_Web/webrtc">WebRTC</a></p></li>
+<li><p><a href="/docs/css/properties/object-fit">object-fit</a></p></li>
+<li><p><a href="/docs/html/elements/embed">EMBED</a></p></li>
+<li><p><a href="/docs/html/elements/video">video</a></p></li>
+<li><p><a href="/docs/tutorials/MSEPrimer">MSEPrimer</a></p></li>
+<li><p><strong>HTML5 Video and Other Recommendations</strong></p></li>
+<li><p><a href="/docs/tutorials/webrtc_resources">WebRTC Resources</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

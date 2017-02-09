@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>continue · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Stops the current iteration of a loop, and starts a new iteration." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/statements/">statements</a></li><li><a href="/docs/javascript/statements/continue/">continue</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>continue</h1>
+<h2>Summary</h2>
+<p>Stops the current iteration of a loop, and starts a new iteration.</p>
+<h2>Syntax</h2>
+<pre><code>continue [ label ];
+</code></pre>
+<h2>Examples</h2>
+<p>In this example, a loop iterates from 1 through 9. The statements between continue and the end of the for body are skipped because of the use of the continue statement together with the expression <code>(i &lt; 5)</code>.</p>
+<pre><code class="js"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+     <span class="hljs-keyword">if</span> (i &lt; <span class="hljs-number">5</span>) {
+         <span class="hljs-keyword">continue</span>;
+     }
+     <span class="hljs-built_in">document</span>.write (i);
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">" "</span>);
+ }
+
+ <span class="hljs-comment">// Output: 5 6 7 8 9</span>
+</code></pre>
+<p>In the following code, the continue statement refers to the for loop that is preceded by the <code>Inner:</code> label. When <code>j</code> is 24, the continue statement causes that for loop to go to the next iteration. The numbers 21 through 23 and 25 through 30 print on each line.</p>
+<pre><code class="js">Outer:
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">10</span>; i++) {
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"&lt;br /&gt;"</span>);
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"i: "</span> + i);
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">" j: "</span>);
+
+ Inner:
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j = <span class="hljs-number">21</span>; j &lt;= <span class="hljs-number">30</span>; j++) {
+         <span class="hljs-keyword">if</span> (j == <span class="hljs-number">24</span>) {
+              <span class="hljs-keyword">continue</span> Inner;
+         }
+         <span class="hljs-built_in">document</span>.write (j + <span class="hljs-string">" "</span>);
+     }
+ }
+
+ <span class="hljs-comment">//Output:</span>
+ <span class="hljs-comment">//i: 1 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 2 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 3 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 4 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 5 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 6 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 7 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 8 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 9 j: 21 22 23 25 26 27 28 29 30</span>
+ <span class="hljs-comment">//i: 10 j: 21 22 23 25 26 27 28 29 30</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The optional label argument specifies the statement to which continue applies.</p>
+<p>You can use the continue statement only inside a while , do…while , <strong>for</strong> , or for…in loop. Executing the continue statement stops the current iteration of the loop and continues program flow with the beginning of the loop. This has the following effects on the different types of loops:</p>
+<ul>
+<li>while and do…while loops test their condition, and if true, execute the loop again.</li>
+<li>for loops execute their increment expression, and if the test expression is true, execute the loop again.</li>
+<li>for…in loops proceed to the next field of the specified variable and execute the loop again.</li>
+</ul>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/statements/break">break Statement</a></li>
+<li><a href="/docs/javascript/statements/do_while">do…while Statement</a></li>
+<li><a href="/docs/javascript/statements/for">for Statement</a></li>
+<li><a href="/docs/javascript/statements/for_in">for…in Statement</a></li>
+<li><a href="/docs/javascript/statements/Labeled">Labeled Statement</a></li>
+<li><a href="/docs/javascript/statements/while">while Statement</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/8de3fkc8(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

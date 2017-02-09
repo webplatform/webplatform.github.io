@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG filters · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This guide shows you how to build SVG image processing filters to create interesting visual effects. It shows how to apply these effects within an SVG graphic, and how to apply them to HTML content using the filter CSS property." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/tutorials/">tutorials</a></li><li><a href="/svg/tutorials/smarter_svg filters/">smarter svg filters</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG filters</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>This guide shows you how to build SVG image processing filters to create interesting visual effects. It shows how to apply these effects within an SVG graphic, and how to apply them to HTML content using the filter CSS property.</p>
+<p>The power of SVG filters is matched by the depth and complexity of available options. It takes a good deal of practice to master the many filter effects and understand how to combine them. This guide covers a wide range of examples. It starts by showing how to modify color values in ways that often correspond to built-in CSS filter functions. Then it shows you how to split and merge independent channels to take advantage of some of SVG’s more unusual filter effects. Finally, it shows you how to apply three-dimensional lighting effects.</p>
+<h2>What are filters?</h2>
+<p>A filter is a little machine that takes graphic input, changes it in some way, and causes the output to render differently. Filters comprise <em>filter effect</em> elements, some of which do intuitively obvious things (such as blur the graphic), and some of which only make sense when combined with other effects. Filter effects are often chained together so that one effect’s output becomes another effect’s input. Filter effects may also operate on different inputs that are modified independently of each other, then combined.</p>
+<p>The idea of applying filters to web content originated in SVG, but it has recently been extended to CSS, so it helps to clarify what <em>filter</em> means in that context. CSS filters currently come in two flavors:</p>
+<ul>
+<li><p>Built-in <em>filter functions</em> provide a series of fairly standard pre-built image processing effects, such as the <a href="/docs/css/functions/blur"><strong>blur()</strong></a> and <a href="/docs/css/functions/grayscale"><strong>grayscale()</strong></a> functions specified by the <a href="/docs/css/properties/filter"><strong>filter</strong></a> property. These CSS functions can be chained together to form larger effects. (Each is actually implemented as an SVG filter.) See <a href="/w/index.php?title=tutorials/css_filters()&amp;action=edit&amp;redlink=1">Understanding CSS filter effects</a> for a guide to these CSS functions.</p></li>
+<li><p>In addition to standard two-dimensional image processing features, CSS <em>custom filters</em> allow you to warp the surface of an element in three dimensions using <a href="/docs/webgl">WebGL</a>. Custom CSS filters are also known as <em>shaders</em>, either <em>vertex</em> shaders that warp a surface, or <em>fragment</em> shaders that modify the pixels that cover the resulting surface.</p></li>
+</ul>
+<p>This guide does not discuss these more recent CSS custom filters, but does show you how to customize your own SVG filters for use in HTML.</p>
+<h2>Applying a simple filter (feGaussianBlur)</h2>
+<p>Start by placing some text within an SVG graphic:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"blurred"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"30"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"100"</span>&gt;</span>An SVG Filter<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/8/89/svgf_none.png" alt="svgf none.png"></p>
+<p>Place a <a href="/docs/svg/elements/filter"><strong>filter</strong></a> element within the SVG’s <a href="/docs/svg/elements/defs"><strong>defs</strong></a> region. Filters contain series of filter effect elements, all prefixed <em>fe</em>. In this example, a <a href="/svg/elements/feGaussianBlur"><strong>feGaussianBlur</strong></a> element produces a blurring effect, which matches the effect of the <a href="/docs/css/functions/blur"><strong>blur()</strong></a> CSS filter function:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_blur"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"10"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>To apply the filter, reference it with the <a href="/docs/svg/properties/filter"><strong>filter</strong></a> property, expressed either as an attribute or via CSS:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span>
+  <span class="hljs-attribute">class</span>  = "<span class="hljs-attribute">blurred</span>"
+  <span class="hljs-attribute">filter</span> = "<span class="hljs-attribute">url</span>(#<span class="hljs-attribute">css_blur</span>)"
+  <span class="hljs-attribute">x</span>      = "<span class="hljs-attribute">30</span>"
+  <span class="hljs-attribute">y</span>      = "<span class="hljs-attribute">100</span>"
+&gt;</span>An SVG Filter<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<pre><code class="css"><span class="hljs-class">.blurred</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">filter      </span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-hexcolor">#c</span>ss_blur)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-family </span>:<span class="hljs-value"> sans-serif</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size   </span>:<span class="hljs-value"> <span class="hljs-number">70px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">fill        </span>:<span class="hljs-value"> red</span></span>;
+}</span>
+</code></pre>
+<p><img src="//static.webplatform.org/2/23/svgf_blurBoth.png" alt="svgf blurBoth.png"></p>
+<p>The effect takes each pixel and moves it around randomly from its original location within a radius specified by the <strong>stdDeviation</strong> value. Unlike the built-in CSS function, in SVG you can specify separate <em>x</em> and <em>y</em> values to produce a sideways motion effect that in this case is a bit more legible:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"sideways_blur"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"10 1"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/a/a9/svgf_blur.png" alt="svgf blur.png"></p>
+<h3>Applying SVG filters to HTML</h3>
+<p>If you want to apply this customized SVG filter to HTML content, place it in an SVG file and use the corresponding <a href="/docs/css/properties/filter"><strong>filter</strong></a> CSS property to reference it using the same <a href="/docs/css/functions/url"><strong>url()</strong></a> function:</p>
+<pre><code class="css"><span class="hljs-class">.sidewaysBlur</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter </span>:<span class="hljs-value"> <span class="hljs-function">url</span>(filters.svg#sideways_blur)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">filter         </span>:<span class="hljs-value"> <span class="hljs-function">url</span>(filters.svg#sideways_blur)</span></span>; <span class="hljs-comment">/* standard in Mozilla */</span>
+}</span>
+</code></pre>
+<p>As of this writing, not all browsers allow you to apply SVG filters to HTML content. Mozilla Firefox fully supports the feature, even allowing filtered elements <a href="/docs/svg/tutorials/smarter_svg_animation">to animate</a>. WebKit Safari’s support is limited to filters that use the blur described above, and basic image processing effects described in the first half of this guide: <strong>feComponentTransfer</strong>, <strong>feColorMatrix</strong>, and <strong>feConvolveMatrix</strong>.</p>
+<h2>Modifying colors with feComponentTransfer</h2>
+<p>The <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransfer</strong></a> element allows you to modify each RGBA <em>component</em> represented in each pixel. Within the element, nest any combination of <a href="/docs/svg/elements/feFuncR"><strong>feFuncR</strong></a>, <a href="/svg/elements/feFuncG"><strong>feFuncG</strong></a>, <a href="/svg/elements/feFuncB"><strong>feFuncB</strong></a>, and <a href="/svg/elements/feFuncA"><strong>feFuncA</strong></a> elements to run different types of function over each pixel component value.</p>
+<p>Setting the <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> of function to <strong>identity</strong> is equivalent to leaving out the function element altogether, keeping the image on the left unchanged. Setting it to <strong>discrete</strong> allows you to posterize an image, clustering gradual color shifts into solid bands based on the step values specified in <a href="/w/index.php?title=svg/attributes/tableValues&amp;action=edit&amp;redlink=1"><strong>tableValues</strong></a>:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"no_op"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"identity"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"identity"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncB</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"identity"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncA</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"identity"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/7/7e/svgf_CTnoop.png/400px-svgf_CTnoop.png" alt="svgf CTnoop.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"posterize"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"discrete"</span>
+        <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"0 0.2 0.4 0.6 0.8 1"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"discrete"</span>
+        <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"0 0.2 0.4 0.6 0.8 1"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feFuncB</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"discrete"</span>
+        <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"0 0.2 0.4 0.6 0.8 1"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/2/28/svgf_CTband.png/400px-svgf_CTband.png" alt="svgf CTband.png"></p>
+<p>Setting the <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> to <strong>linear</strong> multiplies the <a href="/w/index.php?title=svg/attributes/slope&amp;action=edit&amp;redlink=1"><strong>slope</strong></a> value (relative to the default <strong>1</strong>), then adds an <a href="/w/index.php?title=svg/attributes/intercept&amp;action=edit&amp;redlink=1"><strong>intercept</strong></a> value if present. The first example below reproduces the effect of the CSS <a href="/docs/css/functions/brightness"><strong>brightness()</strong></a> function, flattening the slope to darken the image. The second increases the slope to brighten the image, but then drops all values by a fixed amount, zeroing out many of them:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_brightness"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"0.5"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"0.5"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncB</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"0.5"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/8/88/svgf_CTlinear.png/400px-svgf_CTlinear.png" alt="svgf CTlinear.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"brightness_threshold"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"1.5"</span> <span class="hljs-attribute">intercept</span>=<span class="hljs-value">"-0.3"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"1.5"</span> <span class="hljs-attribute">intercept</span>=<span class="hljs-value">"-0.3"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncB</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"1.5"</span> <span class="hljs-attribute">intercept</span>=<span class="hljs-value">"-0.3"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/4/4e/svgf_CTlinearIntercept.png/400px-svgf_CTlinearIntercept.png" alt="svgf CTlinearIntercept.png"></p>
+<p>Setting the <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> to <strong>table</strong> lets you specify your own linear slope based on two <a href="/w/index.php?title=svg/attributes/tableValues&amp;action=edit&amp;redlink=1"><strong>tableValues</strong></a>. The first example behaves like the CSS <a href="/docs/css/functions/opacity"><strong>opacity()</strong></a> function. The second, specifying a negative slope from 1 to 0, behaves like the CSS <a href="/docs/css/functions/invert"><strong>invert()</strong></a> function:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_opacity"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feFuncA</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"0 0.5"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/b/bd/svgf_CTopacity.png/400px-svgf_CTopacity.png" alt="svgf CTopacity.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_invert"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"1 0"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"1 0"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFuncB</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"1 0"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/d1/svgf_CTinvert.png/400px-svgf_CTinvert.png" alt="svgf CTinvert.png"></p>
+<p>Setting the <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> to <strong>gamma</strong> allows you to perform <em>gamma correction</em>, a useful way to increase dark values. The function applies the following formula to produce a curve: ((<em>amplitude</em> × <em>value</em><sup><em>exponent</em></sup>) + <em>offset</em>). The first example heightens the darker greens, and the second uses <a href="/w/index.php?title=svg/attributes/offset&amp;action=edit&amp;redlink=1"><strong>offset</strong></a> to reduce the overall green level (the same way that <a href="/w/index.php?title=svg/attributes/intercept&amp;action=edit&amp;redlink=1"><strong>intercept</strong></a> does for the <strong>linear</strong> type):</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"gamma_correct"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"gamma"</span> <span class="hljs-attribute">amplitude</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">exponent</span>=<span class="hljs-value">"0.5"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/4/44/svgf_CTgammaOffset0.png/400px-svgf_CTgammaOffset0.png" alt="svgf CTgammaOffset0.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"gamma_correct2"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"gamma"</span> <span class="hljs-attribute">amplitude</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">exponent</span>=<span class="hljs-value">"0.5"</span>
+          <span class="hljs-attribute">offset</span>=<span class="hljs-value">"-0.1"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/0/04/svgf_CTgamma.png/400px-svgf_CTgamma.png" alt="svgf CTgamma.png"></p>
+<h2>Transforming colors with feColorMatrix</h2>
+<p>The <a href="/docs/svg/elements/feColorMatrix"><strong>feColorMatrix</strong></a> element provides other useful ways to modify an image’s color. With its <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> set to <strong>saturate</strong>, reducing the <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a> from 1 produces a grayscale, while increasing it makes the image more vivid, just like the <a href="/docs/css/functions/grayscale"><strong>grayscale()</strong></a> and <a href="/docs/css/functions/saturate"><strong>saturate()</strong></a> CSS functions:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_grayscale"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"saturate"</span> <span class="hljs-attribute">values</span>=<span class="hljs-value">"0"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/8/80/svgf_CMXsaturate0.png/400px-svgf_CMXsaturate0.png" alt="svgf CMXsaturate0.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_saturate"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"saturate"</span> <span class="hljs-attribute">values</span>=<span class="hljs-value">"10"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/8/8b/svgf_CMXsaturate10.png/400px-svgf_CMXsaturate10.png" alt="svgf CMXsaturate10.png"></p>
+<p>Setting the <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> to <strong>hueRotate</strong> alters the angle along the color wheel, just like the <a href="/docs/css/functions/hue-rotate"><strong>hue-rotate()</strong></a> CSS function. Setting <strong>luminanceToAlpha</strong> (no <strong>values</strong> necessary) produces an alpha channel from bright pixels, useful to produce image masks as described below.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_hue_rotate"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"hueRotate"</span> <span class="hljs-attribute">values</span>=<span class="hljs-value">"180"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/6/6d/svgf_CMXhurRotate180.png/400px-svgf_CMXhurRotate180.png" alt="svgf CMXhurRotate180.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"luminance_mask"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"luminanceToAlpha"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/c/ca/svgf_CMXluminanceToAlpha.png/400px-svgf_CMXluminanceToAlpha.png" alt="svgf CMXluminanceToAlpha.png"></p>
+<p>As the name of the <a href="/docs/svg/elements/feColorMatrix"><strong>feColorMatrix</strong></a> suggests, setting the <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> to <strong>matrix</strong> allows you to transform colors yourself. It specifies a 20-element transform whose rows correspond to red, green, blue, and alpha channels. This initial transform leaves the image unchanged:</p>
+<pre><code>1 0 0 0 0
+0 1 0 0 0
+0 0 1 0 0
+0 0 0 1 0
+</code></pre>
+<p>The first example below reproduces the effect of the CSS <a href="/docs/css/functions/sepia"><strong>sepia()</strong></a> function, while the second simply reduces green and blue tones. (In these examples, the <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a> appear stacked into a table only in the interest of clarity.)</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_sepia"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span>
+    <span class="hljs-attribute">type</span>=<span class="hljs-value">"matrix"</span>
+    <span class="hljs-attribute">values</span>=<span class="hljs-value">".343 .669 .119 0 0
+            .249 .626 .130 0 0
+            .172 .334 .111 0 0
+            .000 .000 .000 1 0 "</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/0/02/svgf_CMXsepia.png/400px-svgf_CMXsepia.png" alt="svgf CMXsepia.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"dusk"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span>
+    <span class="hljs-attribute">type</span>=<span class="hljs-value">"matrix"</span>
+    <span class="hljs-attribute">values</span>=<span class="hljs-value">"1.0 0   0   0   0
+            0   0.2 0   0   0
+            0   0   0.2 0   0
+            0   0   0   1.0 0 "</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/7/76/svgf_CMXsunset.png/400px-svgf_CMXsunset.png" alt="svgf CMXsunset.png"></p>
+<h2>Sharpening images with feConvolveMatrix</h2>
+<p>The <a href="/docs/svg/elements/feConvolveMatrix"><strong>feConvolveMatrix</strong></a> effect allows you to modify pixels based on the values of their neighbors, useful in sharpening details. In its simplest form, the <a href="/w/index.php?title=svg/attributes/order&amp;action=edit&amp;redlink=1"><strong>order</strong></a> attribute declares a 3×3 box, which defines a matrix of 9 table values that must be reflected in the <a href="/w/index.php?title=svg/attributes/kernelMatrix&amp;action=edit&amp;redlink=1"><strong>kernelMatrix</strong></a> attribute:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"no_op"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feConvolveMatrix</span> <span class="hljs-attribute">order</span>=<span class="hljs-value">"3"</span> <span class="hljs-attribute">kernelMatrix</span>=<span class="hljs-value">"0 0 0 0 1 0 0 0 0"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>The middle value is the pixel to modify, and the others form a map of its immediate neighbors:</p>
+<pre><code>0 0 0
+0 1 0
+0 0 0
+</code></pre>
+<p>The relative weight of the neighbors helps calculate the pixel’s new value. (In this case it’s 0 times each adjacent pixel’s value, summed together along with 1 times the value of the pixel, divided by the sum of all the pixel values.) This initial example has no effect on the image.</p>
+<p>The original image shown on the left is slightly blurred. Applying a sharpen filter nudges pixels for the higher-contrast edges shown at the right:</p>
+<pre><code> 1  -1  1
+-1  -1 -1
+ 1  -1  1
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/9/9c/svgf_CVnoop.png/400px-svgf_CVnoop.png" alt="svgf CVnoop.png"></p>
+<p><img src="//static.webplatform.org/thumb/3/34/svgf_CVsharpen.png/400px-svgf_CVsharpen.png" alt="svgf CVsharpen.png"></p>
+<p>Getting convolve filters to behave predictably takes a bit of practice. The example on the left below sharpens the detail more dramatically, while the one on the right embosses it diagonally:</p>
+<pre><code> 1  -1    1
+-1  -0.1 -1
+ 1  -1    1
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/9/97/svgf_CVsuperSharp.png/400px-svgf_CVsuperSharp.png" alt="svgf CVsuperSharp.png"></p>
+<pre><code>9  0  0
+0  1  0
+0  0 -9
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/4/43/svgf_CVemboss.png/400px-svgf_CVemboss.png" alt="svgf CVemboss.png"></p>
+<p>Convolution filters can also highlight moats around high-contrast edges. The more dramatic texture shown below on the right forms moats throughout the image. It requires an <a href="/w/index.php?title=svg/attributes/order&amp;action=edit&amp;redlink=1"><strong>order</strong></a> of 5, which extends the range of the calculation to each adjacent neighbor’s farthest neighbor.</p>
+<pre><code>-1 -1 -1
+-1  7 -1
+-1 -1 -1
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/7/78/svgf_CVedge.png/400px-svgf_CVedge.png" alt="svgf CVedge.png"></p>
+<pre><code>1   1   1   1  1
+1  -2  -2  -2  1
+1  -2  .01 -2  1
+1  -2  -2  -2  1
+1   1   1   1  1
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/d5/svgf_CVsuperEdge.png/400px-svgf_CVsuperEdge.png" alt="svgf CVsuperEdge.png"></p>
+<p>As shown below, the example on the right is also converted to a grayscale using the <strong>luminanceToAlpha</strong> <a href="/docs/svg/elements/feColorMatrix"><strong>feColorMatrix</strong></a> effect described above, and the effect-chaining technique described in the following section.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"extremeEffect"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feConvolveMatrix</span> <span class="hljs-attribute">order</span>=<span class="hljs-value">"5"</span> <span class="hljs-attribute">kernelMatrix</span>=<span class="hljs-value">"1 1 1 1 1 1 -2 -2 -2 1 1  -2 .01 -2 1 1 -2 -2 -2 1 1 1 1 1 1"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"luminanceToAlpha"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<h2>Chaining, splitting and merging effects: building a drop shadow with feOffset, feFlood, and feMerge</h2>
+<p>Much of the power of SVG filters comes from their ability to accept various graphic inputs, modify them independently of each other, then recombine them. This example reproduces the effect produced by the CSS <a href="/docs/css/functions/drop-shadow"><strong>drop-shadow()</strong></a> function. Stepping through each line and seeing the results as you go helps you to build far more interesting filters:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"css_drop_shadow"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"2"</span>  <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceAlpha"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feOffset</span> <span class="hljs-attribute">dx</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">dy</span>=<span class="hljs-value">"6"</span>           <span class="hljs-attribute">result</span>=<span class="hljs-value">"offsetblur"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feFlood</span> <span class="hljs-attribute">flood-color</span>=<span class="hljs-value">"#777"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"in"</span>        <span class="hljs-attribute">in2</span>=<span class="hljs-value">"offsetblur"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span>                    <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>First we start with an image transparency:</p>
+<p><img src="//static.webplatform.org/thumb/3/30/svgf_dropNoop.png/192px-svgf_dropNoop.png" alt="svgf dropNoop.png"></p>
+<p>We’ve already seen the <a href="/docs/svg/elements/feGaussianBlur"><strong>feGaussianBlur</strong></a> effect in action, but in this case it behaves differently. The optional <a href="/w/index.php?title=svg/attributes/in&amp;action=edit&amp;redlink=1"><strong>in</strong></a> specifies the <strong>SourceAlpha</strong>, or all of its non-transparent pixels. The result of that effect, which is colored black, is passed to the next <a href="/docs/svg/elements/feOffset"><strong>feOffset</strong></a> effect, which simply moves it down and over:</p>
+<p><img src="//static.webplatform.org/thumb/0/0c/svgf_dropOffsetBlur.png/192px-svgf_dropOffsetBlur.png" alt="svgf dropOffsetBlur.png"></p>
+<p>The <a href="/docs/svg/elements/feFlood"><strong>feFlood</strong></a> effect simply produces a color, specified by its <a href="/w/index.php?title=svg/properties/flood-color&amp;action=edit&amp;redlink=1"><strong>flood-color</strong></a> property. The effect is independent of the graphic we’ve produced so far, and doesn’t take any input from the offset effect, so it renders within the filter’s entire region:</p>
+<p><img src="//static.webplatform.org/thumb/6/60/svgf_dropFlood.png/192px-svgf_dropFlood.png" alt="svgf dropFlood.png"></p>
+<p>By default, the <a href="/w/index.php?title=svg/attributes/result&amp;action=edit&amp;redlink=1"><strong>result</strong></a> of the flood becomes the next effect’s <a href="/w/index.php?title=svg/attributes/in&amp;action=edit&amp;redlink=1"><strong>in</strong></a> value, so neither of these attributes needs to be explicitly declared here. The <a href="/docs/svg/elements/feComposite"><strong>feComposite</strong></a> effect applies the <strong>in</strong> composite operation on the portion of the gray fill that falls within the dropped shadow:</p>
+<p><img src="//static.webplatform.org/thumb/5/59/svgf_dropComposite.png/192px-svgf_dropComposite.png" alt="svgf dropComposite.png"></p>
+<p>Finally, the <a href="/docs/svg/elements/feMerge"><strong>feMerge</strong></a> effect combines the modified version of the graphic with the original. The first <a href="/docs/svg/elements/feMergeNode"><strong>feMergeNode</strong></a> accepts the composite result by default, and the second specifies the <strong>SourceGraphic</strong>, which renders over it for the final effect:</p>
+<p><img src="//static.webplatform.org/thumb/6/6e/svgf_dropMerge.png/192px-svgf_dropMerge.png" alt="svgf dropMerge.png"></p>
+<h2>Other input and merging options: feBlend, feComposite, feImage, feTile</h2>
+<p>The <a href="/docs/svg/elements/feMerge"><strong>feMerge</strong></a> element shown above simply places one graphic over another to produce a new filter channel. As an alternative, you can use <a href="/docs/svg/elements/feBlend"><strong>feBlend</strong></a> with its <a href="/w/index.php?title=svg/attributes/mode&amp;action=edit&amp;redlink=1"><strong>mode</strong></a> set to <strong>normal</strong>, which combines the <a href="/w/index.php?title=svg/attributes/in&amp;action=edit&amp;redlink=1"><strong>in</strong></a> and <a href="/w/index.php?title=svg/attributes/in2&amp;action=edit&amp;redlink=1"><strong>in2</strong></a> channels:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feBlend</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"offsetBlur"</span> <span class="hljs-attribute">mode</span>=<span class="hljs-value">"normal"</span> /&gt;</span>
+</code></pre>
+<p>The following shows how <a href="/docs/svg/elements/feBlend"><strong>feBlend</strong></a>'s other modes affect graphics that overlay each other. The <strong>lighten</strong> and <strong>darken</strong> modes simply take the lighter or darker of the two pixels:</p>
+<p><strong>normal</strong></p>
+<p><img src="//static.webplatform.org/thumb/e/e7/svgf_blendNormal.png/150px-svgf_blendNormal.png" alt="svgf blendNormal.png"></p>
+<p><strong>lighten</strong></p>
+<p><img src="//static.webplatform.org/thumb/a/a2/svgf_blendLighten.png/150px-svgf_blendLighten.png" alt="svgf blendLighten.png"></p>
+<p><strong>darken</strong></p>
+<p><img src="//static.webplatform.org/thumb/9/93/svgf_blendDarken.png/150px-svgf_blendDarken.png" alt="svgf blendDarken.png"></p>
+<p><strong>screen</strong></p>
+<p><img src="//static.webplatform.org/thumb/2/2e/svgf_blendScreen.png/150px-svgf_blendScreen.png" alt="svgf blendScreen.png"></p>
+<p><strong>multiply</strong></p>
+<p><img src="//static.webplatform.org/thumb/6/6a/svgf_blendMultiply.png/150px-svgf_blendMultiply.png" alt="svgf blendMultiply.png"></p>
+<p>Setting the <a href="/docs/svg/elements/feComposite"><strong>feComposite</strong></a> element’s <a href="/w/index.php?title=svg/attributes/operator&amp;action=edit&amp;redlink=1"><strong>operator</strong></a> to <strong>over</strong> produces the same default overlay as <a href="/docs/svg/elements/feMerge"><strong>feMerge</strong></a>:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"offsetBlur"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"over"</span> /&gt;</span>
+</code></pre>
+<p>The following shows how its operators behave. The drop-shadow example above uses the <strong>in</strong> operator to fill a color within another graphic.</p>
+<p><strong>over</strong></p>
+<p><img src="//static.webplatform.org/thumb/6/68/svgf_compOver.png/150px-svgf_compOver.png" alt="svgf compOver.png"></p>
+<p><strong>out</strong></p>
+<p><img src="//static.webplatform.org/thumb/3/36/svgf_compOut.png/150px-svgf_compOut.png" alt="svgf compOut.png"></p>
+<p><strong>in</strong></p>
+<p><img src="//static.webplatform.org/thumb/d/d2/svgf_compIn.png/150px-svgf_compIn.png" alt="svgf compIn.png"></p>
+<p><strong>atop</strong></p>
+<p><img src="//static.webplatform.org/thumb/c/cb/svgf_compAtop.png/150px-svgf_compAtop.png" alt="svgf compAtop.png"></p>
+<p><strong>xor</strong></p>
+<p><img src="//static.webplatform.org/thumb/0/02/svgf_compXor.png/150px-svgf_compXor.png" alt="svgf compXor.png"></p>
+<p>Setting the <a href="/w/index.php?title=svg/attributes/operator&amp;action=edit&amp;redlink=1"><strong>operator</strong></a> to <strong>arithmetic</strong> allows you to supply your own <strong>k1</strong>-<strong>k4</strong> table values to produce composite blends. For example, set <a href="/w/index.php?title=svg/attributes/k1&amp;action=edit&amp;redlink=1"><strong>k1</strong></a> and <a href="/w/index.php?title=svg/attributes/k4&amp;action=edit&amp;redlink=1"><strong>k4</strong></a> to 0, then decrease <a href="/w/index.php?title=svg/attributes/k2&amp;action=edit&amp;redlink=1"><strong>k2</strong></a> from 1 while increasing <a href="/w/index.php?title=svg/attributes/k3&amp;action=edit&amp;redlink=1"><strong>k3</strong></a> from 0 for a cross-fade effect. This example makes the <a href="/w/index.php?title=svg/attributes/in2&amp;action=edit&amp;redlink=1"><strong>in2</strong></a> graphic more visible:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"graphicA"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"graphicB"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"arithmetic"</span> <span class="hljs-attribute">k1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">k2</span>=<span class="hljs-value">"0.3"</span> <span class="hljs-attribute">k3</span>=<span class="hljs-value">"0.7"</span> <span class="hljs-attribute">k4</span>=<span class="hljs-value">"0"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/0/05/svgf_compArithmetic.png/150px-svgf_compArithmetic.png" alt="svgf compArithmetic.png"></p>
+<p>Use the <a href="/docs/svg/elements/feImage"><strong>feImage</strong></a> element to import graphics into filter effects as in the examples above and below. It allows you to import not only raster images as with the <a href="/docs/svg/elements/image"><strong>image</strong></a> element, but any other SVG graphic as well. By default, graphics are placed in the center of the filter region. Otherwise, use <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a>, <a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a>, <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a>, and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> attributes to reposition and resize them:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feImage</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"img/icon.png"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"20%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"20%"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"icon"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feImage</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#gradient"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"gradient"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feTile</span>/&gt;</span>
+</code></pre>
+<p>The <a href="/docs/svg/elements/feTile"><strong>feTile</strong></a> element simply allows you to repeat imported graphics as a pattern.</p>
+<h2>Warping effects (feMorphology, feTurbulence, feDisplacementMap)</h2>
+<p>The next example shows how to combine several filter effects to warp text:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"warp"</span> &gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feMorphology</span> <span class="hljs-attribute">radius</span>=<span class="hljs-value">"3"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"dilate"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"1 0.5"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"text"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feTurbulence</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"fractalNoise"</span> <span class="hljs-attribute">baseFrequency</span>=<span class="hljs-value">"0.017"</span> <span class="hljs-attribute">numOctaves</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"warp"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feDisplacementMap</span> <span class="hljs-attribute">xChannelSelector</span>=<span class="hljs-value">"R"</span> <span class="hljs-attribute">yChannelSelector</span>=<span class="hljs-value">"G"</span> <span class="hljs-attribute">scale</span>=<span class="hljs-value">"60"</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"warp"</span>  /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>Start with a bit of text:</p>
+<p><img src="//static.webplatform.org/thumb/d/d2/svgf_warpStart.png/250px-svgf_warpStart.png" alt="svgf warpStart.png"></p>
+<p>The <a href="/docs/svg/elements/feMorphology"><strong>feMorphology</strong></a> effect specifies a <a href="/w/index.php?title=svg/attributes/dilate&amp;action=edit&amp;redlink=1"><strong>dilate</strong></a> factor to thicken the graphic. (Alternately, <a href="/w/index.php?title=svg/attributes/erode&amp;action=edit&amp;redlink=1"><strong>erode</strong></a> would make it thinner.)</p>
+<p><img src="//static.webplatform.org/thumb/4/49/svgf_warpMorph.png/250px-svgf_warpMorph.png" alt="svgf warpMorph.png"></p>
+<p>The <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransfer</strong></a> modifies the color, as described in a previous section:</p>
+<p><img src="//static.webplatform.org/thumb/b/b7/svgf_warpColoredOutline.png/250px-svgf_warpColoredOutline.png" alt="svgf warpColoredOutline.png"></p>
+<p>The <a href="/docs/svg/elements/feMerge"><strong>feMerge</strong></a> places the modified outline behind the original letterform:</p>
+<p><img src="//static.webplatform.org/thumb/c/cd/svgf_warpCombinedOutline.png/250px-svgf_warpCombinedOutline.png" alt="svgf warpCombinedOutline.png"></p>
+<p>The <a href="/docs/svg/elements/feTurbulence"><strong>feTurbulence</strong></a> effect produces its own graphic noise within which colors form cloud-like patterns:</p>
+<p><img src="//static.webplatform.org/thumb/2/2b/svgf_warpTurbulence.png/250px-svgf_warpTurbulence.png" alt="svgf warpTurbulence.png"></p>
+<p>The <a href="/docs/svg/elements/feDisplacementMap"><strong>feDisplacementMap</strong></a> produces the final effect:</p>
+<p><img src="//static.webplatform.org/thumb/d/d6/svgf_warpDisplace.png/250px-svgf_warpDisplace.png" alt="svgf warpDisplace.png"></p>
+<p>The displacement effect moves the pixels of the text (specified by <a href="/w/index.php?title=svg/attributes/in&amp;action=edit&amp;redlink=1"><strong>in</strong></a>) based on the pixel values of the noise pattern (specified by <a href="/w/index.php?title=svg/attributes/in2&amp;action=edit&amp;redlink=1"><strong>in2</strong></a>). The <a href="/w/index.php?title=svg/attributes/xChannelSelector&amp;action=edit&amp;redlink=1"><strong>xChannelSelector</strong></a> and <a href="/w/index.php?title=svg/attributes/yChannelSelector&amp;action=edit&amp;redlink=1"><strong>yChannelSelector</strong></a> specify, for each axis, which color component’s value (<strong>R</strong>, <strong>G</strong>, <strong>B</strong>, or <strong>A</strong>) to use to push the pixels, and the <a href="/w/index.php?title=svg/attributes/scale&amp;action=edit&amp;redlink=1"><strong>scale</strong></a> sets the overall range of movement.</p>
+<h2>Creating textures (feTurbulence)</h2>
+<p>Turbulence is indispensable for grain and weave textures, useful for background patterns. Step through the following example:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"weave"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100%"</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feTurbulence</span> <span class="hljs-attribute">baseFrequency</span>=<span class="hljs-value">".25,.03"</span> <span class="hljs-attribute">numOctaves</span>=<span class="hljs-value">"3"</span> <span class="hljs-attribute">seed</span>=<span class="hljs-value">"1"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"grain"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"3"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFlood</span> <span class="hljs-attribute">flood-color</span>=<span class="hljs-value">"brown"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span>/&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"grain"</span>/&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>Supplying the <a href="/docs/svg/elements/feTurbulence"><strong>feTurbulence</strong></a> effect with two <a href="/w/index.php?title=svg/attributes/baseFrequency&amp;action=edit&amp;redlink=1"><strong>baseFrequency</strong></a> values creates a striped effect:</p>
+<p><img src="//static.webplatform.org/thumb/a/a5/svgf_TBturb.png/180px-svgf_TBturb.png" alt="svgf TBturb.png"></p>
+<p>An <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransfer</strong></a> boosts the red values:</p>
+<p><img src="//static.webplatform.org/thumb/8/8f/svgf_TBcomp.png/180px-svgf_TBcomp.png" alt="svgf TBcomp.png"></p>
+<p>An <a href="/docs/svg/elements/feFlood"><strong>feFlood</strong></a> provides a background color:</p>
+<p><img src="//static.webplatform.org/thumb/0/0d/svgf_TBflood.png/180px-svgf_TBflood.png" alt="svgf TBflood.png"></p>
+<p>The final <a href="/docs/svg/elements/feMerge"><strong>feMerge</strong></a> overlays the pattern:</p>
+<p><img src="//static.webplatform.org/thumb/a/a2/svgf_TBmerge.png/180px-svgf_TBmerge.png" alt="svgf TBmerge.png"></p>
+<p>Note the <a href="/docs/svg/elements/filter"><strong>filter</strong></a> element in the example above uses <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a>, <a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a>, <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a>, and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> attributes to specify dimensions. By default, filters operate on a <em>region</em> that’s somewhat wider than elements they are applied to, to account for offset effects such as the shadow shown above, which extends past the graphic’s original dimensions. In this example, the weave pattern only appears within the graphic’s original dimensions.</p>
+<h2>Lighting effects</h2>
+<p>Shining a light on a graphic provides additional depth and texture. To create a lighting effect, you need to specify three things:</p>
+<ul>
+<li><p>A light <em>color</em>, specified by the <a href="/w/index.php?title=svg/properties/lighting-color&amp;action=edit&amp;redlink=1"><strong>lighting-color</strong></a> property</p></li>
+<li><p>A light <em>source</em>, of which there are three kinds:</p>
+<ul>
+<li>a <em>distant</em> light (<a href="/docs/svg/elements/feDistantLight"><strong>feDistantLight</strong></a>) is arbitrarily far away, and so is specified in terms of its angle from the target. This is the most appropriate way to represent sunlight.</li>
+<li>a <em>point</em> light (<a href="/docs/svg/elements/fePointLight"><strong>fePointLight</strong></a>) emanates from a specific point that is represented as a three-dimensional <em>x</em>/<em>y</em>/<em>z</em> coordinate. This is more appropriate when you need the perspective necessary to place a room light within a scene.</li>
+<li>a <em>spot</em> light (<a href="/w/index.php?title=svg/elements/feSpotLight&amp;action=edit&amp;redlink=1"><strong>feSpotLight</strong></a>) behaves much like a point light, but its beam can be narrowed to a cone, and the light can pivot to other targets.</li>
+</ul></li>
+<li><p>A basic <em>type</em> of light, of which two are available:</p>
+<ul>
+<li><em>diffuse</em> light (<a href="/docs/svg/elements/feDiffuseLighting"><strong>feDiffuseLighting</strong></a>) indicates indirect light from an outside source.</li>
+<li><em>specular</em> light (<a href="/docs/svg/elements/feSpecularLighting"><strong>feSpecularLighting</strong></a>) specifies secondary light that bounced from reflective surfaces.</li>
+</ul></li>
+</ul>
+<p>A graphic’s alpha channel forms a <em>bump map</em> that responds to light. Transparent values remain flat, while opaque values rise to form peaks that are illuminated more prominently. To illustrate how lighting works, this example generates a hilly terrain:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"terrain"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100%"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feTurbulence</span> <span class="hljs-attribute">baseFrequency</span>=<span class="hljs-value">".01"</span> <span class="hljs-attribute">numOctaves</span>=<span class="hljs-value">"2"</span> <span class="hljs-attribute">seed</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"turbulence"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"luminanceToAlpha"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncA</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"1 0"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>The <a href="/docs/svg/elements/feTurbulence"><strong>feTurbulence</strong></a> provides a noise pattern. The darker clusters will become hilltops, and the surrounding white areas will be valleys:</p>
+<p><img src="//static.webplatform.org/thumb/1/11/svgf_TERRturb1.png/260px-svgf_TERRturb1.png" alt="svgf TERRturb1.png"></p>
+<p>The <a href="/docs/svg/elements/feColorMatrix"><strong>feColorMatrix</strong></a> element’s <strong>luminanceToAlpha</strong> type converts the brighter colors in the valleys to higher alpha values:</p>
+<p><img src="//static.webplatform.org/thumb/2/2c/svgf_TERRturb2.png/260px-svgf_TERRturb2.png" alt="svgf TERRturb2.png"></p>
+<p>The <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransfer</strong></a> inverts the alpha channel, so that peaks have higher values and valleys have lower values:</p>
+<p><img src="//static.webplatform.org/thumb/1/1c/svgf_TERRturb3.png/260px-svgf_TERRturb3.png" alt="svgf TERRturb3.png"></p>
+<p>To specify the lighting effect, nest the light source element (<a href="/docs/svg/elements/feDistantLight"><strong>feDistantLight</strong></a>, <a href="/docs/svg/elements/fePointLight"><strong>fePointLight</strong></a>, <a href="/w/index.php?title=svg/elements/feSpotLight&amp;action=edit&amp;redlink=1"><strong>feSpotLight</strong></a>) within the lighting type (<a href="/svg/elements/feDiffuseLighting"><strong>feDiffuseLighting</strong></a>, <a href="/svg/elements/feSpecularLighting"><strong>feSpecularLighting</strong></a>). This example specifies a distant light:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feDiffuseLighting</span> <span class="hljs-attribute">lighting-color</span>=<span class="hljs-value">"brown"</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">diffuseConstant</span>=<span class="hljs-value">"1"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feDistantLight</span> <span class="hljs-attribute">azimuth</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">elevation</span>=<span class="hljs-value">"20"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feDiffuseLighting</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/a/a5/svgf_TERRdiff.png" alt="svgf TERRdiff.png"></p>
+<p>The distant light source’s <a href="/w/index.php?title=svg/attributes/azimuth&amp;action=edit&amp;redlink=1"><strong>azimuth</strong></a> corresponds to a compass angle along the horizon, which lies along the plane of the display screen. The <a href="/w/index.php?title=svg/attributes/elevation&amp;action=edit&amp;redlink=1"><strong>elevation</strong></a> specifies the angle from the horizon, with 90° facing straight up, or out from the screen.</p>
+<p>The diffuse lighting effect’s <a href="/w/index.php?title=svg/attributes/surfaceScale&amp;action=edit&amp;redlink=1"><strong>surfaceScale</strong></a> sets the maximum height of the hilltops. The <a href="/w/index.php?title=svg/attributes/diffuseConstant&amp;action=edit&amp;redlink=1"><strong>diffuseConstant</strong></a> sets the light’s saturation, so increasing it from its default value of 1 produces sunlight that’s brighter than usual.</p>
+<p>The corresponding specular lighting effect only produces highlights, which can be overlaid on the original scene:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feSpecularLighting</span> <span class="hljs-attribute">lighting-color</span>=<span class="hljs-value">"brown"</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">specularConstant</span>=<span class="hljs-value">"1"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feDistantLight</span> <span class="hljs-attribute">azimuth</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">elevation</span>=<span class="hljs-value">"20"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feSpecularLighting</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/c/c3/svgf_TERRspec.png" alt="svgf TERRspec.png"></p>
+<p>This shows the two effects used in combination, with the <a href="/w/index.php?title=svg/properties/lighting-color&amp;action=edit&amp;redlink=1"><strong>lighting-color</strong></a> property specified separately in a style sheet. The two lighting effects take the same <em>terrain</em> input, then later composite the <em>scene</em> and its <em>highlights</em>:</p>
+<pre><code class="css"><span class="hljs-class">.feDiffuseLighting</span>,
+<span class="hljs-class">.feSpecularLighting</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">lighting-color</span>:<span class="hljs-value"> brown</span></span>;
+}</span>
+</code></pre>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"shadow_terrain"</span> <span class="hljs-attribute">primitiveUnits</span>=<span class="hljs-value">"objectBoundingBox"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feTurbulence</span> <span class="hljs-attribute">baseFrequency</span>=<span class="hljs-value">".01"</span> <span class="hljs-attribute">numOctaves</span>=<span class="hljs-value">"2"</span> <span class="hljs-attribute">seed</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"turbulence"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feColorMatrix</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"luminanceToAlpha"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"terrain"</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">feFuncA</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"1 0"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feDiffuseLighting</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"terrain"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"scene"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feDistantLight</span> <span class="hljs-attribute">azimuth</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">elevation</span>=<span class="hljs-value">"20"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feDiffuseLighting</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feSpecularLighting</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"terrain"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"highlights"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feDistantLight</span> <span class="hljs-attribute">azimuth</span>=<span class="hljs-value">"90"</span> <span class="hljs-attribute">elevation</span>=<span class="hljs-value">"20"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">feSpecularLighting</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"scene"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"highlights"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"xor"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/c/ca/svgf_TERRboth.png" alt="svgf TERRboth.png"></p>
+<p>Setting the filter’s <a href="/w/index.php?title=svg/attributes/primitiveUnits&amp;action=edit&amp;redlink=1"><strong>primitiveUnits</strong></a> to <strong>objectBoundingBox</strong> allows you to specify light sources as relative percentages, otherwise the default <strong>userSpaceOnUse</strong> value references the coordinate system in effect when the filter was applied.</p>
+<p>A point light allows you to place light sources closer to the scene. Specify a set of 3D coordinates to position the light source:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">fePointLight</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"50%"</span> <span class="hljs-attribute">z</span>=<span class="hljs-value">"200"</span>&gt;</span>
+</code></pre>
+<p>A spot light can direct a beam from the light source to a different target defined by the <a href="/w/index.php?title=svg/attributes/pointsAtX&amp;action=edit&amp;redlink=1"><strong>pointsAtX</strong></a>, <a href="/w/index.php?title=svg/attributes/pointsAtY&amp;action=edit&amp;redlink=1"><strong>pointsAtY</strong></a>, and <a href="/w/index.php?title=svg/attributes/pointsAtZ&amp;action=edit&amp;redlink=1"><strong>pointsAtZ</strong></a> coordinates. The <a href="/w/index.php?title=svg/attributes/limitingConeAngle&amp;action=edit&amp;redlink=1"><strong>limitingConeAngle</strong></a> attribute allows you to tightly focus the beam:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">feSpotLight</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">z</span>=<span class="hljs-value">"150"</span> <span class="hljs-attribute">pointsAtX</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">pointsAtY</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">pointsAtZ</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">limitingConeAngle</span>=<span class="hljs-value">"30"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/3/30/svgf_TERRspot.png" alt="svgf TERRspot.png"></p>
+<p>See this <a href="http://letmespellitoutforyou.com/samples/svg/filter_terrain.svg">animated SVG</a> that repositions the light sources in these examples.</p>
+<h2>Beveling (feSpecularLighting)</h2>
+<p>Using lighting effects to bevel graphics adds a greater sense of depth to the drop-shadow effect seen above. Step through this example to build the effect:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"bevel"</span> <span class="hljs-attribute">filterUnits</span>=<span class="hljs-value">"userSpaceOnUse"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceAlpha"</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"blur"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feOffset</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"blur"</span> <span class="hljs-attribute">dx</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">dy</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"offsetBlur"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feSpecularLighting</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"5"</span> <span class="hljs-attribute">specularConstant</span>=<span class="hljs-value">".75"</span>
+      <span class="hljs-attribute">specularExponent</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">lighting-color</span>=<span class="hljs-value">"#bbbbbb"</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"blur"</span>
+      <span class="hljs-attribute">result</span>=<span class="hljs-value">"highlight"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">fePointLight</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"-5000"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"-10000"</span> <span class="hljs-attribute">z</span>=<span class="hljs-value">"20000"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feSpecularLighting</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"highlight"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"SourceAlpha"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"in"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"highlight"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"highlight"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"arithmetic"</span>
+               <span class="hljs-attribute">k1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">k2</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">k3</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">k4</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"highlightText"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feMerge</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"offsetBlur"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feMergeNode</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"highlightText"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feMerge</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>Start with some text that appears fairly indistinguishable against a filled background:</p>
+<p><img src="//static.webplatform.org/2/2d/svgf_bevelOrig.png" alt="svgf bevelOrig.png"></p>
+<p>The blur pattern is piped to the <a href="/docs/svg/elements/feOffset"><strong>feOffset</strong></a> and stored in <em>offsetBlur</em> for use as the drop shadow. It’s also stored in <em>blur</em> for use by the lighting effect:</p>
+<p><img src="//static.webplatform.org/8/8f/svgf_bevelBlur.png" alt="svgf bevelBlur.png"></p>
+<p>The blur not only scatters pixels, but distributes their alpha values to form a rounded surface, which the lighting effect highlights:</p>
+<p><img src="//static.webplatform.org/f/f9/svgf_bevelSpec.png" alt="svgf bevelSpec.png"></p>
+<p>The first <a href="/docs/svg/elements/feComposite"><strong>feComposite</strong></a> clips the blurred edges that fall outside the graphic’s original contours, available as its <strong>SourceAlpha</strong>:</p>
+<p><img src="//static.webplatform.org/e/e6/svgf_bevelCompAlpha.png" alt="svgf bevelCompAlpha.png"></p>
+<p>The second <a href="/docs/svg/elements/feComposite"><strong>feComposite</strong></a> overlays the highlight with the original <strong>SourceGraphic</strong>:</p>
+<p><img src="//static.webplatform.org/1/12/svgf_bevelCompImg.png" alt="svgf bevelCompImg.png"></p>
+<p>Finally, the <em>offsetBlur</em> buffer is merged in to provide a drop shadow for additional depth and legibility:</p>
+<p><img src="//static.webplatform.org/a/af/svgf_bevelFinal.png" alt="svgf bevelFinal.png"></p>
+<p>Use the same technique to add depth to surfaces, such as this example that defines a radial gradient that fades to transparent values:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"cornea"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#corneaSurface)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">radialGradient</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"corneaSurface"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"0%"</span>   <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"black"</span> <span class="hljs-attribute">stop-opacity</span>=<span class="hljs-value">"1"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"black"</span> <span class="hljs-attribute">stop-opacity</span>=<span class="hljs-value">"0"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">radialGradient</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/5/5c/svgf_eyeCornea.png" alt="svgf eyeCornea.png"></p>
+<p>The filter uses <a href="/docs/svg/elements/feImage"><strong>feImage</strong></a> to import an graphic filled with the gradient, then shines a narrow spot light on the surface, which results in a subtle rounded highlight:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"corneaShine"</span> <span class="hljs-attribute">primitiveUnits</span>=<span class="hljs-value">"objectBoundingBox"</span> &gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feImage</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#cornea"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feSpecularLighting</span> <span class="hljs-attribute">lighting-color</span>=<span class="hljs-value">"white"</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"170"</span> <span class="hljs-attribute">specularConstant</span>=<span class="hljs-value">"2"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"shine"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feSpotLight</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"-100"</span> <span class="hljs-attribute">z</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">pointsAtX</span>=<span class="hljs-value">"120"</span> <span class="hljs-attribute">pointsAtY</span>=<span class="hljs-value">"80"</span> <span class="hljs-attribute">pointsAtZ</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">limitingConeAngle</span>=<span class="hljs-value">"7"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feSpecularLighting</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"shine"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"SourceGraphic"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"over"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/b/ba/svgf_eyeShine.png" alt="svgf eyeShine.png"></p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Filters</h4>
+<ul>
+<li><p><a href="/docs/css/functions/blur">blur()</a></p></li>
+<li><p><a href="/docs/css/functions/brightness">brightness()</a></p></li>
+<li><p><a href="/docs/css/functions/contrast">contrast()</a></p></li>
+<li><p><a href="/docs/css/functions/custom">custom()</a></p></li>
+<li><p><a href="/docs/css/functions/drop-shadow">drop-shadow()</a></p></li>
+<li><p><a href="/docs/css/functions/grayscale">grayscale()</a></p></li>
+<li><p><a href="/docs/css/functions/hue-rotate">hue-rotate()</a></p></li>
+<li><p><a href="/docs/css/functions/invert">invert()</a></p></li>
+<li><p><a href="/docs/css/functions/opacity">opacity()</a></p></li>
+<li><p><a href="/docs/css/functions/saturate">saturate()</a></p></li>
+<li><p><a href="/docs/css/functions/sepia">sepia()</a></p></li>
+<li><p><a href="/docs/css/properties/filter">filter</a></p></li>
+<li><p><a href="/docs/svg/elements/feBlend">feBlend</a></p></li>
+<li><p><a href="/docs/svg/elements/feColorMatrix">feColorMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feComponentTransfer">feComponentTransfer</a></p></li>
+<li><p><a href="/docs/svg/elements/feComposite">feComposite</a></p></li>
+<li><p><a href="/docs/svg/elements/feConvolveMatrix">feConvolveMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feDiffuseLighting">feDiffuseLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feDisplacementMap">feDisplacementMap</a></p></li>
+<li><p><a href="/docs/svg/elements/feDistantLight">feDistantLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feFlood">feFlood</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncA">feFuncA</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncB">feFuncB</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncG">feFuncG</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncR">feFuncR</a></p></li>
+<li><p><a href="/docs/svg/elements/feGaussianBlur">feGaussianBlur</a></p></li>
+<li><p><a href="/docs/svg/elements/feImage">feImage</a></p></li>
+<li><p><a href="/docs/svg/elements/feMerge">feMerge</a></p></li>
+<li><p><a href="/docs/svg/elements/feMergeNode">feMergeNode</a></p></li>
+<li><p><a href="/docs/svg/elements/feMorphology">feMorphology</a></p></li>
+<li><p><a href="/docs/svg/elements/feOffset">feOffset</a></p></li>
+<li><p><a href="/docs/svg/elements/fePointLight">fePointLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpecularLighting">feSpecularLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpotlight">feSpotlight</a></p></li>
+<li><p><a href="/docs/svg/elements/feTile">feTile</a></p></li>
+<li><p><a href="/docs/svg/elements/feTurbulence">feTurbulence</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_deploy">SVG deployment</a></p></li>
+<li><p><strong>SVG filters</strong></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_graphics">SVG graphic effects</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a></p></li>
+<li><p><a href="/docs/tutorials/svg_filters">SVG filters</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Filters">SVG Essentials: Filters</a>, by J. David Eisenberg</li>
+<li><a href="http://www.w3.org/Graphics/SVG/IG/resources/svgprimer.html#filters">An SVG Primer for Today’s Browsers</a>, by David Dailey</li>
+<li><a href="http://www.w3.org/TR/SVG/filters.html">Scalable Vector Graphics 1.1, Second Edition</a></li>
+<li><a href="http://ie.microsoft.com/testdrive/graphics/hands-on-css3/hands-on_svg-filter-effects.htm">Hands On: SVG Filter Effects</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

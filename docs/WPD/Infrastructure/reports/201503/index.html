@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>March 2015 Infrastructure change log since 2013 · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/reports/">reports</a></li><li><a href="/docs/WPD/Infrastructure/reports/201503/">201503</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>March 2015 Infrastructure change log since 2013</h1>
+<p>List of high level Infrastructure changes we’ve worked on in the last two years.</p>
+<p>Should cover;</p>
+<ul>
+<li>Which individual software we run, pieces involved, what needs each piece fulfills</li>
+<li>Software we got rid of (e.g. web based IRC client, GlusterFS, etc)</li>
+<li>New components</li>
+<li>We weren’t assured of long term free hosting form HP, thankfully DreamHost took charge of us</li>
+<li>Automation improvements</li>
+<li>Overview of lessons learned, and wins</li>
+</ul>
+<p>On a related note, there are also notes in <a href="/docs/WPD/Infrastructure/reports/201410">the 201410 report published last year</a> and in the <a href="/docs/WPD/Infrastructure/analysis/2014-Improvements_plan"><strong>2014 Improvement plan</strong> page</a>.</p>
+<h2>Software we currently use</h2>
+<h3>Web applications we host</h3>
+<table class="wikitable sortable">
+<tr>
+<th>
+Resource
+</th>
+<th>
+Software
+</th>
+<th>
+Deployment repository
+</th>
+<th>
+Location
+</th>
+</tr>
+<tr>
+<th>
+Home page
+</th>
+<td>
+[DocPad](https://docpad.org/)
+</td>
+<td>
+[repository](https://github.com/webplatform/www.webplatform.org)
+</td>
+<td>
+[webplatform.org/](http://webplatform.org/)
+</td>
+</tr>
+<tr>
+<th>
+wiki ([version](/Special:Version))
+</th>
+<td>
+[MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) using Wikimedia Foundation ("wmf/1.24wmfX") continuous release branches
+</td>
+<td>
+[repository](https://github.com/webplatform/mediawiki)
+</td>
+<td>
+[docs.webplatform.org/wiki/](/docs/)
+</td>
+</tr>
+<tr>
+<th>
+IRC logger
+</th>
+<td>
+[Lumberjack (now called Pierc)](http://classam.github.io/pierc/)
+</td>
+<td>
+TODO
+</td>
+<td>
+[www.webplatform.org/talk/chatlogs/](/talk/chatlogs/)
+</td>
+</tr>
+<tr>
+<th>
+Analytics
+</th>
+<td>
+[Piwik](http://piwik.org/)
+</td>
+<td>
+TODO
+</td>
+<td>
+[stats.webplatform.org/](https://stats.webplatform.org/)
+</td>
+</tr>
+<tr>
+<th>
+Blog
+</th>
+<td>
+[WordPress](http://wordpress.org/)
+</td>
+<td>
+[repository](https://github.com/webplatform/blog-service)
+</td>
+<td>
+[blog.webplatform.org/](/blog/)
+</td>
+</tr>
+<tr>
+<th>
+Code sandbox
+</th>
+<td>
+[Dabblet](http://dabblet.com/)
+</td>
+<td>
+[repository](https://github.com/webplatform/dabblet)
+</td>
+<td>
+[code.webplatform.org/](http://code.webplatform.org/)
+</td>
+</tr>
+<tr>
+<th>
+Project management
+</th>
+<td>
+[The Bug Genie](http://www.thebuggenie.com/)
+</td>
+<td>
+[repository](https://github.com/webplatform/thebuggenie)
+</td>
+<td>
+[project.webplatform.org/](https://project.webplatform.org/)
+</td>
+</tr>
+<tr>
+<th>
+Accounts
+</th>
+<td>
+[Firefox Accounts](https://wiki.mozilla.org/Identity/Firefox_Accounts)
+</td>
+<td>
+see [SSO Project page](/WPD/Projects/SSO)
+</td>
+<td>
+[accounts.webplatform.org/](https://accounts.webplatform.org/)
+</td>
+</tr>
+<tr>
+<th>
+Hypothes.is
+</th>
+<td>
+[Hypothes.is](https://www.hypothes.is/)
+</td>
+<td>
+TODO
+</td>
+<td>
+[notes.webplatform.org/](https://notes.webplatform.org/)
+</td>
+</tr>
+<tr>
+<th>
+Discuss
+</th>
+<td>
+[Discourse](http://www.discourse.org/)
+</td>
+<td>
+TODO
+</td>
+<td>
+[discuss.webplatform.org/](https://discuss.webplatform.org/)
+</td>
+</tr>
+</table>
+### Web application that we rely on
+<table class="wikitable sortable">
+<tr>
+<th>
+Resource
+</th>
+<th>
+Software
+</th>
+<th>
+Location
+</th>
+<th>
+Usage
+</th>
+</tr>
+<tr>
+<th>
+Operations issue tracker
+</th>
+<td>
+GitHub "*webplatform/ops"* project and [Hubboard](https://huboard.com/)
+</td>
+<td>
+[*KanBan* dashboard](https://huboard.com/webplatform/ops/#/), [webplatform.github.io/ops](https://webplatform.github.io/ops)
+</td>
+<td>
+A Dashboard utility to visualize in columns what’s next, what´s in progress, and what’s done.
+</td>
+</tr>
+<tr>
+<th>
+WebPlatformDocs GitHub account
+</th>
+<td>
+GitHub
+</td>
+<td>
+[gist.github.com/WebPlatformDocs](https://gist.github.com/WebPlatformDocs), [github.com/WebPlatformDocs](https://github.com/WebPlatformDocs)
+</td>
+<td>
+Store all *code.webplatform.org* gists in GitHub. This account was created before GitHub introduced "organizations".
+</td>
+</tr>
+<tr>
+<th>
+WebPlatform GitHub organization
+</th>
+<td>
+GitHub
+</td>
+<td>
+[github.com/WebPlatform](https://github.com/WebPlatform)
+</td>
+<td>
+An organization in which we store all repositories
+</td>
+</tr>
+</table>
+### Misc.
+<dl>
+<dt>Ubuntu</dt>
+<dd>We were originally running on two different versions of Ubuntu 10.04 and 12.04. While both are “Long Term Support” we weren’t running on the same version for every servers, and also had no automatic install of security updates. Since mid-2014 all servers uses the same version — Ubuntu 14.04 LTS — and automatic security updates<br>
+Memcached
+</dd>
+<dd>A “key store” system that many web applications relies to keep the HTML that it generated, speeding up the page render.<br>
+Redis <em>(new since 2014)</em>
+</dd>
+<dd>Another “key store” system similar to Memcached, but in use for storing session data so we can balance web application backend load across multiple web servers. Benefit of Redis over Memcached is that we can easily make Redis calls through SSL/TLS and require clients to authenticates. Also, we can configure MediaWiki to store async jobs over to Redis instead of a MySQL table. MediaWiki operations team lead said that tables is fine for heavy load. Unless we get wikipedia.org type of load.<br>
+ElasticSearch <em>(new since 2014)</em>
+</dd>
+<dd>A “REST” web application on which we can index documents, and use as a search engine. We store annotations in it, and so we could configure MediaWiki so we improve search capabilities.<br>
+MariaDB <em>(new since 2014)</em>
+</dd>
+<dd>A drop-in replacement to MySQL, in use by most of the infrastructure. We could also configure it to use <em>Galera</em> so we could send writes to any node in the cluster. Might be a next step.<br>
+Monit <em>(new since 2014)</em>
+</dd>
+<dd>A system that is made to help ensure vital services are up.<br>
+NGINX <em>(new since 2014)</em>
+</dd>
+<dd>A Web Server and Proxy software. We will eventually use NGINX instead of apache in a near future<br>
+Apache
+</dd>
+<dd>The original web server software. Only MediaWiki has an hard requirement to it, until we change our configuration or that Semantic MediaWiki (<em>&quot;SMW&quot;’</em>) requirement changes. At this time, SMW requires PHP to be run through <strong>mpm-prefork</strong> which is, in contrast to multi-threaded servers, is asking to always keep up a set of processes to answer HTTP requests. It is said in SMW mailing list, this hard requirement might change soon.<br>
+php-fpm <em>(new since 2014)</em>
+</dd>
+<dd>A PHP execution environment that NGINX connects to to server dynamic pages. Currently in use with Piwik, other PHP web applications (except MediaWiki) could be migrated to it soon enough. Unless we could run everything that runs in <em>php5-fpm</em> to HHVM (see below) instead.
+</dd>
+</dl>
+<h3>Software we are currently evaluating to use</h3>
+<dl>
+<dt><a href="https://github.com/twitter/twemproxy">Nutcracker</a></dt>
+<dd>A “key store” proxy system that we could install on each app server making a local copy and balancing the load accross both Redis and Memcached.<br>
+<a href="http://hhvm.com/">HHVM</a>
+</dd>
+<dd>A complete rewrite of the PHP execution environment with known improvements compared to php-fpm. We might migrate all compatible PHP web applications to this runtime environment.<br>
+<a href="http://logstash.net/">LogStash</a>
+</dd>
+<dd>A centralized log manager. It harmonizes, archives and process any log messages we send to it. Serves as an easy to use log search engine<br>
+<a href="http://phabricator.org/">Phabricator</a>
+</dd>
+<dd>A web application made to help organize software projects. It features an IRC bot from which we could monitor more than one IRC chat room (our chat bot is not maintained and doesn’t scale well). Also, we could Phabricator as a place to: store sensitive documents, mirror GIT/SVN/Mercurial repositories we rely on, host temporary Git/Mercurial stashes so we don’t risk losing them around, code “pastebin” so we don’t need to rely on GitHub gists, etc. See <a href="http://phabricator.org/applications/">Phabricator applications list for more details</a><br>
+<a href="https://www.docker.com/">Docker</a>
+</dd>
+<dd>A system that allows us to create “executable” packages called “containers” out of any software or web application. At a first look, it looks like a VM, but its a very thin one that only does one job and removes the need to upgrade operating system packages and allow to roll back from any previous builds that had been made<br>
+<a href="http://deis.io/">Deis</a>
+</dd>
+<dd>An “orchestration” system that automates the cycle of building Docker containers. It automates handling of subsystems such as load balancing, remove the need to hardcode web application related deployment scripts, archiving, etc. With this, we could build on push anything that has a &quot;<em>Dockerfile</em>&quot; at the root of the project.<br>
+CoreOS
+</dd>
+<dd>A thin Linux distribution that has Docker preinstalled and a few other orchestration utilities to provide auto-discoverability and automatic scaling.
+</dd>
+</dl>
+<h3>Conventions in place</h3>
+<p>Idea is that any service use default configuration as if its local, use of equivalent service to delegate/proxy to specialized set of servers</p>
+<dl>
+<dt>What’s common on any VMs</dt>
+<dd>Refer to <a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">architecture documentation at <strong>Base configuration of a VM</strong></a><br>
+email
+</dd>
+<dd>Each server uses <em>localhost</em> as their email server gateway, but the local email server then uses a specialized VM only for sending emails<br>
+memcached (still in evaluation)
+</dd>
+<dd>Each application server (i.e. a server that runs a web application backend technology such as <em>PHP</em> or <em>Python</em>) acts as if <em>Memcached</em> is local, but in fact a service called <em>Nutcracker</em> (a.k.a. TwEmProxy) is configured to talk to more than one Memcached servers serving the purpose of keeping a local copy of the data.<br>
+secrets, passwords (“accounts” pillars)
+</dd>
+<dd>Are stored in a separate set of (salt) pillars in <em>/srv/private/pillar/accounts/production.sls</em> and (will be) hosted in a private Git repository at W3C. In there, we keep all API secrets, tokens, and passwords we need. Every configuration and services pulls information from there. To adjust, edit and commit the file then run a &quot;highstate&quot;. (staging is at '<em>/srv/private/pillar/accounts/staging.sls</em>)<br>
+Deployment sensible variables… (“infra” pillars)
+</dd>
+<dd>Are stored in a centralized (salt) pillars in <em>/srv/pillar/infra/production.sls</em>. In there, we list private IP addresses of database servers, ElasticSearch, etc. Every configuration file and states relies on it. To adjust, edit and commit the file, then run a &quot;highstate&quot;. (staging is at '<em>/srv/private/pillars/accounts/staging.sls</em>)<br>
+ssh access
+</dd>
+<dd>The only way to work on any is to pass through the salt master as a &quot;jump box&quot;, see <a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM#Accessing_a_VM_using_SSH">Accessing a VM using SSH</a><br>
+which level a VM is in?
+</dd>
+<dd>The “level” grain exists to tell which configuration file to use in both <em>/srv/pillar/infra/$level.sls</em> AND in <em>/srv/private/pillars/accounts/$level.sls</em>. To get which level, you can ask from the terminal <code>salt \* grains.get level</code>. Refer to <a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">architecture documentation at <strong>Roles and Environment level</strong></a>
+</dd>
+</dl>
+<h3>Lessons learned</h3>
+<dl>
+<dt>Varnish</dt>
+<dd>Refer to <a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish#Caveats"><strong>Caveats</strong> in Things to consider when we expose service via Fastly and Varnish</a><br>
+Use IP address instead of names, in web application configuration files
+</dd>
+<dd>Name resolution can be costly. I learned that it speeds page render time when I explicitly set Database, Redis, Memcached, ElasticSearch IPs instead of names that we’d put in <em>/etc/hosts</em>. Since we now manage every configuration file through salt since late 2014, we can now update easily this information automatically<br>
+To support multiple runtime backends …
+</dd>
+<dd>Its much easier to configure a public Front-end server to use directly a private-access-only backend that handles when to serve static files it already hosts and which files should pass through FastCGI, etc. Front-end nodes wouldn’t need to duplicate that part, but be responsible to balance the load and take care of both static files and in-memory page cache. Much like Varnish does.
+</dd>
+</dl>
+<h2>Work done per year</h2>
+<h3>2013</h3>
+<ul>
+<li><em>Started working on WebPlatform on July 2013</em></li>
+<li>Setup analytics solution w/ <strong>Piwik</strong>, at <strong>stats.webplatform.org</strong></li>
+<li>Only one set of Virtual Machines (VMs) exposing live site, no room to work on improvements without risks of affecting live site</li>
+<li>Deployment scripts were assuming exactly one deployment, making it hard to do gradual roll out</li>
+<li>In configuration files, every IP Addresses were scattered around and I had to search around to adjust changes so that the servers would get the information updated</li>
+<li>VMs were running with two different OS versions: Ubuntu 10.04 and 12.04, no automatic installation of security patches</li>
+<li>Setup of a private OpenStack at DreamHost (&quot;DHO&quot;; DreamHost OpenStack) cluster from a 4 blades server, server was lent by DreamHost</li>
+<li>Server migration from HP Cloud into DHO <a href="/docs/WPD/Infrastructure/analysis/2013-Migrating_to_a_new_cloud_provider">2013 Migrating to a new Cloud Provider</a></li>
+<li>Work on MySQL cluster so we could have off-site hot backup (i.e. database replication on a remote site, with logs transferred through SSL)</li>
+<li>Multiple outages due to a bug in MediaWiki+Semantic MediaWiki affecting the rest of the infrastructure</li>
+<li>Complete rework of MediaWiki installation. Originally it was a clone with bits and pieces pasted without source control to a scripted setup exclusively based on source controlled repositories</li>
+<li>Work with Doug to create a new Compatibility data JSON schema</li>
+<li>Sprint on extracting compatibility data from MDN into new Compatibility JSON schema</li>
+<li>Sprint on Compatibility tables extension
+<ul>
+<li>see <a href="/docs/WPD/Projects/CompaTables/201403-sprint">201403 sprint notes</a></li>
+<li>serve a copy of the generated HTML</li>
+<li>flush the generated HTML copy when JSON source is updated</li>
+<li>Alternate views and new supported actions:
+<ol>
+<li>single table view: <a href="/docs/Special:Compatables?feature=border-radius&amp;format=table&amp;topic=css"><code>GET /wiki/Special:Compatables?feature=border-radius&amp;format=table&amp;topic=css</code></a></li>
+<li>single table view, “naked” alternate <a href="/docs/Special:Compatables?feature=border-radius&amp;format=table&amp;topic=css&amp;foresi=1"><code>GET /wiki/Special:Compatables?feature=border-radius&amp;format=table&amp;topic=css&amp;foresi=1</code></a></li>
+<li>manual table flush <a href="/docs/Special:Compatables?feature=border-radius&amp;format=table&amp;topic=css&amp;action=purge"><code>GET /wiki/Special:Compatables?feature=border-radius&amp;format=table&amp;topic=css&amp;action=purge</code></a></li>
+</ol></li>
+<li>Work on Semantic MediaWiki template <a href="/docs/Template:Compatibility">Template:Compatibility</a> to allow embed in content pages</li>
+<li>Creation of a GitHub repository to host compatibility data <a href="https://github.com/webplatform/compatibility-data%7Con">GitHub <em>webplatform/compatibility-data</em></a></li>
+<li>Originally it was regenerating the HTML for EVERY page load based on a previous JSON source</li>
+</ul></li>
+<li>Removed requirement of shared storage across VMs (GlusterFS) and switched to use external DreamObjects storage (Swift) at DreamHost</li>
+<li>Set in place image storage pulling files directly from DreamObjects</li>
+</ul>
+<h3>2014</h3>
+<ul>
+<li>Upgraded all VMs to use only Ubuntu 14.04</li>
+<li>Pages are now served under SSL</li>
+<li>Most of the work mentioned below until 2015 is also noted in <a href="/docs/WPD/Infrastructure/analysis/2014-Improvements_plan">2014 Improvements plan</a></li>
+<li>Refactor of the homepage
+<ul>
+<li>Originally from a set of PHP files to DocPad and other <em>NodeJS</em> based scripts to make the homepage completely static</li>
+<li>see <a href="/docs/WPD/Projects/Homepage">in Projects/Homepage page</a></li>
+</ul></li>
+<li>Setup of our own email exit relay so that every server uses it instead of a paid external provider</li>
+<li>Deployed notes.webplatform.org w/ Hypothes.is</li>
+<li>Worked on implementing “SSO” based on a shared session token key, a “profile” server would be used as a source of truth, client web app (i.e. MediaWiki) would either create a user based on the details, or start a session</li>
+<li>Upgraded MySQL server version, migrated to MariaDB (Open Source version fork from the original author of MySQL)</li>
+<li>Creation of an account management service
+<ul>
+<li>Based on Mozilla Firefox Accounts (“FxA”)</li>
+<li>Created our own fork, changed branding</li>
+<li>Implemented Proof of concept of SSO using FxA for MediaWiki</li>
+<li>see <a href="/docs/WPD/Projects/SSO">SSO Project page</a></li>
+</ul></li>
+<li>Rework of how we deploy which now reads from a specifically crafted git repository and pull any plugins/extensions and gets configuration automatically applied
+<ul>
+<li>Piwik (stats.webplatform.org),</li>
+<li>WordPress (blog.webplatform.org)</li>
+<li>MediaWiki (docs.webplatform.org)</li>
+<li>The IRC bot,</li>
+<li>BugGenie (project.webplatform.org)</li>
+<li>Annotation service (notes.webplatform.org)</li>
+<li>Accounts service (accounts.webplatform.org), many repos refer to notes at <a href="/docs/WPD/Projects/SSO">SSO Project page</a></li>
+<li>Homepage (www.webplatform.org)</li>
+</ul></li>
+<li>Purchase of an EV SSL certificate with mention of “World Wide Web Consortium” to give a hint of the site maintainers</li>
+<li>Purchase of an alternate domain name to replicate in full (!!) the server setup allowing us to test in isolation every components of the site</li>
+<li>Reviewed every blog posts, and imported any images we were linking outside of our site</li>
+<li>“Inventory” system that keeps in memory the internal IP addresses of each infrastructure services: MySQL, Redis, Memcache, etc.</li>
+<li>Generates automatically configuration file with credentials based on the servers that are up at that moment, IP address, Passwords, Private keys, etc</li>
+<li>Capability to update passwords/private keys across all web applications from one “private” configuration file</li>
+<li>Setup of a “private” configuration system stored in a git repo, see <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/145">webplatform/ops#145</a></strong></li>
+<li>We will eventually publish all our deployment scripts to the public, except the “private” data files. Ref <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/48">webplatform/ops#48</a></strong></li>
+<li>Setup an NFS mount point so that ElasticSearch instances can do backups. Reviewed idea of not using inter instance storage, at least limit it only in the case of of backups… until we can store ElasticSearch snapshots through Swift/DreamObjects too, see <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/120">webplatform/ops#120</a></strong></li>
+</ul>
+<h3>2015</h3>
+<ul>
+<li>Renamed <strong>deployment.webplatform.org</strong> into <strong>salt.webplatform.org</strong>
+<ul>
+<li>Old <strong>deployment</strong> —in DHO cluster— was left to run everything in production, as long as it wasn’t ready to be moved to the new environment in DreamCompute</li>
+<li>Created <strong>salt.webplatform.org</strong> —in DreamCompute cluster— so that we could create a complete deployment of every compoenents without affecting production</li>
+<li>Used both environments simultaneously and could do gradual roll out of every components. Once a roll out was made, I stopped the old version in DHO cluster.</li>
+</ul></li>
+<li>Set in place conventions to remove need to change configurations across environments, see <a href="#Conventions_in_place">#Conventions in place</a></li>
+<li>Work done on “hardening” security on servers
+<ul>
+<li>Set in place automatic installation of security updates</li>
+<li>The main deployment server (&quot;salt.webplatform.org&quot;, a.k.a salt) is the only IP address we can connect through SSH, only way to access another server using salt as a proxy. Benefit is that to remove access to a user, we can remove his access on salt, everything else becomes inaccessible</li>
+</ul></li>
+<li><strong>March 2015</strong>; Finished up work planned in <a href="/docs/WPD/Infrastructure/reports/201410#Objectives"><strong>October 2014 sprint report</strong>, according to the <em>Objectives</em></a> <em>and</em> <a href="/docs/WPD/Infrastructure/analysis/2014-Improvements_plan">2014 <strong>Improvements plan</strong></a> we set. Except for &quot;automated deployment at Git push&quot;, something that’ll be done in a future sprint.</li>
+<li>Created bootstrap scripts so we can rebuild “from scratch” —at ANY time— a new salt master (what’s taking care of orchestrating deployment).</li>
+<li>Improved infrastructure maintenance documentation
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture">Architecture design</a>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">What roles each server fulfills and how to leverage it</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">How the <strong>Salt Master</strong> is designed</a></li>
+</ul></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">How we deploy code</a></li>
+</ul></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">How to replace any VM</a> (without downtime)</li>
+<li>How caching is configured
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">How to maintain Varnish/Fastly caching configuration</a>,</li>
+<li>Documented what should be taken into account when working on the configuration in <a href="/docs/WPD/Infrastructure/architecture/Things_to_consider_when_we_expose_service_via_Fastly_and_Varnish"><strong>Things to consider when we work on Varnish configuration</strong></a></li>
+</ul></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">How to manage MySQL/MariaDB replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">How to change database configuration and ensure every affected web application gets the new passswords</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">How to maintain our new ElasticSearch cluster</a>, including notes on how automatic backups are made</li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">How to <strong>Maintain email services</strong></a></li>
+</ul>
+<h2>Soon?</h2>
+<p>Some notes that were gathered around that aren’t been tried yet.</p>
+<ul>
+<li><p>Improve stats:</p>
+<ul>
+<li><strong>Purpose</strong>: Get system health data as graph, over time</li>
+<li>Some candidates
+<ul>
+<li><a href="http://grafana.org">Graphana</a>?</li>
+<li><a href="http://sensuapp.org">Sensu</a>?</li>
+<li><a href="http://riemann.io/">Riemann</a></li>
+<li>collectd</li>
+<li>fluentd</li>
+<li><a href="https://github.com/python-diamond/Diamond">Diamond</a>?</li>
+</ul></li>
+<li>Get page load stats (i.e. what <a href="http://www.soasta.com/">SOASTA</a> does, but use open-source version; <a href="http://www.lognormal.com/boomerang/doc/">Boomerang</a>), see <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/143">webplatform/ops#143</a></strong></li>
+<li>Attempt to merge data from ganglia into Graphana so we do not lose previous data</li>
+</ul></li>
+<li><p>Improve toolkit</p>
+<ul>
+<li>Ability to debug a-la-firebug communication between backends w/ <a href="https://blog.twitter.com/2012/distributed-systems-tracing-with-zipkin">Zipkin</a>, see <a href="http://research.google.com/pubs/pub36356.html">paper about <em>distributed systems tracing</em></a></li>
+<li>Ability to snapshot a server state for future investigation? Ref; <a href="http://www.sysdig.org/">http://www.sysdig.org/</a></li>
+<li>More food for thoughts … <a href="http://metrics20.org/">Metrics 2.0</a></li>
+</ul></li>
+<li><p>Get system metrics</p>
+<ul>
+<li>Leverage Monit system, push to <a href="http://hekad.readthedocs.org">Heka</a>? (<a href="https://github.com/renoirb/mmonit-mock-listener">see this sandbox</a>), or <a href="https://github.com/lunich/monitrb">use an existing one in <em>Ruby</em> that stores in MongoDB</a></li>
+<li>Use NGINX status, ref <a href="https://www.scalyr.com/community/guides/how-to-monitor-nginx-the-essential-guide">How to monitor NGINX, the essential guide</a></li>
+<li>Gather ElasticSearch metrics, see <a href="https://github.com/abronner/elasticsearch-monitoring">this repo</a></li>
+<li>Get Inspiration from <a href="http://www.lowlevelmanager.com/2014/07/monitorama-conference.html">some notes from <em>Monitorama</em> conference</a></li>
+</ul></li>
+<li><p>Centralized logging:</p>
+<ul>
+<li><strong>Purpose</strong>: Aggregate and harmonize all log messages to see what happened (or happens)</li>
+<li>LogStash to process logs (and emails? see <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/127">webplatform/ops#127</a></strong>)</li>
+<li>Log rotation, and create archive files every year to prevent disk filling</li>
+<li>Network traffic review tool <a href="http://www.haka-security.org/hakabana.html">HaKabana</a>; &quot;Visualize Haka traffic in real-time using Kibana and Elasticsearch.&quot;, see <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/142">webplatform/ops#142</a></strong></li>
+</ul></li>
+<li><p>Accounts web app:</p>
+<ul>
+<li>PHP relying client; Create shared component compatible with Composer</li>
+<li>Factor out specific to MediaWiki as an extension, use new shared PHP component</li>
+</ul></li>
+<li><p>Automatic deployment:</p>
+<ul>
+<li><strong>Purpose</strong>: Ease to have contributors to see their work online</li>
+<li>Create typical deployment package (i.e. commands to run to get all dependencies, make a zip file, unpack on every servers)</li>
+<li>Homepage, see: <a href="http://project.webplatform.org/infrastructure/issues/99">Story 99; Automating deployment of Home page</a></li>
+<li>Project, see: <a href="http://project.webplatform.org/infrastructure/issues/81">Story 81; Automating deployment of Project Management tool</a> (postpone?)</li>
+<li>Wiki, see: <a href="http://project.webplatform.org/infrastructure/issues/79">Story 79; Automating deployment of Wiki</a></li>
+<li>Blog, see: <a href="http://project.webplatform.org/infrastructure/issues/80">Story 80; Automating deployment of Blog</a></li>
+<li>Mis. requirements:
+<ul>
+<li>Handle dependencies, look at <a href="https://gradle.org/">Graddle would do?</a></li>
+<li>Make all web apps deployed through Docker?</li>
+<li>Figure out how we could test</li>
+</ul></li>
+</ul></li>
+<li><p>Set in place deployment tests;</p>
+<ul>
+<li>Cover all edge-cases a backend served by Varnish must have</li>
+<li>Cover all edge-cases a request served by Varnish should have</li>
+<li>Think of Behat/ReSpec for a server. See <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/144">webplatform/ops#144</a></strong></li>
+</ul></li>
+<li><p>Monitoring and alerts</p>
+<ul>
+<li>Leverage LogStash as a Monitoring solution? Ref <a href="http://www.nuxeo.com/blog/monitoring-nuxeo/">Monitoring at Nuxeo</a></li>
+<li>Document expectations and endpoints along with links to documentation for each service</li>
+<li>Use deployment tests as monitoring? ref <a href="http://riltsken.github.io/devops/infrastructure/monitoring/2014/04/19/making-runbooks-more-useful-by-exposing-them-through-monitoring.html">making “run books” more useful by exposing through monitoring</a></li>
+<li>etc…</li>
+</ul></li>
+<li><p>Helpers</p>
+<ul>
+<li>Make server SSH MOTD point out links to maintenance documentation, <a href="http://riltsken.github.io/devops/infrastructure/2014/03/16/how-server-message-of-the-day-improved-our-devops-team.html">inspired by this <em>blog post</em></a></li>
+</ul></li>
+<li><p>Dashboard and status</p>
+<ul>
+<li><a href="https://shopify.github.io/dashing">Dashing</a>?</li>
+<li><a href="https://github.com/cachethq">Cachet</a></li>
+</ul></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

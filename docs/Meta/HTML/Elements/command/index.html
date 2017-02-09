@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>command · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    <meta property="standardization" content="Experimental" />
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/Meta:HTML/">Meta:HTML</a></li><li><a href="/Meta:HTML/Elements/">Elements</a></li><li><a href="/Meta:HTML/Elements/command/">command</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>command</h1>
+<p><strong>Needs Summary</strong>: This article does not have a summary. Summaries give a brief overview of the topic and are automatically included on some listing pages that link to this article.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd>[[|]]
+</dd>
+</dl>
+<h1>&lt;command&gt;</h1>
+<p>The &lt;command&gt; element represents a command that the user can invoke.</p>
+<h2>Point</h2>
+<ul>
+<li>A command can be part of a context menu or toolbar, using the menu element, or can be put anywhere else in the page, to define a keyboard shortcut.</li>
+</ul>
+<h2>HTML Attributes</h2>
+<ul>
+<li><p><code>type</code> = command/ checkbox/ radio<br>
+Indicates the kind of command:</p>
+<ul>
+<li>command<br>
+Normal command with an associated action.</li>
+<li>checkbox<br>
+State or option that can be toggled.</li>
+<li>radio<br>
+Selection of one item from a list of items.</li>
+</ul></li>
+<li><p><code>label</code> = string<br>
+Gives the name of the command, as shown to the user.<br>
+The label attribute must be specified and must have a value that is not the empty string.</p></li>
+<li><p><code>icon</code> = valid non-empty URL potentially<br>
+Gives a picture that represents the command.</p></li>
+<li><p><code>disabled</code> = boolean<br>
+If present, indicates that the command is not available in the current state.</p></li>
+<li><p><code>checked</code> = boolean<br>
+If present, indicates that the command is selected.<br>
+The attribute must be omitted unless the type attribute is in either the Checkbox state or the Radio state.</p></li>
+<li><p><code>radiogroup</code> = string<br>
+Gives the name of the group of commands that will be toggled when the command itself is toggled, for commands whose type attribute has the value &quot;radio&quot;.</p></li>
+</ul>
+<p>See also <a href="/w/index.php?title=HTML/Attributes/_Global&amp;action=edit&amp;redlink=1">global attributes</a>.</p>
+<p>Also, the title attribute has special semantics on this element.</p>
+<h2>Examples</h2>
+<h3>Example A</h3>
+<p>[try it]:</p>
+<pre><code>&lt;menu type=&quot;toolbar&quot;&gt;
+  &lt;command type=&quot;radio&quot; radiogroup=&quot;alignment&quot; checked=&quot;checked&quot;
+          label=&quot;Left&quot; icon=&quot;icons/alL.png&quot; onclick=&quot;setAlign('left')&quot;&gt;
+  &lt;command type=&quot;radio&quot; radiogroup=&quot;alignment&quot;
+          label=&quot;Center&quot; icon=&quot;icons/alC.png&quot; onclick=&quot;setAlign('center')&quot;&gt;
+  &lt;command type=&quot;radio&quot; radiogroup=&quot;alignment&quot;
+          label=&quot;Right&quot; icon=&quot;icons/alR.png&quot; onclick=&quot;setAlign('right')&quot;&gt;
+  &lt;hr&gt;
+  &lt;command type=&quot;command&quot; disabled=&quot;disabled&quot;
+          label=&quot;Publish&quot; icon=&quot;icons/pub.png&quot; onclick=&quot;publish()&quot;&gt;
+&lt;/menu&gt;
+</code></pre>
+<h2>HTML Reference</h2>
+<p>The HTML5 specification defines the &lt;command&gt; element in <a href="http://www.w3.org/TR/html5/interactive-elements.html#the-command-element">4.12.3 The command element</a>.</p>
+<p><strong>Needs Examples</strong>: This section should include examples.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

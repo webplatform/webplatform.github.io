@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>text · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Last Call Working Draft" />
+    <meta name="description" content="Legacy. Use textContent instead. When setting, does same as textContent. When getting, gets a concatenated version of all of the child text nodes of a script element." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/HTMLScriptElement/">HTMLScriptElement</a></li><li><a href="/dom/HTMLScriptElement/text/">text</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>text</h1>
+<h2>Summary</h2>
+<p>Legacy. Use textContent instead. When setting, does same as textContent. When getting, gets a concatenated version of all of the child text nodes of a script element.</p>
+<p>Property of <a href="/docs/dom/HTMLScriptElement">dom/HTMLScriptElement</a><a href="/docs/dom/HTMLScriptElement">dom/HTMLScriptElement</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> scriptCode = scriptElement.text;
+scriptElement.text = newScriptCode;
+</code></pre>
+<h2>Return Value</h2>
+<p>Returns an object of type StringString</p>
+<p>A concatenation of all of the child <a href="/docs/dom/Text">text nodes</a> of the element.</p>
+<h2>Examples</h2>
+<p>The following script gets the code of an inline script element, changes the name of a function, constructs a new scripts element, sets the changed code as its code and appends it to the document in order to run it.</p>
+<pre><code class="js"><span class="hljs-comment">// Caching the script element with the some-script ID.</span>
+<span class="hljs-keyword">var</span> script = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"some-script"</span>);
+
+<span class="hljs-comment">// Getting the script code.</span>
+<span class="hljs-comment">// Alternatively, use script.textContent.</span>
+<span class="hljs-keyword">var</span> scriptCode = script.text;
+
+<span class="hljs-comment">// Replacing the first occurrence of "function someFunction()"</span>
+<span class="hljs-comment">// with "function newFunction()".</span>
+scriptCode = scriptCode.replace(<span class="hljs-string">"function someFunction()"</span>, <span class="hljs-string">"function newFunction()"</span>);
+
+<span class="hljs-comment">// Creating a new script element.</span>
+<span class="hljs-keyword">var</span> newScript = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"script"</span>);
+
+<span class="hljs-comment">// Setting the changed script code as its text.</span>
+<span class="hljs-comment">// Alternatively, use newScript.textContent.</span>
+newScript.text = scriptCode;
+
+<span class="hljs-comment">// Appending the script element to the head element</span>
+<span class="hljs-comment">// in order to run it.</span>
+<span class="hljs-built_in">document</span>.head.appendChild(newScript);
+</code></pre>
+<h2>Usage</h2>
+<pre><code> Legacy. Use textContent instead.
+</code></pre>
+<p>Use this property to get a concatenated version of all of the child text nodes of a <a href="/docs/html/elements/script">script</a> element. Setting this property works the same way as setting the <a href="/docs/dom/Node/textContent">textContent</a> property.</p>
+<h2>Notes</h2>
+<ul>
+<li><a href="/docs/dom/Text">Text nodes</a> that are nested within elements or HTML comments are excluded.</li>
+<li>Settings this property of a <a href="/docs/html/elements/script"><strong>script</strong></a> element after its contained or referenced script has already ran does not run the new set code.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/REC-DOM-Level-1/level-one-html.html#ID-46872999">Document Object Model (DOM) Level 1</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting.html#dom-script-text">WHATWG HTML</a></dt>
+<dd>Living Standard
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/scripting-1.html#dom-script-text">HTML5</a></dt>
+<dd>W3C Last Call Working Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

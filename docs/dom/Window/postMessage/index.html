@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>postMessage · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="Sends a cross-document message." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Window/">Window</a></li><li><a href="/dom/Window/postMessage/">postMessage</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>postMessage</h1>
+<h2>Summary</h2>
+<p>Sends a cross-document message.</p>
+<p>Method of <a href="/docs/dom/Window">dom/Window</a><a href="/docs/dom/Window">dom/Window</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"> targetFrame.postMessage(<span class="hljs-comment">/* see parameter list */</span>);
+</code></pre>
+<h2>Parameters</h2>
+<h3>msg</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>A <strong>String</strong> that contains the message data.</p>
+<h3>targetOrigin</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>A <strong>Variant</strong> of type <strong>String</strong> that specifies a target URI.</p>
+<h2>Return Value</h2>
+<p>No return value</p>
+<h2>Examples</h2>
+<p>If Document A (on <a href="http://127.0.0.1">http://127.0.0.1</a>) contains a reference to the <a href="/docs/dom/HTMLIFrameElement/contentWindow"><strong>contentWindow</strong></a> property of Document B (on <a href="http://localhost">http://localhost</a>), script in Document A can send a message to Document B by calling the <strong>postMessage</strong> method as follows:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> targetframe = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">'iframe'</span>)[<span class="hljs-number">0</span>];
+targetframe.contentWindow.postMessage(<span class="hljs-string">'Hello World'</span>,<span class="hljs-string">'http://localhost'</span>);
+</code></pre>
+<p>The script in Document B can respond to the message by registering the <a href="/docs/dom/Window/message"><strong>onmessage</strong></a> event handler for incoming messages.</p>
+<pre><code class="js"><span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'message'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-keyword">if</span> (e.origin == <span class="hljs-string">'http://127.0.0.1'</span>) {
+        <span class="hljs-keyword">if</span> (e.data == <span class="hljs-string">'Hello World'</span>) {
+            <span class="hljs-comment">// We can reply with this</span>
+            e.source.postMessage(<span class="hljs-string">'Hello'</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-built_in">console</span>.log(e);
+        }
+    }
+},<span class="hljs-literal">false</span>);
+</code></pre>
+<h2>Notes</h2>
+<p>**Security Warning:  **While “*” is a valid value for <em>targetOrigin</em>, set the parameter to the value you expected to receive; otherwise, the security of your message might be compromised. For more information about this security message, see Section 3.1.2 of the <a href="http://go.microsoft.com/fwlink/?LinkId=199803">HTML5 Web Messaging</a> Specification (Editor’s Draft) from the World Wide Web Consortium (W3C). The <strong>postMessage</strong> method allows cooperative text exchange between untrusted modules from different domains embedded within a page. It does so by ensuring a consistent and secure process for text-based data exchange. When a script invokes this method on a <strong>window</strong> object, the browser sends an <a href="/docs/dom/Window/message"><strong>onmessage</strong></a> event to the target document on which the <strong>data</strong> property has been set to the value passed in <em>msg</em>. When a target URI is passed into the method, it must have at least a protocol and a host specified. The message will only be sent if the target window has the same protocol and host as the specified target URI. The <strong>postMessage</strong> method call does not return until the event listeners of the target document have finished executing.</p>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=199803">HTML5 Web Messaging</a>, Section 5.3</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage">postMessage</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/cc197015(v=vs.85).aspx">postMessage Method</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS text styling fundamentals · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article covers the fundamentals of styling text on the web, including web fonts, font size, line height, and more." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/css_text styling fundamentals/">css text styling fundamentals</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>CSS text styling fundamentals</h1>
+<h2>Summary</h2>
+<p>This article covers the fundamentals of styling text on the web, including web fonts, font size, line height, and more.</p>
+<h2>Introduction</h2>
+<p>The web is composed of a lot of different things, technical, social, and structural, but at its heart is something we all understand: human language. The beauty of the web is that it allows human-readable text to be presented so that it transcends barriers such as disability and geography. Of course, as humans we have been working out ways to format text so that it is legible to others for many centuries, but in printed form.</p>
+<p>Web design has a lot of parallels with print design, but it also has a lot of differences and a lot more limitations. In this article we explore how to style text on the web using CSS.</p>
+<p>Note: The article <a href="/docs/concepts/web_typography">Web Typography</a> lays a good foundation for this chapter by explaining a number of typographic concepts. Make sure you read it before this one.</p>
+<h2>Print to web?</h2>
+<p>The main shock that print designers get when coming to the web is the lack of control. In print design, designers have ultimate control over how their creations will look, and are safe in the knowledge that the space the work appears in will not change dimensions, number of colors available, or any other such property.</p>
+<p>On the web, however, you can not guarantee that your beautifully crafted design will look identical to you and your users. They might be using a different operating system, or a different device altogether, or they might be visually impaired, meaning that they might be using your site with a lot of magnification, or a custom style sheet that changes your fonts and colors, or a screen reader, which reads the text out to them.</p>
+<p>So, you need to accept this uncertainty and move on. You will discover strategies to make your designs more flexible so they look better in widely varying viewing contexts later, but for now, let’s review the basics.</p>
+<h2>Font styles</h2>
+<p>CSS has a number of properties beginning with <code>font-</code>, which allow you to control many features of the text characters (or glyphs) themselves. We’ll take a look at these in the following sections.</p>
+<h3>Choosing a font with font-family</h3>
+<p><code>font-family</code> allows you to specify which font, or fonts, a selection of elements will use. Try adding the following CSS line to a <code>body</code> rule, then save and reload:</p>
+<pre><code class="css"><span class="hljs-tag">font-family</span>: <span class="hljs-tag">Arial</span>;
+</code></pre>
+<p>This will apply Arial — a sans-serif font (no serifs, the little decorative features at the end of the strokes of the text) — to the whole document, rather than the default serif font (fonts that <em>have</em> serifs), provided this font is available on your user’s system. It probably will be, because Arial is a ubiquitous font.</p>
+<h4>Web-safe fonts</h4>
+<p>There are about 11 fonts that are installed across almost all systems, termed <em>web safe fonts</em> because they are safe for use in your pages. The list includes:</p>
+<ul>
+<li><strong>Sans-serif</strong>: fonts without serifs: Verdana, Arial, Trebuchet MS</li>
+<li><strong>Serif</strong>: fonts with serifs: Times new roman, Georgia</li>
+<li><strong>Monospaced</strong>: fonts in which every glyph takes up the same space, like in computer code: Andale mono, Courier new</li>
+<li><strong>Cursive</strong>: fonts that have a decorative, often handwritten-looking style: Comic Sans</li>
+<li><strong>Fantasy</strong>: fonts that have a bold, often ornamental or quirky style, which are meant to be used for headings, not body copy: Impact</li>
+</ul>
+<h4>Font stacks</h4>
+<p>If you want, you can also apply a number of fonts to a single element selection, known as a <em>font stack</em>. Try changing the line you added above to the following:</p>
+<pre><code class="css">font-family: 'helvetica neue', arial, verdana, sans-serif;
+</code></pre>
+<p>Unless you have Helvetica neue, you’ll probably not see much difference from what was there before, so it is important to understand how it works. When you specify a font stack like this, the browser goes through them from left to right, until it finds a font that is installed on the system, and therefore can be used.</p>
+<p>So:</p>
+<ul>
+<li>The browser searches for Helvetica neue on the user’s system, and uses this font if it finds it.</li>
+<li>If Helvetica neue is not found, the browser searches for Arial on the user’s system, and uses it if it finds it.</li>
+<li>If Arial isn’t found, we’ll use Verdana.</li>
+<li>As a last resort, if none of the fonts in the font stack are found the font falls back to sans-serif, which instructs the browser to use whatever font is the system’s default sans-serif font. You do not know exactly what will be used in this eventuality, which is an annoying loss of control, but at least this is better than ending up with the browser default — Times new roman — which is a serif font.</li>
+</ul>
+<p>Note that fonts with more than one word in their names must be surrounded by quotes.</p>
+<h4>Overriding body fonts</h4>
+<p>So far you have set fonts on the <code>&lt;body&gt;</code> element, which sets a page-wide default that affects everything; now you will learn how to override some of the <code>&lt;body&gt;</code>'s child elements to set things up nicely.</p>
+<p>For a start, it is often a good idea to use a different font for at least some of your headings, to make them stand out and give your site a bit more character. Add the following to your styles:</p>
+<pre><code class="css"><span class="hljs-tag">h1</span>, <span class="hljs-tag">h2</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> impact</span></span>;
+}</span>
+</code></pre>
+<p>Save and reload and notice that the page now looks very different.</p>
+<p>As for other content elements we could affect, how about emphasized text? You could, for example, use <code>&lt;em&gt;</code> for all references involving dates to make them stand out a bit. As it is, the browser gives emphasis a default italic look, but this does not stand out as much as it could. Add the following rule:</p>
+<pre><code class="css"><span class="hljs-tag">em</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> georgia</span></span>;
+}</span>
+</code></pre>
+<p>Your fonts (especially your headings) are one of the biggest contributors to the overall personality of your site, so choose them carefully to fit. This may sound difficult to begin with, but you will soon get the hang of it. As a rule, Times new roman is good for corporate sites, whereas a sans-serif like Arial might be better for a less formal site. Cursive fonts need to be used sparingly — for example, Comic sans is hated by many designers, but it is suitable in some cases, such as creating a chalk-on-blackboard effect on a children’s site.</p>
+<p>Headings used to be difficult to deal with. Given that the only web safe fantasy font seems to be Impact (not bad, but imagine if all sites had to use it) and you do not want to be stuck with a default system font, such as the dreadful Papyrus, designers used to use various image techniques for their headings. As you should know by now, using images for text on a web site is really bad because images cannot be read by screen readers or search engines. In the next section, you will find some solutions to resolve this problem.</p>
+<h3>Image replacement</h3>
+<p>Image replacement is a very common technique to display better looking headings and company logos, while not making the text inaccessible or compromising on search engine optimization. Here is an overview of how it works:</p>
+<p>Create an image file of your heading with the desired design. Add the following rule to your CSS, and then save and reload the page, making sure the image is in the same directory as the HTML file:</p>
+<pre><code class="css"><span class="hljs-tag">h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(myheading.png)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">55px</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">text-indent</span>:<span class="hljs-value"> -<span class="hljs-number">9000px</span></span></span>;
+}</span>
+</code></pre>
+<p>There are many variations on image replacement, but this is basically how most of them work: first of all, we include our image as a background image on the element we want to replace, setting the dimensions of the element to make sure the image can be fully seen. Then we use a very large negative text indent to push the actual heading text right off the page so you cannot see it, just leaving the background image in view. Don’t worry about the unfamiliar CSS properties for now; you will learn more about these later in the article series.</p>
+<p>This works pretty well — you get the heading look you want displayed on the page, across most browsers (most modern browsers display background images), and the actual text is still there (just not visible) to provide screen readers and search engines with what they need. There are some disadvantages, however:</p>
+<ul>
+<li>This technique is very inflexible. You have to create an image for each bit of text you want to replace, and then change them every time you want to change size, color, wording, or anything else. And imagine trying to use image replacement on bits of text inside paragraphs as well as headings? Too fiddly.</li>
+<li>Text scales nicely as you zoom in; images don’t. If you zoom in too much, the graphical heading will start to look grainy and pixelated.</li>
+<li>If you use too much text replacement, the extra HTTP requests could slow down your page load. Some more sophisticated image replacement techniques can slow down the page even more, as they use Flash (<a href="http://www.sifrgenerator.com/">siFR</a>) or SVG (<a href="http://cufon.shoqolate.com/generate/">cufon</a>).</li>
+</ul>
+<h3>Web fonts</h3>
+<p>Thankfully, CSS3 introduces Web fonts, a feature that allows us to specify our own custom font files to download along with our web pages. This is great, as it completely gets around the problem of fonts not being available on users’ machines. To specify a web font for download on a page, you reference the font in a special <code>@font-face</code> block that goes at the top of the page, and looks something like this:</p>
+<pre><code class="css"><span class="hljs-at_rule">@<span class="hljs-keyword">font-face</span></span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">'My font'</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'myfont.ttf'</span>) <span class="hljs-function">format</span>(<span class="hljs-string">'truetype'</span>)</span></span>;
+}</span>
+</code></pre>
+<p>There are more available options, but it is best to keep it simple for now. Basically, this involves specifying the name of the font family, and then pointing to the font file you want visitors to download along with your web page. This should always go at the top of your CSS file, so you can use it afterwards.</p>
+<p>You then include the font in your page in exactly the same way as you would other fonts:</p>
+<pre><code class="css">font-family: 'My font';
+</code></pre>
+<p>Simple huh? Well, not quite. the reality is that not all browsers support the same font formats, so the syntax to make this work across browsers is more complicated. Luckily, it is not necessary to write it yourself, as there are a number of services available that will do the hard work for you. This article describes a free service called <a href="http://www.fontsquirrel.com">Font Squirrel</a>, which not only has lot of great fonts available for you to use, but also generates all the CSS and font files you’ll need.</p>
+<p>Follow these steps:</p>
+<ol>
+<li><p>Obtain a font file. Almost all formats will work. A font I like for headings is called Romantiques, and I got it from <a href="http://www.fontspace.com/category/circus">Fontspace.com</a>. Download the zip file, and then unzip it.</p></li>
+<li><p>Visit fontsquirrel.com and choose the <a href="http://www.fontsquirrel.com/fontface/generator">@font-face generator</a>.</p></li>
+<li><p>Click &quot;Add fonts&quot;, select the Romantique font file you want to use, and check the disclaimer checkbox agreement.</p></li>
+<li><p>Click the “Download your kit” button. After a few seconds, you are prompted to save your web font kit. Save it in your example files.</p></li>
+<li><p>Unzip the kit, and you will see several files. The files you are interested in are the different font format files, and the <code>stylesheet.css</code>.</p></li>
+<li><p>Copy all the font files (<code>.eot</code>, <code>.svg</code>, <code>.ttf</code>, and <code>.woff</code>) to a sensible location in your example files. Saving the files in the same directory as the HTML file is easiest.</p></li>
+<li><p>Open the <code>stylesheet.css</code> file and copy the CSS rule inside it into the top of your example file styles. It looks like this:</p></li>
+</ol>
+<pre><code class="css"><span class="hljs-at_rule">@<span class="hljs-keyword">font-face</span></span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> <span class="hljs-string">'RomantiquesRegular'</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'romantiques-webfont.eot'</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">src</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">'romantiques-webfont.eot?#iefix'</span>) <span class="hljs-function">format</span>(<span class="hljs-string">'embedded-opentype'</span>),
+       <span class="hljs-function">url</span>(<span class="hljs-string">'romantiques-webfont.woff'</span>) <span class="hljs-function">format</span>(<span class="hljs-string">'woff'</span>),
+       <span class="hljs-function">url</span>(<span class="hljs-string">'romantiques-webfont.ttf'</span>) <span class="hljs-function">format</span>(<span class="hljs-string">'truetype'</span>),
+       <span class="hljs-function">url</span>(<span class="hljs-string">'romantiques-webfont.svg#RomantiquesRegular'</span>) <span class="hljs-function">format</span>(<span class="hljs-string">'svg'</span>)</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> normal</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-style</span>:<span class="hljs-value"> normal</span></span>;
+}</span>
+</code></pre>
+<ul>
+<li>Again, the <code>font-family</code> dictates the name of the font, used to identify it in the code.</li>
+<li>The <code>src</code> values specify the locations of the font files. Different browsers coming across this keep going through the list until they find a format they understand, at which point they download that font file and use it in the page (although some browsers are a bit buggy, and may download more than just the one they need, wasting bandwidth in the process). IE uses the <code>.eot</code> version; most modern browsers will use the <abbr title="Web Open Font Format"><code>.woff</code></abbr>, which is smaller in file size than the others; older browsers other than IE that do not support <code>.woff</code> will use the <code>.ttf</code> or <code>.svg</code> files.</li>
+<li>the <code>font-weight</code> and <code>font-style</code> specify attributes such as the weight of the font, and if it is italic, but it is not necessary to worry about those for now.</li>
+</ul>
+<p>Note: If you didn’t save the font files in the same directory as your example file, you must update the file paths to match the location of the fonts.</p>
+<p>Delete the <code>h1</code> rule you added previously, and replace it with this:</p>
+<pre><code class="css"><span class="hljs-tag">h1</span>, <span class="hljs-tag">h2</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> RomantiquesRegular</span></span>;
+}</span>
+</code></pre>
+<p>Save the page and reload it. Notice that the font is applied to all first and second level headings in the page. This is a very useful technique, and much more flexible than image replacement. Try adding a color to your headings:</p>
+<pre><code class="css"><span class="hljs-tag">color</span>: <span class="hljs-id">#530FAD</span>;
+</code></pre>
+<p>There are some issues with using custom fonts in this manner. Consider the following:</p>
+<ul>
+<li><strong>File size</strong>: For the purposes of this article, I deliberately selected a large sized font to highlight file size problems. Most western font file are not this big, but the Romantique files were mostly a few hundred KB, with the SVG weighing in at almost 1MB! This is a lot of extra weight to add to a page, especially for those downloading on slower bandwidth, such as mobile networks. And while Western glyph sets usually only have tens of characters in them, maybe a few hundred if a set is really complete, some language font sets (especially <abbr title="Chinese, Japanese, and Korean">CJK</abbr>) can have literally thousands of characters, and be many MB in size. Be aware!</li>
+<li><strong>Font size</strong>: You will notice that the font size is a lot smaller than with the image replacement version. Different base font sizes can also vary dramatically, so take that into consideration when setting font sizes, and investigate how fallback font sizes will match up to the primary fonts you want to use.</li>
+<li><abbr title="Flash of Unstyled Text"><strong>FOUT</strong></abbr>: This occurs when a page is loading, and for a short while, the text displays without the web font applied, before the web font finishes loading. When it does load, the page shifts to show the new font, which can be a jarring experience for the visitor. You can mitigate this using a library such as <a href="http://code.google.com/apis/webfonts/docs/webfont_loader.html">Google web font loader</a> or <a href="http://www.extensis.com/en/WebINK/fout-b-gone/">FOUT-b-Gone</a>.</li>
+<li><strong>Number of glyphs/font quality</strong>: There are a lot of free fonts available, from sites like <a href="http://www.fontsquirrel.com/">Font squirrel</a>, <a href="http://www.dafont.com/">DaFont</a>, <a href="http://new.myfonts.com/">My Fonts</a>, and <a href="http://www.google.com/webfonts">Google web fonts</a>, however they are not all high quality, and some may have a very limited glyph set, so you’ll get horrible little blank squares displayed instead of characters if you have characters on a page that are not present in your chosen font. This presents far more of a problem in body text than headings, and you need to be especially careful of this if you are using web fonts on sites with user generated content, because you cannot control exactly which characters visitors enter. Some fonts may also look bad on certain operating systems (they can look bad on Windows if the user does not have cleartype enabled). The only answer here is to test your fonts thoroughly before using them in your design. For example, the comma in the first <code>&lt;h2&gt;</code> looked terrible after I set my fonts to Romantique, so I removed it.</li>
+</ul>
+<p>Note: There are professional paid font services you can use for your web font needs, such as <a href="http://fontdeck.com/">Fontdeck</a> and <a href="https://typekit.com/">Typekit</a>. If you have the money to spend, their font options provide higher quality.</p>
+<h3>Setting units and sizing with font-size</h3>
+<p>The next CSS property to look at is <code>font-size</code>. This allows you to set the size of the text inside selected elements, using any CSS units available, such as pixels, ems, percentage, and more.</p>
+<p>You can also use size keywords: <code>xx-small</code>, <code>x-small</code>, <code>small</code>, <code>medium</code>, <code>large</code>, <code>x-large</code>, and <code>xx-large</code>. These tend to be best used when you want to set font sizes relative to each other. For example, the body size is <code>medium</code>, then you could set the top level heading to <code>xx-large</code>, and then perhaps set the second level heading to <code>x-large</code>.</p>
+<p>Using size keywords, headings will always stay proportionate to one another, regardless of the fonts used and the visitor’s operating system. But they do not offer a great amount of control — you do not see them used very often. Check out the following typical font-sizing exercise.</p>
+<h4>Setting a base font size</h4>
+<p>The first thing to do is set a base font size for the whole document. This is usually accomplished by adding a rule to the <code>&lt;body&gt;</code> element. Add the following to your <code>body</code> rule:</p>
+<pre><code class="css"><span class="hljs-tag">font-size</span>: 62<span class="hljs-class">.5</span>%
+</code></pre>
+<p>Why 62.5%? The answer is that the default font-size for most browsers is 16px. 62.5% of 16 is 10, so by using this percentage you are setting the base font for the whole site to 10px, which makes subsequent math calculations easier.</p>
+<h4>Setting heading and body sizes</h4>
+<p>Next, turn your attention to the font-sizes for different content. The base font size is 10px, making it easy to work out the sizes of the rest of the page text. For example, if you want the first level headings to be 42px, you can set the font-size to 420%, or 4.2ems. Percentages and ems work almost equivalently for our purposes. The differences are not really that important, at least for now. Both units set sizes proportionately to the size of parent font size, and the added bonus is that you can also set other dimensions in your design to percentages of ems, such as margins, the width of content blocks, and more. It is nice to be able to control a whole site relative to the text sizes.</p>
+<p>The other option you often see involves using pixels. Pixel units seem to give more control, as you set an absolute pixel size, but the font size does not change proportionally to anything else. However, this is not a best practice, because older browsers like IE6 cannot resize text that is set to pixel values, which is a big accessibility problem.</p>
+<p>For now, stick to using ems when writing rules.</p>
+<p>Add the following rules to your styles:</p>
+<pre><code class="css"><span class="hljs-tag">h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">5.5em</span></span></span>;
+}</span>
+
+<span class="hljs-tag">h2</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">3em</span></span></span>;
+}</span>
+</code></pre>
+<p>If you view the page in different browsers, you will notice that this rather complex font looks better in some browsers than others, and none look quite as good at the image replacement version. This is the kind of testing you should do before embarking too far into a project with a chosen font. Also, it does not look that great at a smaller size on the <code>h2</code>s. But for the purposes of this example, leave it as is.</p>
+<p>Next, set the body text and list to make it easier to read:</p>
+<pre><code class="css"><span class="hljs-tag">p</span>, <span class="hljs-tag">ul</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">1.6em</span></span></span>;
+}</span>
+</code></pre>
+<p>The rule above sets the body copy back to the default browser size, but it looks good and is readable.</p>
+<p>Next, set the emphasis slightly smaller, to make it stand out even more nicely:</p>
+<pre><code class="css"><span class="hljs-tag">em</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">0.8em</span></span></span>;
+}</span>
+</code></pre>
+<p>If you are wondering why you had to set it to 0.8em to get it slightly smaller, rather than say 1.5 or 1.4, try it and see. The reason is that the parent elements of <code>&lt;em&gt;</code> (either <code>&lt;p&gt;</code> or <code>&lt;li&gt;</code>) have been set to 1.5em. The sizing is relative to the font size of the immediate parent, so in this context 16px is equal to 1em. We have set 0.8em for the emphasiTed text, so the size comes out as 16px x 0.8 = about 13px.</p>
+<p>Note: The pixel sizes we are talking about here are called the <em>computed values</em>. Regardless of the units and values you use to set your font sizes, computers display graphics display in pixels, so the browser must convert everything into pixel values before it can display them to visitors.</p>
+<h3>Changing the details with font-weight, font-style, and font-variant</h3>
+<p>Next, you’ll check out these properties:</p>
+<ul>
+<li><code>font-weight</code> allows you to set the boldness of text in selected elements.</li>
+<li><code>font-style</code> allows you to set a element’s text to be oblique or italic.</li>
+<li><code>font-variant</code> allows you to set and element’s text to be small-caps, also known as copperplate letters.</li>
+</ul>
+<h4>Using font-weight</h4>
+<p>Use this property when you want text to be bolder. Possible values are:</p>
+<ul>
+<li><code>bold</code> and <code>bolder</code> provide two levels of extra boldness.</li>
+<li><code>lighter</code> provides a level of less boldness.</li>
+<li><code>100</code>, <code>200</code> … all the way up to <code>900</code> provide incremental levels of boldness.</li>
+<li><code>normal</code> is the default non-bold setting.</li>
+</ul>
+<p>Most of these settings don’t really make a visual difference, especially when setting small font sizes, and when the font you are using doesn’t have different levels of boldness defined in it.</p>
+<p>For this example, add the following rule to highlight the first lines below each heading:</p>
+<pre><code class="css"><span class="hljs-tag">h1</span> + <span class="hljs-tag">p</span><span class="hljs-pseudo">:first-line</span>, <span class="hljs-tag">h2</span> + <span class="hljs-tag">p</span><span class="hljs-pseudo">:first-line</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+}</span>
+</code></pre>
+<p>And then save the page, reload the browser window, and review the results.</p>
+<p>Note: <code>bold</code> is equivalent to <code>700</code>.</p>
+<h4>Setting font-style</h4>
+<p><code>font-style</code> can take the values <code>italic</code>, <code>oblique</code>, and <code>normal</code>. Normal is the default, as before, <code>italic</code> tells the browser to use the italic version of the font (if available), and <code>oblique</code> tells the browser to use the normal version of the font, but slant it. If you specify <code>italic</code>, unless the font you are using has a specific italic version available the browser will fall back to generate an oblique version to use.</p>
+<p>Add the following line to the rule you added in the previous section:</p>
+<pre><code class="css"><span class="hljs-tag">font-style</span>: <span class="hljs-tag">italic</span>;
+</code></pre>
+<h4>Working with font-variant</h4>
+<p><code>font-variant</code> can take two values, <code>normal</code>, which is the default as expected, and <code>small-caps</code>, which uses all capital characters, but large ones for the capital letters, and small ones for the lower case letters. Add the following to the <code>em</code> rule and see what happens:</p>
+<pre><code class="css"><span class="hljs-tag">font-variant</span>: <span class="hljs-tag">small-caps</span>;
+</code></pre>
+<h2>Conclusion</h2>
+<p>You should now have a grasp of text styling fundamentals and be able to apply the techniques to your own pages. For more information, see the other tutorial articles in this section.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

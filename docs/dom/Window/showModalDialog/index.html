@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>showModalDialog · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Do not use. Use &amp;lt;dialog&amp;gt; or a popup window instead. Halts the script execution, creates a popup window, passes it parameters and returns a value when the new window is closed." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Window/">Window</a></li><li><a href="/dom/Window/showModalDialog/">showModalDialog</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>showModalDialog</h1>
+<h2>Summary</h2>
+<p>Do not use. Use &lt;dialog&gt; or a popup window instead. Halts the script execution, creates a popup window, passes it parameters and returns a value when the new window is closed.</p>
+<p>Method of <a href="/docs/dom/Window">dom/Window</a><a href="/docs/dom/Window">dom/Window</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> returnValue = <span class="hljs-built_in">window</span>.showModalDialog(url, argumentsToPass, windowOptions);
+</code></pre>
+<h2>Parameters</h2>
+<h3>url</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>String</strong> that specifies the URL of the document to load and display.</p>
+<h3>argumentsToPass</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<p>The arguments to use when displaying the new document. Use this parameter to pass a value of any type, including an array of values. The dialog box can extract the values passed by the caller from the <a href="/docs/dom/WindowModal/dialogArguments"><strong>dialogArguments</strong></a> property.</p>
+<h3>windowOptions</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>Specifies the window ornaments for the dialog box, using one or more of the following semicolon-delimited values:</p>
+<h2>Return Value</h2>
+<p>Returns an object of type anyany</p>
+<p>The value of the <strong>returnValue</strong> property as set by the window of the document specified in <em>url</em>.</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>showModalDialog</strong> method to open a customized dialog box.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnRandom</span>(<span class="hljs-params">iModifier</span>)</span>{
+   <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">Math</span>.random()*iModifier);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnSetValues</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-keyword">var</span> iHeight=oForm.oHeight.options[
+      oForm.oHeight.selectedIndex].text;
+   <span class="hljs-keyword">if</span>(iHeight.indexOf(<span class="hljs-string">"Random"</span>)&gt;-<span class="hljs-number">1</span>){
+      iHeight=fnRandom(<span class="hljs-built_in">document</span>.body.clientHeight);
+   }
+   <span class="hljs-keyword">var</span> sFeatures=<span class="hljs-string">"dialogHeight: "</span> + iHeight + <span class="hljs-string">"px;"</span>;
+   <span class="hljs-keyword">return</span> sFeatures;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnOpen</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-keyword">var</span> sFeatures=fnSetValues();
+   <span class="hljs-built_in">window</span>.showModalDialog(<span class="hljs-string">"showModalDialog_target.htm"</span>, <span class="hljs-string">""</span>,
+      sFeatures)
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"oForm"</span>&gt;</span>
+    Dialog Height
+  <span class="hljs-tag">&lt;<span class="hljs-title">select</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"oHeight"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>-- Random --<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>150<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>200<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>250<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">option</span>&gt;</span>300<span class="hljs-tag">&lt;/<span class="hljs-title">option</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">select</span>&gt;</span>
+    Create Modal Dialog Box
+  <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"button"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Push To Create"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"fnOpen()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/showModalDialog2.htm">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> Do not use. This API is being phased out. Chrome and Opera have already removed it by default and Firefox also considers following suit.
+</code></pre>
+<h2>Notes</h2>
+<p>A modal dialog box retains the input focus while open. The user cannot switch windows until the dialog box is closed. Because a modal dialog box can include a URL to a resource in a different domain, do not pass information through the <em>varArgIn</em> parameter that the user might consider private. The <em>varArgIn</em> parameter can be referenced within the modal dialog box using the <a href="/docs/dom/WindowModal/dialogArguments"><strong>dialogArguments</strong></a> property of the <strong>window</strong> object. If the <em>varArgIn</em> parameter is defined as a string, the maximum string length that can be passed to the modal dialog box is 4096 characters; longer strings are truncated. You can set the default font settings the same way you set Cascading Style Sheets (CSS) attributes (for example, <code>&quot;font:3;font-size:4&quot;</code>). To define multiple font values, use multiple font attributes. To override <code>center</code>, even though the default for <code>center</code> is <code>yes</code>, you can specify either <code>dialogLeft</code> and/or <code>dialogTop</code>. When Windows Internet Explorer opens a window from a modal or modeless HTML dialog box by using the <strong>showModalDialog</strong> method or by using the <a href="/w/index.php?title=dom/HTMLElement/showModelessDialog&amp;action=edit&amp;redlink=1"><strong>showModelessDialog</strong></a> method, Internet Explorer uses Component Object Model (COM) to create a new instance of the window. Typically, the window is opened by using the first instance of an existing Internet Explorer process. When Internet Explorer opens the window in a new process, all the memory cookies are no longer available, including the session ID. This process is different from the process that Windows Internet Explorer uses to open a new window by using the <a href="/docs/dom/Window/open"><strong>open</strong></a> method. For Windows Internet Explorer 7, <code>dialogHeight</code> and <code>dialogWidth</code> return the height and width of the content area and no longer includes the height and width of the frame. Internet Explorer 7. Although a user can manually adjust the height of a dialog box to a smaller value —provided the dialog box is resizable— the minimum <code>dialogHeight</code> you can specify is 100 pixels, and the minimum <code>dialogWidth</code> you can define is 250 pixels. In versions earlier than Internet Explorer 7 the minimum value of the <code>dialogWidth</code> that can be specified is 100 pixels.</p>
+<p><strong>Note</strong>  For Internet Explorer 7, <code>help</code> is not a valid value for <code>sFeatures</code>. In previous versions, <code>help:{ yes | no | 1 | 0 | on | off }</code> specified whether the dialog window displays the context-sensitive Help icon. This method must use a user-initiated action, such as clicking on a link or tabbing to a link and pressing enter, to open a pop-up window. The Pop-up Blocker feature in Microsoft Internet Explorer 6 blocks windows that are opened without being initiated by the user. Microsoft Internet Explorer 5 and later allows further control over modal dialog boxes through the <code>status</code> and <code>resizable</code> values in the <em>varOptions</em> parameter of the <strong>showModalDialog</strong> method. Turn off the status bar by calling the dialog box from a trusted application, such as Microsoft Visual Basic or an HTML Application (HTA), or from a trusted window, such as a trusted modal dialog box. These applications are considered to be trusted because they use Internet Explorer interfaces instead of the browser. Any dialog box generated from a trusted source has the status bar turned off by default. Resizing is turned off by default, but you can turn it on by specifying <code>resizable=yes</code> in the <em>varOptions</em> string of the <strong>showModalDialog</strong> method. The default unit of measure for <code>dialogHeight</code> and <code>dialogWidth</code> in Internet Explorer 5 and later is the pixel. The value can be an integer or floating-point number, followed by an absolute units designator (<code>cm</code>, <code>mm</code>, <code>in</code>, <code>pt</code>, or <code>pc</code>) or a relative units designator (<code>em</code>, <code>ex</code>, or <code>px</code>). For consistent results, specify the <code>dialogHeight</code> and <code>dialogWidth</code> in pixels when designing modal dialog boxes. As of Microsoft Internet Explorer 4.0, you can eliminate scroll bars on dialog boxes. To turn off the scroll bar, set the <a href="/docs/html/attributes/scroll"><strong>SCROLL</strong></a> attribute to <code>false</code> in the <strong>body</strong> element for the dialog window, or call the modal dialog box from a trusted application.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

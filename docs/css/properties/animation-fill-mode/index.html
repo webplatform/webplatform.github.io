@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>animation-fill-mode · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Defines what values are applied by the animation outside the time it is executing (before and after the animation). 
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/animation-fill-mode/">animation-fill-mode</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>animation-fill-mode</h1>
+<h2>Summary</h2>
+<p>Defines what values are applied by the animation outside the time it is executing (before and after the animation).</p>
+<p>By default, an animation does not affect property values between the time it is applied (when the <a href="/docs/css/properties/animation-name">animation-name</a> property is set on an element) and the time it begins execution (determined by the <a href="/docs/css/properties/animation-delay">animation-delay</a> property). Also, by default an animation does not affect property values after the animation ends (determined by the <a href="/docs/css/properties/animation-duration">animation-duration</a> property). The <strong>animation-fill-mode</strong> property can override this behavior.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>none</code>
+</dd>
+<dt>Applies to</dt>
+<dd>All elements, ::before and ::after pseudo-elements.
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>As specified.
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+</dl>
+<p><a href="/docs/css/concepts/cssom">CSS Object Model Property</a><br>
+:</p>
+<dl>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>animation-fill-mode: backwards</code></li>
+<li><code>animation-fill-mode: both</code></li>
+<li><code>animation-fill-mode: forwards</code></li>
+<li><code>animation-fill-mode: none</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>none</dt>
+<dd>Property values do not change before the animation starts, and they return to their original state when the animation ends. This is the default behavior.
+</dd>
+<dt>forwards</dt>
+<dd>When the animation ends (as determined by its <a href="/docs/css/properties/animation-iteration-count">animation-iteration-count</a>), properties retain the values set by the final keyframe. If <strong>animation-iteration-count</strong> is zero, apply the values that would start the first iteration.
+</dd>
+</dl>
+<dl>
+<dd>
+|[animation-direction](/css/properties/animation-direction)|[animation-iteration-count](/css/properties/animation-iteration-count)|last keyframe encountered|
+|:---------------------------------------------------------|:---------------------------------------------------------------------|:------------------------|
+|`normal`|`even` or `odd`|100% or `to`|
+|`reverse`|`even` or `odd`|0% or `from`|
+|`alternate`|`even`|0% or `from`|
+|`alternate`|`odd`|100% or `to`|
+|`alternate-reverse`|`even`|100% or `to`|
+|`alternate-reverse`|`odd`|0% or `from`|
+</dd>
+</dl>
+<dl>
+<dt>backwards</dt>
+<dd>If the animation is delayed by <a href="/docs/css/properties/animation-delay">animation-delay</a>, properties assume values set by the first keyframe while waiting for the animation to start. These are either the values of the <em>from</em> keyframe (when <a href="/docs/css/properties/animation-direction">animation-direction</a> is <strong>normal</strong> or <strong>alternate</strong>) or those of the <em>to</em> keyframe (when <a href="/docs/css/properties/animation-direction">animation-direction</a> is <strong>reverse</strong> or <strong>alternate-reverse</strong>). When the animation ends, properties revert to their original state.
+</dd>
+</dl>
+<dl>
+<dd>
+|[animation-direction](/css/properties/animation-direction)|first relevant keyframe|
+|:---------------------------------------------------------|:----------------------|
+|`normal` or `alternate`|0% or `from`|
+|`reverse` or `alternate-reverse`|100% or `to`|
+</dd>
+</dl>
+<dl>
+<dt>both</dt>
+<dd>Values set by the first and last keyframes are applied before and after the animation.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>An example of a mobile-like interface in which two concurrent animations displace content with a banner header. Without any animations, both elements would overlay the same screen area. In the <em>moveContent</em> animation, the fill mode of <strong>forwards</strong> means its end state (moved downward) persists after it finishes executing. In the <em>insertBanner</em> animation, the fill mode of <strong>backwards</strong> means its start state (off-screen) takes precedence over the element’s CSS during the delay before the animation executes. (In the subsequent <em>scrollBanner</em> animation, the fill-mode is explicitly set to <strong>none</strong> to keep its initial state from overriding that of the previous animation.)</p>
+<pre><code class="css"><span class="hljs-tag">article</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">animation-name </span>:<span class="hljs-value"> moveContent</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-duration </span>:<span class="hljs-value"> <span class="hljs-number">1s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-delay </span>:<span class="hljs-value"> <span class="hljs-number">4s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-iteration-count </span>:<span class="hljs-value"> <span class="hljs-number">1</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-fill-mode </span>:<span class="hljs-value"> forwards</span></span>;
+}</span>
+
+<span class="hljs-tag">header</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">animation-name </span>:<span class="hljs-value"> insertBanner , scrollBanner</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-duration </span>:<span class="hljs-value"> <span class="hljs-number">1s</span> , <span class="hljs-number">20s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-delay </span>:<span class="hljs-value"> <span class="hljs-number">4s</span> , <span class="hljs-number">5s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-fill-mode </span>:<span class="hljs-value"> backwards , none</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-iteration-count </span>:<span class="hljs-value"> <span class="hljs-number">1</span> , infinite</span></span>;
+}</span>
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">keyframes</span> moveContent </span>{
+    <span class="hljs-tag">from</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateY</span>(<span class="hljs-number">0em</span>) </span></span></span>}
+    <span class="hljs-tag">to</span>   <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateY</span>(<span class="hljs-number">3em</span>) </span></span></span>}
+}
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">keyframes</span> insertBanner </span>{
+    <span class="hljs-tag">from</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateY</span>(-<span class="hljs-number">6em</span>) </span></span></span>}
+    <span class="hljs-tag">to</span>   <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateY</span>(<span class="hljs-number">0em</span>) </span></span></span>}
+}
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">keyframes</span> scrollBanner </span>{
+    <span class="hljs-tag">from</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(<span class="hljs-number">0</span>) </span></span></span>}
+    17%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(<span class="hljs-number">0%</span>) </span></span></span>}
+    20%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">20%</span>) </span></span></span>}
+    37%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">20%</span>) </span></span></span>}
+    40%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">40%</span>) </span></span></span>}
+    57%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">40%</span>) </span></span></span>}
+    60%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">60%</span>) </span></span></span>}
+    77%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">60%</span>) </span></span></span>}
+    80%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">80%</span>) </span></span></span>}
+    97%  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(-<span class="hljs-number">80%</span>) </span></span></span>}
+    <span class="hljs-tag">to</span>   <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">translateX</span>(<span class="hljs-number">0%</span>) </span></span></span>}
+}
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/7012307">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> Can also be a comma-separated list of fill modes, e.g., forwards, none, backwards, where each fill mode is applied to the corresponding ordinal position value of the animation-name property.
+</code></pre>
+<h2>Notes</h2>
+<p>This is an experimental specification, and therefore not completely finalized. Syntax and behavior are still subject to change in future versions.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-animations/">CSS Animation</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/tutorials/css_animations">Making things move with CSS3 animations</a></li>
+<li><a href="/docs/css/atrules/@keyframes">@keyframes</a></li>
+<li><a href="/docs/css/properties/animation">animation</a></li>
+<li><a href="/docs/css/properties/animation-delay">animation-delay</a></li>
+<li><a href="/docs/css/properties/animation-direction">animation-direction</a></li>
+<li><a href="/docs/css/properties/animation-duration">animation-duration</a></li>
+<li><a href="/docs/css/properties/animation-iteration-count">animation-iteration-count</a></li>
+<li><a href="/docs/css/properties/animation-name">animation-name</a></li>
+<li><a href="/docs/css/properties/animation-play-state">animation-play-state</a></li>
+<li><a href="/docs/css/properties/animation-timing-function">animation-timing-function</a></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li>See also <a href="http://www.valhead.com/2013/01/04/tutorial-css-animation-fill-mode/">Val Head’s examples with tutorial video</a>.</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

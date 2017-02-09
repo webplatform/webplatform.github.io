@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Targeting CSS at different media types · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article focuses on using media types to target CSS at different type of media — screen, print, etc." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/targetting_css at different media/">targetting css at different media</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Targeting CSS at different media types</h1>
+<h2>Summary</h2>
+<p>This article focuses on using media types to target CSS at different type of media — screen, print, etc.</p>
+<p>Many of the articles in this tutorial group have focused on the CSS properties and values that you can use to specify how to display a document. This page looks again at the purpose and structure of CSS stylesheets.</p>
+<h2>Information: Media</h2>
+<p>The purpose of CSS is to specify how documents are presented to the user. Presentation can take more than one form.</p>
+<p>For example, you are probably reading this page on a display device. But you might also want to project it on a screen for a large audience, or print it. These different media can have different characteristics. CSS provides ways to present a document differently in different media.</p>
+<p>To specify rules that are specific to a type of media, use <strong>@media</strong>, followed by the media type, followed by curly braces that enclose the rules.</p>
+<h4>Example</h4>
+<p>A document on a web site has a navigation area to allow the user to move around the site.</p>
+<p>In the markup language, the navigation area’s parent element has the <strong>id</strong> <code>nav-area</code>. (In HTML5, this can be marked up with the <code>nav</code> element instead of a <code>div</code> with an <strong>id</strong> attribute.)</p>
+<p>When the document is printed the navigation area has no purpose, so the stylesheet removes it completely:</p>
+<pre><code>@media print {
+  #nav-area {display: none;}
+  }
+</code></pre>
+<p>Some of the common media types are:</p>
+<p>||<br>
+|<code>screen</code>|Color computer display|<br>
+|<code>print</code>|Paged media|<br>
+|<code>projection</code>|Projected display|<br>
+|<code>all</code>|All media (the default)|</p>
+<h4>More details</h4>
+<p>There are other ways to specify the media type of a set of rules.</p>
+<p>The document’s markup language might allow the media type to be specified when the stylesheet is linked to the document. For example, in HTML you can optionally specify the media type with a <code>media</code> attribute in the <code>LINK</code> tag.</p>
+<p>In CSS you can use <code>@import</code> at the start of a stylesheet to import another stylesheet from a URL, optionally specifying the media type.</p>
+<p>By using these techniques you can separate style rules for different media types into different files. This is sometimes a useful way to structure your stylesheets.</p>
+<p>For full details of media types, see <a href="http://www.w3.org/TR/css3-mediaqueries/">Media Queries</a> in the CSS Specification.</p>
+<p>There are more examples of the <code>display</code> property in a later page in this tutorial, <a href="/docs/tutorials/styling_xml_with_css">Styling XML with CSS</a>.</p>
+<h3>Printing</h3>
+<p>CSS has some specific support for printing and for paged media in general.</p>
+<p>A <code>@page</code> rule can set the page margins. For double-sided printing, you can specify the margins separately for <code>@page:left</code> and <code>@page:right</code>.</p>
+<p>For print media, you normally use appropriate length units like inches (<code>in</code>) and points (<code>pt</code> = 1/72 inch), or centimeters (<code>cm</code>) and millimeters (<code>mm</code>). It is equally appropriate to use ems (<code>em</code>) to match the font size, and percentages (<code>%</code>).</p>
+<p>You can control how the content of the document breaks across page boundaries, by using the <code>page-break-before</code>, <code>page-break-after</code> and <code>page-break-inside</code> properties.</p>
+<h4>Example</h4>
+<p>This rule sets the page margins to one inch on all four sides:</p>
+<pre><code>@page {margin: 1in;}
+</code></pre>
+<p>This rule ensures that every H1 element starts on a new page:</p>
+<pre><code>h1 {page-break-before: always;}
+</code></pre>
+<h4>More details</h4>
+<p>For full details of CSS support for paged media, see <a href="http://www.w3.org/TR/css3-page/">Paged Media</a> in the CSS Specification.</p>
+<p>Like other features of CSS, printing depends on your browser and its settings. For example, your Mozilla browser supplies default margins, headers and footers when it prints. When other users print your document, you probably cannot predict the browser and the settings that they will use, so you probably cannot control the results completely.</p>
+<h3>User interfaces</h3>
+<p>CSS has some special properties for devices that support a user interface, like computer displays. These make the document’s appearance change dynamically as the user works with the interface.</p>
+<p>There is no special media type for devices with user interfaces.</p>
+<p>There are five special selectors:</p>
+<p>||<br>
+|<strong>Selector</strong>|<strong>Selects</strong>|<br>
+|<code>E:hover</code>|Any E element that has the pointer over it|<br>
+|<code>E:focus</code>|Any E element that has keyboard focus|<br>
+|<code>E:active</code>|The E element that is involved in the current user action|<br>
+|<code>E:link</code>|Any E element that is a hyperlink to a URL that the user has <em>not</em> visited recently|<br>
+|<code>E:visited</code>|Any E element that is a hyperlink to a URL that the user <em>has</em> visited recently|</p>
+<p><strong>Note:</strong>The information that can be obtained from the :visited selector is restricted in <code>gecko 2.0</code>. See <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Privacy_and_the_:visited_selector">Privacy and the :visited selector</a> for more details.</p>
+<p>The <code>cursor</code> property specifies the shape of the pointer: Some of the common shapes are:</p>
+<p>||<br>
+|<strong>Selector</strong>|<strong>Selects</strong>|<br>
+|<code>pointer</code>|Indicating a link|<br>
+|<code>wait</code>|Indicating that the program cannot accept input|<br>
+|<code>progress</code>|Indicating that the program is working, but can still accept input|<br>
+|<code>default</code>|The default (usually an arrow)|</p>
+<p>An <code>outline</code> property creates an outline that is often used to indicate keyboard focus. Its values are similar to the <code>border</code> property, except that you cannot specify individual sides.</p>
+<p>Some other features of user interfaces are implemented using attributes, in the normal way. For example, an element that is disabled or read-only has the <strong>disabled</strong> attribute or the <strong>readonly</strong> attribute. Selectors can specify these attributes like any other attributes, by using square brackets.</p>
+<h4>Example</h4>
+<p>These rules specify styles for a button that changes dynamically as the user interacts with it:</p>
+<pre><code>.green-button {
+  background-color:#cec;
+  color:#black;
+  border:2px outset #cec;
+  }
+
+.green-button[disabled] {
+  background-color:#cdc;
+  color:#777;
+  }
+
+.green-button:active {
+  border-style: inset;
+  }
+</code></pre>
+<p>This wiki does not support a user interface on the page, so these buttons do not &quot;click&quot;. Here are some static images to illustrate the idea:</p>
+<table border="1">
+<tr>
+<td>
+<table border="1">
+<tr>
+<td>
+Click Me
+</td>
+<td>
+Click Me
+</td>
+<td>
+Click Me
+</td>
+</tr>
+<tr>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+disabled
+</td>
+<td>
+normal
+</td>
+<td>
+active
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+A fully functional button also has a dark outline around the entire button when it is the default, and a dotted outline on the face of the button when it has keyboard focus. It might also have a hover effect when the pointer is over it.
+<h4>More details</h4>
+<p>For more information about user interfaces in CSS, see <a href="http://www.w3.org/TR/css3-ui/">User interface</a> in the CSS Specification.</p>
+<h2>Action: Printing a document</h2>
+<ol>
+<li><p>Make a new HTML document, <code>doc4.html</code>. Copy and paste the content from here:</p>
+<p><!DOCTYPE html><br>
+<html><br>
+<head><br>
+<title>Print sample</title><br>
+<link rel="stylesheet" href="style4.css"><br>
+</head><br>
+<body><br>
+<h1>Section A</h11><br>
+<p>This is the first section…</p><br>
+<h1>Section B</h1><br>
+<p>This is the second section…</p><br>
+<div id="print-head"><br>
+Heading for paged media<br>
+</div><br>
+<div id="print-foot"><br>
+Page:     </div><br>
+</body><br>
+</html></p></li>
+<li><p>Make a new stylesheet, <code>style4.css</code>. Copy and paste the content from here:</p>
+<p>/*** Print sample **<em>/<br>
+/</em> defaults  for screen <em>/<br>
+#print-head, #print-foot {   display: none;   }<br>
+/</em> print only <em>/<br>
+@media print {<br>
+h1 {   page-break-before: always;   padding-top: 2em;   }<br>
+h1:first-child {   page-break-before: avoid;   counter-reset: page;   }<br>
+#print-head {   display: block;   position: fixed;   top: 0pt;   left:0pt;   right: 0pt;    font-size: 200%;   text-align: center;   }<br>
+#print-foot {   display: block;   position: fixed;   bottom: 0pt;   right: 0pt;    font-size: 200%;   }<br>
+#print-foot:after {   content: counter(page);   counter-increment: page;   }<br>
+}<br>
+/</em> end print only */</p></li>
+<li><p>View this document in your browser; it uses your browser’s default style.</p></li>
+<li><p>Print (or print preview) the document; the stylesheet places each section on a separate page, and it adds a header and footer to each page. If your browser supports counters, it adds a page number in the footer.</p></li>
+</ol>
+<h3>Challenges</h3>
+<ul>
+<li>Move the print-specific style rules to a separate CSS file.</li>
+<li>Read the <code>@import</code> reference page to find details of how to import the new print-specific CSS file into your <code>style4.css</code> stylesheet.</li>
+<li>Make the headings turn blue when the mouse pointer is over them.</li>
+</ul>
+<h2>What next?</h2>
+<p>So far, all the style rules in this tutorial have been specified in files. The rules and their values are fixed. The next page describes how you can change rules dynamically by using a programming language called <strong><a href="/docs/javascript">JavaScript</a></strong>.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Media">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

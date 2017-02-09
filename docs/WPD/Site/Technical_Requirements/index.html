@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Technical Requirements · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Site/">WPD/Site</a></li><li><a href="/docs/WPD/Site/Technical_Requirements/">Technical Requirements</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Technical Requirements</h1>
+<h2>A Note on Priorities</h2>
+<p>Each feature should be marked with a priority, to help determine which features are needed when evaluating a CMS.</p>
+<ul>
+<li><strong>1:</strong> Must have</li>
+<li><strong>2:</strong> Should have</li>
+<li><strong>3:</strong> Nice to have</li>
+</ul>
+<h3>Anti-features</h3>
+<p>If there is a feature that the CMS should not have, that should also be noted, for example:</p>
+<pre><code>Should not require users to learn a new, unfamiliar markdown syntax (1)
+</code></pre>
+<p>Note, though, that most of these could be stated as &quot;positive requirements&quot;:</p>
+<pre><code>If uses markdown syntax, should use a familiar syntax such as MediaWiki's (1)
+</code></pre>
+<h2>Core Features</h2>
+<ul>
+<li>Accessible:
+<ul>
+<li><a href="http://www.w3.org/TR/WCAG/">WCAG 2.0</a> (content aspect)
+<ul>
+<li>Level A <strong>(1)</strong></li>
+<li>Level AA <strong>(2)</strong></li>
+</ul></li>
+<li><a href="http://www.w3.org/TR/ATAG20/">ATAG 2.0</a> (authoring tool aspect)
+<ul>
+<li>Level A <strong>(1)</strong></li>
+<li>Level AA <strong>(2)</strong></li>
+</ul></li>
+</ul></li>
+<li>Internationalizable
+<ul>
+<li>easy to add translations or localizations <strong>(1)</strong></li>
+<li>easy to find available translations and navigate to them <strong>(1)</strong></li>
+</ul></li>
+<li>clean semantic underlying code, as much as possible <strong>(2)</strong></li>
+<li>relatively easy and systemic method for porting well-formed content from multiple origins <strong>(2)</strong>
+<ul>
+<li><em>Note:</em> This is most important for the launch, less so for continued growth, so the way to do this doesn’t have to be exposed to the general public… could be a bespoke workflow</li>
+</ul></li>
+<li>Must work equally well across browsers
+<ul>
+<li>viewing pages must work in all versions of browsers <strong>(1)</strong></li>
+<li>editing pages must work in all modern browsers <strong>(1)</strong></li>
+</ul></li>
+<li>Customizable UI</li>
+<li>Mobile-friendly output <strong>(2)</strong></li>
+</ul>
+<h2>Permissions and Profiles</h2>
+<ul>
+<li>Editable by anyone with account <strong>(1)</strong>
+<ul>
+<li>Should track content contributions <strong>(1)</strong></li>
+<li>Should have profile pages <strong>(1)</strong></li>
+<li>Should allow login through OAuth via other identity providers (including W3C) <strong>(2)</strong></li>
+</ul></li>
+<li>Some pages can be “locked” <strong>(1)</strong> or have curated changes only <strong>(2)</strong></li>
+</ul>
+<h2>Navigation and Categorization</h2>
+<ul>
+<li>Tagging:
+<ul>
+<li>must support the annotation or tagging of content to include it in different structures, rather than organizing it in rigid categories <strong>(1)</strong></li>
+<li>tagging system also needs to support a smart referencing system, to generate most of the references to display/make available within each article. For example: An article on responsive design using media queries and viewport, which also makes use of HTML5 &lt;video&gt; and CSS transitions, should have links to those article automatically generated. <strong>(2)</strong></li>
+</ul></li>
+<li>Customizable sidebar / TOC <strong>(1)</strong></li>
+<li>URIs should be consistent, predictable, and unchanging <strong>(1)</strong></li>
+<li>Should allow multiple ways to find and navigate through content, including:
+<ul>
+<li>sequential stepping through related pages <strong>(1)</strong></li>
+<li>links to related topics <strong>(1)</strong></li>
+<li>autocomplete search bar (a la DocHub) <strong>(2)</strong></li>
+<li>drill-downs from general topics to more specific, based on categories <strong>(2)</strong></li>
+</ul></li>
+</ul>
+<h2>Editing</h2>
+<ul>
+<li>Should have WYSIWYG editing <strong>(2)</strong></li>
+<li>Custom markup and other code that the WYSIWYG doesn’t do, for example being able to create a custom CSS layout for a particular article if needed. <strong>(1)</strong>
+<ul>
+<li>CHRIS - Ideally it should be possible to apply custom scripts and stylesheets to pages, although I do accept that in reality this is probably too much of a security hole to have without any limit.</li>
+<li>Specific preferences for generated markup <strong>(2)</strong></li>
+</ul></li>
+<li>Template system for different kinds of content (reference pages for elements, attributes, CSS properties, events, APIs, etc.) <strong>(2)</strong></li>
+</ul>
+<h2>Code and Examples</h2>
+<ul>
+<li>Should be possible for the CMS to handle HTML5 as the standard language for all pages <strong>(1)</strong></li>
+<li>embedding of code examples <strong>(1)</strong></li>
+<li>code and example highlighting <strong>(1)</strong>
+<ul>
+<li>start from numbers other than 1, to allow continuations of snippets <strong>(2)</strong></li>
+</ul></li>
+<li>Embedding live demos like Canvas, SVG, HTML5 &lt;video&gt;, etc? <strong>(1)</strong></li>
+</ul>
+<h2>Content Management</h2>
+<ul>
+<li>Include a “last updated” field in each article’s footer <strong>(1)</strong></li>
+<li>Public view of “stale” articles that haven’t been updated in a while, and may need review <strong>(2)</strong></li>
+</ul>
+<h2>Advanced Features</h2>
+<ul>
+<li>transclusion of content snippets <strong>(2)</strong>
+<ul>
+<li><em>The ability to define snippets of content to include directly in other pages. In practice this often allows tagging to work well, and makes changes to some kinds of formatting or content easier to accomplish.</em></li>
+<li><em>komoroske: I’d argue that this is a priority 1 feature. Without this feature it’s extremely difficult to implement consistent information architecture of pages.</em></li>
+</ul></li>
+<li>Videos <strong>(1)</strong>
+<ul>
+<li>Captioning <strong>(1)</strong></li>
+<li>Served from same server (e.g. not YouTube / Vimeo) <strong>(3)</strong>
+<ul>
+<li><em>komoroske: Serving video also comes with potentially large bandwidth costs, which can be sidestepped by using YouTube/Vimeo</em></li>
+</ul></li>
+</ul></li>
+<li>Per-page scripts <strong>(2)</strong></li>
+</ul>
+<h2>Extra Site Features</h2>
+<ul>
+<li>Executable code example editor (e.g. JSFiddle, JSBin, Dabblet) <strong>(1)</strong>
+<ul>
+<li>Should be able to open all examples in editor <strong>(2)</strong></li>
+</ul></li>
+<li><a href="http://en.wikipedia.org/wiki/Pastebin">Pastebin</a>: may be same as code editor <strong>(2)</strong></li>
+<li>Blog <strong>(2)</strong></li>
+<li>Forums <strong>(2)</strong></li>
+<li>Surveys <strong>(3)</strong></li>
+</ul>
+<h2>APIs</h2>
+<ul>
+<li>Extractable pages for use remotely <strong>(2)</strong>
+<ul>
+<li>Structured sections of page for customized extraction <strong>(2)</strong></li>
+</ul></li>
+<li>Allow automated input of browser support based on tests or other external data <strong>(2)</strong></li>
+</ul>
+<h2>Metrics</h2>
+<ul>
+<li>Feedback / rating for each article <strong>(2)</strong></li>
+<li>Tracking searches and result selection <strong>(3)</strong></li>
+<li>Usage data per site and per page <strong>(2)</strong></li>
+<li>Tracking should only be in aggregate, not per user <strong>(1)</strong></li>
+</ul>
+<h2>Scaling</h2>
+<ul>
+<li>Serving infrastructure can theoretically handle 10 million page views a month without problems <strong>(1)</strong></li>
+<li>Serving infrastructure can easily scale to handle arbitrary load as the site gains in popularity <strong>(2)</strong></li>
+<li>Serving cost scales smoothly with amount of traffic; no price cliffs <strong>(2)</strong></li>
+<li>Cost structure allows 10 million page views for less than $10,000/mo <strong>(2)</strong>
+<ul>
+<li><em>komoroske: I just picked an arbitrary number here. Just trying to express it should be reasonably cheap.</em></li>
+</ul></li>
+</ul>
+<h2>Support</h2>
+<ul>
+<li>Support infrastructure to have site back up within an hour if any outages occur at any time <strong>(1)</strong></li>
+<li>Support infrastructure in place to implement scaling as load increases over time <strong>(2)</strong></li>
+<li>Support infrastructure to provide advice on configuring the site to run smoothly <strong>(2)</strong></li>
+<li>Support infrastructure to consult and/or implement site upgrades over time <strong>(3)</strong></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

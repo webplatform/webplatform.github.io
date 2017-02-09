@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Array · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Provides support for creation of arrays of any data type.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Array/">Array</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Array</h1>
+<h2>Summary</h2>
+<p>Provides support for creation of arrays of any data type.</p>
+<p>Array is an object used to list values together. When you create an array, you’re setting up a list that you can fill with key:value pairs. You can then refer to a whole list using just that one array name. You can also refer to one item in the list using the key, also called an index when the key is a number.</p>
+<h2>Syntax</h2>
+<pre><code>[ element0 [, element1 [, ...[, elementN ]]]]
+
+new Array([ element0 [, element1 [, ...[, elementN ]]]])
+
+new Array([ length ])
+</code></pre>
+<dl>
+<dt><strong>element0,…,elementN</strong></dt>
+<dd>Optional. The elements to place in the array. This creates an array with n + 1 elements, and a <strong>length</strong> of n + 1. Using this syntax, you must supply more than one element.
+</dd>
+<dt><strong>length</strong></dt>
+<dd>Optional. The length of the array. As arrays are zero-based, created elements will have indexes from zero to size -1.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>When no arguments are provided, creates and returns a new Array object, with a length property (whose initial value is +0).</p>
+<p>When multiple arguments are provided, creates and returns a new Array object with the elements provided, with a length property the number of arguments + 1.</p>
+<p>And if only one Number is provided as the argument, with argument len is a Number and ToUint32(len) (an unsigned 32-bit integer), then the length property of the newly constructed object is set to ToUint32(len).</p>
+<p>If the only argument is a Number and ToUint32(len) is not equal to len, a RangeError exception is thrown.</p>
+<p>If the only argument is not a Number, then the length property of the newly constructed object is set to 1 and the 0 property of the newly constructed object is set to len.</p>
+<h2>Examples</h2>
+<p>After an array is created, you can access the individual elements of the array by using [n] notation. Note that unlike other programming languages, arrays keys are only numeric. Keys starts by 0.</p>
+<pre><code class="js"><span class="hljs-comment">// Literal notation</span>
+<span class="hljs-keyword">var</span> my_array = [];
+<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+  my_array[i] = i;
+}
+x = my_array[<span class="hljs-number">4</span>];
+<span class="hljs-built_in">document</span>.write(x);
+<span class="hljs-comment">// Output: 4</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/42267d4185785ffcf82e">View live example</a></p>
+<p>You can pass an unsigned 32-bit integer to the <strong>Array</strong> constructor to specify the size of the array. If the value is negative or not an integer, a run-time error occurs. If you run the following code, you should see this error in the Console.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">10</span>);
+<span class="hljs-built_in">document</span>.write(arr.length);
+<span class="hljs-comment">// Output: 10</span>
+
+<span class="hljs-comment">// Don't do this</span>
+<span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(-<span class="hljs-number">1</span>);
+arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">1.50</span>);
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/8856471">View live example</a></p>
+<p>If a single value is passed to the <strong>Array</strong> constructor, and it is not a number, the <strong>length</strong> property is set to 1, and the value of the only element becomes the single, passed-in argument.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"one"</span>);
+ <span class="hljs-built_in">document</span>.write(arr.length);
+ <span class="hljs-built_in">document</span>.write(arr[<span class="hljs-number">0</span>]);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// 1</span>
+ <span class="hljs-comment">// one</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/8856494">View live example</a></p>
+<p>Adding members, to an array can be done by using the prototypal inheritance chain and call the <code>push()</code> method on it.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> ponies = [<span class="hljs-string">'Twilight Sparkle'</span>,<span class="hljs-string">'Pinkie Pie'</span>,<span class="hljs-string">'Rainbow Dash'</span>];
+
+<span class="hljs-comment">// Adding a new member</span>
+ponies.push(<span class="hljs-string">'Spike'</span>);
+<span class="hljs-built_in">console</span>.log(ponies[<span class="hljs-number">3</span>]);
+
+<span class="hljs-comment">// Output:</span>
+<span class="hljs-comment">// Spike</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/8857418">View live example</a></p>
+<h2>Remarks</h2>
+<p>JavaScript arrays are referred to as “sparse,” which means that elements in an array can be undefined and deleted. The keys, or index, are not reordered into a denser table, unless you do so, explicitly.</p>
+<h2>Usage</h2>
+<pre><code> Array is a standard, built-in object. Among other things, this means you can create a new array by using the object creation expression new Array(), as in:
+
+var myArray = new Array();
+</code></pre>
+<p>But a more efficient way is to use what’s called the literal notation. An array literal is created without using the <code>new</code> keyword. Instead, you use the square brackets <code>[]</code> and list out what should be in the array:</p>
+<pre><code>var myAnimals = [&quot;cat&quot;, &quot;dog&quot;, &quot;rabbit&quot;];
+</code></pre>
+<p>Using an array literal to declare your array this way avoids some of the quirkiness of the creation expression <code>new Array()</code>. (For more information, see Stoyan Stefanov’s <a href="http://shop.oreilly.com/product/9780596806767.do">JavaScript Patterns</a>.) Your array can consist of different values and types. Here’s an array that provides describes my dog:</p>
+<pre><code>var goodDog = [&quot;Rover&quot;, 7, true];
+</code></pre>
+<p>This array combines a string, a number and a Boolean value. An array is often called a zero-indexed, or as having a zero-based index, because the numerical key, or index, starts at zero. (prof.dr. Edsger W. Dijkstra gives a reason <a href="http://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html">why numbering should start at zero</a>.) This means you can refer to the items in your array by referencing the index. So in <code>goodDog</code>, above, you reference the dog’s name with <code>goodDog[0]</code>, or his age with <code>goodDog[1]</code>, or whether he is, indeed, a good dog with <code>goodDog[2]</code>. Arrays can be dimensional as well. This helps when your setting up something that has row and column patterns, such as seats in a theatre or a checkerboard. So, for example, to describe a college dormitory that has 5 beds per floor and 2 floors, you can set up a two-dimensional array that looks like the following:</p>
+<pre><code>var dorm = [[1,1], [1,2], [1,3], [1,4], [1,5],
+            [2,1], [2,2], [2,3], [2,4], [2,5]];
+</code></pre>
+<p>Arrays are a useful kind of object for many reasons. For example, because the keys are numerical indexes by default, it’s easy to iterate, or loop, through all of the values. They also have special properties that other objects don’t have. But if your array becomes more complex, you may want to consider using an object instead.</p>
+<h2>Properties</h2>
+<p>The following table lists the properties of the <strong>Array</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Summary</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/constructor">constructor</a></td><td style="text-align:left">References the function which created the instance of the Array object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/length">length</a></td><td style="text-align:left">Basically specifies the number of elements (AKA length) in an <strong>Array</strong> object. This means the <strong>length</strong> property represents a number one greater than the largest index defined in an <strong>Array</strong> object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/prototype">prototype</a></td><td style="text-align:left">Returns a reference to the prototype for a class of array.</td></tr>
+</tbody>
+</table>
+<h2>Functions</h2>
+<p>The following table lists the functions of the <strong>Array</strong> object.</p>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>Array</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Summary</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/concat">concat</a></td><td style="text-align:left">Combines two or more arrays.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/every">every</a></td><td style="text-align:left">Determines whether all the members of an array satisfy the specified test.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/filter">filter</a></td><td style="text-align:left">Returns the elements of an array that meet the condition specified in a callback function.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/forEach">forEach</a></td><td style="text-align:left">Performs the specified action for each element in an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/indexOf">indexOf</a></td><td style="text-align:left">Returns the index of the first occurrence of a value in an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/isArray">isArray</a></td><td style="text-align:left">Determines whether an object is an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/join">join</a></td><td style="text-align:left">Adds all the elements of an array separated by the specified separator string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/lastIndexOf">lastIndexOf</a></td><td style="text-align:left">Returns the index of the last occurrence of a specified value in an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/map">map</a></td><td style="text-align:left">Calls a defined callback function on each element of an array, and returns an array that contains the results.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/pop">pop</a></td><td style="text-align:left">Removes the last element from an array and returns it.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/push">push</a></td><td style="text-align:left">Appends new elements to an array, and returns the new length of the array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/reduce">reduce</a></td><td style="text-align:left">Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/reduceRight">reduceRight</a></td><td style="text-align:left">Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/reverse">reverse</a></td><td style="text-align:left">Reverses the elements in an <strong>Array</strong>.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/shift">shift</a></td><td style="text-align:left">Removes the first element from an array and returns it.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/slice">slice</a></td><td style="text-align:left">Returns a section of an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/some">some</a></td><td style="text-align:left">Determines whether the specified callback function returns true for any element of an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/sort">sort</a></td><td style="text-align:left">Sorts an <strong>Array</strong>.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/splice">splice</a></td><td style="text-align:left">Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/toString">toString</a></td><td style="text-align:left">Returns a string representation of an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/unshift">unshift</a></td><td style="text-align:left">Inserts new elements at the start of an array.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Array/valueOf">valueOf</a></td><td style="text-align:left">Returns the primitive value of the specified object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Object/hasOwnProperty">hasOwnProperty</a></td><td style="text-align:left">Determines whether an object has a property with the specified name.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Object/isPrototypeOf">isPrototypeOf</a></td><td style="text-align:left">Determines whether an object exists in another object’s prototype chain.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Object/propertyIsEnumerable">propertyIsEnumerable</a></td><td style="text-align:left">Determines whether a specified property is enumerable.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Object/toLocaleString">toLocaleString</a></td><td style="text-align:left">Returns a date converted to a string using the current locale.</td></tr>
+</tbody>
+</table>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript, by Mozilla Developer Network</a></li>
+<li><a href="http://eloquentjavascript.net/">Eloquent JavaScript: A Modern Introduction to Programming, by Marijn Haverbeke</a></li>
+<li><a href="http://tddjs.com/">Test-Driven JavaScript Development</a></li>
+<li><a href="http://shop.oreilly.com/product/9780596806767.do">JavaScript Patterns: Build Better Applications with Coding and Design Patterns, By Stoyan Stefanov</a></li>
+<li><a href="http://www.manning.com/resig/">Secrets of the JavaScript Ninja, by John Resig and Bear Bibeault</a></li>
+</ul>
+<h3>Specification</h3>
+<p><a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.4">15.4 Array Objects</a></p>
+<p>ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/k4h76zbx(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

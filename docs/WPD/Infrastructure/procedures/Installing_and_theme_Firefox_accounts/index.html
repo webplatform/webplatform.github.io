@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Installing Firefox Accounts (&quot;FxA&quot;) · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Installing_and theme Firefox accounts/">Installing and theme Firefox accounts</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Installing Firefox Accounts (&quot;FxA&quot;)</h1>
+<p>Canonical version <a href="https://gist.github.com/renoirb/81a3544bce3a5831e793">published in this gist</a></p>
+<p>Procedure to install <a href="https://wiki.mozilla.org/Identity/Firefox_Accounts">Firefox Accounts system</a> to <a href="/">WebPlatform</a> infrastructure.</p>
+<p>It requires a set of components:</p>
+<ul>
+<li><a href="https://github.com/mozilla/fxa-content-server">Firefox Accounts Content server</a> that holds the HTML/CSS/JavaScript files for the frontend</li>
+<li><a href="https://github.com/mozilla/fxa-auth-server">Firefox Accounts Authentication server</a></li>
+<li><a href="https://github.com/mozilla/fxa-profile-server">Firefox Accounts Profile server</a></li>
+<li><a href="https://github.com/mozilla/fxa-oauth-server">Firefox Accounts OAuth server</a></li>
+</ul>
+<h1>Misc notes</h1>
+<ul>
+<li><a href="https://github.com/mozilla/fxa-oauth-server">https://github.com/mozilla/fxa-oauth-server</a></li>
+<li><a href="https://github.com/mozilla/fxa-oauth-server/wiki/oauth-design">https://github.com/mozilla/fxa-oauth-server/wiki/oauth-design</a></li>
+</ul>
+<h2>OAuth terminology regarding grants/roles/entitlement</h2>
+<blockquote>
+<p>seanmonstar: … the oauth spec uses “grant” where we use &quot;code&quot;. OAuth server sends a code to app, and the app trades the “code” for a token.</p>
+</blockquote>
+<h1>Procedure</h1>
+<h2>Install Firefox Content server</h2>
+<p>Basic system utilities</p>
+<pre><code>sudo apt-get install nginx-full git nodejs npm
+</code></pre>
+<p>Ubuntu package-names collision fix, we want nodejs, not radio amateur utility.</p>
+<pre><code>sudo ln -s /usr/bin/nodejs /usr/bin/node
+</code></pre>
+<p>Deployment specific requirements:</p>
+<pre><code>sudo apt-get install libgmp-dev libgmp10
+sudo npm install -g grunt-cli phantomjs bower bunyan forever
+</code></pre>
+<p>Creating folder:</p>
+<pre><code>sudo mkdir -p /srv/webplatform/auth/fxa-content-server
+sudo chown -R ubuntu:ubuntu /srv/webplatform
+</code></pre>
+<p>Project dependencies</p>
+<pre><code>cd /srv/webplatform/auth/fxa-content-server
+git clone https://github.com/mozilla/fxa-content-server.git .
+</code></pre>
+<p>Checkout the latest <code>train-X</code> they have available. Both auth and content projects should have matching branches.</p>
+<pre><code>git branch -r
+git checkout -t origin/train-11
+</code></pre>
+<p>Install dependencies</p>
+<pre><code>npm install
+bower install
+</code></pre>
+<p>Available configuration options, through Convict</p>
+<pre><code>cp server/config/local.json-dist server/config/local.json
+</code></pre>
+<p>Note that the <code>local.json</code> is in the gitignore and is used by default so you do not need to set command line argument to specify which configuration file to load.</p>
+<p><strong>Configuration</strong>, refer to <a href="https://gist.github.com/renoirb/81a3544bce3a5831e793#fxa-content-server">fxa-content-server</a> config block below.</p>
+<p>Note that you can see available options the project base Convict file.</p>
+<pre><code>more server/lib/configuration.js
+</code></pre>
+<p>Configuration notes:</p>
+<ul>
+<li><code>fxaccount_url</code>: Is where you will expose the <em>fxa-auth-server</em>, ideally through a HTTP server that has a valid SSL certificate, in our case <code>api.accounts.webplatform.org</code></li>
+</ul>
+<p>Start the service:</p>
+<pre><code>grunt server:dist
+</code></pre>
+<p>This command will take care to compile all assets into static ones, and make a local HTTP server so we can use NGINX to forward to it.</p>
+<p><em>Process runner:</em> Ideally this should be ran through a process runner (forever) and logs should be sent to a logger. #TODO</p>
+<p><em>NOTE</em> It has been validated with <code>zaach</code> that content-server requires nodejs. Therefore we cannot just use an HTTP server to serve file, they are not fully static.</p>
+<h2>Install Firefox Account Authentication service</h2>
+<p>Clone the project</p>
+<pre><code>cd /srv/webplatform/auth
+git clone git://github.com/mozilla/fxa-auth-server.git
+cd fxa-auth-server
+</code></pre>
+<p>Checkout the latest <code>train-X</code> they have available.</p>
+<pre><code>git branch -r
+git checkout -t origin/train-10
+</code></pre>
+<p>Install dependencies</p>
+<pre><code>npm install
+</code></pre>
+<p><strong>Configuration</strong>, refer to <a href="https://gist.github.com/renoirb/81a3544bce3a5831e793#fxa-auth-server">fxa-auth-server</a> config block below.</p>
+<p>Note that you can see available options the project base Convict file.</p>
+<pre><code>more config/config.js
+</code></pre>
+<p>The file name can match the environment name. For example, if you use <code>NODE_ENV=prod</code>, the file would be <code>config/prod.json</code></p>
+<p>Notes about the keys:</p>
+<ul>
+<li><code>contentServer</code>: Is the URL where the <em>fxa-content-server</em> is</li>
+<li><code>templateServer</code>: Is, also, where the <em>fxa-content-server</em> is (in case you want a different address)</li>
+</ul>
+<h2>Install OAuth service</h2>
+<p>Clone the project</p>
+<pre><code>cd /srv/webplatform/auth
+git clone git://github.com/mozilla/fxa-oauth-server.git
+cd fxa-oauth-server
+git checkout -t origin/master
+</code></pre>
+<p>Install dependencies</p>
+<pre><code>npm install
+</code></pre>
+<p><strong>Configuration</strong>, refer to <a href="https://gist.github.com/renoirb/81a3544bce3a5831e793#fxa-oauth-server">fxa-oauth-server</a> config block below.</p>
+<p>You can see the available configuration switches here:</p>
+<pre><code>more lib/config.js
+more config/dev.json
+</code></pre>
+<p>Note that the <code>clients</code> array will ensure that the services are inserted in the database. This is how you allow a service to authenticate against the service.</p>
+<p>Note also the <code>whitelisted</code>, this property is useful to differentiate services that we want to pass through OAuth without asking each user to confirm the use. To learn more about generating keys, you can see it in the <a href="https://github.com/mozilla/fxa-oauth-server/blob/master/docs/clients.md">fxa-oauth-server/doc/clients.md</a></p>
+<h2>Configure NGINX</h2>
+<p>Note, we are creating self-signed for the moment.</p>
+<pre><code>sudo -s
+cd /etc/nginx/ssl
+</code></pre>
+<p>From here, you have two choices:</p>
+<ul>
+<li>Install your key and certificates</li>
+<li>Create self-signed certificates</li>
+</ul>
+<p>It is expected that you have the following files in <code>/etc/nginx/ssl</code></p>
+<p>Adjust vhost:</p>
+<pre><code>vi /etc/nginx/sites-enabled/accounts
+</code></pre>
+<p>Paste:</p>
+<pre><code>server {
+    listen      80;
+    server_name accounts.webplatform.org;
+    return      301 https://accounts.webplatform.org$request_uri;
+}
+
+server {
+    listen      80;
+    server_name api.accounts.webplatform.org;
+    return      301 https://api.accounts.webplatform.org$request_uri;
+}
+
+server {
+    listen      80;
+    server_name oauth.accounts.webplatform.org;
+    return      301 https://oauth.accounts.webplatform.org$request_uri;
+}
+
+server {
+    listen       443 ssl;
+    server_name  accounts.webplatform.org;
+
+    location / {
+      proxy_pass http://127.0.0.1:3030;
+    }
+
+    ssl on;
+    ssl_certificate     ssl/accounts.webplatform-20140401.pem;
+    ssl_certificate_key ssl/201404.key;
+    ssl_session_timeout 5m;
+    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers &quot;HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES&quot;;
+    ssl_prefer_server_ciphers on;
+}
+
+server {
+    listen       443 ssl;
+    server_name  api.accounts.webplatform.org;
+
+    location / {
+      proxy_pass http://127.0.0.1:9000;
+    }
+
+    ssl on;
+    ssl_certificate     ssl/api.accounts.webplatform-20140401.pem;
+    ssl_certificate_key ssl/201404.key;
+    ssl_session_timeout 5m;
+    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers &quot;HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES&quot;;
+    ssl_prefer_server_ciphers on;
+}
+
+server {
+    listen       443 ssl;
+    server_name  oauth.accounts.webplatform.org;
+
+    location / {
+      proxy_pass http://127.0.0.1:9010;
+    }
+
+    ssl on;
+    ssl_certificate     ssl/oauth.accounts.webplatform-20140401.pem;
+    ssl_certificate_key ssl/201404.key;
+    ssl_session_timeout 5m;
+    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers &quot;HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES&quot;;
+    ssl_prefer_server_ciphers on;
+}
+</code></pre>
+<p>Remove default nginx vhost</p>
+<pre><code>rm /etc/nginx/sites-enabled/default
+</code></pre>
+<p>Return as normal user</p>
+<pre><code>exit
+</code></pre>
+<h2>Create self-signed certificates</h2>
+<p>Paste our own self-signed CA authority (eventually will be real ones)</p>
+<pre><code>vi ca-cert.pem
+vi ca-key.pem
+</code></pre>
+<p><em>Optionnal</em> If you do not have your own certs to use as root of your own self-signed authority, you can make your own with this:</p>
+<pre><code>openssl genrsa 2048 &gt; ca-key.pem
+
+openssl req -new -x509 -nodes -days 3600 \
+    -key ca-key.pem -out ca-cert.pem
+</code></pre>
+<p>Generate certificate request:</p>
+<pre><code>openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out accounts-req.pem -subj '/C=US/ST=MA/L=Cambridge/O=W3C/OU=WebPlatform Project/CN=accounts.webplatform.org/emailAddress=hostmaster@webplatform.org'
+
+openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out api.accounts-req.pem -subj '/C=US/ST=MA/L=Cambridge/O=W3C/OU=WebPlatform Project/CN=api.accounts.webplatform.org/emailAddress=hostmaster@webplatform.org'
+</code></pre>
+<p>Generate self-signed certificate:</p>
+<pre><code>openssl x509 -req -in accounts-req.pem -days 3600 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out accounts-cert.pem
+
+openssl x509 -req -in api.accounts-req.pem -days 3600 -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out api.accounts-cert.pem
+</code></pre>
+<p>As described in <a href="http://wiki.nginx.org/HttpSslModule#Generate_Certificates">NGINX SSL Module documentation about SSL certificates</a>;</p>
+<blockquote>
+<p>When using a chain of certificates, just append the extra certificates to your .crt file. The server certificate needs to be the first on the file, otherwise you’ll get a mismatch between private and public keys.</p>
+</blockquote>
+<p>Rename them fo follow the conventions given in the rest of the procedure.</p>
+<pre><code>mv accounts-cert.pem accounts.webplatform-20140401.pem
+cat ca-cert.pem &gt;&gt; accounts.webplatform-20140401.pem
+
+mv api.accounts-cert.pem api.accounts.webplatform-20140401.pem
+cat ca-cert.pem &gt;&gt; api.accounts.webplatform-20140401.pem
+
+mv server-key.pem 201404.key
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

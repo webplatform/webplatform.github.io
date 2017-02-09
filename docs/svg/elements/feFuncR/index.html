@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>feFuncR · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/elements/">elements</a></li><li><a href="/svg/elements/feFuncR/">feFuncR</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>feFuncR</h1>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/svg/objects/SVGElement">SVGElement</a>
+</dd>
+</dl>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>This topic describes the <strong>feFuncR</strong>, <strong>feFuncG</strong>, <strong>feFuncB</strong>, and <strong>feFuncA</strong> elements. These four elements are typically children of <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransferelement</strong></a> and specify the transfer functions for the four channels, as follows:</p>
+<ul>
+<li><strong>feFuncR</strong> — transfer function for the red component of the input graphic</li>
+<li><strong>feFuncG</strong> — transfer function for the green component of the input graphic</li>
+<li><strong>feFuncB</strong> — transfer function for the blue component of the input graphic</li>
+<li><strong>feFuncA</strong> — transfer function for the alpha component of the input graphic</li>
+</ul>
+<p>The following rules apply to the processing of the <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransferelement</strong></a> element:</p>
+<ul>
+<li>If more than one transfer function element of the same kind is specified, the last occurrence is used.</li>
+<li>If any of the transfer function elements are unspecified, the <a href="/docs/svg/elements/feComponentTransfer"><strong>feComponentTransferelement</strong></a> must be processed as if those transfer function elements were specified with their <strong>type</strong> attributes set to <strong>identity</strong> (see below).</li>
+</ul>
+<p>In addition to core attributes (<strong>id</strong>, <strong>xml:base</strong>, <strong>xml:lang</strong>, and <strong>xml:space</strong>), the following seven attributes are applicable to the <strong>feFuncR</strong>, <strong>feFuncG</strong>, <strong>feFuncB</strong>, and <strong>feFuncA</strong> elements:</p>
+<ul>
+<li><strong>type</strong></li>
+</ul>
+<p>The <strong>type</strong> attribute can be one of five values: <strong>identity</strong>, <strong>table</strong>, <strong>discrete</strong>, <strong>linear</strong>, or <strong>gamma</strong> (see below). These five values indicate the type of component transfer function. The value of <strong>type</strong> determines the applicability of the other attributes (as discussed below).</p>
+<p>In the following, C is the initial component (such as <strong>feFuncR</strong>), C’ is the re-mapped component; both in the closed interval [0, 1]:</p>
+<ul>
+<li><ul>
+<li>For <strong>identity</strong>:</li>
+</ul></li>
+</ul>
+<p>C’ = C</p>
+<ul>
+<li><ul>
+<li>For <strong>table</strong>, the function is defined by linear interpolation between values given in the attribute <strong>tableValues</strong> (see below). The table has <em>n</em>+1 values (that is, v<sub>0</sub> to v<em><sub>n</sub></em>) specifying the start and end values for <em>n</em> evenly sized interpolation regions. Interpolations use the following formula:</li>
+</ul></li>
+</ul>
+<p>For a value C &lt; 1, find k such that k/n &lt;= C &lt; (k+1)/n</p>
+<p>The result C’ is given by C’ = v<sub>k</sub> + (C - k/n)*<em>n</em> * (v<sub>k+1</sub> - v<sub>k</sub>)</p>
+<p>If C = 1 then C’ = V<em><sub>n</sub></em></p>
+<ul>
+<li><ul>
+<li>For <strong>discrete</strong>, the function is defined by the step function given in the attribute <strong>tableValues</strong> (see below), which provides a list of <em>n</em> values (that is, v<sub>0</sub> to v<sub>n-1</sub>) in order to identify a step function consisting of n steps. The step function is defined by the following formula:</li>
+</ul></li>
+</ul>
+<p>For a value C &lt; 1 find k such that k/<em>n</em> &lt;= C &lt; (k+1)/<em>n</em></p>
+<p>The result C’ is given by C’ = v<sub>k</sub></p>
+<p>If C = 1 then C’ = v<sub>n-1</sub></p>
+<ul>
+<li><ul>
+<li>For <strong>linear</strong>, the function is defined by the following linear equation:</li>
+</ul></li>
+</ul>
+<p>C’ = <strong>slope</strong> * C + <strong>intercept</strong> (see below for <strong>slope</strong> and <strong>intercept</strong>)</p>
+<ul>
+<li><ul>
+<li>For <strong>gamma</strong>, the function is defined by the following exponential function:</li>
+</ul></li>
+</ul>
+<p>C’ = <strong>amplitude</strong> * pow(C, <strong>exponent</strong>) + <strong>offset</strong> (see below for <strong>amplitude</strong>, <strong>exponent</strong>, and <strong>offset</strong>)</p>
+<ul>
+<li><ul>
+<li><strong>tableValues</strong></li>
+</ul></li>
+</ul>
+<p>When <strong>type=&quot;table&quot;</strong>, <strong>tableValue</strong> is a list of numbers v<sub>0</sub>, v<sub>1</sub>, …, v<em><sub>n</sub></em> separated by white space and/or a comma, which define the lookup table. An empty list results in an identity transfer function. If the attribute is not specified, then the effect is as if an empty list were provided.</p>
+<ul>
+<li><ul>
+<li><strong>slope</strong></li>
+</ul></li>
+</ul>
+<p>When <strong>type=&quot;linear&quot;</strong>, <strong>slope</strong> indicates the slope of the linear function. If the attribute is not specified, then the effect is as if a value of 1 were specified.</p>
+<ul>
+<li><ul>
+<li><strong>intercept</strong></li>
+</ul></li>
+</ul>
+<p>When <strong>type=&quot;linear&quot;</strong>, <strong>intercept</strong> indicates the intercept of the linear function. If the attribute is not specified, then the effect is as if a value of 0 were specified.</p>
+<ul>
+<li><ul>
+<li><strong>amplitude</strong></li>
+</ul></li>
+</ul>
+<p>When <strong>type=&quot;gamma&quot;</strong>, <strong>amplitude</strong> indicates the amplitude of the gamma function. If the attribute is not specified, then the effect is as if a value of 1 were specified.</p>
+<ul>
+<li><ul>
+<li><strong>exponent</strong></li>
+</ul></li>
+</ul>
+<p>When <strong>type=&quot;gamma&quot;</strong>, <strong>exponent</strong> indicates the exponent of the gamma function. If the attribute is not specified, then the effect is as if a value of 1 were specified.</p>
+<ul>
+<li><ul>
+<li><strong>offset</strong></li>
+</ul></li>
+</ul>
+<p>When <strong>type=&quot;gamma&quot;</strong>, <strong>offset</strong> indicates the offset of the gamma function. If the attribute is not specified, then the effect is as if a value of 0 were specified</p>
+<h3>Syntax</h3>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=226062">Scalable Vector Graphics: Filter Effects</a>, Section 15.25.7</li>
+</ul>
+<h3>Members</h3>
+<h4>Properties</h4>
+<p>The <strong>SVGFEFuncRElement</strong> object has these properties.</p>
+<ul>
+<li><a href="/docs/svg/properties/amplitude"><strong>amplitude</strong></a>: Indicates the amplitude of the gamma function.</li>
+<li><a href="/docs/svg/properties/exponent"><strong>exponent</strong></a>: Indicates the exponent of the gamma function.</li>
+<li><a href="/docs/svg/properties/intercept"><strong>intercept</strong></a>: Indicates the intercept of the linear function.</li>
+<li><a href="/docs/svg/properties/slope"><strong>slope</strong></a>: Indicates the slope of the linear function.</li>
+<li><a href="/docs/svg/properties/tableValues"><strong>tableValues</strong></a>: Define the lookup table.</li>
+<li><a href="/docs/svg/properties/type_(SVGComponentTransferFunctionElement)"><strong>type</strong></a>: The type of component transfer function. The function type determines the applicability of the other attributes.</li>
+</ul>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Filters</h4>
+<ul>
+<li><p><a href="/docs/css/functions/blur">blur()</a></p></li>
+<li><p><a href="/docs/css/functions/brightness">brightness()</a></p></li>
+<li><p><a href="/docs/css/functions/contrast">contrast()</a></p></li>
+<li><p><a href="/docs/css/functions/custom">custom()</a></p></li>
+<li><p><a href="/docs/css/functions/drop-shadow">drop-shadow()</a></p></li>
+<li><p><a href="/docs/css/functions/grayscale">grayscale()</a></p></li>
+<li><p><a href="/docs/css/functions/hue-rotate">hue-rotate()</a></p></li>
+<li><p><a href="/docs/css/functions/invert">invert()</a></p></li>
+<li><p><a href="/docs/css/functions/opacity">opacity()</a></p></li>
+<li><p><a href="/docs/css/functions/saturate">saturate()</a></p></li>
+<li><p><a href="/docs/css/functions/sepia">sepia()</a></p></li>
+<li><p><a href="/docs/css/properties/filter">filter</a></p></li>
+<li><p><a href="/docs/svg/elements/feBlend">feBlend</a></p></li>
+<li><p><a href="/docs/svg/elements/feColorMatrix">feColorMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feComponentTransfer">feComponentTransfer</a></p></li>
+<li><p><a href="/docs/svg/elements/feComposite">feComposite</a></p></li>
+<li><p><a href="/docs/svg/elements/feConvolveMatrix">feConvolveMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feDiffuseLighting">feDiffuseLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feDisplacementMap">feDisplacementMap</a></p></li>
+<li><p><a href="/docs/svg/elements/feDistantLight">feDistantLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feFlood">feFlood</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncA">feFuncA</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncB">feFuncB</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncG">feFuncG</a></p></li>
+<li><p><strong>feFuncR</strong></p></li>
+<li><p><a href="/docs/svg/elements/feGaussianBlur">feGaussianBlur</a></p></li>
+<li><p><a href="/docs/svg/elements/feImage">feImage</a></p></li>
+<li><p><a href="/docs/svg/elements/feMerge">feMerge</a></p></li>
+<li><p><a href="/docs/svg/elements/feMergeNode">feMergeNode</a></p></li>
+<li><p><a href="/docs/svg/elements/feMorphology">feMorphology</a></p></li>
+<li><p><a href="/docs/svg/elements/feOffset">feOffset</a></p></li>
+<li><p><a href="/docs/svg/elements/fePointLight">fePointLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpecularLighting">feSpecularLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpotlight">feSpotlight</a></p></li>
+<li><p><a href="/docs/svg/elements/feTile">feTile</a></p></li>
+<li><p><a href="/docs/svg/elements/feTurbulence">feTurbulence</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_deploy">SVG deployment</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_filters">SVG filters</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_graphics">SVG graphic effects</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a></p></li>
+<li><p><a href="/docs/tutorials/svg_filters">SVG filters</a></p></li>
+</ul>
+<h3>Related pages</h3>
+<ul>
+<li><a href="/docs/svg/elements/feComponentTransfer"><strong>SVGFEComponentTransferElement</strong></a></li>
+<li><a href="/docs/svg/elements/feFuncGelement"><strong>SVGFEFuncGElement</strong></a></li>
+<li><a href="/docs/svg/elements/feFuncB"><strong>SVGFEFuncBElement</strong></a></li>
+<li><a href="/docs/svg/elements/feFuncA"><strong>SVGFEFuncAElement</strong></a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

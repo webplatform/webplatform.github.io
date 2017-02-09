@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Location · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Geolocation lets you identify a user&#x27;s location by returning their latitude and longitude. Applications can use this to offer localized experiences such as driving directions, nearby points of interest, local deals, etc. In the past few years, smartphones with dedicated GPS chips have exploded in popularity." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/location/">location</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Location</h1>
+<h2>Summary</h2>
+<p>Geolocation lets you identify a user’s location by returning their latitude and longitude. Applications can use this to offer localized experiences such as driving directions, nearby points of interest, local deals, etc. In the past few years, smartphones with dedicated GPS chips have exploded in popularity.</p>
+<p>Devices base location on a number of things, including</p>
+<ul>
+<li>The user’s internet access point or Wi-Fi connection</li>
+<li>The user’s phone operator’s cell-tower locations</li>
+<li>An Embedded GPS chip in the user’s phone</li>
+</ul>
+<h2>Detecting Support</h2>
+<p>Geolocation is supported by all modern browsers, including Chrome 5.0+, Firefox 3.5+, IE 9.0+, Opera 10.6+, Safari 5.0+, and smartphone platforms including iPhone 3.0+, Android 2.0+, Windows Mobile 7. For up-to-date compatibility support, check out <a href="http://www.caniuse.com/#search=geolocation">CanIUse.com</a>.</p>
+<p>You can use the <a href="http://www.modernizr.com/">Modernizr JavaScript library</a> to detect support for the geolocation API. For example,</p>
+<pre><code>if (Modernizr.geolocation) {
+  // geolocation is supported
+} else {
+  // no  geolocation support available
+}
+</code></pre>
+<h2>Location Functions</h2>
+<p>Geolocation functions are exposed under the <code>geolocation</code> property of the global navigator object.</p>
+<pre><code>navigator.geolocation.getCurrentPosition(callback_function, error_handler, PositionOptions_interface_object)
+</code></pre>
+<p>This will asynchronously fetch and pass the user’s current location to the <code>callback_function</code>. The location is only provided via callback to the callback function. If user has not yet authorized your app, a permission info bar/dialog will be rendered to the user. Here’s what it looks like:</p>
+<p><img src="//static.webplatform.org/7/7e/location_infobar.png" alt="location infobar.png"></p>
+<p><img src="//static.webplatform.org/8/88/iphone_location_warning.png" alt="iphone location warning.png"></p>
+<p><img src="//static.webplatform.org/6/6f/android_location_warning.png" alt="android location warning.png"></p>
+<h3>Success callback function</h3>
+<p>When the user’s location is available, your callback function will receive a bundle of information. It’s passed <code>position</code>, with two properties including <code>coords</code> and <code>timestamp</code>.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Returned</th><th style="text-align:left">Type</th><th style="text-align:left">Description</th><th style="text-align:left">Example data</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">coords.latitude</td><td style="text-align:left">Always</td><td style="text-align:left">double</td><td style="text-align:left">decimal degrees</td><td style="text-align:left">37.774929</td></tr>
+<tr><td style="text-align:left">coords.longitude</td><td style="text-align:left">Always</td><td style="text-align:left">double</td><td style="text-align:left">decimal degrees</td><td style="text-align:left">-122.419415</td></tr>
+<tr><td style="text-align:left">coords.accuracy</td><td style="text-align:left">Always</td><td style="text-align:left">double</td><td style="text-align:left">meters</td><td style="text-align:left">50</td></tr>
+<tr><td style="text-align:left">coords.altitude</td><td style="text-align:left">Optional</td><td style="text-align:left">double or null</td><td style="text-align:left">meters</td><td style="text-align:left">150</td></tr>
+<tr><td style="text-align:left">coords.altitudeAccuracy</td><td style="text-align:left">Optional</td><td style="text-align:left">double or null</td><td style="text-align:left">meters</td><td style="text-align:left">8</td></tr>
+<tr><td style="text-align:left">coords.heading</td><td style="text-align:left">Optional</td><td style="text-align:left">double or null</td><td style="text-align:left">degrees, calculated based on previous position.</td><td style="text-align:left">20</td></tr>
+<tr><td style="text-align:left">coords.speed</td><td style="text-align:left">Optional</td><td style="text-align:left">double or null</td><td style="text-align:left">meters/second, calculated based on previous position.</td><td style="text-align:left">10</td></tr>
+<tr><td style="text-align:left">timestamp</td><td style="text-align:left">Optional</td><td style="text-align:left">DOMTimeStamp</td><td style="text-align:left">bound to the <code>Date</code> type</td><td style="text-align:left">1314300437317</td></tr>
+</tbody>
+</table>
+<h3>Error callback function</h3>
+<p>If there is an error while fetching location or user denied permission to your app, the <code>error_handler</code> callback function is called with the <code>PositionError</code> object with following properties.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Type</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">code</td><td style="text-align:left">short</td><td style="text-align:left">enumerated value: <code>error.PERMISSION_DENIED</code> (1), <code>error.POSITION_UNAVAILABLE</code> (2), <code>error.TIMEOUT</code> (3), or <code>error.UNKNOWN_ERROR</code> (0)</td></tr>
+<tr><td style="text-align:left">message</td><td style="text-align:left">DOMString</td><td style="text-align:left">not to be presented to the end user.</td></tr>
+</tbody>
+</table>
+<h3>Control how the location is fetched</h3>
+<p>The optional parameter, <code>PositionOptions_interface_object</code>, provides more control over how location is fetched, timeout or cached location via the following three optional properties.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Type</th><th style="text-align:left">Default</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">enableHighAccuracy</td><td style="text-align:left">boolean</td><td style="text-align:left">false</td><td style="text-align:left">true will seek exact location if device supports it, else coarse location.</td></tr>
+<tr><td style="text-align:left">timeout</td><td style="text-align:left">long</td><td style="text-align:left">none</td><td style="text-align:left">the time in milliseconds before the request should time out. Note that this is calculated after user has allowed sharing location.</td></tr>
+<tr><td style="text-align:left">maximumAge</td><td style="text-align:left">long</td><td style="text-align:left">0</td><td style="text-align:left">in milliseconds. If provided, function returns cached location if available in the [(current - maximumAge) to current] time window</td></tr>
+</tbody>
+</table>
+<h2>Monitoring Location</h2>
+<p>This function is exactly like the <code>getCurrentPosition</code> function except that the callback function will be automatically called every time user’s location changes. It’s useful in a service like turn-by-turn direction. The interval is optimally defined by the browser and can’t be changed.</p>
+<pre><code>int navigator.geolocation.watchPosition(callback_function, error_handler, PositionOptions_interface_object)
+</code></pre>
+<p>Unlike <code>getCurrentPosition</code>, this function returns an integer value which can be used to cancel the watch process and stop invoking any callbacks by calling the <code>clearWatch</code> function. This is how you call the <code>clearWatch</code> function:</p>
+<pre><code>navigator.geolocation.clearWatch(int watch_number)
+</code></pre>
+<h2>Additional Resources</h2>
+<ul>
+<li><a href="http://html5demos.com/geo">HTML5 Geolocation Demo</a></li>
+<li><a href="http://diveintohtml5.info/geolocation.html">Dive Into HTML5: You are here (and so is everybody else)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Facebook HTML5 Resource Center.</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebDriver · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Basic tutorial on how to use WebDriver to test web documents without using a service or 3rd party software" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/WebDriver/">WebDriver</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WebDriver</h1>
+<h2>Summary</h2>
+<p>Basic tutorial on how to use WebDriver to test web documents without using a service or 3rd party software</p>
+<h2>WebDriver in a nutshell</h2>
+<p>WebDriver is a <a href="https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html">W3C editors draft</a> for writing automated tests of websites. It aims to mimic the behaviour of a real user, and as such interacts with the HTML of the application.</p>
+<p>All implementations of WebDriver that communicate with the browser use the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">JSON WireProtocol</a>. This wire protocol defines a RESTful web service using JSON over HTTP.</p>
+<h2>Real world support</h2>
+<p>All browser vendors except of Apple are committed to the WebDriver standard. Although not all browsers provide out of the box support for it, or implement the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">JSON WireProtocol</a> as documented.</p>
+<h3>Microsoft Internet Explorer</h3>
+<p>Microsoft has Support for WebDriver via an external binary, the so called <a href="https://code.google.com/p/selenium/wiki/InternetExplorerDriver">Internet Explorer Driver</a> acts as a RESTful web server and instruments the browser using the non public debug API. The driver is compatible with the Internet Explorer versions 6 to 10, for IE 12 there are rumors that the WebDriver API will be brought natively to the browsers, without the need of an external binary.</p>
+<h3>Google Chrome</h3>
+<p>Google provides support for WebDriver in the same manor as Microsoft does, using an external library called <a href="https://code.google.com/p/selenium/wiki/ChromeDriver">Chromedriver</a>, and like the Internet Explorer Driver, it acts as “man in the middle” to translate RESTful requests into something the browser understands. Due to the fast update path of the Chrome browser, the browser compatibility is in constant flux, but it’s fairly save to say that the past three browser versions are support by the current driver binary.</p>
+<h3>Mozilla Firefox</h3>
+<p>Unfortunately Mozilla does not adhere to the WebDriver standard, but instead supports a homegrown <a href="http://en.wikipedia.org/wiki/Transmission_Control_Protocol">raw TCP socket</a> based testing Framework called <a href="https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette">Marionette</a>, which fortunately is designed to be pretty close the the WebDriver spec. It was shipped in the stable builds beginning with Firefox version 24, but itself isn’t stable &amp; the API is in constant flux.</p>
+<h3>PhantomJS</h3>
+<p>PhantomJS, the <a href="http://blog.arhg.net/2009/10/what-is-headless-browser.html">headless</a> browser based on the WebKit rendering engine &amp; JavaScriptCore javascript engine contains a WebDriver implementation named <a href="https://github.com/detro/ghostdriver">Ghostdriver</a> that is nearly spec compliant. Ghostdriver is shipped bundled with PhantomJS since version 1.8.</p>
+<h3>Mobile Browsers</h3>
+<p>Mobile browsers and operation systems do not contain an native WebDriver implementation (with the exception of the FirefoxOS debug builds containing Marionette); the <a href="http://appium.io/">Appium</a> project tries to fill the gap by acting as a WebDriver server for Mobile Chrome, Mobile Safari &amp; Firefox OS.</p>
+<h2>Setup</h2>
+<p>For our basic test setup, we use <a href="http://phantomjs.org/">PhantomJS</a> as the system we want to test &amp; Chrome as our host system which will control PhantomJS remotely. The installation of PhantomJS is straight forward, just download it from <a href="http://phantomjs.org/download.html">here</a> &amp; you should have the <code>phantomjs</code> binary (or the <code>phantomjs.exe</code> if you’re on windows) ready.</p>
+<p>To start the remote WebDriver server,</p>
+<p>On *nix compatible systems:</p>
+<p><code>$ `./phantomjs --webdriver=8080</code></p>
+<p>On windows:</p>
+<p><code>&gt; phantomjs.exe --webdriver=8080</code></p>
+<p>The output should be something like this:</p>
+<p><code>PhantomJS is launching GhostDriver... [INFO - 2014-05-18T12:53:19.120Z] GhostDriver - Main - running on port 8080</code></p>
+<p>Now that our WebDriver server is up &amp; running, we need to start our client. Lets use Google Chrome for that (we could use anything here that speaks &amp; understands HTTP as a client Node.js, PHP, other browsers etc.). Because of the <code>same origin policy</code> that all browser adhere to, we need to start Chrome with a special flag, that disables this policy for our tests, as our webdriver server runs on a different port/domain, than the page we open up in our browser.</p>
+<p>You can disable the <code>same origin policy</code> by starting chrome with a special flag from the CMD or terminal:</p>
+<p>On *Nix systems:</p>
+<p><code>open -a Google\ Chrome --args -disable-web-security -allow-file-access-from-files</code></p>
+<p>On Windows:</p>
+<p><code>chrome.exe –allow-file-access-from-files -disable-web-security</code></p>
+<p>To finally check if our setup is up &amp; running, navigate to <code>localhost:8080</code>, you should see some output similar to this:</p>
+<p><code>Unknown Command - Request =&gt; {&quot;headers&quot;:{&quot;Accept&quot;:&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,/;q=0.8&quot;,&quot;Accept-Encoding&quot;:&quot;gzip,deflate,sdch&quot;,&quot;Accept-Language&quot;:&quot;en-US,en;q=0.8,de;q=0.6&quot;,&quot;Connection&quot;:&quot;keep-alive&quot;,&quot;Host&quot;:&quot;localhost:8080&quot;,&quot;User-Agent&quot;:&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 1092) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36&quot;},...]</code></p>
+<h2>Connecting to the remote browser</h2>
+<p>Next step is to connect our PhantomJS based server with the JavaScript code we will run in our Chrome client instance. Lets start by creating a simple webpage that will be the host of our tests:</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt; WebDiver testpage&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;This is a WebDiver testpage&lt;/h1&gt;
+    &lt;script&gt;
+      request = new XMLHttpRequest();
+      request.open('GET', 'http://localhost:8080/status', true);
+
+      request.onload = function() {
+        var el = document.createElement('div');
+        var contents = document.createTextNode(request.responseText);
+          el.appendChild(contents);
+          document.getElementsByTagName('body')[0].appendChild(el);
+        };
+
+       request.onerror = function() {
+         // There was a connection error of some sort
+           console.error('err:', arguments);
+       };
+
+       request.send();
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>This sample page uses the <code>status</code> method defined in the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">JSON WireProtocol</a>, it queries the WebDriver servers status; We take that &amp; display the contents of the request on our webpage.</p>
+<p>The output should be something like this:</p>
+<p><code>{&quot;sessionId&quot;:null,&quot;status&quot;:0,&quot;value&quot;:{&quot;build&quot;:{&quot;version&quot;:&quot;1.0.4&quot;},&quot;os&quot;:{&quot;name&quot;:&quot;mac&quot;,&quot;version&quot;:&quot;unknown&quot;,&quot;arch&quot;:&quot;64bit&quot;}}}</code></p>
+<p>We now connected Chrome &amp; PhantomJS, time to extend our basic HTML page to obtain a WebDriver session, open up a webpage we want to test &amp; read out the title of that one.</p>
+<h2>Browser, I command you</h2>
+<p>If we want to grab the title of the Webplatform Wiki main page located at <code>/Main_Page</code>, we need to take three steps to make that happen:</p>
+<ul>
+<li>First, we need to get a session from the remote Webdriver (in our case, PhantomJS)</li>
+<li>Second, we need to tell the remote Webdriver which URL we want to navigate to</li>
+<li>Third and last, we need to tell the remote Webdriver which data we want, in our case, that we want the <code>title</code></li>
+</ul>
+<h3>Obtain a session</h3>
+<p>As said, first we need to ask the remote Webdriver instance to start a new session for us, this is needed because a remote Webdriver instance can be requested from different clients at the same time &amp; we it needs to hold some state like which URL we are currently on for example.</p>
+<p>To obtain a session, we need to make a <code>POST</code> request to the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session">/session</a> method. This method expects us to send some JSON data, the so called <code>desiredCapabilities</code>, with the request. The desired capabilities were invented to tell the remote WebDriver what we want in this run, most probably if we were running against a large browser array, which browser on which operating system we want to control. In our case, as we only want to talk directly to the browser, we can go with the default data:</p>
+<pre><code>{
+    desiredCapabilities: {
+        browserName: 'phantomjs',
+        version: '',
+        platform: 'ANY'}
+}
+</code></pre>
+<p>A function that would do this request would look like this:</p>
+<pre><code>var getSession = function (cb) {
+  var request = new XMLHttpRequest();
+  request.open('POST', 'http://localhost:8080/session', true);
+  request.setRequestHeader('Content-Type', 'application/json');
+
+  request.onload = function() {
+        cb(null, JSON.parse(request.responseText));
+  };
+
+  request.onerror = function() {
+        cb(arguments, null);
+  };
+
+  request.send(JSON.stringify({desiredCapabilities: {browserName: 'phantomjs', version: '', platform: 'ANY'}}));
+};
+</code></pre>
+<h3>Open the URL</h3>
+<p>After we obtained the session, we need to tell remote browser which URL we want to open. We can do this by issuing another <code>POST</code> request to the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/url">/url</a> method. The pattern here is always the same, if we want the remote browser to do something, like navigating to a page, clicking an element, etc., we make a <code>POST</code> request, if we want to retrieve data, we make a <code>GET</code> request.</p>
+<p>If we transform the request into code, it looks like this:</p>
+<pre><code>var openUrl = function (url, session, cb) {
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://localhost:8080/session/' + session + '/url', true);
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.onload = function() {
+      cb(null, JSON.parse(request.responseText));
+    };
+
+    request.onerror = function() {
+      cb(arguments, null);
+    };
+
+  request.send(JSON.stringify({url: url}));
+};
+</code></pre>
+<p>Note that we need to send the sessionId, we received in the last request, with the request as a part of the URL. The address of the page we want to open needs to be transferred as a part of the request body.</p>
+<h3>Grab the title</h3>
+<p>Now that we know how we can control the remote browser instance, lets see how we can receive some data. As said, we want to know the title of the Webplatform.org main wiki page. In order to do so, we need to request the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/title">/title</a> method, and as we want to receive some data, it is a <code>GET</code> request this time.</p>
+<p>We also need to send the session with us (which makes sense, otherwise the Webdriver would not know from which URL it should fetch the title), and so the function looks quite similar to the ones we used before:</p>
+<pre><code>var getPageTitle = function (session, cb) {
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://localhost:8080/session/' + session + '/title', true);
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.onload = function() {
+        cb(null, JSON.parse(request.responseText));
+    };
+
+    request.onerror = function() {
+        cb(arguments, null);
+    };
+
+    request.send();
+};
+</code></pre>
+<h3>Display title &amp; close the session</h3>
+<p>So, as we have coded our three functions to get a session, open an URL &amp; request the page title, it is time to glue them all together and have some fun. I hope you noticed that every of our functions above takes an argument called <code>cb</code>. <code>cb</code> is short for <code>callback</code> &amp; describes a function that should be invoked after the work in the previously called function is done, in our case, if the request is finished.</p>
+<p>All of our callbacks take to arguments, the first argument <code>err</code> normally is <code>null</code> and will only change its value, if an error happens, in doing so we can be sure to always add at least some code to handle an error that occurs. The second arguments is the <code>data</code> that we receive from our request if it succeeds.</p>
+<p>A typical response for a <code>GET</code> looks like this:</p>
+<pre><code>{
+    sessionId: &quot;d8916520-e40a-11e3-84ea-b7d1dad7eee9&quot;,
+    status: 0,
+    value: &quot;WebPlatform Docs · WebPlatform Docs · WPD · WebPlatform.org&quot;
+}
+</code></pre>
+<p>The response contains the <code>sessionId</code> we send with the request, a <code>status</code> that indicates if an error was risen (0 indicates success) &amp; the <code>value</code> attribute, which carries the answer to our question, in this case to: “What is the title?”. Responses for <code>POST</code> requests look similar, they only lack the <code>value</code> attribute.</p>
+<p>Armoured with this knowledge we can glue our functions together &amp; execute them:</p>
+<pre><code>// load the session data
+getSession(function (err, data) {
+    // check for an error &amp; report
+    if (err) console.error(err);
+
+    // store the sessionId for later use
+    var session = data.sessionId;
+
+    // open the webplatform url
+    openUrl('/docs/Main_Page', session, function (err, data) {
+        // check for an error &amp; report
+        if (err) console.error(err);
+
+        // get the page title
+        getPageTitle(session, function (err, data) {
+            // again check for an error &amp; report
+            if (err) console.error(err);
+
+            // take the title response and display it
+            var el = document.createElement('div');
+        var contents = document.createTextNode('Title: ' + data.value);
+        el.appendChild(contents);
+        document.getElementsByTagName('body')[0].appendChild(el);
+
+            // close the session
+            closeSession(session);
+        });
+    });
+});
+</code></pre>
+<p>You might wondered what the <code>closeSession</code> method does, that is actually a function we haven’t added yet. The <code>closeSession</code> method makes a <code>DELETE</code> request to the <a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId">/session</a> method, which terminates the session (otherwise it would be open for a long time before it times out).</p>
+<p>The function to do this, looks like so:</p>
+<pre><code>var closeSession = function (session) {
+  var request = new XMLHttpRequest();
+  request.open('DELETE', 'http://localhost:8080/session/' + session, true);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.send();
+};
+</code></pre>
+<h2>Summary</h2>
+<p>To sum it up, the complete code looks like this:</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt; WebDiver testpage&lt;/title&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;This is a WebDiver testpage&lt;/h1&gt;
+        &lt;script&gt;
+            var getSession = function (cb) {
+              var request = new XMLHttpRequest();
+              request.open('POST', 'http://localhost:8080/session', true);
+              request.setRequestHeader('Content-Type', 'application/json');
+
+              request.onload = function() {
+                    cb(null, JSON.parse(request.responseText));
+              };
+
+              request.onerror = function() {
+                    cb(arguments, null);
+              };
+
+              request.send(JSON.stringify({desiredCapabilities: {browserName: 'phantomjs', version: '', platform: 'ANY'}}));
+            };
+
+            var openUrl = function (url, session, cb) {
+                var request = new XMLHttpRequest();
+                request.open('POST', 'http://localhost:8080/session/' + session + '/url', true);
+                request.setRequestHeader('Content-Type', 'application/json');
+
+                request.onload = function() {
+                  cb(null, JSON.parse(request.responseText));
+                };
+
+                request.onerror = function() {
+                  cb(arguments, null);
+                };
+
+              request.send(JSON.stringify({url: url}));
+            };
+
+            var getPageTitle = function (session, cb) {
+                var request = new XMLHttpRequest();
+                request.open('GET', 'http://localhost:8080/session/' + session + '/title', true);
+                request.setRequestHeader('Content-Type', 'application/json');
+
+                request.onload = function() {
+                    cb(null, JSON.parse(request.responseText));
+                };
+
+                request.onerror = function() {
+                    cb(arguments, null);
+                };
+
+                request.send();
+            };
+
+            var closeSession = function (session) {
+              var request = new XMLHttpRequest();
+              request.open('DELETE', 'http://localhost:8080/session/' + session, true);
+              request.setRequestHeader('Content-Type', 'application/json');
+              request.send();
+            };
+
+            // the fun part
+            getSession(function (err, data) {
+                if (err) console.error(err);
+
+                var session = data.sessionId;
+                openUrl('/docs/Main_Page', session, function (err, data) {
+                    if (err) console.error(err);
+
+                    getPageTitle(session, function (err, data) {
+                        if (err) console.error(err);
+
+                        var el = document.createElement('div');
+                    var contents = document.createTextNode('Title: ' + data.value);
+                    el.appendChild(contents);
+                    document.getElementsByTagName('body')[0].appendChild(el);
+
+                        closeSession(session);
+                    });
+                });
+            });
+        &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>I encourage you to take this as a foundation, to play around with &amp; to gain even more and deeper knowledge on how Webdriver works.</p>
+<h2>Further reading &amp; tooling</h2>
+<ul>
+<li><a href="https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html">W3C editors draft</a> - The W3Cs specification document on Webdriver</li>
+<li><a href="https://code.google.com/p/selenium/wiki/JsonWireProtocol">JSON WireProtocol</a> - The JSON WireProtocol specification</li>
+<li><a href="http://docs.seleniumhq.org/">Selenium</a> - A Java based Framework to interface with different browsers</li>
+<li><a href="http://appium.io/">Appium</a> - A Node.js based framework to interface with mobile applications &amp; browsers</li>
+<li><a href="https://github.com/admc/wd">WD.js</a> - A Node.js framework to interface with different browsers</li>
+<li><a href="http://dalekjs.com/">Dalek.js</a> - A Node.js framework designed to test websites in different browsers</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

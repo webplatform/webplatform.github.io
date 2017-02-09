@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Maintaining ElasticSearch cluster · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch cluster/">Maintaining ElasticSearch cluster</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Maintaining ElasticSearch cluster</h1>
+<p>To get details about how a node is installed, refer to <a href="/docs/WPD/Infrastructure/architecture/VM_roles#elastic">WPD/Infrastructure/architecture/VM_roles#elastic</a></p>
+<h2>How to get system status/health</h2>
+<p>Since everything is made through HTTP calls, here are a few we can make.</p>
+<pre><code>   curl localhost:9200/_cluster/stats?pretty
+   curl localhost:9200/_cluster/health?pretty
+   curl localhost:9200/_cluster/state?pretty
+   curl 'http://localhost:9200/_cluster/health?wait_for_status=green&amp;timeout=50s'
+   curl localhost:9200/_nodes/_local?pretty &gt; nodes_details.json
+</code></pre>
+<h2>How backups are made</h2>
+<p>Our ElasticSearch cluster backup is currently done through <strong>type: fs</strong>, each <strong>elastic</strong> VM mounts an NFS share up to the <strong>backup</strong> VM.</p>
+<ul>
+<li><strong>backup</strong> VM exposes through NFS <code>backup:/srv/exports/elasticsearch</code></li>
+<li><strong>elastic</strong> VMs sees <strong>backup</strong>’s NFS mount point at <code>/mnt/backup/elasticsearch/nfsshared</code></li>
+<li>ElasticSearch has it configured so that it saves snapshot at <code>/mnt/backup/elasticsearch/nfsshared</code></li>
+<li>Every <strong>elastic</strong> VMs shares <code>/mnt/backup/elasticsearch/nfsshared</code> — This is what the <strong>type: fs</strong> ElasticSearch snapshot requires</li>
+<li><strong>backup</strong> VM has a cronjob to create a snapshot at midnight EST (<code>PUT /_snapshot/nfsshared/production</code>)</li>
+<li>The snapshot name is based on the deployment level (e.g. &quot;<strong>level: staging</strong>&quot;), we would see “staging” in stead of “production” as the snapshot name. — We have ONE <strong>backup</strong> VM per deployment.</li>
+<li><strong>backup</strong> VM has another cronjob to create an archive of the elastic VMs NFS’ mount points and stores it along with what’s stored in <strong>backup</strong>’s <code>/mnt/backup</code> backups archive folder</li>
+</ul>
+<p>It means that, in <strong>production</strong> level on the March 11 2015, the following would happen:</p>
+<ol>
+<li>at midnight, the <strong>backup</strong> VM issues an HTTP request to <strong>elastic</strong> VM to make a snapshot</li>
+<li>ElasticSearch will save the snapshot from any <strong>elastic</strong> VM as <code>/mnt/backup/elasticsearch/nfsshared/snapshot-production</code> — any elastic VM has the same folder anyway</li>
+<li>at 1 am, the <strong>backup</strong> VM has a cronjob to create an archive
+<ol>
+<li>the <strong>backup</strong> VM makes an archive of the full <code>/srv/exports/elasticsearch/nfsshared</code> — therefore including any other snapshots the cluster might have</li>
+<li>the <strong>backup</strong> VM then saves the archive at <code>/mnt/backup/elasticsearch-snapshot-20150311.tar.gz</code> — along with other backups the VM stores.</li>
+</ol></li>
+</ol>
+<h2>Misc tasks</h2>
+<h3>Backup and restore</h3>
+<p>ElasticSearch backup are referred to as &quot;snapshots&quot;.</p>
+<p>Its a two step process;</p>
+<ol>
+<li>where to store the snapshot. It can be locally (type: fs) or using a plugin</li>
+<li>make an API call to either create a new snapshot, or restore</li>
+</ol>
+<p>A drawback with the <strong>type = fs</strong> storage is that every ES nodes MUST have access to the same folder through network mount. This is why we will use another mechanism as soon as possible, the ideal would be to send to a DreamObject bucket directly.</p>
+<p>First, we have to setup a snapshot location.</p>
+<pre><code>   curl -XPUT localhost:9200/_snapshot/nfsshared -d '{
+     &quot;type&quot;: &quot;fs&quot;,
+     &quot;settings&quot;: {
+         &quot;location&quot;: &quot;/mnt/backup/elasticsearch/nfsshared&quot;,
+         &quot;compress&quot;: true}}'
+</code></pre>
+<p>Idea is that we create (HTTP PUT) a new <strong>_snapshot</strong> location with alias <strong>nfsshared</strong> that’ll read/write in <strong>/mnt/backup/elasticsearch/nfsshared</strong>.</p>
+<p>Inquire about existing snapshots:</p>
+<pre><code>   curl localhost:9200/_snapshot/nfsshared/_all?pretty
+   {
+     &quot;snapshots&quot; : [ {
+       &quot;snapshot&quot; : &quot;2015030900&quot;,
+       &quot;indices&quot; : [ &quot;notes&quot; ],
+       &quot;state&quot; : &quot;SUCCESS&quot;,
+       &quot;start_time&quot; : &quot;2015-03-09T23:43:17.971Z&quot;,
+       &quot;start_time_in_millis&quot; : 1425944597971,
+       &quot;end_time&quot; : &quot;2015-03-09T23:43:18.451Z&quot;,
+       &quot;end_time_in_millis&quot; : 1425944598451,
+       &quot;duration_in_millis&quot; : 480,
+       &quot;failures&quot; : [ ],
+       &quot;shards&quot; : {
+         &quot;total&quot; : 5,
+         &quot;failed&quot; : 0,
+         &quot;successful&quot; : 5
+       }
+     } ]
+   }
+</code></pre>
+<p>Recover a snapshot, e.g. &quot;2015030900&quot;:</p>
+<pre><code>   curl -XPOST localhost:9200/_snapshot/nfsshared/2015030900/_restore
+</code></pre>
+<p>Create a snapshot:</p>
+<pre><code>   curl -XPUT localhost:9200/_snapshot/nfsshared/production?wait_for_completion=true
+</code></pre>
+<p>Check a snapshot status:</p>
+<pre><code>   curl localhost:9200/_snapshot/nfsshared/production?pretty
+</code></pre>
+<h4>Use a plugin to store backups to a Swift endpoint automatically</h4>
+<p>This option would be perfect as we wouldn’t need to sync to DreamObjects later like we need to do with the rest.</p>
+<p>This has to be done, refer to <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/120">webplatform/ops#120</a></strong>. Until then, we’ll stick to initial <a href="#How_backups_are_made">#How backups are made</a></p>
+<h4>Related reference</h4>
+<ul>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-snapshots.html</a></li>
+<li><a href="https://github.com/wikimedia/search-repository-swift">https://github.com/wikimedia/search-repository-swift</a></li>
+</ul>
+<h3>Plugins</h3>
+<p>ElasticSearch has many plugins available, we aren’t using any yet.</p>
+<h3>Example on how to install a plugin</h3>
+<p>One of the plugins ElasticSearch has is &quot;Marvel&quot;, a status dashboard to show the cluster health using Kibana. Kibana is an open source project that’s made to create graphs based on data we can feed it.</p>
+<p>The following will show how to install “Marvel” as an example on how to install and use an ElasticSearch plugin.</p>
+<p>To install, you can run from any '<em>elastic</em> node.</p>
+<p>Technically if we use in production, we’ll ensure they are installed but its out of the scope of this quick procedure.</p>
+<pre><code>   root@elastic1:~# /usr/share/elasticsearch/bin/plugin -i elasticsearch/marvel/latest
+</code></pre>
+<p>This particular plugin exposes a web application at <strong>hostname:9200/_plugin/marvel</strong>. Here it would be at <strong>elastic1:9200/_plugin/marvel</strong>.</p>
+<p>Since our network doesn’t expose everything to the public, if we want to see what it has we’ll have to make a web browser to pass through the salt master SOCKS proxy so we can have our local computer access the <em>elastic1</em> node as if we were in the same network.</p>
+<p>Details on how to access the dashboard is described in <a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM#Accessing_a_VM_using_SSH">WPD/Infrastructure/architecture/Base_configuration_of_a_VM#Accessing_a_VM_using_SSH</a>.</p>
+<p>Once you have a web browser setup, you can go to “http://elastic1:9200/_plugin/marvel/” and see the dashboard;</p>
+<p><img src="//static.webplatform.org/6/61/elasticsearch-cluster-status-201503.png" alt="elasticsearch-cluster-status-201503.png"></p>
+<h2>Reference</h2>
+<ul>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-repositories.html">ElasticSearch setup repositories</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM#Accessing_a_VM_using_SSH">WebPlatform Infrastructure architecture notes, at “Accessing a VM”</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html</a></li>
+<li><a href="http://www.xmsxmx.com/elasticsearch-cluster-configuration-best-practices/">http://www.xmsxmx.com/elasticsearch-cluster-configuration-best-practices/</a></li>
+</ul>
+<h4>Understanding how ElasticSearch works</h4>
+<p>A <em>must-read</em> list to help understand how ElasticSearch works. It takes more or less two hours.</p>
+<ul>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/distributed-search.html">http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/distributed-search.html</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/distrib-read.html">http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/distrib-read.html</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/distributed-docs.html">http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/distributed-docs.html</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_scale_horizontally.html">http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_scale_horizontally.html</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_coping_with_failure.html">http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_coping_with_failure.html</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

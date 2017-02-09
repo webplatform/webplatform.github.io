@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>link · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="Enables the current document to establish links to external documents." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/link/">link</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>link</h1>
+<h2>Summary</h2>
+<p>Enables the current document to establish links to external documents.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLLinkElement">HTMLLinkElement</a>
+</dd>
+</dl>
+<p>The &lt;link&gt; element allows authors to link their document to other resources. It carries the same semantics as any hyperlink, or the HTTP <code>Link:</code> header.</p>
+<h2>Attributes</h2>
+<ul>
+<li><code>href</code> = URL potentially surrounded by spaces<br>
+Specifies a URL that provides the destination of the link.</li>
+<li><code>rel</code> = set of space-separated tokens<br>
+Specifies a list of tokens that specify the relationship between the document containing the link and the destination indicated by the link.Two categories of links can be created using the link element: Links to external resources and hyperlinks:</li>
+<li><code>media</code> = media-query list<br>
+The media for which the destination of the hyperlink was designed.<br>
+If the link is a hyperlink then the media attribute is purely advisory, and describes for which media the document in question was designed.<br>
+However, if the link is an external resource link, then the media attribute is prescriptive. The user agent must apply the external resource when the media attribute’s value matches the environment and the other relevant conditions apply, and must not apply it otherwise.<br>
+The default, if the media attribute is omitted, is &quot;all&quot;, meaning that by default links apply to all media.</li>
+<li><code>hreflang</code> = language tag<br>
+The language of the destination of the hyperlink.<br>
+A valid language tag, as defined in [BCP47].</li>
+<li><code>type</code> = A valid MIME type that destination of the hyperlink.<br>
+gives the MIME type of the linked resource.<br>
+The default value for the type attribute, which is used if the attribute is absent, is &quot;text/css&quot;.</li>
+<li><code>sizes</code> = icon sizes<br>
+The sizes attribute is used with the icon link type. The attribute must not be specified on link elements that do not have a rel attribute that specifies the icon keyword.</li>
+<li>Also, the title attribute has special semantics on this element. The exception is for style sheet links, where the title attribute defines alternative style sheet sets.</li>
+</ul>
+<h2>Link relations</h2>
+<p>A URI or any IANA Link can be used as the link <code>rel=&quot;&quot;</code>, but HTML defines special semantics for many of them:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Link type</th><th style="text-align:left">Category</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">alternate</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Gives alternate representations of the current document.</td></tr>
+<tr><td style="text-align:left">archives</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Provides a link to a collection of records, documents, or other materials of historical interest.</td></tr>
+<tr><td style="text-align:left">author</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Gives a link to the current document’s author.</td></tr>
+<tr><td style="text-align:left">first</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Indicates that the current document is a part of a series, and that the first document in the series is the referenced document.</td></tr>
+<tr><td style="text-align:left">help</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Provides a link to context-sensitive help.</td></tr>
+<tr><td style="text-align:left">icon</td><td style="text-align:left">External Resource</td><td style="text-align:left">Imports an icon to represent the current document.</td></tr>
+<tr><td style="text-align:left">index</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Gives a link to the document that provides a table of contents or index listing the current document.</td></tr>
+<tr><td style="text-align:left">last</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Indicates that the current document is a part of a series, and that the last document in the series is the referenced document.</td></tr>
+<tr><td style="text-align:left">license</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Indicates that the main content of the current document is covered by the copyright license described by the referenced document.</td></tr>
+<tr><td style="text-align:left">next</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Indicates that the current document is a part of a series, and that the next document in the series is the referenced document.</td></tr>
+<tr><td style="text-align:left">pingback</td><td style="text-align:left">External Resource</td><td style="text-align:left">Gives the address of the pingback server that handles pingbacks to the current document.</td></tr>
+<tr><td style="text-align:left">prefetch</td><td style="text-align:left">External Resource</td><td style="text-align:left">Specifies that the target resource should be preemptively cached.</td></tr>
+<tr><td style="text-align:left">prev</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Indicates that the current document is a part of a series, and that the previous document in the series is the referenced document.</td></tr>
+<tr><td style="text-align:left">search</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Gives a link to a resource that can be used to search through the current document and its related pages.</td></tr>
+<tr><td style="text-align:left">stylesheet</td><td style="text-align:left">External Resource</td><td style="text-align:left">Imports a stylesheet.</td></tr>
+<tr><td style="text-align:left">sidebar</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Specifies that the referenced document, if retrieved, is intended to be shown in the browser’s sidebar (if it has one).</td></tr>
+<tr><td style="text-align:left">tag</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Gives a tag (identified by the given address) that applies to the current document.</td></tr>
+<tr><td style="text-align:left">up</td><td style="text-align:left">Hyperlink</td><td style="text-align:left">Provides a link to a document giving the context for the current document.</td></tr>
+</tbody>
+</table>
+<h2>Examples</h2>
+<p>This example uses the <strong>link</strong> element to apply an external style sheet, called styles.css, to the page.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">stylesheet</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"styles.css"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>/&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>link</strong> element can be used only within the <strong>head</strong> tag. Windows Internet Explorer 8 and later. The behavior of the <a href="/docs/html/attributes/href"><strong>href</strong></a> and the <a href="/docs/html/attributes/rel"><strong>rel</strong></a> attributes depends on the current document compatibility mode.</p>
+<h3>IANA Link Relations database</h3>
+<p>The IANA maintains a registry of valid link relations at their <a href="http://www.iana.org/assignments/link-relations/link-relations.xhtml">Link Relations registry</a>, established in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/document-metadata.html#the-link-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/document-metadata.html#the-link-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/links.html#edef-LINK">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="https://tools.ietf.org/html/rfc5988">RFC 5988: Web Linking</a></dt>
+<dd>Standards Track
+</dd>
+<dt><a href="http://www.w3.org/TR/SRI/">Subresource Integrity</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

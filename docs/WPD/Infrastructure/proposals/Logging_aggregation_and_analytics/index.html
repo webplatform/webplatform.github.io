@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Logging aggregation and analytics · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/proposals/">proposals</a></li><li><a href="/docs/WPD/Infrastructure/proposals/Logging_aggregation and analytics/">Logging aggregation and analytics</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Logging aggregation and analytics</h1>
+<h2>Summary</h2>
+<p>In order to get as much information on the system as possible, we have to aggregate log events.</p>
+<p>Current state is using UDP as a way to transfer log data and is not reliable by nature of the protocol, it is acceptable to drop packets. Not acceptable for log messages.</p>
+<p>See <strong><a href="http://jasonwilder.com/blog/2012/01/03/centralized-logging/">This blog post about Centralized logging by Joson Wilder</a></strong> to understand the idea behind.</p>
+<p>Also, see this presentation: <a href="http://www.youtube.com/watch?v=RuUFnog29M4">Logstash and other things by Jordan Sissel of Dreamhost</a></p>
+<h3>Related tasks</h3>
+<ul>
+<li>Initiating the project <a href="http://project.webplatform.org/infrastructure/issues/INFR-39">#INFR-39</a></li>
+</ul>
+<h2>Overview</h2>
+<p>An ideal system should:</p>
+<ol>
+<li>Accept messages from all the nodes and their services</li>
+<li>Use some FIFO or queue to make sure we do not lose messages or overflow the internal network traffic</li>
+<li>Provide a web-based interface to search events</li>
+<li>Index all log messages and parse known elements such as date formats, and categorize by type of service</li>
+<li>Be open-source, and hosted within our own infrastructure</li>
+</ol>
+<p>Found:</p>
+<ol>
+<li>LogStash</li>
+<li>Graylog2</li>
+<li>Scribe</li>
+</ol>
+<h2>Data sources</h2>
+<ul>
+<li>Salt stack minion <code>log_file</code> parameter</li>
+<li>Apache2 in every vhost <code>ErrorLog syslog:local</code> and <code>php_flag log_errors on</code></li>
+<li>NGINX in every vhost</li>
+<li>Local syslog service to forward, configure message queue</li>
+<li>Add hooks in some web apps
+<ol>
+<li>MediaWiki hooks <a href="http://www.mediawiki.org/wiki/Manual:Hooks/PageContentSave">[1]</a></li>
+<li>BugGenie</li>
+<li>WordPress</li>
+</ol></li>
+</ul>
+<h2>Reference</h2>
+<ul>
+<li><a href="http://saltstarters.org/example/ahammond/salt_logstash">Salt state configuration for LogStash</a>, using <a href="http://logstash.net/">Log stash</a></li>
+<li><a href="https://github.com/heroku/logplex">LogPlex</a></li>
+<li><a href="https://github.com/facebook/scribe/wiki">Scribe</a> (a facebook project)</li>
+</ul>
+<h3>Articles and tutotials</h3>
+<ul>
+<li><a href="http://blog.pkhamre.com/2012/07/05/visualizing-logdata-with-logstash-statsd-and-graphite/">Visualizing log data with logstash</a> (adapt to Ganglia?)</li>
+<li><a href="http://stackoverflow.com/questions/680200/application-log-aggregation-management-and-notifications">http://stackoverflow.com/questions/680200/application-log-aggregation-management-and-notifications</a></li>
+<li><a href="http://opencast.org/article/graylog2-matterhorn-centralized-log-management">http://opencast.org/article/graylog2-matterhorn-centralized-log-management</a></li>
+<li><a href="http://www.logalyze.com/product/major-features">Logalize</a></li>
+<li><a href="http://nichol.as/zeromq-an-introduction">ZeroMQ, an introduction</a> (Answers: what is zero mq anyway?)</li>
+<li><a href="http://www.logstash.net/docs/1.2.1/tutorials/getting-started-centralized">[2]</a></li>
+<li><a href="http://www.rexconsulting.net/tip-centralized-logging-benefits.html">[3]</a></li>
+<li><a href="http://urbanairship.com/blog/2010/10/05/centralized-logging-using-rsyslog/">[4]</a></li>
+<li><a href="http://jasonwilder.com/blog/2012/01/03/centralized-logging/">[5]</a></li>
+<li><a href="http://imcol.in/tag/rabbitmq/">[6]</a></li>
+<li><a href="http://hron.me/blog/2012/10/logging-with-logstash/">[7]</a></li>
+<li><a href="http://sysadvent.blogspot.ca/2009/12/cron-practices.html">[8]</a></li>
+<li><a href="http://blog.tagged.com/2012/05/grabbing-full-java-stack-traces-from-syslog-ng-with-logstash/">[9]</a></li>
+<li><a href="http://jpmens.net/2012/08/06/my-logstash-and-graylog2-notes/">[10]</a></li>
+<li><a href="http://benwilber.net/realtime-pixel-tracking-nginx-syslog-ng-redis">[11]</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

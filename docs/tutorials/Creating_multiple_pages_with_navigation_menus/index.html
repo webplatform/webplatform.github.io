@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Creating multiple pages with navigation menus · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/Creating_multiple pages with navigation menus/">Creating multiple pages with navigation menus</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Creating multiple pages with navigation menus</h1>
+<h2>Introduction</h2>
+<p>In this article we’ll talk about web site navigation and menus. You’ll learn about different types of menus and how to create them in HTML. We’ll also touch on the subject of menu usability and accessibility. We won’t go into styling menus yet, but this article will lay the foundations. There are <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/menu_examples.zip">code examples to download</a> to go along with this article — we will refer to these throughout the tutorial.</p>
+<h2>the HTML5 <code>&lt;nav&gt;</code> menu</h2>
+<p>HTML5 defines a <code>&lt;nav&gt;</code> menu, which is to be used to contain the primary navigation of a web site, be it a list of links or a form element such as a search box. This is a good idea, as previous to this we would contain the navigation block inside something like <code>&lt;div id=&quot;navigation&quot;&gt;</code>. Yes, you can identify this for styling purposes pretty well, but it is a <code>&lt;div&gt;</code>, and therefore semantically anonymous. <code>&lt;nav&gt;</code> gives us a consistent way to unambiguously define with the primary navigation is, which is good for things like search engine optimization, and for visually impaired users using a screen reader, who will be able to find the navigation much more easier if it is clearly signposted (this does depend on the screen reader they are using supporting the <code>&lt;nav&gt;</code> element, so it might be a little way off yet). So, a navigation block would look something like this:</p>
+<pre><code>&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Navigation&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Menu&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Links&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>Bear in mind that <code>&lt;nav&gt;</code> should only be used for the main user navigation of a web page, not for advertising links down the bottom of the page, or for a secondary navigation relating to a small part of the page.</p>
+<h2>Your main HTML menu tools — links, anchors and lists</h2>
+<p>There are several different types of menu and navigation idioms to consider in HTML, all connected closely with <code>&lt;link&gt;</code> and <code>&lt;a&gt;</code> (anchor) elements. In a nutshell:</p>
+<ul>
+<li><code>&lt;link&gt;</code> elements describe relationships across several documents. You can for example tell a user agent that the current document is part of a larger set that spans several documents, including a table of contents, and define the relationships between the documents.</li>
+<li>Anchors (aka <code>&lt;a&gt;</code> elements) allow you to either link to another document, resource or document section, or to a certain section of the current document. These don’t get automatically followed by the user agent; instead they’ll be activated by your visitors by whatever mean available to them (mouse, keyboard, voice recognition, etc.)</li>
+</ul>
+<p>If you haven’t read the <a href="http://www.w3.org/wiki/HTML_links_-_lets_build_a_web">links</a> and <a href="http://www.w3.org/wiki/HTML_lists">lists</a> articles earlier in the course, you should do, as they a required prerequisites for understanding this one.</p>
+<p>Anchors/links do not just become menus on their own — you need to structure and style them to let both the browser and your users know that their function is as a navigation menu, not just a set of random links. If the order of the pages is not important you can use an unordered list as in this <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/unordered.html">unordered list menu example</a>.</p>
+<p>If the order in which the visitors go through all the documents is important then you need to use an ordered list. If for example you have a multi-document online course where one tutorial builds on top of the last one, you could use an ordered list like in this <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/ordered.html">ordered list example</a>.</p>
+<p>Using <code>&lt;nav&gt;</code> and lists to create menus is great for several reasons:</p>
+<ul>
+<li>It is easy to differentiate the primary navigation lists/links from other lists and links on the page because they are the ones inside the <code>&lt;nav&gt;</code>. Not only will this make finding it easier for screen reader users, as mentioned above, but it makes targeting it with CSS and JavaScript easier too.</li>
+<li>Lists can be nested, which means you can easily create several levels of navigation hierarchy.</li>
+<li>Even without any styling applied to the list, the browser rendering of the HTML makes sense and it is easy to grasp for a visitor that these links belong together and make up one logical unit.</li>
+</ul>
+<p>You nest lists by embedding the nested list inside the <code>&lt;li&gt;</code> element, not after it. you can see a <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/nesting.html">correct and an incorrect example here</a>.</p>
+<p>Notice that browsers display both examples in the same way. Browser display should never be an indicator for the quality of your code. An invalid HTML construct like the wrong example shown on the above example page will be hard to style, add behaviour to with JavaScript or convert to another format. The structure of nested ULs should always be <code>&lt;ul&gt;&lt;li&gt;&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</code> and never <code>&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;</code>.</p>
+<h2>The need for flexibility</h2>
+<p>The menu of a site is unlikely to stay the same for very long — sites tend to grow organically as functionality is added and the user base grows, so you should create menus with scope for menu items to be added and removed as the site progresses, and for menus to be translated into different languages (so links will change in length). Also, you may well find yourself working on sites where the HTML for menus is created dynamically using server-side languages rather than with static HTML. This does not however mean that knowing HTML will become obsolete; it will actually become more important as this knowledge will still be needed to create HTML templates for the server-side script to populate.</p>
+<h2>Different types of menu</h2>
+<p>There are several types of menus you will be called upon to create in HTML, as you work on different web sites. Most of these can be created with lists, although sometimes interface restrictions force you to use something different (more on that later). The list-based menus you will be likely to create are as follows:</p>
+<ul>
+<li>In-page navigation: For example a table of contents for a single page, with links pointing to the different sections on the page.</li>
+<li>Site navigation: A navigation bar for your whole web site (or a subsection of it), with links pointing to different pages on the same site.</li>
+<li>Content-contextual navigation: A list of links that point to pages closely related to the subject of the page you’re currently on, either on the same site, or different ones.</li>
+<li>Sitemaps: Large lists of links that point to all the different pages of a web site, grouped into related sublists to make them easier to make sense of.</li>
+<li>Pagination: Links pointing to other pages that make up further sections or parts of a whole, along with the current page, for example part 1, part 2, and part 3 of an article.</li>
+</ul>
+<h3>In-page navigation (table of contents)</h3>
+<p>We’ve already covered this to a certain degree in the tutorial about links, but here’s a more in-depth description of what in-page navigation means and what you need to make it work.</p>
+<p>In the <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/inpagenavigation.html">example related to this in-page navigation section</a>, we have used a list of links that point to anchors further down the page. Each menu link looks like so:</p>
+<pre><code>&lt;nav&gt;
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;#intro&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+
+  ...
+</code></pre>
+<p>The <code>href</code> attribute points to the corresponding anchor further down the page via the anchor’s <code>id</code> attribute value, preceded by a hash symbol (#). So the anchor looks like this:</p>
+<pre><code>&lt;h2 id=&quot;intro&quot;&gt;Introduction&lt;/h2&gt;
+</code></pre>
+<p>Each section of the page also has a “back to menu” link that works in the same way, but points back to the menu instead.</p>
+<p>Technically, this is all you need to make this kind of navigation work, however, there is an annoying bug in Internet Explorer that forces you do to a bit more.</p>
+<p>You can try this bug out yourself:</p>
+<ol>
+<li>Open the document in Internet Explorer 6 or 7</li>
+<li>Do not use a mouse; instead use the keyboard to navigate the document. You can hit the tab key to jump from link to link and the enter key to activate a link — in this case to jump to the section it points to.</li>
+<li>Seemingly all is well when you do that — the browser scrolls down to where you wanted to go.</li>
+<li>If you hit the tab key again the right behaviour for a browser is to take you to (give focus to) the first link inside the section you chose. Internet Explorer, however, will take you back to the start of the menu at the top of the page!</li>
+</ol>
+<p>The way around this is terribly confusing and deals with a special property of Internet Explorer called <code>&lt;hasLayout&gt;</code>. You can trigger this in several ways, all of which are explained in <a href="http://www.satzansatz.de/cssd/onhavinglayout.html">Ingo Chao’s excellent article “On having layout”</a>. The easiest way is to <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/inpagenavigationmsiefix.html">wrap the anchor in an element and then set that element’s width using CSS</a>. In this case we used <code>&lt;section&gt;</code> elements and then set their width to 100% using CSS. This is what IE needs — the anchor to be inside an element with <code>&lt;hasLayout&gt;</code>.</p>
+<p>Having to do this is annoying, but it also helps you if you want to style the sections differently - you can’t add styling to a whole section unless you wrap it in an appropriate block level element.</p>
+<p>Note that keyboard navigation around links in Opera is slightly different—try looking at the above example in Opera, then hold down Shift and use the arrow keys to navigate around links (it also works on form elements). This is called spatial navigation.</p>
+<h3>Site navigation</h3>
+<p>Site navigation is most probably the most common menu type you’ll need to create. It is the menu of the whole site (or a subset of it), showing both the options visitors can choose from and the hierarchy of the site. Lists are perfect for this purpose, as you’ll see from this <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/home.html">site navigation example</a>.</p>
+<pre><code>&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Home&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;About Us&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;clients.html&quot;&gt;Our Clients&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;products.html&quot;&gt;Our Products&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;services.html&quot;&gt;Our Services&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;Contact Us&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>There aren’t many surprises here, at least not from a pure HTML point of view — try navigating to the different pages in the example to see what happens. Later on in the course we’ll talk about styling these kind of menus with CSS and adding behaviour via JavaScript. One important thing to consider is how to highlight the current document in the menu, to give the user a sense of being in a particular place, and that they are moving location (even though in reality they aren’t, unless of course they are using a mobile device to browse the Web!). In this case we are just removing the link to the current page, in each case - this makes sense, as you don’t need to link to the same document you are on, and it makes it clear where you are in the menu. We’ll look more at “you are here” in the next section.</p>
+<h4>Providing visitors with a “You are here” feeling</h4>
+<p>One golden rule of web development and navigation is that the current document should never link to itself but instead be obviously different to the other entries in the menu. This is important as it gives the visitors something to hold on to and tells them where they are on their journey through your site. There are edge cases like web applications, permalinks in blogs and so called “one page” web sites but in 99% of cases a link to the document you are already looking at is redundant and confusing to the visitor.</p>
+<p>In <a href="/w/index.php?title=HTML_links_-_lets_build_a_web&amp;action=edit&amp;redlink=1">HTML links - lets build a web</a>, we stated that a link is an agreement and a liability: you offer visitors a way to reach more information that they need, but you need to be careful — you’ll lose credibility and trust if that link doesn’t give the users what they want, and/or results in unexpected behaviour. If you offer for example a link that points to the current document, activating it will reload the document. As a user this is something you don’t expect — what purpose did clicking this link have? This results in users getting confused.</p>
+<p>This is the reason why the current page should never be linked to from the menu. You could remove it altogether, or even better highlight it as well (eg. by surrounding it with a <code>&lt;strong&gt;</code> element) — this gives users a visual clue and also tells blind visitors that this is extra important — this <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/about.html">current page highlight example</a> illustrates this.</p>
+<h4>How many options should you give users at one time?</h4>
+<p>Another issue to consider is how many options you want to give visitors. A lot of menus you see on the web try to make sure that every page in the site can be accessed from one single menu. This is where scripting and CSS trickery comes in — you can make the menu more manageable by hiding certain parts until users select certain areas (rollover menus, as they are sometimes called). This is clever from a technical point of view, but there are several issues with this approach:</p>
+<ul>
+<li>Not all visitors will be able to use the clever trick as intended; keyboard users for example will have to tab through all links on the page just to reach the one they are looking for.</li>
+<li>You’ll need to add a lot of HTML to each document of your site to achieve this, and a lot of it can be redundant on many pages. If we drill down three levels in a menu to reach the document we want to read, we don’t need to see options leading us to 4, 5, and 6 levels deep.</li>
+<li>You can overwhelm visitors if you present them with too many options at once — humans don’t like making decisions. Think about how long it can take you to pick a meal from a lengthy restaurant menu.</li>
+<li>If there is not much content on a page but a lot of links, search engines will assume that there is not much valid information on this page and not give the page much attention, so it is harder to find when searching the Web.</li>
+</ul>
+<p>All in all, it is up to you how many items you put into a menu — different designs will call for different choices — but if in doubt, you should try cutting your menus down to only the links to the main sections of the site. You can always provide further submenus where appropriate.</p>
+<h3>Contextual menus</h3>
+<p>Contextual menus are links that build on the content of the current document and offer more information related to the current page you are on. A classic example is the “related articles” links you tend to get at the bottom of news articles, as shown in Figure 1.</p>
+<p><img src="//static.webplatform.org/1/16/menus-fi.png" alt="Screenshot of a contexual menu, in this case related news items"></p>
+<p>Figure 1: An example of a contextual menu — a news article offering related news items at the bottom.</p>
+<p>This is a slightly different thing to context menus in software user interfaces, which offer different options depending on where they are accessed (like the right-click or Ctrl + click menus you find in desktop applications that offer specific options depending on where your mouse pointer is at the time).</p>
+<p>Contextual menus on web sites are a great way to promote content on other parts of the site; in terms of HTML they are just another list of links.</p>
+<h3>Sitemaps</h3>
+<p>Sitemaps are what you might expect — maps of all the different pages (or the main sections if you are talking about really huge sites) of your site. They allow your site’s visitors to get a glimpse of the overall structure of your site, and go anywhere they need to fast — even if the page they need is deep within your page hierarchy.</p>
+<p>Both sitemaps and site searches are a great way of offering visitors a fallback option when they are lost or to offer quick access for those who are in a hurry.</p>
+<p>From an HTML point of view they could either be one massive nested list full of links or — in the case of very large sites — section headings with nested links of section-specific hierarchies or even search forms for each of the sections.</p>
+<h3>Pagination</h3>
+<p>Pagination is necessary when you have to offer a way to navigate through large documents split into separate pages. You’ll find pagination in large image archives or search result pages (like Google or Yahoo search), for example</p>
+<p>Pagination is different from other types of navigation because it does normally link back to the same document — but results in more options or further information being displayed. Some examples of pagination are shown in Figure 2:</p>
+<p><img src="//static.webplatform.org/0/00/menus-fj.png" alt="Different types of pagination menus"></p>
+<p>Figure 2: Pagination menus allow visitors to go through large sets of data without losing track of where they are.</p>
+<p>The HTML is nothing ground-breaking — once again you offer a list of links with the current link (indicating which chunk of data is shown and how far down in your pagination you are) being highlighted (eg. with a <code>&lt;strong&gt;</code> element) and not linked.</p>
+<p>The main difference to site navigation is that there is a lot of programming logic going on with pagination. Depending on where you are in the whole data set you need to show or hide the previous, next, first and last links. If you have really massive amounts of information to navigate through you will also want to offer links to landmarks like 0-100 results, 101-200 results, etc. This is why you are not very likely to hard-code menus like these in HTML but instead create them on the server-side. This does not change the rules however — the current chunk should not link to itself and you shouldn’t offer links that lead nowhere.</p>
+<h2>When lists are not enough — image maps and forms</h2>
+<p>In 99% of cases an ordered or unordered list is a sufficient HTML construct for menus, especially as the logical order and nesting also allows for styling with CSS very nicely. There are however some situations that may require different design techniques.</p>
+<h3>Setting hotspots with image maps</h3>
+<p>One technique is client side image maps. Image maps turn an image into a menu by turning sections of the images into interactive areas that you can link to different documents. The <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/imagemap.html">imagemap example</a> associated with this section turns an image into a clickable menu. Try it out by following the link above and clicking the different sections of the triangle in the image shown in Figure 3.</p>
+<p><img src="//static.webplatform.org/f/f8/menus-fk.png" alt="Screenshot of an image with hotspots"></p>
+<p>Figure 3: By defining a map with area elements you can turn parts of an image into interactive elements.</p>
+<p>You can turn any image into a menu by defining a map with different areas (also called hotspots). You give the map a <code>name</code> attribute and connect the image and the map using the <code>usemap</code> attribute on the <code>&lt;img&gt;</code> element. The code in our example looks like this:</p>
+<pre><code>&lt;nav&gt;
+  &lt;img src=&quot;skillset.gif&quot; alt=&quot;A web developer's skillset - web standards, browser bugs and user impact&quot; usemap=&quot;#skillset_Map&quot;&gt;
+  &lt;map name=&quot;skillset_Map&quot;&gt;
+    &lt;area shape=&quot;poly&quot; alt=&quot;W3C Guidelines&quot; coords=&quot;90,70,113,112,67,112,90,70&quot; href=&quot;w3c.html&quot;&gt;
+    &lt;area shape=&quot;poly&quot; alt=&quot;Browser Bugs&quot; coords=&quot;61,120,115,120,137,157,40,157,62,120&quot; href=&quot;browser.html&quot;&gt;
+    &lt;area shape=&quot;poly&quot; alt=&quot;User Impact&quot; coords=&quot;35,166,142,166,171,216,6,216,35,166&quot; href=&quot;userimpact.html&quot;&gt;
+  &lt;/map&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>Note that this works exactly like in-page links, which means that you need to precede the value of the <code>usemap</code> attribute with a hash.</p>
+<p>Each area has several attributes:</p>
+<ul>
+<li><code>href</code> defines the URL the area should link to (which could also be a target in the same document).</li>
+<li><code>alt</code> defines alternative text that can be displayed if the image is not viewable for whatever reason.</li>
+<li><code>shape</code> defines the shape of the area. This can be <code>rect</code> for rectangles, <code>circle</code> for circles or <code>poly</code> for irregular shapes defined using polygons.</li>
+<li><code>coords</code> defines the coordinates in the image that should become hotspots — these values are measured from the top left corner of the image, and can be measured in pixels or percentages. For rectangular areas you only need to define the top left and the bottom right corner; for circles you need to define the center of the circle and the radius; for polygons you need to provide a comma-delimited list of all the corner points.</li>
+</ul>
+<p>Image maps are not much fun to define and type in as HTML, which is why image manipulation tools like Adobe Image Ready or Fireworks offer an option to create them visually (they generate the HTML for you).</p>
+<h3>Saving screen space and preventing link overload with forms</h3>
+<p>Another technique you can employ is to using a form control for navigation — for example, you could use a <code>&lt;select&gt;</code> element for the navigation, with the different pages as options inside the <code>&lt;select&gt;</code> element. Your visitors can choose an option then submit the form to jump to different pages. You can find a <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/selectnavigation.html">form menu example here</a>: note that it won’t actually work, as it is not wired up to any script to make it work.</p>
+<p>The most obvious benefit of using this type of menu is that you can offer a lot of options without using up a lot of space on the screen, as browsers render the menu as one line — see Figure 4.</p>
+<p><img src="//static.webplatform.org/b/ba/menus-fl.png" alt="Screenshot of a menu created with a select box, open and closed"></p>
+<p>Figure 4: Select menus take up only one line on the screen.</p>
+<p>You can go further with this, grouping the different menu options using the <code>&lt;optgroup&gt;</code> element, as shown in this <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/selectnavigationoptgroup.html">optgroup example</a>.</p>
+<p>This will show a menu with non-selectable options (these are the group names) as shown in Figure 5:</p>
+<p><img src="//static.webplatform.org/3/38/menus-fm.png" alt="Screenshot of a menu created with a select boxincluding option groups"></p>
+<p>Figure 5: Select menus can get option groups that allow you to tell visitors which options belong together.</p>
+<p>This technique has the benefit of using up hardly any space but it also means that you need to have a server-side script to send the visitors to the pages they have chosen. You can also use JavaScript to make the links work, but you cannot rely on JavaScript being available — you need to make sure your users can still make use of the menu with JavaScript disabled.</p>
+<p>Another, less obvious benefit is that you don’t offer too many links in the same document. This means that you don’t overwhelm users of assistive technologies (who often tend to be presented with the links in one big list). It also means that search engines don’t consider the links on your page worthless as the link to text ratio makes the document appear to be a sitemap. However, many assistive technologies can produce a map of your pages’ links; if your important links are all in a select menu, there is a chance that a visitor might never chance upon them. It is therefore a good idea to offer anchor links to the main destination pages and <code>&lt;select&gt;</code> element menus to offer more options. Visitors will be able to use them, but machines like search engine robots don’t need to know they exist.</p>
+<h2>Where to put the menu, and offering options to skip it</h2>
+<p>One last thing to mention about HTML menus is that the placement of the menu plays a large role. Consider visitors that have no scrolling mechanism or might not be able to see so rely on keyboard navigation to find their way around your site. The first thing they’ll encounter when they load the document is its location and the title; next the document gets read top to bottom, stopping at each link to ask the visitor if they wanted to follow this link or not. Other options are to get a list of all the links or to jump from heading to heading.</p>
+<p>If the menu is at the top of document, it will be the first thing the user will meet. Having to skip through 15 or 20 links before they get to any content could get really annoying. There are two workarounds available. First, you could put the menu after the main content of the document (you can still place it at the top the screen using CSS if you wish). Second, you could offer a skip link. Skip links are simply links placed before the main menu that link to the start of the content, allowing the visitor to skip over the menu and get to the content immediately if they wish. You can add another “go to menu” link at the end of the document to make it easy to get back up to the top. Check out the <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/skiplinks.html">skiplinks example for more of an insight</a>.</p>
+<p>Skip links are not only useful for these kind of disabilities but make life a lot easier when you navigate a site on a mobile device with a small screen.</p>
+<h2>Summary</h2>
+<p>In this tutorial we have covered the different types of menu you are likely to have to write in HTML.</p>
+<h2>Exercise Questions</h2>
+<ul>
+<li>Why is it a good idea to mark up menus as lists?</li>
+<li>When you design a navigation menu, what do you need to plan for in the future?</li>
+<li>What are the benefits of using <code>&lt;select&gt;</code> elements for menus, and what are the problems?</li>
+<li>What do you define with <code>&lt;area&gt;</code> elements, and what is the <code>nohref</code> attribute of an area element for (this is not in here, you’d need to do some online research)</li>
+<li>What are the benefits of skip links?</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/23-creating-multiple-pages-with-navigat/">23: Creating multiple pages with navigation menus</a>, written by Christian Heilmann. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

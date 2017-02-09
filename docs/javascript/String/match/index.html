@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>match · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Matches a string with a regular expression, and returns an array containing the results of that search." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/String/">String</a></li><li><a href="/docs/javascript/String/match/">match</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>match</h1>
+<h2>Summary</h2>
+<p>Matches a string with a regular expression, and returns an array containing the results of that search.</p>
+<h2>Syntax</h2>
+<pre><code>stringObj.match( rgExp )
+</code></pre>
+<dl>
+<dt><strong>stringObj</strong></dt>
+<dd>Required. The String object or string literal on which to perform the search.
+</dd>
+<dt><strong>rgExp</strong></dt>
+<dd>Required. A regular expression object that contains the regular expression pattern and applicable flags. This can also be a variable name or string literal containing the regular expression pattern and flags.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the match method.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> src = <span class="hljs-string">"azcafAJAC"</span>;
+
+ <span class="hljs-keyword">var</span> re = <span class="hljs-regexp">/[a-c]/</span>;
+
+ <span class="hljs-keyword">var</span> result = src.match(re);
+
+ <span class="hljs-comment">// The entire match is in array element 0.</span>
+ <span class="hljs-built_in">document</span>.write(result[<span class="hljs-number">0</span>] + <span class="hljs-string">"&lt;br/&gt;"</span>);
+
+ <span class="hljs-comment">// Now try the same match with the global flag.</span>
+ <span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/[a-c]/g</span>;
+ result = src.match(reg);
+
+
+ <span class="hljs-comment">// The matches are in elements 0 through n.</span>
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>; index &lt; result.length; index++)
+ {
+     <span class="hljs-built_in">document</span>.write (<span class="hljs-string">"submatch "</span> + index + <span class="hljs-string">": "</span> +  result[index]);
+     <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"&lt;br /&gt;"</span>);
+ }
+</code></pre>
+<h2>Remarks</h2>
+<p>If the <strong>match</strong> method does not find a match, it returns null. If it finds a match, <strong>match</strong> returns an array, and the properties of the global <strong>RegExp</strong> object are updated to reflect the results of the match.</p>
+<p>The array returned by the <strong>match</strong> method has three properties, <strong>input</strong> , <strong>index</strong> and <strong>lastIndex</strong>. The input property contains the entire searched string. The index property contains the position of the matched substring within the complete searched string. The <strong>lastIndex</strong> property contains the position following the last character in the last match.</p>
+<p>If the global flag ( <strong>g</strong> ) is not set, Element zero of the array contains the entire match, while elements 1 through n contain any submatches. This behavior is the same as the behavior of the <a href="/docs/javascript/regular_expression/exec">exec Method (Regular Expression)</a> when the global flag is not set. If the global flag is set, elements 0 through n contain all matches that occurred.</p>
+<p>If the flag <strong>i</strong> is set, the search is not case-sensitive.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/regular_expression/exec">exec Method (Regular Expression)</a></li>
+<li><a href="/docs/javascript/RegExp">RegExp Object</a></li>
+<li><a href="/docs/javascript/regular_expression">Regular Expression Object</a></li>
+<li><a href="/docs/javascript/String/replace">replace Method (String)</a></li>
+<li><a href="/docs/javascript/String/search">search Method (String)</a></li>
+<li><a href="/docs/javascript/regular_expression/test">test Method (Regular Expression)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/7df7sf4x(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

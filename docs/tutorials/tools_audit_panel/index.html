@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Auditing your web app for speed · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="How to audit a web app for speed." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/tools_audit panel/">tools audit panel</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Auditing your web app for speed</h1>
+<p><strong>By Seth Ladd</strong><br>
+Originally published July 28, 2010</p>
+<h2>Summary</h2>
+<p>How to audit a web app for speed.</p>
+<h2>Introduction</h2>
+<p>A fast web app is a successful web app. Your job as a developer is not done until you have optimized both the real and perceived performance of your app. Not only is it simply the right thing to do to ensure that your users have an excellent experience, but there are very practical and important business reasons to optimize. Amazon measured a 1% drop in sales for every 100ms of site latency, and Google measured a 20% drop in traffic for every 0.5 second delay (<a href="http://www.scribd.com/doc/4970486/Make-Data-Useful-by-Greg-Linden-Amazoncom">citation</a>). Those are real numbers with real implications for your business and web apps.</p>
+<p>Web speed is so important that Google even has an entire effort devoted to <a href="http://code.google.com/speed/">making the web faster</a>. And if you need yet another reason to optimize your app performance, Google has announced that they are <a href="http://googlewebmastercentral.blogspot.com/2010/04/using-site-speed-in-web-search-ranking.html">adding page speed to their ranking algorithm</a>.</p>
+<p>There are many published best practices for optimizing the performance of your web app, including two great books (<a href="http://oreilly.com/catalog/9780596529307/">High Performance Web Sites</a> and <a href="http://oreilly.com/catalog/9780596522308/">Even Faster Web Sites</a>). Techniques on the server (such as implementing the correct cache control headers) and on the client (such as providing image width and height attributes) are combined into an end-to-end strategy for optimizing performance. With so many tips and tricks, it’s sometimes difficult to gauge how they all map to real life and your real web apps.</p>
+<p>Luckily, the Chrome Developer Tools (included in every instance of Chrome) provides an excellent tool which inspects your web app and offers customized recommendations to enhance performance and reduce latency. This article covers the Audit Panel, which is similar in scope to the very popular <a href="http://developer.yahoo.com/yslow/">YSlow</a> tool, and explains how you can use it to speed up your website, decrease latency, and increase user satisfaction.</p>
+<h2>Getting Started</h2>
+<p>To illustrate how the Audit Panel can recommend web app performance improvements, we’ll turn the tool toward our very own <a href="http://www.html5rocks.com/">HTML5Rocks!</a>. We’ll use the Audit Panel to help make our site even faster.</p>
+<p>Starting Developer Tools is as easy as using the wrench icon (upper right of the Chrome window) and selecting <strong>Tools &gt; Developer tools</strong>.</p>
+<p><em>The Developer Tools are accessible from the Wrench menu</em> <img src="//static.webplatform.org/7/72/auditspeed01.png" alt="Chrome Developer Tools"></p>
+<p>For more information on how to get started with Developer Tools, please see <a href="/docs/tutorials/developertools_chrome1">Introduction to Chrome Developer Tools, Part One</a>.</p>
+<p>The Audit Panel is located in the main tools button panel. You’ll notice that, once selected, the Audit Panel has not yet run through its analysis of your web app. Running all of the heuristics can be slow, especially for a large web app such as GMail, so the tool is disabled by default.</p>
+<p><em>The Audit Panel</em> <img src="//static.webplatform.org/3/3f/auditspeed02.png" alt="Audit Panel"></p>
+<p>Let’s dive in by clicking the <em>Run</em> button, which reloads the web app with the performance heuristics turned on. After the page reloads, you’ll see a list of recommendations similar to the screen shot below.</p>
+<p><em>Recommendations of performance improvements from the Audit Panel</em> <img src="//static.webplatform.org/2/29/auditspeed03b.png" alt="Improvement recommendations"></p>
+<p>You’ll notice that the Audit Panel classifies the suggestions by severity, with the most severe marked with a red dot, and the medium severity suggestions marked with a yellow dot. This color-coding helps you prioritize the suggestions, focusing on the most important (those providing the biggest gains) first.</p>
+<p>The number in parentheses following the suggestion is how many instances the Audit Tool detected. For example, there were 12 instances of &quot;Leverage browser caching&quot;. This gives you a sense of how often the suggestion can be applied.</p>
+<h2>Speed Strategies</h2>
+<p>As mentioned before, there are plenty of well known and heavily tested strategies for optimizing web app performance. We won’t be covering them all in depth with this article, but it’s easy to find more information and details. Helpful resources for learning more about the specifics of web app optimization include Google’s <a href="http://code.google.com/speed/articles/">Let’s make the web faster tutorials</a> and High Scalability’s <a href="http://highscalability.com/blog/2009/7/25/latency-is-everywhere-and-it-costs-you-sales-how-to-crush-it.html">Latency is Everywhere and It Costs You Sales</a>.</p>
+<p>The Audit Panel groups its suggestions into two categories, Network Utilization and Web Page Performance. According to the Audit Panel, to improve Network Utilization we should:</p>
+<ul>
+<li>leverage browser caching</li>
+<li>leverage proxy caching</li>
+<li>minimize cookie size</li>
+<li>serve static content from a cookieless domain</li>
+<li>specify image dimensions</li>
+</ul>
+<p>To improve web page performance, we should:</p>
+<ul>
+<li>optimize the order of styles and scripts</li>
+<li>remove unused CSS rules</li>
+</ul>
+<p>Let’s look at one of the strategies we can focus on to improve performance at HTML5Rocks!.</p>
+<h2>Leverage Browser Caching</h2>
+<p>Let’s first dive into the recommendation to leverage browser caching. What does this mean, specifically? Opening up the option in the UI, we are presented with the following details:</p>
+<p><em>The Audit Panel gives you recommendations for performance improvements</em> <img src="//static.webplatform.org/5/52/auditspeed04b.png" alt="Audit Panel recommendations"></p>
+<ul>
+<li>The following resources are missing a cache expiration. Resources that do not specify an expiration may not be cached by browsers.</li>
+<li>The following cacheable resources have a short freshness lifetime.</li>
+<li>The following resources are explicitly non-cacheable. Consider making them cacheable if possible.</li>
+</ul>
+<p>Caching resources is an excellent way to improve network utilization, which leads to lower bandwidth bills for the developer and faster response times for the user. Unfortunately, the tool doesn’t tell you exactly what you need to do, so we need to dive into the recommendations a bit and use our knowledge of web app performance optimizations to apply these suggestions.</p>
+<h3>Caching</h3>
+<p>Without getting too deep into HTTP caching, we can certainly cover some of the basics. The HTTP protocol includes <a href="http://tools.ietf.org/html/rfc2616#section-13">caching instructions</a>, allowing the server and the client to reduce the amount of data that needs to be transferred over the wire. For example, the server can tell the client to save a resource locally for a certain amount of time, thus eliminating the need to request the resource again. The client can also ask if the server’s resource is newer than the one that is stored locally. Ideally, if a resource is static, the server should tell the client to store the resource locally and avoid asking the server for the resource in the future. There are, as you can imagine, an incredible number of details regarding HTTP caching, but the general theme is &quot;reduce the amount of data sent over the wire by storing resources locally on the client&quot;.</p>
+<h2>Fixing Non-Cacheable Resources</h2>
+<p>Let’s look at one recommendation in depth, and learn how to connect the Audit recommendation to other tools inside Developer Tools. Specifically, let’s look at how to address “the following resources are explicitly non-cacheable.”</p>
+<p>Because caching is accomplished via the HTTP protocol, we need to look at the HTTP request and response for the <a href="http://www.html5rocks.com/">http://www.html5rocks.com/</a> resource. Simply click on the resource to view the original request and its response headers and details.</p>
+<p><em>Navigating the recommendations</em> <img src="//static.webplatform.org/b/b1/auditspeed05.png" alt="Navigating recommendations"></p>
+<p>You are then taken to the Resources Panel with the contents of the resources in view. Click the <em>Headers</em> tab, next to Content, to view the headers used in the request and the response.</p>
+<p><em>Viewing header information</em> <img src="//static.webplatform.org/a/a3/auditspeed06.png" alt="Viewing header information"></p>
+<p>We are trying to confirm that the server has told the client &quot;do not cache the home page of html5rocks.com&quot;. To do this, we need to look at the Response Headers, as these are the headers and instructions sent by the server.</p>
+<p><em>The <code>Cache-Control</code> header</em> <img src="//static.webplatform.org/5/58/auditspeed07.png" alt="The Cache-Control header"></p>
+<p>Sure enough, the server sent the “Cache-Control: no-cache” header to the client. This, as you would imagine, tells the client to always ask for the resource and to not cache it locally. Specifically, the HTTP specification for <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">no-cache</a> reads:</p>
+<p>“If the no-cache directive does not specify a field-name, then a cache MUST NOT use the response to satisfy a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent caching even by caches that have been configured to return stale responses to client requests.”</p>
+<p>This is exactly why the Audit Panel recommends enabling caching, because otherwise the server and client are sending potentially redundant information.</p>
+<p>Now that we have confirmed the root cause of the Audit suggestion, how do we fix it? In this case, the solution involves server side configuration or code. Depending on your setup, you could enable caching through your web server’s configuration or through configurations in your web app framework. Specifically, you should include an Expires header and a Cache-Control: private with a max-age parameter for any resource that you want cached.</p>
+<h2>Suggestions Are Just That—Suggestions</h2>
+<p>Remember that the Audit Panel is recommending improvements based on generic heuristics. It is applying best practices, learned over many years, to your specific web app. Most of the time, these recommendations are spot on and should be taken to heart.</p>
+<p>However, there are a few cases where recommendations may be correct but may not actually lead to any improvement. For example, if your page only has a single large image, the Audit Panel would recommend adding width and height attributes to the &lt;img&gt; tag, so that the rendering engine knows the image dimensions without first having to download and inspect the image. While this is generally great advice, it won’t help much if the image is the only element on the page.</p>
+<p>Remember to apply these suggestions after you understand them. And don’t forget to measure performance before and after the changes, to ensure that there is actually an improvement.</p>
+<h2>Summary</h2>
+<p>The Audit Panel is an excellent and easy-to-use tool that will quickly show you how to optimize the performance of your web app. Speed is a crucial web app attribute, and many companies have found direct correlations between performance and revenue or activity. Optimizing your app’s performance is not just the right thing to do for your users, but it is the right thing to do for your business’s bottom line.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/developertools/auditpanel/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

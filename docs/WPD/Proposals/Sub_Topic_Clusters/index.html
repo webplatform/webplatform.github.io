@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sub-topic Clusters in WPD · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Proposals/">WPD/Proposals</a></li><li><a href="/docs/WPD/Proposals/Sub_Topic Clusters/">Sub Topic Clusters</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Sub-topic Clusters in WPD</h1>
+<p>We have <a href="/docs/WPD/Implementation_Patterns/Templates#Topics.2C_Topic_Clusters.2C_See_Also">topic clusters</a>, which were designed to automatically generate a section of related pages in the See Also section. This feature allows an author to create associations between articles without the author having to know about (or where to find) the articles.</p>
+<p>The current implementation works pretty well for API pages. For example, a high-level topic cluster pertains to a broad area of focus, like Off-line Storage, to which the <a href="/docs/apis/filesystem">FileSystem</a>, IndexedDB, AppCache, and StorageQuota APIs belong. But only the API Listing pages belong in this topic cluster, not their member API object child pages (i.e. apis/filesystem/FileEntry); nor do the individual properties, methods, and events of those objects belong. We’ve been reasonably successful keeping the topic clusters succinct and meaningful for the APIs. Also, tutorial and concept pages fit into the current implementation the way they should. But for the CSS pages, things are getting out of control.</p>
+<h2>Problems</h2>
+<ul>
+<li>Too many pages being assigned to the same cluster resulting in overly-long lists of links.
+<ul>
+<li><a href="/docs/css/selectors/attributes/whitespace#Related_articles">css/selectors/attributes/whitespace#Related_articles</a> (An example of a really long list under Selectors.)</li>
+<li><a href="/docs/css/properties/display#Related_articles">css/properties/display#Related_articles</a> (The text topic cluster is so long as to be useless.)</li>
+</ul></li>
+<li>The list of <a href="/Property:Topic_Cluster">Property:Topic_Cluster</a> items is getting very long and unwieldy.</li>
+<li>Duplicate pages in topic clusters, and duplicate topic clusters. Examples:
+<ul>
+<li><a href="/docs/css/properties/font-family#Related_articles">css/properties/font-family#Related_articles</a> (Note CSS Fonts and Fonts)</li>
+</ul></li>
+<li>There are two basic use cases for topic clusters:
+<ul>
+<li>To group pages of the same type, i.e. css/border-style, css/border-right-style, css/border-left-style, etc. (This is more of a navigation use case.)</li>
+<li>To provide a mix of reference, conceptual, and tutorial articles of the same topic. (This is more true to the intent of topic clusters.)</li>
+</ul></li>
+</ul>
+<dl>
+<dd>
+Our current implementation does not differentiate between these two use cases, resulting in lists that are a mix of both.
+</dd>
+</dl>
+One of the hurdles is the lack of listing pages for groups of CSS properties and the flat structure of the css/ namespace. If we had listing pages for groups of CSS properties, we could reduce the length of the topic cluster lists generated by simply assigning only the CSS property listing pages (for example, a css/border page, which would be the listing page for css/border/border-style, css/border/border-right-style, etc.)
+<h2>Objectives</h2>
+<h3>Categorization</h3>
+<p>We’d like <em>sub</em>-topic clusters to provide a categorization layer over the CSS properties. For example, we would create sub-topic clusters for each of the topic clusters in column three of the <a href="/docs/Meta:web_platform_wednesday">WPW page</a>. But these would be distinct from the existing topic clusters, which we’ll keep (and clean up, of course).</p>
+<p>These sub-topic clusters could be used in a navigation structure, like the way SitePoint does it. Notice how in the navigation pane, the <a href="http://reference.sitepoint.com/css/height">height</a> property page is a child of Dimensions, and Dimensions is a child of Box Properties, yet the URL still reads, “css/height.” No listing pages exist for either the Dimensions or Box Properties interstitials. They are only nodes in the navigation tree.</p>
+<p>However, building out a navigation UI and all that is beyond the scope of this proposal. Here we’re concerned with building just the infrastructure with templates and properties to enable the sub-topic clusters. For this project, the sub-topic clusters would function and display the same way the current topic clusters do.</p>
+<p>As a mechanism, we need to make this extensible so we can implement it for not just CSS properties, but other sections of WPD that are mostly flat, like the other CSS namespaces, HTML, and so forth.</p>
+<h3>Membership in multiple sub-topic clusters</h3>
+<p>A given page could belong to more that one sub-topic cluster. Indeed, this is one way to provide a multi-faceted taxonomy. For example, the CSS border-right-style property could belong to both the “Border Right” and “Border Style” sub-topic clusters.</p>
+<h3>Union with topic clusters</h3>
+<p>However, even if we solve the categorization problem, per the above, we still need to solve for the union of sub-topic clusters with topic clusters. Instead of including every CSS page (topic) for a group of properties in a topic cluster, we would like to include just the sub-topic cluster for that group. For example, in a “Responsive Design” topic cluster, we would like to include articles on device detection, CSS media queries, the viewport meta tag, the FullScreen API, and the FlexBox CSS properties. But we don’t want to include a link to every FlexBox property. Rather, we would like to include a link to the “Flexbox” sub-topic cluster.</p>
+<p>This, of course, is impossible unless there is a <em>page</em> for the “Flexbox” sub-topic cluster, which there is not; it exists only as a property shared by a group of pages.</p>
+<p>If we want to reduce the size of the topic cluster list by aggregating groups of CSS properties (or other flat content), we have to create listing pages for those groups of properties. The listing pages would function the same way as they do for API pages.</p>
+<p>The disadvantage: there goes our flat URL structure. Instead of css/border-right-style we would have something like css/border_style/border-right-style, where the border_style page would be a listing page with border-style, border-right-style, border-left-style, border-bottom-style, and border-bottom-style as member pages.</p>
+<p>But at least the “CSS Layout” topic cluster would be able to refer to just the border_style listing page, instead of including links to all of the other border-style pages.</p>
+<h2>Design</h2>
+<p>Currently, topic clusters work like this:</p>
+<p>The Topic Cluster pane gets generated in the <a href="/Template:See_Also_Section">Template:See_Also_Section</a>:</p>
+<pre><code>&lt;includeonly&gt;{{#if: {{{Topic_clusters|}}}{{{Manual_links|}}}{{{External_links|}}}{{{Manual_sections|}}}|
+==See also==
+{{#if: {{{Topic_clusters|}}}|
+</code></pre>
+<p>by the following <a href="/Template:See_Also_Form_Section">Template:See_Also_Form_Section</a> code:</p>
+<pre><code>==See also section==
+Most of this section is auto-generated by assigning an article to a topic cluster. Only use Manual links rarely; instead add a new topic cluster to [[Property:Topic_Cluster]]
+{| class=&quot;formtable&quot;
+! Topic clusters:
+| {{{field|Topic_clusters|property=Topic_Cluster|list}}}
+|-
+</code></pre>
+<p>This draws the checkboxes for the topic clusters with the values from the <a href="/Property:Topic_Cluster">Property:Topic_Cluster</a>.</p>
+<p>Then the list of links are produced in the published page with the following template call:</p>
+<pre><code>{{See_Also_Section
+|Topic_clusters=Selectors
+}}
+</code></pre>
+<p>In the above, “Selectors” is the only topic cluster cited; there could be others.</p>
+<p>The sub-topic clusters would be implemented as follows.</p>
+<p>First, the form needs a new section for the sub-topic cluster that pertains to this page. The “#if” condition would provide the proper type of sub-topic cluster. For example, the template would provide for the Sub-topic_Cluster_CSS_Property, Sub-topic_Cluster_CSS_Selector, and Sub-topic_Cluster_HTML_Element to be displayed. There could be sub-topic clusters for each page type.</p>
+<pre><code>&lt;includeonly&gt;{{#if: {{{Topic_clusters|}}}{{{Sub-topic_Cluster_CSS_Property|}}}{{{Sub-topic_Cluster_CSS_Selector|}}}{{{Sub-topic_Cluster_HTML_Element|}}}{{{Manual_links|}}}{{{External_links|}}}{{{Manual_sections|}}}|
+==See also==
+{{#if: {{{Topic_clusters|}}}|
+{{#if: Sub-topic_Cluster_CSS_Property|}}|
+{{#if: Sub-topic_Cluster_CSS_Selector|}}|
+{{#if: Sub-topic_Cluster_HTML_Element|}}|
+</code></pre>
+<p>But now here’s the tricky part. The <a href="/Template:See_Also_Form_Section">Template:See_Also_Form_Section</a> code needs to provide a switch so that the sub-topic cluster choices provided pertain to the page. I’ve added this aspect as pseudo code, prefixed with ‘###’ below:</p>
+<pre><code>==See also section==
+Most of this section is auto-generated by assigning an article to a topic cluster. Only use Manual links rarely; instead add a new topic cluster to [[Property:Topic_Cluster]]
+{| class=&quot;formtable&quot;
+! Topic clusters:
+| {{{field|Topic_clusters|property=Topic_Cluster|list}}}
+|-
+### if this is a CSS_Property page
+[[Property:Sub-topic_Cluster_CSS_Property]]
+{| class=&quot;formtable&quot;
+! Related CSS Properties:
+| {{{field|Sub-topic_clusters|property=Sub-topic_Cluster_CSS_Property|list}}}
+|-
+### if this is a CSS_Selector page
+[[Property:Sub-topic_Cluster_CSS_Selector]]
+{| class=&quot;formtable&quot;
+! Related CSS Selectors:
+| {{{field|Sub-topic_clusters|property=Sub-topic_Cluster_CSS_Selectors|list}}}
+|-
+### if this is an HTML_Element page
+[[Property:Sub-topic_Cluster_ HTML_Element]
+{| class=&quot;formtable&quot;
+! Related  HTML Elements:
+| {{{field|Sub-topic_clusters|property=Sub-topic_Cluster_ HTML_Element|list}}}
+|-
+</code></pre>
+<p>The above is based on a shaky understanding of how these things work, and I’m hoping for help from the Template Corps to flesh this idea out with a more cogent explanation.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

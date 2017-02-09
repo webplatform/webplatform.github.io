@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>color · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="Unknown" />
+    <meta name="description" content="This page explains the different mechanisms available in HTML and CSS to specify colors." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/color/">color</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>color</h1>
+<h2>Summary</h2>
+<p>This page explains the different mechanisms available in HTML and CSS to specify colors.</p>
+<h2>Basic HTML Color keywords</h2>
+<p>The <a href="http://www.w3.org/TR/REC-html40/types.html#h-6.5">HTML 4.01 spec</a> defines 16 color keywords. These colors can always be rendered properly, regardless of the color resolution of the user’s display card. As an example, you can specify pure red text in CSS with the following:</p>
+<pre><code class="html">color: red; /* color rendered pure red */
+</code></pre>
+<p>The <a href="http://www.w3.org/TR/CSS2/syndata.html#color-units">Cascading Style Sheets, Level 2 Revision 1 (CSS2.1)</a> specification includes “orange” (#FFA500) for a total of 17 color keywords.</p>
+<h2>Extended Color keywords</h2>
+<p>In addition to the colors listed above, most browsers support an extended list of color keywords. The links below point to tables of colors sorted in various ways. The named colors do not represent the full color spectrum; therefore, for best results, use RGB or HSL color values. The basic and extended color keywords are defined in the <a href="http://www.w3.org/TR/css3-color/#svg-color">CSS Color Module Level 3 Extended Color Keywords</a> section.</p>
+<ul>
+<li><a href="/docs/css/color/colors_by_name">Colors by Name</a></li>
+<li><a href="/docs/css/color/colors_by_hue">Colors by Hue</a></li>
+<li><a href="/docs/css/color/colors_by_lightness">Colors by Lightness</a></li>
+<li><a href="/docs/css/color/colors_by_saturation">Colors by Saturation</a></li>
+</ul>
+<h3>Hexadecimal and RGB Notation</h3>
+<p>An RGB color value can be specified in two ways:</p>
+<ul>
+<li>A ‘#’ immediately, followed by a triad of two-digit hexadecimal numbers specifying the intensity of the three component color channels: red, green, and blue, respectively.</li>
+</ul>
+<pre><code class="html">color: #FF0000; /* Text rendered pure red because the red channel is set to its highest value, FF.*/
+</code></pre>
+<p>There is also a shorthand notation that is three digits long instead of six, for example #FFF. This syntax is supported by all old and new browser however, different browser, operating platforms, and monitors, sometimes display color a little differently. The three digit hex color palette is shorter then the six digit color palette. So while the shorthand will save a few bytes in size there are less color options available as a result. Consider the example for the color pure red:</p>
+<pre><code class="html">color: #FF0000; /* Six total, two hexadecimal digits in each of the three parts.  */
+color: #F00; /* Three total, one hexadecimal digits in each of the three parts. */
+</code></pre>
+<ul>
+<li>The RGB() function, which contains three values delimited by commas specifying the intensity of the three component color channels: red, green, and blue, respectively. The above red color can be specified by either of the following:</li>
+</ul>
+<pre><code class="html">color: rgb(255,0,0) /* text rendered pure red because the red channel is set to its highest integer value, 255.*/
+color: rgb(100%,0%,0%) /* text rendered pure red because the red channel is set to its highest percentage value, 100%.*/
+</code></pre>
+<p>Why 255? modern computers use 256-bit color, which means they can display around 16.7 million different colors (256 x 256 x 256; hexadecimal numbers have 16 different values, 0-9 and then a-f — 16 x 16 = 255). And since computers count from 0, not 1, the value range is 0-255, not 1-256.</p>
+<h2>RGBA Notation</h2>
+<p>In modern browsers (Opera, Firefox, Chrome, Safari, and Internet Explorer 9+), a counterpart to the RGB color model is supported — RGBA — which can also accept an “alpha” value specifying the opacity of a color. The format of an RGBA value is the same as RGB, with the addition of a numerical value between 0 (completely transparent and therefore invisible) and 1 (completely opaque).</p>
+<pre><code class="html">color: rgba(255,0,0,0.5) /* text rendered semi-transparent red */
+color: rgba(100%,0%,0%,0.5) /* text rendered semi-transparent red */
+</code></pre>
+<h2>HSL and HSLA notation</h2>
+<p>Modern browsers (Opera, Firefox, Chrome, Safari, and Internet Explorer 9+) also support an &lt;acronym title=&quot;Hue Saturation Lightness&quot;&gt;HSL&lt;/acronym&gt; color model, which is also a function taking three values:</p>
+<ul>
+<li>The hue takes a degree value in the range of 0-360, representing how far round a standard colour wheel the color sits. The table below gives you an idea of how this works.</li>
+</ul>
+<table>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr class="header">
+<th align="left">Degree</th>
+<th align="left">Name</th>
+<th align="left">Color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0°</td>
+<td align="left">red</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#ff0000">
+</div></td>
+</tr>
+<tr class="even">
+<td align="left">60</td>
+<td align="left">yellow</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#ffff00">
+</div></td>
+</tr>
+<tr class="odd">
+<td align="left">120</td>
+<td align="left">lime</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#00ff00">
+</div></td>
+</tr>
+<tr class="even">
+<td align="left">180</td>
+<td align="left">cyan</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#00ffff">
+</div></td>
+</tr>
+<tr class="odd">
+<td align="left">240</td>
+<td align="left">blue</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#0000ff">
+</div></td>
+</tr>
+<tr class="even">
+<td align="left">300</td>
+<td align="left">magenta</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#ff00ff">
+</div></td>
+</tr>
+<tr class="odd">
+<td align="left">360</td>
+<td align="left">red</td>
+<td align="left"><div style="width:100%;height:20px;background-color:#ff0000">
+</div></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Saturation is represented as a percentage, where <code>100%</code> is full color saturation and <code>0%</code> percent is a shade of gray.</li>
+<li>Lightness is also represented as a percentage, where <code>50%</code> percent is normal, <code>0%</code> is pure black, and <code>100%</code> is pure white.</li>
+</ul>
+<p>HSL also has a corresponding function that accepts an alpha channel value — HSLA <code>hsla()</code> alpha counterpart that allows you to specify opacity by using a numerical value between 1 and 0.</p>
+<pre><code class="html">color: hsl(0, 100%, 50%) /* red */
+color: hsla(0, 100%, 50%, 0.5) /* semi-transparent red */
+
+color: hsl(120, 100%, 50%) /* lime green */
+color: hsl(120, 100%, 20%) /* dark green */
+color: hsl(120, 100%, 80%) /* light green */
+color: hsl(120, 75%, 75%)  /* pastel green */
+</code></pre>
+<h2>System Colors</h2>
+<p><strong>Note</strong>: CSS2 <a href="http://www.w3.org/TR/css3-color/#css-system">System Color values</a> have been deprecated in favor of the <a href="http://www.w3.org/TR/css3-ui/#appearance">CSS3 appearance property</a>. If you want to emulate the look of a user interface related element or control, please use the ‘appearance’ property instead of attempting to mimic a user interface element through a combination of system colors.</p>
+<p>It is also possible to specify system colors, so you can specify for example that you want your text to be the same color as your highlighted text; these are only supported on Windows. Unlike the named colors, system colors have no numeric RGB equivalent because the exact color is not known until the Web page is viewed on the user’s system. In this way, system colors are user-defined because users can choose their own system color scheme from the Windows Control Panel. The following table demonstrates appropriate text and background colors, as they would appear on a Windows Vista system with default colors.</p>
+<p><img src="//static.webplatform.org/8/8a/named_system_colors.png" alt="named system colors.png"></p>
+<p>Note that the system color names have been deprecated in the <a href="http://www.w3.org/TR/css3-color/">http://www.w3.org/TR/css3-color/</a> CSS Color Module Level 3] recommendation, and since they are Windows-only, so it is advisable to not use them.</p>
+<p>For a complete list of system colors, see <a href="/docs/css/color/user-defined_system_colors">User-Defined System Colors</a>.</p>
+<h2>currentColor</h2>
+<ul>
+<li>You can use the <code>currentColor</code> value to set a color to the computed value of the element’s <code>color</code> propety. for example, the background color of the div in the following example will be red, the same color as the <code>color</code> of it’s parent element.</li>
+</ul>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"color:red"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This is a sample article<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color:currentColor"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This is some kind of highlight box.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+</code></pre>
+<h2>transparent keyword</h2>
+<p>Note that the <a href="http://www.w3.org/TR/css3-color/">CSS Color Module Level 3</a> spec defines a keyword <code>transparent</code>, which is very useful for overriding previously set colors when required. It is equivalent to rgba(0,0,0,0), which is completely transparent black.</p>
+<p>This value used to only be defined as an override value for the <a href="/docs/css/properties/background">background</a> and <a href="/docs/css/properties/border">border property</a>, until it was defined as a true value in CSS3. <code>transparent</code> is supported on all properties in al modern browsers including IE9+.</p>
+<h2>Opacity property</h2>
+<p>You can set the opacity of an entire element using the <a href="/docs/css/properties/opacity">opacity property</a>.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Visual Effects</h4>
+<ul>
+<li><p><strong>color</strong></p></li>
+<li><p><a href="/docs/css/color/colors_by_hue">Colors by Hue</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_name">Colors by Name</a></p></li>
+<li><p><a href="/docs/css/color/colors_by_saturation">Colors by Saturation</a></p></li>
+<li><p><a href="/docs/css/color/user-defined_system_colors">User-Defined System Colors</a></p></li>
+<li><p><a href="/docs/css/high_contrast_mode/properties/-ms-high-contrast">-ms-high-contrast</a></p></li>
+<li><p><a href="/docs/css/high_contrast_modeapis/properties/ms-high-contrast-adjust">ms-high-contrast-adjust</a></p></li>
+<li><p><a href="/docs/css/properties/-ms-progress-appearance">-ms-progress-appearance</a></p></li>
+<li><p><a href="/docs/css/properties/background-blend-mode">background-blend-mode</a></p></li>
+<li><p><a href="/docs/css/properties/clip">clip</a></p></li>
+<li><p><a href="/docs/css/properties/cursor">cursor</a></p></li>
+<li><p><a href="/docs/css/properties/opacity">opacity</a></p></li>
+<li><p><a href="/docs/css/properties/zoom">zoom</a></p></li>
+<li><p><a href="/docs/html/attributes/height">height</a></p></li>
+<li><p><a href="/docs/html/elements/blink">blink</a></p></li>
+<li><p><a href="/docs/svg/elements/filter">filter</a></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li><p><a href="/docs/tutorials/setting_color_in_css">Setting color in CSS</a></p></li>
+<li><p><a href="/docs/css/properties/color">color</a></p></li>
+<li><p><a href="/docs/css/data_types/color">color</a></p></li>
+<li><p><a href="http://www.w3.org/Style/CSS/Test/CSS3/Color/current/">W3 css3-color Conformance Test Suite</a></p></li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/CSS/color">MDN color property</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/en-us/library/ie/ms530749(v=vs.85).aspx">MSDN color property</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

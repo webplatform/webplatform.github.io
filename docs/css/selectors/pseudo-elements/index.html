@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>pseudo-elements · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/selectors/">selectors</a></li><li><a href="/docs/css/selectors/pseudo-elements/">pseudo-elements</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>pseudo-elements</h1>
+<p>Pseudo-elements create abstractions about the document tree beyond those specified by the document language. For instance, document languages do not offer mechanisms to access the first letter or first line of an element’s content. Pseudo-elements allow authors to refer to this otherwise inaccessible information. Pseudo-elements may also provide authors a way to refer to content that does not exist in the source document (e.g., the <code>::before</code> and <code>::after</code> pseudo-elements give access to generated content).</p>
+<p>A pseudo-element is made of two colons (<code>::</code>) followed by the name of the pseudo-element.</p>
+<p>This <code>::</code> notation is introduced by the current document in order to establish a discrimination between pseudo-classes and pseudo-elements. For compatibility with existing style sheets, user agents must also accept the previous one-colon notation for pseudo-elements introduced in CSS levels 1 and 2 (namely, <code>:first-line</code>, <code>:first-letter</code>, <code>:before</code> and <code>:after</code>). This compatibility is not allowed for the new pseudo-elements introduced in this specification.</p>
+<p>Only one pseudo-element may appear per selector, and if present it must appear after the sequence of simple selectors that represents the <a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#subject">subjects</a> of the selector.</p>
+<blockquote>
+<p><strong>Note:</strong> A future version of this specification may allow multiple pseudo-elements per selector.</p>
+</blockquote>
+<p>Pseudo-elements selectors:</p>
+<ul>
+<li><a href="/docs/css/selectors/pseudo-elements/::first-line">::first-line</a></li>
+<li><a href="/docs/css/selectors/pseudo-elements/::first-letter">::first-letter</a></li>
+<li><a href="/docs/css/selectors/pseudo-elements/::after">::after</a></li>
+<li><a href="/docs/css/selectors/pseudo-elements/::before">::before</a></li>
+<li><a href="/docs/css/selectors/pseudo-elements/::selection">::selection</a> (not standard)</li>
+</ul>
+<h2>The <code>::first-line</code> pseudo-element</h2>
+<p>The <code>::first-line</code> pseudo-element describes the contents of the first formatted line of an element.</p>
+<p>CSS example:</p>
+<pre><code class="css"><span class="hljs-tag">p</span><span class="hljs-pseudo">::first-line</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">text-transform</span>:<span class="hljs-value"> uppercase </span></span></span>}
+</code></pre>
+<p>The above rule means &quot;change the letters of the first line of every p element to uppercase&quot;. The selector <code>p::first-line</code> does not match any real document element. It does match a pseudo-element that conforming user agents will insert at the beginning of every <code>p</code> element.</p>
+<p>Note that the length of the first line depends on a number of factors, including the width of the page, the font size, etc. Thus, an ordinary HTML paragraph such as:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span>This is a somewhat long HTML
+paragraph that will be broken into several
+lines. The first line will be identified
+by a fictional tag sequence. The other lines
+will be treated as ordinary lines in the
+paragraph.<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+</code></pre>
+<p>the lines of which happen to be broken as follows:</p>
+<pre><code class="html">THIS IS A SOMEWHAT LONG HTML PARAGRAPH THAT
+will be broken into several lines. The first
+line will be identified by a fictional tag
+sequence. The other lines will be treated as
+ordinary lines in the paragraph.
+</code></pre>
+<p>This paragraph might be “rewritten” by user agents to include the fictional tag sequence for <code>::first-line</code>. This fictional tag sequence helps to show how properties are inherited.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">P::first-line</span>&gt;</span> This is a somewhat long HTML
+paragraph that <span class="hljs-tag">&lt;/<span class="hljs-title">P::first-line</span>&gt;</span> will be broken into several
+lines. The first line will be identified
+by a fictional tag sequence. The other lines
+will be treated as ordinary lines in the
+paragraph.<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+</code></pre>
+<p>If a pseudo-element breaks up a real element, the desired effect can often be described by a fictional tag sequence that closes and then re-opens the element. Thus, if we mark up the previous paragraph with a span element:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">SPAN</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"test"</span>&gt;</span> This is a somewhat long HTML
+paragraph that will be broken into several
+lines.<span class="hljs-tag">&lt;/<span class="hljs-title">SPAN</span>&gt;</span> The first line will be identified
+by a fictional tag sequence. The other lines
+will be treated as ordinary lines in the
+paragraph.<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+</code></pre>
+<p>the user agent could simulate start and end tags for span when inserting the fictional tag sequence for <code>::first-line</code>.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">P::first-line</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">SPAN</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"test"</span>&gt;</span> This is a
+somewhat long HTML
+paragraph that will <span class="hljs-tag">&lt;/<span class="hljs-title">SPAN</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">P::first-line</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">SPAN</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"test"</span>&gt;</span> be
+broken into several
+lines.<span class="hljs-tag">&lt;/<span class="hljs-title">SPAN</span>&gt;</span> The first line will be identified
+by a fictional tag sequence. The other lines
+will be treated as ordinary lines in the
+paragraph.<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+</code></pre>
+<h3>First formatted line definition in CSS</h3>
+<p>In CSS, the <code>::first-line</code> pseudo-element can only have an effect when attached to a block-like container such as a block box, inline-block, table-caption, or table-cell.</p>
+<p>The first formatted line of an element may occur inside a block-level descendant in the same flow (i.e., a block-level descendant that is not out-of-flow due to floating or positioning). For example, the first line of the <code>DIV</code> in</p>
+<p>This line…</p>
+<p></code> is the first line of the <code>P</code> (assuming that both <code>P</code> and <code>DIV</code> are block-level). The first line of a table-cell or inline-block cannot be the first formatted line of an ancestor element. Thus, in</p>
+<p>Hello<br>
+Goodbye</p>
+<p>etcetera</p>
+<p></code> the first formatted line of the <code>DIV</code> is not the line &quot;Hello&quot;.</p>
+<blockquote>
+<p><strong>Note:</strong> Note that the first line of the <code>p</code> in this fragment:</p>
+<pre><code>&lt;p&gt;&lt;br&gt;First...
+</code></pre>
+<p>doesn’t contain any letters (assuming the default style for br in HTML 4). The word “First” is not on the first formatted line.</p>
+</blockquote>
+<p>A UA should act as if the fictional start tags of the <code>::first-line</code> pseudo-elements were nested just inside the innermost enclosing block-level element. (Since CSS1 and CSS2 were silent on this case, authors should not rely on this behavior.) For example, the fictional tag sequence for</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">DIV</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span>First paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span>Second paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+</code></pre>
+<p>is</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">DIV</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">DIV::first-line</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">P::first-line</span>&gt;</span>First paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">P::first-line</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">DIV::first-line</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">P::first-line</span>&gt;</span>Second paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">P::first-line</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+</code></pre>
+<p>The <code>::first-line</code> pseudo-element is similar to an inline-level element, but with certain restrictions. The following CSS properties apply to a <code>::first-line</code> pseudo-element: font properties, color property, background properties, ‘<code>word-spacing</code>’, ‘<code>letter-spacing</code>’, ‘<code>text-decoration</code>’, ‘<code>vertical-align</code>’, ‘<code>text-transform</code>’, ‘<code>line-height</code>’. UAs may apply other properties as well.</p>
+<p>During CSS inheritance, the portion of a child element that occurs on the first line only inherits properties applicable to the <code>::first-line</code> pseudo-element from the <code>::first-line</code> pseudo-element. For all other properties inheritence is from the non-pseudo-element parent of the first line pseudo element. (The portion of a child element that does not occur on the first line always inherits from the parent of that child.)</p>
+<h2>The <code>::first-letter</code> pseudo-element</h2>
+<p>The <code>::first-letter</code> pseudo-element represents the first letter of an element, if it is not preceded by any other content (such as images or inline tables) on its line. The <code>::first-letter</code> pseudo-element may be used for “initial caps” and &quot;drop caps&quot;, which are common typographical effects.</p>
+<p>Punctuation (i.e, characters defined in Unicode in the “open” (Ps), “close” (Pe), “initial” (Pi). “final” (Pf) and “other” (Po) punctuation classes), that precedes or follows the first letter should be included. <a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#UNICODE">UNICODE</a></p>
+<p>The <code>::first-letter</code> also applies if the first letter is in fact a digit, e.g., the “6” in “67 million dollars is a lot of money.”</p>
+<blockquote>
+<p><strong>Note:</strong> In some cases the <code>::first-letter</code> pseudo-element should include more than just the first non-punctuation character on a line. For example, combining characters must be kept with their base character. Additionally, some languages may have specific rules about how to treat certain letter combinations. The UA definition of <code>::first-letter</code> should include at least the default grapheme cluster as defined by UAX29 and may include more than that as appropriate. In Dutch, for example, if the letter combination “ij” appears at the beginning of an element, both letters should be considered within the <code>::first-letter</code> pseudo-element. <a href="http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#UAX29">UAX29</a></p>
+</blockquote>
+<p>If the letters that would form the ::first-letter are not in the same element, such as “‘T” in</p>
+<pre><code>&lt;p&gt;'&lt;em&gt;T...
+</code></pre>
+<p>, the UA may create a <code>::first-letter</code> pseudo-element from one of the elements, both elements, or simply not create a pseudo-element.</p>
+<p>Similarly, if the first letter(s) of the block are not at the start of the line (for example due to bidirectional reordering), then the UA need not create the pseudo-element(s).</p>
+<p>The following CSS and HTML example illustrates how overlapping pseudo-elements may interact. The first letter of each P element will be green with a font size of ’<code>24pt</code>'. The rest of the first formatted line will be ‘<code>blue</code>’ while the rest of the paragraph will be ‘<code>red</code>’.</p>
+<pre><code class="css"><span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>; <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">12pt</span> </span></span></span>}
+<span class="hljs-tag">p</span><span class="hljs-pseudo">::first-letter</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> green</span></span>; <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">200%</span> </span></span></span>}
+<span class="hljs-tag">p</span><span class="hljs-pseudo">::first-line</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue </span></span></span>}
+</code></pre>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span>Some text that ends up on two lines<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+</code></pre>
+<p>Assuming that a line break will occur before the word &quot;ends&quot;, the fictional tag sequence for this fragment might be:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">P</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">P::first-line</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">P::first-letter</span>&gt;</span>
+S
+<span class="hljs-tag">&lt;/<span class="hljs-title">P::first-letter</span>&gt;</span>ome text that
+<span class="hljs-tag">&lt;/<span class="hljs-title">P::first-line</span>&gt;</span>
+ends up on two lines
+<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+</code></pre>
+<p>Note that the <code>::first-letter</code> element is inside the <code>::first-line</code> element. Properties set on <code>::first-line</code> are inherited by <code>::first-letter</code>, but are overridden if the same property is set on <code>::first-letter</code>.</p>
+<p>The first letter must occur on the first formatted line. For example, in this HTML fragment:</p>
+<pre><code>&lt;p&gt;&lt;br&gt;First...
+</code></pre>
+<p>the first line doesn’t contain any letters and <code>::first-letter</code> doesn’t match anything (assuming the default style for br in HTML 4). In particular, it does not match the “F” of “First.”</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

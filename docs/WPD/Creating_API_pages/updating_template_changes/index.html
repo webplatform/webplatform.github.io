@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>updating template changes · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Creating_API pages/">WPD/Creating API pages</a></li><li><a href="/docs/WPD/Creating_API pages/updating_template changes/">updating template changes</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>updating template changes</h1>
+<h2>Updating API_Listing pages to use the new Template:Concept_Listing</h2>
+<p>We have created a Template:Concept_Listing that can be called in any location on any page where you want to create a table of links and summaries. (However, it does not allow you to change where the table is produced on API_Listing pages - see below.)</p>
+<p>This decouples the Basic Listing Configuration section from the Template:API_Listing (which now serves only to provide the appropriate category, “API_Listings” to the page that uses it). This allows you to do landing pages that list and summarize all of the pages corresponding to the query you supply. See the Mobile Web landing page for an example.</p>
+<p>Note, earlier in the thread we considered providing more than the two extant options for the table header, “Page” and “API Name” - and this is a good idea, we should pursue it - but we only had bandwidth to do as much as we did for now.</p>
+<p>Also, the Form:API_Listing will continue to include the Template:Concept_Listing_Form_Section, which calls the Template:Concept_Listing at a specific location, so you can’t put the Template:Concept_Listing anywhere you want in an API_Listing page. The PHP engine will just put it back under the Summary section when you edit the form. Here’s the WebRTC API listing page for an example. If you are creating a new API_Listing page, you do it just like you used to - there is no change required in creating new API_Listing pages.</p>
+<p>However, we will need to update the extant API_Listing pages to use this new method, because these pages are not yet calling the new Template:Concept_Listing_Form_Section with a query. Don’t worry, though, the Template:API_Listing provides for legacy usage in API_Listing pages that still pass the query to it the old way, so there should be no wreckage in extant API_Listing pages. Once we have updated all the API_Listing pages, we’ll remove the legacy usage.</p>
+<p>To update an extant API_Listing page to use the new templates and forms:</p>
+<ol>
+<li><p>Navigate to an extant API_Listing page and <strong>Edit Source</strong>.</p></li>
+<li><p>Under the <strong>{{API_Listing</strong> template call, copy the contents of the query into your buffer.</p>
+<ol>
+<li>Select everything after the <strong>Query=</strong> including the brackets; for example, <strong>[[Category:IndexedDB]][[Category:API_Objects]]</strong>.</li>
+<li>Press <strong>command c</strong> or <strong>Ctrl c</strong> or whatever.</li>
+</ol></li>
+<li><p>From the <strong>{{API_Listing</strong> call, delete the query entirely. That’s the pipe character and everything up to but not including the closing <strong>}}</strong>.<br>
+<dl><br>
+<dd><br>
+For example, delete <strong>|Query=[[Category:IndexedDB]][[Category:API_Objects]]|Use_page_title=No|List_all_subpages=No</strong> so that the template call now reads simply, <strong>{{API_Listing}}</strong><br>
+</dd></p></li>
+<li><p>Click <strong>Save page</strong>. Be sure the save takes - watch out for the old session data loss bug.</p></li>
+<li><p><strong>Edit</strong> the page - this time with the form.</p></li>
+<li><p>Under <strong>Basic Listing Configuration</strong>, in the <strong>Query</strong> field, paste the query from your buffer.</p></li>
+<li><p>Click <strong>Save page</strong>.</p></li>
+</ol>
+<p>Your API_Listing is now using the new templates and forms appropriately.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

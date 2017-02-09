@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inheritance revisited · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Inheritance has always been available in JavaScript, but the examples on this page use some methods introduced in ECMAScript 5." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/inheritance/">inheritance</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Inheritance revisited</h1>
+<h2>Summary</h2>
+<p>Inheritance has always been available in JavaScript, but the examples on this page use some methods introduced in ECMAScript 5.</p>
+<h2>Example</h2>
+<p><code>B</code> shall inherit from <code>A</code>:</p>
+<pre><code>function A(a){
+  this.varA = a;
+}
+A.prototype = {
+  varA : null,
+  doSomething : function(){
+    // ...
+  }
+}
+function B(a, b){
+  A.call(this, a);
+  this.varB = b;
+}
+B.prototype = Object.create(A.prototype, {
+  varB : { value: null, enumerable: true, configurable: true, writable: true },
+  doSomething : { value: function(){ // override
+       A.prototype.doSomething.apply(this, arguments); // call super
+       // ...
+    }, enumerable: true, configurable: true, writable: true }
+})
+
+var b = new B();
+b.doSomething();
+</code></pre>
+<p>The important parts are:</p>
+<ul>
+<li>Types are defined in <code>.prototype</code></li>
+<li>You use <code>Object.create()</code> to inherit</li>
+</ul>
+<h2><code>prototype</code> and Object.getPrototypeOf</h2>
+<p>JavaScript is a bit confusing for developers coming from Java or C++, as it’s all dynamic, all runtime, and it has no classes at all. It’s all just instances (objects). Even the “classes” we simulate are just a function object.</p>
+<p>You probably already noticed that our <code>function A</code> has a special property called <code>prototype</code>. This special property works with the JavaScript <code>new</code>operator. The reference to the prototype object is copied to the internal <code>[[Prototype]]</code> property of the new instance. For example, when you do <code>var a1 = new A()</code>, JavaScript (after creating the object in memory and before running function <code>A()</code> with <code>this</code> defined to it) sets <code>a1.[[Prototype]] = A.prototype</code>. When you then access properties of the instance, JavaScript first checks whether they exist on that object directly, and if not, it looks in <code>[[Prototype]]</code>. This means that all the stuff you define in <code>prototype</code> is effectively shared by all instances, and you can even later change parts of <code>prototype</code> and have the changes appear in all existing instances, if you wanted to.</p>
+<p>If, in the example above, you do <code>var a1 = new A(); var a2 = new A();</code> then <code>a1.doSomething</code> would actually refer to <code>Object.getPrototypeOf(a1).doSomething</code>, which is the same as the <code>A.prototype.doSomething</code> you defined, i.e. <code>Object.getPrototypeOf(a1).doSomething == Object.getPrototypeOf(a2).doSomething == A.prototype.doSomething</code>.</p>
+<p>In short, <code>prototype</code> is for types, while <code>Object.getPrototypeOf()</code> is the same for instances.</p>
+<p><code>[[Prototype]]</code> is looked at <em>recursively</em>, i.e. <code>a1.doSomething</code>, <code>Object.getPrototypeOf(a1).doSomething</code>, <code>Object.getPrototypeOf(Object.getPrototypeOf(a1)).doSomething</code> etc., until it’s found or <code>Object.getPrototypeOf</code>returns null.</p>
+<p>So, when you call</p>
+<pre><code>var o = new Foo();
+</code></pre>
+<p>JavaScript actually just does</p>
+<pre><code>var o = new Object();
+ o.[[Prototype]] = Foo.prototype;
+ o.Foo();
+</code></pre>
+<p>(or something like that) and when you later do</p>
+<pre><code>o.someProp;
+</code></pre>
+<p>it checks whether <code>o</code> has a property <code>someProp</code>. If not it checks <code>Object.getPrototypeOf(o).someProp</code> and if that doesn’t exist it checks <code>Object.getPrototypeOf(Object.getPrototypeOf(o)).someProp</code> and so on.</p>
+<p><span style="float: left"><a href="/docs/en-US/docs/JavaScript/Guide/Details_of_the_Object_Model">« Previous</a></span><a href="/en-US/docs/JavaScript/Guide/Iterators_and_Generators">Next »</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Inheritance_Revisited">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

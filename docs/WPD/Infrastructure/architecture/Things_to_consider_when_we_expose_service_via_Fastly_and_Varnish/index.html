@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Things to consider when we expose service via Fastly and Varnish · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/architecture/">architecture</a></li><li><a href="/docs/WPD/Infrastructure/architecture/Things_to consider when we expose service via Fastly and Varnish/">Things to consider when we expose service via Fastly and Varnish</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Things to consider when we expose service via Fastly and Varnish</h1>
+<h3><a href="/docs/WPD/Infrastructure/architecture">WebPlatform server Infrastructure architecture menu</a></h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/architecture/Base_configuration_of_a_VM">Base configuration of a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Reports_to_review_status">Reports to review status</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Roles_and_environment_level">Roles and environment level</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/SSL_certificates">SSL certificates</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/The_salt_master">The salt master</a></li>
+<li><strong>Things to consider when we expose service via Fastly and Varnish</strong></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/Useful_commands">Useful commands</a></li>
+<li><a href="/docs/WPD/Infrastructure/architecture/VM_roles">VM roles</a></li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/procedures/Deploying_code_changes">Deploying code changes</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Replacing_a_VM">Replacing a VM</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_Varnish_or_Fastly_configuration">Maintaining Fastly configuration</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Managing_MySQL_replication">Managing MySQL replication</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Create_new_database_credentials_configure_a_web_application_to_use_it">Create new database credentials and configure a web application to use it</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_ElasticSearch_cluster">Maintaining ElasticSearch cluster</a></li>
+<li><a href="/docs/WPD/Infrastructure/procedures/Maintaining_email_services">Maintaining email services</a></li>
+</ul>
+<p>Not finished, see also <a href="http://github.com/webplatform/varnish-configs">our GitHub <strong>webplatform/varnish-configs</strong> project</a></p>
+<h2>Mind map</h2>
+<ul>
+<li>Check for specific headers the backend sends
+<ul>
+<li>Vary</li>
+<li>Cache-Control</li>
+<li>Set-Cookie</li>
+<li>Expires</li>
+</ul></li>
+<li>Cases when Varnish don’t cache a response
+<ul>
+<li>Client request has a Cookie header</li>
+<li>Backend response has a Set-Cookie header</li>
+<li>Backend response has a Cache-Control: with private and/or max-age=0 and/or s-max-age=0</li>
+</ul></li>
+<li>Common problems found in web apps preventing varnish to cache
+<ul>
+<li>Images, JavaScript, CSS
+<ul>
+<li>Don’t need Cookie header</li>
+<li>Enforce Cache-Control public with some duration</li>
+</ul></li>
+<li>MediaWiki:
+<ul>
+<li>Sends Cache-Control: private too often</li>
+<li>Expires is in the past in every situations</li>
+<li>Vary is set with both Cookie and Accept-Encoding. While Cookie is useful if we have no Varnish cache, it doesn’t help us in our context</li>
+<li>How can we fix MediaWiki behavior to improve caching in Varnish:
+<ol>
+<li>Remove backend Cache-Control if `req.http.Cookie !~ &quot;_session=&quot;` was sent in request</li>
+<li>Remove backend Expires header if `req.http.Cookie !~ &quot;_session=&quot;` was sent in request</li>
+</ol></li>
+</ul></li>
+</ul></li>
+<li>Ensure backend has a purging mechanism on page save.
+<ul>
+<li>e.g. after saving /wiki/beginners, send `http PURGE /wiki/beginners`</li>
+</ul></li>
+<li>Ensure static assets (or anything else) isn’t cached until &quot;end of time&quot;, when we update content we would be forced to purge every time</li>
+<li>Varnish matches headers explicitly, which means that order and cASING matters
+<ul>
+<li>Space matters: Vary: Accept-Encoding,Cookie  !== Vary: Cookie, Accept-Encoding<br>
+Order matters<br>
+:   Accept-Encoding: gzip,deflate !== Accept-Encoding: deflate, gzip<br>
+Casing matters<br>
+:   Accept-Encoding: gzip !== accept-encoding: gzip</li>
+</ul></li>
+<li>Specific to Fastly
+<ul>
+<li>While Varnish would be OK pass along an Accept-Encoding: gzip, get and cache a Content-Encoding: gzip, Fastly don’t. Instead let Fastly get it non compressed, and he’ll compress to the client if the client asks for it. In both cases, only one copy is required for both use cases. #TODO: Validate</li>
+<li>If a backend uses ESI, make sure backend ALWAYS fetches contents non encoded</li>
+</ul></li>
+<li>Consider which views in web app really needs different render than a cached version
+<ul>
+<li>MediaWiki
+<ul>
+<li><code>GET /wiki/Special …</code><br>
+:   Special pages (using rewrite)<br>
+<code>GET /w/index.php?title=Special</code><br>
+:   Special pages (explicit link, without rewrite)<br>
+<code>GET /w/index.php? … &amp;action=edit …</code><br>
+:   Edit a page</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2>Caveats</h2>
+<dl>
+<dt>remove “Cookie” from backend’s Vary response header</dt>
+<dd>Vary header can create non-required alternate versions of a page render. Since Varnish already handles a request with a cookie, it doesn’t need to &quot;vary on cookie&quot;. Only valid “Vary” we need for now is &quot;Vary: Content-Encoding&quot;. If we were serving same page, but with different languages we could add also add “Accept-Language”<br>
+make sure “Vary” and “Accept-Encoding” possible values are harmonized
+</dd>
+<dd>Anything in Varnish is very explicit. If a condition reads directly an arbitrary “Accept-Encoding” request parameter without filtering it could make un needed different versions.<br>
+do some headers cleaning if a web application breaks caching
+</dd>
+<dd>What is called <em>Cache “HIT ratio”</em> is a metric used in HTTP caching to tell how many times it didn’t serve a cached request. Caching is prevent if one or more of the following exists in the backend response sent back to Varnish: Authorization, Set-Cookie, Cache-Control that contains <em>max-age=0</em> or similar and Vary with &quot;cookie&quot;. If a given page has NO possible changes whatsoever between a request with cookies or not, it is therefore safe to remove those headers.<br>
+remove non needed cookies from a request to a backend that doesn’t need them
+</dd>
+<dd>Its important it is to configure Varnish to clean cookies it sends to our backend servers. Otherwise we do not have cache at all. The cleaning must be done for each backend because, for example, WordPress cookies wouldn’t be the same as MediaWiki’s. In order to not lose the subtleties, we published all Varnish VCLs into GitHub at <a href="https://github.com/webplatform/varnish-configs">webplatform/varnish-configs</a>.
+</dd>
+</dl>
+<h2>Reference</h2>
+<ul>
+<li><a href="https://www.mnot.net/cache_docs/">https://www.mnot.net/cache_docs/</a></li>
+<li><a href="http://www.fastly.com/blog/best-practices-for-using-the-vary-header/">http://www.fastly.com/blog/best-practices-for-using-the-vary-header/</a></li>
+<li><a href="https://www.varnish-cache.org/docs/trunk/users-guide/increasing-your-hitrate.html#the-role-of-http-headers">https://www.varnish-cache.org/docs/trunk/users-guide/increasing-your-hitrate.html#the-role-of-http-headers</a></li>
+<li><a href="https://www.varnish-cache.org/trac/wiki/VCLExampleLongerCaching">https://www.varnish-cache.org/trac/wiki/VCLExampleLongerCaching</a></li>
+<li><a href="http://stackoverflow.com/questions/10284813/howto-control-varnish-and-a-browser-using-cache-control-max-age-header-in-a-rai">http://stackoverflow.com/questions/10284813/howto-control-varnish-and-a-browser-using-cache-control-max-age-header-in-a-rai</a></li>
+</ul>
+<h3>See also in our pages</h3>
+<ul>
+<li><a href="/docs/WPD/Infrastructure/analysis/2015-How_MediaWiki_backend_sees_requests_with_or_without_Fastly_in_front">analysis; 2015, How MediaWiki backend sees requests with and without <em>Fastly</em> in front</a></li>
+</ul>
+<h3>Reference to review</h3>
+<ul>
+<li><a href="https://www.mobify.com/blog/beginners-guide-to-http-cache-headers/">https://www.mobify.com/blog/beginners-guide-to-http-cache-headers/</a></li>
+</ul>
+<h4>MediaWiki</h4>
+<ul>
+<li><a href="http://www.mediawiki.org/wiki/Manual:Varnish_caching">MediaWiki Varnish Caching</a></li>
+<li><a href="http://labs.creativecommons.org/2011/03/18/caching-mediawiki-with-varnish/">Caching mediawiki with varnish</a></li>
+<li><a href="https://www.varnish-cache.org/lists/pipermail/varnish-misc/2012-January/021574.html">Default VCL for MediaWiki</a></li>
+</ul>
+<h4>Varnish in general</h4>
+<ul>
+<li><a href="http://kly.no/varnish/regex.txt">Regular expression Cheat sheet</a></li>
+<li><a href="https://www.varnish-cache.org/docs/2.1/genindex.html">Varnish documentation</a>
+<ul>
+<li><a href="https://www.varnish-cache.org/docs/2.1/tutorial/vcl.html">Varnish configuration language</a></li>
+<li><a href="https://www.varnish-cache.org/docs/2.1/tutorial/cookies.html">Varnish tutorial cookies</a></li>
+</ul></li>
+<li><a href="https://www.varnish-software.com/static/book/Tuning.html?highlight=timeout">Varnish book about tuning</a></li>
+</ul>
+<h4>ESI</h4>
+<ul>
+<li><a href="https://www.varnish-cache.org/trac/wiki/ESIfeatures">Varnish ESI features</a></li>
+<li><a href="https://www.varnish-cache.org/docs/2.1/tutorial/esi.html">Varnish 2.1 ESI doc</a></li>
+</ul>
+<h4>Misc.</h4>
+<ul>
+<li><a href="http://kly.no/posts/2010_01_08__Hitpass_objects_and_Varnish__.rst">Varnish caching, definition of HIT, PASS and other caching lingo</a></li>
+<li><a href="http://docs.fastly.com/guides/21847086">Fastly: Caching tutorials</a>
+<ul>
+<li><a href="http://docs.fastly.com/guides/21835572/21744408">Fastly: Removing headers from backend response</a></li>
+<li><a href="http://docs.fastly.com/guides/21835572/23999817">Fastly: Adding and modifying headers</a></li>
+<li><a href="http://docs.fastly.com/guides/21847086/22257776">How to serve stale content in case of origin becoming unavailable</a></li>
+</ul></li>
+<li><a href="http://docs.fastly.com/guides/21847086/26628787">Fastly tutorial: Cache control</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

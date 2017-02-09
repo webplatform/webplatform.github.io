@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>hgroup · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    <meta property="standardization" content="Deprecated" />
+    <meta name="description" content="(Obsolete) The hgroup element (&amp;lt;hgroup&amp;gt;) is typically used to group a set of one or more h1-h6 elements — to group, for example, a section title and an accompanying subtitle. The hgroup element (&amp;lt;hgroup&amp;gt;) element is obsolete in HTML5." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/hgroup/">hgroup</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>hgroup</h1>
+<h2>Summary</h2>
+<p>(Obsolete) The hgroup element (&lt;hgroup&gt;) is typically used to group a set of one or more h1-h6 elements — to group, for example, a section title and an accompanying subtitle. The hgroup element (&lt;hgroup&gt;) element is obsolete in HTML5.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLElement">HTMLElement</a>
+</dd>
+</dl>
+<h2>Obsolete</h2>
+<p>The hgroup element is obsolete in HTML. Consider the <a href="/docs/html/elements/header">header</a> element, or a <code>&lt;span class=&quot;subheading&quot;&gt;</code> element with differentiated styling.</p>
+<h2>Point</h2>
+<ul>
+<li>The element is used to group a set of h1–h6 elements when the heading has multiple levels, such as subheadings, alternative titles, or taglines. <a href="#Example_A">[Example A]</a></li>
+<li>For the purposes of document summaries, outlines, and the like, the text of hgroup elements is defined to be the text of the highest ranked h1–h6 element descendant of the hgroup element, if there are any such elements, and the first such element if there are multiple elements with that rank.</li>
+<li>The rank of an hgroup element is the rank of the highest-ranked h1–h6 element descendant of the hgroup element, if there are any such elements, or otherwise the same as for an h1 element (the highest rank).</li>
+</ul>
+<h2>Examples</h2>
+<p>The following is an example of a valid heading. The <strong>hgroup</strong> masks the <strong>h2</strong> element (which acts as a secondary title) from the outline algorithm.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">hgroup</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Dr. Strangelove<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Or: How I Learned to Stop Worrying and Love the Bomb<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">hgroup</span>&gt;</span>
+</code></pre>
+<p>For document summaries and outlines, the text of <strong>hgroup</strong> elements is defined as the text of the highest ranked <strong>h1-h6</strong> element descendant, or the first such element if there are multiple elements with the highest rank. If there are no such elements, then the text of the <strong>hgroup</strong> element is the empty string. The following script demonstrates how to implement this behavior.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findHeadings</span>(<span class="hljs-params">node</span>)
+</span>{
+    <span class="hljs-comment">// First check if this node has an &lt;hgroup&gt;.</span>
+    <span class="hljs-keyword">var</span> hg = node.getElementsByTagName(<span class="hljs-string">"HGROUP"</span>);
+    <span class="hljs-keyword">if</span>(hg.length&gt;<span class="hljs-number">0</span>)
+        node = hg[<span class="hljs-number">0</span>];
+    <span class="hljs-comment">// Now find the highest ranking heading.</span>
+    <span class="hljs-keyword">var</span> ranks = [ <span class="hljs-string">"H1"</span>,<span class="hljs-string">"H2"</span>,<span class="hljs-string">"H3"</span>,<span class="hljs-string">"H4"</span>,<span class="hljs-string">"H5"</span>,<span class="hljs-string">"H6"</span> ];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;ranks.length; i++) {
+        <span class="hljs-keyword">var</span> headings = node.getElementsByTagName(ranks[i]);
+        <span class="hljs-keyword">if</span>(headings.length&gt;<span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> headings[<span class="hljs-number">0</span>].textContent;
+    }
+    <span class="hljs-comment">// No headings present, return empty string.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+}
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>Windows Internet Explorer 9. The <strong>hgroup</strong> element is only supported for webpages displayed in IE9 Standards mode. For more information, see Defining Document Compatibility. The <strong>hgroup</strong> element is used to group a set of <strong>h1-h6</strong> elements when the heading has multiple levels, such as subheadings, alternative titles, or taglines. Other elements of heading content in the <strong>hgroup</strong> element indicate subheadings or subtitles.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<p><a href="http://www.w3.org/html/wg/drafts/html/CR/obsolete.html#hgroup">http://www.w3.org/html/wg/drafts/html/CR/obsolete.html#hgroup</a></p>
+<h3>Related pages</h3>
+<ul>
+<li><code>Reference</code></li>
+<li><code>article</code></li>
+<li><code>aside</code></li>
+<li><code>figcaption</code></li>
+<li><code>figure</code></li>
+<li><code>footer</code></li>
+<li><code>header</code></li>
+<li><code>mark</code></li>
+<li><code>nav</code></li>
+<li><code>section</code></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

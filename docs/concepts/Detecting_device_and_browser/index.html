@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Detecting device and browser · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article explains client and server-side techniques for detecting browser capabilities." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/Detecting_device and browser/">Detecting device and browser</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Detecting device and browser</h1>
+<h2>Summary</h2>
+<p>This article explains client and server-side techniques for detecting browser capabilities.</p>
+<p>Device detection enables developers to identify device properties and characteristics in order to determine the best content, layout, mark-up or application to serve to a given device. These characteristics include screen size, browser type and version, media support, and the level of support for CSS, HTML and JavaScript.</p>
+<h2>Why use device and feature detection?</h2>
+<p>The ability to identify a device, browser or feature enables the developer to perform actions such as:</p>
+<ul>
+<li>Serve a mobile formatted site rather than the desktop site.</li>
+<li>Swap style sheets to adapt layout and content to the device’s specific HTML, CSS and JavaScript capabilities.</li>
+<li>Modify the amount or nature of content to suit device capabilities. For example, a JavaScript-based slide show may be served to a higher-end device, and a simple list served to a lower-end device.</li>
+<li>Serve smaller or larger images to suit screen size, or swap SVG graphics for bitmap images on less capable devices.</li>
+<li>Enhance functionality on more capable devices by applying progressive enhancement based on feature and object detection.</li>
+<li>Increase or decrease font size, margins and padding to scale the actionable areas on a touch device.</li>
+<li>Serve different sizes and/or formats of media such as video to suit device codecs or capabilities.</li>
+</ul>
+<h2>Common approaches to device detection</h2>
+<p>Device detection can be accomplished server-side, before content is delivered to the client, or client-side, after content and related files have been loaded to the device itself. Both approaches have advantages and disadvantages, which are described in this topic. Smartphone browsers generally have better client-side detection capabilities than cheaper feature phones, and this gives Web developers more flexibility to use design techniques such as the responsive design approach. Feature phone browsers are designed to provide speed, performance and bandwidth optimization, but may lack advance features required for some design approaches.</p>
+<h2>Client-side detection</h2>
+<p>Client-side detection employs JavaScript to detect the type of browser, as well as using DOM objects and properties such as screen.width, screen.pixelDepth, navigator.userAgent, and navigator.cookieEnabled. Using CSS, it is now also possible to implement 'progressive enhancement’, which is a design strategy to enable any browser to access the basic content of a Web page, while serving the complete feature set of the page to those browsers that support advanced technologies. For more information on progressive enhancement, see <a href="http://en.wikipedia.org/wiki/Progressive_enhancement">Wikipedia</a>, <a href="http://www.alistapart.com/articles/understandingprogressiveenhancement/">A List Apart</a> and <a href="http://modernizr.com/">modernizr.com</a>.</p>
+<p>Media queries are another common strategy for adapting content to a device, based on media type and device width or display size. For more information on media query techniques, see <a href="http://www.html5rocks.com/en/mobile/responsivedesign/">Creating a Mobile-First Responsive Web Design</a> and <a href="http://www.html5rocks.com/en/mobile/mobifying/">Mobifying Your HTML5 Site</a> on HTML5 Rocks.</p>
+<h3>Advantages of client-side detection</h3>
+<p>The main advantage of client-side detection is the ability to react promptly to exact client conditions such as size, orientation, and accurately assess support for specific elements and APIs. Capability detection is developed and executed purely on the client, using CSS and JavaScript. There is no requirement for web servers to provide device detection or serve alternative content, and installation and maintenance of a device database is not required.</p>
+<p>Client-side detection can provide a useful fallback and can implement run-time tweaks in response to behavior such as changes in device orientation. On more advanced devices, client-side Ajax and CSS can be used to download additional content and enhancements without having to refresh an entire page.</p>
+<h3>Disadvantages of client-side detection</h3>
+<p>When incorrectly implemented, client-side detection may cause a device to request content that is unsupported. In this case, a user will be notified that the browser is not capable of rendering the content only after time and bandwidth have been wasted delivering it. Because JavaScript and CSS execute locally, an entire page may have to be downloaded before scripts can process and manipulate the Document Object Model <a href="http://en.wikipedia.org/wiki/Document_Object_Model">DOM</a>. In addition, JavaScript and media queries are not supported on some older devices, and there may be a time lag between page load and execution of client-side adaptation.</p>
+<h2>Server-side detection</h2>
+<p>Server-side detection of devices and capabilities is usually performed by analysing HTTP request headers received from the client (also called the user agent). In most cases, only the User-Agent string is needed, but sometimes a combination of more than one header is required.</p>
+<p>For more information about specific server-side detection techniques, see:</p>
+<ul>
+<li><a href="http://mobile.smashingmagazine.com/2012/09/24/server-side-device-detection-history-benefits-how-to/">Server-Side Detection: History, Benefits and How-To</a></li>
+<li><a href="http://www.html5rocks.com/en/mobile/cross-device/">A Non-Responsive Approach to Building Cross-Device Webapps</a>.</li>
+</ul>
+<h3>Advantages of server-side detection</h3>
+<p>The main advantages of server-side detection are that it saves client resources and does not rely on the ability of the client to adapt the content that it receives. As soon as the client makes a request, server-side applications learn the identity of the device and what it can do. This makes it possible to serve only media and content that is most appropriate for that particular device. For example, if a mobile device is old and has a small screen, it will not be served a page section displaying HD video.</p>
+<p>Server-side detection enables optimization of assets such as CSS files, CSS image sprites, scripts, and so on. It can be extremely efficient when combined with device or ‘group-based’ caching on the server. For an example of a group-detection script, see <a href="http://wordpress.org/extend/plugins/wordpress-mobile-pack/">WordPress Mobile Pack</a>'s device group detection script.</p>
+<h3>Disadvantages of server-side detection</h3>
+<p>Databases for server-side detection require frequent updating, are not always accurate, and do not respond to user settings or personalization. Employing a device database requires implementing a server-side API and maintaining it. (The simplest solution is to employ a short script containing only very basic information, such as the one shown in WordPress Mobile Pack’s lite-detection php script.)</p>
+<h2>Best of both worlds</h2>
+<p>Server-side and client-side detection techniques can be used together to enable the developer to only serve content that is supported by a device, while allowing the browser to adjust style and layout in response to the current context.</p>
+<p>Note: This material was originally published as part of the Nokia Developer Web Development Library, available as <a href="http://www.developer.nokia.com/Resources/Library/Web/#!nokia-browsers/common-elements-of-nokia-browsers/device-and-browser-detection.html">Device and browser detection</a></p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<p><a href="http://www.developer.nokia.com/Community/Wiki/index.ph/Device_and_feature_detection_on_the_mobile_web">http://www.developer.nokia.com/Community/Wiki/index.ph/Device_and_feature_detection_on_the_mobile_web</a></p>
+<p><a href="http://mobiforge.com/developing/story/lightweight-device-detection-php">http://mobiforge.com/developing/story/lightweight-device-detection-php</a></p>
+<p><a href="http://yiibu.com/articles/rethinking-the-mobile-web/">http://yiibu.com/articles/rethinking-the-mobile-web/</a></p>
+<p><a href="http://mobiforge.com/designing/story/effective-design-multiple-screen-sizes">http://mobiforge.com/designing/story/effective-design-multiple-screen-sizes</a></p>
+<p><a href="http://mobiforge.com/designing/story/a-very-modern-mobile-switching-algorithm-part-i">http://mobiforge.com/designing/story/a-very-modern-mobile-switching-algorithm-part-i</a></p>
+<p><a href="http://calendar.perfplanet.com/2010/high-performance-mobile/">http://calendar.perfplanet.com/2010/high-performance-mobile/</a></p>
+<p><a href="http://www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/">http://www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/</a></p>
+<p>To access screensize with JS is tricky in mobile: <a href="http://tripleodeon.com/2011/12/first-understand-your-screen/">http://tripleodeon.com/2011/12/first-understand-your-screen/</a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

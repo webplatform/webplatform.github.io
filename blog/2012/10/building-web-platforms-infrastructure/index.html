@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+  <head>
+    <meta charset="UTF-8">
+    <title>Building Web Platform's Infrastructure · WebPlatform.org</title>
+    <link rel="icon" type="image/png" href="/logo/logo_stroke.png">
+    <link rel="apple-touch-icon" type="image/png" href="/logo/wplogo_nocopy.png">
+    <link rel="shortcut icon" type="image/png" href="/logo/logo_stroke.png" />
+    <link rel="stylesheet" href="/assets/css/squished.css" /><link rel="stylesheet" href="/assets/css/transition.css" /><link rel="stylesheet" href="/assets/css/blog.css" />
+    <link rel="copyright" href="/docs/Contributor_Agreement/index.html" />
+    <meta name="viewport" content="width=device-width">
+    <meta name="generator" content="DocPad v6.78.6" />
+    <!--[if lt IE 7]><script src="/assets/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/assets/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/assets/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+  </head>
+  <body class="ltr sitedir-ltr">
+<!-- WebPlatform -->
+<header id="mw-head" class="noprint">
+  <div class="container">
+    <div id="p-logo">
+      <a href="/"  title="Visit the main page"></a>
+    </div>
+  </div>
+</header>
+<nav id="sitenav">
+<div class="container">
+  <ul class="links">
+      <li><a href="/docs/Main_Page/index.html">The Docs</a></li>
+      <li><a href="/docs/WPD/Community/index.html">Connect</a></li>
+      <li><a href="/docs/WPD/Contributors_Guide/index.html">Contribute</a></li>
+      <li><a class="active" href="/blog/">Blog</a></li>
+  </ul>
+</div>
+</nav>
+
+
+  <div class="notice" style="position: relative; max-width: 1000px; margin: 10px auto 0 auto;">
+    <div style="margin: 10px auto; padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+  <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+</div>
+
+    
+
+<div class="tool-area">
+  <div id="hierarchy-menu">
+        <ol id="breadcrumb-info" class="breadcrumbs">
+          <li><a href="/">Home</a></li>
+          
+            
+              <li><a href="/blog/">blog</a>
+              
+              </li>
+            
+              <li><a href="/blog/2012/">2012</a>
+              
+              </li>
+            
+              <li><a href="/blog/2012/10/">October</a>
+              
+              </li>
+            
+          
+        </ol>
+  </div>
+  <div class="clear"> </div>
+</div>
+
+
+  </div>
+  <style>
+  /* Yeah, that's a few quick hacks to fix blog pages into static site */
+  /* Below is margin under the breadcrumb. */
+  .notice ol.breadcrumbs { float:inherit !important; }
+  /* Below is about background texture */
+  html,body { background-size:inherit !important; }
+  </style>
+
+  <div id="page" class="hfeed">
+
+      <div id="page-content">
+        <div id="primary">
+          <div id="content">
+
+              <article class="post type-post status-publish format-standard hentry">
+              <header class="entry-header">
+                <h1 class="entry-title"><a href="/blog/2012/10/building-web-platforms-infrastructure.html">Building Web Platform's Infrastructure</a></h1>
+              </header>
+              <p>For the initial launch of Web Platform, we decided to go for an alpha release with a small and concrete set of platform goals. We used open source software, and we kept the initial set of applications small, to focus on preparing them to handle the initial launch load.</p>
+<h2 id="applications-targeted">Applications targeted</h2>
+<p>The initial set of applications targeted were those that launched with the alpha: <a href="http://www.mediawiki.org">MediaWiki</a> (docs), <a href="http://wordpress.org">Wordpress</a> (blog),  <a href="http://piwik.org">Piwik</a> (stats), <a href="http://www.question2answer.org">Question2Answer</a> (talk/forums), <a href="http://qwebirc.org">qwebirc</a> (talk/chat), and <a href="http://curtis.lassam.net/software/lumberjack/">LumberJack</a> (chat logging). The first four are PHP applications, qwebirc is Python, and LumberJack is Python, PHP, and JavaScript.</p>
+<h2 id="scaling-targets">Scaling targets</h2>
+<p>Our upper-bound targets for launch day were:</p>
+<ul>
+<li>100,000 visitors</li>
+</ul>
+<ul>
+<li>200 anonymous requests per second</li>
+</ul>
+<ul>
+<li>10 logged-in requests per second.</li>
+</ul>
+<p>Our use case assumes 95+% of requests will be reads.</p>
+<p>We wanted to be well-prepared for whatever the Internet would throw at us.</p>
+<h2 id="launch-statistics">Launch statistics</h2>
+<p>Our actual statistics for the launch day were:</p>
+<ul>
+<li>86,000 visitors</li>
+</ul>
+<ul>
+<li>720,000 page views</li>
+</ul>
+<ul>
+<li>300 requests per second during the US peak</li>
+</ul>
+<ul>
+<li>350 requests per second during the Europe peak.</li>
+</ul>
+<p>Our application servers combined CPU load was steady between 10-20%. Memory usage was steady between 20-30%. Database wait-io (the only statistic that really showed a blip) was between 5-10%. The storage servers showed no statistics worth mentioning.</p>
+<p>Here&#39;s how we managed this...</p>
+<!-- more -->
+<h2 id="approach">Approach</h2>
+<p>I&#39;m going to describe the backend infrastructure in this post. We&#39;ll talk more about the different applications in later posts.</p>
+<h3 id="platform">Platform</h3>
+<p>One of our goals was to limit the amount of infrastructure used as much as possible, so cloud services was the way to go. We used <a href="https://www.hpcloud.com/">HP Cloud</a> for our platform. We&#39;re currently using their compute and block storage services. HP Cloud uses <a href="http://www.openstack.org">OpenStack</a> as their infrastructure stack, which fits well with our goal of using open source solutions or hosted solutions based on open source products where possible.</p>
+<p>Our platform currently has the following instances:</p>
+<ul>
+<li>5 application servers, with specs:</li>
+</ul>
+<pre><code>* 8GB RAM, 240GB disk, 4 VCPUs
+</code></pre><ul>
+<li>2 database servers, with specs:</li>
+</ul>
+<pre><code>* 16GB RAM, 480GB disk, 4 VCPUs
+</code></pre><ul>
+<li>2 storage servers, with specs:</li>
+</ul>
+<pre><code>* 2GB RAM, 50GB disk (volume storage), 2 VCPUs
+</code></pre><ul>
+<li>1 deployment server, with specs:</li>
+</ul>
+<pre><code>* 2GB RAM, 60GB disk, 2 VCPUs
+</code></pre><ul>
+<li>1 monitoring server, with specs:</li>
+</ul>
+<pre><code>* 2GB RAM, 60GB disk, 2 VCPUs
+</code></pre><ul>
+<li>1 backup server, with specs:</li>
+</ul>
+<pre><code>* 2GB RAM, 50GB disk (volume storage), 2 VCPUs
+</code></pre><ul>
+<li>1 bots server, with specs:</li>
+</ul>
+<pre><code>* 1GB RAM, 30GB disk, 1 VCPU
+</code></pre><p>All instances run Ubuntu Linux (either lucid or precise).</p>
+<h3 id="automation-deployment-and-configuration-management">Automation, deployment and configuration management</h3>
+<p>Every infrastructure project should start with configuration management. Everything should be kept in a repository and everything that&#39;s put into production should be automated.</p>
+<p>For configuration management, deployment and remote execution we use <a href="http://saltstack.org/">Salt Stack</a>. For configuration management we use salt states. For deployment we use a combination of salt states, salt modules, and salt runners. For remote execution we use salt modules. We keep everything in a number of git repositories.</p>
+<p>Automation is done by building instances using the OpenStack compute API, injecting a bootstrapping script into user data, and using cloud-init to install the salt minion and point it at the master. Instances are named by role, which allows us to use globs to pre-define an instance&#39;s role; for instance: app<em> -&gt; application server, db</em> -&gt; database server, etc.. Instances come up completely configured and ready to be added to a pool.</p>
+<h3 id="frontend-cache">Frontend cache</h3>
+<p>The use case of our applications is almost totally based on reads. To scale our use case, we simply need to increase the number of reads we can handle. This is effectively handled by frontend caching.</p>
+<p>For our frontend caching service, we use <a href="http://www.fastly.com/">Fastly</a>, which specializes in dynamic long-tail content, like MediaWiki. Fastly was a top choice because it can purge caches globally in a very, very short period of time. MediaWiki&#39;s use case assumes instant purging for editing, so this was a fairly hard requirement for any CDN chosen. Fastly also uses Varnish, which suits our goals of using open source solutions well.</p>
+<p>To use Fastly, we created CNAME DNS entries for <a href="/docs/">docs.webplatform.org</a>, <a href="http://talk.webplatform.org">talk.webplatform.org</a>, <a href="/blog/">blog.webplatform.org</a>, and <a href="http://stats.webplatform.org">stats.webplatform.org</a>. Each Fastly service load balances our set of application servers, with health checks.</p>
+<p>No infrastructure plan survives contact with the audience. Upon launch, we had scaling issues with our static content at <a href="http://webplatform.org">webplatform.org</a>. webplatform.org must be an A record, so we couldn&#39;t point it at Fastly. We had pointed www.webplatform.org as a CNAME to webplatform.org with a fairly long TTL, so we created a www1.webplatform.org CNAME, and pointed it at Fastly. After doing so, we redirected webplatform.org to www1.webplatform.org, as a temporary hack to deal with the load balancing. DNS for www.webplatform.org was expired globally the following day, so we pointed requests back to www.webplatform.org at that point.</p>
+<h3 id="backend-cache">Backend cache</h3>
+<p>MediaWiki and Wordpress must do generation of some of their content, which is expensive. MediaWiki, for instance, must convert wiki markup into HTML output; for some of our very long articles this can take 5-15 seconds. Using a backend cache, it&#39;s possible to avoid regenerating the content.</p>
+<p>Additionally, PHP is an interpreted language and it must be converted into bytecode each run. It&#39;s possible to cache the bytecode result.</p>
+<p>We use memcache for our backend cache, and APC for our PHP bytecode cache. Two of our application servers run memcache with 2GB of cache per node; combined that can hold all of our content plus more. APC is installed on all application servers with a shared memory size of 240MB.</p>
+<h3 id="horizontal-scaling">Horizontal scaling</h3>
+<p>Even with good frontend caching, we still have a fair number of requests hit the backend. To handle this we deploy all applications on all application servers. We put sessions in memcache and used our frontend caches to load balance between the application servers.</p>
+<p>Though we deploy all applications to all application servers, we are still able to move the traffic for the applications around to specific application servers, if needed. We split the applications into separate subdomains. Each subdomain is a separate service in our frontend cache. If Question2Answer starts eating too many resources and affects the performance of the site, we could move it to a single application server, and move the other services away from that server.</p>
+<p>We handle different services on the application servers using a fairly generic virtual host configuration in Apache.</p>
+<p>Having generic application servers also allows us to quickly scale if we need to add application servers. We can launch new application servers, deploy the code to them, then add them to the Fastly configuration.</p>
+<h3 id="shared-storage">Shared storage</h3>
+<p>MediaWiki and Wordpress require storage of user uploaded files. Since we have loadbalanced application servers, we can&#39;t store the uploads locally.</p>
+<p>We have two storage nodes, running glusterfs with a replicated volume. We share the volume to the application servers, which mount the shares via the fstab.</p>
+<h3 id="database-replication-with-read-write-separation">Database replication with read/write separation</h3>
+<p>Assuming 5% of our traffic will be writes, and we expect 10 logged-in requests per second, we expect a very low number of writes per second to our database.</p>
+<p>We&#39;re using the standard lucid install of MySQL with replication enabled. Very little tuning has been done since the writes per second are relatively low.</p>
+<p>MediaWiki is the only special configuration. It&#39;s using db2 for reads and db1 for writes.</p>
+<h3 id="email">Email</h3>
+<p>We avoided setting up mail services. We&#39;re using <a href="http://sendgrid.com/">SendGrid</a> for mail delivery and accept no incoming mail. This may change in the future.</p>
+<h3 id="monitoring">Monitoring</h3>
+<p>We only needed a basic amount of monitoring for launch. We&#39;re using ganglia to monitor resource usage. For ganglia&#39;s configuration, we have a single <a href="http://monitor.webplatform.org/ganglia/">monitoring server</a>. That server has a gmond process per cluster. gmond on every server talks to the appropriate gmond service on the monitoring server. gmetad subscribes to each of those processes locally. We&#39;re using the ganglia-webfrontend package from Ubuntu&#39;s precise repository.</p>
+<h3 id="system-logging">system Logging</h3>
+<p>We&#39;re using three services for logging: rsyslog, syslog-ng, and udp2log.</p>
+<p>We&#39;re using rsyslog and syslog-ng for Apache error logs. Apache is configured to send its logs to syslog:local1. rsyslog on the application servers is configured to send its local1 logs to the deployment server. The deployment server uses syslog-ng to send udp logs to a combined error file.</p>
+<p>We&#39;re also using a service called udp2log, which was written by and is maintained by the Wikimedia Foundation. udp2log is a simple service. It takes udp messages and sends them to a set of pipes. We have a pipe configured that is a python script called demux.py. demux splits the messages received into a file name and a message. MediaWiki is configured to send messages per log group to udp2log. This allows us to see exception messages, pages that parse slowly, memcache errors, etc.. Like syslog-ng, udp2log runs on the deployment system, allowing developers and operations people to see all logs on a centralized system.</p>
+<h3 id="backups">Backups</h3>
+<p>We&#39;re using a very simple mechanism for backups. The deployment server runs crons to backup software repos, uploaded files, etc.. The database servers run crons to backup the databases. We have a backup system that rsyncs the local backup copies from the deployment server and database servers onto a volume service mounted disk. We keep backups for 30 days. We use LVM for the backup disk and keep LVM snapshots for a week.</p>
+<h2 id="future-infrastructure-changes">Future infrastructure changes</h2>
+<p>There&#39;s a few things that we didn&#39;t get to implement for launch that would be nice to have from an infrastructure point of view:</p>
+<ul>
+<li>Object storage. We&#39;re using glusterfs right now, but it&#39;s not ideal. Mounting shared storage is a great way to have a really bad outage, especially on virtualized infrastructure. Object storage is more reliable and handled by the cloud provider. The support for object storage in MediaWiki is currently mostly undocumented. In the future we&#39;ll switch away from using glusterfs to using HP Cloud&#39;s object storage (which is based on OpenStack Swift). This would eliminate two servers from our infrastructure.</li>
+</ul>
+<ul>
+<li>Database as a Service. Our database usage is tiny. It&#39;s really wasteful to have two xlarge instances handling this. It would be more effective for us to run on HP Cloud&#39;s database service. This would eliminate two servers from our infrastructure.</li>
+</ul>
+<ul>
+<li>Offisite backup to an object store. All of our backups are in the same datacenter, currently. We thankfully have backups on volume storage and a second copy on instance storage, on different intances, but it would be better to have the backups in another datacenter in object storage.</li>
+</ul>
+<ul>
+<li>LVM snapshots of the database disks. Backups are nice, but LVM snapshots of database disks are much nicer for more instant recovery.</li>
+</ul>
+<ul>
+<li>Fastly API. We can further our automation setup by automatically adding new application servers into services by using the Fastly API. By doing so we could auto-expand and auto-shrink our application server cluster as needed.</li>
+</ul>
+<ul>
+<li>Releasing our salt configuration management repository. Our repository isn&#39;t really in a state that&#39;s currently releasable. It has some embedded passwords and other sensitive things. We also don&#39;t have a reasonable way to host it currently. Relying on GitHub for deployment is terrifying, since we don&#39;t have proper control of the repositories. We&#39;ll likely host a Gerrit instance and replicate to GitHub for this.</li>
+</ul>
+
+              <article>
+
+            </div><!-- /content -->
+          </div><!-- /primary -->
+
+          <div id="secondary" class="widget-area" role="complementary">
+    				<aside id="archives" class="widget">
+    					<h3 class="widget-title">Archives</h3>
+    					<ul>
+  							<li><a href="/blog/2014/09/">September 2014</a></li>
+              	<li><a href="/blog/2014/05/">May 2014</a></li>
+              	<li><a href="/blog/2014/04/">April 2014</a></li>
+              	<li><a href="/blog/2014/03/">March 2014</a></li>
+              	<li><a href="/blog/2014/02/">February 2014</a></li>
+              	<li><a href="/blog/2013/11/">November 2013</a></li>
+              	<li><a href="/blog/2013/10/">October 2013</a></li>
+              	<li><a href="/blog/2013/09/">September 2013</a></li>
+              	<li><a href="/blog/2013/08/">August 2013</a></li>
+              	<li><a href="/blog/2013/07/">July 2013</a></li>
+              	<li><a href="/blog/2013/06/">June 2013</a></li>
+              	<li><a href="/blog/2013/05/">May 2013</a></li>
+              	<li><a href="/blog/2013/04/">April 2013</a></li>
+              	<li><a href="/blog/2013/02/">February 2013</a></li>
+              	<li><a href="/blog/2013/01/">January 2013</a></li>
+              	<li><a href="/blog/2012/12/">December 2012</a></li>
+              	<li><a href="/blog/2012/11/">November 2012</a></li>
+              	<li><a href="/blog/2012/10/">October 2012</a></li>
+    					</ul>
+    				</aside>
+				</div>
+
+      </div><!-- /page-content -->
+  </div><!-- /page -->
+
+
+<!-- <%= @site.name %> -->
+<footer role="contentinfo" id="mw-footer" data-comment="footer-homepage">
+  <div class="container">
+    <div id="footer-wordmark">
+      <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+    </div>
+  </div>
+</footer>
+
+
+
+  </body>
+</html>

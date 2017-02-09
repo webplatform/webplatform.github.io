@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Importing users from MediaWiki to Firefox Accounts · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/Importing_users from MediaWiki to Firefox Accounts/">Importing users from MediaWiki to Firefox Accounts</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Importing users from MediaWiki to Firefox Accounts</h1>
+<p>This page describes how to query MediaWiki database and run an import script to create accounts within our fork (<a href="/docs/WPD/Projects/SSO/Adapt_Firefox_Accounts_for_WebPlatform">WPD/Projects/SSO/Adapt_Firefox_Accounts_for_WebPlatform</a>) of Firefox Accounts (“FxA”).</p>
+<p>To have an higher level description of how we implemented it, see <a href="/docs/WPD/Projects/SSO/How_we_implemented_it">WPD/Projects/SSO/How_we_implemented_it</a>.</p>
+<p>See canonical version in this <a href="https://gist.github.com/WebPlatformDocs/5543e6314dde476283fc">gist.github.com/WebPlatformDocs</a></p>
+<h1>Process</h1>
+<ul>
+<li>Requires NodeJS, NPM</li>
+<li>Clone <a href="https://github.com/webplatform/fxa-auth-server">fxa-auth-server</a> in a folder of the same name</li>
+<li>Install dependencies in fxa-auth-server with <code>npm install</code></li>
+<li>Go a folder up, create a new one and paste the following in it</li>
+</ul>
+<h2>1. Export MediaWiki Users</h2>
+<p>See also <a href="https://gist.github.com/WebPlatformDocs/5543e6314dde476283fc#file-mediawiki_sql_query-md">REAMDE in original gist</a></p>
+<ul>
+<li>Run this query from MySQL Workbench.</li>
+</ul>
+<pre><code class="html">    SELECT
+      CONVERT(user_name USING utf8),
+      CONVERT(user_real_name USING utf8),
+      CONVERT(user_email USING utf8),
+      CONVERT(user_registration, DATETIME),
+      user_id
+    FROM
+      user
+    ORDER BY user_id
+    LIMIT 40000;
+</code></pre>
+<ul>
+<li>Export the result in a file `users.csv`, it’ll be used to import</li>
+<li>Make sure the output is a CSV file
+<ul>
+<li>one entry per line</li>
+<li>Fields in this order: username, realname, email, creation date</li>
+</ul></li>
+</ul>
+<p>Should look like…</p>
+<pre><code class="html">WikiSysop,,team-webplatform-admin@w3.org,"2012-05-29 17:37:32"
+NoEmailUser,"Eliot Graff",,"2012-06-26 00:17:47"
+</code></pre>
+<h2>2. Create file run.js</h2>
+<p>See also <a href="https://gist.github.com/WebPlatformDocs/5543e6314dde476283fc#file-run-js">run.js in original gist</a></p>
+<pre><code class="html">/**
+ * Import MediaWiki accounts file to run
+ *
+ * To use within fxa-auth-server deployment.
+ *
+ * Based on work pushed in https://github.com/mozilla/fxa-auth-server/pull/711
+ *
+ * See documentation at /docs/WPD/Projects/SSO/Importing_users_from_MediaWiki_to_Firefox_Accounts
+ *
+ * @author David Kirstein <span class="hljs-tag">&lt;<span class="hljs-title">frozenice@frozenice.de</span>&gt;</span> (http://webplatform.org)
+ * @author Renoir Boulanger <span class="hljs-tag">&lt;<span class="hljs-title">renoir@w3.org</span>&gt;</span>
+ */
+
+var fs = require('fs');
+var Q = require('q');
+var csv = require('csv-streamify');
+var sleep = require('sleep');
+var AccountCreator = require('./accountscreator');
+
+function doSomethingWithLine(line) {
+    try {
+      var payload = new AccountCreator(line);
+    } catch (err) {
+      return Q.reject(err);
+    }
+
+    return payload.makePromiseToCreate();
+}
+
+var fstream = fs.createReadStream('users.csv');
+var csvOptions = { empty: null, objectMode: true };
+var parser = csv(csvOptions);
+var workItems = [], errors = [];
+
+parser.on('readable', function() {
+  var line = parser.read(); // line is an array of fields
+  sleep.usleep(100 * 1000); // sleep 100 ms
+  var promise = doSomethingWithLine(line);
+  promise.done(function onFulfilled() {
+    // Nothing
+  }, function onRejected(a) {
+    errors.push([line[0], a.message || a]);
+  });
+  workItems.push(promise);
+});
+
+fstream.pipe(parser).on('end', function() {
+  waitForAllPromises();
+});
+
+function waitForAllPromises() {
+  // use allSettled, all would abort if just one promise would be rejected
+  Q.allSettled(workItems).done(function() {
+    console.log('all done! errors:');
+    console.error(errors);
+  });
+}
+</code></pre>
+<h2>3. Create file accountscreator.js</h2>
+<p>See also <a href="https://gist.github.com/WebPlatformDocs/5543e6314dde476283fc#file-accountscreator-js">accountscreator.js in original gist</a></p>
+<pre><code class="html">/**
+ * Import MediaWiki accounts
+ *
+ * To use within fxa-auth-server deployment.
+ *
+ * Based on work pushed in https://github.com/mozilla/fxa-auth-server/pull/711
+ *
+ * See documentation at /docs/WPD/Projects/SSO/Importing_users_from_MediaWiki_to_Firefox_Accounts
+ *
+ * @author Renoir Boulanger <span class="hljs-tag">&lt;<span class="hljs-title">renoir@w3.org</span>&gt;</span>
+ */
+
+// Password (DO NOT USE THE SAME AS POSTED ONLINE!1)
+var password = '4e9bde2d85';
+
+    /**
+     * fxa-auth-server listen IP and port
+     *
+     * Make sure it matches the same configuration
+     * otherwise the hashing validation will fail with
+     * "Bad mac" error message.
+     *
+     * See config/config.js in listen section.
+     *
+     * @type {String} FXA Auth server HTTP endpoint to make calls against
+     */
+var  instanceEndpoint = 'https://api.accounts.webplatform.org';
+
+var fs = require('fs'),
+    publicKey = JSON.parse(fs.readFileSync('../fxa-auth-server/config/public-key.json')),
+    Client = require('../fxa-auth-server/client'),
+    duration = 1000 * 60 * 60 * 24,
+    client = null;
+
+function AccountCreator(dataObject) {
+  if ( dataObject[2] === null ) {
+    throw 'User MUST have an email address for ' + dataObject[0];
+  }
+  // Use a hard to guess password to force users to ask a new one
+  this.password = password;
+  this.email = dataObject[2]; // See _parseUserData
+  this.config = {pk: publicKey, d: duration, ep: instanceEndpoint};
+  this.userData = this._parseUserData(dataObject);
+}
+
+/**
+ * Format options array for overloaded signup
+ *
+ * userData expects 4 members:
+ * - MediaWiki username
+ * - Full name
+ * - Email address
+ * - Registration date
+ *
+ * @param  array  userData      data in a predetermined order
+ * @return object optionsObject what we return as 3rd argument to ClientCreate call
+ */
+AccountCreator.prototype._parseUserData = function _parseUserData(userData) {
+    var dateObject = new Date(userData[3]),
+        out = {};
+
+    out.preVerified = true;
+    out.username = userData[0];
+    out.fullName = userData[1] || null;
+    out.forceCreatedAt = dateObject.getTime();
+
+    return out;
+};
+
+AccountCreator.prototype.makePromiseToCreate = function makePromiseToCreate () {
+  return Client.create(this.config.ep, this.email, this.password, this.userData)
+          .then(function(a){
+            console.log('Created ', a.email);
+          });
+};
+
+module.exports = AccountCreator;
+</code></pre>
+<h2>4. Create a new package.json</h2>
+<p>See original <a href="https://gist.github.com/WebPlatformDocs/5543e6314dde476283fc#file-package-json">package.json gist</a></p>
+<pre><code class="html">{
+  "name": "mediawiki-to-fxa-user-importer",
+  "version": "0.0.1",
+  "dependencies": {
+    "q": "~1.0.0",
+    "csv-streamify":"~1.0.0",
+    "sleep": "~1.1.5"
+  }
+}
+</code></pre>
+<p>Run</p>
+<pre><code class="html">npm install
+</code></pre>
+<h2>5. Run import script</h2>
+<p>Note that this step can take some time. With ~39 000 users, it took a bit more than an hour to run in full.</p>
+<pre><code class="html">node run.js
+</code></pre>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>translations · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/translations/">translations</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>translations</h1>
+<h2>Summary</h2>
+<p>WebPlatform.org documents are attracting attention from a lot of web developers who read and write in many different languages as well as English. Many of them are willing to translate the documents into their native languages and associate them with the original ones written in English.</p>
+<p>Currently we have a problem on writing translations. There is no rule for creating translation articles yet.</p>
+<h2>Potential solutions</h2>
+<p>As preceding examples in translations, <a href="http://meta.wikimedia.org/wiki/Complete_list_of_Wikimedia_projects">MediaWikis running on Wikimedia Project servers</a> have two different manners for creating articles in different language and associating it with ones in the other languages.</p>
+<h3>Different host for each language</h3>
+<p>In <a href="http://en.wikipedia.org/">Wikipedia</a>, <a href="http://en.wiktionary.org/">Wiktionary</a>, <a href="http://en.wikiversity.org/">Wikiversity</a>, etc., different host is prepared for each language; as for Wikipedia, <a href="http://en.wikipedia.org/">http://en.wikipedia.org/</a> for English, <a href="http://es.wikipedia.org/">http://es.wikipedia.org/</a> for Spanish, <a href="http://ko.wikipedia.org/">http://ko.wikipedia.org/</a> for Korean, etc.</p>
+<p>As for WebPlatform.org, there is a proposal like <code>{lang}.docs.webplatform.org</code> or <code>docs-{lang}.webplatform.org</code> <a href="http://lists.w3.org/Archives/Public/public-webplatform/2012Dec/0113.html">[1]</a>.</p>
+<p>In this manner, different article names are allowed in different languages. (e.g. ‘beginners’ for English, ‘初心者’ for Japanese)</p>
+<p>This solution requires configuration and additional mechanism for <a href="http://www.mediawiki.org/wiki/Manual:Interwiki">interwiki</a>, which provides a method for hyperlinking between different Wikis. MediaWiki in every language host requires configurations of interwiki to the other language hosts.</p>
+<p>By default, all translators have to make interwiki manually to the corresponding articles in the other languages. MediaWiki itself does not have any functionalities to make such interwiki automatically. In Wikipedia, <a href="http://meta.wikimedia.org/wiki/Interwiki_bot">interwiki bots</a> managed by volunteers are patrolling to find the articles which are hyperlinked from the ones in the other languages and make mutual interwiki hyperlinks automatically. For more convenience, <a href="http://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> provides a tool to create interwiki hyperlinks to all existing translations at once <a href="http://meta.wikimedia.org/wiki/Interwiki_bot">[2]</a>.</p>
+<h3>Using language code suffix and {{Languages}} template</h3>
+<p><a href="http://www.mediawiki.org/">MediaWiki web site</a> etc. have a simple rule of translations. Translated articles can be created as the subpage of their original English article. For instance, the article <code>article/name/fr</code> describes a French translation of <code>article/name</code> in English.</p>
+<p>In this solution, we can add the list of all translations simply by putting <a href="http://www.mediawiki.org/wiki/Template:Languages">{{Languages}} template</a> in a MediaWiki source code. This requires no additional configuration in MediaWiki (LocalSettings.php, etc.).</p>
+<p>This solution is found to have a problem that several language codes conflict with the names of some HTML elements <a href="http://lists.w3.org/Archives/Public/public-webplatform/2012Dec/0051.html">[3]</a>. To avoid such conflicts, alternative suffix rules are proposed; <code>article/name/lang-{lang}</code><a href="http://lists.w3.org/Archives/Public/public-webplatform/2012Dec/0076.html">[4]</a>, <code>article/name/lang:{lang}</code><a href="http://lists.w3.org/Archives/Public/public-webplatform/2012Dec/0077.html">[5]</a>, etc.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

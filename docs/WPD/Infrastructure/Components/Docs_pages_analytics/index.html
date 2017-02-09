@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Docs pages analytics · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/Components/">Components</a></li><li><a href="/docs/WPD/Infrastructure/Components/Docs_pages analytics/">Docs pages analytics</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Docs pages analytics</h1>
+<p><strong>INCOMPLETE</strong>, see <em>WebPlatform GitHub operations issue tracker</em>, at <strong><a href="https://github.com/webplatform/ops/issues/149">webplatform/ops#149</a></strong></p>
+<p>How to get data from MediaWiki.</p>
+<h2>Tools found</h2>
+<ul>
+<li><a href="/Special:Statistics">Statistics Special page</a> or its command-line equivalent <a href="https://www.mediawiki.org/wiki/Manual:ShowSiteStats.php"><em>showSiteStats</em> maintenance script</a>, e.g. <code>php mediawiki/maintenance/showSiteStats.php</code>
+<ul>
+<li>Refresh site stats with <a href="https://www.mediawiki.org/wiki/Manual:InitSiteStats.php"><em>InitSiteStats.php</em></a>, e.g. <code>php mediawiki/maintenance/initSiteStats.php</code></li>
+</ul></li>
+</ul>
+<h3><a href="https://meta.wikimedia.org/wiki/StatMediaWiki">StatMediaWiki</a> (outdated)</h3>
+<p><strong>Outcome:</strong> Couldn’t make something work in a reasonable time. Code was made against earlier version of MW and isn’t maintained.</p>
+<p>TL;DR. Its a Python project can read from a database snapshot, crunch some data, and generate reports. Unfortunately, it has next to no docs, although I could get something at <a href="http://edutechwiki.unige.ch/en/StatMediaWiki">in this wiki</a>.</p>
+<p>Unfortunately it seems the Python code is making database queries to MediaWiki database tables changed since the time <em>StatMediaWiki</em> was made and wasn’t completing execution.</p>
+<p>See also the <a href="https://meta.wikimedia.org/wiki/Talk:StatMediaWiki">StatMediaWiki Talk page</a></p>
+<h3><a href="https://www.mediawiki.org/wiki/Extension:Usage_Statistics">Usage Statistics Extension</a></h3>
+<p><strong>Outcome:</strong> Couldn’t make it work due to incompatibility caused by some calls that were using deprecated methods. After some more tests, it gives usage data per user; doesn’t match what we want to get.</p>
+<h3><a href="http://reportcard.wmflabs.org/">Limn</a> (to be phased out by wmf)</h3>
+<p><strong>Outcome:</strong> After consultation with <em>#wikimedia-analytics</em> folks, Limn (<a href="https://github.com/wikimedia/limn">repo</a>) is a visualization tool, one has to feed it with reports. In order to use it, we have to have crunched data, see <a href="http://reportcard.wmflabs.org/datasources">limn <em>datasources</em></a>. To get data, Wikimedia foundation uses <em>wikimetrics</em> and <em>Quarry</em>.</p>
+<h3>Also</h3>
+<ul>
+<li><a href="https://meta.wikimedia.org/wiki/WikiXRay">https://meta.wikimedia.org/wiki/WikiXRay</a></li>
+<li><a href="https://www.mediawiki.org/wiki/Analytics/Wikistats">https://www.mediawiki.org/wiki/Analytics/Wikistats</a> <a href="https://stats.wikimedia.org/">https://stats.wikimedia.org/</a></li>
+</ul>
+<h2>What Wikimedia do</h2>
+<p>Wikimedia Foundation has an <em>Analytics</em> team (<a href="http://www.mediawiki.org/wiki/Analytics">ref</a>) and separate their work in @@ sub projects.</p>
+<dl>
+<dt><a href="http://www.mediawiki.org/wiki/Analytics/Research_and_Data">Research and Data</a></dt>
+<dd>To help making research-informed decisions. See <a href="https://phabricator.wikimedia.org/tag/Research-and-Data/"><strong>#Research-and-Data</strong> in Wikimedia Phabricator</a><br>
+<a href="http://www.mediawiki.org/wiki/Analytics/Wikimetrics">Wikimetrics</a>
+</dd>
+<dd>A web based tool designed to simplify the measurement.
+</dd>
+</dl>
+<h3><a href="http://quarry.wmflabs.org/">Quarry</a></h3>
+<p>Run database queries from the web browser.</p>
+<p><em>Quarry</em> (<a href="https://github.com/wikimedia/analytics-quarry-web">repo</a>) is a tool written in Python that allows to make database queries from a web browser and expose publicly the results.</p>
+<p>Here are a few interesting ones:</p>
+<ul>
+<li><a href="http://quarry.wmflabs.org/query/3033">Catalan Wikipedia users who published more than one article</a></li>
+<li><a href="http://quarry.wmflabs.org/query/947">Files uploaded to two projects</a></li>
+<li><a href="http://quarry.wmflabs.org/query/3012">Most edited pages in Portugese Wikipedia</a></li>
+<li><a href="http://quarry.wmflabs.org/query/2930">New active users in Lativian Wikipedia</a></li>
+</ul>
+<h3><a href="https://metrics.wmflabs.org/">WikiMetrics</a></h3>
+<p><a href="/File:wikimetrics-screenshot-namespaceedits.png"></a></p>
+<p>Sample database query</p>
+<p><img src="//static.webplatform.org/thumb/d/de/wikimetrics-screenshot-namespaceedits.png/300px-wikimetrics-screenshot-namespaceedits.png" alt=""></p>
+<p>WikiMetrics is a sandbox we can import and run scripts to get usage statistics.</p>
+<p>TL;DR … a way to get wiki activity reports and statistics, one has to run it inside a sandboxed MediaWiki installation in which we import a database snapshot from production so it can crunch metrics.</p>
+<p>Wikimetrics also helps to generate database queries that can be run to make reports</p>
+<ul>
+<li><em>Freenode IRC</em> channel: <em>#wikimedia-analytics</em></li>
+<li><a href="http://www.mediawiki.org/wiki/Analytics/Wikimetrics">project description page</a>, see also <a href="http://www.mediawiki.org/wiki/User_Metrics">former project description page &quot;<em>User Metrics</em>&quot;</a></li>
+<li><a href="https://phabricator.wikimedia.org/tag/Analytics-Wikimetrics/">Wkimedia Phabricator KanBan board</a></li>
+<li><a href="https://github.com/wikimedia/analytics-wikimetrics">code mirror on GitHub</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

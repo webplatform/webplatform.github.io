@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>use strict · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Restricts the use of some potentially-harmful features of JavaScript (e.g., eval, with) and throws syntax errors for certain sloppy code." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/directives/">directives</a></li><li><a href="/docs/javascript/directives/use_strict/">use strict</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>use strict</h1>
+<h2>Summary</h2>
+<p>Restricts the use of some potentially-harmful features of JavaScript (e.g., eval, with) and throws syntax errors for certain sloppy code.</p>
+<h2>Syntax</h2>
+<pre><code>&quot;use strict&quot;;
+</code></pre>
+<h2>Examples</h2>
+<p>The following code causes a syntax error because in strict mode all variables must be declared with <code>var</code>.</p>
+<pre><code class="js"><span class="hljs-comment">// Be careful - all code used in the page/context must be strict mode conformant.</span>
+<span class="hljs-pi">"use strict"</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testFunction</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-keyword">var</span> testvar = <span class="hljs-number">4</span>;
+    <span class="hljs-keyword">return</span> testvar;
+}
+intvar = testFunction();
+</code></pre>
+<p>The following code causes a syntax error because in strict mode all variables must be declared with <code>var</code>. Even though the strict mode directive (<code>use strict;</code>) is only added to the function, the whole code breaks because that function does not adhere to the strict mode rules.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testFunction</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-comment">// Restricts strict mode to this function only.</span>
+<span class="hljs-pi">   "use strict"</span>;
+   <span class="hljs-comment">// This will throw.</span>
+   testvar = <span class="hljs-number">4</span>;
+   <span class="hljs-keyword">return</span> testvar;
+}
+<span class="hljs-keyword">var</span> hello = <span class="hljs-literal">true</span>;
+</code></pre>
+<p>The following code _does not_ cause a syntax error, even though the variable <strong>intvar</strong> variable is not declared with <code>var</code>, because the strict mode is scoped to the function only, while the non conformant code is found in a different scope (the global scope).</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testFunction</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-comment">// Restricts strict mode to this function only.</span>
+<span class="hljs-pi">   "use strict"</span>;
+   <span class="hljs-keyword">var</span> testvar = <span class="hljs-number">4</span>;
+   <span class="hljs-keyword">return</span> testvar;
+}
+
+<span class="hljs-comment">// This would have caused a syntax error to be thrown if there had been</span>
+<span class="hljs-comment">// a "use strict"; directive at the top of the script (above the testFunction</span>
+<span class="hljs-comment">// function). Since the directive is scoped to the function and not to the</span>
+<span class="hljs-comment">// global scope (in which this code operates), this code runs normally.</span>
+intvar = <span class="hljs-number">1</span>;
+</code></pre>
+<p>When the expression <code>&quot;use strict&quot;;</code> is placed at the start of a script or a function body, the code contained in it is parsed under stricter rules than what the default JavaScript language allows. These rules include:</p>
+<ul>
+<li>Variables must be explicitly declared (<code>var</code>).</li>
+<li>Statements must end with a semicolon (<code>;</code>).</li>
+<li>Assigning values to a read-only property fails (<code>Node.DOCUMENT_FRAGMENT_NODE = 9;</code>).</li>
+<li><strong>with</strong> statements are completely disallowed.</li>
+</ul>
+<p><strong>TODO</strong>: Add the complete set of strict mode rules.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/yek4tbz0%28v=vs.94%29.aspx">Windows Internet Explorer JavaScript reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

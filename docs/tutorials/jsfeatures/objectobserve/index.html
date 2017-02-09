@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Respond to change with Object.observe · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Object.observe() lets you add a listener to any JavaScript object that gets called whenever that object, or its properties, change." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/jsfeatures/">jsfeatures</a></li><li><a href="/tutorials/jsfeatures/objectobserve/">objectobserve</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Respond to change with Object.observe</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#alexdanilo">Alex Danilo</a></strong><br>
+Originally published 28 November 2012</p>
+<h2>Summary</h2>
+<p>Object.observe() lets you add a listener to any JavaScript object that gets called whenever that object, or its properties, change.</p>
+<h2>Introduction</h2>
+<p>Lots of JavaScript frameworks using MVC or MDV need to respond to changes to the objects that model the state inside a web application. This capability is a fundamental part of a data-binding model.</p>
+<p>There are a number of different ways to monitor JavaScript objects and DOM properties to trigger some sort of action, but most of the techniques aren’t ideal for various reasons such as performance, etc.</p>
+<p>In order to improve the performance of web applications, a new method called <a href="http://wiki.ecmascript.org/doku.php?id=harmony:observe">Object.observe()</a> has been proposed to TC39 – the standards body overseeing development of ECMAScript (JavaScript).</p>
+<p>Object.observe() lets you add a listener to any JavaScript object that gets called whenever that object, or its properties, change.</p>
+<h2>Compatibility</h2>
+<p>You can try it out now in <a href="https://tools.google.com/dlpage/chromesxs">Chrome Canary</a>.</p>
+<p>To experiment with this feature, you need to enable the Enable Experimental JavaScript flag in Chrome Canary and restart the browser. The flag can be found under 'about://flags’ as shown in the image below:</p>
+<p><img src="//static.webplatform.org/0/0b/objectobserve1.jpg" alt="objectobserve1.jpg"></p>
+<h2>Basic use</h2>
+<p>Here’s a simple example of how to set up an observer on an object:</p>
+<pre><code>var beingWatched = {};
+// Define callback function to get notified on changes
+function somethingChanged(changes) {
+    // do something
+}
+Object.observe(beingWatched, somethingChanged);
+</code></pre>
+<p>When the object 'beingWatched’ is modified, it will trigger the callback function 'somethingChanged’ which receives an array of changes that were applied to the object.</p>
+<p>So the JavaScript engine is free to buffer up a number of changes and pass them all in a single call to the callback function. This helps with optimizing the callbacks so that your code can do lots of JavaScript manipulation but process only a few callbacks by batching the updates together.</p>
+<p>The callback function will be triggered whenever a property is added, modified, deleted or reconfigured.</p>
+<h2>Observing multiple changes</h2>
+<p>Another really nice thing when observing arrays is that if an array has had a number of changes made to it, you can use a <a href="https://github.com/rafaelw/ChangeSummary">Change Summary</a> helper library to create a minimal change set, so that client side JavaScript doesn’t have to manually scan the array to check each item.</p>
+<p>You can iterate through each change quite easily, by doing something like the following in your 'somethingChanged’ callback function:</p>
+<pre><code>function whatHappened(change) {
+    console.log(change.name + &quot; was &quot; + change.type + &quot; and is now &quot; + change.object[change.name]);
+}
+function somethingChanged(changes) {
+    changes.forEach(whatHappened);
+}
+</code></pre>
+<p>The <code>type</code> property identifies what happened to the object. Some examples of properties being set and the associated type can be seen in the code below:</p>
+<pre><code>beingWatched.a = &quot;foo&quot;; // new
+beingWatched.a = &quot;bar&quot;; // updated
+beingWatched.a = &quot;bar&quot;; // no change
+beingWatched.b = &quot;amazing&quot;; // new
+</code></pre>
+<p>The great thing about this technique is that all the monitoring smarts are inside the JavaScript engine which allows the browser to optimize it well and free your JavaScript up to implement functionality taking advantage of this feature.</p>
+<h2>Calling the debugger</h2>
+<p>Another really great feature for development is the ability to use Object.observe() to trigger the debugger whenever an object changes. To do that you’d use code something like the example below:</p>
+<pre><code>Object.observe(beingWatched, function(){ debugger; });
+</code></pre>
+<h2>More information</h2>
+<p><a href="https://www.youtube.com/watch?feature=player_embedded&amp;v=VO--VXFJnmE">Here’s a great video introduction</a> about Object.observe() that explains it in detail.</p>
+<p>There’s also a <a href="http://weblog.bocoup.com/JavaScript-object-observe/">nice descriptive write-up here</a> and a <a href="http://simpl.info/observe/">working example here</a>.</p>
+<h2>Conclusion</h2>
+<p>The TC39 standards body is seeking feedback on this feature, so go ahead and try it and let us know what you think.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://updates.html5rocks.com/2012/11/Respond-to-change-with-Object-observe">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

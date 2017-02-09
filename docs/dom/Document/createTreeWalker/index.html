@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>createTreeWalker · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="Creates a TreeWalker object that you can use to traverse filtered lists of nodes or elements in a document." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Document/">Document</a></li><li><a href="/dom/Document/createTreeWalker/">createTreeWalker</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>createTreeWalker</h1>
+<h2>Summary</h2>
+<p>Creates a TreeWalker object that you can use to traverse filtered lists of nodes or elements in a document.</p>
+<p>Method of <a href="/docs/dom/Document">dom/Document</a><a href="/docs/dom/Document">dom/Document</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> treeWalker = <span class="hljs-built_in">document</span>.createTreeWalker(rootNode, whatToShow, filter, entityReferenceExpansion);
+</code></pre>
+<h2>Parameters</h2>
+<h3>rootNode</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>DOM Node
+</dd>
+</dl>
+<p>The root element or node to start traversing on.</p>
+<h3>whatToShow</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>unsigned long
+</dd>
+</dl>
+<p>The type of nodes or elements to appear in the node list. For more information, see <a href="/docs/dom/NodeIterator/whatToShow"><strong>whatToShow</strong></a>.</p>
+<h3>filter</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>DOM Node
+</dd>
+</dl>
+<p>A custom <strong>NodeFilter</strong> function to use. For more information, see <a href="/docs/dom/NodeIterator/filter"><strong>filter</strong></a>, or null for none.</p>
+<h3>entityReferenceExpansion</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>Boolean
+</dd>
+</dl>
+<p>Whether entity reference nodes are expanded. For more information, see <a href="/docs/dom/NodeIterator/expandEntityReferences"><strong>expandEntityReferences</strong></a>.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type DOM NodeDOM Node</p>
+<p>A <a href="/docs/dom/TreeWalker"><strong>TreeWalker</strong></a> instance object.</p>
+<h2>Examples</h2>
+<p>The following code example shows how to use <a href="/docs/dom/TreeWalker"><strong>TreeWalker</strong></a> objects to find and remove references. The iterator returns all text nodes from the document <strong>body</strong> and searches for <code>Monday</code> in text and <a href="/docs/html/attributes/id"><strong>id</strong></a> attributes of parent nodes. The script matches text by using the <a href="/docs/dom/Text/wholeText"><strong>wholeText</strong></a> property of the node.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">noMondays</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> tw = <span class="hljs-built_in">document</span>.createTreeWalker(<span class="hljs-built_in">document</span>.body, NodeFilter.SHOW_TEXT, <span class="hljs-literal">null</span>, <span class="hljs-literal">false</span>);
+
+    <span class="hljs-keyword">var</span> textNode = tw.nextNode();
+    <span class="hljs-keyword">while</span> (textNode) {
+        <span class="hljs-keyword">if</span> (textNode.wholeText.match(<span class="hljs-string">'Monday'</span>) ||
+            textNode.parentNode.getAttribute(<span class="hljs-string">'id'</span>) == <span class="hljs-string">'Monday'</span>)
+        {
+            textNode.parentNode.removeChild(textNode);
+        }
+        textNode = tw.nextNode();
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">refresh</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-built_in">window</span>.location.reload( <span class="hljs-literal">false</span> );    <span class="hljs-comment">// Reload our page.</span>
+}
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Monday, Joe bought a turkey.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Tuesday, Bill bought a pound of nails.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Chuck called in sick Monday.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"Monday"</span>&gt;</span>CALL supplier today!<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Wednesday's delivery was delayed.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"refresh()"</span>&gt;</span>Reload<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"noMondays()"</span>&gt;</span>Lose Mondays<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Usage</h2>
+<pre><code> Use the createTreeWalker method when you want to navigate a representation of the document's hierarchical structure. If you would rather traverse a sequence of nodes without regard to document structure, use createNodeIterator.
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/DOM-Level-2-Traversal-Range/traversal.html#Traversal-Document">DOM Level 2 Traversal and Range</a></dt>
+<dd>Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li>createNodeIterator<a href="/docs/dom/Document/createNodeIterator">createNodeIterator</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AudioContext · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="The AudioContext represents a set of AudioNode objects and their connections. It allows for arbitrary routing of signals to the AudioDestinationNode (what the user ultimately hears). Nodes are created from the context and are then connected together. In most use cases, only a single AudioContext is used per document." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/webaudio/">webaudio</a></li><li><a href="/apis/webaudio/AudioContext/">AudioContext</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>AudioContext</h1>
+<h2>Summary</h2>
+<p>The AudioContext represents a set of AudioNode objects and their connections. It allows for arbitrary routing of signals to the AudioDestinationNode (what the user ultimately hears). Nodes are created from the context and are then connected together. In most use cases, only a single AudioContext is used per document.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/webaudio/AudioContext/activeSourceCount">activeSourceCount</a></dt>
+<dd>The number of <a href="/docs/apis/webaudio/AudioBufferSourceNode"><strong>AudioBufferSourceNode</strong>s</a> that are currently playing.
+<strong>Out of date; removed from spec. See <a href="http://webaudio.github.io/web-audio-api/">http://webaudio.github.io/web-audio-api/</a>.</strong>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/currentTime">currentTime</a></dt>
+<dd>This is a time in seconds which starts at zero when the context is created and increases in real-time. All scheduled times are relative to it. This is not a <em>transport</em> time which can be started, paused, and re-positioned. It is always moving forward. A GarageBand-like timeline transport system can be very easily built on top of this (in JavaScript). This time corresponds to an ever-increasing hardware timestamp.
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/destination">destination</a></dt>
+<dd>An <a href="/docs/apis/webaudio/AudioDestinationNode">AudioDestinationNode</a> with a single input representing the final destination for all audio (to be rendered to the audio hardware, i.e., speakers). All <a href="/docs/apis/webaudio/AudioNode">AudioNodes</a> actively rendering audio will directly or indirectly connect to the destination node.
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/listener">listener</a></dt>
+<dd>An <a href="/docs/apis/webaudio/AudioListener">AudioListener</a>, used for 3D spatialization.
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/sampleRate">sampleRate</a></dt>
+<dd>The sample rate, in sample-frames per second, at which the AudioContext handles audio. It is assumed that all <a href="/docs/apis/webaudio/AudioNode">AudioNodes</a> in the context run at this rate. In making this assumption, sample-rate converters or <em>varispeed</em> processors are not supported in real-time processing.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/webaudio/AudioContext/createAnalyser">createAnalyser</a></dt>
+<dd><p>Creates an <a href="/docs/apis/webaudio/AnalyserNode"><strong>AnalyserNode</strong></a>.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createBiquadFilter">createBiquadFilter</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/BiquadFilterNode">BiquadFilterNode</a> representing a second order filter which can be configured as one of several common filter types.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createBuffer">createBuffer</a></dt>
+<dd><p>Creates an <a href="/docs/apis/webaudio/AudioBuffer">AudioBuffer</a> of the given size. The audio data in the buffer will be zero-initialized (silent). An exception will be thrown if the <a href="/docs/apis/webaudio/AudioBuffer/numberOfChannels">numberOfChannels</a> or <a href="/apis/webaudio/AudioContext/sampleRate">sampleRate</a> are out-of-bounds.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createBufferSource">createBufferSource</a></dt>
+<dd><p>Creates an <a href="/docs/apis/webaudio/AudioBufferSourceNode">AudioBufferSourceNode</a> that can be used to play audio data contained within an AudioBuffer object…</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createChannelMerger">createChannelMerger</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/ChannelMergerNode">ChannelMergerNode</a> representing a channel merger. An exception will be thrown for invalid parameter values.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createChannelSplitter">createChannelSplitter</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/ChannelSplitterNode">ChannelSplitterNode</a> representing a channel splitter. An exception will be thrown for invalid parameter values.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createConvolver">createConvolver</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/ConvolverNode">ConvolverNode</a>, commonly used to add reverb to audio.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createDelay">createDelay</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/DelayNode">DelayNode</a> representing a variable delay line. Default delay is 0 seconds.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createDynamicsCompressor">createDynamicsCompressor</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/DynamicsCompressorNode">DynamicsCompressorNode</a>, used to apply compression to audio.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createGain">createGain</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/GainNode">GainNode</a>, used to control the volume of audio.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createMediaElementSource">createMediaElementSource</a></dt>
+<dd><p>Creates a MediaElementAudioSourceNode, given an <a href="/docs/dom/HTMLMediaElement">HTMLMediaElement</a>. As a consequence of calling this method, audio playback from the <a href="/dom/HTMLMediaElement">HTMLMediaElement</a> will be re-routed into the processing graph of the <strong>AudioContext</strong>.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createMediaStreamSource">createMediaStreamSource</a></dt>
+<dd><p>Creates a MediaStreamAudioSourceNode, given a <a href="/docs/apis/webrtc/MediaStream">MediaStream</a>. As a consequence of calling this method, audio playback from the <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> will be re-routed into the processing graph of the <strong>AudioContext</strong>.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createOscillator">createOscillator</a></dt>
+<dd><p>Creates an <a href="/docs/apis/webaudio/OscillatorNode">OscillatorNode</a>, a source representing a periodic waveform. It basically generates a constant tone…</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createPanner">createPanner</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/PannerNode">PannerNode</a>, used to spatialize an incoming audio stream in 3D space…</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createScriptProcessor">createScriptProcessor</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/ScriptProcessorNode">ScriptProcessorNode</a> for direct audio processing using JavaScript. An exception will be thrown if <a href="/docs/apis/webaudio/ScriptProcessorNode/bufferSize">bufferSize</a> or numberOfInputChannels or numberOfOutputChannels are outside the valid range.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createWaveShaper">createWaveShaper</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/WaveShaperNode">WaveShaperNode</a>, used to apply a distortion effect to audio.</p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/createWaveTable">createWaveTable</a></dt>
+<dd><p>Creates a <a href="/docs/apis/webaudio/WaveTable"><strong>WaveTable</strong></a> representing a waveform containing arbitrary harmonic content. The real and imag parameters must be of type <strong>Float32Array</strong> of equal lengths greater than zero and less than or equal to 4096 or an exception will be thrown. These parameters specify the Fourier coefficients of a Fourier series representing the partials of a periodic waveform. The created <a href="/docs/apis/webaudio/WaveTable"><strong>WaveTable</strong></a> will be used with an <a href="/apis/webaudio/OscillatorNode"><strong>OscillatorNode</strong></a> and will represent a normalized time-domain waveform having maximum absolute peak value of 1. Another way of saying this is that the generated waveform of an <a href="/apis/webaudio/OscillatorNode"><strong>OscillatorNode</strong></a> will have maximum peak value at 0dBFS. Conveniently, this corresponds to the full-range of the signal values used by the Web Audio API. Because the <a href="/apis/webaudio/WaveTable"><strong>WaveTable</strong></a> will be normalized on creation, the real and imag parameters represent relative values.</p>
+<p><strong>Out of date; removed from spec. See <a href="http://webaudio.github.io/web-audio-api/">http://webaudio.github.io/web-audio-api/</a>.</strong></p>
+</dd>
+<dt><a href="/docs/apis/webaudio/AudioContext/decodeAudioData">decodeAudioData</a></dt>
+<dd><p>Asynchronously decodes the audio file data contained in the ArrayBuffer. The ArrayBuffer can, for example, be loaded from an XMLHttpRequest with the new <em>responseType</em> and <em>response</em> attributes. Audio file data can be in any of the formats supported by the audio element.</p>
+<p>The decodeAudioData() method is preferred over the <a href="/docs/apis/webaudio/AudioContext/createBuffer">createBuffer()</a> from ArrayBuffer method because it is asynchronous and does not block the main JavaScript thread.</p>
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">W3C Web Audio API</a></dt>
+<dd>W3C Editor’s Draft
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

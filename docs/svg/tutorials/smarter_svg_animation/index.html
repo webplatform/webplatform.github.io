@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG animation · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This guide shows you how to animate SVG graphics using SMIL-based markup.  Along with core animation techniques, it shows how to morph shapes, move graphics along curved paths, animate complex filter effects, and control animations from JavaScript." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/tutorials/">tutorials</a></li><li><a href="/svg/tutorials/smarter_svg animation/">smarter svg animation</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG animation</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>This guide shows you how to animate SVG graphics using SMIL-based markup. Along with core animation techniques, it shows how to morph shapes, move graphics along curved paths, animate complex filter effects, and control animations from JavaScript.</p>
+<h2>Introduction</h2>
+<p>Interfaces become more vibrant when you add animation effects. This guide focuses on SVG’s built-in animation features, which derive from the SMIL web standard (<em>Synchronized Multimedia Integration Language</em>). As discussed in the <a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a>, many SVG attributes are actually implemented as CSS <em>properties</em>, and thus respond to CSS <a href="/docs/tutorials/css_transitions">transitions</a> and <a href="/tutorials/css_animations">keyframe animations</a>. The techniques described here offer a way to smoothly animate SVG <em>attributes</em>. You’ll also learn how to dynamically modify those attribute values that can’t be animated.</p>
+<h2>A simple animation</h2>
+<p>Start with a simple SVG element that you’d like to animate:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"100"</span>&gt;</span>An SVG Animation<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p>Nest an <a href="/w/index.php?title=svg/elements/animate&amp;action=edit&amp;redlink=1"><strong>animate</strong></a> element such as the following:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"100"</span>&gt;</span>
+    An SVG Animation
+    <span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+        <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">x</span>"
+        <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">1000</span>"
+        <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">0</span>"
+        <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+        <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.5s</span>"
+        <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">swipe</span>"
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p>When you load the SVG, the resulting animation quickly swipes in some text from the right side of the screen:</p>
+<p><img src="//static.webplatform.org/thumb/2/23/svga_simpleSwipe.png/400px-svga_simpleSwipe.png" alt="svga simpleSwipe.png"></p>
+<p>Each animation element can modify the value of only one attribute at a time, specified by the <a href="/w/index.php?title=svg/attributes/attributeName&amp;action=edit&amp;redlink=1"><strong>attributeName</strong></a>. The <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> set what the values of that attribute should be at the beginning and end of the animation. Setting the <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> to <strong>0s</strong> makes it execute immediately, and the <a href="/w/index.php?title=svg/attributes/dur&amp;action=edit&amp;redlink=1"><strong>dur</strong></a> sets a half-second duration over which the animation executes.</p>
+<p>Instead of nesting the animation, you can also indirectly link the element you want to animate:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">animate</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#swipeText"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"swipe"</span> <span class="hljs-attribute">attributeName</span>=<span class="hljs-value">"x"</span>
+         <span class="hljs-attribute">from</span>=<span class="hljs-value">"1000"</span> <span class="hljs-attribute">to</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">begin</span>=<span class="hljs-value">"0s"</span> <span class="hljs-attribute">dur</span>=<span class="hljs-value">"0.5s"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"swipeText"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"100"</span>&gt;</span>An SVG Animation<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_swipe.svg">View this animation</a></p>
+<h2>Delaying an animation</h2>
+<p>Increasing the <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> attribute’s time value from <strong>0s</strong> to <strong>1s</strong> delays the animation:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"1000"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"100"</span>&gt;</span>
+    An SVG Animation
+    <span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+        <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">x</span>"
+        <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">1000</span>"
+        <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">0</span>"
+        <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">1s</span>"
+        <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.5s</span>"
+        <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+        <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">delayed_swipe</span>"
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p>Delaying the animation causes a problem, and the solution is highlighted. The outer text element’s <strong>x</strong> attribute is set to <strong>1000</strong>. If it were to start at <strong>0</strong>, the text would display for a second, then awkwardly disappear once the animation starts to execute, slide in from the right, and reposition itself at its initial location.</p>
+<p>Fixing that problem causes another problem, whose solution is also highlighted. Once the animation completes, by default the value of <strong>x</strong> reverts to its initial value, <strong>1000</strong>, thus making it disappear. Setting the <a href="/docs/svg/attributes/fill"><strong>fill</strong></a> attribute to <strong>freeze</strong> maintains the attribute’s value after the animation completes, effectively overriding whatever the text element specifies. (The <a href="/docs/svg/attributes/fill"><strong>fill</strong></a> <em>attribute</em> used in animations is unfortunately named the same as SVG’s <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> <em>property</em>, which specifies background colors and images. Do not confuse the two.)</p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_swipeDelay.svg">View this animation</a></p>
+<h2>Sequences of frames</h2>
+<p>The animation above swipes in, but then comes to an abrupt stop. This variation bounces the text a bit off the left wall:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">bounce</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">x</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">1000</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.5s</span>"
+    <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+    <span class="hljs-attribute">values</span>        = "<span class="hljs-attribute">1000</span>;<span class="hljs-attribute">0</span>;<span class="hljs-attribute">-20</span>;<span class="hljs-attribute">10</span>;<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">keyTimes</span>      = "<span class="hljs-attribute">0</span>;<span class="hljs-attribute">0.8</span>;<span class="hljs-attribute">0.85</span>;<span class="hljs-attribute">0.9</span>;<span class="hljs-attribute">1</span>"
+/&gt;</span>
+</code></pre>
+<p>The highlighted <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a> attribute uses semicolons to specify a series of intermediate values between the animation’s <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> and <a href="/w/index.php?title=svg/attributes/end&amp;action=edit&amp;redlink=1"><strong>end</strong></a> points. Starting at <strong>1000</strong>, the animation proceeds to the <strong>0</strong> point that represents the left wall, then goes a bit further to <strong>-20</strong>, then back to <strong>10</strong> before finally settling at <strong>0</strong>.</p>
+<p>By itself, the <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a> specification would still result in an awkward-looking animation. The initial transition between <strong>1000</strong> and <strong>0</strong> executes <em>very</em> quickly, compared to which the subsequent transitions seem much too slow. The <a href="/w/index.php?title=svg/attributes/keyTimes&amp;action=edit&amp;redlink=1"><strong>keyTimes</strong></a> fixes this by specifying milestones between 0 and 1 at which each frame appears. In this case, the initial transition that slides the text in takes 80% of the total duration, rather than the more brisk 25% default range between the five values. The number of <a href="/w/index.php?title=svg/attributes/keyTimes&amp;action=edit&amp;redlink=1"><strong>keyTimes</strong></a> <em>must</em> match the number of <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a>, or the animation does not work.</p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_swipeFrames.svg">View this animation</a></p>
+<h2>Synchronizing animations</h2>
+<p>The example above manipulates a simple positioning attribute. Animations become far more interesting when applied to complex filter effects, which are discussed in <a href="/docs/svg/tutorials/smarter_svg_filters">SVG Filters</a>. This variation synchronizes two different animations, swiping horizontally blurred text into view, then removing the blur once it has stopped:</p>
+<p><img src="//static.webplatform.org/thumb/b/b8/svga_xBlur.png/400px-svga_xBlur.png" alt="svga xBlur.png"></p>
+<p>It is based on the following filter:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"slidingBlur"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feOffset</span>       <span class="hljs-attribute">id</span>=<span class="hljs-value">"slideEffect"</span> <span class="hljs-attribute">dx</span>=<span class="hljs-value">"1000"</span> <span class="hljs-attribute">dy</span>=<span class="hljs-value">"0"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"blurEffect"</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"20,1"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>The <a href="/docs/svg/elements/feOffset"><strong>feOffset</strong></a> effect’s <a href="/w/index.php?title=svg/attributes/dx&amp;action=edit&amp;redlink=1"><strong>dx</strong></a> value reproduces the slide effect using the techniques discussed above, moving the element horizontally within the filtered region:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">slideAnim</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">dx</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">1000</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.5s</span>"
+    <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+    <span class="hljs-attribute">values</span>        = "<span class="hljs-attribute">1000</span>;<span class="hljs-attribute">0</span>;<span class="hljs-attribute">-20</span>;<span class="hljs-attribute">10</span>;<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">keyTimes</span>      = "<span class="hljs-attribute">0</span>;<span class="hljs-attribute">0.8</span>;<span class="hljs-attribute">0.85</span>;<span class="hljs-attribute">0.9</span>;<span class="hljs-attribute">1</span>"
+    <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">slideEffect</span>"
+/&gt;</span>
+</code></pre>
+<p>The <a href="/docs/svg/elements/feGaussianBlur"><strong>feGaussianBlur</strong></a> effect’s <a href="/w/index.php?title=svg/attributes/stdDeviation&amp;action=edit&amp;redlink=1"><strong>stdDeviation</strong></a> controls the degree of blur, which the animation reduces primarily along the <em>x</em> axis. But note its <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> attribute no longer specifies a time value. Instead, this animation begins whenever the previous one ends:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">blurAnim</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">stdDeviation</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">20</span>,<span class="hljs-attribute">1</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">0</span>,<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">slideAnim.end</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.2s</span>"
+    <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+    <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">blurEffect</span>"
+/&gt;</span>
+</code></pre>
+<p>The <em>slideAnim</em> identifies the previous animation, and the <em>.end</em> refers to the <a href="/w/index.php?title=dom/events/end&amp;action=edit&amp;redlink=1"><strong>end</strong></a> DOM event the animation produces. You can also reference the corresponding <a href="/w/index.php?title=dom/events/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> event to execute different animations concurrently, without having to keep track of how long each one takes to keep them all synchronized.</p>
+<p>To calculate when to start the second animation, SVG actually looks ahead to see when the <a href="/w/index.php?title=dom/events/end&amp;action=edit&amp;redlink=1"><strong>end</strong></a> event is <em>supposed</em> to occur, based on the specified duration. You can subtract or add time values to start it before or after that point. For example, this variation overlaps the two animations by a fifth of a second:</p>
+<pre><code>begin = &quot;slideAnim.end-200ms&quot;
+</code></pre>
+<p>To maintain long chains of animations, you can also use the <strong>prev</strong> shorthand keyword, which refers to the previously defined animation:</p>
+<pre><code>begin = &quot;prev.end&quot;
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_swipeBlur.svg">View this animation</a></p>
+<h2>Morphing shapes</h2>
+<p>The motion animation shown above animates a single value at a time, but the blur animation animates two, a pair of <em>x</em>/<em>y</em> coordinates. SVG also allows you to animate long series of coordinates that make up <a href="/docs/svg/elements/path"><strong>path</strong></a> definitions, which are discussed in <a href="/docs/svg/tutorials/smarter_svg_shapes">SVG basic shapes and text</a>. This results in curved morphing effects:</p>
+<p><img src="//static.webplatform.org/thumb/9/9a/svga_morph1.png/200px-svga_morph1.png" alt="svga morph1.png"></p>
+<p><img src="//static.webplatform.org/thumb/b/bd/svga_morph2.png/200px-svga_morph2.png" alt="svga morph2.png"></p>
+<p><img src="//static.webplatform.org/thumb/5/5e/svga_morph3.png/200px-svga_morph3.png" alt="svga morph3.png"></p>
+<p><img src="//static.webplatform.org/thumb/e/ee/svga_morph4.png/200px-svga_morph4.png" alt="svga morph4.png"></p>
+<p>For the animation to work, the <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> values, and any frames specified along the way in <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a>, must feature the <em>exact</em> same number of path commands, all arranged in the same sequence. Only their numeric values may vary. This example shows a path consisting of one <em>M</em> positioning command and four <em>S</em> curve commands going through a series of eight frames:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span> = "<span class="hljs-attribute">shape</span>" <span class="hljs-attribute">d</span> = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">149</span>,<span class="hljs-attribute">424</span> <span class="hljs-attribute">460</span>,<span class="hljs-attribute">555</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">608</span>,<span class="hljs-attribute">367</span> <span class="hljs-attribute">568</span>,<span class="hljs-attribute">157</span>
+      <span class="hljs-attribute">S</span> <span class="hljs-attribute">438</span>,<span class="hljs-attribute">108</span> <span class="hljs-attribute">174</span>,<span class="hljs-attribute">57</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">97</span>,<span class="hljs-attribute">90</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span>" &gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">animate</span> <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">d</span>" <span class="hljs-attribute">begin</span> = "<span class="hljs-attribute">0s</span>" <span class="hljs-attribute">dur</span> = "<span class="hljs-attribute">20s</span>"
+  <span class="hljs-attribute">from</span> = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">149</span>,<span class="hljs-attribute">424</span> <span class="hljs-attribute">460</span>,<span class="hljs-attribute">555</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">608</span>,<span class="hljs-attribute">367</span> <span class="hljs-attribute">568</span>,<span class="hljs-attribute">157</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">438</span>,<span class="hljs-attribute">108</span> <span class="hljs-attribute">174</span>,<span class="hljs-attribute">57</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">97</span>,<span class="hljs-attribute">90</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span>"
+  <span class="hljs-attribute">to</span> = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">149</span>,<span class="hljs-attribute">424</span> <span class="hljs-attribute">460</span>,<span class="hljs-attribute">555</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">608</span>,<span class="hljs-attribute">367</span> <span class="hljs-attribute">568</span>,<span class="hljs-attribute">157</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">438</span>,<span class="hljs-attribute">108</span> <span class="hljs-attribute">174</span>,<span class="hljs-attribute">57</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">97</span>,<span class="hljs-attribute">90</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span>"
+  <span class="hljs-attribute">values</span> = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">149</span>,<span class="hljs-attribute">424</span> <span class="hljs-attribute">460</span>,<span class="hljs-attribute">555</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">608</span>,<span class="hljs-attribute">367</span> <span class="hljs-attribute">568</span>,<span class="hljs-attribute">157</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">438</span>,<span class="hljs-attribute">108</span> <span class="hljs-attribute">174</span>,<span class="hljs-attribute">57</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">97</span>,<span class="hljs-attribute">90</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">284</span>,<span class="hljs-attribute">81</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">117</span>,<span class="hljs-attribute">248</span> <span class="hljs-attribute">91</span> ,<span class="hljs-attribute">478</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">240</span>,<span class="hljs-attribute">595</span> <span class="hljs-attribute">547</span>,<span class="hljs-attribute">608</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">608</span>,<span class="hljs-attribute">349</span> <span class="hljs-attribute">588</span>,<span class="hljs-attribute">140</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">420</span>,<span class="hljs-attribute">48</span> <span class="hljs-attribute">284</span>,<span class="hljs-attribute">81</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">360</span>,<span class="hljs-attribute">313</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">413</span>,<span class="hljs-attribute">253</span> <span class="hljs-attribute">475</span>,<span class="hljs-attribute">308</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">491</span>,<span class="hljs-attribute">422</span> <span class="hljs-attribute">464</span>,<span class="hljs-attribute">508</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">293</span>,<span class="hljs-attribute">511</span> <span class="hljs-attribute">217</span>,<span class="hljs-attribute">424</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">254</span>,<span class="hljs-attribute">297</span> <span class="hljs-attribute">360</span>,<span class="hljs-attribute">313</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">381</span>,<span class="hljs-attribute">643</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">574</span>,<span class="hljs-attribute">490</span> <span class="hljs-attribute">580</span>,<span class="hljs-attribute">225</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">468</span>,<span class="hljs-attribute">133</span> <span class="hljs-attribute">297</span>,<span class="hljs-attribute">38</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">103</span>,<span class="hljs-attribute">144</span> <span class="hljs-attribute">62</span>,<span class="hljs-attribute">382</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">172</span>,<span class="hljs-attribute">641</span> <span class="hljs-attribute">381</span>,<span class="hljs-attribute">643</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">456</span>,<span class="hljs-attribute">56</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">579</span>,<span class="hljs-attribute">221</span> <span class="hljs-attribute">603</span>,<span class="hljs-attribute">479</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">449</span>,<span class="hljs-attribute">59</span> <span class="hljs-attribute">5</span> <span class="hljs-attribute">196</span>,<span class="hljs-attribute">636</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">64</span>,<span class="hljs-attribute">367</span> <span class="hljs-attribute">96</span>,<span class="hljs-attribute">111</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">371</span>,<span class="hljs-attribute">28</span> <span class="hljs-attribute">456</span>,<span class="hljs-attribute">56</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">552</span>,<span class="hljs-attribute">89</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">326</span>,<span class="hljs-attribute">83</span> <span class="hljs-attribute">111</span>,<span class="hljs-attribute">219</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">66</span>,<span class="hljs-attribute">407</span> <span class="hljs-attribute">104</span>,<span class="hljs-attribute">623</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">426</span>,<span class="hljs-attribute">653</span> <span class="hljs-attribute">605</span>,<span class="hljs-attribute">503</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">655</span>,<span class="hljs-attribute">263</span> <span class="hljs-attribute">552</span>,<span class="hljs-attribute">89</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">628</span>,<span class="hljs-attribute">3</span> <span class="hljs-attribute">55</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">563</span>,<span class="hljs-attribute">183</span> <span class="hljs-attribute">397</span>,<span class="hljs-attribute">79</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">199</span>,<span class="hljs-attribute">79</span> <span class="hljs-attribute">65</span>,<span class="hljs-attribute">270</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">65</span>,<span class="hljs-attribute">464</span> <span class="hljs-attribute">258</span>,<span class="hljs-attribute">650</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">467</span>,<span class="hljs-attribute">623</span> <span class="hljs-attribute">628</span>,<span class="hljs-attribute">355</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">84</span>,<span class="hljs-attribute">239</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">223</span>,<span class="hljs-attribute">528</span> <span class="hljs-attribute">336</span>,<span class="hljs-attribute">620</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">516</span>,<span class="hljs-attribute">606</span> <span class="hljs-attribute">630</span>,<span class="hljs-attribute">347</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">587</span>,<span class="hljs-attribute">153</span> <span class="hljs-attribute">3</span> <span class="hljs-attribute">25</span>,<span class="hljs-attribute">70</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">76</span>,<span class="hljs-attribute">87</span> <span class="hljs-attribute">84</span>,<span class="hljs-attribute">239</span>;<span class="hljs-attribute">M</span>
+    <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">149</span>,<span class="hljs-attribute">424</span> <span class="hljs-attribute">460</span>,<span class="hljs-attribute">555</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">608</span>,<span class="hljs-attribute">367</span> <span class="hljs-attribute">568</span>,<span class="hljs-attribute">157</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">438</span>,<span class="hljs-attribute">108</span> <span class="hljs-attribute">174</span>,<span class="hljs-attribute">57</span> <span class="hljs-attribute">S</span> <span class="hljs-attribute">97</span>,<span class="hljs-attribute">90</span> <span class="hljs-attribute">115</span>,<span class="hljs-attribute">169</span>"
+/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">path</span>&gt;</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_morph.svg">View this animation</a></p>
+<h2>Setting the pace</h2>
+<p>This variation on the swipe animation doesn’t bounce the text against the wall, but instead brings it to a more gradual stop:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">ease_in</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">x</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">1000</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">1s</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.5s</span>"
+    <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+    <span class="hljs-attribute">calcMode</span>      = "<span class="hljs-attribute">spline</span>"
+    <span class="hljs-attribute">keySplines</span>    = "<span class="hljs-attribute">0</span> <span class="hljs-attribute">0.75</span> <span class="hljs-attribute">0.25</span> <span class="hljs-attribute">1</span>"
+    <span class="hljs-attribute">keyTimes</span>      = "<span class="hljs-attribute">0</span>;<span class="hljs-attribute">1</span>"
+/&gt;</span>
+</code></pre>
+<p>By default, animations proceed instantly and progress as a constant rate. Setting the <a href="/w/index.php?title=svg/attributes/calcMode&amp;action=edit&amp;redlink=1"><strong>calcMode</strong></a> to <strong>spline</strong> allows it to start and stop more gradually. The accompanying <a href="/w/index.php?title=svg/attributes/keySplines&amp;action=edit&amp;redlink=1"><strong>keySplines</strong></a> defines a bezier response curve. (Use semicolons to specify as many curves as there are frames in your animation.)</p>
+<p>The following examples show how these response curves behave, usually by slowing the start and end points. Each <em>x</em> axis represents the animation’s elapsed time, and the <em>y</em> axis represents its progress, so the more the line curves vertically along the way, the faster the animation proceeds at that point:</p>
+<pre><code>0.42 0 1 1
+ease-in
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/6/64/transitF_easein.png/230px-transitF_easein.png" alt="transitF easein.png"></p>
+<pre><code>0 0 0.58 1
+ease-out
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/0/00/transitF_easeout.png/230px-transitF_easeout.png" alt="transitF easeout.png"></p>
+<pre><code>0.25 0.1 0.25 1
+ease
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/7/73/transitF_ease.png/230px-transitF_ease.png" alt="transitF ease.png"></p>
+<pre><code>0.42 0 0.58 1
+ease-in-out
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/6/67/transitF_easeinout.png/230px-transitF_easeinout.png" alt="transitF easeinout.png"></p>
+<pre><code>0 0 1 1
+linear
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/8/8e/transitF_linear.png/230px-transitF_linear.png" alt="transitF linear.png"></p>
+<p>These examples compare common <a href="/docs/css/properties/transition-timing-function"><strong>transition-timing-function</strong></a> and <a href="/docs/css/properties/animation-timing-function"><strong>animation-timing-function</strong></a> CSS property keywords with their <a href="/docs/css/functions/cubic-bezier"><strong>cubic-bezier()</strong></a> CSS function equivalents, which matches SVG’s <a href="/w/index.php?title=svg/attributes/keySplines&amp;action=edit&amp;redlink=1"><strong>keySplines</strong></a>.</p>
+<p>If <a href="/w/index.php?title=svg/attributes/calcMode&amp;action=edit&amp;redlink=1"><strong>calcMode</strong></a> is set to <strong>discrete</strong>, the animation jumps abruptly from each frame defined in <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a> to the next, just like CSS’s <a href="/docs/css/functions/steps"><strong>steps()</strong></a> function. If it’s set to <strong>paced</strong>, it progresses at a constant rate over the entire course of the animation, but unlike <strong>linear</strong>, it ignores any progress points <a href="/w/index.php?title=svg/attributes/keyTimes&amp;action=edit&amp;redlink=1"><strong>keyTimes</strong></a> may define along the way.</p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_swipeTimed.svg">View this animation</a></p>
+<h2>Repetition</h2>
+<p>The examples above all execute once, but this example uses <a href="/w/index.php?title=svg/attributes/repeatCount&amp;action=edit&amp;redlink=1"><strong>repeatCount</strong></a> to run an animation continuously. It modifies a more complex filter effect (explained in greater detail in <a href="/docs/svg/tutorials/smarter_svg_filters">SVG Filters</a>) that shines a light on a beveled surface:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"bevel"</span> <span class="hljs-attribute">filterUnits</span>=<span class="hljs-value">"userSpaceOnUse"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceAlpha"</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"blur"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feOffset</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"blur"</span> <span class="hljs-attribute">dx</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">dy</span>=<span class="hljs-value">"4"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"offsetBlur"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feSpecularLighting</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"elevationEffect"</span> <span class="hljs-attribute">surfaceScale</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">specularConstant</span>=<span class="hljs-value">".75"</span>
+        <span class="hljs-attribute">in</span>=<span class="hljs-value">"blur"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"specOut"</span> <span class="hljs-attribute">specularExponent</span>=<span class="hljs-value">"20"</span> <span class="hljs-attribute">lighting-color</span>=<span class="hljs-value">"#bbbbbb"</span> &gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feDistantLight</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"lightAngleEffect"</span> <span class="hljs-attribute">azimuth</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">elevation</span>=<span class="hljs-value">"30"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feSpecularLighting</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"specOut"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"SourceAlpha"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"in"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"specOut"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"SourceGraphic"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"specOut"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"arithmetic"</span> <span class="hljs-attribute">result</span>=<span class="hljs-value">"litPaint"</span>
+        <span class="hljs-attribute">k1</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">k2</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">k3</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">k4</span>=<span class="hljs-value">"0"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComposite</span> <span class="hljs-attribute">in</span>=<span class="hljs-value">"litPaint"</span> <span class="hljs-attribute">in2</span>=<span class="hljs-value">"offsetBlur"</span> <span class="hljs-attribute">operator</span>=<span class="hljs-value">"over"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/8/88/svga_bevel.png" alt="svga bevel.png"></p>
+<p>One animation highlights different sides of the element by rotating the light source around it, using its <a href="/w/index.php?title=svg/attributes/azimuth&amp;action=edit&amp;redlink=1"><strong>azimuth</strong></a> attribute to modify direction. Its <a href="/w/index.php?title=svg/attributes/repeatCount&amp;action=edit&amp;redlink=1"><strong>repeatCount</strong></a> is set to <strong>indefinite</strong>, so after it proceeds from <strong>0</strong> to <strong>360</strong> degrees, it restarts invisibly at <strong>0</strong>:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">lightAngleAnim</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">azimuth</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">360</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">7s</span>"
+    <span class="hljs-attribute">repeatCount</span>   = "<span class="hljs-attribute">indefinite</span>"
+    <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">lightAngleEffect</span>"
+/&gt;</span>
+</code></pre>
+<p>A second un-synchronized animation raises and lowers the rounded surface that makes the element appear beveled. Unlike the previous animation, the <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> values match, and the oscillation occurs within the intervening frames defined in the <a href="/w/index.php?title=svg/attributes/values&amp;action=edit&amp;redlink=1"><strong>values</strong></a> attribute. (Unlike <a href="/docs/tutorials/css_animations">CSS keyframe animations</a>, SVG does not allow you to oscillate between the start and end values each time the animation repeats.)</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">elevationAnim</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">surfaceScale</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">5</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">5</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">5s</span>"
+    <span class="hljs-attribute">values</span>        = "<span class="hljs-attribute">5</span>;<span class="hljs-attribute">20</span>;<span class="hljs-attribute">5</span>"
+    <span class="hljs-attribute">repeatCount</span>   = "<span class="hljs-attribute">indefinite</span>"
+    <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">elevationEffect</span>"
+/&gt;</span>
+</code></pre>
+<p>(Yet another animation synchronizes with the first, repositioning the shadow set by <a href="/docs/svg/elements/feOffset"><strong>feOffset</strong></a> to match the angle of the light source.)</p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/filter_bevel.svg">View this animation</a></p>
+<dl>
+<dd>
+<dl>
+<dd>
+**Note:** As of this writing, only Firefox displays these animations in HTML content via the [**filter**](/css/properties/filter) CSS property. See [SVG Filters](/svg/tutorials/smarter_svg_filters) for more information on how to do this. However, there is no clear way to restart these animations when re-applying the filter in the HTML, so it is more appropriate for animations that execute continuously. As a workaround within SVG, toggle CSS classes to apply filters, then use a DOM mutation event such as **begin = "targetID.DOMAttrModified"** to restart the animation.
+</dd>
+</dl>
+</dd>
+</dl>
+You can set [**repeatCount**](/w/index.php?title=svg/attributes/repeatCount&action=edit&redlink=1) to any positive integer. Each time an animation repeats, it produces a [**repeat**](/w/index.php?title=dom/events/repeat&action=edit&redlink=1) event, which you can also use to synchronize other animations. The second example below runs it only the first time the animation repeats:
+<pre><code>begin = &quot;otherAnim.repeat&quot;
+begin = &quot;otherAnim.repeat(1)&quot;
+</code></pre>
+<p><img src="//static.webplatform.org/a/a7/scr_svg_eyes.png" alt="scr svg eyes.png"></p>
+<p>Each animation defines a potentially expansive length of time, over which you can repeat an animation using a series of <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> values. For example, the eyeballs discussed in the <a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a> blink several times in a row, leaving long pauses between each iteration:</p>
+<pre><code>begin = &quot;4s;6s;8s;9s;11.5s;13s&quot;
+</code></pre>
+<p>Read on for information on how to trigger animations from JavaScript.</p>
+<h2>Building progressions</h2>
+<p>In all of these examples, the <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> are fixed at specific values. Sometimes it’s useful to build on a value that results from a previous animation. Here’s an example that moves a piece across an checker board:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"board"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"800"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"800"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"#000"</span> <span class="hljs-attribute">stroke-width</span>=<span class="hljs-value">"6"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#chessBoard)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"piece"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"150"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"550"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"40"</span>/&gt;</span>
+</code></pre>
+<p>The board is defined as an 800×800 square, and the piece is positioned over one of those squares. (See <a href="/docs/svg/tutorials/smarter_svg_graphics">SVG graphic effects</a> for information on how to use transforms and patterns to build a checker board.) The accompanying animation moves the piece three squares over to the right:</p>
+<p><img src="//static.webplatform.org/thumb/9/97/svga_checkerStart.png/300px-svga_checkerStart.png" alt="svga checkerStart.png"></p>
+<p><img src="//static.webplatform.org/thumb/a/a7/svga_checkerEnd.png/300px-svga_checkerEnd.png" alt="svga checkerEnd.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+    <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">moveRight</span>"
+    <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">cx</span>"
+    <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">0</span>"
+    <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">100</span>"
+    <span class="hljs-attribute">values</span>        = "<span class="hljs-attribute">0</span>;<span class="hljs-attribute">100</span>;<span class="hljs-attribute">100</span>"
+    <span class="hljs-attribute">keyTimes</span>      = "<span class="hljs-attribute">0</span>;<span class="hljs-attribute">.7</span>;<span class="hljs-attribute">1</span>"
+    <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">piece.click</span>"
+    <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.5s</span>"
+    <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+    <span class="hljs-attribute">repeatCount</span>   = "<span class="hljs-attribute">3</span>"
+    <span class="hljs-attribute">additive</span>      = "<span class="hljs-attribute">sum</span>"
+    <span class="hljs-attribute">accumulate</span>    = "<span class="hljs-attribute">sum</span>"
+    <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">piece</span>"
+    <span class="hljs-attribute">restart</span>       = "<span class="hljs-attribute">whenNotActive</span>"
+/&gt;</span>
+</code></pre>
+<p>When you set the <a href="/w/index.php?title=svg/attributes/additive&amp;action=edit&amp;redlink=1"><strong>additive</strong></a> attribute to <strong>sum</strong>, the <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> values are interpreted in terms relative to the element’s original value. In this case, the circle’s <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a> is 150, so the animation starts there and ends at that value plus 100, resulting in 250.</p>
+<p>When you set the <a href="/w/index.php?title=svg/attributes/accumulate&amp;action=edit&amp;redlink=1"><strong>accumulate</strong></a> attribute to <strong>sum</strong>, each of the animation’s repetitions builds upon the previous value. In this case, it proceeds from 150 to 250, 350, then 450.</p>
+<p>Notice also that the <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> does not specify a time value, but instead responds when users click on the piece. SVG supports interactive mouse, focus, and DOM mutation events. To prevent problems resulting from such interaction, setting the animation’s <a href="/w/index.php?title=svg/attributes/restart&amp;action=edit&amp;redlink=1"><strong>restart</strong></a> attribute to <strong>whenNotActive</strong> prevents it from restarting if it is already executing.</p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_chess.svg">View this animation</a></p>
+<h2>Curved motions</h2>
+<p>The example above moves the game piece in a straight line, but instead you can move it along the curve of a path. SVG provides an alternative <a href="/w/index.php?title=svg/elements/animateMotion&amp;action=edit&amp;redlink=1"><strong>animateMotion</strong></a> element, whose <a href="/w/index.php?title=svg/attributes/path&amp;action=edit&amp;redlink=1"><strong>path</strong></a> attribute specifies the movement of a graphic relative to its current position. The animation also links to the graphic that is to be moved along that path. This example moves the game piece along the highlighted series of arcs, <em>exactly</em> as shown. It relies on the <em>A</em> path command to define elliptical semicircle curves to destination points up and to the right.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">animateMotion</span>
+    <span class="hljs-attribute">id</span>         = "<span class="hljs-attribute">animDiag</span>"
+    <span class="hljs-attribute">xlink:href</span> = "#<span class="hljs-attribute">piece</span>"
+    <span class="hljs-attribute">begin</span>      = "<span class="hljs-attribute">piece.click</span>"
+    <span class="hljs-attribute">fill</span>       = "<span class="hljs-attribute">freeze</span>"
+    <span class="hljs-attribute">dur</span>        = "<span class="hljs-attribute">3s</span>"
+    <span class="hljs-attribute">path</span>       = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">0</span>,<span class="hljs-attribute">0</span> <span class="hljs-attribute">A</span> <span class="hljs-attribute">1</span>,<span class="hljs-attribute">1</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">1</span> <span class="hljs-attribute">100</span>,<span class="hljs-attribute">-100</span> <span class="hljs-attribute">A</span> <span class="hljs-attribute">1</span>,<span class="hljs-attribute">1</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">1</span> <span class="hljs-attribute">200</span>,<span class="hljs-attribute">-200</span> <span class="hljs-attribute">A</span> <span class="hljs-attribute">1</span>,<span class="hljs-attribute">1</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">1</span> <span class="hljs-attribute">300</span>,<span class="hljs-attribute">-300</span>"
+/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">rect</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"board"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"800"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"800"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"#000"</span> <span class="hljs-attribute">stroke-width</span>=<span class="hljs-value">"6"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#chessBoard)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"piece"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"150"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"550"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"40"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/3/33/svga_motionChessBefore.png/300px-svga_motionChessBefore.png" alt="svga motionChessBefore.png"></p>
+<p><img src="//static.webplatform.org/thumb/8/8d/svga_motionChessAfter.png/300px-svga_motionChessAfter.png" alt="svga motionChessAfter.png"></p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_chessMotion.svg">View this animation</a></p>
+<p>As an alternative, nesting an <a href="/w/index.php?title=svg/elements/mpath&amp;action=edit&amp;redlink=1"><strong>mpath</strong></a> element within the <a href="/w/index.php?title=svg/elements/animateMotion&amp;action=edit&amp;redlink=1"><strong>animateMotion</strong></a> makes the graphic travel along the contours of any referenced path, rather than relative to the current position. This example makes an icon travel continuously around an irregularly curved shape. The direction of movement depends on the sequence of path commands, in this case a counter-clockwise motion:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">animateMotion</span>
+    <span class="hljs-attribute">xlink:href</span>  = "#<span class="hljs-attribute">icon</span>"
+    <span class="hljs-attribute">rotate</span>      = "<span class="hljs-attribute">auto</span>"
+    <span class="hljs-attribute">start</span>       = "<span class="hljs-attribute">0s</span>"
+    <span class="hljs-attribute">dur</span>         = "<span class="hljs-attribute">10s</span>"
+    <span class="hljs-attribute">repeatCount</span> = "<span class="hljs-attribute">indefinite</span>"
+&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">mpath</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#shape"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">animateMotion</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">image</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"icon"</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"0"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"icon.png"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"shape"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 115,169 S 149,424 460,555 S 608,367 568,157 S 438,108 174,57 S 97,90 115,169"</span>/&gt;</span>
+</code></pre>
+<p>By default, the graphic retains its original orientation, as shown below on the left where the icon points right. Specifying a <a href="/w/index.php?title=svg/attributes/rotate&amp;action=edit&amp;redlink=1"><strong>rotate</strong></a> attribute of <strong>auto</strong> keeps it pointed in the direction of travel. A value of <strong>auto-reverse</strong> makes the left side of graphic face forwards, and on the other side of the path.</p>
+<pre><code>rotate=&quot;0&quot; (default)
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/de/svga_motionZero.png/300px-svga_motionZero.png" alt="svga motionZero.png"></p>
+<pre><code>rotate=&quot;auto&quot;
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/2/27/svga_motionAuto.png/300px-svga_motionAuto.png" alt="svga motionAuto.png"></p>
+<pre><code>rotate=&quot;auto-reverse&quot;
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/2/25/svga_motionAutoReverse.png/300px-svga_motionAutoReverse.png" alt="svga motionAutoReverse.png"></p>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_motion.svg">View this animation</a>. The example additionally morphs the shape along which the icon travels.</p>
+<p>To move text along a path, you need to return to the <a href="/w/index.php?title=svg/elements/animate&amp;action=edit&amp;redlink=1"><strong>animate</strong></a> element, modifying the <a href="/docs/svg/elements/textPath"><strong>textPath</strong></a>'s <a href="/w/index.php?title=svg/attributes/startOffset&amp;action=edit&amp;redlink=1"><strong>startOffset</strong></a> attribute, which sets the text’s starting point relative to the start of the path. In this example, both offsets place the text out of view. Ordinarily you can specify percentages as offset values, but these units are defined relative to an arbitrary <a href="/w/index.php?title=svg/attributes/pathLength&amp;action=edit&amp;redlink=1"><strong>pathLength</strong></a> value, which helps to pace the animation regardless of the path’s actual length:</p>
+<p><img src="//static.webplatform.org/5/5d/svga_motionText.png" alt="svga motionText.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+   <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">txtPath</span>"
+   <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">startOffset</span>"
+   <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">1000</span>"
+   <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">-1000</span>"
+   <span class="hljs-attribute">start</span>         = "<span class="hljs-attribute">0s</span>"
+   <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">8s</span>"
+   <span class="hljs-attribute">repeatCount</span>   = "<span class="hljs-attribute">indefinite</span>"
+/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"txt"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">textPath</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"txtPath"</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#shape"</span> <span class="hljs-attribute">startOffset</span>=<span class="hljs-value">"0"</span>&gt;</span>
+    Moving text along a path
+  <span class="hljs-tag">&lt;/<span class="hljs-title">textPath</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span>
+   <span class="hljs-attribute">id</span>         = "<span class="hljs-attribute">shape</span>"
+   <span class="hljs-attribute">d</span>          = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">100</span>,<span class="hljs-attribute">300</span> <span class="hljs-attribute">A</span> <span class="hljs-attribute">1</span>,<span class="hljs-attribute">1</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">0</span> <span class="hljs-attribute">1</span> <span class="hljs-attribute">500</span>,<span class="hljs-attribute">300</span>"
+   <span class="hljs-attribute">pathLength</span> = "<span class="hljs-attribute">1000</span>"
+   /&gt;</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_motionText.svg">View this animation</a></p>
+<h2>Animating transforms</h2>
+<p><img src="//static.webplatform.org/thumb/2/2f/svga_transform.png/200px-svga_transform.png" alt="svga transform.png"></p>
+<p>Transforms specify not just a single value, but a combination of functional values. To animate them, use the specialized <a href="/w/index.php?title=svg/elements/animateTransform&amp;action=edit&amp;redlink=1"><strong>animateTransform</strong></a> element, which clarifies which transform function you want to animate. It works just like the <a href="/w/index.php?title=svg/elements/animate&amp;action=edit&amp;redlink=1"><strong>animate</strong></a> element, but the additional <a href="/w/index.php?title=svg/attributes/type&amp;action=edit&amp;redlink=1"><strong>type</strong></a> attribute specifies the transform function to be animated. This example moves a graphic diagonally:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animateTransform</span>
+   <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">transform</span>"
+   <span class="hljs-attribute">type</span>          = "<span class="hljs-attribute">translate</span>"
+   <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">0</span>,<span class="hljs-attribute">0</span>"
+   <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">10</span>,<span class="hljs-attribute">10</span>"
+   <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+   <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">1s</span>"
+   <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">shiftDiagonal</span>"
+/&gt;</span>
+</code></pre>
+<p>The element to be animated must not specify other transforms. For example, if you want to animate the <strong>rotate()</strong> function shown on the left below, you need to place the accompanying <strong>translate()</strong> in a different element as shown on the right:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(10,10) rotate(-90)"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileSquare"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(10,10)"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"pivot"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"rotate(-90)"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#tileSquare"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_transform.svg">View this animation</a> for an example of transforms within a pattern tile. As of this writing, animating transforms on entire patterns (using <a href="/w/index.php?title=svg/attributes/patternTransform&amp;action=edit&amp;redlink=1"><strong>patternTransform</strong></a>) does not work reliably in many browsers.</p>
+<h2>Color properties and other values</h2>
+<p>To animate color values, SVG provides another specialized <a href="/w/index.php?title=svg/elements/animateColor&amp;action=edit&amp;redlink=1"><strong>animateColor</strong></a> element. In this example, its <a href="/w/index.php?title=svg/attributes/attributeType&amp;action=edit&amp;redlink=1"><strong>attributeType</strong></a> may help clarify that the animation is modifying a <strong>CSS</strong> property, rather than an <strong>XML</strong> attribute assumed as the default:</p>
+<p><img src="//static.webplatform.org/thumb/6/6d/svga_color.png/200px-svga_color.png" alt="svga color.png"></p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">animateColor</span>
+   <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">fill</span>"
+   <span class="hljs-attribute">attributeType</span> = "<span class="hljs-attribute">CSS</span>"
+   <span class="hljs-attribute">from</span>          = "#<span class="hljs-attribute">E1BC9B</span>"
+   <span class="hljs-attribute">to</span>            = "#<span class="hljs-attribute">996600</span>"
+   <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+   <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">0s</span>"
+   <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">5s</span>"
+   <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">tileRectSkin</span>"
+   <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">animSkinColor</span>"
+/&gt;</span>
+</code></pre>
+<p>However, note that SVG color values are implemented as CSS properties, which may be animated more easily using CSS-based animation techniques. For example, toggling classes might transition the skin color in the example above:</p>
+<pre><code class="css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">transition         </span>:<span class="hljs-value"> all <span class="hljs-number">1s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition </span>:<span class="hljs-value"> all <span class="hljs-number">1s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-moz-transition    </span>:<span class="hljs-value"> all <span class="hljs-number">1s</span></span></span>;
+}</span>
+<span class="hljs-class">.white</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">fill</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#E1BC9B</span> </span></span></span>}
+<span class="hljs-class">.black</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">fill</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#996600</span> </span></span></span>}
+</code></pre>
+<p>(The <a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a> discusses how to apply CSS properties to <a href="/docs/svg/elements/use"><strong>use</strong></a> instances, which are necessary for more complex graphics.)</p>
+<p>Many SVG attributes and properties that specify arbitrary string values cannot be animated at all, but you can still dynamically modify them using the <a href="/w/index.php?title=svg/elements/set&amp;action=edit&amp;redlink=1"><strong>set</strong></a> shorthand element. It can be triggered like any animation, but executes immediately on any value. In this example, a <a href="/w/index.php?title=svg/elements/tref&amp;action=edit&amp;redlink=1"><strong>tref</strong></a> element draws in text from a <em>label1</em> object, which the <a href="/w/index.php?title=svg/elements/set&amp;action=edit&amp;redlink=1"><strong>set</strong></a> replaces with <em>label2</em> to display different text once a separate animation has completed:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">set</span>
+   <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">xlink:href</span>"
+   <span class="hljs-attribute">xlink:href</span>    = "#<span class="hljs-attribute">label</span>"
+   <span class="hljs-attribute">to</span>            = "#<span class="hljs-attribute">label2</span>"
+   <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">animSkinColor.end</span>"
+/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"label1"</span>&gt;</span>Animation in progress...<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"label2"</span>&gt;</span>Animation complete!<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">text</span> <span class="hljs-attribute">x</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">y</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(170,10) rotate(50)"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">tref</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#label1"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+</code></pre>
+<p><a href="http://letmespellitoutforyou.com/samples/svg/anim_color.svg">View these combined animations</a></p>
+<h2>Scripting animations</h2>
+<p>This guide shows various ways to control SVG animations, and suggests opportunities to pair them with CSS animations. To wrap up, this section shows how an application might control them with JavaScript. To play back an animation, call <a href="/w/index.php?title=svg/methods/beginElement&amp;action=edit&amp;redlink=1"><strong>beginElement()</strong></a> on the relevant animation element:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">play</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'animate'</span>).beginElement();
+}
+</code></pre>
+<p>SVG documents keep track of the number of seconds they have been running, available via the root <a href="/docs/svg/elements/svg"><strong>svg</strong></a> element’s <a href="/docs/svg/methods/getCurrentTime"><strong>getCurrentTime()</strong></a> method. If an animation is set to begin at <strong>0s</strong>, it executes when the SVG loads. Calling <a href="/w/index.php?title=svg/methods/beginElement&amp;action=edit&amp;redlink=1"><strong>beginElement()</strong></a> restarts the clock for the specified animation.</p>
+<p>Calling <a href="/w/index.php?title=svg/methods/endElement&amp;action=edit&amp;redlink=1"><strong>endElement()</strong></a> stops a currently running animation, returning the graphic back to its original position, or halting it if the animation’s <a href="/docs/svg/attributes/fill"><strong>fill</strong></a> attribute is set to <strong>freeze</strong>. Both of these methods are equivalent to running <a href="/w/index.php?title=svg/methods/beginElementAt&amp;action=edit&amp;redlink=1"><strong>beginElementAt(0)</strong></a> or <a href="/w/index.php?title=svg/methods/endElementAt&amp;action=edit&amp;redlink=1"><strong>endElementAt(0)</strong></a>. Any other time value specifies a delay: <strong>beginElementAt(2)</strong> starts an animation after two seconds, and <strong>endElementAt(2)</strong> waits the same amount of time before stopping it.</p>
+<p>SVG also provides a mechanism to pause and resume playback, but it applies to all animations that are currently running. The following toggles playback:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pausePlayAll</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> root = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'svg'</span>);
+    root.animationsPaused()
+        ? root.unpauseAnimations()
+        : root.pauseAnimations();
+}
+</code></pre>
+<p>Note that <a href="/docs/svg/methods/animationsPaused"><strong>animationsPaused()</strong></a> is a method call just like <a href="/docs/svg/methods/pauseAnimations"><strong>pauseAnimations()</strong></a> and <a href="/svg/methods/unpauseAnimations"><strong>unpauseAnimations()</strong></a>, not a simple object property as you might expect.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Animation</h4>
+<ul>
+<li><p><a href="/docs/apis/web_animations">Web Animations API</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationEffect/clone">clone</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationNode">AnimationNode</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationNode/timing">timing</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayer/currentTime">currentTime</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayer/reverse">reverse</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayer/source">source</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationPlayerEvent">AnimationPlayerEvent</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationTimeline/currentTime">currentTime</a></p></li>
+<li><p><a href="/docs/apis/web_animations/AnimationTimeline/play">play</a></p></li>
+<li><p><a href="/docs/css/atrules/@keyframes">@keyframes</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule">CSSKeyframeRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule/keyText">keyText</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframeRule/style">style</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule">CSSKeyframesRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/cssRules">cssRules</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/deleteRule">deleteRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/findRule">findRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/insertRule">insertRule</a></p></li>
+<li><p><a href="/docs/css/cssom/CSSKeyframesRule/name">name</a></p></li>
+<li><p><a href="/docs/css/functions/cubic-bezier">cubic-bezier</a></p></li>
+<li><p><a href="/docs/css/properties/animations">Animations</a></p></li>
+<li><p><a href="/docs/css/properties/transition">transition</a></p></li>
+<li><p><a href="/docs/tutorials/animation_in_javascript_2">JavaScript animation</a></p></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

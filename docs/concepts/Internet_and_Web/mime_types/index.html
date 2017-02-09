@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to MIME types · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="MIME types enable browsers to recognize the filetype of a file which has been sent via HTTP by the webserver. As a result the browser is able to choose a suitable displaying method. Common MIME types are for example text/html for html-files or image/jpeg for jpeg-files." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/Internet_and Web/">Internet and Web</a></li><li><a href="/concepts/Internet_and Web/mime_types/">mime types</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Introduction to MIME types</h1>
+<h2>Summary</h2>
+<p>MIME types enable browsers to recognize the filetype of a file which has been sent via HTTP by the webserver. As a result the browser is able to choose a suitable displaying method. Common MIME types are for example text/html for html-files or image/jpeg for jpeg-files.</p>
+<h4>original by Bob Clary</h4>
+<h4>published Feb. 20, 2003</h4>
+<h2>What are MIME types?</h2>
+<p>MIME (Multi-purpose Internet Mail Extensions) is an expansion of the original Internet e-mail protocol that exchanges different kinds of data files on the Internet: text, audio, video, images, application programs, and others. In 1991, the protocol was extended so that Internet clients and servers could recognize and handle various kinds of data, and new file types were added to the “mail” protocol as supported Internet Protocol file types.</p>
+<p>Servers insert the MIME header at the beginning of any web transmission. Clients use this header to select an appropriate display, or &quot;player&quot;, application for the type of data indicated by the header. Some of these players are built into the client, typically a browser (for example, all browsers come with GIF and JPEG image players, as well as the ability to handle HTML files); other players may need to be downloaded.</p>
+<p>MIME types—also sometimes called Internet media types or Content-types—describe the media type of content either contained in email or served by web servers or web applications, and are intended to help guide a web browser to correctly process and display the content. Examples of MIME types are:</p>
+<ul>
+<li><code>text/html</code> for normal web pages</li>
+<li><code>text/plain</code> for plain text</li>
+<li><code>application/octet-stream</code> meaning “download this file”</li>
+<li><code>application/x-java-applet</code> for Java<sup>™</sup> applets</li>
+<li><code>application/pdf</code> for Adobe<sup>®</sup> PDF documents.</li>
+</ul>
+<p>By default, many web servers are configured to report a MIME type of <code>text/plain</code> or <code>application/octet-stream</code> for unknown content types. As new content types are invented or added to web servers, web administrators may fail to add the new MIME types to their web server’s configuration. This is a major source of problems for users of Gecko-based browsers, which respect the MIME types as reported by web servers and web applications.</p>
+<h3>Technical Background</h3>
+<p>MIME is currently defined in RFCs <a href="http://www.isi.edu/in-notes/rfc2045.txt">2045</a>, <a href="http://www.isi.edu/in-notes/rfc2046.txt">2046</a>, <a href="http://www.isi.edu/in-notes/rfc2047.txt">2047</a>, <a href="http://www.isi.edu/in-notes/rfc2048.txt">2048</a>, and <a href="http://www.isi.edu/in-notes/rfc2049.txt">2049</a>; registered values for MIME types are available in <a href="http://www.iana.org/assignments/media-types/index.html">IANA/MIME Media Types</a>. The <a href="http://www.w3.org/Protocols/HTTP/1.1/spec.html">HTTP specification</a> defines a superset of MIME which is used to describe the media types used on the web.</p>
+<h2>Why are correct MIME types important?</h2>
+<p>If the web server or application reports an incorrect MIME type for content, a web browser has no way, <em>according to the HTTP specification</em>, of knowing that the author actually intended the content to be processed and displayed in a way different from that implied by the reported MIME type.</p>
+<p>Some other web browsers, such as Internet Explorer, try to allow for misconfigured web servers and applications by <em><a href="http://support.microsoft.com/default.aspx?sd=msdn&amp;scid=kb;en-us;293336">guessing</a></em> what the correct MIME type should be. This has sheltered many web administrators from their own errors as, using this method, Internet Explorer will continue to process content as expected even though the web server is misconfigured, e.g., it may correctly display an image that is reported to be plain text.</p>
+<p>Serving content using the correct MIME type can also be important for security reasons; it’s possible for malicious content to affect the user’s computer by pretending to be a safe type of document when it is in fact not.</p>
+<h3>Why browsers should not guess MIME types</h3>
+<p>Apart from violating the HTTP specification, it is a bad strategy for browsers to guess MIME types for the following reasons.</p>
+<h4>Loss of control</h4>
+<p>If the browser ignores the reported MIME type, web administrators and authors no longer have control over how their content is to be processed.</p>
+<p>For example, a website oriented for web developers might wish to send certain example HTML documents as either <code>text/html</code> or <code>text/plain</code> in order to have the documents either processed and displayed as HTML or as source code. If the browser guesses the MIME type, this option is no longer available to the author.</p>
+<h4>Security</h4>
+<p>Some content types, such as executable programs, are inherently unsafe. For this reason, the actions a browser can take when given content of that type are usually restricted. For example, an executable program should not be executed on the user’s computer, and at most should cause a dialog to appear asking the user if they wish to download the file.</p>
+<p>MIME type guessing has led to security exploits in Internet Explorer based on malicious authors incorrectly reporting a MIME type of a dangerous file as a safe type. This deliberate misrepresentation bypassed the normal download dialog, resulting in Internet Explorer correctly guessing that the content was an executable program and then running it on the user’s computer.</p>
+<h2>How to determine the MIME type sent by a server</h2>
+<p>In Firefox, load the file and use <code>Tools &gt; Page Info</code>. You can also use <a href="http://www.rexswain.com/httpview.html">Rex Swain’s HTTP Viewer</a> or <a href="http://livehttpheaders.mozdev.org/">Live HTTP Headers</a> to see the full headers and content of any file sent from a web server.</p>
+<p>According to the standards, a <code>meta</code> tag that gives the MIME type such as <code>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html&quot;&gt;</code> should be ignored if there’s a <code>Content-Type</code> line in the header. Instead of looking for this line in the HTML source, use the above techniques to determine the MIME type sent by the server.</p>
+<h2>How to determine the correct MIME type for your content</h2>
+<p>There are several steps you can take to determine the correct MIME type value to be used for your content.</p>
+<ol>
+<li>If your content was created using a vendor’s software application, read the vendor’s documentation to see which MIME types should be reported for its media types.</li>
+<li>Look in the <a href="http://www.iana.org/assignments/media-types/index.html">IANA/MIME Media Types registry</a>, which contains all registered MIME types.</li>
+<li>Search for the file extension at <a href="http://filext.com/">FILExt</a> or <a href="http://www.file-extensions.org/">File extensions reference</a> to see what MIME types are associated with that extension.</li>
+</ol>
+<h2>Common MIME Types</h2>
+<table>
+<thead>
+<tr><th style="text-align:left">MIME Type</th><th style="text-align:left">File Type</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">application/javascript</td><td style="text-align:left">js, jsonp</td></tr>
+<tr><td style="text-align:left">application/json</td><td style="text-align:left">json</td></tr>
+<tr><td style="text-align:left">application/octet-stream</td><td style="text-align:left">safariextz</td></tr>
+<tr><td style="text-align:left">application/vnd.ms-fontobject</td><td style="text-align:left">eot</td></tr>
+<tr><td style="text-align:left">application/x-chrome-extension</td><td style="text-align:left">crx</td></tr>
+<tr><td style="text-align:left">application/x-font-woff</td><td style="text-align:left">woff</td></tr>
+<tr><td style="text-align:left">application/x-shockwave-flash</td><td style="text-align:left">swf</td></tr>
+<tr><td style="text-align:left">application/x-web-app-manifest+json</td><td style="text-align:left">webapp</td></tr>
+<tr><td style="text-align:left">application/x-xpinstall</td><td style="text-align:left">xpi</td></tr>
+<tr><td style="text-align:left">application/xml</td><td style="text-align:left">rss, atom, xml, rdf</td></tr>
+<tr><td style="text-align:left">audio/mp4</td><td style="text-align:left">m4a, f4a, f4b</td></tr>
+<tr><td style="text-align:left">audio/ogg</td><td style="text-align:left">ogg, oga</td></tr>
+<tr><td style="text-align:left">font/opentype</td><td style="text-align:left">otf</td></tr>
+<tr><td style="text-align:left">image/svg+xml</td><td style="text-align:left">svg, svgz</td></tr>
+<tr><td style="text-align:left">image/webp</td><td style="text-align:left">webp</td></tr>
+<tr><td style="text-align:left">image/x-icon</td><td style="text-align:left">ico</td></tr>
+<tr><td style="text-align:left">text/cache-manifest</td><td style="text-align:left">appcache, manifest</td></tr>
+<tr><td style="text-align:left">text/v-card</td><td style="text-align:left">vcf</td></tr>
+<tr><td style="text-align:left">text/vtt</td><td style="text-align:left">vtt</td></tr>
+<tr><td style="text-align:left">text/x-component</td><td style="text-align:left">htc</td></tr>
+<tr><td style="text-align:left">video/mp4</td><td style="text-align:left">mp4, m4v, f4v, f4p</td></tr>
+<tr><td style="text-align:left">video/ogg</td><td style="text-align:left">ogv</td></tr>
+<tr><td style="text-align:left">video/webm</td><td style="text-align:left">webm</td></tr>
+<tr><td style="text-align:left">video/x-flv</td><td style="text-align:left">flv</td></tr>
+<tr><td style="text-align:left">x-font-ttf</td><td style="text-align:left">ttf, ttc</td></tr>
+</tbody>
+</table>
+<h2>Related Links</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en/Incorrect_MIME_Type_for_CSS_Files">Incorrect MIME Type for CSS Files</a></li>
+<li><a href="http://www.iana.org/assignments/media-types/index.html">IANA/MIME Media Types</a></li>
+<li><a href="http://www.w3.org/Protocols/HTTP/1.1/spec.html">Hypertext Transfer Protocol—HTTP/1.1</a></li>
+<li><a href="http://support.microsoft.com/default.aspx?sd=msdn&amp;scid=kb;en-us;293336">Microsoft - 293336 - INFO: WebCast: MIME Type Handling in Microsoft Internet Explorer</a></li>
+<li><a href="http://msdn.microsoft.com/workshop/networking/moniker/overview/appendix_a.asp">Microsoft - Appendix A: MIME Type Detection in Internet Explorer</a></li>
+<li><a href="http://www.microsoft.com/windows/ie/downloads/critical/q290108/">Microsoft - Security Update, March 29, 2001</a></li>
+<li><a href="http://www.microsoft.com/windows/ie/downloads/critical/Q313675/">Microsoft - Security Update, December 13, 2001</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/Properly_Configuring_Server_MIME_Types">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

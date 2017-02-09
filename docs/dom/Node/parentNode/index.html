@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>parentNode · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="Retrieves the parent node in the document hierarchy." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Node/">Node</a></li><li><a href="/dom/Node/parentNode/">parentNode</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>parentNode</h1>
+<h2>Summary</h2>
+<p>Retrieves the parent node in the document hierarchy.</p>
+<p>Property of <a href="/docs/dom/Node">dom/Node</a><a href="/docs/dom/Node">dom/Node</a></p>
+<h2>Syntax</h2>
+<p><strong>Note</strong>: This property is read-only.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> parentNode = node.parentNode;
+</code></pre>
+<h2>Return Value</h2>
+<p>Returns an object of type DOM NodeDOM Node</p>
+<p>The parent node of the node.</p>
+<h2>Examples</h2>
+<p>This example assigns the <strong>parentNode</strong> of a <strong>span</strong> object to a variable.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> oParent = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"oSpan"</span>).parentNode;
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+:
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">ID</span>=<span class="hljs-value">"oSpan"</span>&gt;</span>A Span<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p>This example assigns the <strong>parentNode</strong> of a node, created with the <a href="/docs/dom/Document/createElement"><strong>createElement</strong></a> method, to a variable.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> oNode = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"B"</span>);
+<span class="hljs-built_in">document</span>.body.insertBefore(oNode);
+<span class="hljs-comment">// This returns document.body.</span>
+<span class="hljs-keyword">var</span> oParent = oNode.parentNode;
+</code></pre>
+<p>This example demonstrates the difference between parentNode and parentElement when queried on the documents root element (&lt;html&gt;)</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"root"</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"text/html; charset=utf-8"</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"Content-Type"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>parentElement/parentNode<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> root=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'root'</span>);
+<span class="hljs-keyword">try</span>{<span class="hljs-built_in">document</span>.write(<span class="hljs-string">'typeof root.parentNode:'</span>+ <span class="hljs-keyword">typeof</span>(root.parentNode)+<span class="hljs-string">'&lt;br/&gt;'</span>);}<span class="hljs-keyword">catch</span>(e){alert(e);}
+<span class="hljs-keyword">try</span>{<span class="hljs-built_in">document</span>.write(<span class="hljs-string">'root.parentNode.tagName:'</span>+root.parentNode.tagName+<span class="hljs-string">'&lt;br/&gt;'</span>);}<span class="hljs-keyword">catch</span>(e){alert(e);}
+<span class="hljs-keyword">try</span>{<span class="hljs-built_in">document</span>.write(<span class="hljs-string">'typeof root.parentElement:'</span>+<span class="hljs-keyword">typeof</span>(root.parentElement)+<span class="hljs-string">'&lt;br/&gt;'</span>);}<span class="hljs-keyword">catch</span>(e){alert(e);}
+<span class="hljs-keyword">try</span>{<span class="hljs-built_in">document</span>.write(<span class="hljs-string">'root.parentElement.tagName:'</span>+root.parentElement.tagName+<span class="hljs-string">'&lt;br/&gt;'</span>);}<span class="hljs-keyword">catch</span>(e){alert(e);}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Usage</h2>
+<pre><code> Use to find the parent of a node (if any).
+</code></pre>
+<h2>Notes</h2>
+<p>The topmost object returns null as its parent.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/DOM-Level-3-Core/">DOM Level 3 Core</a></dt>
+<dd>Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node.parentNode">Node.parentNode</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/ms534328(v=vs.85).aspx">parentNode Property</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

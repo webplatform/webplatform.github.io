@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG clipping and masking · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="This article explains how clipping and masking work in SVG." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/svg_clipping and masking/">svg clipping and masking</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG clipping and masking</h1>
+<h2>Summary</h2>
+<p>This article explains how clipping and masking work in SVG.</p>
+<p>Erasing part of what one has created cumbersome might at first sight look contradictory. But when you try to create a semicircle in SVG, you will find out the use of the following properties quickly.</p>
+<p><strong>Clipping</strong> refers to removing parts of elements defined by other parts. In this case, any half-transparent effects are not possible; it’s an all-or-nothing approach.</p>
+<p><strong>Masking</strong> on the other hand allows soft edges by taking transparency and grey values of the mask into account.</p>
+<h3>Creating clips</h3>
+<p>We create the above mentioned semicircle based on a <code>circle</code> element:</p>
+<pre><code>&lt;clipPath id=&quot;cut-off-bottom&quot;&gt;
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;200&quot; height=&quot;100&quot; /&gt;
+&lt;/clipPath&gt;
+
+&lt;circle cx=&quot;100&quot; cy=&quot;100&quot; r=&quot;100&quot; clip-path=&quot;url(#cut-off-bottom)&quot; /&gt;
+</code></pre>
+<p>Centered at (100,100), a circle with radius 100 is painted. The attribute <code>clip-path</code> references a <code>Template:SVGElement(&quot;clipPath&quot;)</code> element with a single <code>rect</code> element. This rectangular on its own would paint the upper half of the canvas black. Note that the <code>clipPath</code> element is usually placed in a <code>defs</code> section.</p>
+<p>The <code>rect</code> will not be painted, however. Instead, its pixel data will be used to determine which pixels of the circle “make it” to the final rendering. Since the rectangle covers only the upper half of the circle, the lower half of the circle will vanish:</p>
+<p><img src="//static.webplatform.org/1/1a/clipdemo.png" alt="clipdemo.png"></p>
+<p>We now have a semicircle without having to deal with arcs in path elements. For the clipping, every path inside the <code>clipPath</code> is inspected and evaluated together with its stroke properties and transformation. Then every part of the target lying in a transparent area of the resulting <code>clipPath</code>'s content will not rendered. Color, opacity and such have no effect as long as they don’t let parts vanish completely.</p>
+<h3>Masking</h3>
+<p>The effect of masking is most impressively presented with a gradient. If you want an element to fade out, you can achieve this effect quite quickly with masks.</p>
+<pre><code>&lt;svg version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id=&quot;Gradient&quot;&gt;
+      &lt;stop offset=&quot;0&quot; stop-color=&quot;white&quot; stop-opacity=&quot;0&quot; /&gt;
+      &lt;stop offset=&quot;1&quot; stop-color=&quot;white&quot; stop-opacity=&quot;1&quot; /&gt;
+    &lt;/linearGradient&gt;
+    &lt;mask id=&quot;Mask&quot;&gt;
+      &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;200&quot; height=&quot;200&quot; fill=&quot;url(#Gradient)&quot;  /&gt;
+    &lt;/mask&gt;
+  &lt;/defs&gt;
+
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;200&quot; height=&quot;200&quot; fill=&quot;green&quot; /&gt;
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;200&quot; height=&quot;200&quot; fill=&quot;red&quot; mask=&quot;url(#Mask)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>You see a green-filled <code>rect</code> at the lowest layer and on top a red-filled <code>rect</code>. The latter has the <code>mask</code> attribute pointing to the <code>mask</code> element. The content of the mask is a single <code>rect</code> element, that is filled with a transparent-to-white gradient. As a result the pixels of the red rectangle inherit the alpha value (the transparency) of the mask content, and we see a green-to-left gradient as a result:</p>
+<p><img src="//static.webplatform.org/e/ec/maskdemo.png" alt="maskdemo.png"></p>
+<h3>Transparency with opacity</h3>
+<p>There is a simple possibility to set the transparency for a whole element. It’s the <code>opacity</code> attribute:</p>
+<pre><code>&lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;100&quot; height=&quot;100&quot; opacity=&quot;.5&quot; /&gt;
+</code></pre>
+<p>The above rectangle will be painted half-transparent. For the fill and stroke, there are two separate attributes, <code>fill-opacity</code> and <code>stroke-opacity</code>, that control each of those property opacities separately. Note that the stroke will be painted on top of the filling. Hence, if you set a stroke opacity on an element that also has a fill, the fill will shine through on half of the stroke, while on the other half the background will appear:</p>
+<pre><code>&lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;200&quot; height=&quot;200&quot; fill=&quot;blue&quot; /&gt;
+&lt;circle cx=&quot;100&quot; cy=&quot;100&quot; r=&quot;50&quot; stroke=&quot;yellow&quot; stroke-width=&quot;40&quot; stroke-opacity=&quot;.5&quot; fill=&quot;red&quot; /&gt;
+</code></pre>
+<p><img src="//static.webplatform.org/3/3e/opacitydemo.png" alt="opacitydemo.png"></p>
+<p>You see in this example the red circle on blue background. The yellow stroke is set to 50% opacity, which effectively leads to a double-color stroke.</p>
+<h2>Using well-known CSS techniques</h2>
+<p>One of the most powerful tools in a web developer’s toolbox is <code>display: none</code>. There is therefore little surprise that it was decided to take this CSS property into SVG as well, together with <code>visibility</code> and <code>clip</code> as defined by CSS 2. For reverting a previously set <code>display: none</code>, it is important to know that the initial value for all SVG elements is <code>inline</code>.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/Clipping_and_masking">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

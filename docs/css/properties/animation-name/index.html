@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>animation-name · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Defines the list of animations that apply to the element." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/animation-name/">animation-name</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>animation-name</h1>
+<h2>Summary</h2>
+<p>Defines the list of animations that apply to the element.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>none</code>
+</dd>
+<dt>Applies to</dt>
+<dd>All elements, ::before and ::after pseudo-elements
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>As specified.
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+<dt><a href="/docs/css/concepts/cssom">CSS Object Model Property</a></dt>
+<dd><code>animationName</code>
+</dd>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>animation-name: &lt;single-animation-name&gt; [, &lt;single-animation-name&gt;]*</code></li>
+<li><code>animation-name: none</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>none</dt>
+<dd>No animation applies to the element. You can use this value to override any animations coming from the cascade.
+</dd>
+<dt>&lt;single-animation-name&gt; [, &lt;single-animation-name&gt;]*</dt>
+<dd>One or more comma-separated animation names. Each name is used to select the <code>@keyframes</code> rule that defines the animation. If the specified name does not match any <strong>@keyframes</strong> rule then no animation will be run for this name. In addition, when multiple animations update the same property, the animation listed last wins.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>A slide-in animation that executes once, much like a transition.</p>
+<pre><code class="css"><span class="hljs-tag">h1</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">animation-duration</span>:<span class="hljs-value"> <span class="hljs-number">3s</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">animation-name</span>:<span class="hljs-value"> slidein</span></span>;
+}</span>
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">keyframes</span> slidein </span>{
+  <span class="hljs-tag">from</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">300%</span>
+  </span></span></span>}
+
+  <span class="hljs-tag">to</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">0%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  }</span>
+}
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/7009934">View live example</a></p>
+<p>A repeating pulse animation that shrinks and dims an element, then restores it.</p>
+<pre><code class="css"><span class="hljs-tag">div</span><span class="hljs-class">.selected</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">animation-name</span>:<span class="hljs-value"> pulse</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-duration</span>:<span class="hljs-value"> <span class="hljs-number">1s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">animation-iteration-count</span>:<span class="hljs-value"> infinite</span></span>;
+}</span>
+
+<span class="hljs-at_rule">@<span class="hljs-keyword">keyframes</span> pulse </span>{
+    <span class="hljs-tag">from</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">scale</span>(<span class="hljs-number">1</span>) <span class="hljs-function">translateX</span>(<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">opacity </span>:<span class="hljs-value"> <span class="hljs-number">1</span></span></span>;
+    }</span>
+    50% <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">scale</span>(<span class="hljs-number">0.75</span>) <span class="hljs-function">translateX</span>(<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">opacity </span>:<span class="hljs-value"> <span class="hljs-number">0.25</span></span></span>;
+    }</span>
+    <span class="hljs-tag">to</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">transform </span>:<span class="hljs-value"> <span class="hljs-function">scale</span>(<span class="hljs-number">1</span>) <span class="hljs-function">translateX</span>(<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">opacity </span>:<span class="hljs-value"> <span class="hljs-number">1</span></span></span>;
+    }</span>
+}
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/7010365">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> Note that animation-name is not sufficient to run an animation. The animation-duration property also needs to be set to a non-zero duration.
+</code></pre>
+<p>When <code>animation-name</code> specifies a list of names, other animation properties such as <code>animation-duration</code> should define values corresponding to each name. If the lists of values for the other animation properties do not have the same number of values as <code>animation-name</code>, the length of the <code>animation-name</code> list determines the number of items in each list examined when starting animations. The lists are matched up from the first value: excess values at the end are not used. If one of the other properties doesn’t have enough comma-separated values to match the number of values of <code>animation-name</code>, the list is repeated until there are enough. This truncation or repetition does not affect the computed value.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-animations/">CSS Animations</a></dt>
+<dd>Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/tutorials/css_animations">Making things move with CSS3 animations</a></li>
+<li><a href="/docs/css/atrules/@keyframes">@keyframes</a></li>
+<li><a href="/docs/css/properties/animation">animation</a></li>
+<li><a href="/docs/css/properties/animation-delay">animation-delay</a></li>
+<li><a href="/docs/css/properties/animation-direction">animation-direction</a></li>
+<li><a href="/docs/css/properties/animation-duration">animation-duration</a></li>
+<li><a href="/docs/css/properties/animation-fill-mode">animation-fill-mode</a></li>
+<li><a href="/docs/css/properties/animation-iteration-count">animation-iteration-count</a></li>
+<li><a href="/docs/css/properties/animation-play-state">animation-play-state</a></li>
+<li><a href="/docs/css/properties/animation-timing-function">animation-timing-function</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

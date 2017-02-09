@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebRTC API · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Enables real-time communication across the web." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/webrtc/">webrtc</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WebRTC API</h1>
+<h2>Summary</h2>
+<p>Enables real-time communication across the web.</p>
+<dl>
+<dt><a href="/docs/apis/webrtc/MediaStream">MediaStream</a></dt>
+<dd>The MediaStream interface of the <strong>WebRTC</strong> API describes a stream of audio or video data. A MediaStream object represents a linear, potentially infinite timeline. It is not preloadable, nor is it seekable.
+</dd>
+</dl>
+<p><a href="/docs/apis/webrtc/RTCIceCandidate">RTCIceCandidate</a><br>
+:</p>
+<h2>Usage</h2>
+<pre><code> The RTC in WebRTC stands for Real-Time Communications, technology that enables audio/video streaming and data sharing between browser clients (peers). As a set of standards, WebRTC provides any browser with the ability to share application data and perform teleconferencing peer to peer, without the need to install plug-ins or third-party software.
+</code></pre>
+<p>WebRTC components are accessed with JavaScript APIs. Currently in development are the Network Stream API, which represents an audio or video data stream, and the PeerConnection API, which allows two or more users to communicate browser-to-browser. Also under development is a DataChannel API that enables communication of other types of data for real-time gaming, text chat, file transfer, and so forth.</p>
+<h2>MediaStream API</h2>
+<p>A <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> object is typically set as a simple URL string which can be used to reference data stored in a DOM File or Blob object with window.URL.createObjectURL(). The <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> object is further distinguished as either a <a href="/apis/webrtc/MediaStreamTrack">MediaStreamTrack</a> or a <a href="/apis/webrtc/LocalMediaStream">LocalMediaStream</a>.</p>
+<p>A <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> consists of zero or more <a href="/docs/apis/webrtc/MediaStreamTrack">MediaStreamTrack</a> objects, which comprise one or more channels, and which are contained in a <a href="/apis/webrtc/MediaStreamTrackList">MediaStreamTrackList</a>. Each <a href="/apis/webrtc/MediaStreamTrack">MediaStreamTrack</a> may have one or more channels. The channel represents the smallest unit of a media stream, such as an audio signal.</p>
+<p><a href="/docs/apis/webrtc/MediaStream">MediaStream</a> objects have an input and an output. A <a href="/docs/apis/webrtc/LocalMediaStream">LocalMediaStream</a> is a MediaStream object generated by <a href="/docs/dom/Navigator/getUserMedia">getUserMedia()</a>, and which has as its source input the user’s camera or microphone. The output describes how the consumer uses the <a href="/apis/webrtc/MediaStream">MediaStream</a> object. The consumer is either of the media elements, <code>&lt;audio&gt;</code> or <code>&lt;video&gt;</code>, or the PeerConnection API.</p>
+<h2>PeerConnection API</h2>
+<p>The PeerConnection API, represented chiefly by the <a href="/docs/apis/webrtc/RTCPeerConnection">RTCPeerConnection</a> object, provides for the exchange of <a href="/docs/apis/webrtc/MediaStream">MediaStream</a> object data between browser instances (peers) across a secure channel. The process starts with signaling from one peer to others through a server. The signaling protocol is determined by the application, and once established, encapsulated in the <a href="/apis/webrtc/RTCSessionDescription">RTCSessionDescription</a> object.</p>
+<h2>DataChannel API</h2>
+<p><strong>TODO</strong>: Add more information here.</p>
+<p>The DataChannel API, represented by the <a href="/docs/apis/webrtc/RTCDataChannel">RTCDataChannel</a> and leveraged through RTCPeerConnection, provides for the exchange of strings or binary data between peers. A data channel can be reliable, semi reliable and not reliable.</p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>WebRTC</h4>
+<ul>
+<li><p><a href="/docs/apis/MediaStream/ended">Track ended</a></p></li>
+<li><p><a href="/docs/apis/media_capture_and_streams">Media Capture and Streams</a></p></li>
+<li><p><strong>WebRTC API</strong></p></li>
+<li><p><a href="/docs/concepts/Internet_and_Web/webrtc">WebRTC</a></p></li>
+<li><p><a href="/docs/tutorials/webrtc_resources">WebRTC Resources</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.w3.org/2011/04/webrtc/">WebRTC working group</a></li>
+<li><a href="http://dev.w3.org/2011/webrtc/editor/webrtc.html">PeerConnection API</a> (includes DataChannel)</li>
+<li><a href="http://dev.w3.org/2011/webrtc/editor/getusermedia.html">Media Capture and Streams API</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

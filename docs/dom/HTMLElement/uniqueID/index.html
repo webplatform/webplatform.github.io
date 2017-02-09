@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>uniqueID · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/HTMLElement/">HTMLElement</a></li><li><a href="/dom/HTMLElement/uniqueID/">uniqueID</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>uniqueID</h1>
+<p>Property of <a href="/docs/dom/HTMLElement">dom/HTMLElement</a><a href="/docs/dom/HTMLElement">dom/HTMLElement</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> result = element.uniqueID;
+element.uniqueID = value;
+</code></pre>
+<h2>Examples</h2>
+<p>The following examples use the <strong>uniqueID</strong> property within an HTC to assign a unique identifier to an element.</p>
+<p>This example assigns a <strong>uniqueID</strong> to an element from within a behavior. Every time the <a href="/docs/dom/Window/setTimeout"><strong>setTimeout</strong></a> method is invoked, the behavior-defined tick() function is called. The <strong>uniqueID</strong> attaches the element to the tick() function defined in the behavior’s namespace.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:METHOD</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"tick"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:METHOD</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"startFly"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:PROPERTY</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"from"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:PROPERTY</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"fromX"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:PROPERTY</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"fromY"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:PROPERTY</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"delay"</span> /&gt;</span>
+:
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span> <span class="hljs-attribute">LANGUAGE</span>=<span class="hljs-value">"jscript"</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> currCount;
+<span class="hljs-keyword">var</span> flyCount;
+<span class="hljs-keyword">var</span> flying;
+<span class="hljs-keyword">var</span> msecs;
+<span class="hljs-keyword">var</span> oTop, oLeft;
+
+msecs = <span class="hljs-number">50</span>;
+flyCount = <span class="hljs-number">20</span>;
+flying = <span class="hljs-literal">false</span>;
+
+runtimeStyle.position = <span class="hljs-string">"relative"</span>;
+runtimeStyle.visibility = <span class="hljs-string">"hidden"</span>;
+
+<span class="hljs-built_in">window</span>.attachEvent(<span class="hljs-string">"onload"</span>, onload);
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onload</span>(<span class="hljs-params"></span>)
+</span>{
+  <span class="hljs-comment">// delay commences from the window.onLoad event</span>
+  <span class="hljs-keyword">if</span> (delay != <span class="hljs-string">"none"</span>)
+  {
+     <span class="hljs-built_in">window</span>.setTimeout(uniqueID+<span class="hljs-string">".tick()"</span>, delay);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tick</span>(<span class="hljs-params"></span>)
+</span>{
+   <span class="hljs-keyword">if</span> (flying == <span class="hljs-literal">false</span>)
+   {
+      startFly();
+   }
+   <span class="hljs-keyword">else</span>
+   {
+      doFly();
+   }
+}
+:
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/CustomTags/CustomFlying.htm">View live example</a></p>
+<p>This example uses the <strong>uniqueID</strong> property to show how the browser can autogenerate a unique ID for an element inserted into the document by a behavior.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">PUBLIC:ATTACH</span> <span class="hljs-attribute">EVENT</span>=<span class="hljs-value">"onload"</span> <span class="hljs-attribute">FOR</span>=<span class="hljs-value">"window"</span> <span class="hljs-attribute">ONEVENT</span>=<span class="hljs-value">"init()"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span> <span class="hljs-attribute">LANGUAGE</span>=<span class="hljs-value">"JScript"</span>&gt;</span><span class="actionscript">
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span><span class="hljs-params">()</span>
+</span>{
+   <span class="hljs-comment">// Specifying an ID=document.uniqueID ensures that a unique identifier</span>
+   <span class="hljs-comment">// will be assigned to the element being inserted into the document by</span>
+   <span class="hljs-comment">// the behavior.</span>
+   newTextAreaID = element.document.uniqueID;
+   element.document.body.insertAdjacentHTML (<span class="hljs-string">"beforeEnd"</span>,
+    <span class="hljs-string">"&lt;P&gt;&lt;TEXTAREA STYLE='height: 200 ;"</span>+
+    <span class="hljs-string">"width: 350' ID= "</span> + newTextAreaID + <span class="hljs-string">"&gt;&lt;/TEXTAREA&gt;&lt;/P&gt;"</span>);
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>When you apply this property to the <a href="/docs/dom/Document"><strong>Document</strong></a> object, the client automatically generates a new ID that you can assign to an element’s <a href="/docs/html/attributes/id"><strong>id</strong></a> property. A new ID is generated and assigned to the element the first time the property is retrieved. Every subsequent access to the property on the same element returns the same ID. <strong>Note</strong>  The unique ID generated is not guaranteed to be the same every time the document is loaded.</p>
+<h3>Syntax</h3>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

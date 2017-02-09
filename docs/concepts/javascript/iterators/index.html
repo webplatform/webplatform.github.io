@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iterators and generators · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="Processing each of the items in a collection is a very common operation. JavaScript provides a number of ways of iterating over a collection, from simple for and for each loops to map(), filter()]] and array comprehensions. Iterators and Generators, introduced in JavaScript 1.7, bring the concept of iteration directly into the core language and provide a mechanism for customizing the behavior of for...in and for each loops." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/javascript/">javascript</a></li><li><a href="/concepts/javascript/iterators/">iterators</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Iterators and generators</h1>
+<h2>Summary</h2>
+<p>Processing each of the items in a collection is a very common operation. JavaScript provides a number of ways of iterating over a collection, from simple for and for each loops to map(), filter()]] and array comprehensions. Iterators and Generators, introduced in JavaScript 1.7, bring the concept of iteration directly into the core language and provide a mechanism for customizing the behavior of for…in and for each loops.</p>
+<h2>Iterators</h2>
+<p>An Iterator is an object that knows how to access items from a collection one at a time, while keeping track of its current position within that sequence. In JavaScript an iterator is an object that provides a <code>next()</code> method which returns the next item in the sequence. This method can optionally raise a <code>StopIteration</code> exception when the sequence is exhausted.</p>
+<p>Once created, an iterator object can be used either explicitly by repeatedly calling <code>next()</code>, or implicitly using JavaScript’s <code>for...in</code> and <code>for each</code> constructs.</p>
+<p>Simple iterators for objects and arrays can be created using the <code>Iterator()</code> function:</p>
+<pre><code>var lang = { name: 'JavaScript', birthYear: 1995 };
+var it = Iterator(lang);
+</code></pre>
+<p>Once initialized, the <code>next()</code> method can be called to access key-value pairs from the object in turn:</p>
+<pre><code>var pair = it.next(); // Pair is [&quot;name&quot;, &quot;JavaScript&quot;]
+pair = it.next(); // Pair is [&quot;birthYear&quot;, 1995]
+pair = it.next(); // A StopIteration exception is thrown
+</code></pre>
+<p>A <code>for...in</code> loop can be used instead of calling the <code>next()</code> method directly. The loop will automatically terminate when the <code>StopIteration</code> exception is raised.</p>
+<pre><code>var it = Iterator(lang);
+for (var pair in it)
+  print(pair); // prints each [key, value] pair in turn
+</code></pre>
+<p>If we just want to iterate over the object’s keys, we can pass a second argument of <code>true</code> to the <code>Iterator()</code> function:</p>
+<pre><code>var it = Iterator(lang, true);
+for (var key in it)
+  print(key); // prints each key in turn
+</code></pre>
+<p>One advantage of using <code>Iterator()</code> to access the contents of an object is that custom properties that have been added to <code>Object.prototype</code> will not be included in the sequence.</p>
+<p><code>Iterator()</code> can be used with arrays as well:</p>
+<pre><code>var langs = ['JavaScript', 'Python', 'C++'];
+var it = Iterator(langs);
+for (var pair in it)
+  print(pair); // prints each [index, language] pair in turn
+</code></pre>
+<p>As with objects, passing <code>true</code> as the second argument will result in iteration occurring over the array indices:</p>
+<pre><code>var langs = ['JavaScript', 'Python', 'C++'];
+var it = Iterator(langs, true);
+for (var i in it)
+  print(i); // prints 0, then 1, then 2
+</code></pre>
+<p>It is also possible to assign block scoped variables to both index and value within the for loop using the <code>let</code> keyword and a destructuring assignment:</p>
+<pre><code>var langs = ['JavaScript', 'Python', 'C++'];
+var it = Iterator(langs);
+for (let [i, lang] in it)
+ print(i + ': ' + lang); // prints &quot;0: JavaScript&quot; etc.
+</code></pre>
+<h2>Defining custom iterators</h2>
+<p>Some objects represent collections of items that should be iterated over in a specific way.</p>
+<ul>
+<li>Iterating over a range object should return the numbers in that range one by one.</li>
+<li>The leaves in a tree can be visited using depth-first or breadth-first traversal.</li>
+<li>Iterating over an object representing the results from a database query should return rows one by one, even if the entire result set has not been loaded in to a single array.</li>
+<li>An iterator on an infinite mathematical sequence (such as the Fibonacci sequence) should be able to return results one by one without creating an infinite length data structure.</li>
+</ul>
+<p>JavaScript lets you write code that represents custom iteration logic and link it to an object.</p>
+<p>We’ll create a simple <code>Range</code> object which stores a low and high value.</p>
+<pre><code>function Range(low, high){
+  this.low = low;
+  this.high = high;
+}
+</code></pre>
+<p>Now we’ll create a custom iterator that can return a sequence of inclusive integers from that range. The iterator interface requires that we provide a <code>next()</code> method which either returns an item from the sequence or throws a <code>StopIteration</code> exception.</p>
+<pre><code>function RangeIterator(range){
+  this.range = range;
+  this.current = this.range.low;
+}
+RangeIterator.prototype.next = function(){
+  if (this.current &gt; this.range.high)
+    throw StopIteration;
+  else
+    return this.current++;
+};
+</code></pre>
+<p>Our <code>RangeIterator</code> is instantiated with a range instance, and maintains its own <code>current</code> property to track how far along in the sequence it has got.</p>
+<p>Finally, to associate our <code>RangeIterator</code> with the <code>Range</code> object we need to add a special <code>__iterator__</code> method to <code>Range</code>. This will be called when we attempt to iterate over a <code>Range</code> instance, and should return an instance of <code>RangeIterator</code>, which implements the iterator logic.</p>
+<pre><code>Range.prototype.__iterator__ = function(){
+  return new RangeIterator(this);
+};
+</code></pre>
+<p>Having hooked in our custom iterator, we can iterate over a range instance with the following:</p>
+<pre><code>var range = new Range(3, 5);
+for (var i in range)
+  print(i); // prints 3, then 4, then 5 in sequence
+</code></pre>
+<h2>Generators: a better way to build Iterators</h2>
+<p>While custom iterators are a useful tool, their creation requires careful programming due to the need to explicitly maintain their internal state. Generators provide a powerful alternative: they allow you to define an iterative algorithm by writing a single function which can maintain its own state.</p>
+<p>A generator is a special type of function that works as a factory for iterators. A function becomes a generator if it contains one or more <code>yield</code> expressions.</p>
+<p>The <code>yield</code> keyword is only available to code blocks in HTML wrapped in a <code>script</code> element with attribute <code>type=&quot;application/javascript;version=1.7&quot;</code> (or higher version). XUL script tags have access to these features without needing this special block.</p>
+<p>When a generator function is called the body of the function does not execute straight away; instead, it returns a generator-iterator object. Each call to the generator-iterator’s <code>next()</code> method will execute the body of the function up to the next <code>yield</code> expression and return its result. When either the end of the function or a <code>return</code> statement is reached, a <code>StopIteration</code> exception is thrown.</p>
+<p>This is best illustrated with an example:</p>
+<pre><code>function simpleGenerator(){
+  yield &quot;first&quot;;
+  yield &quot;second&quot;;
+  yield &quot;third&quot;;
+  for (var i = 0; i &lt; 3; i++)
+    yield i;
+}
+
+var g = simpleGenerator();
+print(g.next()); // prints &quot;first&quot;
+print(g.next()); // prints &quot;second&quot;
+print(g.next()); // prints &quot;third&quot;
+print(g.next()); // prints 0
+print(g.next()); // prints 1
+print(g.next()); // prints 2
+print(g.next()); // StopIteration is thrown
+</code></pre>
+<p>A generator function can be used directly as the <code>__iterator__</code> method of a class, greatly reducing the amount of code needed to create custom iterators. Here is our <code>Range</code> rewritten to use a generator:</p>
+<pre><code>function Range(low, high){
+  this.low = low;
+  this.high = high;
+}
+Range.prototype.__iterator__ = function(){
+  for (var i = this.low; i &lt;= this.high; i++)
+    yield i;
+};
+var range = new Range(3, 5);
+for (var i in range)
+  print(i); // prints 3, then 4, then 5 in sequence
+</code></pre>
+<p>Not all generators terminate; it is possible to create a generator that represents an infinite sequence. The following generator implements the Fibonacci sequence, where each element is the sum of the two previous elements:</p>
+<pre><code>function fibonacci(){
+  var fn1 = 1;
+  var fn2 = 1;
+  while (1){
+    var current = fn2;
+    fn2 = fn1;
+    fn1 = fn1 + current;
+    yield current;
+  }
+}
+
+var sequence = fibonacci();
+print(sequence.next()); // 1
+print(sequence.next()); // 1
+print(sequence.next()); // 2
+print(sequence.next()); // 3
+print(sequence.next()); // 5
+print(sequence.next()); // 8
+print(sequence.next()); // 13
+</code></pre>
+<p>Generator functions can take arguments, which are bound the first time the function is called. Generators can be terminated (causing them to raise a <code>StopIteration</code> exception) using a <code>return</code> statement. The following <code>fibonacci()</code> variant takes an optional limit argument, and will terminate once that limit has been passed.</p>
+<pre><code>function fibonacci(limit){
+  var fn1 = 1;
+  var fn2 = 1;
+  while (1){
+    var current = fn2;
+    fn2 = fn1;
+    fn1 = fn1 + current;
+    if (limit &amp;&amp; current &gt; limit)
+      return;
+    yield current;
+  }
+}
+</code></pre>
+<h2>Advanced generators</h2>
+<p>Generators compute their yielded values on demand, which allows them to efficiently represent sequences that are expensive to compute, or even infinite sequences as demonstrated above.</p>
+<p>In addition to the <code>next()</code> method, generator-iterator objects also have a <code>send()</code> method which can be used to modify the internal state of the generator. A value passed to <code>send()</code> will be treated as the result of the last <code>yield</code> expression that paused the generator. You must start a generator by calling <code>next()</code> at least once before you can use <code>send()</code> to pass in a specific value.</p>
+<p>Here is the fibonacci generator using <code>send()</code> to restart the sequence:</p>
+<pre><code>function fibonacci(){
+  var fn1 = 1;
+  var fn2 = 1;
+  while (1){
+    var current = fn2;
+    fn2 = fn1;
+    fn1 = fn1 + current;
+    var reset = yield current;
+    if (reset){
+        fn1 = 1;
+        fn2 = 1;
+    }
+  }
+}
+
+var sequence = fibonacci();
+print(sequence.next());     // 1
+print(sequence.next());     // 1
+print(sequence.next());     // 2
+print(sequence.next());     // 3
+print(sequence.next());     // 5
+print(sequence.next());     // 8
+print(sequence.next());     // 13
+print(sequence.send(true)); // 1
+print(sequence.next());     // 1
+print(sequence.next());     // 2
+print(sequence.next());     // 3
+</code></pre>
+<p><strong>Note:</strong> As a point of interest, calling <code>send(undefined)</code> is equivalent to calling <code>next()</code>. However, starting a newborn generator with any value other than undefined when calling <code>send()</code> will result in a <code>TypeError</code> exception.</p>
+<p>You can force a generator to throw an exception by calling its <code>throw()</code> method and passing the exception value it should throw. This exception will be thrown from the current suspended context of the generator, as if the <code>yield</code> that is currently suspended were instead a <code>throw value</code> statement.</p>
+<p>If a yield is not encountered during the processing of the thrown exception, then the exception will propagate up through the call to <code>throw()</code>, and subsequent calls to <code>next()</code> will result in <code>StopIteration</code> being thrown.</p>
+<p>Generators have a <code>close()</code> method that forces the generator to close itself. The effects of closing a generator are:</p>
+<ol>
+<li>Any <code>finally</code> clauses active in the generator function are run.</li>
+<li>If a <code>finally</code> clause throws any exception other than <code>StopIteration</code>, the exception is propagated to the caller of the <code>close()</code> method.</li>
+<li>The generator terminates.</li>
+</ol>
+<h2>Generator expressions</h2>
+<p><strong>Note</strong>: Introduced in JavaScript 1.8</p>
+<p>A significant drawback of <a href="/w/index.php?title=concepts/javascript/iterators/guides/js/objects&amp;action=edit&amp;redlink=1">array comprehensions</a> is that they cause an entire new array to be constructed in memory. When the input to the comprehension is itself a small array the overhead involved is insignificant — but when the input is a large array or an expensive (or indeed infinite) generator the creation of a new array can be problematic.</p>
+<p>Generators enable lazy computation of sequences, with items calculated on-demand as they are needed. <em>Generator expressions</em> are syntactically almost identical to array comprehensions — they use parenthesis instead of braces (and <code>for...in</code> instead of <code>for each...in</code>) — but instead of building an array they create a generator that can execute lazily. You can think of them as short hand syntax for creating generators.</p>
+<p>Suppose we have an iterator <code>it</code> which iterates over a large sequence of integers. We want to create a new iterator that will iterate over their doubles. An array comprehension would create a full array in memory containing the doubled values:</p>
+<pre><code>var doubles = [i * 2 for (i in it)];
+</code></pre>
+<p>A generator expression on the other hand would create a new iterator which would create doubled values on demand as they were needed:</p>
+<pre><code>var it2 = (i * 2 for (i in it));
+print(it2.next()); // The first value from it, doubled
+print(it2.next()); // The second value from it, doubled
+</code></pre>
+<p>When a generator expression is used as the argument to a function, the parenthesis used for the function call means that the outer parenthesis can be omitted:</p>
+<pre><code>var result = doSomething(i * 2 for (i in it));
+</code></pre>
+<p><span style="float: left"><a href="/w/index.php?title=concepts/javascript/iterators/guides/js/inheritance&amp;action=edit&amp;redlink=1">« Previous</a></span> <a href="/w/index.php?title=concepts/javascript/iterators/guides/JavaScript/Closures&amp;action=edit&amp;redlink=1">Next »</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Iterators_and_Generators">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

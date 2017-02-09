@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG fonts · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This article covers the creation and usage of SVG fonts." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/svg_fonts/">svg fonts</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG fonts</h1>
+<h2>Summary</h2>
+<p>This article covers the creation and usage of SVG fonts.</p>
+<p>When SVG was specified support for web fonts was far from being expected. Since the correct font is however crucial for the rendering of a graphic, it was decided to add a font description technology to SVG. It was not meant to concur with other formats like PostScript or OTF, but as a simple means of embedding glyph information for rendering engines.</p>
+<p>SVG Fonts browser support covers all modern browsers (desktop and mobile) except Firefox and Internet Explorer. Firefox has <a href="/w/index.php?title=postponed_implementation_indefinitely&amp;action=edit&amp;redlink=1">postponed implementation indefinitely</a> to concentrate on <a href="/w/index.php?title=WOFF&amp;action=edit&amp;redlink=1">WOFF</a>. However, other tools, like the <a href="/w/index.php?title=Adobe_SVG_Viewer&amp;action=edit&amp;redlink=1">Adobe SVG Viewer</a> plugin, Batik and in parts Inkscape support them.</p>
+<p>The base for defining an SVG font is the <a href="/w/index.php?title=Template:SVGElement(%22font%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font”)</a> element.</p>
+<h2>Defining a font</h2>
+<p>There are some elements involved in getting all information together, that is needed for a font. I will first show an example declaration (the one <a href="/w/index.php?title=from_the_specification&amp;action=edit&amp;redlink=1">from the specification</a>) and afterwards explain the details.</p>
+<pre><code>&lt;font id=&quot;Font1&quot; horiz-adv-x=&quot;1000&quot;&gt;
+  &lt;font-face font-family=&quot;Super Sans&quot; font-weight=&quot;bold&quot; font-style=&quot;normal&quot;
+      units-per-em=&quot;1000&quot; cap-height=&quot;600&quot; x-height=&quot;400&quot;
+      ascent=&quot;700&quot; descent=&quot;300&quot;
+      alphabetic=&quot;0&quot; mathematical=&quot;350&quot; ideographic=&quot;400&quot; hanging=&quot;500&quot;&gt;
+    &lt;font-face-src&gt;
+      &lt;font-face-name name=&quot;Super Sans Bold&quot;/&gt;
+    &lt;/font-face-src&gt;
+  &lt;/font-face&gt;
+  &lt;missing-glyph&gt;&lt;path d=&quot;M0,0h200v200h-200z&quot;/&gt;&lt;/missing-glyph&gt;
+  &lt;glyph unicode=&quot;!&quot; horiz-adv-x=&quot;300&quot;&gt;&lt;!-- Outline of exclam. pt. glyph --&gt;&lt;/glyph&gt;
+  &lt;glyph unicode=&quot;@&quot;&gt;&lt;!-- Outline of @ glyph --&gt;&lt;/glyph&gt;
+  &lt;!-- more glyphs --&gt;
+&lt;/font&gt;
+</code></pre>
+<p>We start with the <a href="/w/index.php?title=Template:SVGElement(%22font%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font”)</a> element. It bears an id attribute, that is needed if you want to reference it via URI (see below). The <code>horiz-adv-x</code> attribute determines, how wide a character is on average compared to the path definitions of the single glyphs. The value <code>1000</code> sets a reasonable value to work in. There are several accompanying attributes, that help further defining the basic glyph-box layout.</p>
+<p>The <a href="/w/index.php?title=Template:SVGElement(%22font-face%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font-face”)</a> element is the counterpart of the CSS <a href="/w/index.php?title=@font-face&amp;action=edit&amp;redlink=1">@font-face</a> declaration. It defines basic properties of the final font, as how to classify its weight, style and so forth. In the example above the first and most important to be defined is <code>font-family</code>. Its value can then be referenced in CSS and SVG <code>font-family</code> properties. The <code>font-weight</code> and <code>font-style</code> attributes have the same purpose. All following attributes are rendering instructions to the font layout engine, for example, how much of the glyphs’ overall height are <a href="/w/index.php?title=ascenders&amp;action=edit&amp;redlink=1">ascenders</a>.</p>
+<p>Its child, the <a href="/w/index.php?title=Template:SVGElement(%22font-face-src%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font-face-src”)</a> element, corresponds to CSS’ <code>src</code> property in <code>@font-face</code> declarations. You can point to external sources for font declarations by means of its children <a href="/w/index.php?title=Template:SVGElement(%22font-face-name%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font-face-name”)</a> and <a href="/w/index.php?title=Template:SVGElement(%22font-face-uri%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font-face-uri”)</a>. The example states, that if the renderer has a local font at hand named &quot;Super Sans Bold&quot;, it should use this instead.</p>
+<p>Following <a href="/w/index.php?title=Template:SVGElement(%22font-face-src%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“font-face-src”)</a> is a <a href="/w/index.php?title=Template:SVGElement(%22missing-glyph%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“missing-glyph”)</a> element. This declares, what should be displayed, if a certain glyph is not found in the font, and if there are no fallback mechanisms. It also shows, how glyphs are created: By simply adding any graphical SVG content inside. You can use literally any other SVG elements in there, even <a href="/w/index.php?title=Template:SVGElement(%22filter%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“filter”)</a>, <a href="/w/index.php?title=Template:SVGElement(%22a%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“a”)</a> or <a href="/w/index.php?title=Template:SVGElement(%22script%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“script”)</a>. For simple glyphs, however, you can simply add a <code>d</code> attribute that works exactly like for paths.</p>
+<p>The actual glyphs are then defined by <a href="/w/index.php?title=Template:SVGElement(%22glyph%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“glyph”)</a> elements. The most important attribute is <code>unicode</code>. It defines the Unicode Codepoint, that is represented by this glyph. If you specify the <code>lang</code> attribute, you can furthermore restrict the glyph for certain languages (represented by <code>xml:lang</code> on the target) exclusively. Again, you can use arbitrary SVG to define the glyph, which allows for great effects in conforming user agents.</p>
+<p>There are two further elements, that can be defined inside <code>font</code>, <a href="/w/index.php?title=Template:SVGElement(%22hkern%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“hkern”)</a> and <a href="/w/index.php?title=Template:SVGElement(%22vkern%22)&amp;action=edit&amp;redlink=1">Template:SVGElement(“vkern”)</a>. Each instance carries references to at least two characters and an attribute k that determines how much the distance between those characters should be decreased. The basic example are “A” and &quot;V&quot;, where renderers should place “AV” much narrower than the single character definitions imply.</p>
+<pre><code>&lt;hkern u1=&quot;A&quot; u2=&quot;V&quot; k=&quot;20&quot; /&gt;
+</code></pre>
+<h2>Referencing a font</h2>
+<p>This is a fairly simple one. If you have put together your font declaration as described above, you can just use a simple <code>font-family</code> attribute.</p>
+<pre><code>&lt;font&gt;
+  &lt;font-face font-family=&quot;Super Sans&quot; /&gt;
+  &lt;!-- and so on --&gt;
+&lt;/font&gt;
+
+&lt;text font-family=&quot;Super Sans&quot;&gt;My text uses Super Sans&lt;/text&gt;
+</code></pre>
+<p>However, you are free to combine several methods for great freedom of how and where to define the font.</p>
+<h3>Option: Use CSS @font-face</h3>
+<p>You can use @font-face to reference remote (and not so remote) fonts.</p>
+<pre><code>&lt;font id=&quot;Super_Sans&quot;&gt;
+  &lt;!-- and so on --&gt;
+&lt;/font&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+@font-face {
+  font-family: &quot;Super Sans&quot;;
+  src: url(#Super_Sans);
+}
+&lt;/style&gt;
+
+&lt;text font-family=&quot;Super Sans&quot;&gt;My text uses Super Sans&lt;/text&gt;
+</code></pre>
+<h3>Option: reference a remote font</h3>
+<p>The above mentioned font-face-uri allows to reference an external font, hence allowing greater re-usability.</p>
+<pre><code>&lt;font&gt;
+  &lt;font-face font-family=&quot;Super Sans&quot;&gt;
+    &lt;font-face-src&gt;
+      &lt;font-face-uri xlink:href=&quot;fonts.svg#Super_Sans&quot; /&gt;
+    &lt;/font-face-src&gt;
+  &lt;/font-face&gt;
+&lt;/font&gt;
+</code></pre>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/SVG_fonts">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

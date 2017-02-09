@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>blockquote · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="blockquote要素は拡張された引用を表します。" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/blockquote/">blockquote</a></li><li><a href="/html/elements/blockquote/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>blockquote</h1>
+<h2>Summary</h2>
+<p>blockquote要素は拡張された引用を表します。</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLQuoteElement">HTMLQuoteElement</a>
+</dd>
+</dl>
+<h3>導入</h3>
+<p><strong>blockquote</strong>要素は別のソースから引用したコンテンツであることを示します。追加で<a href="/w/index.php?title=html/elements/footer/ja&amp;action=edit&amp;redlink=1"><strong>footer</strong></a>や<a href="/w/index.php?title=html/elements/cite/ja&amp;action=edit&amp;redlink=1"><strong>cite</strong></a>要素で引用元を記載したり、注釈や省略のような変更なども一緒に示すことがあります。</p>
+<p><strong>blockquote</strong>要素の中に出典元や変更を記載したい場合、一つだけなら、<a href="/w/index.php?title=html/attributes/cite/ja&amp;action=edit&amp;redlink=1"><strong>cite</strong>属性</a>に記載することができます。</p>
+<dl>
+<dd>
+注: ブログのコメントのような複数人から投稿されたコンテンツでページが構成されている場合、同じページ上の他の人が書いたコメントを'出典元'とする事ができます。
+</dd>
+</dl>
+cite属性を記載する際は正しいURLを設定しなければいけません。引用元のリンクを対応させるには、属性の値が、「要素と関連する」と解釈される値でなくてはいけません。ユーザエージェントは引用元リンクを辿ることを許可しますが、主に読み手に不要な私的な利用（引用サイトの利用統計を収集するサーバサイドスクリプト等）のために使われます。
+<p>cite属性は要素の引用コンテンツの帰属を反映しなければいけません。</p>
+<h2>HTML属性</h2>
+<ul>
+<li><code>cite</code> = 有効なURL（前後にスペースがある場合、取り除かれて扱われます。）<br>
+引用元のアドレスを指定します。</li>
+</ul>
+<h2>Examples</h2>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- この例は引用をインデントさせて目立たせるためにblockquote要素を使用しています。: --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>彼は
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span> <span class="hljs-attribute">cite</span>=<span class="hljs-value">"http://www.example.com"</span>&gt;</span>"やあ、皆さん!"<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>と言いました。
+</code></pre>
+<p><strong>blockquote</strong>要素は別のソースから引用したコンテンツであることを示します。追加で<strong>footer</strong>や<strong>cite</strong>要素で引用元を記載したり、注釈や省略のような変更なども一緒に示すことがあります。例えば、英語では慣例的に省略を示す場合、角括弧を使用します。&quot;フレッドはクラッカーを食べた。そして彼はリンゴと魚が好きだと言った。&quot;という文章を考えましょう。これは以下のように引用されます。</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>[フレッド]は[...]魚が好きだといった。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<p><strong>blockquote</strong>の中で、引用されたテキストと注釈とを明確に区別するために引用符が使われます。</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- 例えば、著者が文中で注釈を入れた場合です。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ "かの怪物、習慣というものは、感覚を食い尽くし、
+  悪魔のように振舞うが、"<span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"et cetera"</span>&gt;</span>などなど<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span>（ここはFirst Folioの文章ではありません）
+ "なんという堕落だろう！
+  結婚のとき手に手をとって、
+  高潔な愛をもって誓ったこのわしを無みし、
+  はるかに品位の劣る悪党に身を任せるとは。"
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>
+ — <span class="hljs-tag">&lt;<span class="hljs-title">cite</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"title"</span>&gt;</span>シェイクスピアマニュアル<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span> 著：<span class="hljs-tag">&lt;<span class="hljs-title">cite</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"author"</span>&gt;</span>フレデリク・ガード・フレーイー<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>,
+ 19ページ (in Google Books)
+ <span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- 注: 上記の例では、引用元はfigure要素内のfooter要素に含まれており、引用とともに引用についての情報を関連付けています。今回のケースでは、キャプションではなく、引用元を含んでいるため、figcaption要素は使っていません。 --&gt;</span>
+</code></pre>
+<p>引用の帰属は<strong>blockquote</strong>要素に記述しても良いですが、<strong>cite</strong>要素か<strong>footer</strong>要素に記述すべきです</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- 例えば、ここでは引用したテキストのあとのfooterに帰属を記載し、帰属と引用物の関係を明確にしています。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>我々は無神論者である、ということを私は強く主張する。 私の信ずる神は
+ あなたの信ずる神よりもひとつ少ないというだけだ。あなたが他の神々を拒絶する理由を理解すれば、
+ なぜ私があなた方を拒絶するか理解できるだろう。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>— <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>ステファン・ロバート<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!--  ここでは引用したテキストの最終行の&lt;cite&gt;要素に帰属を記述しています。著者のリンクも含まれていることに注意してください。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+ 人々は、その産物から自分自身を認識する。
+ 自動車やhi-fi装置、乱平面住宅、台所用品などに自身の魂を見出す。
+ — <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://ja.wikipedia.org/wiki/ヘルベルト・マルクーゼ"</span>&gt;</span>ヘルベルト・マルクーゼ<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- ここでは引用文のあとのフッターで帰属と参照元のメタデータをMicrodata構文で記述しています。（※RDFA Liteでマークアップするのと同義です。） --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>... 彼女は”口説く”の代わりに"恋する"という言葉が使われている供述書には一切署名をしなかった。その違いは彼女にとって極めて重要な意味があった。それは彼女の元夫がいつも口説文句をささやいているのに、本心では恋をしたことなど一度もなかった、という離婚理由にある。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">footer</span> <span class="hljs-attribute">itemscope</span> <span class="hljs-attribute">itemtype</span>=<span class="hljs-value">"http://schema.org/Book"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">itemprop</span>=<span class="hljs-value">"author"</span>&gt;</span>ハインリヒ・ベル<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>,
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">itemprop</span>=<span class="hljs-value">"name"</span>&gt;</span>カタリーナ・ブルームの失われた名誉<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>,
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">itemprop</span>=<span class="hljs-value">"datePublished"</span>&gt;</span>1974年1月1日<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- 注: 引用元から引用してきた要素をマークアップする方法として正しい方法というものはありません。引用元について記述するために'''blockquote'''の中にフッターやcite要素が含まれる場合、例えばclass属性を使って仕組みを拡張し、メタデータと共に引用元の起源を注釈するという --&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- この例では、引用元をcite要素に記述し、class属性を使って注釈しています。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>私のお気に入りの本は<span class="hljs-tag">&lt;<span class="hljs-title">cite</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"from-source"</span>&gt;</span>スウィム・トゥ・バーズ亭にて<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>です。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>- <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Mike[tm]Smith<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<p>以下の例は上記と異なる方法で帰属を記しています。</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- ここではfigure要素とキャプションをつなぐためにblockquote要素を使用しています。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">figure</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>真実とは時に不可解なものだ。真実がすべきことをすることもあるだろう。直感に反することもあるだろう。心の奥底にある偏見と矛盾することもあるだろう。真実だと思い込んでいることと一致しないこともあるだろう。しかし、私達の選択によって何が真実かが決まるわけではない。我々のもつ理論よって真実にたどり着くことは絶対にない。真実に極限まで近づくだけである。そして発見するのは新たな、そして広大な、未発見の可能性の海である。巧みにデザインされた実験が鍵である。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">figcaption</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>カール・セーガン<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>懐疑的な尋問者<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span> 19巻1号(1995年1-2月)より"<span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>神秘と懐疑論<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>"<span class="hljs-tag">&lt;/<span class="hljs-title">figcaption</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">figure</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- 次の例は引用文と一緒に引用元を記しています。--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>次の作品はふさわしく<span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>ソネット130<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>と名付けられました。:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span> <span class="hljs-attribute">cite</span>=<span class="hljs-value">"http://quotes.example.org/s/sonnet130.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>我が恋人の目に太陽の輝きはない、<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+  彼女の唇より珊瑚のほうがずっと赤い、<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+  ...
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- この例ではあるユーザがフォーラムの投稿に返信する際の例です。article要素は投稿ごとに使われ、スレッドをマークアップしています。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://bacon.example.com/?blog=109431"</span>&gt;</span>Bacon on a crowbar<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>t3yw<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 12 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29578"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>greg<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 8 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Dude narwhals don't eat bacon.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29579"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>t3yw<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 15 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Dude narwhals don't eat bacon.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Next thing you'll be saying they don't get capes and wizard
+    hats either!<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29580"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>boing<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> -5 points 1 hour ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>narwhals are worse than ceiling cat<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29581"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">header</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>fred<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> 1 points 23 minutes ago<span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet a narwhal would love that.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I bet they'd love to peel a banana too.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"?pid=29582"</span>&gt;</span>permalink<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+</code></pre>
+<pre><code class="html"><span class="hljs-comment">&lt;!-- この例ではp要素をblockquote要素に入れずにごく短い引用文を記述しています。 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>彼は以下のように”レッスン”を始めた。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>メリットを得られるように譲歩することはもちろん、
+相手側が非を認めることを前提としないこと<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>彼は似たような言葉を続けたあと、以下のように締めくくった。<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span>最後に、どこかで交渉が崩壊する脅威に対して準備し、
+可能性を盾に脅されないこと。<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>今回はこれらの点について議論していこう...
+</code></pre>
+<h2>Notes</h2>
+<h3>備考</h3>
+<ul>
+<li>後のセクションで、会話の表し方の例が示されるかもしれませんが、<strong>cite</strong>と<strong>blockquote</strong>はそのような目的にはふさわしくありません。</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/grouping-content.html#the-blockquote-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/grouping-content.html#the-blockquote-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/text.html#edef-BLOCKQUOTE">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages (internal)</h3>
+<ul>
+<li>q<a href="/docs/html/elements/q">q</a></li>
+<li>cite<a href="/docs/html/elements/cite">cite</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/HTML/Element/blockquote">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

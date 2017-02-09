@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG grand tour · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This guide shows you how to build a pair of animating eyeballs, providing a comprehensive tour of SVG features detailed in other tutorials. It shows how to maintain a set of reusable graphic components, and provides essential context on SVG transforms and coordinate spaces." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/tutorials/">tutorials</a></li><li><a href="/svg/tutorials/smarter_svg overview/">smarter svg overview</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>SVG grand tour</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>This guide shows you how to build a pair of animating eyeballs, providing a comprehensive tour of SVG features detailed in other tutorials. It shows how to maintain a set of reusable graphic components, and provides essential context on SVG transforms and coordinate spaces.</p>
+<p>SVG is a standard markup format, like HTML and XML, that renders <em>Scalable Vector Graphics</em> within web browsers. <em>Vector</em> or <em>drawing</em>-style graphics are implemented as pure shapes that render crisply at any magnification. In contrast, <em>raster</em> or <em>paint</em>-style images consist of a series of pixels that may not display well when zoomed at high resolution. Use SVG if you want to freely interact with portions of a graphic. Since SVG renders within the browser’s DOM, each graphic component can be styled through CSS, manipulated with JavaScript through core APIs, and can appear comfortably within HTML pages.</p>
+<p>This section of the guide shows how SVG is deployed along with other core web standards, with which you should already be familiar. It highlights some notable differences, and provides a quick tour of many SVG features that are covered in more detail in other sections. It focuses on the unique way you can build complex interactive graphics from reusable components, and how to flexibly resize them and place them within various drawing surfaces.</p>
+<p><img src="//static.webplatform.org/a/a7/scr_svg_eyes.png" alt="scr svg eyes.png"></p>
+<p>As part of a grand tour to get a feel for SVG markup, you’ll stroll through an example that shows how to build a pair of eyes, and how to move them around and make them blink. <a href="http://letmespellitoutforyou.com/samples/svg_eyeball.html">View the accompanying live demo here</a>.</p>
+<h2>Defining the drawing area</h2>
+<p>There are several ways to deploy SVG, with various options outlined in the section at the bottom of this page. Examples used throughout this guide feature <em>inline</em> SVG that’s directly embedded within HTML, which allows you to flexibly apply CSS and JavaScript to both the SVG graphic and the HTML content. The basic markup looks like this, with an <a href="/docs/svg/elements/svg"><strong>svg</strong></a> element encapsulating the graphics:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>SVG grand tour demo<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"css/eyeballs.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"600"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>eyeballs<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">desc</span>&gt;</span>interactive demo showcasing several SVG features<span class="hljs-tag">&lt;/<span class="hljs-title">desc</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"js/eyeballs.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>You can add <a href="/docs/svg/elements/title"><strong>title</strong></a> and <a href="/docs/svg/elements/desc"><strong>desc</strong></a> elements wherever necessary to comment your markup.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_deploy"><strong>SVG deployment</strong></a> for different ways to render SVG content.)</p>
+<h2>The eyeball</h2>
+<p>Adding this line within the <a href="/docs/svg/elements/svg"><strong>svg</strong></a> region produces a circle. The <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a> and <a href="/w/index.php?title=svg/attributes/cy&amp;action=edit&amp;redlink=1"><strong>cy</strong></a> attributes position its center point, and the <a href="/w/index.php?title=svg/attributes/r&amp;action=edit&amp;redlink=1"><strong>r</strong></a> sizes it relative to that point:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/3/31/svgGrandTour_eyeball_circle_black.png/100px-svgGrandTour_eyeball_circle_black.png" alt="svgGrandTour eyeball circle black.png"></p>
+<p>By default, it’s filled black. Adding a <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> attribute allows you to color the background white, and a <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> attribute helps clarify the edge of the shape:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"white"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"black"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/e/ec/svgGrandTour_eyeball_circle_white.png/100px-svgGrandTour_eyeball_circle_white.png" alt="svgGrandTour eyeball circle white.png"></p>
+<p>To add the iris and pupil, you can add more circles that specify different fill colors. Declaring the larger circles first prevents them from obscuring the smaller ones:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"white"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"black"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"iris"</span>    <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"lightblue"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"pupil"</span>   <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"12"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"black"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/9/96/svgGrandTour_eyeball_circles.png/100px-svgGrandTour_eyeball_circles.png" alt="svgGrandTour eyeball circles.png"></p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_shapes"><strong>SVG shapes</strong></a> for more about basic graphic elements such as circles, ellipses, rectangles, and polygons.)</p>
+<h2>Styling via CSS</h2>
+<p>In this example, the <a href="/w/index.php?title=svg/attributes/id&amp;action=edit&amp;redlink=1"><strong>id</strong></a>, <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a>, <a href="/w/index.php?title=svg/attributes/cy&amp;action=edit&amp;redlink=1"><strong>cy</strong></a>, and <a href="/w/index.php?title=svg/attributes/r&amp;action=edit&amp;redlink=1"><strong>r</strong></a> are all ordinary <em>attributes</em>, while the <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> and <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> are known as <em>presentation attributes</em>. These are simply CSS properties that happen to be expressed as attributes. Other than the tendency of longer CSS property names to use <em>dashes-between-lowercase-words</em> rather than <em>camelCase</em> for attribute names, there may be no way to tell the difference by looking at them.</p>
+<p>Many CSS properties such as <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> and <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> apply only to SVG content. Some, like <a href="/w/index.php?title=svg/properties/font-size&amp;action=edit&amp;redlink=1"><strong>font-size</strong></a>, apply to both SVG and HTML. Some behave like CSS properties that you apply to HTML, but are named differently. The <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> property provides much the same capabilities in SVG as the <a href="/docs/css/properties/background-color"><strong>background-color</strong></a> and <a href="/docs/css/properties/background-image"><strong>background-image</strong></a> properties do for HTML. Since <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> is a CSS property, You can also modify it locally via the <a href="/w/index.php?title=svg/attributes/style&amp;action=edit&amp;redlink=1"><strong>style</strong></a> attribute. Doing so actually takes precedence over the value of presentation attributes, so this example changes the eye color to brown:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"iris"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"25"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"lightblue"</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"fill:brown"</span>/&gt;</span>
+</code></pre>
+<p>As in HTML, you can consolidate CSS within style sheets to separate it from markup. Placing this CSS in the <em>eyeballs.css</em> file referenced from the HTML applies it to the slightly pared-down SVG markup that follows:</p>
+<pre><code class="css"><span class="hljs-id">#eyeball</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">fill</span>:<span class="hljs-value"> white</span></span>; <span class="hljs-rule"><span class="hljs-attribute">stroke</span>:<span class="hljs-value"> black </span></span></span>}
+<span class="hljs-id">#iris</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">fill</span>:<span class="hljs-value"> lightblue </span></span></span>}
+<span class="hljs-id">#pupil</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">fill</span>:<span class="hljs-value"> black </span></span></span>}
+</code></pre>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"iris"</span>    <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"25"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"pupil"</span>   <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"12"</span>/&gt;</span>
+</code></pre>
+<p>As you’ll see below, there are some cases where you want to avoid using style sheets.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_deploy"><strong>SVG deployment</strong></a> for different ways to apply CSS.)</p>
+<h2>Applying a gradient</h2>
+<p>The concentric circles provide a good way to implement the edge of the iris and pupil, but are not good for the slight bloodshot color towards the edge of the eye. As an alternative, you can implement the entire eyeball as a large circle, within which a radial gradient builds a series of concentric rings:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"150"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"url(#eyeballFill)"</span> /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">radialGradient</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeballFill"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"inner"</span>           <span class="hljs-attribute">offset</span>=<span class="hljs-value">"12%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"black"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"pupil"</span>           <span class="hljs-attribute">offset</span>=<span class="hljs-value">"15%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"lightblue"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"iris"</span>            <span class="hljs-attribute">offset</span>=<span class="hljs-value">"27%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"lightblue"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"white"</span>           <span class="hljs-attribute">offset</span>=<span class="hljs-value">"30%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"white"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"bloodshotExtent"</span> <span class="hljs-attribute">offset</span>=<span class="hljs-value">"40%"</span>  <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"white"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">stop</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"outer"</span>           <span class="hljs-attribute">offset</span>=<span class="hljs-value">"100%"</span> <span class="hljs-attribute">stop-color</span>=<span class="hljs-value">"pink"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">radialGradient</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/1/1d/svgGrandTour_eyeball_fill.png/200px-svgGrandTour_eyeball_fill.png" alt="svgGrandTour eyeball fill.png"></p>
+<p>The <a href="/docs/svg/elements/circle"><strong>circle</strong></a> element’s <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> attribute uses CSS’s <strong>url()</strong> function to reference the <a href="/w/index.php?title=svg/attributes/id&amp;action=edit&amp;redlink=1"><strong>id</strong></a> of the <a href="/docs/svg/elements/radialGradient"><strong>radialGradient</strong></a> element. Its nested <a href="/svg/elements/stop"><strong>stop</strong></a> elements define fairly abrupt gradations from the center towards the edge—from black to blue and then to white—followed by a more gradual transition to pink around the edge of the circle. SVG gradients work similarly to CSS gradients available for HTML content, but CSS gradients are only available via the <a href="/docs/css/properties/background-image"><strong>background-image</strong></a> property, which doesn’t apply to SVG.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_graphics"><strong>SVG graphics</strong></a> for details about gradients, and other information on using patterns and images.)</p>
+<h2>Referencing graphics</h2>
+<p>This new circle is much larger than the actual eyeball, because we want to move it around behind a smaller pair of eyelids. (Don’t worry for now that the shape is wider than the drawing area.) Before you build the eyelids, you should stash away the graphic components you’ve already defined. Add a <a href="/docs/svg/elements/defs"><strong>defs</strong></a> region to the <a href="/docs/svg/elements/svg"><strong>svg</strong></a>:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>SVG grand tour demo<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"css/eyeballs.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"600"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200"</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>eyeballs<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">desc</span>&gt;</span>interactive demo showcasing several SVG features<span class="hljs-tag">&lt;/<span class="hljs-title">desc</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+      <span class="hljs-comment">&lt;!-- place components here --&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"js/eyeballs.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you move the <a href="/docs/svg/elements/radialGradient"><strong>radialGradient</strong></a> within the <a href="/docs/svg/elements/defs"><strong>defs</strong></a> region, the <a href="/svg/elements/circle"><strong>circle</strong></a> still references it as before, but if you move the <a href="/svg/elements/circle"><strong>circle</strong></a> there, it doesn’t render.</p>
+<p>The SVG <a href="/docs/svg/elements/use"><strong>use</strong></a> element allows you a way to reuse graphic components repeatedly, and to place them in differently sized areas. After placing the <a href="/docs/svg/elements/circle"><strong>circle</strong></a> within the <a href="/svg/elements/defs"><strong>defs</strong></a> region, pointing to it with a <a href="/svg/elements/use"><strong>use</strong></a> element placed outside the <a href="/svg/elements/defs"><strong>defs</strong></a> makes it render:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyeball"</span>/&gt;</span>
+</code></pre>
+<p>The <a href="/docs/svg/elements/use"><strong>use</strong></a> element can be a bit mystifying at first. It’s not simply a copy of the object it points to, but a <em>deep reference</em>. Any changes made to the prototype <a href="/docs/svg/elements/circle"><strong>circle</strong></a> or <a href="/svg/elements/radialGradient"><strong>radialGradient</strong></a> components appears dynamically wherever a <a href="/svg/elements/use"><strong>use</strong></a> element references them. Despite this flexibility, you can’t redefine any of the referenced object’s attributes. But you can add optional presentation attributes that aren’t already defined there.</p>
+<p>Since the <a href="/docs/svg/elements/use"><strong>use</strong></a> and its target element are placed in different parts of the document tree, CSS style sheets that ordinarily apply to the target do not automatically cascade to the <a href="/docs/svg/elements/use"><strong>use</strong></a>. However, you can apply CSS separately to the <a href="/svg/elements/use"><strong>use</strong></a> element. This example applies the same style sheet based on the <a href="/w/index.php?title=svg/attributes/id&amp;action=edit&amp;redlink=1"><strong>id</strong></a> of the target, and the <a href="/w/index.php?title=svg/attributes/class&amp;action=edit&amp;redlink=1"><strong>class</strong></a> of any <a href="/svg/elements/use"><strong>use</strong></a> that references it:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+<span class="hljs-id">#eyeball</span>, <span class="hljs-class">.eyeball</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">fill</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-hexcolor">#e</span>yeballFill)</span></span>;
+}</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"200"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"150"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyeball"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball_1"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+</code></pre>
+<p>Note that if the targeted <a href="/docs/svg/elements/circle"><strong>circle</strong></a> were also to share the same <em>eyeball</em> class in this example, then the <a href="/docs/svg/elements/use"><strong>use</strong></a> element would not have the flexibility to be able to change it.</p>
+<p>Notice as well that the <a href="/docs/svg/elements/use"><strong>use</strong></a> element needs the <strong>xlink</strong> namespace to qualify the standard <strong>href</strong> attribute, which is also available in HTML with no namespace qualifier. This <strong>xlink:href</strong> attribute offers a different way to reference an object than the CSS <strong>url()</strong> syntax you see in the example above.</p>
+<h2>The eyelids</h2>
+<p>To place the eyeball within eyelids requires a <em>clipping path</em>, which allows an object to render only when it appears within another shape. In this case, the <em>eyelids</em> shape is a free-form <a href="/docs/svg/elements/path"><strong>path</strong></a> whose <a href="/w/index.php?title=svg/attributes/d&amp;action=edit&amp;redlink=1"><strong>d</strong></a> (<em>definition</em>) attribute draws two curves that face each other:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyelids"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 200,100 Q 100,200 0,100 Q 100,0 200,100"</span> /&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/f/fa/svgGrandTour_eyeball_eyelid.png/200px-svgGrandTour_eyeball_eyelid.png" alt="svgGrandTour eyeball eyelid.png"></p>
+<p>Each curve’s definition includes <em>control points</em> that influence the shape of the curve, but that do not themselves render. Starting from the right corner (<em>M</em> for <em>move to</em>), the first quadratic (<em>Q</em>) curve’s control point is placed at the top, and the destination is the left corner. The second quadratic curve places its control point at the bottom corner and ends up at the right corner:</p>
+<p><img src="//static.webplatform.org/thumb/f/f6/svgGrandTour_eyeball_ctrl.png/200px-svgGrandTour_eyeball_ctrl.png" alt="svgGrandTour eyeball ctrl.png"></p>
+<p>To make the shape behave as a clipping path, place a <a href="/docs/svg/elements/clipPath"><strong>clipPath</strong></a> element around the <a href="/docs/svg/elements/path"><strong>path</strong></a>. You will actually need to use this shape again, so it is best to <a href="/svg/elements/use"><strong>use</strong></a> a reference to it:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">clipPath</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"clipEyelid"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyelids"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyelids"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">clipPath</span>&gt;</span>
+</code></pre>
+<p>Now apply the <a href="/w/index.php?title=svg/properties/clip-path&amp;action=edit&amp;redlink=1"><strong>clip-path</strong></a> property to apply the clipping path to the eyeball shape. This example shows it assigned separately via CSS:</p>
+<pre><code class="css"><span class="hljs-class">.eyeball</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">fill       </span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-hexcolor">#e</span>yeballFill)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">clip-path  </span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-hexcolor">#c</span>lipEyelid)</span></span>;
+}</span>
+</code></pre>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyeball"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyeball"</span> /&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/e/e1/svgGrandTour_eyeball_eyelid_clip.png/200px-svgGrandTour_eyeball_eyelid_clip.png" alt="svgGrandTour eyeball eyelid clip.png"></p>
+<p>The only problem now is that the eyelid has disappeared. Clipping paths don’t actually render, so we need to point another reference to it. The first <a href="/docs/svg/elements/use"><strong>use</strong></a> below places the eyeball within the clipping path, and the second produces the path itself. The third <a href="/docs/svg/elements/use"><strong>use</strong></a> that appears outside the <a href="/svg/elements/defs"><strong>defs</strong></a> renders the entire object:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eye"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyeball"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyeball"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyelids"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyelids"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eye"</span> /&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/f/f9/svgGrandTour_eyeball_eyelid_both.png/200px-svgGrandTour_eyeball_eyelid_both.png" alt="svgGrandTour eyeball eyelid both.png"></p>
+<p>It becomes useful here to <em>group</em> the two graphic elements, wrapping a <a href="/docs/svg/elements/g"><strong>g</strong></a> element around them to consolidate a larger semantic <em>eye</em> object. You can reference the grouped object, and you will see below, move or otherwise transform it as a unit.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_shapes"><strong>SVG shapes</strong></a> for details on path commands, and <a href="/docs/svg/tutorials/smarter_svg_graphics"><strong>SVG graphics</strong></a> for clipping paths.)</p>
+<h2>The eyelashes</h2>
+<p>Drawing the eyelashes along the eyelid requires a bit of creativity. We need to add a third reference to the eyelid shape.</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eye"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyelids"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyelashes"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyelids"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyelids"</span>   /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyeball"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyeball"</span>   /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p>The <em>eyelashes</em> class presents the underlying <em>eyelids</em> shape much differently:</p>
+<pre><code class="css"><span class="hljs-class">.eyelashes</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">fill              </span>:<span class="hljs-value"> none</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke            </span>:<span class="hljs-value"> <span class="hljs-hexcolor">#ddd</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-width      </span>:<span class="hljs-value"> <span class="hljs-number">40</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-dasharray  </span>:<span class="hljs-value"> <span class="hljs-number">1</span>,<span class="hljs-number">10</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-linejoin   </span>:<span class="hljs-value"> bevel</span></span>;
+}</span>
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/properties/stroke-width&amp;action=edit&amp;redlink=1"><strong>stroke-width</strong></a> thickens the edge so that it extends both inside and outside the shape. By default, the <em>stroke</em> is solid, but you can apply a <em>dash</em> pattern to break it into segments. Setting the <a href="/w/index.php?title=svg/properties/stroke-dasharray&amp;action=edit&amp;redlink=1"><strong>stroke-dasharray</strong></a> property to <em>1,10</em> specifies that for every pixel rendered around the edge of the shape, skip another ten pixels. This has the effect of drawing individual eyelashes:</p>
+<p><img src="//static.webplatform.org/thumb/d/d3/svgGrandTour_eyeball_eyelashes.png/200px-svgGrandTour_eyeball_eyelashes.png" alt="svgGrandTour eyeball eyelashes.png"></p>
+<p>The beveled <a href="/w/index.php?title=svg/properties/stroke-linejoin&amp;action=edit&amp;redlink=1"><strong>stroke-linejoin</strong></a> property prevents the stroke from rendering too far past the sharp corner of the eye where the eyelids meet.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_shapes"><strong>SVG shapes</strong></a> for details on various stroke properties.)</p>
+<h2>Applying eyeliner</h2>
+<p>Even after lightening the color of the stroke, the eyelashes appear way too crisp and thin compared to the eyeball, and could be softened and thickened up a bit. SVG <em>filters</em> provide many image processing tools that you can mix and match to produce such special visual effects.</p>
+<p>Add a <a href="/docs/svg/elements/filter"><strong>filter</strong></a> element to the <a href="/docs/svg/elements/defs"><strong>defs</strong></a> region. It serves as a wrapper for various <em>filter effect</em> components, which by default are applied in sequence. In this case, the <a href="/svg/elements/feGaussianBlur"><strong>feGaussianBlur</strong></a> effect scatters the pixels around randomly (a bit more vertically than horizontally), and <a href="/svg/elements/feComponentTransfer"><strong>feComponentTransfer</strong></a> darkens the result:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span>
+    <span class="hljs-attribute">id</span>           = "<span class="hljs-attribute">soften</span>"
+    <span class="hljs-attribute">x</span>            = "<span class="hljs-attribute">-20</span>"
+    <span class="hljs-attribute">y</span>            = "<span class="hljs-attribute">-20</span>"
+    <span class="hljs-attribute">width</span>        = "<span class="hljs-attribute">250</span>"
+    <span class="hljs-attribute">height</span>       = "<span class="hljs-attribute">250</span>"
+    <span class="hljs-attribute">filterUnits</span>  = "<span class="hljs-attribute">userSpaceOnUse</span>"
+&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">desc</span>&gt;</span>soften eyelid and eyelashes<span class="hljs-tag">&lt;/<span class="hljs-title">desc</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"1 3"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">feFuncR</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"0.3"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">feFuncG</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"0.3"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">feFuncB</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"linear"</span> <span class="hljs-attribute">slope</span>=<span class="hljs-value">"0.3"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<p>Since the eyelid renders horizontally between 0 and 200 pixels, the eyelashes spill slightly outside the the left edge of the original drawing area. The <em>filter</em> element’s <a href="/w/index.php?title=svg/attributes/x&amp;action=edit&amp;redlink=1"><strong>x</strong></a>/<a href="/w/index.php?title=svg/attributes/y&amp;action=edit&amp;redlink=1"><strong>y</strong></a>/<a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a>/<a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> attributes apply the effect to a wider set of dimensions. Setting <a href="/w/index.php?title=svg/attributes/filterUnits&amp;action=edit&amp;redlink=1"><strong>filterUnits</strong></a> to <strong>userSpaceOnUse</strong> uses the same coordinate system as the shape to which the filter is applied; otherwise values would be interpreted as percentages of the object’s bounding box.</p>
+<p>Use the <a href="/docs/svg/properties/filter"><strong>filter</strong></a> property to assign the effect to the shape used to render the eyelids and eyelashes:</p>
+<pre><code class="css"><span class="hljs-id">#eyelids</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">filter </span>:<span class="hljs-value"> <span class="hljs-function">url</span>(#soften)</span></span>;
+}</span>
+</code></pre>
+<p>Here is how it appears, first after the blur, then after the subsequent darkening:</p>
+<p><img src="//static.webplatform.org/thumb/7/7d/svgGrandTour_eyeball_eyelash_filter_blur.png/200px-svgGrandTour_eyeball_eyelash_filter_blur.png" alt="svgGrandTour eyeball eyelash filter blur.png"></p>
+<p><img src="//static.webplatform.org/thumb/4/4f/svgGrandTour_eyeball_eyelid_filters.png/200px-svgGrandTour_eyeball_eyelid_filters.png" alt="svgGrandTour eyeball eyelid filters.png"></p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_filters"><strong>SVG filters</strong></a> for information on various ways to combine SVG’s filter effects.)</p>
+<h2>Transforms and coordinate spaces</h2>
+<p>To finish off the graphic, group another instance of the <em>eye</em> object into a higher-level <em>eyes</em> object:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyes"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eye"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eye"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p>This renders the same shape twice at the same location. To space them out, apply a <a href="/w/index.php?title=svg/attributes/transform&amp;action=edit&amp;redlink=1"><strong>transform</strong></a>. This moves the character’s right eye to the right a bit, and the left eye 300 units further:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyes"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eye"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeRight"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(50,0)"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eye"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeLeft"</span>  <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(350,0)"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p>The <a href="/w/index.php?title=svg/attributes/transform&amp;action=edit&amp;redlink=1"><strong>transform</strong></a> attribute’s <strong>translate()</strong> function provides a flexible way to reposition objects referenced via <a href="/docs/svg/elements/use"><strong>use</strong></a>, but transforms can be applied to most any graphic element. SVG transforms provide the same functionality as two-dimensional CSS transforms. The <strong>scale()</strong> function accepts a decimal value to size the object, where <em>1</em> is the current size, <em>0</em> vanishes to a point, and values greater than 1 increase the size. The <strong>rotate()</strong> function accepts a <em>deg</em> or <em>rad</em> angle measurement that spins the object. The <strong>skewX()</strong> and <strong>skewY()</strong> also accepts an angle with which to shear the object horizontally or vertically. And <strong>translate()</strong> shifts the object’s position.</p>
+<p>Once the eyes are semantically grouped, a single <a href="/docs/svg/elements/use"><strong>use</strong></a> element outside the <a href="/docs/svg/elements/defs"><strong>defs</strong></a> region renders them:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyes"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/a/ac/svgGrandTour_eyeballs.png/500px-svgGrandTour_eyeballs.png" alt="svgGrandTour eyeballs.png"></p>
+<p>When presenting the eyes with other interface elements, you may want to resize them. The original <a href="/docs/svg/elements/svg"><strong>svg</strong></a> element specified that they should appear within a 600×200-pixel rectangle:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"600"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"200"</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/d6/svgGrandTour_eyeballs_viewport_large.png/600px-svgGrandTour_eyeballs_viewport_large.png" alt="svgGrandTour eyeballs viewport large.png"></p>
+<p>But what if that’s much too big for the context in which they are to appear? If you shrink it down, using either <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a>/<a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> attributes or CSS, its dimensions no longer match the various measurements specified within the graphic:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+<span class="hljs-tag">svg</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">width  </span>:<span class="hljs-value"> <span class="hljs-number">300px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height </span>:<span class="hljs-value"> <span class="hljs-number">100px</span></span></span>;
+}</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- ...or... --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"300"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/b/bd/svgGrandTour_eyeballs_viewport_small.png/300px-svgGrandTour_eyeballs_viewport_small.png" alt="svgGrandTour eyeballs viewport small.png"></p>
+<p>The solution is to define a custom box using the <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a> attribute. Doing so declares a set of abstract units for exclusive use <em>within</em> the graphic, which may bear no relation to the outer coordinate space in which the graphic is presented, to which the SVG’s <a href="/w/index.php?title=svg/attributes/width&amp;action=edit&amp;redlink=1"><strong>width</strong></a> and <a href="/w/index.php?title=svg/attributes/height&amp;action=edit&amp;redlink=1"><strong>height</strong></a> apply:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"300"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 600 200"</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/8/84/svgGrandTour_eyeballs_viewbox.png/300px-svgGrandTour_eyeballs_viewbox.png" alt="svgGrandTour eyeballs viewbox.png"></p>
+<p>Adding a <a href="/w/index.php?title=svg/attributes/preserveAspectRatio&amp;action=edit&amp;redlink=1"><strong>preserveAspectRatio</strong></a> attribute controls what happens in cases when the shape of the <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a> doesn’t match the <em>viewport</em> within which the graphic appears. In this case, <strong>xMidYMid</strong> centers it and shrinks it enough for the entire graphic to appear:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 600 200"</span> <span class="hljs-attribute">preserveAspectRatio</span>=<span class="hljs-value">"xMidYMid"</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/0/04/svgGrandTour_eyeballs_viewbox_preserve.png/100px-svgGrandTour_eyeballs_viewbox_preserve.png" alt="svgGrandTour eyeballs viewbox preserve.png"></p>
+<h2>Glancing</h2>
+<p>The only remaining problem is that the graphic doesn’t actually <em>do</em> anything. We want to make the eyes to <em>move</em>.</p>
+<p>In many cases, you can use CSS techniques to animate numeric and color properties that apply to SVG. For example, here’s a way to gradually change the eye color, by toggling between the gradient color stops’ <em>blue</em> and <em>brown</em> classes:</p>
+<pre><code class="css"> <span class="hljs-class">.blue</span>  <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">stop-color   </span>:<span class="hljs-value"> lightblue</span></span>; }</span>
+ <span class="hljs-class">.brown</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">stop-color   </span>:<span class="hljs-value"> brown</span></span>; }</span>
+ <span class="hljs-tag">stop</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">transition         </span>:<span class="hljs-value"> all <span class="hljs-number">5s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition </span>:<span class="hljs-value"> all <span class="hljs-number">5s</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-moz-transition    </span>:<span class="hljs-value"> all <span class="hljs-number">5s</span></span></span>;
+ }</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/e/e0/svgGrandTour_eyeballs_brown.png/500px-svgGrandTour_eyeballs_brown.png" alt="svgGrandTour eyeballs brown.png"></p>
+<p>You can’t use that familiar approach for SVG attributes. SVG has its own mechanism (based on the <em>SMIL</em> standard) to animate attribute values. We’ll use it to make the eye glance to the side.</p>
+<p>First, let’s try to move the eye statically using a <strong>translate()</strong> transform described above:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span> <span class="hljs-attribute">transform</span>=<span class="hljs-value">"translate(50,0)"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/f/f2/svgGrandTour_eyeballs_translate50.png/500px-svgGrandTour_eyeballs_translate50.png" alt="svgGrandTour eyeballs translate50.png"></p>
+<p>That certainly didn’t do what we want. It moved the entire eyeball, including the clipping path behind which it is supposed to render. Instead, modify the <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a> attribute, which sets the position of the center of the circle:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"150"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"50"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/e/ea/svgGrandTour_eyeball_glance.png/500px-svgGrandTour_eyeball_glance.png" alt="svgGrandTour eyeball glance.png"></p>
+<p>That’s much better. Now return the <a href="/w/index.php?title=svg/attributes/cx&amp;action=edit&amp;redlink=1"><strong>cx</strong></a> to its original value. To get it to move dynamically, place an <a href="/w/index.php?title=svg/elements/animate&amp;action=edit&amp;redlink=1"><strong>animate</strong></a> element within the <em>eyeball</em> object whose attribute you want to modify:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"150"</span> &gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+        <span class="hljs-attribute">id</span>             = "<span class="hljs-attribute">glanceStart</span>"
+        <span class="hljs-attribute">attributeType</span>  = "<span class="hljs-attribute">XML</span>"
+        <span class="hljs-attribute">attributeName</span>  = "<span class="hljs-attribute">cx</span>"
+        <span class="hljs-attribute">begin</span>          = "<span class="hljs-attribute">1s</span>"
+        <span class="hljs-attribute">dur</span>            = "<span class="hljs-attribute">0.5s</span>"
+        <span class="hljs-attribute">from</span>           = "<span class="hljs-attribute">100</span>"
+        <span class="hljs-attribute">to</span>             = "<span class="hljs-attribute">150</span>"
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">circle</span>&gt;</span>
+</code></pre>
+<p>Let’s step through what each attribute does:</p>
+<ul>
+<li><p><a href="/w/index.php?title=svg/attributes/attributeType&amp;action=edit&amp;redlink=1"><strong>attributeType</strong></a> clarifies that the value we’re manipulating is an <em>XML</em> attribute, not a <em>CSS</em> property.</p></li>
+<li><p><a href="/w/index.php?title=svg/attributes/attributeName&amp;action=edit&amp;redlink=1"><strong>attributeName</strong></a> provides the name of the attribute to modify, <em>cx</em> in this case.</p></li>
+<li><p><a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> specifies a delay after which the animation executes, in this case 1 second. A begin value of <em>0s</em> animates immediately. (If you leave out this attribute, the animation does not play by default, but you can control it with JavaScript as described below.)</p></li>
+<li><p><a href="/w/index.php?title=svg/attributes/dur&amp;action=edit&amp;redlink=1"><strong>dur</strong></a> specifies the animation’s duration, half a second in this case.</p></li>
+<li><p><a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> provide the values between which the animation should transition. In this case, it moves the eyeball 50 units to the right.</p></li>
+</ul>
+<p>As it appears above, the animation moves the eyes to the right, then immediately snaps back. There’s an attribute called <a href="/docs/svg/attributes/fill"><strong>fill</strong></a>, which is unfortunately named the same as the <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> property that applies colors and gradients to shapes. Adding a <a href="/docs/svg/attributes/fill"><strong>fill</strong></a> attribute here and setting it to <strong>freeze</strong> would keep the eyes looking to the side after the animation ends. But instead, we’ll add another animation to return the eyes to their original state:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">circle</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyeball"</span> <span class="hljs-attribute">cx</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">cy</span>=<span class="hljs-value">"100"</span> <span class="hljs-attribute">r</span>=<span class="hljs-value">"150"</span> &gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+        <span class="hljs-attribute">id</span>             = "<span class="hljs-attribute">glanceStart</span>"
+        <span class="hljs-attribute">attributeType</span>  = "<span class="hljs-attribute">XML</span>"
+        <span class="hljs-attribute">attributeName</span>  = "<span class="hljs-attribute">cx</span>"
+        <span class="hljs-attribute">begin</span>          = "<span class="hljs-attribute">1s</span>"
+        <span class="hljs-attribute">dur</span>            = "<span class="hljs-attribute">0.5s</span>"
+        <span class="hljs-attribute">from</span>           = "<span class="hljs-attribute">100</span>"
+        <span class="hljs-attribute">to</span>             = "<span class="hljs-attribute">150</span>"
+    /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+        <span class="hljs-attribute">id</span>             = "<span class="hljs-attribute">glanceEnd</span>"
+        <span class="hljs-attribute">attributeType</span>  = "<span class="hljs-attribute">XML</span>"
+        <span class="hljs-attribute">attributeName</span>  = "<span class="hljs-attribute">cx</span>"
+        <span class="hljs-attribute">begin</span>          = "<span class="hljs-attribute">glanceStart.end</span>"
+        <span class="hljs-attribute">dur</span>            = "<span class="hljs-attribute">0.5s</span>"
+        <span class="hljs-attribute">from</span>           = "<span class="hljs-attribute">150</span>"
+        <span class="hljs-attribute">to</span>             = "<span class="hljs-attribute">100</span>"
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">circle</span>&gt;</span>
+</code></pre>
+<p>Aside from the inversion of the <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> values, note the <em>glanceEnd</em> animation’s <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> time is expressed in terms of whenever the previous <em>glanceStart</em> animation ends. And notice that in addition to the <strong>xlink:href</strong> and <strong>url()</strong> syntax we’ve seen used to reference objects, now we see a third form of dot syntax that references the <em>glanceStart</em> identifier along with the value of its <a href="/w/index.php?title=svg/attributes/end&amp;action=edit&amp;redlink=1"><strong>end</strong></a> attribute.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_filters"><strong>SVG animations</strong></a> for details.)</p>
+<h2>Blinking</h2>
+<p>As is true for CSS transitions and animations, you can animate most any numeric or color value. You can also animate complex series of coordinates used in <a href="/docs/svg/elements/path"><strong>path</strong></a> definitions, so long as the sequence of path commands match so that there are corresponding sets of points. This allows the eyes to blink. Add this to the <em>eyelids</em> object:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eyelids"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 200,100 Q 100,200 0,100 Q 100,0 200,100"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+        <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">blink</span>"
+        <span class="hljs-attribute">attributeType</span> = "<span class="hljs-attribute">XML</span>"
+        <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">d</span>"
+        <span class="hljs-attribute">from</span>          = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">200</span>,<span class="hljs-attribute">100</span> <span class="hljs-attribute">Q</span> <span class="hljs-attribute">100</span>,<span class="hljs-attribute">200</span> <span class="hljs-attribute">0</span>,<span class="hljs-attribute">100</span> <span class="hljs-attribute">Q</span> <span class="hljs-attribute">100</span>,<span class="hljs-attribute">0</span> <span class="hljs-attribute">200</span>,<span class="hljs-attribute">100</span>"
+        <span class="hljs-attribute">to</span>            = "<span class="hljs-attribute">M</span> <span class="hljs-attribute">200</span>,<span class="hljs-attribute">100</span> <span class="hljs-attribute">Q</span> <span class="hljs-attribute">100</span>,<span class="hljs-attribute">100</span> <span class="hljs-attribute">0</span>,<span class="hljs-attribute">100</span> <span class="hljs-attribute">Q</span> <span class="hljs-attribute">100</span>,<span class="hljs-attribute">100</span> <span class="hljs-attribute">200</span>,<span class="hljs-attribute">100</span>"
+        <span class="hljs-attribute">begin</span>         = "<span class="hljs-attribute">4s</span>; <span class="hljs-attribute">6s</span>; <span class="hljs-attribute">8s</span>; <span class="hljs-attribute">9s</span>; <span class="hljs-attribute">11.5s</span>; <span class="hljs-attribute">13s</span>"
+        <span class="hljs-attribute">dur</span>           = "<span class="hljs-attribute">0.1s</span>"
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">path</span>&gt;</span>
+</code></pre>
+<p>In this case, the <a href="/w/index.php?title=svg/attributes/begin&amp;action=edit&amp;redlink=1"><strong>begin</strong></a> attribute specifies half a dozen different values, so the animation executes several times . Between the <a href="/w/index.php?title=svg/attributes/from&amp;action=edit&amp;redlink=1"><strong>from</strong></a> and <a href="/w/index.php?title=svg/attributes/to&amp;action=edit&amp;redlink=1"><strong>to</strong></a> values, the only values that are modified are the positions of the two control points that affect the shape of the curve, so the animation behaves like this:</p>
+<p><img src="//static.webplatform.org/7/75/svgGrandTour_eyeball_blink.png" alt="svgGrandTour eyeball blink.png"></p>
+<p>You can use JavaScript to control these animations more flexibly. To do so, call the <strong>beginElement()</strong> method on the animation object. This example shifts the <em>x</em>/<em>y</em> coordinates to which the eyes glance, with an optional duration parameter to regulate the speed:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">glanceTo</span>(<span class="hljs-params">x,y,dur</span>) </span>{
+    dur = (dur || <span class="hljs-number">0.5</span>) + <span class="hljs-string">'s'</span>; <span class="hljs-comment">// assign 3rd param or default</span>
+    <span class="hljs-keyword">var</span> toThere = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#glanceStart'</span>);
+    <span class="hljs-keyword">var</span> andBack = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#glanceEnd'</span>);
+    toThere.setAttribute(<span class="hljs-string">"to"</span>, x + <span class="hljs-string">" "</span> + y);
+    andBack.setAttribute(<span class="hljs-string">"from"</span>, x + <span class="hljs-string">" "</span> + y);
+    toThere.setAttribute(<span class="hljs-string">"dur"</span>, dur);
+    andBack.setAttribute(<span class="hljs-string">"dur"</span>, dur);
+    toThere.beginElement();
+}
+</code></pre>
+<p>Calling this function keeps the eyes blinking at random points between two and five seconds:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">blink</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> minDelay = <span class="hljs-number">2000</span>;
+    <span class="hljs-keyword">var</span> maxExtraDelay = <span class="hljs-number">3000</span>;
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#blink'</span>).beginElement();
+    setTimeout(blink, (<span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * maxExtraDelay) + minDelay));
+}
+</code></pre>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_filters"><strong>SVG animations</strong></a> for details.)</p>
+<h2>Interactive Zoom</h2>
+<p>Suppose you want to click on the graphic to get a closer look at it. Scaling the eyeball would be difficult, because there are now two of them, and they would collide with each other. Instead, you can alter the dimensions of the current <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a> to zoom into the scene.</p>
+<p>Links use the same <a href="/docs/svg/elements/a"><strong>a</strong></a> element as in HTML, but as usual the <strong>xlink:href</strong> attribute needs its namespace qualified, and it needs to wrap other SVG elements rather than plain text. This link encapsulates the wrapper for both eyes, so clicking on either one activates the link:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#zoomIn"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyes"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"zoomIn"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"100 50 100 100"</span> /&gt;</span>
+</code></pre>
+<p>When linking to an internal <a href="/docs/svg/elements/view"><strong>view</strong></a> element, its <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a> value overrides that of the <a href="/docs/svg/elements/svg"><strong>svg</strong></a> of which it is a descendant, thus zooming the scene:</p>
+<p><img src="//static.webplatform.org/thumb/a/ac/svgGrandTour_eyeball_zoom.png/200px-svgGrandTour_eyeball_zoom.png" alt="svgGrandTour eyeball zoom.png"></p>
+<p>The entire eyeball is active by default, but this can be configured. In HTML content, the <a href="/docs/css/properties/pointer-events"><strong>pointer-events</strong></a> property allows you to control whether an element’s mouse and touch event handlers execute, useful in layered interfaces. SVG allows you to target the active area to the <strong>visibleStroke</strong> or <strong>visibleFill</strong> portion of a graphic (or <strong>visiblePainted</strong> for both). These become active when a graphic’s <a href="/docs/css/properties/visibility"><strong>visibility</strong></a> is enabled (<strong>visible</strong>), and when <a href="/w/index.php?title=svg/properties/fill&amp;action=edit&amp;redlink=1"><strong>fill</strong></a> and <a href="/w/index.php?title=svg/properties/stroke&amp;action=edit&amp;redlink=1"><strong>stroke</strong></a> values are defined. (Unlike <a href="/docs/css/properties/visibility"><strong>visibility:hidden</strong></a>, setting <a href="/docs/css/properties/display"><strong>display:none</strong></a> entirely suppresses an element’s rendering.)</p>
+<p>As in HTML, the <a href="/docs/css/properties/cursor"><strong>cursor</strong></a> property allows you to highlight active areas, but unlike HTML, <em>any</em> graphic element can be styled separately with the <strong>:hover</strong> pseudoclass, not just links:</p>
+<pre><code class="css"><span class="hljs-id">#eyelid</span><span class="hljs-pseudo">:hover</span>, <span class="hljs-class">.eyelids</span><span class="hljs-pseudo">:hover</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">cursor</span>:<span class="hljs-value"> pointer</span></span>; }</span>
+<span class="hljs-id">#eyelid</span>, <span class="hljs-class">.eyelids</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">pointer-events</span>:<span class="hljs-value"> visiblePainted</span></span>; }</span>
+</code></pre>
+<h2>Animated Zoom</h2>
+<p>There are two problems with the anchor-zoom navigation described above. First, it only works within SVG files, not inline SVG within HTML. Second, it executes abruptly, the same way anchor navigation scrolls an HTML page.</p>
+<p>Both problems can be fixed by overriding the default navigation. First, define alternate <a href="/docs/svg/elements/view"><strong>view</strong></a> targets along with an <a href="/w/index.php?title=svg/elements/animate&amp;action=edit&amp;redlink=1"><strong>animate</strong></a> element to shift between each target’s <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a>. Setting <a href="/docs/svg/attributes/fill"><strong>fill</strong></a> to <strong>freeze</strong> retains the zoom level after the animation ends:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"zoomOut"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"0 0 600 200"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"zoomIn"</span> <span class="hljs-attribute">viewBox</span>=<span class="hljs-value">"100 50 100 100"</span> /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">animate</span>
+   <span class="hljs-attribute">id</span>            = "<span class="hljs-attribute">zoomNav</span>"
+   <span class="hljs-attribute">attributeType</span> = "<span class="hljs-attribute">XML</span>"
+   <span class="hljs-attribute">attributeName</span> = "<span class="hljs-attribute">viewBox</span>"
+   <span class="hljs-attribute">fill</span>          = "<span class="hljs-attribute">freeze</span>"
+   /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"zoom"</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#zoomIn"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyes"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre>
+<p>This JavaScript calls <strong>preventDefault()</strong> to disable default navigation for <em>zoom</em>-classed links. Instead, it executes the animation modified based on the target’s <a href="/w/index.php?title=svg/attributes/viewBox&amp;action=edit&amp;redlink=1"><strong>viewBox</strong></a>:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> animate, svg; <span class="hljs-comment">// corresponds to SVG elements</span>
+<span class="hljs-keyword">var</span> duration = <span class="hljs-string">'3s'</span>;
+
+<span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    svg = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'svg'</span>);
+    animate = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#zoomNav'</span>);
+    animate.setAttribute(<span class="hljs-string">'dur'</span>, duration);
+    animate.setAttribute(<span class="hljs-string">'from'</span>, svg.getAttribute(<span class="hljs-string">'viewBox'</span>));
+    animate.setAttribute(<span class="hljs-string">'to'</span>, svg.getAttribute(<span class="hljs-string">'viewBox'</span>));
+    <span class="hljs-keyword">var</span> links = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'a.zoom'</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, l = links.length; i &lt; l; i++) {
+        <span class="hljs-comment">// replace default navigation:</span>
+        links[i].setAttribute(<span class="hljs-string">'onclick'</span>, <span class="hljs-string">'event.preventDefault()'</span>);
+        links[i].addEventListener(<span class="hljs-string">'click'</span>, zoomNav);
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">zoomNav</span>(<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-keyword">var</span> hash = e.currentTarget.getAttribute(<span class="hljs-string">'xlink:href'</span>);
+    <span class="hljs-keyword">var</span> tgt = <span class="hljs-built_in">document</span>.querySelector(hash);
+    <span class="hljs-comment">// swap to/from values:</span>
+    animate.setAttribute(<span class="hljs-string">'from'</span>, animate.getAttribute(<span class="hljs-string">'to'</span>));
+    animate.setAttribute(<span class="hljs-string">'to'</span>, tgt.getAttribute(<span class="hljs-string">'viewBox'</span>));
+    <span class="hljs-comment">// execute animation:</span>
+    animate.beginElement();
+    <span class="hljs-comment">// apply CSS class to help customize display within each zoom level:</span>
+    svg.className = hash.replace(<span class="hljs-regexp">/#/</span>,<span class="hljs-string">''</span>);
+}
+</code></pre>
+<p>The last line applies different classes to the <a href="/docs/svg/elements/svg"><strong>svg</strong></a> container, which we’ll use to customize display of the text elements described below for different zoom levels.</p>
+<h2>Adding Text</h2>
+<p>SVG allows you to mix text with other graphics, but these are simple lines of text that do not wrap within a box as in HTML. You ordinarily use <strong>x</strong> and <strong>y</strong> coordinate attributes to position <a href="/docs/svg/elements/text"><strong>text</strong></a> elements directly within a graphic. This example relies on SVG’s characteristic ability to place text along a curved path:</p>
+<p><img src="//static.webplatform.org/thumb/2/2a/svgGrandTour_eyeball_textRotate.png/200px-svgGrandTour_eyeball_textRotate.png" alt="svgGrandTour eyeball textRotate.png"></p>
+<p>The text appears to wrap around a <a href="/docs/svg/elements/circle"><strong>circle</strong></a> element, but since circles do not have logical start and end points, you need to use the <a href="/docs/svg/tutorials/smarter_svg_shapes">rather complex</a> <em>A</em> path command to draw two elliptical arc curves, each facing the other, originating and terminating at the left edge:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"irisPath"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 60,100 A 40,40 0 0 1 140,100 A 40,40 0 0 1 60,100 "</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"pupilPath"</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 78,100 A 22,22 0 0 1 122,100 A 22,22 0 0 1 78,100"</span>/&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/c/cc/svgGrandTour_eyeball_textPath.png/200px-svgGrandTour_eyeball_textPath.png" alt="svgGrandTour eyeball textPath.png"></p>
+<p>We’ll add a reference to a <em>labels</em> object along with other eyeball components:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"eye"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyelids"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyelashes"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyelids"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyelids"</span>   /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#eyeball"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"eyeball"</span>   /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">use</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#labels"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p>Its <a href="/docs/svg/elements/textPath"><strong>textPath</strong></a> diverts a portion of the <a href="/docs/svg/elements/text"><strong>text</strong></a> to display along the path:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">g</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"labels"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">text</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">textPath</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#irisPath"</span>&gt;</span> Iris <span class="hljs-tag">&lt;/<span class="hljs-title">textPath</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">text</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">textPath</span> <span class="hljs-attribute">xlink:href</span>=<span class="hljs-value">"#pupilPath"</span>&gt;</span> Pupil <span class="hljs-tag">&lt;/<span class="hljs-title">textPath</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">text</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">g</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/d/df/svgGrandTour_eyeball_text.png/200px-svgGrandTour_eyeball_text.png" alt="svgGrandTour eyeball text.png"></p>
+<p>Ordinarily, you can increment the <a href="/docs/svg/elements/textPath"><strong>textPath</strong></a>'s <a href="/w/index.php?title=svg/attributes/startOffset&amp;action=edit&amp;redlink=1"><strong>startOffset</strong></a> attribute in animations to push text along the path. As an alternative in this case, you can use CSS transforms to rotate the circular object:</p>
+<pre><code class="css"><span class="hljs-id">#irisPath</span>, <span class="hljs-id">#pupilPath</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">fill             </span>:<span class="hljs-value"> none</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">transform-origin </span>:<span class="hljs-value"> center         </span></span>; <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform-origin </span>:<span class="hljs-value"> center  </span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-transform-origin </span>:<span class="hljs-value"> center</span></span>;
+}</span>
+<span class="hljs-id">#irisPath</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">transform        </span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">120deg</span>) </span></span>; <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform </span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">120deg</span>) </span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-transform </span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">120deg</span>)</span></span>;
+}</span>
+<span class="hljs-id">#pupilPath</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">transform        </span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">20deg</span>)  </span></span>; <span class="hljs-rule"><span class="hljs-attribute">-webkit-transform </span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">20deg</span>)  </span></span>; <span class="hljs-rule"><span class="hljs-attribute">-moz-transform </span>:<span class="hljs-value"> <span class="hljs-function">rotate</span>(<span class="hljs-number">20deg</span>)</span></span>;
+}</span>
+</code></pre>
+<p>By default, SVG transforms originate from an element’s top-left corner, so to spin the circle properly you need to explicitly set the <a href="/docs/css/properties/transform-origin"><strong>transform-origin</strong></a> property to CSS’s own default <strong>50% 50%</strong> value. And be careful when mixing transforms, since SVG’s get clobbered by CSS’s.</p>
+<p><img src="//static.webplatform.org/thumb/2/2a/svgGrandTour_eyeball_textRotate.png/200px-svgGrandTour_eyeball_textRotate.png" alt="svgGrandTour eyeball textRotate.png"></p>
+<p>Finally, additional CSS specifies the appearance of the text labels, and displays contextually within the magnified zoom level. Transitions on the <a href="/w/index.php?title=svg/properties/fill-opacity&amp;action=edit&amp;redlink=1"><strong>fill-opacity</strong></a> and <a href="/w/index.php?title=svg/properties/stroke-opacity&amp;action=edit&amp;redlink=1"><strong>stroke-opacity</strong></a> properties fade them in and out as the zoom animation executes:</p>
+<pre><code class="css"><span class="hljs-tag">text</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">font-size          </span>:<span class="hljs-value"> <span class="hljs-number">10px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">text-transform     </span>:<span class="hljs-value"> uppercase</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-width       </span>:<span class="hljs-value"> <span class="hljs-number">0.5</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke             </span>:<span class="hljs-value"> black</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-opacity     </span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">fill               </span>:<span class="hljs-value"> red</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">fill-opacity       </span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-comment">/* transition to default zoom level lasts 2 seconds; no delay */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">transition         </span>:<span class="hljs-value"> all <span class="hljs-number">2s</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition </span>:<span class="hljs-value"> all <span class="hljs-number">2s</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">-moz-transition    </span>:<span class="hljs-value"> all <span class="hljs-number">2s</span></span></span>;
+}</span>
+
+<span class="hljs-tag">svg</span><span class="hljs-class">.zoomIn</span> <span class="hljs-tag">text</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">fill-opacity       </span>:<span class="hljs-value"> <span class="hljs-number">0.25</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">stroke-opacity     </span>:<span class="hljs-value"> <span class="hljs-number">0.25</span></span></span>;
+    <span class="hljs-comment">/* transition to magnified zoom level lasts 2 seconds, with 2 second delay */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">transition         </span>:<span class="hljs-value"> all <span class="hljs-number">2s</span> <span class="hljs-number">2s</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">-webkit-transition </span>:<span class="hljs-value"> all <span class="hljs-number">2s</span> <span class="hljs-number">2s</span></span></span>;    <span class="hljs-rule"><span class="hljs-attribute">-moz-transition    </span>:<span class="hljs-value"> all <span class="hljs-number">2s</span> <span class="hljs-number">2s</span></span></span>;
+}</span>
+</code></pre>
+<p>Text letterforms behave just like paths, so the various and fill and stroke properties work the same way as for other shapes.</p>
+<p>(See <a href="/docs/svg/tutorials/smarter_svg_text"><strong>SVG text</strong></a> for details on text properties.)</p>
+<p>Had enough?</p>
+<p><img src="//static.webplatform.org/thumb/6/69/svgGrandTour_eyeball_tired.png/600px-svgGrandTour_eyeball_tired.png" alt="svgGrandTour eyeball tired.png"></p>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Filters</h4>
+<ul>
+<li><p><a href="/docs/css/functions/blur">blur()</a></p></li>
+<li><p><a href="/docs/css/functions/brightness">brightness()</a></p></li>
+<li><p><a href="/docs/css/functions/contrast">contrast()</a></p></li>
+<li><p><a href="/docs/css/functions/custom">custom()</a></p></li>
+<li><p><a href="/docs/css/functions/drop-shadow">drop-shadow()</a></p></li>
+<li><p><a href="/docs/css/functions/grayscale">grayscale()</a></p></li>
+<li><p><a href="/docs/css/functions/hue-rotate">hue-rotate()</a></p></li>
+<li><p><a href="/docs/css/functions/invert">invert()</a></p></li>
+<li><p><a href="/docs/css/functions/opacity">opacity()</a></p></li>
+<li><p><a href="/docs/css/functions/saturate">saturate()</a></p></li>
+<li><p><a href="/docs/css/functions/sepia">sepia()</a></p></li>
+<li><p><a href="/docs/css/properties/filter">filter</a></p></li>
+<li><p><a href="/docs/svg/elements/feBlend">feBlend</a></p></li>
+<li><p><a href="/docs/svg/elements/feColorMatrix">feColorMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feComponentTransfer">feComponentTransfer</a></p></li>
+<li><p><a href="/docs/svg/elements/feComposite">feComposite</a></p></li>
+<li><p><a href="/docs/svg/elements/feConvolveMatrix">feConvolveMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feDiffuseLighting">feDiffuseLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feDisplacementMap">feDisplacementMap</a></p></li>
+<li><p><a href="/docs/svg/elements/feDistantLight">feDistantLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feFlood">feFlood</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncA">feFuncA</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncB">feFuncB</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncG">feFuncG</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncR">feFuncR</a></p></li>
+<li><p><a href="/docs/svg/elements/feGaussianBlur">feGaussianBlur</a></p></li>
+<li><p><a href="/docs/svg/elements/feImage">feImage</a></p></li>
+<li><p><a href="/docs/svg/elements/feMerge">feMerge</a></p></li>
+<li><p><a href="/docs/svg/elements/feMergeNode">feMergeNode</a></p></li>
+<li><p><a href="/docs/svg/elements/feMorphology">feMorphology</a></p></li>
+<li><p><a href="/docs/svg/elements/feOffset">feOffset</a></p></li>
+<li><p><a href="/docs/svg/elements/fePointLight">fePointLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpecularLighting">feSpecularLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpotlight">feSpotlight</a></p></li>
+<li><p><a href="/docs/svg/elements/feTile">feTile</a></p></li>
+<li><p><a href="/docs/svg/elements/feTurbulence">feTurbulence</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_deploy">SVG deployment</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_filters">SVG filters</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_graphics">SVG graphic effects</a></p></li>
+<li><p><strong>SVG grand tour</strong></p></li>
+<li><p><a href="/docs/tutorials/svg_filters">SVG filters</a></p></li>
+</ul>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/svg/tutorials/smarter_svg_shapes">svg/tutorials/smarter_svg_shapes</a> (SVG basic shapes and text)</li>
+<li><a href="/docs/svg/tutorials/smarter_svg_graphics">svg/tutorials/smarter_svg_graphics</a> (SVG graphic effects)</li>
+<li><a href="/docs/svg/tutorials/smarter_svg_filters">svg/tutorials/smarter_svg_filters</a> (SVG filters)</li>
+<li><a href="/docs/svg/tutorials/smarter_svg_animation">svg/tutorials/smarter_svg_animation</a> (SVG animation)</li>
+<li><a href="/docs/svg/tutorials/smarter_svg_deploy">svg/tutorials/smarter_svg_deploy</a> (SVG deployment)</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

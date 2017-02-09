@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>dataset and data-* · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/attributes/">attributes</a></li><li><a href="/html/attributes/data-*/">data-*</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>dataset and data-*</h1>
+<table class="wikitable">
+<tr>
+<th>
+Applies to
+</th>
+<td>
+ ?
+</td>
+</tr>
+</table>
+##### <span class="secno">3.2.3.9</span><dfn>Embedding custom non-visible data</dfn> with the `<a href="#attr-data-*">data-*</a>` attributes
+<p>A <dfn id="custom-data-attribute">custom data attribute</dfn> is an attribute in no namespace whose name starts with the string &quot;<dfn id="attr-data-.2A" title="attr-data-*"><code>data-</code></dfn>&quot;, has at least one character after the hyphen, is &lt;a href=&quot;infrastructure.html#xml-compatible&quot;&gt;XML-compatible&lt;/a&gt;, and contains no &lt;a href=&quot;infrastructure.html#uppercase-ascii-letters&quot;&gt;uppercase ASCII letters&lt;/a&gt;.</p>
+<p>All attribute names on &lt;a href=&quot;infrastructure.html#html-elements&quot;&gt;HTML elements&lt;/a&gt; in &lt;a href=&quot;infrastructure.html#html-documents&quot;&gt;HTML documents&lt;/a&gt; get ASCII-lowercased automatically, so the restriction on ASCII uppercase letters doesn’t affect such documents.</p>
+<p>&lt;a href=&quot;#custom-data-attribute&quot; title=&quot;custom data attribute&quot;&gt;Custom data attributes&lt;/a&gt; are intended to store custom data private to the page or application, for which there are no more appropriate attributes or elements.</p>
+<p>These attributes are not intended for use by software that is independent of the site that uses the attributes.</p>
+<p>For instance, a site about music could annotate list items representing tracks in an album with custom data attributes containing the length of each track. This information could then be used by the site itself to allow the user to sort the list by track length, or to filter the list for tracks of certain lengths.</p>
+<pre><code>&lt;ol&gt;
+ &lt;li data-length=&quot;2m11s&quot;&gt;Beyond The Sea&lt;/li&gt;
+ ...
+&lt;/ol&gt;
+</code></pre>
+<p>It would be inappropriate, however, for the user to use generic software not associated with that music site to search for tracks of a certain length by looking at this data.</p>
+<p>This is because these attributes are intended for use by the site’s own scripts, and are not a generic extension mechanism for publicly-usable metadata.</p>
+<p>Every &lt;a href=&quot;infrastructure.html#html-elements&quot; title=&quot;HTML elements&quot;&gt;HTML element&lt;/a&gt; may have any number of &lt;a href=&quot;#custom-data-attribute&quot; title=&quot;custom data attribute&quot;&gt;custom data attributes&lt;/a&gt; specified, with any value.</p>
+<hr>
+<dl>
+<dt><var title>element</var> . <code>&lt;a href=&quot;#dom-dataset&quot;&gt;dataset&lt;/a&gt;</code></dt>
+<dd><p>Returns a <code>&lt;a href=&quot;infrastructure.html#domstringmap-0&quot;&gt;DOMStringMap&lt;/a&gt;</code> object for the element’s <code>&lt;a href=&quot;#attr-data-*&quot;&gt;data-*&lt;/a&gt;</code> attributes.</p>
+<p>Hyphenated names become camel-cased. For example, <code>data-foo-bar=&quot;&quot;</code> becomes <code>element.dataset.fooBar</code>.</p>
+</dd>
+</dl>
+<p>The <dfn id="dom-dataset" title="dom-dataset"><code>dataset</code></dfn> IDL attribute provides convenient accessors for all the <code>&lt;a href=&quot;#attr-data-*&quot;&gt;data-*&lt;/a&gt;</code> attributes on an element. On getting, the <code>&lt;a href=&quot;#dom-dataset&quot;&gt;dataset&lt;/a&gt;</code> IDL attribute must return a <code>&lt;a href=&quot;infrastructure.html#domstringmap-0&quot;&gt;DOMStringMap&lt;/a&gt;</code> object, associated with the following algorithms, which expose these attributes on their element:</p>
+<dl>
+<dt>The algorithm for getting the list of name-value pairs</dt>
+<dd><ol>
+<li>Let <var title>list</var> be an empty list of name-value pairs.</li>
+<li>For each content attribute on the element whose first five characters are the string &quot;<code>data-</code>&quot; and whose remaining characters (if any) do not include any &lt;a href=&quot;infrastructure.html#uppercase-ascii-letters&quot;&gt;uppercase ASCII letters&lt;/a&gt;, in the order that those attributes are listed in the element’s attributes list, add a name-value pair to <var title>list</var> whose name is the attribute’s name with the first five characters removed and whose value is the attribute’s value.</li>
+<li>For each name <var title>list</var>, for each &quot;-&quot; (U+002D) character in the name that is followed by a &lt;a href=&quot;infrastructure.html#lowercase-ascii-letters&quot; title=&quot;lowercase ASCII letters&quot;&gt;lowercase ASCII letter&lt;/a&gt;, remove the &quot;-&quot; (U+002D) character and replace the character that followed it by the same character &lt;a href=&quot;infrastructure.html#converted-to-ascii-uppercase&quot;&gt;converted to ASCII uppercase&lt;/a&gt;.</li>
+<li>Return <var title>list</var>.</li>
+</ol>
+</dd>
+<dt>The algorithm for setting names to certain values</dt>
+<dd><ol>
+<li>Let <var title>name</var> be the name passed to the algorithm.</li>
+<li>Let <var title>value</var> be the value passed to the algorithm.</li>
+<li>If <var title>name</var> contains a &quot;-&quot; (U+002D) character followed by a &lt;a href=&quot;infrastructure.html#lowercase-ascii-letters&quot; title=&quot;lowercase ASCII letters&quot;&gt;lowercase ASCII letter&lt;/a&gt;, throw a <code>&lt;a href=&quot;infrastructure.html#syntaxerror&quot;&gt;SyntaxError&lt;/a&gt;</code> exception and abort these steps.</li>
+<li>For each &lt;a href=&quot;infrastructure.html#uppercase-ascii-letters&quot; title=&quot;uppercase ASCII letters&quot;&gt;uppercase ASCII letter&lt;/a&gt; in <var title>name</var>, insert a &quot;-&quot; (U+002D) character before the character and replace the character with the same character &lt;a href=&quot;infrastructure.html#converted-to-ascii-lowercase&quot;&gt;converted to ASCII lowercase&lt;/a&gt;.</li>
+<li>Insert the string <code>data-</code> at the front of <var title>name</var>.</li>
+<li>Set the value of the attribute with the name <var title>name</var>, to the value <var title>value</var>, replacing any previous value if the attribute already existed. If <code>setAttribute()</code> would have thrown an exception when setting an attribute with the name <var title>name</var>, then this must throw the same exception.</li>
+</ol>
+</dd>
+<dt>The algorithm for deleting names</dt>
+<dd><ol>
+<li>Let <var title>name</var> be the name passed to the algorithm.</li>
+<li>For each &lt;a href=&quot;infrastructure.html#uppercase-ascii-letters&quot; title=&quot;uppercase ASCII letters&quot;&gt;uppercase ASCII letter&lt;/a&gt; in <var title>name</var>, insert a &quot;-&quot; (U+002D) character before the character and replace the character with the same character &lt;a href=&quot;infrastructure.html#converted-to-ascii-lowercase&quot;&gt;converted to ASCII lowercase&lt;/a&gt;.</li>
+<li>Insert the string <code>data-</code> at the front of <var title>name</var>.</li>
+<li>Remove the attribute with the name <var title>name</var>, if such an attribute exists. Do nothing otherwise.</li>
+</ol>
+</dd>
+</dl>
+<p>The same object must be returned each time.</p>
+<p>If a Web page wanted an element to represent a space ship, e.g. as part of a game, it would have to use the <code>&lt;a href=&quot;#classes&quot;&gt;class&lt;/a&gt;</code> attribute along with <code>&lt;a href=&quot;#attr-data-*&quot;&gt;data-*&lt;/a&gt;</code> attributes:</p>
+<pre><code>&lt;div class=&quot;spaceship&quot; data-ship-id=&quot;92432&quot;
+     data-weapons=&quot;laser 2&quot; data-shields=&quot;50%&quot;
+     data-x=&quot;30&quot; data-y=&quot;10&quot; data-z=&quot;90&quot;&gt;
+ &lt;button class=&quot;fire&quot;
+         onclick=&quot;spaceships[this.parentNode.dataset.shipId].fire()&quot;&gt;
+  Fire
+ &lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Notice how the hyphenated attribute name becomes camel-cased in the API.</p>
+<p>Authors should carefully design such extensions so that when the attributes are ignored and any associated CSS dropped, the page is still usable.</p>
+<p>User agents must not derive any implementation behavior from these attributes or values. Specifications intended for user agents must not define these attributes to have any meaningful values.</p>
+<p>JavaScript libraries may use the &lt;a href=&quot;#custom-data-attribute&quot; title=&quot;custom data attribute&quot;&gt;custom data attributes&lt;/a&gt;, as they are considered to be part of the page on which they are used. Authors of libraries that are reused by many authors are encouraged to include their name in the attribute names, to reduce the risk of clashes. Where it makes sense, library authors are also encouraged to make the exact name used in the attribute names customizable, so that libraries whose authors unknowingly picked the same name can be used on the same page, and so that multiple versions of a particular library can be used on the same page even when those versions are not mutually compatible.</p>
+<p>For example, a library called “DoQuery” could use attribute names like <code>data-doquery-range</code>, and a library called “jJo” could use attributes names like <code>data-jjo-range</code>. The jJo library could also provide an API to set which prefix to use (e.g. <code>J.setDataPrefix('j2')</code>, making the attributes have names like <code>data-j2-range</code>).</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li>Imported from: &lt;a href=&quot;<a href="http://www.w3.org/html/wg/drafts/html/master/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes">http://www.w3.org/html/wg/drafts/html/master/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes</a>&quot;&gt;<a href="http://www.w3.org/html/wg/drafts/html/master/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes">http://www.w3.org/html/wg/drafts/html/master/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes</a>&lt;/a.</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

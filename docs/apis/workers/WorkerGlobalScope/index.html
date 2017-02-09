@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WorkerGlobalScope · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="An object representing the &amp;quot;inside&amp;quot; of a worker." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/workers/">workers</a></li><li><a href="/apis/workers/WorkerGlobalScope/">WorkerGlobalScope</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WorkerGlobalScope</h1>
+<h2>Summary</h2>
+<p>An object representing the “inside” of a worker.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/location">location</a></dt>
+<dd>Returns the WorkerLocation object created for the WorkerGlobalScope object when the worker was created.
+</dd>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/navigator">navigator</a></dt>
+<dd>Returns an instance of the WorkerNavigator interface, which represents the identity and state of the user agent (the client).
+</dd>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/onerror">onerror</a></dt>
+<dd>An event listener to be called when an error occurs.
+</dd>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/onoffline">onoffline</a></dt>
+<dd>An event listener to be called when the worker goes offline.
+</dd>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/ononline">ononline</a></dt>
+<dd>An event listener to be called when the worker goes online.
+</dd>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/self">self</a></dt>
+<dd>Returns the WorkerGlobalScope object.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/close">close</a></dt>
+<dd>Discards any pending tasks and immediately closes the worker.
+</dd>
+<dt><a href="/docs/apis/workers/WorkerGlobalScope/importScripts">importScripts</a></dt>
+<dd>Fetches one or more script resources, identified by absolute URLs.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Notes</h2>
+<p>The <strong>WorkerGlobalScope</strong> object is accessed by using the <strong>self</strong> or <strong>this</strong> property and is accessed only inside a worker. A worker has the following functionality within its scope:</p>
+<ul>
+<li>It can use the <strong>XMLHttpRequest</strong> method.</li>
+<li>It has a <strong>self</strong> property, which contains a reference to the worker object.</li>
+<li>It can call all global JavaScript core methods.</li>
+<li>It has a <strong>navigator</strong> object, which provides the <strong>appName</strong>, <strong>appVersion</strong>, <strong>onLine</strong>, <strong>userAgent</strong>, and <strong>platform</strong> properties but no others.</li>
+<li>The <strong>location</strong> property creates the <strong>WorkerLocation</strong> object, which contains URL information on the worker’s location. This property is similar to the <strong>Window.location</strong> property, but is read-only.</li>
+<li>It supports the worker versions of the <strong>setTimeout</strong>, <strong>setInterval</strong>, <strong>clearTimeout</strong>, and <strong>clearInterval</strong> methods, which are similar to the methods of the same name for the <strong>Window</strong> object.</li>
+<li>It can load other JavaScript files into the scope of the worker using the <strong>importScripts</strong> method.</li>
+</ul>
+<p>Workers do not have access to the Document Object Model (DOM), nor the <strong>window</strong>, <strong>document</strong>, and <strong>parent</strong> objects. To terminate a worker thread from inside, use the <strong>close</strong> method. From the main document, use the <strong>terminate</strong> method to terminate the worker thread. You can send messages to the main document using <strong>postMessage</strong> and receive messages from the main document using the <strong>onmessage</strong> message handler. You can create new child workers from inside a worker. They must all run in the same host and their location depends on the parent worker of the new worker, not the original webpage. Because a new worker is likely to be in a separate process, you shouldn’t create too many workers at once. Also, because messages between workers and their parents are copies and not shared, too many workers can use up resources quickly.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://dev.w3.org/html5/workers">W3C Web Workers Specification</a></dt>
+<dd>W3C Editor’s Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dynamic visual effects with CSS3 transitions · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="CSS transitions offer the easiest way to animate an
+    interface.  CSS is used everywhere to control how web pages appear,
+    and shifts from one set of style sheets to another ordinarily occur
+    abruptly.  Adding transition properties allows most of those changes
+    to occur gradually, for a more vibrant, fluid interface.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/css_transitions/">css transitions</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Dynamic visual effects with CSS3 transitions</h1>
+<p><strong>By Mike Sierra</strong></p>
+<h2>Summary</h2>
+<p>CSS transitions offer the easiest way to animate an interface. CSS is used everywhere to control how web pages appear, and shifts from one set of style sheets to another ordinarily occur abruptly. Adding transition properties allows most of those changes to occur gradually, for a more vibrant, fluid interface.</p>
+<p>This tutorial introduces CSS’s various transition properties and shows you how to control how smoothly transitions execute. It shows you how to create sequences of more than one transition, but increasingly complex movements require <a href="/docs/tutorials/css_animations">keyframe animations</a>, which work similarly. You should become familiar with what CSS <em>transitions</em> can do before mastering <em>animations</em>. Both kinds of CSS-based animation require none of the JavaScript timers traditionally used to move things around, and they execute much faster.</p>
+<p>While transitions allow you to apply hover effects and other relatively marginal enhancements to traditional desktop interfaces, they are particularly useful for small-screen mobile interfaces in which displaying elements need to slide or fade out of view, or else collapse into icons. Abrupt transitions can be particularly disorienting on a small screen.</p>
+<p>These key points serve as reference:</p>
+<ul>
+<li><p>Transitions are simple animations that smooth shifts from one style sheet to another.</p></li>
+<li><p>Set <a href="/docs/css/properties/transition-property"><strong>transition-property</strong></a> to specify which CSS property (or <strong>all</strong>) to animate between style sheets.</p></li>
+<li><p>Properties that reference numeric measurements and color values can be transitioned.</p></li>
+<li><p>The <a href="/docs/css/properties/transition-duration"><strong>transition-duration</strong></a> property sets how much time the transition takes to run.</p></li>
+<li><p>Use <a href="/docs/css/properties/transition-delay"><strong>transition-delay</strong></a> to pause before executing a transition.</p></li>
+<li><p>Use comma-delimited values to apply more than one transition to an element, useful in building sequences. Transitions can also execute concurrently when applied to different elements.</p></li>
+<li><p>The <a href="/docs/css/properties/transition-timing-function"><strong>transition-timing-function</strong></a> property allows you to control a transitions’s speed of progress. It accepts keywords: <strong>ease</strong>, <strong>ease-in</strong>, <strong>ease-out</strong>, <strong>ease-in-out</strong>, <strong>linear</strong>, or custom <a href="/docs/css/functions/cubic-bezier"><strong>cubic-bezier()</strong></a> response curves.</p></li>
+<li><p>The <a href="/docs/css/properties/transition"><strong>transition</strong></a> shorthand property can represent values from all other transition properties. If two time measurements are included, they are interpreted first as duration then as delay.</p></li>
+<li><p>Specify a redundant set of property names prefixed <em>-webkit-</em>.</p></li>
+<li><p>The <strong>transitionend</strong> event (or <strong>webkitTransitionEnd</strong>) fires at the end of a transition for each property that animates.</p></li>
+</ul>
+<h2>The transition property</h2>
+<p>For transitions to work, there need to be two sets of style sheets that might apply to any element as users interact with the page. In this case, tapping a small <strong>nav</strong> element expands it out to a wider navigation panel:</p>
+<p><img src="//static.webplatform.org/f/f1/transit_parent.png" alt="transit parent.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_nested_toplayer.html">View live sample</a>)</p>
+<p>To achieve this effect, a default style sheet defines most of how it appears. A second style sheet changes how it appears when it is assigned the <em>expanded</em> class.</p>
+<pre><code>nav {
+        /* transition applies to all varying elements */
+    transition            : all 0.5s;
+        /* dimensions and position (mostly outside view) */
+    height                : 42px;
+    width                 : 300px;
+    position              : absolute;
+    right                 : -260px;
+    top                   : 10px;
+    padding               : 2px;
+    overflow              : hidden;
+    box-sizing            : border-box;
+        /* define icon */
+    background-image      : url(html5.png);
+    background-position-x : left;
+    background-position-y : 50%;
+    background-repeat     : no-repeat;
+    background-size       : contain;
+    background-color      : #fff;
+        /* border and shadow hidden by default */
+    border                : transparent solid medium;
+    border-radius         : 4px;
+    box-shadow            : 0 0 1em transparent;
+}
+nav.expanded  {
+        /* transition applies to these varying elements */
+    right                 : 10px;   /* bring panel into view */
+    background-position-x : 400px;  /* icon out of view */
+    border                : #aaa solid medium;
+    box-shadow            : 0 0 1em #777;
+}
+</code></pre>
+<p>The <em>expanded</em> class specifies a handful of CSS properties that override those that apply without the class. Adding the <a href="/docs/css/properties/transition"><strong>transition</strong></a> property makes those properties animate when toggling the class:</p>
+<pre><code>-moz-transition    : all 0.5s;
+-o-transition      : all 0.5s;
+-webkit-transition : all 0.5s;
+transition         : all 0.5s;
+</code></pre>
+<p>Changes to the values of the <a href="/docs/css/properties/right"><strong>right</strong></a> and <a href="/docs/css/properties/background-position"><strong>background-position</strong></a> properties makes the element and its displaying icon slide in from the right. As it does, the border and shadow appear and get darker.</p>
+<p><strong>Note:</strong> Though transition properties were implemented recently enough, all browser engines but WebKit support them without <em>vendor</em> prefixes<em>such as <strong>-moz-</strong>, <strong>-o-</strong>, or <strong>-webkit-</strong> as shown</em> above. Still, you need prefixes to support older browser versions. Further examples only show un-prefixed transition property names, but for widest support you should apply all of them.</p>
+<p>The <a href="/docs/css/properties/transition"><strong>transition</strong></a> property specifies which properties to animate, <strong>all</strong> in this case, and the half second the animation takes to execute. It is shorthand for these separate properties:</p>
+<pre><code>transition-property : all;
+transition-duration : 0.5s;
+transition-duration : 500ms; /* same as above, but expressed as milliseconds */
+</code></pre>
+<p>To see the animation in action, all you need is a mechanism to apply the <em>expanded</em> class, in this case a <strong>click</strong> handler that also responds to touch input:</p>
+<pre><code>document.querySelector('nav').addEventListener('click', function(event) {
+    event.currentTarget.classList.toggle('expanded');
+});
+</code></pre>
+<p>You’ll notice that transitions respond very gracefully by reversing direction if you re-toggle the class while the animation is executing.</p>
+<h2>Parallel transitions</h2>
+<p>We want the panel to display a set of nested navigation icons, in this case a set of horizontal <strong>div</strong> elements. A second <a href="/docs/css/properties/transition"><strong>transition</strong></a> property animates these nested elements depending on the state of their parent <strong>nav</strong> element:</p>
+<pre><code>nav &gt; div {
+    transition        : all 0.5s;
+    height            : 34px;
+    width             : 34px;
+    background-size   : contain;
+    display           : inline-block; /* arranged horizontally */
+    opacity           : 0;            /* faded */
+    transform         : scale(0);     /* scaled down */
+}
+nav.expanded &gt; div {
+    opacity           : 1;
+    transform         : scale(1);
+}
+</code></pre>
+<p>The <a href="/docs/css/properties/opacity"><strong>opacity</strong></a> property fades the icons, and <a href="/docs/css/properties/transform"><strong>transform</strong></a> grows or shrinks them down to a point. (See the <a href="/docs/tutorials/css_transforms">tutorial on CSS transforms</a> for details.) Combined, the two sets of transitions execute simultaneously:</p>
+<p><img src="//static.webplatform.org/thumb/a/a3/transit_simple.png/280px-transit_simple.png" alt="transit simple.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_nested.html">View live sample</a>)</p>
+<p>For an element to be transitioned, it must specify a numeric value or percentage, such as a measurement or set of coordinates, or values that translate to numeric values, such as colors. Many keyword values work as well, such as the color <strong>red</strong> or <strong>center</strong> when used as a coordinate. But you cannot transition properties whose values specify a different kind of behavior. For example, you cannot transition between the <a href="/docs/css/properties/display"><strong>display</strong></a> property’s <strong>block</strong> and <strong>none</strong> values, or use <a href="/docs/css/properties/text-align"><strong>text-align</strong></a> to switch between <strong>left</strong> and <strong>right</strong> justification.</p>
+<p><strong>Note:</strong> Generated content can be transitioned, but only by separately styling the <a href="/docs/css/selectors/pseudo-elements/::before">::before</a> and <a href="/docs/css/selectors/pseudo-elements/::after">::after</a> selectors.</p>
+<h2>Sequential transitions</h2>
+<p>You are not limited to a single set of transitions to get from one set of style sheets to another. The panel in this example first grows to its full width, then lengthens. The sequence is then reversed when collapsing the panel back down to icon size:</p>
+<p><img src="//static.webplatform.org/thumb/b/bf/transit_sequence.png/900px-transit_sequence.png" alt="transit sequence.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_sequence.html">View live sample</a>)</p>
+<p>Here is the relevant CSS:</p>
+<pre><code>div {
+    width               : 56px;
+    height              : 56px;
+    transition-property : height , width;  /* collapse sequence */
+    transition-duration : 0.5s   , 0.5s;
+    transition-delay    : 0.0s   , 0.5s;   /* delay 2nd transition */
+}
+div.expanded {
+    transition-property : width  , height; /* expand sequence */
+    width               : 280px;
+    height              : 400px;
+}
+</code></pre>
+<p>Each transition property uses commas to delimit additional transitions that form the larger second-long sequence. In this case, the duration for each is the same: half a second. The <a href="/docs/css/properties/transition-delay"><strong>transition-delay</strong></a> property specifies that the first executes immediately, and the second is delayed a half second, effectively waiting until the first transition has completed.</p>
+<p>This example also specifies individual property names rather than <strong>all</strong>. When transitioning to the <em>expanded</em> class, the <a href="/docs/css/properties/width"><strong>width</strong></a> animates before the <a href="/docs/css/properties/height"><strong>height</strong></a>, and the sequence reverses in the other direction.</p>
+<p>The <a href="/docs/css/properties/transition"><strong>transition</strong></a> shorthand property also accommodates additional transitions. Here is the same as above, but expressed more tersely:</p>
+<pre><code>div          { transition: height 0.5s 0.0s , width  0.5s 0.5s ; }
+div.expanded { transition: width  0.5s 0.0s , height 0.5s 0.5s ; }
+</code></pre>
+<p>The first supplied time value is interpreted as the <a href="/docs/css/properties/transition-duration"><strong>transition-duration</strong></a>, and the second as the <a href="/docs/css/properties/transition-delay"><strong>transition-delay</strong></a>.</p>
+<p>Note that with no delay specified, you can use more than one transition to animate selected properties simultaneously, which might be useful if you want to animate some properties but not <strong>all</strong> of them. You can also stagger the delays so that execution overlaps. In this example, a single transition specifies the <a href="/docs/css/properties/transform"><strong>transform</strong></a> property to move six cards to the right over the course of one second, but the delay for each is successively staggered up to half a second so that the overall sequence takes 1.5 seconds to execute:</p>
+<pre><code>section &gt; div {
+    transition: transform 1s;
+    transform: translateX(0px);
+    /* ^^^ this transform is optional; transition assumes default value */
+}
+section.deal &gt; div {
+    transform: translateX(300px); /* move to right */
+}
+section &gt; div:nth-of-type(6) {
+    transition-delay: 0.0s;
+    background-image: url(QueenSpade.png);
+}
+section &gt; div:nth-of-type(5) {
+    transition-delay: 0.1s;
+    background-image: url(KingClub.jpeg);
+}
+section &gt; div:nth-of-type(4) {
+    transition-delay: 0.2s;
+    background-image: url(JackClub.jpeg);
+}
+section &gt; div:nth-of-type(3) {
+    transition-delay: 0.3s;
+    background-image: url(AceSpade.jpeg);
+}
+section &gt; div:nth-of-type(2) {
+    transition-delay: 0.4s;
+    background-image: url(JackSpade.jpeg);
+}
+section &gt; div:nth-of-type(1) {
+    transition-delay: 0.5s;
+    background-image: url(JackHeart.jpeg);
+}
+</code></pre>
+<p>The overall movement is staggered like this:</p>
+<p><img src="//static.webplatform.org/5/51/transit_delay.png" alt="transit delay.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_delay.html">View live sample</a>)</p>
+<p><span id="timing"></span></p>
+<h2>Timing functions</h2>
+<p>You may notice in the example above that the cards are not evenly spaced. That’s because transitions by default start out slowly, gather speed, then slow down again at the end. The <a href="/docs/css/properties/transition-timing-function"><strong>transition-timing-function</strong></a> property specifies this behavior. By default it uses an <strong>ease</strong> value. If it were <strong>linear</strong>, they would all start and stop abruptly and move at the same speed:</p>
+<p><img src="//static.webplatform.org/9/95/transit_linear.png" alt="transit linear.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_delay_linear.html">View live sample</a>)</p>
+<p>Browsers represent these keywords as bezier curves, which makes their response easier to visualize. Here is the basic set of keyword values along with their alternate <a href="/docs/css/functions/cubic-bezier"><strong>cubic-bezier()</strong></a> functions. The animation’s elapsed time and progress correspond to <em>x</em> and <em>y</em> axes, so the more the line curves vertically along the way, the faster the animation proceeds:</p>
+<p><strong>linear</strong><br>
+<strong>cubic-bezier(0.0, 0.0, 1.0, 1.0)</strong> <img src="//static.webplatform.org/thumb/8/8e/transitF_linear.png/230px-transitF_linear.png" alt="transitF linear.png"></p>
+<p><strong>ease</strong><br>
+<strong>cubic-bezier(0.25, 0.1, 0.25, 1.0)</strong> <img src="//static.webplatform.org/thumb/7/73/transitF_ease.png/230px-transitF_ease.png" alt="transitF ease.png"></p>
+<p><strong>ease-in-out</strong><br>
+<strong>cubic-bezier(0.42, 0, 0.58, 1.0)</strong> <img src="//static.webplatform.org/thumb/6/67/transitF_easeinout.png/230px-transitF_easeinout.png" alt="transitF easeinout.png"></p>
+<p><strong>ease-in</strong><br>
+<strong>cubic-bezier(0.42, 0, 1.0, 1.0)</strong> <img src="//static.webplatform.org/thumb/6/64/transitF_easein.png/230px-transitF_easein.png" alt="transitF easein.png"></p>
+<p><strong>ease-out</strong><br>
+<strong>cubic-bezier(0, 0, 0.58, 1.0)</strong> <img src="//static.webplatform.org/thumb/0/00/transitF_easeout.png/230px-transitF_easeout.png" alt="transitF easeout.png"></p>
+<p>This useful <a href="http://cubic-bezier.com">cubic bezier function utility</a> allows you to create your own custom curves and compare them with standard timing keyword values.</p>
+<p>Timing functions can also be specified as part of the <a href="/docs/css/properties/transition"><strong>transition</strong></a> shorthand property. This example makes a sequence of two <strong>ease-in</strong> and <strong>ease-out</strong> transitions resemble the behavior of a single <strong>ease-in-out</strong> function:</p>
+<pre><code>div          { transition: height 0.5s 0.0s ease-in, width  0.5s 0.5s ease-out; }
+div.expanded { transition: width  0.5s 0.0s ease-in, height 0.5s 0.5s ease-out; }
+</code></pre>
+<p>As an alternative to response curves, the <strong>steps()</strong> function specifies a series of distinct frames with no smoothing applied. This animates three interim steps that occur between the start and end points:</p>
+<pre><code>transition-timing-function : steps(5);
+</code></pre>
+<h2>The transitionend event</h2>
+<p>The <strong>transitionend</strong> event allows an application to respond after a transition finishes executing. The event fires on the element that is being transitioned, once for each property, and <em>only</em> if the specified transition actually modifies content.</p>
+<p>In this example, applying a <em>display</em> class makes an information panel appear:</p>
+<p><img src="//static.webplatform.org/1/13/transit_end.png" alt="transit end.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_end.html">View live sample</a>)</p>
+<p>The <a href="/docs/css/properties/opacity"><strong>opacity</strong></a> property makes the element fade in, and is the only noticeable change to its appearance. A second transition executes over a longer span of time, and makes an imperceptible change to the background color. Here is the relevant CSS:</p>
+<pre><code>div {
+    background-color : white;
+    opacity          : 0;
+    transition       : opacity 1s, background-color 5s;
+}
+div.display {
+    opacity          : 1;
+    background-color : rgba(100%, 100%, 100%, 0.95);
+}
+</code></pre>
+<p>After 5 seconds, a <strong>transitionend</strong> handler removes the <em>display</em> class to revert the element back to its original state:</p>
+<pre><code>var panel = document.querySelector('.message');
+panel.addEventListener('transitionend'       , timeoutDisplay); // Standard: Gecko, IE10, Opera 12.10+
+panel.addEventListener('otransitionend'      , timeoutDisplay); // Old Opera
+panel.addEventListener('webkitTransitionEnd' , timeoutDisplay); // WebKit
+
+function timeoutDisplay(e) {
+    // ignore irrelevant transitions:
+    if (e.propertyName != 'background-color') return(false);
+    // execute only after expanding panel:
+    if (! e.currentTarget.classList.contains('display')) return(false);
+    // collapse panel:
+    e.currentTarget.classList.remove('display');
+}
+</code></pre>
+<p>Note the various provisional names for the event: <strong>webkitTransitionEnd</strong> (WebKit), <strong>otransitionend</strong> (old Opera), along with the standard <strong>transitionend</strong> (Gecko, Opera 12.10+, Internet Explorer).</p>
+<p><span id="advanced"></span></p>
+<h2>Advanced image transitions</h2>
+<p>While it’s pretty obvious which properties can be transitioned, some browsers are adding support for a couple of unusual ones. So far these non-standard features can only be found in Webkit browsers.</p>
+<p>Transitions between two <a href="/docs/css/properties/background-image"><strong>background-image</strong></a> files now results in a cross-fade effect. Changing style sheets such as the following can thus drive an image gallery interface:</p>
+<pre><code>div[data-img=&quot;4&quot;] { background-image : url(&quot;Image04.jpg&quot;); }
+div[data-img=&quot;5&quot;] { background-image : url(&quot;Image05.jpg&quot;); }
+</code></pre>
+<p><img src="//static.webplatform.org/1/1e/fade.png" alt="fade.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_bkimg.html">View live sample</a>)</p>
+<p>See the <a href="/docs/css/functions/cross-fade">cross-fade()</a> function for a way to mix images statically.</p>
+<p><strong>Note:</strong> As of this writing, there is no support for transitions between <a href="/docs/css/functions/linear-gradient">gradient</a> background image values.</p>
+<p>The <a href="/docs/css/properties/filter"><strong>filter</strong></a> property allows you to apply sequences of image processing functions to any kind of visual element, and these effects can also be transitioned. This more unusual example applies a transition to a video as it plays back, blurring it and distorting its colors in various ways while it rotates in space:</p>
+<pre><code>video {
+  -webkit-filter: hue-rotate(0deg) saturate(1) blur(0);
+  -webkit-transition: all 30s linear;
+}
+video.finished {
+  -webkit-filter: hue-rotate(-180deg) saturate(10) blur(10px);
+  -webkit-transform: translate(100px, 50px) rotateX(45deg) rotateY(-30deg) rotateZ(10deg);
+}
+</code></pre>
+<p><img src="//static.webplatform.org/3/3d/videofade.png" alt="videofade.png"></p>
+<p>(<a href="http://letmespellitoutforyou.com/samples/transit_filter_video.html">View live sample</a>)</p>
+<p>Unlike <a href="/docs/css/properties/transform"><strong>transform</strong></a> functions, <a href="/docs/css/properties/filter"><strong>filter</strong></a> functions must be explicitly declared in each style sheet in the exact same order if they are to transition.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/css3-transitions/">CSS Transitions: W3C Working Draft</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

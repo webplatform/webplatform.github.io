@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>&lt;url&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="The &amp;lt;url&amp;gt; CSS data type, formerly called the &amp;lt;uri&amp;gt; data type, represents a reference to a file or file fragment.  It is specified with the url() function." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/data_types/">data types</a></li><li><a href="/docs/css/data_types/url/">url</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>&lt;url&gt;</h1>
+<h2>Summary</h2>
+<p>The &lt;url&gt; CSS data type, formerly called the &lt;uri&gt; data type, represents a reference to a file or file fragment. It is specified with the url() function.</p>
+<p>The <code>url(string)</code> function identifies the parameter string as a resource identifier; possible resource identifier types include absolute file paths, relative file paths, fragment identifiers and data URI values. Relative file paths are resolved relative to the location of the file that contains the CSS rule.</p>
+<p>The <code>&lt;url&gt;</code> data type is commonly used for images, but also for loading web fonts or defining filter or clipping path effects (in which case the identifier must link to a fragment within an SVG file).</p>
+<p>The string may be quoted (with single or double quotes) but need not be. If an unquoted string contains any whitespace or special characters they will need to be escaped with a <strong>\</strong> character; quoted strings require escapes for line breaks or for any nested quotes of the same type (see the third <a href="#Examples">example</a>). See the <a href="/docs/css/data_types/string"><code>&lt;string&gt;</code> data type page</a> for more information on escape sequences for CSS strings.</p>
+<p>Not all references in CSS to external files require the use of the <code>url()</code> syntax; file names in <a href="/docs/css/atrules/@import"><code>@import</code> rules</a>, for example, may be given as simple quoted <a href="/docs/css/data_types/string"><code>&lt;string&gt;</code></a> values.</p>
+<h2>Examples</h2>
+<p><strong>Relative URLs and Fragments</strong></p>
+<p>In a <code>&lt;style&gt;</code> block in an HTML or SVG page, relative files and fragments are resolved relative to that page or its base url.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+       <span class="hljs-tag">body</span> <span class="hljs-rules">{
+           <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">"fileInTheSameFolderAsThisPage.jpeg"</span>)</span></span>;
+       }</span>
+       <span class="hljs-class">.blurry</span> <span class="hljs-rules">{
+           <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(<span class="hljs-string">"#blurFilter"</span>)</span></span>;
+       }</span>
+   </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">svg</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">defs</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"blurFilter"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">feGaussianBlur</span> <span class="hljs-attribute">stdDeviation</span>=<span class="hljs-value">"2"</span>/&gt;</span>
+       <span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">defs</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"blurry"</span>&gt;</span>Blurry Headline<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/10604525">View live example</a></p>
+<p>In an external stylesheet, relative files are resolved relative to the stylesheet’s location.</p>
+<pre><code class="css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+           <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value"> <span class="hljs-function">url</span>(fileInTheSameFolderAsTheStylesheet.jpeg)</span></span>;
+    <span class="hljs-comment">/* note that a simple file name does not have to be quoted */</span>
+}</span>
+</code></pre>
+<p><strong>Escaped Characters and Data URIs</strong></p>
+<p>The <strong>\</strong> character allows you to escape the following character in a url string, allowing you to nest quotation marks (or you can simply use a different quotation mark type). To break a long string across multiple lines, use a <strong>\</strong> escape character as the <em>final</em> character in each line.</p>
+<p><strong>Note</strong>: This example does not work in Internet Explorer, which does not support xml data URI values without full URI encoding.</p>
+<pre><code class="css"><span class="hljs-tag">ul</span><span class="hljs-class">.custom</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value">x-large</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">list-style</span>:<span class="hljs-value">image</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">list-style-image</span>:<span class="hljs-value"><span class="hljs-function">url</span>(
+    <span class="hljs-string">"data:image/svg+xml;charset=UTF-8,\
+    &lt;svg xmlns=\"http://www.w3.org/2000/svg\" \
+      width='100%' height='100%' \
+      viewBox='-5 -5 10 10' preserveAspectRatio='xMidYMid meet'&gt;\
+        &lt;circle r='4' fill='blue' stroke='green' stroke-width='2'/&gt;\
+    &lt;/svg&gt;"</span>
+  )</span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/10603403">View live example</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-values/#urls">CSS Values and Units Module Level 3</a></dt>
+<dd>W3C Candidate Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/CSS21/syndata.html#uri">CSS 2.1</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>call · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Calls a method of an object, substituting another object for the current object." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Function/">Function</a></li><li><a href="/docs/javascript/Function/call/">call</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>call</h1>
+<h2>Summary</h2>
+<p>Calls a method of an object, substituting another object for the current object.</p>
+<h2>Syntax</h2>
+<pre><code>call([ thisObj [, arg1 [ , arg2 [ ,   [ , argN ]]]]])
+</code></pre>
+<dl>
+<dt><strong>thisObj</strong></dt>
+<dd>Optional. The object to be used as the current object.
+</dd>
+<dt><strong>arg1, arg2, , argN</strong></dt>
+<dd>Optional. A list of arguments to be passed to the method.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following code shows how to use the <strong>call</strong> method.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callMe</span>(<span class="hljs-params">arg1, arg2</span>)</span>{
+     <span class="hljs-keyword">var</span> s = <span class="hljs-string">""</span>;
+
+     s += <span class="hljs-string">"this value: "</span> + <span class="hljs-keyword">this</span>;
+     s += <span class="hljs-string">"&lt;br /&gt;"</span>;
+     <span class="hljs-keyword">for</span> (i <span class="hljs-keyword">in</span> callMe.arguments) {
+         s += <span class="hljs-string">"arguments: "</span> + callMe.arguments[i];
+         s += <span class="hljs-string">"&lt;br /&gt;"</span>;
+     }
+     <span class="hljs-keyword">return</span> s;
+ }
+
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Original function: &lt;br/&gt;"</span>);
+ <span class="hljs-built_in">document</span>.write(callMe(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>));
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"&lt;br/&gt;"</span>);
+
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"Function called with call: &lt;br/&gt;"</span>);
+ <span class="hljs-built_in">document</span>.write(callMe.call(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>));
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// Original function:</span>
+ <span class="hljs-comment">// this value: [object Window]</span>
+ <span class="hljs-comment">// arguments: 1</span>
+ <span class="hljs-comment">// arguments: 2</span>
+
+ <span class="hljs-comment">// Function called with call:</span>
+ <span class="hljs-comment">// this value: 3</span>
+ <span class="hljs-comment">// arguments: 4</span>
+ <span class="hljs-comment">// arguments: 5</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The <strong>call</strong> method is used to call a method on behalf of another object. It allows you to change the this object of a function from the original context to the new object specified by thisObj.</p>
+<p>If thisObj is not supplied, the global object is used as thisObj.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/Function">Function Object</a></li>
+<li><a href="/docs/javascript/Function/apply">apply Method (Function)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/h2ak8h2y(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

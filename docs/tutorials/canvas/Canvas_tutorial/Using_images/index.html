@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Using images · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="One of the more fun features of the canvas is the ability to use images. These can be used to do dynamic photo compositing or used as backdrops of graphs etc. External images can be used in any format supported by the browser (e.g. PNG, GIF or JPEG format). Other canvas elements on the same page can also be used as the source." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/canvas/">canvas</a></li><li><a href="/tutorials/canvas/Canvas_tutorial/">Canvas tutorial</a></li><li><a href="/tutorials/canvas/Canvas_tutorial/Using_images/">Using images</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Using images</h1>
+<h2>Summary</h2>
+<p>One of the more fun features of the canvas is the ability to use images. These can be used to do dynamic photo compositing or used as backdrops of graphs etc. External images can be used in any format supported by the browser (e.g. PNG, GIF or JPEG format). Other canvas elements on the same page can also be used as the source.</p>
+<h2>Importing images</h2>
+<p>Importing images is basically a two step process:</p>
+<ul>
+<li>Firstly we need a reference to a JavaScript Image object or other canvas element as a source. It isn’t possible to use images by simply providing a URL/path to them.</li>
+<li>Secondly we draw the image on the canvas using the <code>drawImage</code> function.</li>
+</ul>
+<p>Let’s look at step one first. There are basically four options available:</p>
+<h4>Using images which are on the same page</h4>
+<p>We can access all images on a page by using either the <code>document.images</code> collection, the <code>document.getElementsByTagName</code> method, or if we know the ID attribute of the image, the <code>document.getElementById</code> method.</p>
+<h4>Using images from other domains</h4>
+<p>Using the <code>crossOrigin</code> attribute on an <code>Image</code>, you can request permission to load an image from another domain for use in your call to <code>drawImage()</code>. If the hosting domain permits cross-domain access to the image, the image can be used in your canvas without tainting it; otherwise using the image will taint the canvas.</p>
+<p><strong>Note</strong>: Need description for “taint the canvas”</p>
+<h4>Using other canvas elements</h4>
+<p>Just as with normal images we access other canvas elements using either the <code>document.getElementsByTagName</code> method or the <code>document.getElementById</code> method. Make sure you’ve drawn something to the source canvas before using it in your target canvas.</p>
+<p>One of the more practical uses of this would be to use a second canvas element as a thumbnail view of the other larger canvas.</p>
+<h4>Creating an image from scratch</h4>
+<p>Another option is to create new <code>Image</code> objects in our script.</p>
+<p>Basically to create a new image object we do this:</p>
+<pre><code>var img = new Image();   // Create new img element
+img.src = 'myImage.png'; // Set source path
+</code></pre>
+<p>When this script gets executed, the image starts loading. Trying to call <code>drawImage</code> before the image has finished loading will throw in Gecko 1.9.2 and earlier, and silently do nothing in Gecko 2.0 and later. So you must use an <code>onload</code> event handler:</p>
+<pre><code>var img = new Image();   // Create new img element
+img.onload = function(){
+  // execute drawImage statements here
+};
+img.src = 'myImage.png'; // Set source path
+</code></pre>
+<p>If you’re only using one external image this can be a good approach but once you need to track more than one we need to resort to something more cunning. It’s beyond the scope of this tutorial to look at image preloading tactics but you can check out <a href="http://www.webreference.com/programming/javascript/gr/column3/index.html">JavaScript Image Preloader</a> for a complete solution.</p>
+<h4>Embedding an image via data: url</h4>
+<p>Another possible way to include images is via the <a href="/w/index.php?title=data:_url&amp;action=edit&amp;redlink=1">data: url</a>. Data urls allow you to completely define an image as a Base64 encoded string of characters directly in your code. One advantage of data urls is that the resulting image is available immediately without another round trip to the server. (Another advantage is that it is then possible to encapsulate in one file all of your CSS, Javascript, HTML, and images, making it more portable to other locations.) Some disadvantages of this method are that your image is not cached, and for larger images the encoded url can become quite long:</p>
+<pre><code>var img_src = 'data:image/gif;base64,R0lGODlhCwALAIAAAAAA3pn/ZiH5BAEAAAEALAAAAAALAAsAAAIUhA+hkcuO4lmNVindo7qyrIXiGBYAOw==';
+</code></pre>
+<h2>drawImage</h2>
+<p>Once we have a reference to our source image object we can use the <code>drawImage</code> method to render it to the canvas. As we we’ll see later the <code>drawImage</code> method is overloaded and has three different variants. In its most basic form it looks like this.</p>
+<p><code>drawImage(image, x, y)</code></p>
+<p>Where <code>image</code> is a reference to our image or canvas object. <code>x</code> and <code>y</code> form the coordinate on the target canvas where our image should be placed.</p>
+<h4>drawImage example 1</h4>
+<p><img src="//static.webplatform.org/7/7b/Canvas_backdrop.png" alt="basic graph drawn on a canvas"></p>
+<p>In the following example I will be using an external image as the backdrop of a small line graph. Using backdrops can make your script considerably smaller because we don’t need to draw an elaborate background. I’m only using one image here so I use the image object’s <code>onload</code> event handler to execute the drawing statements. The <code>drawImage</code> method places the backdrop on the coordinate (0,0) which is the top left corner of the canvas.</p>
+<pre><code>  function draw() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var img = new Image();
+    img.onload = function(){
+      ctx.drawImage(img,0,0);
+      ctx.beginPath();
+      ctx.moveTo(30,96);
+      ctx.lineTo(70,66);
+      ctx.lineTo(103,76);
+      ctx.lineTo(170,15);
+      ctx.stroke();
+    };
+    img.src = 'images/backdrop.png';
+  }
+</code></pre>
+<h2>Scaling</h2>
+<p>The second variant of the <code>drawImage</code> method adds two new parameters and it allows us to place scaled images on the canvas.</p>
+<p><code>drawImage(image, x, y, width, height)</code></p>
+<p>Where <code>width</code> and <code>height</code> is the image’s size on the target canvas.</p>
+<h4>drawImage example 2</h4>
+<p><img src="//static.webplatform.org/1/1a/Canvas_rhino.jpg" alt="An image of a rhino wading in water"></p>
+<p><img src="//static.webplatform.org/8/84/Canvas_scale_image.png" alt="Wallpaper made from an image of a rhino"></p>
+<p>In this example I’m going to use an image as a wallpaper and repeat it several times on the canvas. This is done simply by looping and placing the scaled images at different positions. In the code below the first <code>for</code> loops through the rows the second <code>for</code> loop the columns. The image is scaled one third of its original size which is 50x38 pixels. We’ll see how this could also have been achieved, by creating a custom pattern, later in this tutorial.</p>
+<p><strong>Note</strong>: Images can become blurry when scaling up or grainy if they’re scaled down too much. Scaling is probably best not done if you’ve got some text in it which needs to remain legible.</p>
+<pre><code>  function draw() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var img = new Image();
+    img.onload = function(){
+      for (var i=0;i&lt;4;i++){
+        for (var j=0;j&lt;3;j++){
+          ctx.drawImage(img,j*50,i*38,50,38);
+        }
+      }
+    };
+    img.src = 'images/rhino.jpg';
+  }
+</code></pre>
+<h2>Slicing</h2>
+<p>The third and last variant of the <code>drawImage</code> method has eight new parameters. We can use this method to slice parts of a source image and draw them to the canvas.</p>
+<p><code>drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)</code></p>
+<p><img src="//static.webplatform.org/8/81/Canvas_drawimage.jpg" alt="Using drawImage to slice parts of an image"></p>
+<p>The first parameter <code>image</code>, just as with the other variants, is either a reference to an image object or a reference to a different canvas element. For the other eight parameters it’s best to look at the image on the right. The first four parameters define the location and size of the slice on the source image. The last four parameters define the position and size on the destination canvas.</p>
+<p>Slicing can be a useful tool when you want to make compositions. You could have all elements in a single image file and use this method to composite a complete drawing. For instance, if you want to make a chart you could have a PNG image containing all the necessary text in a single file and depending on your data could change the scale of your chart without very much diffculty. Another advantage is that you don’t need to load every image individually.</p>
+<h4>drawImage example 3</h4>
+<p><img src="//static.webplatform.org/6/63/Canvas_drawimage2.jpg" alt="Cropped image of a rhino in a gilt frame"></p>
+<p>In this example I’m going to use the same rhino as we’ve seen above, but now I’m going to slice its head out and composite it into a picture frame. The image of the picture frame includes a dropshadow which has been saved as a 24-bit PNG image. Because 24-bit PNG images include a full 8-bit alpha channel, unlike GIF and 8-bit PNG images, I can place it onto any background and don’t have to worry about a matte color.</p>
+<p>I took a different approach to the loading of the images than the example above. I just placed the images directly in my HTML document and used a CSS rule to hide them from view (<code>display:none</code>). I assigned both images an <code>id</code> attribute to make them easier to select. The script itself is very simple. I first draw the sliced and scaled image on the canvas (first <code>drawImage</code> statement), and then place the frame on top (second <code>drawImage</code> statement).</p>
+<p><img src="//static.webplatform.org/e/e5/Canvas_picture_frame.png" alt="An empty gilt picture frame"></p>
+<pre><code>function draw() {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+
+  // Draw slice
+  ctx.drawImage(document.getElementById('source'),
+                33,71,104,124,21,20,87,104);
+
+  // Draw frame
+  ctx.drawImage(document.getElementById('frame'),0,0);
+}
+</code></pre>
+<h2>Art gallery example</h2>
+<p><img src="//static.webplatform.org/3/38/Canvas_art_gallery.jpg" alt="A group of four canvas images, each in a frame, on a brown background"></p>
+<p>In the final example of this chapter I’ve made a little art gallery. The gallery consists of a table containing several images. When the page is loaded, for each image in the page a canvas element is inserted and a frame is drawn arround it.</p>
+<p>In my case, all images have a fixed width and height, and so does the frame that’s drawn around it. You could enhance the script so that it uses the image’s width and height to make the frame fit perfectly around it.</p>
+<p>The code below should be self-explanatory. We loop through the images array and add new canvas elements accordingly. Probably the only thing to note, for those not so familar with the DOM, is the use of the <a href="/w/index.php?title=insertBefore&amp;action=edit&amp;redlink=1">insertBefore</a> method. <code>insertBefore</code> is a method of the parent node (a table cell) of the element (the image) before which we want to insert our new node (the canvas element).</p>
+<pre><code>function draw() {
+
+  // Loop through all images
+  for (var i=0;i&lt;document.images.length;i++){
+
+    // Don't add a canvas for the frame image
+    if (document.images[i].getAttribute('id')!='frame'){
+
+      // Create canvas element
+      canvas = document.createElement('canvas');
+      canvas.setAttribute('width',132);
+      canvas.setAttribute('height',150);
+
+      // Insert before the image
+      document.images[i].parentNode.insertBefore(canvas,document.images[i]);
+
+      ctx = canvas.getContext('2d');
+
+      // Draw image to canvas
+      ctx.drawImage(document.images[i],15,20);
+
+      // Add frame
+      ctx.drawImage(document.getElementById('frame'),0,0);
+    }
+  }
+}
+</code></pre>
+<h2>Controlling image scaling behavior</h2>
+<p>Introduced in Gecko 1.9.2 (Firefox 3.6 / Thunderbird 3.1 / Fennec 1.0)</p>
+<p>Gecko 1.9.2 introduced the <code>mozImageSmoothingEnabled</code> property to the canvas element; if this Boolean value is <code>false</code>, images won’t be smoothed when scaled. This property is <code>true</code> by default.</p>
+<pre><code>ctx.mozImageSmoothingEnabled = false;
+</code></pre>
+<p><a href="/docs/tutorials/canvas/Canvas_tutorial/Drawing_shapes">&lt;&lt;Previous ||</a><a href="/docs/tutorials/canvas/Canvas_tutorial/Applying_styles_and_colors">Next&gt;&gt;</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Canvas_tutorial/Using_images">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

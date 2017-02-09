@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML validation · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article introduces the concept of validation, and shows how to use the online W3C validator to validate your HTML." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/html_validation/">html validation</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML validation</h1>
+<h2>Summary</h2>
+<p>This article introduces the concept of validation, and shows how to use the online W3C validator to validate your HTML.</p>
+<h2>Introduction</h2>
+<p>So you’ve written a few HTML pages, and they seem to display okay, but there are a few things not quite right with them. What is the best way to start finding out what is wrong, and to ensure that these pages (and any future pages you write) will be displayed properly across browsers, with no errors?</p>
+<p>Validation is the answer! There are many tools available, from the W3C and other places, that allow you to validate the code on your sites. The most common validators you’ll use are:</p>
+<ul>
+<li><a href="http://html5.validator.nu/">Validator.nu</a>: A new-school validator that validates HTML5, ARIA, SVG 1.1 and MathML 2.0, it checks the entire document pointing out places where your markup doesn’t follow that doctype correctly (i.e., where there are errors). This is the one we recommend if you are using the HTML5 doctype, also highly recommended.</li>
+<li><a href="http://validator.w3.org/">The W3C MarkUp Validator</a>: This looks at the (X)HTML doctype for the document you want to check, and then validates your markup accordingly. This is the one we recommend if you are using an HTML4 or XHTML1.x doctype. It does validate HTML5, but validator.nu is arguably more up to date.</li>
+<li><a href="http://validator.w3.org/checklink">The W3C Link Checker</a>: This checks a document, and tests all the links to make sure they are not broken (e.g., that the <code>&lt;href&gt;</code> values point to resources that actually exist).</li>
+<li><a href="http://jigsaw.w3.org/css-validator/">The W3C CSS Validator</a>: This checks a CSS (or HTML/CSS) document and verifies that the CSS follows the specs properly.</li>
+</ul>
+<p>In this article, we will cover how to use the second of these, demonstrating how to validate markup and interpret the typical kinds of results the validator gives you.</p>
+<h2>Errors</h2>
+<p>In computer programming — which includes markup languages — there are generally two types of errors with code:</p>
+<ul>
+<li>syntax errors — these errors usually involve a mistake that causes the computer to be unable to execute or compile the program properly (e.g., a missing brace or parenthesis).</li>
+<li>logic errors — these errors arise when the code is syntactically correct but doesn’t do exactly what it was meant to do.</li>
+</ul>
+<p>With most programming languages, the first kind of error is impossible to overlook. The code will refuse to compile or run until the error is fixed, and the compiler will usually alert the programmer to the error and the line number on which it can be found. This makes finding and fixing syntax errors much easier than logic errors, which result in those general head-scratching moments of, “Why isn’t it doing what I want?” Validators, as you might expect, can only find syntax errors.</p>
+<p>Although HTML is a declarative markup language rather than a procedural programming language, syntax errors may still occur. However, syntax errors in a web page do not commonly cause the web browser to refuse to display the page. This inherent forgiveness in web browsers is one of the biggest reasons for the rapid adoption and spread of the web. Even if you forget to close a tag, your page will usually still display.</p>
+<p>The first web browser, <a href="http://www.w3.org/People/Berners-Lee/WorldWideWeb.html">WorldWideWeb</a> (written by Tim Berners-Lee), was also an editor, allowing authors to create web pages without learning HTML. Although this editor created invalid HTML, it established an important precedent that exists in all web browsers to this day — that allowing users to access content is more important than complaining about errors to people who won’t understand them — or be in a position to fix them.</p>
+<h2>What is validation?</h2>
+<p>Although web browsers will accept invalid code in web pages and do their best to render the code by making a best guess of the author’s intention, it is still possible to check whether the HTML has been written correctly, and indeed it is a good idea to do so, as you’ll see below. We call this “validating” the HTML.</p>
+<p>A validation program compares the HTML code in the web page with the rules of the accompanying <a href="/docs/guides/doctypes_and_markup_styles">doctype</a> and tells you if and where those rules have been broken.</p>
+<h2>Why validate?</h2>
+<p>There is a common feeling among some web developers that if a web page looks fine in browsers, it doesn’t matter if it doesn’t validate (often stated as, “In function there is beauty”). They describe validation as an ideal goal, but not something that is a black-and-white issue.</p>
+<p>There is some wisdom in this attitude. The HTML4 specification is not perfect, and some things that were arguably correct — such as <a href="http://www.w3.org/wiki/HTML_lists#Beginning_ordered_lists_with_numbers_other_than_1">starting an ordered list with a number other than 1</a> — were invalid HTML. HTML5 fixes quite a lot of spec issues, including this one, but you may still run into situations where validation may need to be broken in order to render the page as you want. As the saying goes, <em>Learn the rules so you know how to break them properly.</em></p>
+<p>There are two very powerful reasons to validate your HTML as you author it:</p>
+<ul>
+<li>You are not always perfect, and neither is your code. We all make mistakes, and your web pages will be higher quality (that is, work more consistently) if you weed out the mistakes.</li>
+<li>It is a fact of life that browsers change. In the future, it is likely that browsers will be less, not more, forgiving when parsing invalid code.</li>
+</ul>
+<p>Validation is your early-warning system about bugs in your markup that can manifest in “interesting” and hard-to-fix ways. When a browser encounters invalid HTML, it has to take an educated guess as to what you meant to do — and different browsers can come up with different answers.</p>
+<h2>Different browsers interpret invalid HTML differently</h2>
+<p>Valid HTML is the only contract you have with the browser manufacturers. The HTML specification says how you should write documents, and how they should interpret them. In recent times, standards compliance of browsers has reached the point where, as long as you write valid code, all the major browsers should interpret your code the same way. This is almost always the case for HTML at least, with other standards having a few more differences in support here and there.</p>
+<p>But what happens when you do pass a browser invalid code? The answer is that the browser’s error handling comes into play to work out what to do with the code. It basically says, “This code doesn’t validate, so how do I present this page to the end user?”</p>
+<p>It sounds great, doesn’t it? If you leave a few errors in your page, the browser will fill in the gaps for you! Not so, as each browser does things differently. Consider the following code:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>This text should be bold<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Should this text be bold? How does the HTML look when rendered?<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span>This text should be a link<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Should this text be a link? How does the HTML look when rendered?<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>The errors are that (1) the <strong>strong</strong> element is incorrectly nested across multiple block elements, and (2) the <strong>anchor</strong> element is not closed. When you try to display this code in different browsers, they interpret it in very different ways:</p>
+<ul>
+<li>Opera makes the subsequent elements children of the <strong>bold</strong> element.</li>
+<li>Firefox adds extra <strong>bold</strong> elements between the paragraphs, which were not present in the markup.</li>
+<li>Internet Explorer puts the text “This text should be a link” outside the <strong>anchor</strong> tag that creates the link.</li>
+</ul>
+<p>This original version of this example can be found in Hallvord Steen’s article <a href="http://blog.teamtreehouse.com/same-dom-errors-different-browser-interpretations">Same DOM errors, different browser interpretations</a> — read this for a deeper treatment of HTML errors, as well as some information about debugging tools.</p>
+<p>None of the different browsers’ behaviors is incorrect; they’re all trying to fill in the gaps of your incorrect code, they just do it differently. The bottom line is, <em>avoid invalid markup in your pages if at all possible!</em></p>
+<p>Note that HTML5 fixes this to some degree; for the first time in the history of HTML, it defines how browsers should handle badly-formed markup. At the time of this writing, however, support for this HTML5 error handling is not widespread across browsers, so you can’t yet rely on it.</p>
+<h2>How to validate your pages</h2>
+<p>Now that we’ve explored the theory behind validating your HTML, let’s talk about the easy part — the actual validation. Okay, that’s not completely accurate. Putting a URL into a validator to see whether the page is valid is easy; working out what is wrong and fixing the errors is sometimes not so easy, as the error messages can sometimes be a bit cryptic. Let’s look at some examples.</p>
+<p>The example we’ll be looking at in this section is below; feel free to copy and paste it into a new page in your favorite editor.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Validating your HTML<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>The tale of Herbet Gruel<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Welcome to my story. I am a slight whisp of a man, slender and fragile, features wrinkled and worn, eyes sunken into their sockets like rabbits cowering in their burrows. The <span class="hljs-tag">&lt;<span class="hljs-title">em</span>&gt;</span>years have not been kind to me<span class="hljs-tag">&lt;/<span class="hljs-title">em</span>&gt;</span>, but yet I hold no regrets, as I have overcome all that sought to ail me, and have been allowed to bide my time, making mischief as I travel to and fro, 'cross the unyielding landscape of the <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://outer-rim-rocks.co.uk"</span> <span class="hljs-attribute">colspan</span>=<span class="hljs-value">"3"</span>&gt;</span>outer rim<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Buster<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Buster is my guardian angel. Before that, he was my dog. Before that, who knows? I lost my dog many moons ago while out hunting geese in the undergrowth. A shot rang out from my rifle, and I called for Buster to collect the goose I had felled. He ran off towards where the bird had landed, but never returned. I never found his body, but I comfort myself with the thought that he did not die; rather he transcended to a higher place, and now watches over me, to ensure my well-being.
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>My possessions<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>A travelling man needs very little to accompany him on the road:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>My hat full of memories<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>My trusty walking cane<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>A purse that did contain gold at one time<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>A diary, from the year 1874<span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>An empty glasses case<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>A newspaper, for when I need to look busy<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+<p>This simple page consists of three headings, three paragraphs, one hyperlink, and one unordered list. It uses the XHTML 1.0 strict doctype as its rule set to validate against. (We used XHTML 1.0 strict because it is more likely to throw errors than the HTML5 doctype.) There are a few errors in the document, which we’ll discover below using the W3C HTML validator.</p>
+<h3>The W3C HTML validator</h3>
+<p>Open the <a href="http://validator.w3.org/">W3C online validator</a> in a new tab or window, so that you can switch between the validator and this article as you go through the example. (You can also validate pages in the W3C validator directly from the Opera browser by right/Ctrl-clicking and selecting the “Validate” option.)</p>
+<p>You’ll notice that the validator has three tabs available across the top of the interface:</p>
+<ul>
+<li>Validate by URI: Allows you to enter the address of a page already on the internet for validation.</li>
+<li>Validate by File Upload: Allows you to upload a local HTML file for validation.</li>
+<li>Validate by Direct Input: Allows you to paste HTML directly into the window for validation.</li>
+</ul>
+<p>Whichever method you use should give you the same result; it’s easiest to test the example page from here by copying the full example code from above and pasting it into the third tab. Doing so should give you the result shown in Figure 1:</p>
+<p><img src="//static.webplatform.org/2/2b/html_validation_errors.png" alt="The results of validating the sample document is 11 errors"></p>
+<p><em>Figure 1: The results of validating the sample document — 11 errors!</em></p>
+<p>This may sound worrying, especially when we tell you that there are <strong>not</strong> 11 errors in the document! Don’t despair — the validator is reporting more errors than there actually are. This is because often an error at the top of the page will cascade, making the validator report more errors further down, as it looks like more elements are not closed or incorrectly nested. You just have to think about what the error messages mean, look for obvious errors in the markup, and work from the top down. Table 1 below shows all of the errors we fixed to make the page validate, along with our logic for working out what was wrong, and the fixes we applied to solve the problem.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Error message</th><th style="text-align:left">Resolution logic</th><th style="text-align:left">Fix made</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Line 8, Column 461: there is no attribute “colspan”</td><td style="text-align:left">We know that there is a <code>colspan</code> attribute, and it is valid HTML, so why is it saying it doesn’t exist? Wait, maybe it means it is being used on an element that you shouldn’t use it on? Sure enough, it is being used on an <code>&lt;a&gt;</code> element — wrong!</td><td style="text-align:left">Removed the <code>colspan</code> attribute from the <code>&lt;a&gt;</code> element.</td></tr>
+<tr><td style="text-align:left">Line 13, Column 7: document type does not allow element “h3” here; missing one of &quot;object&quot;, &quot;applet&quot;, &quot;map&quot;, &quot;iframe&quot;, &quot;button&quot;, &quot;ins&quot;, “del” start-tag. <code>&lt;h3&gt;My possessions&lt;/h3&gt;</code></td><td style="text-align:left">Again, at first glance this seems strange — the <code>&lt;h3&gt;</code> element is properly closed, and allowed in this context. You should note that often, this error message means that there is an unclosed element nearby.</td><td style="text-align:left">Added a closing <code>&lt;p&gt;</code> tag to the line above the heading in question.</td></tr>
+<tr><td style="text-align:left">Line 19, Column 40: document type does not allow element “li” here; missing one of &quot;ul&quot;, &quot;ol&quot;, &quot;menu&quot;, “dir” start-tag. <code>&lt;li&gt;A diary, from the year 1874&lt;li&gt;</code></td><td style="text-align:left">This one is pretty easy — you can see from the line it is pointing to that the end <code>&lt;li&gt;</code> tag is missing a closing slash (<code>/</code>).</td><td style="text-align:left">Added a closing slash to the line in question.</td></tr>
+<tr><td style="text-align:left">Line 23, Column 9: end tag for “html” omitted, but OMITTAG NO was specified. <code>&lt;/body&gt;</code></td><td style="text-align:left">Again, it doesn’t take much to work out that this means the end <code>&lt;html&gt;</code> tag is missing. The error message explanation even starts with You may have neglected to close an element.</td><td style="text-align:left">Added the missing end <code>&lt;/html&gt;</code> element.</td></tr>
+</tbody>
+</table>
+<p>With these four errors fixed, the remaining seven disappear and the validator now gives a satisfying success message, as shown in Figure 2:</p>
+<p><img src="//static.webplatform.org/2/2a/validatehtml2.gif" alt="A success message to say that all my errors have been fixed"></p>
+<p><em>Figure 2: A success message to say that all my errors have been fixed.</em></p>
+<p>Below is the corrected version of the code; feel free to copy and paste it into a new page in your favorite editor.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.w3.org/1999/xhtml"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Validating your HTML<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>The tale of Herbet Gruel<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Welcome to my story. I am a slight whisp of a man, slender and fragile, features wrinkled and worn, eyes sunken into their sockets like rabbits cowering in their burrows. The <span class="hljs-tag">&lt;<span class="hljs-title">em</span>&gt;</span>years have not been kind to me<span class="hljs-tag">&lt;/<span class="hljs-title">em</span>&gt;</span>, but yet I hold no regrets, as I have overcome all that sought to ail me, and have been allowed to bide my time, making mischief as I travel to and fro, 'cross the unyielding landscape of the <span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://outer-rim-rocks.co.uk"</span>&gt;</span>outer rim<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Buster<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Buster is my guardian angel. Before that, he was my dog. Before that, who knows? I lost my dog many moons ago while out hunting geese in the undergrowth. A shot rang out from my rifle, and I called for Buster to collect the goose I had felled. He ran off towards where the bird had landed, but never returned. I never found his body, but I comfort myself with the thought that he did not die; rather he transcended to a higher place, and now watches over me, to ensure my well-being.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>My possessions<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>A travelling man needs very little to accompany him on the road:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>My hat full of memories<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>My trusty walking cane<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>A purse that did contain gold at one time<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>A diary, from the year 1874<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>An empty glasses case<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>A newspaper, for when I need to look busy<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Conclusion</h2>
+<p>That’s about all there is to it, really. You just need to keep your wits about you, code carefully, and remember what doctype your page is being validated against.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.opera.com/dragonfly/">Opera Dragonfly</a> (built into Opera)</li>
+<li><a href="https://www.squarefree.com/bookmarklets/validation.html">General validation bookmarklet</a></li>
+<li><a href="http://chrispederick.com/work/web-developer/">The Firefox web developer toolbar extension</a></li>
+<li><a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=e59c3964-672d-4511-bb3e-2d5e1db91038&amp;displaylang=en">The IE developer toolbar</a></li>
+<li><a href="http://zappatic.net/safaritidy/">Safari tidy</a></li>
+<li><a href="http://tidy.sourceforge.net/">HTML tidy</a></li>
+</ul>
+<h3>Exercise questions</h3>
+<ul>
+<li>What happens when a browser parses invalid HTML?</li>
+<li>What is the problem with this?</li>
+<li>Will using a frameset in a document validated against the HTML 4 Strict doctype generate an error?</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Advanced selectors guide · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This guide gives a detailed explanation of most of the advanced CSS selectors available." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/advanced_selectors guide/">advanced selectors guide</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Advanced selectors guide</h1>
+<h2>Summary</h2>
+<p>This guide gives a detailed explanation of most of the advanced CSS selectors available.</p>
+<h2>Introduction</h2>
+<p>In our <a href="/docs/tutorials/using_selectors">Using selectors</a> article, we introduced the most basic of CSS selectors: element, class, and id selectors. With these selectors you can accomplish a lot, but this certainly is not an exhaustive list of selectors — there are other selectors that allow you to select elements to style based on more specific criteria. In this article, most of the advanced CSS selectors are described.</p>
+<p>Note: This article discusses <em>most</em> of the advanced selectors, because although most modern browsers support all the selectors listed in the <a href="http://www.w3.org/TR/selectors/">CSS3 selectors module</a>, new selectors are being added and modified all the time–keep checking the <a href="http://www.w3.org/TR/selectors4/">CSS4 selectors draft</a> for updates. New selectors will be added to this article as they receive more widespread browser support.</p>
+<p>You will see many of these selectors used throughout our articles as you read on. Don’t worry if you don’t understand them all immediately: keep referencing this article as needed.</p>
+<h2>Universal selectors</h2>
+<p>Universal selectors select every element on a page. For example, the following rule says that every element on the page will display a solid 1 pixel black border:</p>
+<pre><code class="css">* <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#000000</span></span></span>;
+}</span>
+</code></pre>
+<h2>Attribute selectors</h2>
+<p>Attribute selectors allow you to select elements based on the attributes they contain. For example, you can select every <code>&lt;img&gt;</code> element with an <code>alt</code> attribute using the following selector:</p>
+<pre><code class="css"><span class="hljs-tag">img</span><span class="hljs-attr_selector">[alt]</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#000000</span></span></span>;
+}</span>
+</code></pre>
+<p>Note the square brackets in the example above.</p>
+<p>Using the above selector, you could perhaps add a black border around any images that have an <code>alt</code> attribute, and style other images with a bright red border — this is a useful technique for accessibility testing.</p>
+<h3>Selecting by attribute value</h3>
+<p>Attribute selectors instantly become more useful when you consider that you can select by <em>attribute value</em>, not just an attribute’s name. The following rule selects all images with an <code>src</code> attribute value of <code>alert.gif</code>:</p>
+<pre><code class="css"><span class="hljs-tag">img</span><span class="hljs-attr_selector">[src="alert.gif"]</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#000000</span></span></span>;
+}</span>
+</code></pre>
+<p>Again this style is useful for debugging purposes. You can also use it to style important icons or links without requiring additional classes and IDs.</p>
+<p>Note that this code is not supported by IE6 and below.</p>
+<h3>Selecting based on substrings within the attribute value</h3>
+<p>This is where attribute selectors become even more useful. To begin, you can select and style our <code>&lt;img src=&quot;alert.gif&quot;&gt;</code> element using the following rule:</p>
+<pre><code class="css"><span class="hljs-tag">img</span><span class="hljs-attr_selector">[src^="alert"]</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#000000</span></span></span>;
+}</span>
+</code></pre>
+<p>The ^ character dictates that this selector affects <code>&lt;img&gt;</code> elements only if they contain the string <code>alert</code> at the start of the <code>src</code> attribute value.</p>
+<p>You can also select a <code>&lt;img src=&quot;alert.gif&quot;&gt;</code> element using this rule:</p>
+<pre><code class="css"><span class="hljs-tag">img</span><span class="hljs-attr_selector">[src$="gif"]</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#000000</span></span></span>;
+}</span>
+</code></pre>
+<p>The $ character dictates that this selector should select <code>&lt;img&gt;</code> elements only if they contain the string <code>gif</code> at the end of the <code>src</code> attribute value. This is really useful for styling links that point to specific types of resources, such as PDF files or word documents.</p>
+<p>And finally, you can select a <code>&lt;img src=&quot;alert.gif&quot;&gt;</code> element like this:</p>
+<pre><code class="css"><span class="hljs-tag">img</span><span class="hljs-attr_selector">[src*="ert"]</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid <span class="hljs-hexcolor">#000000</span></span></span>;
+}</span>
+</code></pre>
+<p>The * character dictates that this selector should affect <code>&lt;img&gt;</code> elements only if they have the string <code>ert</code> anywhere within the <code>src</code> attribute value.</p>
+<p>Note: These advanced selectors are not supported by IE8 and below.</p>
+<h3>Selecting based on delimited items within the attribute value</h3>
+<p>If you have an element on a page with a number of classes applied to it, for example:</p>
+<pre><code>&lt;article class=&quot;featured archive english&quot;&gt;&lt;/article&gt;
+</code></pre>
+<p>You could select it using any of the following selectors:</p>
+<pre><code class="css"><span class="hljs-tag">article</span><span class="hljs-attr_selector">[class~="featured"]</span>
+<span class="hljs-tag">article</span><span class="hljs-attr_selector">[class~="archive"]</span>
+<span class="hljs-tag">article</span><span class="hljs-attr_selector">[class~="english"]</span>
+</code></pre>
+<p>The ~ character dictates that these selectors should select an <code>&lt;article&gt;</code> element whose <code>class</code> attribute value is a list of whitespace-separated values, but only if one of those values is the value given inside the quotes.</p>
+<p>Next, take a look at an element on a page with an ID value in the form of hyphen-separated list:</p>
+<pre><code>&lt;article id=&quot;english-daily-feature&quot;&gt;&lt;/article&gt;
+</code></pre>
+<p>You can select it using the following selector:</p>
+<pre><code class="css"><span class="hljs-tag">article</span><span class="hljs-attr_selector">[id|="english"]</span>
+</code></pre>
+<p>The | character dictates that this selector should select an <code>&lt;article&gt;</code> element whose <code>id</code> attribute value is a list of hyphen-separated values, but only if the leftmost value is <code>english</code>.</p>
+<p>Note: These selectors are not supported by IE8 and below.</p>
+<h2>Child selector</h2>
+<p>You can use a child selector to select specific elements that are children of other specific elements. For example, the following rule will turn the text of <code>&lt;strong&gt;</code> elements that are children of <code>&lt;h3&gt;</code> elements blue, without affecting other <code>&lt;strong&gt;</code> elements:</p>
+<pre><code class="css"><span class="hljs-tag">h3</span> &gt; <span class="hljs-tag">strong</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;
+}</span>
+</code></pre>
+<p>Note that child selectors are not supported in IE6 or below.</p>
+<p>Note also that the &gt; character is often referred to as a combinator in this context — it combines multiple elements together in one selector.</p>
+<h2>Descendent selector</h2>
+<p>Descendent selectors are similar to child selectors, except that child selectors only select immediate descendants; descendent selectors select matching elements anywhere in the element hierarchy, not just direct descendants. Investigate what this means by examining the following HTML snippet:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>hello<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">article</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>In this paragraph I will say goodbye<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>In this snippet, the <code>&lt;div&gt;</code> element is the parent of all other elements. It has two children, a <code>&lt;p&gt;</code> and an <code>&lt;article&gt;</code>. The <code>&lt;article&gt;</code> element has a single child element: another <code>&lt;p&gt;</code>.</p>
+<p>You could use a child selector to select just the <code>&lt;p&gt;</code> immediately inside the <code>&lt;div&gt;</code>, like so:</p>
+<pre><code class="css">div &gt; p {
+ …
+}
+</code></pre>
+<p>If you instead use a descendent selector, as follows:</p>
+<pre><code class="css">div p {
+ …
+}
+</code></pre>
+<p>Then, both of the <code>&lt;p&gt;</code> elements are selected.</p>
+<h2>Adjacent sibling selector</h2>
+<p>This selector allows you to select a specific element that comes directly after another specific element, on the same level in the element hierarchy. Review the following example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>My heading<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My first paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My second paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My third paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My fourth paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My fifth paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>If you wanted to select just the <code>&lt;p&gt;</code> element that comes immediately after the <code>&lt;h2&gt;</code> element (and any other such <code>&lt;p&gt;</code> elements that might appear later in the document) you could use the following rule:</p>
+<pre><code class="css">h2 + p {
+ ...
+}
+</code></pre>
+<p>Note that the adjacent sibling selector is not supported in IE6 or below.</p>
+<p>Note also that the + character is often referred to as a combinator in this context — it combines multiple elements together in one selector.</p>
+<h2>General sibling selectors</h2>
+<p>The general sibling selector is very similar to the adjacent sibling selector, except that it allows you to select all siblings of the specified element type, not just the one immediate next to the element on the left side. The CSS syntax looks like this:</p>
+<pre><code class="css">h2 ~ p {
+ ...
+}
+</code></pre>
+<p>Returning to our previous example, this ruleset would select all five paragraph elements, not just the first one. It would also select the paragraph shown below:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>My heading<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>My sub heading<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>My paragraph<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Note that the general sibling selector is not supported in IE8 or below.</p>
+<p>Note also that the ~ character is often referred to as a combinator in this context — it combines multiple elements together in one selector.</p>
+<h2>Pseudo-classes</h2>
+<p>Pseudo-classes are used to provide styles not for elements, but for various states of elements.</p>
+<h3>Link and user action pseudo-classes</h3>
+<p>The most common pseudo-classes you will come across are those used to style link states (they are described in full usage in <a href="/Styling_lists_and_links">Styling lists and links</a>):</p>
+<ul>
+<li><code>:link</code> — the normal, default state of links, as displayed when the page first loads in a browser.</li>
+<li><code>:visited</code> — selects links that you have already visited in the browser you are currently using.</li>
+<li><code>:focus</code> — selects links that currently have the text indicator (location of cursor) within them.</li>
+<li><code>:hover</code> — selects links that the cursor is currently hovering over.</li>
+<li><code>:active</code> — selects links that are currently being clicked.</li>
+</ul>
+<p>Note that the last three listed above (called “user action pseudo-classes” — the first two are the link pseudo-classes) can be used to style the states of any element. They are often used when styling a user interface. For example, you can set a different style of a form input field when it is tabbed into, or you might want an information box to appear only when the cursor hovers over a certain area of the screen.</p>
+<p>Check out the following examples. The CSS rules below applies a link style to display blue links (which is the default link style in most browsers anyway). When hovered over, the default link underline disappears. To achieve the same effect when the link is focused via the keyboard, the <code>:hover</code> rule is duplicated with the <code>:focus</code> selector. When a link has already been visited, it turns gray. Finally, when a link is active, it is bold, as an extra clue to visitors that something significant is happening.</p>
+<pre><code class="css"><span class="hljs-tag">a</span><span class="hljs-pseudo">:link</span> <span class="hljs-rules">{
+ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;
+}</span>
+
+<span class="hljs-tag">a</span><span class="hljs-pseudo">:visited</span> <span class="hljs-rules">{
+ <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> gray</span></span>;
+}</span>
+
+<span class="hljs-tag">a</span><span class="hljs-pseudo">:hover</span>, <span class="hljs-tag">a</span><span class="hljs-pseudo">:focus</span> <span class="hljs-rules">{
+<span class="hljs-rule"><span class="hljs-attribute">text-decoration</span>:<span class="hljs-value"> none</span></span>;
+}</span>
+
+<span class="hljs-tag">a</span><span class="hljs-pseudo">:active</span> <span class="hljs-rules">{
+ <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+}</span>
+</code></pre>
+<p>Take care to specify these rules in the same order as they are shown in above, because otherwise they might not work as you expect. This is due to the way specificity causes later rules in the style sheet to override earlier rules. Specificity is covered in more detail in the article titled <a href="/docs/tutorials/inheritance_and_cascade">Inheritance and cascade</a>.</p>
+<p>As another example, the <code>:focus</code> pseudo-class is also useful as a usability aid in forms. For example, you can highlight the input field that has the active blinking cursor inside it with a rule like this:</p>
+<pre><code class="css">input:focus  {
+  border: 2px solid black;
+  background color: lightgray;
+}
+</code></pre>
+<h3>The negation (not) pseudo-class</h3>
+<p>The negation pseudo-class can be used to explicitly apply styles to elements that <strong>are not</strong> selected by a simple selector. For example, imagine that you want to apply some styling to a number of content blocks, all except one. The blocks could look like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"experiment"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"tests"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"results"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"conclusion"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"references"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+</code></pre>
+<p>You can apply the styling to all sections except the references, with this rule:</p>
+<pre><code class="css">#abstract, #experiment, #tests, #results, #conclusion {
+  ...
+}
+</code></pre>
+<p>Or instead, you can use the negation selector, like this:</p>
+<pre><code class="css">section:not(#references) {
+  ...
+}
+</code></pre>
+<p>Which is much shorter and easy to read.</p>
+<p>Note: The negation selector is not supported by IE8 and below.</p>
+<h3>The language (lang) pseudo-class</h3>
+<p>The <code>:lang</code> pseudo-class selects elements whose languages have been set to the specified language using the <code>lang</code> attribute. For example, the following HTML element:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-US"</span>&gt;</span>A paragraph of American text, gee whiz!<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Could be selected using the following:</p>
+<pre><code class="css">p:lang(en-US) {
+ ...
+}
+</code></pre>
+<h3>The target pseudo-class</h3>
+<p>The target pseudo-class allows you to select an element if it is the <strong>target</strong> of the current page URL. This is really useful and allows for some cool effects, because it effectively allows you to set styles to be applied when links are clicked. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"#target"</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"target"</span>&gt;</span>Woot!<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>This is accomplished with a simple link followed by a <code>&lt;div&gt;</code> — the link references the <code>&lt;div&gt;</code> via its ID. The current URL only targets the <code>&lt;div&gt;</code> upon the link being clicked. To style the <code>&lt;div&gt;</code> only when the link is clicked, you could use the following rule:</p>
+<pre><code class="css">div:target {
+  ...
+}
+</code></pre>
+<p>To see a much more involved example of <code>:target</code> usage, read the article titled <a href="http://dev.opera.com/articles/view/css3-target-based-interfaces/">CSS3 target-based interfaces</a> by Corey Mwamba.</p>
+<h3>UI element state pseudo-classes</h3>
+<p>These pseudo-classes are all concerned with styling advanced states of UI elements. You’ll most commonly use them to style HTML form elements, particularly when some of the new features of HTML5 forms are being used, such as built in validation. (See [HTML5 form additions] for more details.)</p>
+<p>Imagine you are styling a basic form input with a <code>valid</code> attribute for validation:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">required</span>&gt;</span>
+</code></pre>
+<p>You can style it only when the information entered into it is valid or invalid using these two rules:</p>
+<pre><code class="css"><span class="hljs-tag">input</span><span class="hljs-pseudo">:valid</span> <span class="hljs-rules">{}</span>
+</code></pre>
+<p>and</p>
+<pre><code class="css"><span class="hljs-tag">input</span><span class="hljs-pseudo">:invalid</span> <span class="hljs-rules">{}</span>
+</code></pre>
+<p>You can also style it depending on whether it is enabled (default) or disabled (using the <code>disabled</code> attribute), using this style:</p>
+<pre><code class="css"><span class="hljs-tag">input</span><span class="hljs-pseudo">:enabled</span> <span class="hljs-rules">{}</span>
+</code></pre>
+<p>and this style:</p>
+<pre><code class="css"><span class="hljs-tag">input</span><span class="hljs-pseudo">:disabled</span> <span class="hljs-rules">{}</span>
+</code></pre>
+<p>Finally, you can style a checkbox only when checked, like this:</p>
+<pre><code class="css"><span class="hljs-tag">input</span><span class="hljs-attr_selector">[type="checkbox"]</span><span class="hljs-pseudo">:checked</span> <span class="hljs-rules">{}</span>
+</code></pre>
+<h3>Structural pseudo-classes</h3>
+<p>Structural pseudo-classes are advanced selectors that enable you to target specific elements based on their position in the document hierarchy. These were introduced in CSS3, and they are built on selectors previously discussed, such as the adjacent sibling selector.</p>
+<p><code>:root</code> selects the root element of the document, which is usually the <code>&lt;html&gt;</code> element. For example, this rule:</p>
+<pre><code class="css">html:root{ ... }
+</code></pre>
+<p><code>:nth-child(n)</code> allows you to select a repeating pattern of elements inside an continuous set of like elements, such as several list items, or several paragraphs or articles next to one another. Review this example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>First<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Second<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Third<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Fourth<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Fifth<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Sixth<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Seventh<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Eighth<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Ninth<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Tenth<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+</code></pre>
+<p><code>n</code> is set to the pattern we want to select. In this case, to select list items, use this code:</p>
+<pre><code class="css"><span class="hljs-tag">li</span><span class="hljs-pseudo">:nth-child(n)</span>
+</code></pre>
+<p>To select just the odd or even list items, add this rule:</p>
+<pre><code class="css"><span class="hljs-tag">li</span><span class="hljs-pseudo">:nth-child(odd)</span>
+<span class="hljs-tag">li</span><span class="hljs-pseudo">:nth-child(even)</span>
+</code></pre>
+<p>Or you can use this rule to accomplish the same result:</p>
+<pre><code class="css"><span class="hljs-tag">li</span><span class="hljs-pseudo">:nth-child(2n+1)</span>
+<span class="hljs-tag">li</span><span class="hljs-pseudo">:nth-child(2n+0)</span>
+</code></pre>
+<p>Take a look at some other formula examples:</p>
+<ul>
+<li><code>li:nth-child(5)</code>: select the fifth adjacent list item.</li>
+<li><code>li:nth-child(4n+1)</code>: select every fourth list item, and then add 1 to each result. So numbers 5 and 9.</li>
+<li><code>li:nth-child(3n-2)</code>: select every third list item, and subtract 2 from each result. So numbers 1, 4 and 7.</li>
+</ul>
+<p>You can also use <code>nth-last-child(n)</code>. This does the same thing as <code>nth-child(n)</code>, but it counts from the last element in the sequence, not the first element.</p>
+<p><code>nth-of-type(n)</code> and <code>nth-last-of-type(n)</code> accomplish almost exactly the same goals as <code>nth-child(n)</code> and <code>nth-last-child(n)</code>, but there is one important difference: the former two ignore any rogue elements interspersed with the repeated sequence of like elements because they select by type of element, not by child number. The latter selects by child number.</p>
+<p>Here is another example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  1. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  2. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  3. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  4. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  5. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  6. <span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+  7. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  8. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+  9. <span class="hljs-tag">&lt;<span class="hljs-title">article</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"abstract"</span>&gt;</span> ... <span class="hljs-tag">&lt;/<span class="hljs-title">article</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>In this example we’ve got a <code>&lt;element&gt;</code> with eight child <code>&lt;article&gt;</code> elements, and a single <code>&lt;blockquote&gt;</code> element in the middle of them: this is child number six. There are a total of nine child elements.</p>
+<p>If you use <code>article:nth-child(2n+0)</code> as the selector, to select all the even-numbered children of the <code>&lt;div&gt;</code>, you’d select only the <code>&lt;article&gt;</code>s in positions 2, 4 and 8: the <code>&lt;blockquote&gt;</code> (position number six) is not selected because it is not an <code>&lt;article&gt;</code>.</p>
+<p>If you use <code>article:nth-of-type(2n+0)</code> as the selector, you would select the <code>&lt;article&gt;</code>s in positions 2, 4, 7 and 9: this occurs because it selects by the type of element, not the child position. Therefore in this case, the <code>&lt;blockquote&gt;</code> is completely ignored and the even numbered <code>&lt;article&gt;</code>s are selected. Yes, two of them are odd numbered according to my original numbering scheme because in reality the <code>&lt;blockquote&gt;</code> exists and offsets their position, but <code>article:nth-of-type(2n+0)</code> ignores the <code>&lt;blockquote&gt;</code>, effectively counting positions 7 and 9 as 6 and 8.</p>
+<p>Next, check out the <code>:first-child</code> and <code>:last-child</code> selectors — these pseudo-classes select only the first or last instance of an element that is the first or last child element of its parent. So, considering the above example again, we could use the following to select - respectively - the first and last <code>&lt;article&gt;</code> element:</p>
+<pre><code class="css">article:first-child { ... }
+
+article:last-child { ... }
+</code></pre>
+<p><code>blockquote:first-child</code> would select nothing, because the first child is not a <code>&lt;blockquote&gt;</code>.</p>
+<p><code>first-of-type</code> and <code>last-of-type</code> again work in a very similar way, but they select based on the type of element, not the position of child it is. So <code>article:first-of-type</code> selects exactly the same <code>&lt;article&gt;</code> element as <code>article:first-child</code>, but <code>blockquote:first-of-type</code> selects the single <code>&lt;blockquote&gt;</code> in the example, because it is the first of its type, even though it is the sixth child.</p>
+<p>There are a few others to consider:</p>
+<ul>
+<li><code>only-child</code>: Selects an element only if it is the only child of its parent. The selector <code>article:only-child</code> wouldn’t select anything in our example above, because there is more than one <code>&lt;article&gt;</code> child.</li>
+<li><code>only-of-type</code>: Selects an element only if it is the only sibling of its type inside the parent element. So <code>blockquote:only-of-type</code> would select the <code>&lt;blockquote&gt;</code> in the above example because it is the only one of its type that exists.</li>
+<li><code>empty</code>: selects an element only if it has no children whatsoever (including text nodes). For example <code>div:empty</code> would select <code>&lt;div&gt;&lt;/div&gt;</code>, but not <code>&lt;div&gt;1&lt;/div&gt;</code> or <code>&lt;div&gt;&lt;p&gt;Hi!&lt;/p&gt;&lt;/div&gt;</code></li>
+</ul>
+<h2>Pseudo-elements</h2>
+<p>Pseudo elements differ from pseudo-classes in that they don’t select states of elements; they select parts of an element.</p>
+<h3>:first-letter</h3>
+<p>You can select the first letter inside a given element using the following rule:</p>
+<pre><code class="css"><span class="hljs-tag">p</span><span class="hljs-pseudo">:first-letter</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">300%</span>
+  background-color: red</span></span>;
+}</span>
+</code></pre>
+<p>The first letter of every paragraph will now be bold, 300% bigger than the rest of the paragraph, and have a red background. This is a good start towards creating a decent drop cap effect.</p>
+<h3>:first-line</h3>
+<p>To make the first line of every paragraph bold, you can use the following rule:</p>
+<pre><code class="css"><span class="hljs-tag">p</span><span class="hljs-pseudo">:first-line</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">font-weight</span>:<span class="hljs-value"> bold</span></span>;
+}</span>
+</code></pre>
+<h3>Generated content using :before and :after</h3>
+<p>You can use the <code>:before</code> and <code>:after</code> pseudo-elements to specify that content should be inserted before and after the selected element. You then specify the content that you want to insert or generate. For example, you can use the following rule to insert a decorative image after every link on the page:</p>
+<pre><code class="css"><span class="hljs-tag">a</span><span class="hljs-pseudo">:after</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">" "</span> <span class="hljs-function">url</span>(flower.gif)</span></span>;
+}</span>
+</code></pre>
+<p>You can also use the <code>attr()</code> function to insert the values of attributes of the elements after the element. For example, you could insert the target of every link in your document in brackets after each one using the following:</p>
+<pre><code class="css"><span class="hljs-tag">a</span><span class="hljs-pseudo">:after</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">content</span>:<span class="hljs-value"> <span class="hljs-string">""</span> <span class="hljs-string">"("</span> <span class="hljs-function">attr</span>(href) <span class="hljs-string">")"</span></span></span>;
+}</span>
+</code></pre>
+<p>This is a great technique to use in a print style sheet, where it is important to display the URLs in the document rather than have them hidden inside text links (which are useless on a printed page).</p>
+<p>You can also insert incremented numerical values after repeating elements (such as bullets or paragraphs) using the <code>counter()</code> function. This is explained in much more detail in the article titled [<a href="http://dev.opera.com/articles/view/automatic-numbering-with-css-counters/">Automatic numbering with CSS counters</a>] by David Storey.</p>
+<p>These selectors are not supported in IE 7 or below. Also note that you should not insert important information with CSS, because that content will be unavailable to assistive technologies. It will also be unavailable if a visitor chooses not to use the style sheet. The golden rule is that CSS rules are for styling; HTML is for displaying important content.</p>
+<h3>CSS3 pseudo-element double colon syntax</h3>
+<p>Please note that the new CSS3 way of writing pseudo-elements is to use a double colon, such as <code>a::after { … }</code>, to set them apart from pseudo-classes. You may see this sometimes in CSS. CSS3 however also still allows for single colon pseudo-elements, for the sake of backwards compatibility. For the immediate future, it is recommended to continue using the single colon syntax.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

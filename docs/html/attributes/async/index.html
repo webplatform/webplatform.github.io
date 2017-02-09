@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>async · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Proposed Recommendation" />
+    <meta name="description" content="Provides additional control over when an external script or an HTML import is being fetched and executed while a document loads." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/attributes/">attributes</a></li><li><a href="/html/attributes/async/">async</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>async</h1>
+<h2>Summary</h2>
+<p>Provides additional control over when an external script or an HTML import is being fetched and executed while a document loads.</p>
+<table class="wikitable">
+<tr>
+<th>
+Applies to
+</th>
+<td>
+[HTMLScriptElement](/dom/HTMLScriptElement)
+</td>
+</tr>
+</table>
+### Declaratively Created Scripts
+<p>Usually <code>&lt;script&gt;</code> elements bring a browser’s HTML parser to a temporary halt until the contained or referenced script has been fetched and has also been fully executed. The <code>async</code> attribute decouples script fetching and execution from the main process of HTML parsing which enables the browser to continue rendering the underlying page at full speed. A script marked with the <code>async</code> attribute will be fetched and executed at some later point in time upon which the browser is free to decide. In most cases this will be as soon as the browser finds an opportunity to request it. In addition to that such a script will also no longer respect the order in which the <code>&lt;script&gt;</code> elements were initially declared in the HTML source. This means that there shouldn’t be other script that depend or build upon scripts marked as asynchronous. It is also important to know that the <code>async</code> attribute only works for externally referenced scripts. When attached to an inline script block this attribute is simply ignored. And finally asynchronous scripts are no longer part of the content relevant to firing the <code>DOMContentLoaded</code> event. But they are still part of the global <code>load</code> event.</p>
+<h3>Programmatically Created Scripts</h3>
+<p>All of the above only applies to scripts declared via HTML markup. For scripts created via JavaScript the effects are sort of turned upside down. The first change is that dynamically created scripts always start off by being fully asynchronous, meaning they neither block the HTML parser nor do they respect their order of creation. The effect is the same as if one would set <code>script.async = true;</code>. What is possible here is to instead set <code>script.async = false;</code>. This won’t bring the script all the way back to a point where it would block the HTML parser, but it does make the script respect the order of creation. This allows one to work with dependencies between dynamically created scripts. Beware: “order of creation” doesn’t factor in any scripts declared via HTML. Declarative scripts and programmatic scripts both live, and stay, in their own worlds.</p>
+<h3>At one glance</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">Characteristic</th><th style="text-align:left">Declaratively w/o async</th><th style="text-align:left">Declaratively w/ async</th><th style="text-align:left">Programmatically w/o async</th><th style="text-align:left">Programmatically w/ async = false</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Blocking?</td><td style="text-align:left">yes</td><td style="text-align:left">no</td><td style="text-align:left">no</td><td style="text-align:left">no</td></tr>
+<tr><td style="text-align:left">In order?</td><td style="text-align:left">yes</td><td style="text-align:left">no</td><td style="text-align:left">no</td><td style="text-align:left">yes</td></tr>
+</tbody>
+</table>
+<h3>HTML Imports</h3>
+<p>The <code>async</code> attribute appears at one other place: Attached to a <code>&lt;link rel=&quot;import&quot;&gt;</code> declaration. The latter denotes an HTML import, which is part of the web component eco system. Since <code>&lt;link&gt;</code> elements can only be placed within the <code>&lt;head&gt;</code> of a page and since HTML imports are usually synchronous they do have the potential to block initial page rendering a lot. Therefore it is possible to also mark such an HTML import to get handled asynchronously. The browser then does not wait on it to be finished any more before proceeding.</p>
+<h2>Examples</h2>
+<p>The following script declaration would not block HTML parsing/rendering:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"script.js"</span> <span class="hljs-attribute">async</span>&gt;</span><span class="handlebars"><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">s​cript</span>&gt;</span>
+</span></span></code></pre>
+<p>Although not blocking it is not a good idea to mark a series of scripts that depend on each other as asynchronous:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery.js"</span> <span class="hljs-attribute">async</span>&gt;</span><span class="handlebars"><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">s​cript</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery-plugin.js"</span> <span class="hljs-attribute">async</span>&gt;</span><span class="handlebars"><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">s​cript</span>&gt;</span>
+</span></span></span></span></code></pre>
+<p>Instead, keep the main library synchronous and just mark those dependant on it as asynchronous:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery.js"</span>&gt;</span><span class="handlebars"><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">s​cript</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"jquery-plugin.js"</span> <span class="hljs-attribute">async</span>&gt;</span><span class="handlebars"><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">s​cript</span>&gt;</span>
+</span></span></span></span></code></pre>
+<p>Async attribute with programmatically created scripts:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> script;
+
+<span class="hljs-comment">/*
+ * Programmatically created scripts are always asynchronous.
+ * Therefore the following results in an error:
+ */</span>
+
+script = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"script"</span>);
+script.src = <span class="hljs-string">"jquery.js"</span>;
+<span class="hljs-built_in">document</span>.body.appendChild(script);
+
+script = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"script"</span>);
+script.src = <span class="hljs-string">"jquery.plugin.js"</span>; <span class="hljs-comment">// Needs jQuery in place to work</span>
+<span class="hljs-built_in">document</span>.body.appendChild(script);
+
+<span class="hljs-comment">/*
+ * Programmatically created scripts can be told to respect
+ * the order of creation, though, via async attribute.
+ * So the following works:
+ */</span>
+
+script = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"script"</span>);
+script.src = <span class="hljs-string">"jquery.js"</span>;
+script.async = <span class="hljs-literal">false</span>;
+<span class="hljs-built_in">document</span>.body.appendChild(script);
+
+script = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"script"</span>);
+script.src = <span class="hljs-string">"jquery.plugin.js"</span>; <span class="hljs-comment">// Needs jQuery in place to work</span>
+script.async = <span class="hljs-literal">false</span>;
+<span class="hljs-built_in">document</span>.body.appendChild(script);
+</code></pre>
+<p>Making HTML imports non-blocking:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"import"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"component.html"</span> <span class="hljs-attribute">async</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<p>Declaring a script to run asynchronously can improve performance by unblocking the rest of the document.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html5/scripting-1.html#attr-script-async">HTML5</a></dt>
+<dd>W3C Proposed Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html-imports/#dfn-import-async-attribute">HTML Imports</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/ResourcePriorities/Overview.html#the-script-element">Resource Priorities</a></dt>
+<dd>Editor’s Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/html/attributes/defer">defer attribute</a></li>
+</ul>
+<h3>Related pages</h3>
+<ul>
+<li>HTMLScriptElement<a href="/docs/dom/HTMLScriptElement">HTMLScriptElement</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>area · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="イメージマップ上でハイパーリンクとして設定されるテキストとエリア、またはハイパーリンクとして設定しないエリアを表します。" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/html/">html</a></li><li><a href="/docs/html/elements/">elements</a></li><li><a href="/html/elements/area/">area</a></li><li><a href="/html/elements/area/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>area</h1>
+<h2>Summary</h2>
+<p>イメージマップ上でハイパーリンクとして設定されるテキストとエリア、またはハイパーリンクとして設定しないエリアを表します。</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/dom/HTMLAreaElement">HTMLAreaElement</a>
+</dd>
+</dl>
+<h2>HTML属性</h2>
+<dl>
+<dt>グローバル属性: accesskey, class, contenteditable, dir, hidden, id, lang, spellcheck, style, tabindex, title, translate</dt>
+<dd><a href="/w/index.php?title=html/global_attributes/ja&amp;action=edit&amp;redlink=1">グローバル属性</a>を参照<br>
+<code>alt</code> =イメージマップの代替テキスト
+</dd>
+<dd>&lt;area&gt;要素でhref属性を指定していた場合、alt属性は必須です。<br>
+同じイメージマップ（同一リソース）に対する別の&lt;area&gt;要素でalt属性に空白以外が指定されている場合、alt属性は空白のままにすることができます。<br>
+<code>coords</code> = 有効な整数のリスト
+</dd>
+<dd>この属性にはshape属性で記述した図形の座標を指定します。 この属性の処理はイメージマップの処理モデルの一部とされています。
+<ul>
+<li>円の場合<br>
+&lt;area&gt;要素のcoords属性に3つの整数を指定しなければいけません。この3つの内、最後の整数は負の値を指定できません。
+<ul>
+<li>画像の左端から円の中心までのピクセル数</li>
+<li>画像の上端から円の中心までのピクセル数</li>
+<li>円の半径</li>
+</ul></li>
+<li>多角形の場合<br>
+&lt;area&gt;要素のcoords属性に最低6つの、偶数個の整数を指定しなければいけません。整数のペアが画像の左上からの数えた座標となり、指定した順に多角形の角として扱われます。</li>
+<li>長方形の場合<br>
+&lt;area&gt;要素のcoords属性に4つの整数を指定しなければいけません。1つ目の整数を3つ目より小さく、2つ目の整数を4つ目より小さく指定する必要があります。
+<ul>
+<li>画像の左端から長方形の左側までののピクセル数</li>
+<li>画像の上端から長方形の上側までののピクセル数</li>
+<li>画像の左端から長方形の右側までののピクセル数</li>
+<li>画像の上端から長方形の下側までののピクセル数</li>
+</ul></li>
+</ul>
+</dd>
+<dt><code>shape</code> = “circle” / “poly” / “rect” / “default”</dt>
+<dd><ul>
+<li><code>circle</code>: ハイパーリンクエリアが円の形になります。</li>
+<li><code>poly</code>: ハイパーリンクエリアが長方形の形になります。</li>
+<li><code>rect</code>: ハイパーリンクエリアが多角形の形になります。</li>
+<li><code>default</code>: 画像全体がハイパーリンクとなります。coords属性を指定することはできません。</li>
+</ul>
+</dd>
+<dt><code>href</code> = URL（前後にスペースがある場合、取り除かれて扱われます。）</dt>
+<dd>リンク先のURLを指定します。href属性を指定しない場合、プレースホルダーリンク（Javascript等で動的に生成したURLを設定するための空リンク）として扱われます。<br>
+<code>target</code> = ブラウジング・コンテキストの名前またはキーワード
+</dd>
+<dd>target = ブラウジング・コンテキストの名前またはキーワード<br>
+ユーザエージェントがハイパーリンクを開くためのブラウジング・コンテキストの名前かキーワードを指定します。<br>
+&lt;a&gt;要素のtarget属性はHTMLの過去のバージョンで非推奨となりましたが、iframe要素を組み込んでいるようなウェブアプリケーションでは未だに現役です。<br>
+以下のいずれかの文字列を指定します。
+<ul>
+<li>ブラウジング・コンテキストの名前</li>
+<li>大文字小文字問わず、以下の文字列と一致するもの： &quot;_blank&quot;, &quot;_self&quot;, &quot;_parent&quot;, “_top”</li>
+</ul>
+</dd>
+<dt><code>rel</code> = スペース区切りのトークン</dt>
+<dd>リンク元とリンク先の関係を表すトークンのリストを指定します。<br>
+<code>hreflang</code> = 言語タグ
+</dd>
+<dd>リンク先の言語を指定します。<br>
+[BCP47]で定義されている言語タグのみ有効です。<br>
+<code>media</code> = メディアクエリのリスト
+</dd>
+<dd>リンク先をデザインするメディアを指定します。<br>
+[MediaQueries]で定義されたメディアのみ有効です。<br>
+<code>type</code> = MIMEタイプ
+</dd>
+<dd>リンク先のMIMEタイプを指定します。<br>
+[RFC2046]で定義された文字列のみ有効です。
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>この例は親となる<strong>&lt;map&gt;</strong>要素の中で<strong>&lt;area&gt;</strong>要素を使い、太陽系のイメージマップを作成するHTMLです。各&lt;area&gt;要素が<a href="/w/index.php?title=html/attributes/coords/ja&amp;action=edit&amp;redlink=1"><strong>coords</strong></a>属性と<a href="/w/index.php?title=html/attributes/shape/ja&amp;action=edit&amp;redlink=1"><strong>shape</strong></a>属性を使ってmap要素の画像にハイパーリンクを設定しています。そして<a href="/w/index.php?title=html/attributes/title/ja&amp;action=edit&amp;redlink=1"><strong>title</strong></a>属性でマウスカーソルを当てた時にポップアップされるヒントを定義しています。このようなヒントは画像ファイルが存在しない、または何らかの理由で読み込むことができない場合などに有効です。</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"X-UA-Compatible"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"IE=8"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>イメージマップの例<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">base</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://samples.msdn.microsoft.com"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/workshop/graphics/solarsys.png"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">504</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">126</span> <span class="hljs-attribute">border</span>=<span class="hljs-value">0</span>
+    <span class="hljs-attribute">title</span>=<span class="hljs-value">"太陽系"</span> <span class="hljs-attribute">usemap</span>=<span class="hljs-value">"#SystemMap"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">map</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"SystemMap"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"rect"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"0,0,82,126"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/sun.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"太陽"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"90,58,3"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/merglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"水星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"124,58,8"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/venglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"金星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"162,58,10"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/earglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"地球"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"203,58,8"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/marglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"火星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"221,34,238,37,257,32,278,44,284,60,
+        281,75,288,91,267,87,253,89,237,81,229,64,228,54"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/jupglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"木星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"288,19,316,39,330,37,348,47,351,66,
+        349,74,367,105,337,85,324,85,307,77,303,60,307,50"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/satglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"土星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"405,39,408,50,411,57,410,71,404,78,
+        393,80,383,86,381,75,376,69,376,56,380,48,393,44"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/uraglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"天王星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"poly"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"445,38,434,49,431,53,427,62,430,72,
+        435,77,445,92,456,77,463,72,463,62,462,53,455,47"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/nepglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"海王星"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">area</span> <span class="hljs-attribute">shape</span>=<span class="hljs-value">"circle"</span> <span class="hljs-attribute">coords</span>=<span class="hljs-value">"479,66,3"</span>
+        <span class="hljs-attribute">href</span>=<span class="hljs-value">"/workshop/graphics/pluglobe.png"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"冥王星"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/imagemap.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>備考</h3>
+<ul>
+<li>&lt;area&gt;要素は1つの&lt;map&gt;要素に何個でも指定することができます。</li>
+<li><a href="/w/index.php?title=html/attributes/coords/ja&amp;action=edit&amp;redlink=1"><strong>coords</strong></a>属性のフォーマットは<a href="/w/index.php?title=html/attributes/shape/ja&amp;action=edit&amp;redlink=1"><strong>shape</strong></a>属性の値に依存します。</li>
+<li>IE8以上（標準モード）において、&lt;img&gt;要素や&lt;map&gt;要素でヒントのポップアップを指定している場合、<a href="/w/index.php?title=html/attributes/alt/ja&amp;action=edit&amp;redlink=1"><strong>alt</strong></a>属性より<a href="/w/index.php?title=html/attributes/title/ja&amp;action=edit&amp;redlink=1"><strong>title</strong></a>属性を使うべきでしょう。また、<a href="/w/index.php?title=html/attributes/href/ja&amp;action=edit&amp;redlink=1"><strong>href</strong></a>属性の値はドキュメント互換モードに依存します。</li>
+<li>この要素は画面上に描画されません。</li>
+<li>この要素は終了タグ(&lt;/area&gt;)が要りません。</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/html51/embedded-content.html#the-area-element">HTML 5.1</a></dt>
+<dd>W3C Working Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-area-element">HTML 5</a></dt>
+<dd>W3C Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/html401/struct/objects.html#edef-AREA">HTML 4.01</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

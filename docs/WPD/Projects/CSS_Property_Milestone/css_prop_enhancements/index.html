@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Suggested design enhancements for CSS properties · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="This page is a suggested mockup of how a CSS property page should look.
+    Compared to the original font-size property page, there are several enhancements that would need to be implemented, and here is a list of the most significant. They&#x27;re broken down into 3 basic categories: SKIN requiring mostly modified CSS, TEMPLATE requiring a change in how content is generated and flows onto the final HTML page, and FORM for changes in the text-input UI.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/CSS_Property Milestone/">CSS Property Milestone</a></li><li><a href="/docs/WPD/Projects/CSS_Property Milestone/css_prop enhancements/">css prop enhancements</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Suggested design enhancements for CSS properties</h1>
+<h2>Summary</h2>
+<p>This page is a suggested mockup of how a CSS property page should look. Compared to the original font-size property page, there are several enhancements that would need to be implemented, and here is a list of the most significant. They’re broken down into 3 basic categories: SKIN requiring mostly modified CSS, TEMPLATE requiring a change in how content is generated and flows onto the final HTML page, and FORM for changes in the text-input UI.</p>
+<ol>
+<li><strong>[SKIN]</strong> Page title &amp; summary are on the same line in this example; formatted as left/right justification with negative margin for overlay; this is fragile for cases where text in either runs too long.</li>
+<li><strong>[TEMPLATE]</strong> Removed hard-coded “W3C Recommendation” text. If necessary, use a graphic to represent options or otherwise push it out of the main text flow.</li>
+<li><strong>[FORM]</strong> “Specifies the size of text” is currently called a &quot;summary&quot;, hopefully a simple sentence reflected in CSS property listings. The “This property sets the…” text offers more fleshed-out expository context not intended for listings. New field needed in template. What to call it? Summary-listing/Summary-extended?</li>
+<li><strong>[TEMPLATE]</strong> Removed the implicit “Summary” &amp; “Overview table” headings.</li>
+<li><strong>[TEMPLATE]</strong> Under &quot;Values&quot;, each &lt;dt&gt;/&lt;dd&gt; pair generate incorrectly in its own &lt;dl&gt;, which also produces unnecessary rules. Regardless, Suggest removing the rule formatting altogether as too busy.</li>
+<li><strong>[TEMPLATE/SKIN]</strong> Heavily reformatted the property value overview table. Suggest shading all rows white here.</li>
+<li><strong>[TEMPLATE]</strong> Each cell title (“Computed value&quot;/&quot;Initial value”) should link to a concept page.</li>
+<li><strong>[TEMPLATE]</strong> Inherited/Animatable use check/X icons rather than Yes/No text.</li>
+<li><strong>[FORM]</strong> Current template only allows one media type, but property may well apply to more.</li>
+<li><strong>[FORM]</strong> Added an extra “Shorthand” field to overview table. Suggest a field in e.g. template for font-size to specify &quot;font&quot;. Then font-size page would display “Shorthand: font” and font page would display “Shorthand for: font-family, font-size, font-weight” … etc. for all properties that share the same shorthand.</li>
+<li><strong>[TEMPLATE]</strong> If property is marked as &quot;inherited&quot;, should a syntax line &amp; value description be automatically generated, or is it implicit, and is link to the “inherited” concept sufficient? Authors should not have to redundantly hard-code the “inherit” value at any rate.</li>
+<li><strong>[FORM]</strong> Fixed keyword values are bold, while variables are italic. The template provides no way to make that important distinction.</li>
+<li><strong>[TEMPLATE/SKIN]</strong> Default text for &lt;dd&gt; text in “Values” section should not be italic.</li>
+<li><strong>[TEMPLATE]</strong> Heavily reformatted &amp; merged the compatibility table.</li>
+<li><strong>[TEMPLATE]</strong> Separated sub-issues in compatibility table (e.g. “vw/vh/vmin viewport units”) with col-spanned table headings.</li>
+<li><strong>[FORM]</strong> Under compatibility notes, added less-than/greater-than/equals for explicit relation to version numbers.</li>
+<li><strong>[TEMPLATE]</strong> Removed redundant “See Also” head; used “Related Articles” instead.</li>
+<li><strong>[TEMPLATE]</strong> Pushed Specification info into “Related Articles” area</li>
+<li><strong>[SKIN]</strong> Reformatted most related-article links as 3-column to save space. (Can CSS formatting kick in after # of list items exceeds a threshold? For 3-col format, should kick in with &gt;6 items to prevent orphans.)</li>
+<li><strong>[FORM]</strong> Directly embedded a sample page as an &lt;iframe&gt;. This is only a suggested UI. Hopefully dabblet sample pages can be presented this way, directly available on the page next to doc that describes it.</li>
+<li><strong>[FORM]</strong> Suggest adding explicit “example” template options for embedded samples, and for images showing the result of CSS formatting described in other code examples. (Suggest support for &gt;1 inline image, useful to clarify before/after scenarios.)</li>
+<li><strong>[FORM]</strong> Unclear what “Percentages” template option is intended for &quot;Top-Level Summary&quot;, but it is not reflected in the resulting overview table.</li>
+<li><strong>[TEMPLATE]</strong> Headings may be reshuffled in output.</li>
+<li><strong>[TEMPLATE]</strong> If only one “Basic support” feature is considered in compatibility table, do not include explicit column span heading. If other sub-features are included, include explicit column spans.</li>
+<li><strong>[TEMPLATE]</strong> If appropriate to include explicit “inherit” or “initial” values within “Values” listing (not sure if it is), generate it from supplied metadata, and append it.</li>
+<li><strong>[FORM]</strong> Should there be a compatibility-table row for tablet-class browsers?</li>
+<li><strong>[TEMPLATE]</strong> When both prefix &amp; unprefixed support is specified, include them in the same cell (e.g.: “5.0&lt;br/&gt;&lt;span class=&quot;tinyWebkitPrefix&quot;&gt;3.0&lt;/span&gt;”). Support is the crucial info to convey; having to implement redundant property prefixes is relatively trivial.</li>
+<li><strong>[FORM]</strong> Option to include sample syntax with each syntax item. E.g., along with variable “length” syntax item, a quick sample would be “1.5em” as it appears in the sample.</li>
+<li><strong>[FORM]</strong> Clarify the expected scope of each input field. What’s the difference between “Usage” and &quot;Notes&quot;?</li>
+<li><strong>[SKIN]</strong> On basic principle, increase line-height within UL/OL/DL lists to match body text. I mean, just look at this page.</li>
+</ol>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

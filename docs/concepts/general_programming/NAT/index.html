@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NAT · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="NAT is the system through which many computers are able to talk to the outer world, like the internet , via only one  Internet Protocol address (IP address)  usually using ports enabling many more people to cohabit the internet&#x27;s limited space." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/general_programming/">general programming</a></li><li><a href="/concepts/general_programming/NAT/">NAT</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>NAT</h1>
+<h2>Summary</h2>
+<p>NAT is the system through which many computers are able to talk to the outer world, like the internet , via only one Internet Protocol address (IP address) usually using ports enabling many more people to cohabit the internet’s limited space.</p>
+<p>NAT:</p>
+<p>Usually NAT service is provided through a router. Often at home there is one IP address number given by the home’s Internet Service Provider which allows participation on the internet. Using a connected router allows each logged-in user to appear as an individual identity to the outer internet world; while, all are actually sharing this one home IP address number.</p>
+<p>Usually the following process is how NAT works:</p>
+<p>Whenever a computer sends a request, Tcp/udp, the request contains many other small bits of information among the main information. The ones that enable NAT are Destination Port and Source Port. (see link)</p>
+<p>Steps… 1. Server listening at port 80 2. Client/Chrome/Computer at local network sends request to www.example.com at port 80. (thus Destination Port = 80). 3. Client waits for it on whatever port, let’s say port 200. (thus source port =200) 4. the request goes to router first as client is behind router. 5. The router takes the request change the Source Port to new number, let’s say 400, and sends the request to www.example.com at 80. Also, remembers that any request that it receives for port 400 is for x ip/client at local network. 6. Server receives the request, since request’s destination was aimed at 80, server accepts as it was listening on it. And return the request with new data at the ip address it received from, the ip address given by isp, and at the port which was defined in source port. So basically, switch the Source port with destination port. 7. Router recieves the request, sees it is meant for port 400, which it knows mean some computer in local network so it redirects that request to that ip address of local network which may look like 192.168.1.23 and where as its public ip may been something like this 67.123.0.345.</p>
+<p>Link: <a href="http://sanjibmukherjee.info/http://sanjibmukherjee.info/wp-content/uploads/2011/11/fig2.jpg">http://sanjibmukherjee.info/http://sanjibmukherjee.info/wp-content/uploads/2011/11/fig2.jpg</a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

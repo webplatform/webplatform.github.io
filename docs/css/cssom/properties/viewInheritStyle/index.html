@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>viewInheritStyle · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/cssom/">cssom</a></li><li><a href="/docs/css/cssom/properties/">properties</a></li><li><a href="/docs/css/cssom/properties/viewInheritStyle/">viewInheritStyle</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>viewInheritStyle</h1>
+<p>Property of <a href="/docs/css/cssom/properties">css/cssom/properties</a><a href="/docs/css/cssom/properties">css/cssom/properties</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> result = element.viewInheritStyle;
+element.viewInheritStyle = value;
+</code></pre>
+<h2>Examples</h2>
+<p>The content of the primary document is shown in the code snippet below. In the following sample a <strong>div</strong> tag contains a custom element that has an element behavior attached to it. The <strong>div</strong> tag that is located in the primary document sets a number of CSS attributes, specifically the following:</p>
+<li>
+[**color**](/html/attributes/color) is set to red.
+</li>
+<li>
+[**fontSize**](/css/properties/font-size) is set to 12 pt.
+</li>
+<li>
+[**fontStyle**](/css/properties/font-style) is set to italic.
+</li>
+<li>
+[**border**](/css/properties/border) is set to 2px solid blue.
+</li>
+``` html
+<HTML xmlns:myns>
+<HEAD>
+<?import namespace="myns" implementation="viewInheritStyle.htc">
+</HEAD>
+<BODY>
+<DIV style= "color:red;font-size:12pt;font-Style:italic;border:2px solid blue">
+This text is inside a DIV element in the primary document.
+<BR>
+<!-- this is a custom element -->
+<myns:abc></myns:abc>
+</DIV>
+</BODY>
+</HTML>
+```
+<p>The next code snippet shows the content of the HTC file, <code>viewInheritStyle.htc</code>.</p>
+<p>The HTC file contains a simple document fragment, which also includes a <strong>div</strong> tag that uses the following CSS styles.</p>
+<li>
+[**fontSize**](/css/properties/font-size) is set to 20 pt.
+</li>
+<li>
+[**border**](/css/properties/border) is set to 2px solid green.
+</li>
+Because the content in the primary document has CSS styles set on a **div** tag that contains the custom element, the **div** tag in the document fragment inherits the inheritable CSS Styles when the **viewInheritStyle** property is true.
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">public:component</span> <span class="hljs-attribute">tagName</span>=<span class="hljs-value">"abc"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">attach</span> <span class="hljs-attribute">event</span>=<span class="hljs-value">"oncontentready"</span> <span class="hljs-attribute">onevent</span>=<span class="hljs-value">init()</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">public:component</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>)</span>{
+defaults.viewLink=<span class="hljs-built_in">document</span>;
+defaults.viewInheritStyle = <span class="hljs-literal">false</span>;
+docFragCaption.innerText = <span class="hljs-string">"viewInheritStyle is now set to false"</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">btnChangeInheritance_onClick</span>(<span class="hljs-params"></span>)</span>{
+boolInherit = defaults.viewInheritStyle;
+
+    <span class="hljs-keyword">if</span> (boolInherit == <span class="hljs-literal">true</span>) {
+    defaults.viewInheritStyle = <span class="hljs-literal">false</span>;
+    docFragCaption.innerText = <span class="hljs-string">"viewInheritStyle is now set to false"</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+    defaults.viewInheritStyle = <span class="hljs-literal">true</span>;
+    docFragCaption.innerText = <span class="hljs-string">"viewInheritStyle is now set to true"</span>;
+    }
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">DIV</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"docFragCaption"</span> <span class="hljs-attribute">style</span>= "<span class="hljs-attribute">font-size:20pt</span>;<span class="hljs-attribute">border:2px</span> <span class="hljs-attribute">solid</span> <span class="hljs-attribute">green</span>"&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BR</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">INPUT</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">btnChangeInheritance</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">button</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Toggle viewInheritStyle property"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"btnChangeInheritance_onClick()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>For more information on the CSS styles that can be inherited when <strong>viewInheritStyle</strong> is set to true, see About Viewlink CSS Inheritance. Inheritable CSS styles are only applied to elements in the document fragment that do not already have the corresponding CSS styles defined.</p>
+<h3>Syntax</h3>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li>defaultSelected<a href="/docs/dom/HTMLOptionElement/defaultSelected">defaultSelected</a></li>
+<li><code>Conceptual</code></li>
+<li><code>Introduction to Viewlink</code></li>
+<li><code>About Viewlink CSS Inheritance</code></li>
+<li><code>About Element Behaviors</code></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

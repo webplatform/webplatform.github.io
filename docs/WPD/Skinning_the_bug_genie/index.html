@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>A hitchhiker’s guide to skinning the Bug Genie · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Skinning_the bug genie/">WPD/Skinning the bug genie</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>A hitchhiker’s guide to skinning the Bug Genie</h1>
+<p>What follows is an attempt to document my findings while skinning The Bug Genie in the form of a short guide that I wish I had found when I started skinning it for WebPlatform.org. Most of it is reverse engineered, so there might be small inaccuracies.</p>
+<h2>Where is the HTML located?</h2>
+<p>Bug Genie is split into multiple modules, so the templates are scattered across multiple folders. The most common UI elements are found in the following paths:</p>
+<h3>core/templates</h3>
+<p>Very few templates, but the most crucial:</p>
+<ul>
+<li><code>backdrops.inc.php</code>: The various popup dialogs</li>
+<li><code>footer.inc.php</code>: The footer at the end of every page</li>
+<li><code>headertop.inc.php</code>: The top part of the header. In the default BG it contains the logo, byline and global popup menus. In WPD it contains the logo, search and user menu.</li>
+<li><code>submenu.inc.php</code>: Breadcrumbs &amp; search in the default skin. In WPD it’s used for the global navigation (DOCS etc).</li>
+<li><code>layout.php</code>: The main markup shell around the content. In the default BG it contains a main table which is around the content of every page, but it seems it can be safely removed.</li>
+<li><code>offline.inc.php</code>: Message for when the site is offline. Not customized in WPD.</li>
+<li><code>error.php</code>: A full page template about technical errors (e.g. can’t connect to the database). Not customized in WPD.</li>
+<li><code>toolarea.inc.php</code>: Custom WPD template, not present in the default BG.</li>
+</ul>
+<h3>modules/main/templates</h3>
+<p>We didn’t customize any of those for WPD, but the templates for many important features reside here.</p>
+<h3>modules/project/templates</h3>
+<p>Lots of useful templates here too. The distinction between <code>modules/main</code> and <code>modules/project</code> is a bit unclear. The only template here that we customized for WPD is <code>_overview.inc.php</code> which contains the project list in the home page.</p>
+<h2>Can I add a new template?</h2>
+<p>Adding templates is actually pretty easy. For example, to create a new Core template:</p>
+<ol>
+<li>Make a new <code>.inc.php</code> file in <code>core/templates</code>. In fact it could have any extension, but <code>.inc.php</code> is consistent with the other templates.</li>
+<li>Include whatever code or markup you want in it. I’ve also noticed that moving code across templates seems to work fine, unlike in other software. However, I haven’t tested that very extensively.</li>
+<li>In the place where you want the template to be included, use the following line of code (assuming the new template is called <code>toolarea.inc.php</code>:</li>
+</ol>
+<!-- -->
+<pre><code>&lt;?php require THEBUGGENIE_CORE_PATH . 'templates/toolarea.inc.php'; ?&gt;
+</code></pre>
+<p>There are probably other constants similar to <code>THEBUGGENIE_CORE_PATH</code> for the other template paths, but I didn’t need to look into that.</p>
+<p>There is also a <code>include_template()</code> function that accepts a path (e.g. <code>'project/milestonedetailsissue'</code>) and an associative array of parameters.</p>
+<h2>PHP in templates</h2>
+<p>PHP in templates is kept to a minimum, to adhere to a proper MVC-style separation. It’s only used for:</p>
+<ul>
+<li>Conditionals (if)</li>
+<li>Looping</li>
+<li>Template functions (see section below for a few of those)</li>
+<li>Basic PHP functions like <code>isset()</code></li>
+</ul>
+<p>The syntax for the control structures is the <a href="http://php.net/manual/en/control-structures.alternative-syntax.php">alternative, longer one</a> to make them clearer, similarly to other software using PHP for templating, like Wordpress.</p>
+<h2>Functions used in templates</h2>
+<p>These are PHP functions used inside <code>&lt;?php</code> and <code>?&gt;</code>.</p>
+<ul>
+<li><code>__()</code> prints internationalized phrases. In English it makes no difference, but in other languages, it will print out the translation of the parameter. This is how all content phrases should be printed out.</li>
+<li><code>make_url()</code> <a href="http://issues.thebuggenie.com/wiki/TheBugGenie%3ADevelopment%3ARouting#article_149_toc_3">Makes internal URLs</a></li>
+<li><code>link_tag()</code> prints out an HTML link (<code>&lt;a href&gt;</code>). It accepts three parameters:
+<ul>
+<li>URL: The <code>href</code> attribute</li>
+<li>content: The link text (i.e. the content of the tag)</li>
+<li>attributes: A PHP associative array of HTML attributes</li>
+</ul></li>
+<li><code>image_tag()</code> prints out an HTML image tag (<code>&lt;img&gt;</code>). It accepts two parameters:
+<ul>
+<li>URL: The <code>src</code> attribute</li>
+<li>attributes: A PHP associative array of HTML attributes</li>
+</ul></li>
+<li><code>javascript_link_tag()</code> same as link_tag() with a URL of <code>&quot;javascript:void(0)&quot;</code></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

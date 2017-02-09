@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Date · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Enables basic storage and retrieval of dates and times." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Date/">Date</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Date</h1>
+<h2>Summary</h2>
+<p>Enables basic storage and retrieval of dates and times.</p>
+<h2>Syntax</h2>
+<pre><code>dateObj = new Date()
+
+dateObj = new Date( dateVal )
+
+dateObj = new Date( year , month , date [, hours [, minutes [, seconds [, ms ]]]])
+</code></pre>
+<dl>
+<dt><strong>dateObj</strong></dt>
+<dd>Required. The variable name to which the Date object is assigned.
+</dd>
+<dt><strong>dateVal</strong></dt>
+<dd>Required. If a numeric value, dateVal represents the number of milliseconds in Universal Coordinated Time between the specified date and midnight January 1, 1970. If a string, dateVal is parsed according to the rules in Formatting Date and Time Strings (Windows Scripting - JScript). The dateVal argument can also be a VT_DATE value as returned from some ActiveX objects.
+</dd>
+<dt><strong>year</strong></dt>
+<dd>Required. The full year, for example, 1976 (and not 76).
+</dd>
+<dt><strong>month</strong></dt>
+<dd>Required. The month as an integer between 0 and 11 (January to December).
+</dd>
+<dt><strong>date</strong></dt>
+<dd>Required. The date as an integer between 1 and 31.
+</dd>
+<dt><strong>hours</strong></dt>
+<dd>Optional. Must be supplied if minutes is supplied. An integer from 0 to 23 (midnight to 11pm) that specifies the hour.
+</dd>
+<dt><strong>minutes</strong></dt>
+<dd>Optional. Must be supplied if seconds is supplied. An integer from 0 to 59 that specifies the minutes.
+</dd>
+<dt><strong>seconds</strong></dt>
+<dd>Optional. Must be supplied if milliseconds is supplied. An integer from 0 to 59 that specifies the seconds.
+</dd>
+<dt><strong>ms</strong></dt>
+<dd>Optional. An integer from 0 to 999 that specifies the milliseconds.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example illustrates the use of the Date object.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> dateString = <span class="hljs-string">"Today's date is: "</span>;
+
+ <span class="hljs-keyword">var</span> newDate = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+
+ <span class="hljs-comment">// Get the month, day, and year.</span>
+ dateString += (newDate.getMonth() + <span class="hljs-number">1</span>) + <span class="hljs-string">"/"</span>;
+ dateString += newDate.getDate() + <span class="hljs-string">"/"</span>;
+ dateString += newDate.getFullYear();
+
+ <span class="hljs-built_in">document</span>.write(dateString);
+
+ <span class="hljs-comment">// Output: Today's date is: &lt;date&gt;</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>A Date object contains a number representing a particular instant in time to within a millisecond. If the value of an argument is greater than its range or is a negative number, other stored values are modified accordingly. For example, if you specify 150 seconds, JavaScript redefines that number as two minutes and 30 seconds.</p>
+<p>If the number is <strong>NaN</strong> , the object does not represent a specific instant of time. If you pass no parameters to the Date object, it is initialized to the current time (UTC). A value must be given to the object before you can use it.</p>
+<p>The range of dates that can be represented in a Date object is approximately 285,616 years on either side of January 1, 1970.</p>
+<p>See Date and Time Calculations (Windows Scripting - JScript) for more information about how to use the Date object and related methods.</p>
+<h2>Properties</h2>
+<p>The following table lists the properties of the <strong>Date</strong> object.</p>
+<h2>Functions</h2>
+<p>The following table lists the functions of the <strong>Date</strong> object.</p>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>Date</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Summary</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getDate">getDate</a></td><td style="text-align:left">Gets the day-of-the-month, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getDay">getDay</a></td><td style="text-align:left">Gets the day of the week, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getFullYear">getFullYear</a></td><td style="text-align:left">Gets the year, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getHours">getHours</a></td><td style="text-align:left">Gets the hours in a date, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getMilliseconds">getMilliseconds</a></td><td style="text-align:left">Gets the milliseconds of a Date, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getMinutes">getMinutes</a></td><td style="text-align:left">Gets the minutes of a Date object, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getMonth">getMonth</a></td><td style="text-align:left">Gets the month, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getSeconds">getSeconds</a></td><td style="text-align:left">Gets the seconds of a <strong>Date</strong> object, using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getTime">getTime</a></td><td style="text-align:left">Gets the time value in milliseconds.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getTimezoneOffset">getTimezoneOffset</a></td><td style="text-align:left">Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCDate">getUTCDate</a></td><td style="text-align:left">Gets the day-of-the-month, using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCDay">getUTCDay</a></td><td style="text-align:left">Gets the day of the week using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCFullYear">getUTCFullYear</a></td><td style="text-align:left">Gets the year using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCHours">getUTCHours</a></td><td style="text-align:left">Gets the hours value in a <strong>Date</strong> object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCMilliseconds">getUTCMilliseconds</a></td><td style="text-align:left">Gets the milliseconds of a Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCMinutes">getUTCMinutes</a></td><td style="text-align:left">Gets the minutes of a Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCMonth">getUTCMonth</a></td><td style="text-align:left">Gets the month of a Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getUTCSeconds">getUTCSeconds</a></td><td style="text-align:left">Gets the seconds of a <strong>Date</strong> object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/getYear">getYear</a></td><td style="text-align:left">Gets the year of a <strong>Date</strong> object. Deprecated in favor of <strong>getFullYear</strong> method.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setDate">setDate</a></td><td style="text-align:left">Sets the numeric day-of-the-month value of the <strong>Date</strong> object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setFullYear">setFullYear</a></td><td style="text-align:left">Sets the year of the <strong>Date</strong> object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setHours">setHours</a></td><td style="text-align:left">Sets the hour value in the Date object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setMilliseconds">setMilliseconds</a></td><td style="text-align:left">Sets the milliseconds value in the Date object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setMinutes">setMinutes</a></td><td style="text-align:left">Sets the minutes value in the <strong>Date</strong> object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setMonth">setMonth</a></td><td style="text-align:left">Sets the month value in the <strong>Date</strong> object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setSeconds">setSeconds</a></td><td style="text-align:left">Sets the seconds value in the Date object using local time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setTime">setTime</a></td><td style="text-align:left">Sets the date and time value in the Date object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCDate">setUTCDate</a></td><td style="text-align:left">Sets the numeric day of the month in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCFullYear">setUTCFullYear</a></td><td style="text-align:left">Sets the year value in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCHours">setUTCHours</a></td><td style="text-align:left">Sets the hours value in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCMilliseconds">setUTCMilliseconds</a></td><td style="text-align:left">Sets the milliseconds value in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCMinutes">setUTCMinutes</a></td><td style="text-align:left">Sets the minutes value in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCMonth">setUTCMonth</a></td><td style="text-align:left">Sets the month value in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setUTCSeconds">setUTCSeconds</a></td><td style="text-align:left">Sets the seconds value in the Date object using Universal Coordinated Time (UTC).</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/setYear">setYear</a></td><td style="text-align:left">Sets the year value in the <strong>Date</strong> object. Deprecated in favor of the <strong>setFullYear</strong> method.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/toDateString">toDateString</a></td><td style="text-align:left">Returns the date component of a date as a human readable string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/toGMTString">toGMTString</a></td><td style="text-align:left">Returns a date converted to a string formatted according to GMT conventions.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/toISOString">toISOString</a></td><td style="text-align:left">Returns a date as a string value in simplified ISO 8601 Extended format.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/toLocaleDateString">toLocaleDateString</a></td><td style="text-align:left">Returns a date as a string value appropriate to the host environment’s current locale.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/toTimeString">toTimeString</a></td><td style="text-align:left">Returns the time component of a date as a human readable string.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/toUTCString">toUTCString</a></td><td style="text-align:left">Returns a date converted to a string formatted according to UTC conventions.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/valueOf">valueOf</a></td><td style="text-align:left">Returns the stored time value in milliseconds since midnight, January 1, 1970 UTC.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Object/hasOwnProperty">hasOwnProperty</a></td><td style="text-align:left">Determines whether an object has a property with the specified name.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Object/isPrototypeOf">isPrototypeOf</a></td><td style="text-align:left">Determines whether an object exists in another object’s prototype chain.</td></tr>
+</tbody>
+</table>
+<h2>Properties</h2>
+<p>The following table lists properties of the <strong>Date Object</strong>.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/constructor">constructor</a></td><td style="text-align:left">Specifies the function that creates an object.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/prototype">prototype</a></td><td style="text-align:left">Returns a reference to the prototype for a class of objects.</td></tr>
+</tbody>
+</table>
+<h2>Functions</h2>
+<p>The following table lists functions of the <strong>Date Object</strong>.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Functions</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/now">Date.now</a></td><td style="text-align:left">Returns the number of milliseconds between January 1, 1970, and the current date and time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/parse">Date.parse</a></td><td style="text-align:left">Parses a string containing a date, and returns the number of milliseconds between that date and midnight, January 1, 1970.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/Date/UTC">Date.UTC</a></td><td style="text-align:left">Returns the number of milliseconds between midnight, January 1, 1970 Universal Coordinated Time (UTC) (or GMT) and the supplied date.</td></tr>
+</tbody>
+</table>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/cd9w2te4(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

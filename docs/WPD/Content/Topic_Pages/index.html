@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Topic Pages · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Content/">WPD/Content</a></li><li><a href="/docs/WPD/Content/Topic_Pages/">Topic Pages</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Topic Pages</h1>
+<p>We have a number of landing pages implied by the <a href="/docs/WPD/Architecture">WPD/Architecture</a>. Most of them are captured in this migration tracking spreadsheet: <a href="https://docs.google.com/a/chromium.org/spreadsheet/ccc?key=0AkRs-89PKiZpdHBqN2poNnJjV1c0N1FCYlN3ZUtpZ3c#gid=34">https://docs.google.com/a/chromium.org/spreadsheet/ccc?key=0AkRs-89PKiZpdHBqN2poNnJjV1c0N1FCYlN3ZUtpZ3c#gid=34</a></p>
+<p>This page documents how to go about creating them.</p>
+<p>The primary goal of these topic pages is to make sure that users (and search engines!) know about all of the content we have within the site. The secondary goal is to explain the concepts that unite them.</p>
+<p><strong>For each page, make sure to use the Basic_Page type, and fill in the summary</strong>. The summary will be used in other listing pages.</p>
+<p>There are a few types of pages:</p>
+<h2>Manually generated</h2>
+<p>Some pages are so specialized (and so little work to generate, and so unlikely to change) that it just makes sense for us to list them by hand. The main page is a good example–it needs to point to the major topic areas but those are few in number and change rarely.</p>
+<p>The disadvantage is that if we generate them by hand they can get stale easily, so don’t fall back to this unless you have to.</p>
+<h2>Simple Sub-Directory</h2>
+<p>If all you need to do is list all of the sub-directories, MediaWiki has some built in features.</p>
+<p>The following snippet will print out all descendants of the given URL:</p>
+<pre><code>{{Special:PrefixIndex/WPD/Example_Pages/}}
+</code></pre>
+<p>Where “/WPD/Example_Pages/” is the prefix of the URL to list the descendants of. However, this has a <strong>crucial limitation</strong>: it automatically prints out all <em>descendants</em>, where often all you want is the <em>children</em>.</p>
+<p>We installed the SubPageList extension to help with this.</p>
+<p>The code snippet you’ll probably use most often is this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">splist</span> /&gt;</span>
+</code></pre>
+<p>The first parameter is omitted because it’s the URL to list sub-pages of, and if you omit it it defaults to the current page.</p>
+<p>You can read more at <a href="http://www.mediawiki.org/wiki/Extension:SubPageList">http://www.mediawiki.org/wiki/Extension:SubPageList</a> .</p>
+<h2>Query-generated</h2>
+<p>Sometimes you need to do something that’s not just the descendants or children of the given page. For that you’ll want to use Semantic Media Wiki’s query functionality.</p>
+<p>I’ve set up a template that makes this easy: <a href="/Template:API_Listing">Template:API_Listing</a> . This template accepts a query string, and abstracts away the other arcana of producing the right listing.</p>
+<p>The query string is how you select which pages to show. Common ones would be based on the category they’re in, like [[Category:CSS_Properties]]. You can chain them together to AND them, or even do ORs. You can also filter based on semantic media properties set on them.</p>
+<p>See <a href="http://semantic-mediawiki.org/wiki/Help:Selecting_pages">http://semantic-mediawiki.org/wiki/Help:Selecting_pages</a> for more information about all of the stuff you can pass to the query parameter.</p>
+<h2>Notes from Chris</h2>
+<p>These are some notes I have recorded, from my experiences with trying to create these pages. Hopefully they will help others.</p>
+<ol>
+<li><p>First, you need to make sure your landing pages fit with the structure defined in the <a href="/docs/WPD/Architecture">WPD/Architecture</a> page. So for example I created a top level landing page for concepts by using entering “concepts” into the Basic page form at <a href="/docs/WPD/New_Page">WPD/New_Page</a>. This created <a href="/docs/concepts">concepts</a>.</p></li>
+<li><p>Unfortunately I found that the concepts page had already been created, and it hadn’t been created using a form. If you find this, you’ll need to edit the source of the page to put the Basic page form into it, before you can then edit it and fill it in using the form. This code looks like so — copy this all and put it into the edit form, then save:</p>
+<pre><code>{{Page_Title}}
+{{Flags}}
+{{Summary_Section|SUMMARY GOES HERE}}
+{{Basic_Page
+|Content=PAGE CONTENT GOES HERE
+}}
+{{Compatibility_Section
+|Not_required=Yes
+|Desktop_rows=
+|Mobile_rows=
+|Notes_rows=
+}}
+{{See_Also_Section}}
+{{Topics}}
+{{External_Attribution
+|Is_CC-BY-SA=No
+|MDN_link=
+|MSDN_link=
+|HTML5Rocks_link=
+}}
+</code></pre>
+<p>You probably don’t need most of this, but I added it all in just to be on the safe side.</p></li>
+<li><p>Now edit the page by choosing Edit, not the Edit Source option: you’ll be able to edit the page using the nice form, which is necessary, and makes things a lot easier.</p></li>
+<li><p>When you create article links, often the raw relative URL fragments don’t look very good, for example <a href="/docs/concepts/Internet_and_Web/How_does_the_Internet_Work">concepts/Internet and Web/How does the Internet Work</a>. It is much better to use different display text in such cases, and this can be added after a pipe character, after the URL fragment. So for example:</p>
+<pre><code>[[concepts/Internet and Web/How does the Internet Work|How does the Internet Work?]]
+</code></pre>
+<p>Creates this: <a href="/docs/concepts/Internet_and_Web/How_does_the_Internet_Work">How does the Internet Work?</a></p></li>
+</ol>
+<p>Whatever way of populating the page you choose, make sure the TOC is easy to follow and makes sense. I did the concepts page manually, because I found that just generating the article list automatically didn’t give enough control, and it didn’t look very good either. For example, to list all the concept pages I used this:</p>
+<pre><code>{{Special:PrefixIndex/concepts/}}
+</code></pre>
+<p>It’s a good tool for making sure that you don’t miss any pages of a given topic, but I wouldn’t recommend it for final presentation. Have we got some kind of tool to alert us to new pages being created, so we can make sure to add them to the landing pages?</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

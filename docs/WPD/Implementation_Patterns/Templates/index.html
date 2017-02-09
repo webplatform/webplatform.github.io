@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Templates · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Implementation_Patterns/">WPD/Implementation Patterns</a></li><li><a href="/docs/WPD/Implementation_Patterns/Templates/">Templates</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Templates</h1>
+<p><strong>This page is a specific overview of our primary work-horse templates, and complements the more high-level <a href="/docs/WPD/Implementation_Patterns">WPD/Implementation_Patterns</a> guide. It assumes you have read and understood that guide.</strong></p>
+<h2>General Organization</h2>
+<p>Almost every reference page uses one of ~20 major templates/forms. You can view a comprehensive list at <a href="/docs/WPD/New_Page">WPD/New_Page</a>.</p>
+<p>There are many common elements on these reference pages that occur either on all of the major page type templates or occur on more than one. An example is the <a href="/Template:Summary_Section">summary section template</a>. For each of these sections, we create a separate template to do the work. We also create a template of the <em>form</em> for that template. Then, in the form for the main page type, we include the sub-form template. This automatically configures the form to deposit the sub-template on the page when it is saved.</p>
+<p>The summary section is a good example. We have the <a href="/Template:Summary_Section">main template</a> that handles the work of taking in parameters and rendering them out in a standard way, as well as setting certain semantic media wiki properties in the right way. If you “Edit Source” on almost any reference page, you’ll see that there’s an instantiation of this template on the page. We also have the <a href="/Template:Summary_Form_Section">form template</a> which configures how that part of the form will show up and what fields it will have. If you look at the source of any of the major page-type forms, like <a href="/Form:CSS_Property">the css property form</a>, you’ll see that there is a call to this Summary_Form_Section template.</p>
+<p>Most page-type forms use sub-forms and sub-templates as much as possible, and use the “central” template–the one most specific to this page-type–only for properties and form fields that are specific to this page type and this page type only. That “central” template is often the one that deposits the appropriate category on the page to wire it up to the form. The most simple of these page-type forms is the <a href="/Form:Basic">one for basic pages</a>. There aren’t any special parameters to set, so basically that central template <em>just</em> sets the Basic Pages category so that in the future when the user hits the Edit button the right form will show.</p>
+<p><strong>TODO</strong>: Represent the information in this page as a diagram</p>
+<h2>Template/Form Naming Conventions</h2>
+<p>In the vast majority of cases, we use consistent naming conventions so it’s easy to figure out what the related Form/Template is called without having to investigate it.</p>
+<p>For page types:</p>
+<ul>
+<li><strong>Core template</strong>: <a href="/Template:Foo">Template:Foo</a></li>
+<li><strong>Core category</strong>: [[Category:Foos]], where “Foos” is the english plurilization of the core template name.</li>
+<li><strong>Core form</strong>: <a href="/w/index.php?title=Form:Foo&amp;action=edit&amp;redlink=1">Form:Foo</a></li>
+</ul>
+<p><strong>Note</strong>: Basic page’s form is an exception to these rules. The main form is at <a href="/Template:Basic_Page">Template:Basic_Page</a> but the form is at <a href="/Form:Basic">Form:Basic</a></p>
+<p>For sub-templates and sub-forms:</p>
+<ul>
+<li><strong>Template</strong>: <a href="/w/index.php?title=Template:Foo_Section&amp;action=edit&amp;redlink=1">Template:Foo_Section</a></li>
+<li><strong>Sub-Form</strong>: <a href="/w/index.php?title=Template:Foo_Form_Section&amp;action=edit&amp;redlink=1">Template:Foo_Form_Section</a> <strong>Note</strong>: the sub-form is implemented as a <em>template</em>, not a <em>form</em>.</li>
+</ul>
+<h2>Specific Sub-Forms</h2>
+<p>There are many sub-forms and sub-templates that we use very often. These are generally easy to discover by viewing the source of the page-type form you’re interested in.</p>
+<ul>
+<li><a href="/Template:Page_Title">Template:Page_Title</a></li>
+<li><a href="/Template:Flags">Template:Flags</a></li>
+<li><a href="/Template:Standardization_Status">Template:Standardization_Status</a></li>
+<li><a href="/Template:API_Name">Template:API_Name</a></li>
+<li><a href="/Template:Summary_Section">Template:Summary_Section</a></li>
+<li><a href="/Template:Examples_Section">Template:Examples_Section</a></li>
+<li><a href="/Template:Notes_Section">Template:Notes_Section</a></li>
+<li><a href="/Template:Related_Specifications_Section">Template:Related_Specifications_Section</a></li>
+<li><a href="/Template:Compatibility_Section">Template:Compatibility_Section</a></li>
+<li><a href="/Template:See_Also_Section">Template:See_Also_Section</a></li>
+<li><a href="/Template:Topics">Template:Topics</a></li>
+<li><a href="/Template:External_Attribution">Template:External_Attribution</a></li>
+<li><em>This list is not comprehensive yet. Please add more sub-forms to it!</em></li>
+</ul>
+<h2>Page-Type Organization</h2>
+<p>Again, the common elements of pages (like summaries) are handled in sub-forms and sub-templates that are used the same on every page. Most page-types have a specific “central” template that handles the interesting bits that are specific to this page type. For example, the <a href="/Form:CSS_Property">css property form</a> defines fields for whether or not the field is inheritable and what its legal values are.</p>
+<p>The following sections give a more in-depth overview of how these main page-types are inter-related. Documentation that is mainly about one specific page-type (and not how they inter-relate) should be found on the given Template itself.</p>
+<p><strong>TODO</strong>: A lot of the documentation in the following sections actually should live in the specific documentation sections on each Template’s page.</p>
+<h3>API Objects, Methods, and Properties</h3>
+<p>Some of the most common page-types are <a href="/Template:API_Object">Template:API_Object</a>, <a href="/Template:API_Object_Method">Template:API_Object_Method</a>, and <a href="/Template:API_Object_Property">Template:API_Object_Property</a>. They are also some of the most confusing when you first look at them.</p>
+<p>The API Object template is the one that should be used for the object that contains methods and properties. It will ultimately have an exhaustive list of all of its associated properties, methods, events, constants, etc. However, if you edit a page that uses this template you will see that there isn’t much content on the page at all!</p>
+<p>The way the API_Object template works is that all of the applicable API_Object_Method and API_Object_Property pages set an Applies_to field that specifies the page they &quot;apply to&quot;: the API_Object. Then, when we generate the text for that page, we use a semantic media wiki query to select all pages that apply to it and print out their information.</p>
+<p>Importantly, it’s also possible to define the <strong>Subclass_of</strong> property of API_Objects. This is the way we formally represent which objects this inherits properties and methods of–something that’s critically important for many DOM APIs (for example, the chain for AudioElement looks like: AudioElement --&gt; MediaElement --&gt; HTMLElement --&gt; Element --&gt; Node). We automatically print out the properties and methods of the immediate parent. For performance reasons we don’t print out any methods or properties that come from higher up in the chain, but if you want to, you can manually specify more ancestors in the Subclass_of field by separating them with commas (most recent ancestor first).</p>
+<h3>Summaries, Page_Title, and API_Name</h3>
+<p>As far as MediaWiki is concerned, the “title” of a page is the entirety of the URL after the &quot;<a href="/docs/">/docs/</a>&quot; part. This leads to many pages having long names like “css/properties/font-size” when “font-size” is far more appropriate. Also, when we include a link to a page on another page, we often want to provide a bit of context on what the page is about.</p>
+<p>We get around this by setting Semantic Media Wiki properties for the Page_Title, API_Name, and Summary.</p>
+<p>The Summary is simply a property of type Text that is set to contain the Summary field in the form. By setting a property, other pages (like <a href="/Template:API_Listing">Template:API_Listing</a>) can automatically pull out that information and display it in a table.</p>
+<p>The <a href="/Template:Page_Title">page title</a> template is how you set the page title. If the editor provided a value, it uses that value. However, it defaults to using the last part of the page-title. So, for example, on &quot;css/properties/font-size&quot;, it would default to &quot;font-size&quot;.</p>
+<p>The <a href="/Template:API_Name">API name</a> template overlaps in use with the page title template quite a bit, but historically it predates it. Whereas page title is what the page should be called when presented as a link, the API_Name is the precise text used to invoke that API. The API_Name is used when generating automatic examples and theoretically for more stuff in the future. For methods and properties, it would be the method/property name. For things like CSS selectors, however, it would be things like “#” or &quot;.&quot;. Pages with weird API_Names are the cases where the page title might be different than the API_Name, for example the page might have a title of &quot;Class Selector&quot;, but the API_Name might have a value of &quot;.&quot;.</p>
+<h3>API Listing</h3>
+<p>The <a href="/Template:API_Listing">API Listing</a> template is somewhat confusingly named. Unlike the API_Object template which is the canonical reference for the methods, properties, and events that apply to a given interface object, the API Listing template is more about just listing all sub-pages that match some criteria.</p>
+<p>The API_Listing page template is used for many pages that are primarily about organization and not about content. For example, the <a href="/docs/css/properties">css/properties</a> page uses this template to list all css properties.</p>
+<p>The listing is powered in one of two ways: the better way and the worse way.</p>
+<h4>The Worse Way</h4>
+<p>First, the worse way.</p>
+<p>It is possible in MediaWiki to enumerate all sub-pages that are descendants of a given page. We implement this in the API Listing template with a parameter to “Print all sub-pages rooted here.”</p>
+<p>There are two major limitations of this approach. First, it prints out <em>all descendants</em> when what you normally want is only the <em>direct children</em>. This creates listings that are far too full. Secondly, the listings use the full page name (things like “css/properties/font-size”), which is ugly, and doesn’t include the page summary.</p>
+<p>The reason we have this is because of a mistake we made in the import. The prettier way of printing sub-pages relies on the &quot;Page_Title&quot;, &quot;Path&quot;, and “Summary” properties being set on pages. However, when we did the import, we goofed–we didn’t include the templates that set those properties. Thus, most pages imported don’t have those properties set until they’ve been manually edited at least once (we refer to a manual edit without substantive changes, whose only purpose is to make sure all relevant templates and properties are included, a “touch”).</p>
+<p>We figured at the beginning that it was better to comprehensively list all descendants instead of doing the better listing format but missing some pages seemingly randomly–perhaps forgetting about them for all time.</p>
+<p>Over time, as more articles are touched, every API_Listing page should transition to using the Better Way and stop using this “Print all sub-pages rooted here” checkbox. Note that while we’re transitioning, it’s best practice to include the better way print out as well as the comprehensive sub-listing (they can coexist on the page). Once we’ve verified the better listing is comprehensive, we can uncheck the sub-listing option.</p>
+<h4>The Better Way</h4>
+<p>The better way uses Semantic Media Wiki query syntax to select which pages to show. You can see what syntax is allowed at <a href="http://semantic-mediawiki.org/wiki/Help:Selecting_pages">this page</a>. Basically you write a query that selects pages based on categories they’re in or the values of semantic media wiki properties on them.</p>
+<p>Note that it’s actually kind of difficult to select pages that are only direct children of a page (as opposed to all descendants). We get around this (somewhat) by having every page have a Path property, which is just set to the name of the page (e.g. “css/properties/font-size”). You can then use the like operator in the SMW query to do some matching.</p>
+<p><strong>Note</strong>: Pro tip: you can easily see what properties are currently applied to a page by going to Tools &gt; Browse Properties</p>
+<p>In practice, the queries you will create will be some combination of a given template type combined with it having a URL of a given form.</p>
+<h3>Attributes, properties, and DOM</h3>
+<p><strong>Note</strong>: This part gets hairy really fast, and our current information organization for it has known problems (see the notes from the community meeting on 10/30 for just a few examples of things we need to change).</p>
+<p>First of all, most DOM interfaces should use the <a href="/Template:API_Object">API Object template</a>, since they primarily consist of methods/properties on an API interface.</p>
+<p>Markup_Elements should use the DOM_Interface property to point to the <em>most specific DOM interface that applies to them.</em> For example, the &lt;audio&gt; markup_element page would point to the AudioElement page. For many “simple” elements, the most specific DOM interface is simply HTMLElement.</p>
+<p>Markup_Attribute pages should point at the most-specific DOM interface to which they apply (yes, this is conceptually a bit weird). In the future for each markup_element, we will check to see what its DOM_Interface is, and then query for all attributes that are associated with that DOM_Interface and show those.</p>
+<p>Attributes are weird for another reason: generally every attribute on a markup element has a corresponding property on associated DOM interface. However, this corresponding property might be slightly different (for example, switching from hyphens to camel casing); we need to update the Markup_Attribute template to have an often-automatically-generated Associated_property parameter. There are theoretically some attributes that don’t have associated properties (although I can’t think of any right now); we need to allow a Markup_Attribute to specify it doesn’t have a corresponding property. We don’t think it makes sense to have two pages that would have almost precisely the same content. Generally, the rule of thumb is this: <strong>If the attribute is also a property, create a Markup_Attribute page and make sure it’s pointing at the right DOM interface. If there’s a property with no attribute, make it just an API_Object_Property</strong>.</p>
+<p>Events are weird because they have both an Applies_to (the types of DOM interfaces they can be fired at), as well as their Subclass_of. There are many different event types that are interconnected with dependency relationships that it’s important to model. Most of these relationships terminate with the vanilla Event object.</p>
+<h3>Topics, Topic Clusters, See Also</h3>
+<p>We use a number of organizing principles, and it’s easy to get confused about how they all inter-relate and when you should use each one.</p>
+<p>First, <strong>Topics</strong>. Topics are simply special category pages that are common enough that they make sense to show in a form UI on most pages. You can see more information about them at <a href="/docs/WPD/Topics">WPD/Topics</a>. You can think of Topics almost like &quot;tags&quot;: if you can imagine more than 20 or so pages using them, and a realistic user scenario where someone would want to find all of those pages as a group, there should be a tag.</p>
+<p>Many articles have a See Also section. This section ranges from fully-automatically generated to completely manually generated. The see also sections sometimes include links from within WPD and sometimes include external links. 70 million years from now when we’re done documenting everything, pages will use topic clusters, manual links, and external links sections–but not the &quot;Manual Sections&quot;.</p>
+<p><strong>Topic clusters</strong> are the way that allows us to automatically generate portions of the See Also section automatically for articles on the WPD. A topic cluster (configured at <a href="/Property:Topic_Cluster">Property:Topic_Cluster</a>) should be created whenever there’s a grouping of articles that should all be listed on one-another’s pages. The CSS Font topic cluster is a canonical example; there are a lot of CSS properties that deal directly with fonts and it makes sense to list all of them on one-another’s pages. <strong>If you check off a topic cluster for a page, it will automatically print out links to all other pages in its see also section.</strong> Whereas Topics are designed to be visible to end users and a relatively small list, Topic clusters should be created whenever you want to have an automatically-curated grouping of See Also links.</p>
+<p>The See Also section also has three free-form fields: <strong>Manual Links</strong>, <strong>External Links</strong>, and <strong>Manual Sections</strong>.</p>
+<p><strong>Manual links</strong> is a section in the See Also section that should list any articles within WPD that should also be listed but where a Topic Cluster doesn’t make sense. Don’t include a header (it’s automatically generated for you) but do include bullets for each line.</p>
+<p><strong>External Links</strong> is a section in the See Also section that should list links to any external resources (except for specs; those go in the Related Specifications form). Don’t include a header (it’s automatically generated for you) but do include bullets for each line.</p>
+<p><strong>Manual Sections</strong> is for articles that haven’t yet made use of topic clusters appropriately. It’s basically an escape hatch where you can just list whatever you want and it will be plopped into the see also section wholesale. 70 million years from now when we’re done documenting everything, pages will use topic clusters, manual links, and external links sections–but not the &quot;Manual Sections&quot;.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

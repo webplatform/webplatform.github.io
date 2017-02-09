@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>domain · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="Insecure. Use the web messaging API (postMessage and the message event) instead. Gets or sets the security domain of the document." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Document/">Document</a></li><li><a href="/dom/Document/domain/">domain</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>domain</h1>
+<h2>Summary</h2>
+<p>Insecure. Use the web messaging API (postMessage and the message event) instead. Gets or sets the security domain of the document.</p>
+<p>Property of <a href="/docs/dom/Document">dom/Document</a><a href="/docs/dom/Document">dom/Document</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> domain = <span class="hljs-built_in">document</span>.domain;
+<span class="hljs-built_in">document</span>.domain = topLevelDomain;
+</code></pre>
+<h2>Return Value</h2>
+<p>Returns an object of type StringString</p>
+<p>The current security domain of the document.</p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The property initially returns the host name of the server from which the page is served. The property can be assigned the domain suffix to allow sharing of pages across frames. For example, a page in one frame from home.microsoft.com and a page from www.microsoft.com initially cannot communicate with each other. However, by setting the <strong>domain</strong> property of both pages to the suffix “microsoft.com,” you ensure that both pages are considered secure and access is available between the pages. When you set the <strong>domain</strong> property, use the domain name determined by the server instead of the domain name determined by the client. All the pages on different hosts must have the <strong>domain</strong> property explicitly set to the same value to communicate successfully with each other. For example, the value of the <strong>domain</strong> property of a page on the host microsoft.com is “microsoft.com” by default. It might seem logical that if you set the <strong>domain</strong> property of a page on another host named msdn.microsoft.com to “microsoft.com,” that the two pages could communicate with each other. However, this is not the case, unless you explicitly set the <strong>domain</strong> property of the page on microsoft.com to “microsoft.com.” This property cannot be used to enable cross-frame communication among frames with different domain suffixes. For example, a page in one frame from www.microsoft.com and a page in another frame from www.msn.com cannot communicate with each other, even if the <strong>domain</strong> property of both pages is set to the suffix “microsoft.com.” **Security Warning:  **If you use this property incorrectly, you can compromise the security of your Web site. Set the <strong>domain</strong> property only if you must allow cross-domain scripting. Use a value determined on the server. If you set this property to a value determined on the client, such as through the <a href="/docs/dom/Location"><strong>location</strong></a> object, you might expose your site to attack from another site through Domain Name System (DNS) manipulation. For more information, see Security Considerations: Hosting and Reuse. **Security Warning:  ** If you use this property incorrectly, you can compromise the security of your Web site. Set the <strong>domain</strong> property only if you must allow cross-domain scripting. Use a value determined on the server. If you set this property to a value determined on the client, such as through the <a href="/docs/dom/Location"><strong>location</strong></a> object, you might expose your site to attack from another site through DNS manipulation. For more information, see Security Considerations: Dynamic HTML. For more information on domain security, see About Cross-Frame Scripting and Security.</p>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=161725">Document Object Model (DOM) Level 1 Specification</a>, Section 2.4</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

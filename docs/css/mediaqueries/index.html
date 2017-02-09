@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>mediaqueries · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/mediaqueries/">mediaqueries</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>mediaqueries</h1>
+<h2>Introduction</h2>
+<p>Media Queries are a paradigm <a href="http://www.w3.org/TR/CSS2/media.html">with origins in CSS2 Media Types</a> which were then <a href="http://www.w3.org/TR/css3-mediaqueries/">enhanced in CSS3</a> with the introduction of Media Features. By combining media types and media features into a media query, a developer is able to apply styles only when certain conditions are met, such as the viewing device being of media type <em>screen</em> or when the current viewport is below or above a certain height or width threshold. This allows for both subtle and drastic changes in layout and appearance of a website all controlled entirely within the site’s CSS.</p>
+<h2>Syntax</h2>
+<p>Media queries consist of a media type and can, as of the CSS3 specification, contain one or more media feature expressions, which will resolve to either true or false. The result of the query is true if the media type specified in the media query matches the type of device the document is being displayed with <strong>and</strong> all media feature expressions are true.</p>
+<p>When a media query is true, the corresponding style sheet or style rules are applied. Selectors inside active media queries are placed into the normal cascade and do not automatically have higher precedence than those outside of active media queries. Style sheets with media queries attached to their <em>&lt;link&gt;</em> tags <a href="http://scottjehl.github.com/CSS-Download-Tests/">will still download</a> even if their media queries would return false (they will not apply, however).</p>
+<p>Unless using the <em>not</em> or <em>only</em> operators, the media type is optional and the <em>all</em> type will be implied.</p>
+<h3>Logical Operators</h3>
+<p>You can compose complex media queries using logical operators, including <em>not</em>, <em>and</em>, and <em>only</em>. The <em>and</em> operator is used for combining multiple <a href="/w/index.php?title=media_features&amp;action=edit&amp;redlink=1">media features</a> together into a single media query, requiring each chained feature to return true in order for the query to be true. The <em>not</em> operator is used to negate an entire media query. The <em>only</em> operator is used to apply a style only if the entire query matches, useful for preventing older browsers from applying selected styles. Both the <em>not</em> and the <em>only</em> operators require a media type in order to be evaluated, <em>all</em> is not implied.</p>
+<p>In addition, you can combine multiple media queries in a comma-separated list; if any of the media queries in the list is true, the entire media statement returns true. This is equilivant to an <em>or</em> operator.</p>
+<h4>and</h4>
+<p>The <em>and</em> keyword is used for combining multiple media features together, as well as combining media features with media types. A basic media query, a single media feature with the implied <em>all</em> media type, could look like this:</p>
+<p>||<br>
+|@media (min-width: 700px) { … }|</p>
+<p>If, however, you wanted this to apply only if the display is in landscape, you could use an <em>and</em> operator to chain the media features together.</p>
+<p>||<br>
+|@media (min-width: 700px) and (orientation: landscape) { … }|</p>
+<p>Now the above media query will only return true if the viewport is 700px wide or wider and the display is in landscape. If, however, you only wanted this to apply if the display in question was of the media type TV, you could chain these features with a media type using an <em>and</em> operator.</p>
+<p>||<br>
+|@media tv and (min-width: 700px) and (orientation: landscape) { … }|</p>
+<p>Now, the above media query will only apply if the media type is TV, the viewport is 700px wide or wider, and the display is in landscape.</p>
+<h4>comma-separated lists</h4>
+<p>Comma-separated lists behave like the logical operator <em>or</em> when used in media queries. When using a comma-separated list of media queries, if any of the media queries returns true, the styles or style sheets get applied. Each media query in a comma-separated list is treated as an individual query, and any operator applied to one media query does not affect the others. This means the comma-separated media queries can target different media features, types, and states.</p>
+<p>For instance, if you wanted to apply a set of styles if the viewing device either had a minimum width of 700px or was a handheld in landscape, you could write the following:</p>
+<p>||<br>
+|@media (min-width: 700px), handheld and (orientation: landscape) { … }|</p>
+<p>Above, if I were on a <em>screen</em> device with a viewport width of 800px, the media statement would return true because the first part, interperated as <em>@media all and (min-width: 700px)</em> would apply to my device and therefore return true, despite the fact that my <em>screen</em> device would fail the <em>handheld</em> media type check in the second media query. Likewise, if I were on a <em>handheld</em> device held in landscape with a viewport width of 500px, while the first media query would fail due to the viewport width, the second media query would succeed and thus the media statement would return true.</p>
+<h4>not</h4>
+<p>The <em>not</em> keyword applies to the whole media query and returns true if the media query would otherwise return false (such as <em>monochrome</em> on a color display or a screen width of 600px with a <em>min-width: 700px</em> feature query). A <em>not</em> will only negate the media query it is applied to and not to every media query if present in a comma-separated list of media queries. The <em>not</em> keyword cannot be used to negate an individual feature query, only an entire media query. For example, the <em>not</em> is evaluated last in the following query:</p>
+<p>||<br>
+|@media not all and (monochrome) { … }|</p>
+<p>This means that the query is evaluated like this:</p>
+<p>||<br>
+|@media not (all and (monochrome)) { … }|</p>
+<p>… rather than like this:</p>
+<p>||<br>
+|@media (not all) and (monochrome) { … }|</p>
+<p>As another example, look at the following media query:</p>
+<p>||<br>
+|@media not screen and (color), print and (color)|</p>
+<p>It is evaluated like this:</p>
+<p>||<br>
+|@media (not (screen and (color))), print and (color)|</p>
+<h4>only</h4>
+<p>The <em>only</em> keyword prevents older browsers that do not support media queries with media features from applying the given styles:</p>
+<p>||<br>
+|&lt;link rel=&quot;stylesheet&quot; media=&quot;only screen and (color)&quot; href=&quot;example.css&quot; /&gt;|</p>
+<h2>Media features</h2>
+<ul>
+<li><a href="/docs/css/media_queries/any-hover">any-hover</a></li>
+<li><a href="/docs/css/media_queries/any-pointer">any-pointer</a></li>
+<li>[[css/media queries/aspect-ratio|aspect-ratio]*<a href="/docs/css/media_queries/color">color</a></li>
+<li><a href="/docs/css/media_queries/color-index">color-index</a></li>
+<li><a href="/docs/css/media_queries/device-aspect-ratio">device-aspect-ratio</a></li>
+<li><a href="/docs/css/media_queries/device-height">device-height</a></li>
+<li><a href="/docs/css/media_queries/device-width">device-width</a></li>
+<li><a href="/docs/css/media_queries/grid">grid</a></li>
+<li><a href="/docs/css/media_queries/height">height</a></li>
+<li><a href="/docs/css/media_queries/monochrome">monochrome</a></li>
+<li><a href="/docs/css/media_queries/orientation">orientation</a></li>
+<li><a href="/docs/css/media_queries/resolution">resolution</a></li>
+<li><a href="/docs/css/media_queries/scan">scan</a></li>
+<li><a href="/docs/css/media_queries/view-mode">view-mode</a></li>
+<li><a href="/docs/css/media_queries/width">width</a></li>
+</ul>
+<h2>See also</h2>
+<ul>
+<li><a href="http://www.w3.org/TR/css3-mediaqueries/">Media Queries Specification</a></li>
+<li><a href="/docs/css/tutorials">CSS tutorials</a></li>
+<li><a href="/docs/css/properties">CSS properties reference</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

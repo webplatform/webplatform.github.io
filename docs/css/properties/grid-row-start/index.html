@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>grid-row-start · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="A grid item&#x27;s placement in a grid area consists of a grid position and a grid span. The grid-row-start property (with grid-row-end, grid-column-start, and grid-column-end) determines a grid item&#x27;s placement by specifying the grid lines of a grid item&#x27;s grid area." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/grid-row-start/">grid-row-start</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>grid-row-start</h1>
+<h2>Summary</h2>
+<p>A grid item’s placement in a grid area consists of a grid position and a grid span. The grid-row-start property (with grid-row-end, grid-column-start, and grid-column-end) determines a grid item’s placement by specifying the grid lines of a grid item’s grid area.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>auto</code>
+</dd>
+<dt>Applies to</dt>
+<dd>Grid items
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>As specified
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+</dl>
+<p><a href="/docs/css/concepts/cssom">CSS Object Model Property</a><br>
+:</p>
+<dl>
+<dt>Percentages</dt>
+<dd>N/A
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>grid-row-start: &lt;grid-line&gt;</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>&lt;grid-line&gt;</dt>
+<dd>Contributes a line, a span, or nothing (automatic) to the item’s row placement or column placement. Values have the following meanings:
+</dd>
+</dl>
+<ul>
+<li><strong>auto</strong> - The property contributes nothing to the grid item’s placement.</li>
+<li><strong>&lt;ident&gt;</strong> - If there is a named grid area with the specified name, contributes a line to the placement by specifying the line at the corresponding edge of that named grid area. Otherwise, if there is a named line with the specified name, contributes a line to the placement by specifying the first line of that name. Otherwise, contributes nothing to the placement.</li>
+<li><strong>&lt;integer&gt; &lt;ident&gt;</strong> - Contributes a line to the placement by specifying the Nth grid line. (Negative integers are allowed, but zero is not; if &lt;integer&gt; is omitted, it defaults to 1.) If a name is given as an &lt;ident&gt;, only lines with that name are counted. If no line with that name exists, it instead specifies the first grid line (or the last, if &lt;integer&gt; is negative). If not enough lines of that name exist, it specifies the last such named line (or the first, if the &lt;integer&gt; is negative).</li>
+<li><strong>span</strong> [ <strong>&lt;integer&gt;</strong> <em>or</em> <strong>&lt;ident&gt;</strong> ] - Contributes a grid span to the placement by specifying that the corresponding edge of the item’s grid area is N grid lines from the opposite edge of the item’s grid area. (Negative integers and zero are not allowed; if &lt;integer&gt; is omitted, it defaults to 1.) If a name is given as an &lt;ident&gt;, only lines with that name are counted. If no line with that name exists, the name is ignored. If not enough lines of that name exist, it spans to the last such named line.</li>
+</ul>
+<h2>Examples</h2>
+<pre><code class="css"><span class="hljs-comment">/* auto */</span>
+<span class="hljs-tag">grid-row-start</span>: <span class="hljs-tag">auto</span>;
+
+<span class="hljs-comment">/* &lt;ident&gt; */</span>
+<span class="hljs-tag">grid-row-start</span>: "<span class="hljs-tag">C</span>";
+
+<span class="hljs-comment">/* &lt;integer&gt; &lt;ident&gt; */</span>
+<span class="hljs-tag">grid-row-start</span>: 2 "<span class="hljs-tag">B</span>";
+
+<span class="hljs-comment">/* span &lt;integer&gt; */</span>
+<span class="hljs-tag">grid-row-start</span>: <span class="hljs-tag">span</span> 2;
+
+<span class="hljs-comment">/* span &lt;ident&gt; */</span>
+<span class="hljs-tag">grid-row-start</span>: <span class="hljs-tag">span</span> "<span class="hljs-tag">C</span>";
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-grid-layout">W3C Grid Layout Module</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

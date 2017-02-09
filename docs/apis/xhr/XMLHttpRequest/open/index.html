@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>open · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="Initializes an XMLHttpRequest." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/xhr/">xhr</a></li><li><a href="/apis/xhr/XMLHttpRequest/">XMLHttpRequest</a></li><li><a href="/apis/xhr/XMLHttpRequest/open/">open</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>open</h1>
+<h2>Summary</h2>
+<p>Initializes an XMLHttpRequest.</p>
+<p>Method of <a href="/docs/apis/xhr/XMLHttpRequest">apis/xhr/XMLHttpRequest</a><a href="/docs/apis/xhr/XMLHttpRequest">apis/xhr/XMLHttpRequest</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"> object.open(method, url, <span class="hljs-keyword">async</span>, user, password);
+</code></pre>
+<h2>Parameters</h2>
+<h3>method</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>Specifies the HTTP method used to open the connection, such as GET, POST, or HEAD. This parameter is not case-sensitive.</p>
+<h3>url</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>Specifies either an absolute or relative URL of the XML data or server-side Web services.</p>
+<h3>async</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>Boolean
+</dd>
+</dl>
+<p>(Optional)</p>
+<p>Specifies true for asynchronous operation (the call returns immediately), or false for synchronous operation. If true, assign a callback handler to the <strong>onreadystatechange</strong> property to determine when the call has completed. If not specified, the default is true.</p>
+<h3>user</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>(Optional)</p>
+<p>Specifies the name of the user for authentication. If this parameter is null or not specified and the site requires authentication, the browser displays a logon window.</p>
+<h3>password</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>(Optional)</p>
+<p>Specifies the password for authentication. This parameter is ignored if the user parameter is null or not specified.</p>
+<h2>Return Value</h2>
+<p>No return value</p>
+<h2>Examples</h2>
+<p>The following script demonstrates how to create and use the XMLHttpRequest object. For best client-side performance, the request is asynchronous and uses an onreadystatechange event handler to process the data returned by the call.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (xhr.readyState === <span class="hljs-number">4</span> <span class="hljs-comment">/* complete */</span>) {
+    <span class="hljs-keyword">if</span> (xhr.status === <span class="hljs-number">200</span>) {
+            <span class="hljs-built_in">console</span>.log(xhr.responseText);
+        }
+    }
+}
+<span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+xhr.open(<span class="hljs-string">"GET"</span>, <span class="hljs-string">"http://localhost/test.xml"</span>, <span class="hljs-literal">true</span>);
+xhr.onreadystatechange = handler;
+xhr.send();
+</code></pre>
+<h2>Notes</h2>
+<p>The following HTTP verbs and World Wide Web Distributed Authoring and Versioning (WebDAV) methods are supported:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Verb / Method</th><th style="text-align:left">Defined In <a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP (RFC-2616)</a></th><th style="text-align:left">Defined In <a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV (RFC-2518)</a></th><th style="text-align:left">Function</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">GET</td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP</a></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Request URI</td></tr>
+<tr><td style="text-align:left">POST</td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP</a></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Send data to server</td></tr>
+<tr><td style="text-align:left">HEAD</td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP</a></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Request URI without body</td></tr>
+<tr><td style="text-align:left">PUT</td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP</a></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Store data for URI</td></tr>
+<tr><td style="text-align:left">DELETE</td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP</a></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Delete data for URI</td></tr>
+<tr><td style="text-align:left">MOVE</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Move URI to to new location</td></tr>
+<tr><td style="text-align:left">PROPFIND</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Request URI Properties</td></tr>
+<tr><td style="text-align:left">PROPPATCH</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Update or Delete URI Properties</td></tr>
+<tr><td style="text-align:left">MKCOL</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Create collection at URI</td></tr>
+<tr><td style="text-align:left">COPY</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Create copy of URI</td></tr>
+<tr><td style="text-align:left">LOCK</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Create Lock</td></tr>
+<tr><td style="text-align:left">UNLOCK</td><td style="text-align:left"></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Remove Lock</td></tr>
+<tr><td style="text-align:left">OPTIONS</td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84048">HTTP</a></td><td style="text-align:left"><a href="http://go.microsoft.com/fwlink/p/?linkid=84046">WebDAV</a></td><td style="text-align:left">Request URI Options</td></tr>
+</tbody>
+</table>
+<p>Internet Explorer caches the results of HTTP GET requests in the Temporary Internet Files (TIF) folder. In most cases, caching improves performance for data that will not change frequently. To guarantee that the results are not cached, use POST. **Security Warning:  ** Cross-domain, cross-port, and mixed protocol requests are not allowed. The <em>bstrUrl</em> parameter may only specify files in the same domain, using the same port and protocol method, as that from which the page is served. Although this method accepts credentials passed via parameter, those credentials are not automatically sent to the server on the first request. The <em>varUser</em> and <em>varPassword</em> parameters are not transmitted unless the server challenges the client for credentials with a 401 - Access Denied response. After calling this method, use <strong>send</strong> to send the request and data, if any, to the server.</p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/XMLHttpRequest/">W3C XMLHttpRequest Specification</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

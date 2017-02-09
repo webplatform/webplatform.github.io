@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>&lt;position&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="The &amp;lt;position&amp;gt; CSS data type represents information for positioning an element in horizontal and vertical directions using a mix of keywords, percentage, and length values." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/data_types/">data types</a></li><li><a href="/docs/css/data_types/position/">position</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>&lt;position&gt;</h1>
+<h2>Summary</h2>
+<p>The &lt;position&gt; CSS data type represents information for positioning an element in horizontal and vertical directions using a mix of keywords, percentage, and length values.</p>
+<p>The syntax for the <code>&lt;position&gt;</code> data type was initially developed specifically for the <a href="/docs/css/properties/background-position"><code>background-position</code></a> property, but has since been adopted in other CSS standards, such as the <a href="/docs/css/functions/radial-gradient"><code>radial-gradient()</code></a> function.</p>
+<p>The position is specified using one or two tokens, either of which may be a keyword, length or percentage. The first token represents the <em>horizontal</em> position and the second represents the <em>vertical</em> position, <em>unless</em> both values are specified using keywords (in which case the order is irrelevant, since the keywords specify the dimension). If only one token is specified, the second token is treated as the keyword &quot;center&quot;.</p>
+<h3>Numerical position values</h3>
+<p>If positions are given using <a href="/docs/css/data_types/length"><code>&lt;length&gt;</code></a> values, the length represents the distance from the top or left side of the positioning container (the element box or viewport) to the top or left side of the object being positioned.</p>
+<p>If positions are given using <a href="/docs/css/data_types/percentage"><code>&lt;percentage&gt;</code></a> values, the computed length is relative to the <em>difference</em> in length (height or width) between the object being positioned and the container it is positioned within. That means that:</p>
+<ul>
+<li>a value of 0% means that the object is positioned flush against the left or top side of the container;</li>
+<li>a value of 50% means that the object is centered within the container (in the horizontal or vertical direction as applicable);</li>
+<li>a value of 100% means that the object is positioned flush against the right or bottom side of the container.</li>
+</ul>
+<p>More generally, for an object of width <em>x1</em> and height <em>y1</em> positioned within a container of width <em>x2</em> and height <em>y2</em>, a position value of <em>h% v%</em> means that the top-left corner is positioned at <em>( (x2-x1)*h%, (y2-y1)*v%)</em>.</p>
+<p>If the object being positioned is a single point (e.g., the center point of a radial gradient), it is treated as if has zero height and width and therefore the percentages are just simple percentages of the container’s height and width.</p>
+<h3>Keyword position values</h3>
+<p>The keyword values are:</p>
+<ul>
+<li><strong>left</strong>, equivalent to a horizontal position of 0%;</li>
+<li><strong>right</strong>, equivalent to a horizontal position of 100%;</li>
+<li><strong>top</strong>, equivalent to a vertical position of 0%;</li>
+<li><strong>bottom</strong>, equivalent to a vertical position of 100%;</li>
+<li><strong>center</strong>, equivalent to position of 50% in the applicable direction.</li>
+</ul>
+<p>The applicable direction for the <strong>center</strong> keyword is horizontal if its the first token, vertical if it’s the second, <em>unless</em> the other token is one of the left/right/top/bottom keywords.</p>
+<p>Keywords may be combined with length and percentage values, but then the <strong>horizontal vertical</strong> order must be respected.</p>
+<h2>Examples</h2>
+<pre><code class="css"><span class="hljs-tag">body</span><span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"><span class="hljs-number">100%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#222</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background-image</span>:<span class="hljs-value">
+       <span class="hljs-function">radial-gradient</span>(circle at center, red, indigo <span class="hljs-number">3em</span>),
+       <span class="hljs-function">radial-gradient</span>(circle farthest-side at top right, yellow, green <span class="hljs-number">90%</span>, blue),
+       <span class="hljs-function">radial-gradient</span>(ellipse at left <span class="hljs-number">70%</span>, yellow, orange <span class="hljs-number">30%</span>)</span></span>;
+    <span class="hljs-comment">/* The center point is defined using the position syntax, after the "at" keyword.
+    */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">background-size</span>:<span class="hljs-value"><span class="hljs-number">15em</span> <span class="hljs-number">10em</span>, <span class="hljs-number">30%</span> <span class="hljs-number">70%</span>, <span class="hljs-number">100px</span> <span class="hljs-number">70px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">background-position</span>:<span class="hljs-value"> center left,  center <span class="hljs-function">calc</span>(<span class="hljs-number">100%</span> - <span class="hljs-number">1em</span>), <span class="hljs-number">100%</span> <span class="hljs-number">50%</span></span></span>;
+    <span class="hljs-comment">/* Note that the position values are interpretted as horizontal first then vertical
+       *unless* one of the values is given with the top/bottom or left/right keywords.
+       Also note that percentages are interpretted as the percent of extra space,
+       so that 50% is centered and 100% is aligned flush against the far edge.
+    */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">background-repeat</span>:<span class="hljs-value">no-repeat no-repeat, no-repeat no-repeat, no-repeat no-repeat</span></span>;
+}</span>
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/10612218">View live example</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-values/#position">CSS Values and Units Module Level 3</a></dt>
+<dd>W3C Candidate Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/CSS21/colors.html#propdef-background-position">CSS 2.1</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

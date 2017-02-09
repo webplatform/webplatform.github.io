@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>insertAdjacentHTML · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="Mixed" />
+    <meta name="description" content="Parses and inserts HTML code at or beyond the edges of an element within the document hierarchy." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Element/">Element</a></li><li><a href="/dom/Element/insertAdjacentHTML/">insertAdjacentHTML</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>insertAdjacentHTML</h1>
+<h2>Summary</h2>
+<p>Parses and inserts HTML code at or beyond the edges of an element within the document hierarchy.</p>
+<p>Method of <a href="/docs/dom/Element">dom/Element</a><a href="/docs/dom/Element">dom/Element</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"> element.insertAdjacentHTML(where, html);
+</code></pre>
+<h2>Parameters</h2>
+<h3>where</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>Where to insert the HTML text. Must be one of the following values:</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Value</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">“beforebegin”</td><td style="text-align:left">Before the element itself.</td></tr>
+<tr><td style="text-align:left">“afterbegin”</td><td style="text-align:left">Just inside the element, before its first child.</td></tr>
+<tr><td style="text-align:left">“beforeend”</td><td style="text-align:left">Just inside the element, after its last child.</td></tr>
+<tr><td style="text-align:left">“afterend”</td><td style="text-align:left">After the element itself.</td></tr>
+</tbody>
+</table>
+<h3>html</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p>Well-formed HTML code to insert. The string can be a combination of text and HTML tags.</p>
+<h2>Return Value</h2>
+<p>No return value</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>insertAdjacentHTML</strong> method to insert script into the page.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> sHTML=<span class="hljs-string">"&lt;input type=button onclick="</span> +
+    <span class="hljs-string">"go2()"</span> + <span class="hljs-string">" value='Click Me'&gt;&lt;BR&gt;"</span>
+<span class="hljs-keyword">var</span> sScript=<span class="hljs-string">'&lt;SCRIPT DEFER&gt;'</span>
+sScript = sScript +
+    <span class="hljs-string">'function go2(){ alert("Hello from inserted script.") }'</span>
+sScript = sScript + <span class="hljs-string">'&lt;/script'</span> + <span class="hljs-string">'&gt;'</span>;
+ScriptDiv.insertAdjacentHTML(<span class="hljs-string">"afterBegin"</span>,sHTML + sScript);
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/insertscript_1.htm">View live example</a></p>
+<h2>Usage</h2>
+<pre><code> Use this method to add HTML to the page before/after an element or at the beginning or at the end of an element.
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>In XML documents, this methods will fail if the <strong>html</strong> parameter is not well-formed, valid HTML.</li>
+<li>This method will fail if “afterend” or “beforebegin” is used when the context is the root element of the document.</li>
+<li>If the text contains HTML tags, the method parses and formats the text as it is inserted.</li>
+</ul>
+<p><strong>TODO</strong>: The notes below need to be verified.</p>
+<ul>
+<li>You cannot insert text while the document is loading. Wait for the <a href="/docs/dom/Element/load"><strong>onload</strong></a> event to fire before attempting to call this method.</li>
+<li>When using the <strong>insertAdjacentHTML</strong> method to insert script, you must include the <a href="/docs/html/attributes/defer"><strong>DEFER</strong></a> attribute in the <a href="/html/elements/script"><strong>script</strong></a> element.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://domparsing.spec.whatwg.org/">DOM Parsing and Serialization</a></dt>
+<dd>Living Standard
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li>innerHTML<a href="/docs/dom/HTMLElement/innerHTML">innerHTML</a></li>
+<li>outerHTML<a href="/docs/dom/HTMLElement/outerHTML">outerHTML</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

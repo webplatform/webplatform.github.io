@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ApplicationCache · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="The Application Cache (AppCache) lets web-based applications run offline. Developers can specify resources for the browser to cache, making them available to the application even if no connection can be made to the server. These resources load and work correctly even if users click the refresh button when they are offline." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/appcache/">appcache</a></li><li><a href="/apis/appcache/ApplicationCache/">ApplicationCache</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>ApplicationCache</h1>
+<h2>Summary</h2>
+<p>The Application Cache (AppCache) lets web-based applications run offline. Developers can specify resources for the browser to cache, making them available to the application even if no connection can be made to the server. These resources load and work correctly even if users click the refresh button when they are offline.</p>
+<h2>Overview</h2>
+<p>An application cache provides the following benefits:</p>
+<ul>
+<li>Offline browsing: users can navigate a site or use a web application although they are offline</li>
+<li>Speed: cached resources are local, and therefore load faster</li>
+<li>Reduced server load: the browser only downloads resources that have changed from the server.</li>
+</ul>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/appcache/ApplicationCache/oncached">oncached</a></dt>
+<dd>The resources listed in the manifest have been downloaded, and the application is now cached.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/onchecking">onchecking</a></dt>
+<dd>The user agent is checking for an update, or attempting to download the manifest for the first time. This is always the first event in the sequence.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/ondownloading">ondownloading</a></dt>
+<dd>The user agent has found an update and is fetching it, or is downloading the resources listed by the manifest for the first time.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/onerror">onerror</a></dt>
+<dd>Indicates an error has occurred.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/onnoupdate">onnoupdate</a></dt>
+<dd>Indicates the manifest has not changed.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/onobsolete">onobsolete</a></dt>
+<dd>The Webpage is associated with an application cache whose group is marked as obsolete.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/onprogress">onprogress</a></dt>
+<dd>The user agent is downloading resources listed by the manifest. The event object’s total attribute returns the total number of files to be downloaded. The event object’s loaded attribute returns the number of files processed so far.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/onupdateready">onupdateready</a></dt>
+<dd>The ApplicationCache object’s cache host is associated with an application cache whose application cache group’s update status is idle, and whose application cache group is not marked as obsolete, but that application cache is not the newest cache in its group.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/status">status</a></dt>
+<dd>Returns the current status of the application cache, as given by the constants defined below.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/appcache/ApplicationCache/abort">abort</a></dt>
+<dd>Cancels the application cache download process. This method is intended to be used by Web applications showing their own caching progress UI, in case the user wants to stop the update (e.g., because bandwidth is limited).
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/swapCache">swapCache</a></dt>
+<dd>Switches to the most recent application cache, if there is a newer one. If there isn’t, throws an <strong>InvalidStateError</strong> exception.
+This does not cause previously-loaded resources to be reloaded; for example, images do not suddenly get reloaded and style sheets and scripts do not get reparsed or reevaluated. The only change is that subsequent requests for cached resources will obtain the newer copies.
+The <strong>updateready</strong> event will fire before this method can be called. Once it fires, the Web application can, at its leisure, call this method to switch the underlying cache to the one with the more recent updates. To make proper use of this, applications have to be able to bring the new features into play; for example, reloading scripts to enable new features. An easier alternative to <code>swapCache()</code> is just to reload the entire page at a time suitable for the user, using <code>location.reload()</code>.
+</dd>
+<dt><a href="/docs/apis/appcache/ApplicationCache/update">update</a></dt>
+<dd>Invokes the application cache download process. Throws an InvalidStateError exception if there is no application cache to update. Calling this method is not usually necessary, as user agents will generally take care of updating application caches automatically. The method can be useful in situations such as long-lived applications. For example, a Web mail application might stay open in a browser tab for weeks at a time. Such an application could want to test for updates each day.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Usage</h2>
+<pre><code> In order to cache files, you must do the following:
+</code></pre>
+<ul>
+<li>Create a manifest file that lists the files and other web resources you want to cache.</li>
+<li>Reference the manifest file in the header of every page you want cached.</li>
+</ul>
+<h3>The manifest file</h3>
+<p>The manifest file defines which web resources are cached when a user browses to your site. The manifest file typically has the extension <strong>.appcache</strong> or <strong>.manifest</strong>. Each webpage must add a manifest attribute to the HTML element similar to this:</p>
+<pre><code>&lt;html manifest=&quot;example.appcache&quot;&gt;
+</code></pre>
+<p>You can use an absolute or relative URL. The cache manifest file lists the files that will be cached, using the format:</p>
+<pre><code>CACHE MANIFEST
+# Version 1
+
+CACHE:
+script/scriptfilename1.js
+css/cssfilename.css
+images/imagename1.png
+images/imagename2.jpg
+images/imagename3.png
+
+FALLBACK:
+# This will enable imagename4.png to be as a replacement for
+# all resources under the images dir when there is no network connectivity.
+images/ images/imagename4.png
+
+NETWORK:
+# This will prevent other network resources from being accessed.
+images/imagename5.png
+</code></pre>
+<p>The first line of the manifest must read CACHE MANIFEST and the lines that follow it list the web resources you want to cache. You can use the # symbol to make comments.</p>
+<p>Alternatively, web resources that need to be cached can be specified by adding a “CACHE:” header section before the resources (as shown previously). In addition, fallback resources can be defined to replace general or specific web resources when there is no network connectivity. This is done by adding a “FALLBACK:” header section before the resources. These resources can be wildcard to specify a catch all mechanism (as shown previously). Be aware that there is a space after the first “images/” in the FALLBACK: section. This indicates that any files contained under the “images/” directory will fall back to a specific web resource (for example, images/imagename4.png) if they cannot be accessed from the network. Also, web resources can be specified to only be loaded from the network. This is done by adding a &quot;NETWORK: &quot; header section before the resources. This functionality can be used to scope down the number of resources that can be accessed from the network, thus, creating an allowed only list (as shown previously).</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Section</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">CACHE</td><td style="text-align:left">This is the default section for entries. Files listed under this header (or immediately after the CACHE MANIFEST) will be explicitly cached after they’re downloaded for the first time.</td></tr>
+<tr><td style="text-align:left">NETWORK</td><td style="text-align:left">Files listed under this section are white-listed resources that require a connection to the server. All requests to these resources bypass the cache, even if the user is offline. Wildcards may be used.</td></tr>
+<tr><td style="text-align:left">FALLBACK</td><td style="text-align:left">An optional section specifying fallback pages if a resource is inaccessible. The first URI is the resource, the second is the fallback. Both URIs must be relative and from the same origin as the manifest file. Wildcards may be used.</td></tr>
+</tbody>
+</table>
+<p><strong>ApplicationCache</strong> functionality is independent of HTTP caching headers. The manifest file implicitly includes itself as a page to be cached. It also needs to have the same domain of origin as the page that contains it.</p>
+<h2>Notes</h2>
+<h3>Limitations</h3>
+<p>The <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/offline.html">specification</a> states that browsers &quot;should consider applying constraints on disk usage&quot;. <a href="http://www.browserscope.org/user/tests/table/agt1YS1wcm9maWxlcnINCxIEVGVzdBjwwK0RDA?v=3&amp;layout=simple">The disk usage constraints vary across browsers.</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://dev.w3.org/html5/spec/single-page.html#application-cache-api">W3C ApplicationCache Specification</a></dt>
+<dd>W3C Editor’s Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://alistapart.com/article/application-cache-is-a-douchebag">Application Cache is a Douchebag</a></li>
+<li><a href="http://www.html5rocks.com/en/tutorials/appcache/beginner/">HTML5Rocks - A Beginner’s Guide to Using the Application Cache</a></li>
+<li><a href="http://www.webdirections.org/blog/get-offline/">Taking your web sites and apps offline with the HTML5 appcache</a></li>
+<li><a href="http://dev.opera.com/articles/view/offline-applications-html5-appcache/">Running your web applications offline with HTML5 AppCache</a></li>
+<li><a href="http://appcachefacts.info/">appcachefacts.info</a></li>
+<li><a href="http://manifest-validator.com">Cache Manifest Validator</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/HTML/Using_the_application_cache">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

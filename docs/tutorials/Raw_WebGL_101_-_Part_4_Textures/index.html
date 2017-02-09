@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Raw WebGL 101 — Part 4: Textures · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="How to import a texture from an image file into the canvas." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/Raw_WebGL 101 — Part 4: Textures/">Raw WebGL 101 — Part 4: Textures</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Raw WebGL 101 — Part 4: Textures</h1>
+<h2>Summary</h2>
+<p>How to import a texture from an image file into the canvas.</p>
+<h2>Introduction</h2>
+<p>Greetings, WebGL ninjas. The fourth tutorial is upon you, so be prepared: keep your browsers sharp and your scripts quick, and meld into the shadows, ready to strike! The striking will of course involve writing some cool WebGL, rather than infiltrating a shogun’s palace, but I think that’s ninja enough for us. This week we will turn our attention to importing textures from an image file into the canvas.</p>
+<p>This article is a transcript of <a href="http://www.youtube.com/watch?v=me3BviH3nZc&amp;t=56m50s">time 56:50 to 1:03:20</a> in Erik Möller’s <a href="http://www.youtube.com/watch?v=me3BviH3nZc">WebGL 101</a> tutorial, available on YouTube.</p>
+<p>Note: [05-texturing.html You can run the finished texture example] from this article to see what you are aiming towards.</p>
+<h2>Preparing to use textures in WebGL</h2>
+<p>We’re going to build this example on top of the <a href="http://dev.opera.com/articles/view/raw-webgl-part2-simple-shader/">previous lesson</a>'s simple shader. So take a copy of <a href="http://devfiles.myopera.com/articles/9462/03-minimal-shader.html">03 Minimal Shader</a> file and save it as 05-texturing.html.</p>
+<p>We’ll also need an image to use as texture, so copy this [opera.png Opera logo PNG] file into a place in your working directory.</p>
+<p>Now we’re going to remove the offset as we’re not going to be using it here. To do so, first go into the vertex shader <code>&lt;script&gt;</code> element and remove the following line:</p>
+<pre><code>uniform vec2 uOffset;
+</code></pre>
+<p>Next, remove the reference to it in the <code>vTexCoord = aVertexPosition + uOffset;</code> line below it to just leave this:</p>
+<pre><code>vTexCoord = aVertexPosition;
+</code></pre>
+<p>And finally, back in the main script delete the offset array line:</p>
+<pre><code>var offset = [1, 1];
+</code></pre>
+<p>and the two lines that link the offset to the program:</p>
+<pre><code>program.offsetUniform = gl.getUniformLocation(program, 'uOffset');
+</code></pre>
+<p>and</p>
+<pre><code>gl.uniform2f(program.offsetUniform, offset[0], offset[1]);
+</code></pre>
+<p>Now we’re ready to start working on our texture.</p>
+<h2>Creating the texture</h2>
+<p>First, let’s create a uniform by going into the fragment shader <code>&lt;script&gt;</code> element and putting the following line just above the <code>main()</code> function:</p>
+<pre><code>uniform sampler2D uSampler;
+</code></pre>
+<p><code>sampler2D</code> allows to sample pixel colours from a 2D image.</p>
+<p>Now inside the <code>main()</code> function of the fragment shader, we need to change the <code>gl_FragColor</code> line to call the texture lookup function <code>texture2D</code> on the sampler as we want to get the colour information from the texture:</p>
+<pre><code>gl_FragColor = texture2D(uSampler, vTexCoord);
+</code></pre>
+<p>That’s it for the fragment shader. Now we need to modify the main <code>&lt;script&gt;</code> to pull in the sample texture. So, below</p>
+<pre><code>program.vertexPosAttrib = gl.getAttribLocation(program, 'aVertexPosition');
+</code></pre>
+<p>add:</p>
+<pre><code>program.samplerUniform = gl.getUniformLocation(program, 'uSampler');
+</code></pre>
+<p>And now, always inside the main <code>&lt;script&gt;</code>, we need to create the texture we are going to use, give it an image, and create our drawing function.</p>
+<p>So first, we’ll create a new texture and store it in a variable:</p>
+<pre><code>var texture = gl.createTexture();
+</code></pre>
+<p>Next, we create a new image variable to store our image in:</p>
+<pre><code>var img = new Image();
+</code></pre>
+<p>and specify the location of the image:</p>
+<pre><code>img.src = 'textures/opera.png';
+</code></pre>
+<h2>The drawing function</h2>
+<p>Now, right above the last line you added, we’ll add our drawing function, which will run when the image has finished loading. Our initial drawing function will look like this:</p>
+<pre><code>img.onload = function() {
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.uniform1i(program.samplerUniform, 0);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
+}
+</code></pre>
+<p>The first line sets <code>TEXTURE0</code> as the active texture. This line is not strictly necessary because <code>TEXTURE0</code> is the default active texture anyway, but I’ve included it so you have it there if you need it for reference in the future.</p>
+<p>The second line binds the texture we created earlier.</p>
+<p>The third line, tells the shader which texture we’re going to be using. WebGL can handle up to 32 textures during any given call to drawing functions (like <code>gl.drawArrays</code>), they’re called TEXTURE0 to TEXTURE31. <code>1i</code> means that the uniform will accept a single integer, and that integer is set to zero because we’re going to be using texture 0.</p>
+<p>The fourth line is the same you’re already familiar with from our previous lesson.</p>
+<p>Now we have a drawing function to play with, let’s add to it.</p>
+<p>Right after the second line of our drawing function, create a new line and enter the following to it:</p>
+<pre><code>gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+</code></pre>
+<p>This sets how you should read the source data when it’s set with <code>texImage2d</code> (on the next line). Specifically, we’re flipping the Y-axis (or flipping the image around the X-axis) so the texture coordinates will have Ys that increase as you go up the screen when you use images in formats where Y-coordinates increase downwards (like the <code>.png</code> we’re using here).</p>
+<p>On the next line, we will actually specify our image data and parameters (using <code>texImage2d</code>). We are specifying that it’s 2D and that it is using RGBA colour and each component in every pixel — r, g, b and a — is specified as un unsigned byte (ranging from 0 to 255). Finally we specify <code>img</code>, the variable where our image is stored:</p>
+<pre><code>gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
+</code></pre>
+<p>Finally, for this function, we want to specify some texture parameters, to use for drawing the image. Put these lines underneath the previous one:</p>
+<pre><code>gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+</code></pre>
+<p>Mag filter is used when you’re stretching an image over a larger area than the original source image and you need to figure out what’s &quot;in-between pixels&quot;. You can either linearly interpolate between the colours, or use the same value as the nearest pixel to it (resulting in more blockiness.)</p>
+<p>Also, change your canvas size to something a bit bigger so you can see what is going on more clearly. I chose 900 x 900. Now try testing your code — you should be presented with something that looks like Figure 1.</p>
+<p><img src="//static.webplatform.org/e/ed/figure1.png" alt="A series of Opera company logos rendered inside a canvas using WebGL"></p>
+<p>Figure 1: A series of Opera company logos rendered inside a <code>&lt;canvas&gt;</code> using WebGL.</p>
+<h2>Changing the filter</h2>
+<p>You’ll notice that currently the rendering looks a bit pixellated, because we chose a <code>NEAREST</code> filter. To see what difference the different filters make, try using the <code>LINEAR</code> filter instead:</p>
+<pre><code>gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+</code></pre>
+<p>This will give a much smoother result, as shown in Figure 2.</p>
+<p><a href="/w/index.php?title=Special:Upload&amp;wpDestFile=figure2.png">A series of Opera company logos rendered inside a canvas using WebGL that look smooth and not pixellated</a></p>
+<p>Figure 2: The linear filter gives a much smoother result.</p>
+<h2>Wrap modes</h2>
+<p>Right now we are displaying four versions of the Opera logo. This is because we are currently indexing our image with values from -1 to 1, and the wrap mode is by default set to wrap content when it goes outside the range 0 to 1. So we’re drawing one “O” for -1 to 0 and one for 0 to 1 in each dimension.</p>
+<p>Let’s update the code to just display a single copy of the image. First, add a solid border to the canvas so it is easier to visualise where the canvas is, and what is going on:</p>
+<pre><code>&lt;canvas id='c' width='900' height='900' style=&quot;border: 1px solid black;&quot;&gt;
+&lt;/canvas&gt;
+</code></pre>
+<p>Let’s explore how wrap modes work. We’re drawing a quad that covers the entire canvas and we’re texturing it with a &quot;O&quot;. The quad coordinates range from -1 to 1 along both the x and y axes. To draw only one “O” you should have coordinates going from 0 to 1. If we change to clamp in one direction you’ll only see two O’s: the clamped axis will not draw a O in the -1 to 0 range. If you clamp both axes, you’ll only see one O drawn. Change your <code>texParameter</code> lines to the following:</p>
+<pre><code>gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+</code></pre>
+<p>S and T are the texture coordinate axes. Note that our axes start at (0,0) — the bottom left of a texture — and go to (1,1) — the top right.</p>
+<p>This will give us the display shown in Figure 3.</p>
+<p><img src="//static.webplatform.org/5/59/figure3.png" alt="A single Opera logo rendered on a canvas"></p>
+<p>Figure 3: Our four Opera logos have been reduced down to one.</p>
+<h2>Summary</h2>
+<p>That’s it this for this week, my dear WebGL ninjas. Next time we will start ramping it up again, looking at how we can further improve our shaders with XHR.</p>
+<p>This article is licensed under a <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

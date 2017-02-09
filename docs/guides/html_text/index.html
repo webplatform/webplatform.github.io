@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML text · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article talks about some of the most common elements used when marking up text content in HTML." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/html_text/">html text</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>HTML text</h1>
+<h2>Summary</h2>
+<p>This article talks about some of the most common elements used when marking up text content in HTML.</p>
+<h2>Introduction</h2>
+<p>In this article we will take you through the basics of using HTML to mark up the content within the body of your document.</p>
+<p>We will first look at general structural elements such as headings and paragraphs, and how to embed long quotes and code. After that we will look at inline content, such as short quotes and emphasis, and finish with a quick examination of old-fashioned presentational markup.</p>
+<h2>Space — the final frontier</h2>
+<p>Before we discuss text, we should discuss the space between the text. HTML documents contain non-printing characters known as <em>white space</em> that separate text. The regular space character (the space bar on a keyboard) is the most common, but there are others such as the tab character and the carriage return (or new line) character.</p>
+<p>In HTML, multiple contiguous occurrences of these characters are almost always treated as a single space character. Consider this source code:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>In   the
+                beginning<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+</code></pre>
+<p>It would be interpreted by a web browser to be equivalent to:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>In the beginning<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+</code></pre>
+<p>The only time this is not the case is when the <code>&lt;pre&gt;</code> element is used, which we will discuss later in this article.</p>
+<p>White space compression can be a source of confusion for novice HTML authors, who may try to pad out text with extra spaces to achieve a desired indentation, to get more spacing after the period between sentences, or to introduce more vertical space between paragraphs. Remember, HTML is a content language, not a style language; visual layout should not be attempted in the HTML source, and should instead be achieved via CSS.</p>
+<h2>Block elements</h2>
+<p><em>Block elements</em> are those that create a line break before and after the element. In this section we will look at the syntax and usage of some common block elements.</p>
+<h3>Page section headings</h3>
+<p>Each part of your web content should be introduced by an appropriate heading.</p>
+<p>HTML defines six heading levels: <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, and <code>&lt;h6&gt;</code> (from the highest importance to the lowest). Generally speaking, the <code>&lt;h1&gt;</code> would be the main heading of the page. You would then use <code>&lt;h2&gt;</code> to break the page up into sections, <code>&lt;h3&gt;</code> to define the sub-sections, and so on.</p>
+<p>It is important to use the heading levels to describe the document hierarchically, and to not skip or incorrectly nest different levels, as this makes the document more understandable to screen readers and to automated processes like indexing bots. See <a href="http://www.accessibilitytips.com/2008/03/10/avoid-skipping-header-levels/">this article</a> for more information.</p>
+<p>A good example of a header structure, using this article as a template, might look like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Marking up textual content in HTML<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Introduction<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Space — the final frontier<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Block elements<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Page section headings<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Generic paragraphs<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Quoting other sources<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Preformatted text<span class="hljs-tag">&lt;/<span class="hljs-title">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Inline elements<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+
+[...and so on...]
+</code></pre>
+<h3>Generic paragraphs</h3>
+<p>The <em>paragraph</em> is the primary building block of most documents. In HTML a paragraph is represented by the <code>&lt;p&gt;</code> element. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This is a very short paragraph. It only has two sentences.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>A paragraph can contain any amount of text, from a single character to thousands of words, but is typically used in the standard literary sense to contain one to a few sentences. However, there’s no need to overuse <code>&lt;p&gt;</code>; if the content is actually a list, heading, link, or other specific type of content, there are many suitable elements available.</p>
+<h3>Quoting other sources</h3>
+<p>Articles, blog posts, and reference documents often quote sections of text from another document, called a <em>block quote</em>. In HTML, this kind of quotation is marked up using the <code>&lt;blockquote&gt;</code> element.</p>
+<p>While, technically, a <code>&lt;blockquote&gt;</code> element can directly contain text that is not enclosed in other elements, it is bad practice, and will probably cause your code to not validate. Instead, you should nest other elements inside <code>&lt;blockquote&gt;</code>. When quoting from another source, you should use the same type of elements: when quoting a paragraph of text, use a paragraph tag; when quoting a list of items, use the list tags; and so on.</p>
+<p>If you want, you can indicate the source of the quote using the <code>cite</code> attribute, like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>HTML 4.01 is the only version of HTML that you should use
+when creating a new web page, according to the
+specification:<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">blockquote</span> <span class="hljs-attribute">cite</span>=<span class="hljs-value">"http://www.w3.org/TR/html401/"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This document obsoletes previous versions of HTML 4.0,
+although W3C will continue to make those specifications and
+their DTDs available at the W3C website.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">blockquote</span>&gt;</span>
+</code></pre>
+<p>Depending on default and user-defined styles, the above content might render like this in the browser:</p>
+<p>HTML 4.01 is the only version of HTML that you should use when creating a new web page, according to the specification:</p>
+<blockquote>
+<p>This document obsoletes previous versions of HTML 4.0, although W3C will continue to make those specifications and their DTDs available at the W3C website.</p>
+</blockquote>
+<p>Note that the <code>cite</code> attribute doesn’t really do anything on its own, although it is useful to keep a record of the quote’s source in the same page location as the quote itself.</p>
+<h3>Preformatted text</h3>
+<p>Any case in which the formatting and white space should be preserved, such as code examples, should be marked up using the <em>preformatted</em> element <code>&lt;pre&gt;</code>. In this example, you see a snippet of code written in the Perl programming language:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">code</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"language-perl"</span>&gt;</span>
+# read in the named file in its entirety
+sub slurp {
+  my $filename = shift;
+  my $file     = new FileHandle $filename;
+
+  if ( defined $file ) {
+    local $/;
+    return <span class="hljs-tag">&lt;<span class="hljs-title">$file</span>&gt;</span>;
+  }
+  return undef;
+};
+<span class="hljs-tag">&lt;/<span class="hljs-title">code</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">pre</span>&gt;</span>
+</code></pre>
+<p>In the browser, that snippet is rendered exactly as written, including white space:</p>
+<pre><code>&lt;code class=&quot;language-perl&quot;&gt;
+# read in the named file in its entirety
+sub slurp {
+  my $filename = shift;
+  my $file     = new FileHandle $filename;
+
+  if ( defined $file ) {
+    local $/;
+    return &lt;$file&gt;;
+  }
+  return undef;
+};
+&lt;/code&gt;
+</code></pre>
+<p>In most web browsers, text marked as preformatted will be displayed to the user as it appears in the source, usually using a fixed width (monospace) font, giving the text a feeling of having come from a typewriter or printer. This is an artifact of older computers, which had only fixed width fonts, but is quite handy today for code examples and other content that is best displayed without browser modification.</p>
+<p>Note: The use of the <code>&lt;code&gt;</code> element is covered in the <a href="/docs/tutorials/lesser-known_semantic_elements">Lesser-known semantic elements</a> article.</p>
+<h2>Inline elements</h2>
+<p><em>Inline elements</em> are those that do not create a line break before or after the element. In this section we will look at the syntax and usage of some common inline elements.</p>
+<h3>Short quotations</h3>
+<p>Short quotes used within a normal sentence or paragraph are contained within the <em>quote</em> element <code>&lt;q&gt;</code>. Like <code>&lt;blockquote&gt;</code>, this element can contain a <code>cite</code> attribute that indicates the source of the quote.</p>
+<p>A short quote should normally be rendered with quotation marks around it. According to the <a href="http://www.w3.org/TR/html401/struct/text.html#h-9.2.2.1">HTML specification</a>, these should be inserted by the user agent so that they can be correctly nested and so that quote characters appropriate to the document’s language can be used.</p>
+<p>Here’s an example of <code>&lt;q&gt;</code> in action, with a <code>lang</code> attribute:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This did not end well for me. Oh well,
+<span class="hljs-tag">&lt;<span class="hljs-title">q</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"fr"</span>&gt;</span>c'est la vie<span class="hljs-tag">&lt;/<span class="hljs-title">q</span>&gt;</span>, as the French say.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>In the browser, that paragraph will render like this (note the European quote characters):</p>
+<p>This did not end well for me. Oh well, “c’est la vie”, as the French say.</p>
+<h3>Emphasis</h3>
+<p>HTML contains four elements for indicating emphasis, a way to differentiate specific text from its surrounding content. For browsers this normally means making the text bold or italicised. For screen readers it can result in a different voice or other auditory effect.</p>
+<h4>&lt;em&gt;</h4>
+<p>For emphasis that subtly changes the meaning of a sentence, you use the <em>emphasis</em> element <code>&lt;em&gt;</code>, like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">em</span>&gt;</span>Please<span class="hljs-tag">&lt;/<span class="hljs-title">em</span>&gt;</span> remember to unplug the kettle at night.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Most browsers render <code>&lt;em&gt;</code> as italic text:</p>
+<p><em>Please</em> remember to unplug the kettle at night.</p>
+<h4>&lt;i&gt;</h4>
+<p>The <code>&lt;i&gt;</code> element used to mean <em>italic</em> in HTML4, but this was considered bad practice, as it was more of a presentational element than a semantic one. That is, it just described what the element looked like, rather than what its meaning was. (See below for more on these kinds of elements.) HTML5, however, redefines the meaning of <code>&lt;i&gt;</code>, saying that it “represents a span of text in an alternate voice or mood, or otherwise offset from the normal prose, such as a taxonomic designation, a technical term, an idiomatic phrase from another language, a thought, a ship name, or some other prose whose typical typographic presentation is italicised.”</p>
+<p>That does sound rather confusing, so here are some examples of where <code>&lt;i&gt;</code> would be appropriate:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>As we sailed into port, we spied the <span class="hljs-tag">&lt;<span class="hljs-title">i</span>&gt;</span>Black Pearl<span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span> moored at the dock.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>She really does add that little bit of <span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"fr"</span>&gt;</span>je ne sais quoi<span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>In the browser, that renders exactly as you expect:</p>
+<p>As we sailed into port, we spied the <em>Black Pearl</em> moored at the dock.</p>
+<p>She really does add that little bit of <em>je ne sais quoi</em>.</p>
+<h4>&lt;strong&gt;</h4>
+<p>The <em>strong</em> element <code>&lt;strong&gt;</code> indicates particular importance for its content, declaring that it is more important than its surrounding content. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>There are twenty different species living inside this enclosure.
+<span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>Warning! Do not feed them: they will eat your shoes.<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Most browsers render <code>&lt;strong&gt;</code> as bold text:</p>
+<p>There are twenty different species living inside this enclosure. <strong>Warning! Do not feed them: they will eat your shoes.</strong></p>
+<h4>&lt;b&gt;</h4>
+<p>Like <code>&lt;i&gt;</code>, the <em>bold</em> element <code>&lt;b&gt;</code> used to be frowned upon because it described the look of the content, not its meaning. HTML5 has therefore redefined this element as well; it now “identifies content that is stylistically offset from the rest of the text, but no more important in terms of its meaning.” Consider the most significant words in a product review or document abstract, as in this example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>In this article, Chris Mills will show you how to combine <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>HTML5<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>CSS3<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>, <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>coloured card<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span>,
+and <span class="hljs-tag">&lt;<span class="hljs-title">b</span>&gt;</span>string<span class="hljs-tag">&lt;/<span class="hljs-title">b</span>&gt;</span> to create an attractive mobile for your child's bedroom.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Also like <code>&lt;i&gt;</code>, this renders as expected:</p>
+<p>In this article, Chris Mills will show you how to combine <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>coloured card</strong>, and <strong>string</strong> to create an attractive mobile for your child’s bedroom.</p>
+<h4>Combining emphasis elements</h4>
+<p>You can combine and nest these different types of emphasis. For example, if an entire sentence was to be emphasised, but there was also a point within the sentence that was more important, you could use the <code>&lt;strong&gt;</code> and <code>&lt;em&gt;</code> elements together to indicate stronger emphasis than normal:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">em</span>&gt;</span>Please note: The kettle <span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>must<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span> be unplugged every evening, otherwise it will explode --
+<span class="hljs-tag">&lt;<span class="hljs-title">strong</span>&gt;</span>killing us all!<span class="hljs-tag">&lt;/<span class="hljs-title">strong</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">em</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>The browser will render that paragraph like this:</p>
+<p><em>Please note: The kettle <strong>must</strong> be unplugged every evening, otherwise it will explode – <strong>killing us all!</strong></em></p>
+<h3>Small print</h3>
+<p>The <em>small</em> element <code>&lt;small&gt;</code> is another element that was originally presentational and therefore considered bad practice in HTML4, but has been redefined in HTML5. It used to be an element for making ordinary text appear in a smaller font, but in HTML5 it is now properly used to mark up small print, such as legal restrictions, disclaimers, copyright notices, attribution statements, or licensing information. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">small</span>&gt;</span>This content is released under a
+Creative Commons Attribution Share-alike license.<span class="hljs-tag">&lt;/<span class="hljs-title">small</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>In the browser, that will render as:</p>
+<p><small>This content is released under a Creative Commons Attribution Share-alike license.</small></p>
+<h3>Telling the time</h3>
+<p>New to HTML5, the <em>time</em> element <code>&lt;time&gt;</code> gives you a way to unambiguously mark up times and dates you include in your text, allowing you to display them however you want, whilst including a consistent ISO-formatted date that machines can read. Here’s an example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I was born on the <span class="hljs-tag">&lt;<span class="hljs-title">time</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"1978-06-27"</span>&gt;</span>27<span class="hljs-tag">&lt;<span class="hljs-title">sup</span>&gt;</span>th<span class="hljs-tag">&lt;/<span class="hljs-title">sup</span>&gt;</span> June 1978<span class="hljs-tag">&lt;/<span class="hljs-title">time</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Because you can put whatever you want in between the opening and closing tags, you could write this any number of ways, while still keeping the date precise and machine readable:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">time</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"1978-06-27"</span>&gt;</span>June 27 1978 - my birthday<span class="hljs-tag">&lt;/<span class="hljs-title">time</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>You can also add a time to the date, appended to the end of the ISO-formatted string after a capital T, in 24 hour clock format:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">time</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"1978-06-27T21:00"</span>&gt;</span>9pm on my birthday<span class="hljs-tag">&lt;/<span class="hljs-title">time</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Or you can just specify the time if you want:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">time</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"21:00"</span>&gt;</span>9pm<span class="hljs-tag">&lt;/<span class="hljs-title">time</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Note, however, that you cannot currently specify a non-specific date, such as “August 2011” or &quot;2011&quot;.</p>
+<p>You can also add a number of seconds (after another colon), milliseconds (after a period), and a time zone offset (after a dash) following the time value. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">time</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"1978-06-27T21:00:00.006-08:00"</span>&gt;</span>9pm and 6 milliseconds
+on my birthday, in Pacific standard time<span class="hljs-tag">&lt;/<span class="hljs-title">time</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Finally, you can also add a <em>publication date</em> attribute <code>pubdate</code> to a <code>&lt;time&gt;</code> element, to specify that the datetime value represents when the content was published:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Published on <span class="hljs-tag">&lt;<span class="hljs-title">time</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"2011-07-20"</span> <span class="hljs-attribute">pubdate</span>&gt;</span>July 27<span class="hljs-tag">&lt;<span class="hljs-title">sup</span>&gt;</span>th<span class="hljs-tag">&lt;/<span class="hljs-title">sup</span>&gt;</span> 2011<span class="hljs-tag">&lt;/<span class="hljs-title">time</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<h2>Presentational elements — never use these</h2>
+<p>In addition to <code>&lt;i&gt;</code>, <code>&lt;b&gt;</code>, and <code>&lt;small&gt;</code>, the HTML4 specification includes several other elements that are strictly presentational because they only specify what the content within them should look like, and not what it means. The use of these elements is discouraged, and most have been removed from the HTML5 specification.</p>
+<p>We will describe them briefly here, but note that this is mostly for historic interest — these elements should never be used in a modern web page. To achieve these text effects, you should use CSS.</p>
+<h3>&lt;font face=&quot;…&quot; size=&quot;…&quot;&gt;</h3>
+<p>The <em>font</em> element indicates that the text should be rendered using a font different from the default. Use CSS instead.</p>
+<h3>&lt;strike&gt;</h3>
+<p>The <em>strike</em> element indicates that the text should be struck-through with a line. Use CSS instead.</p>
+<h3>&lt;u&gt;</h3>
+<p>The <em>u</em> element indicates that the text should be underlined (underscored). Not only should this be done with CSS instead, but it should rarely be done at all, because most readers will interpret the underscore as a hyperlink. Of course, because it isn’t a hyperlink, clicking it will do nothing — except frustrate your readers.</p>
+<h3>&lt;tt&gt;</h3>
+<p>The <em>tt</em> element indicates that the text should be presented in a “teletype” or monospace font. An alternative to using CSS to achieve this effect would be to use the semantic elements <code>&lt;pre&gt;</code> for block content or <code>&lt;code&gt;</code> for inline content.</p>
+<h3>&lt;big&gt;</h3>
+<p>The <em>big</em> element indicates that the text should be rendered in a larger font.</p>
+<h2>Conclusion</h2>
+<p>In this article we have looked at the basics of HTML text markup, including headings, paragraphs, quotes, code, and various emphasis elements. When you are comfortable with these concepts, please move on to the other tutorials in this series, which cover HTML lists, images, links, tables, and more.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

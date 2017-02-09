@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>reduce · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Array/">Array</a></li><li><a href="/docs/javascript/Array/reduce/">reduce</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>reduce</h1>
+<h2>Summary</h2>
+<p>Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.</p>
+<h2>Syntax</h2>
+<pre><code>reduce( callbackfn [, initialValue ])
+</code></pre>
+<dl>
+<dt><strong>callbackfn</strong></dt>
+<dd>Required. A function that accepts up to four arguments. The <strong>reduce</strong> method calls the callbackfn function one time for each element in the array.
+</dd>
+<dt><strong>initialValue</strong></dt>
+<dd>Optional. If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>The accumulated result from the last call to the callback function.</p>
+<h2>Examples</h2>
+<p>The following example concatenates array values into a string, separating the values with &quot;::&quot;. Because no initial value is provided to the <strong>reduce</strong> method, the first call to the callback function has “abc” as the previousValue argument and “def” as the currentValue argument.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the callback function.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appendCurrent</span> (<span class="hljs-params">previousValue, currentValue</span>) </span>{
+     <span class="hljs-keyword">return</span> previousValue + <span class="hljs-string">"::"</span> + currentValue;
+     }
+
+ <span class="hljs-comment">// Create an array.</span>
+ <span class="hljs-keyword">var</span> elements = [<span class="hljs-string">"abc"</span>, <span class="hljs-string">"def"</span>, <span class="hljs-number">123</span>, <span class="hljs-number">456</span>];
+
+ <span class="hljs-comment">// Call the reduce method, which calls the callback function</span>
+ <span class="hljs-comment">// for each array element.</span>
+ <span class="hljs-keyword">var</span> result = elements.reduce(appendCurrent);
+
+ <span class="hljs-built_in">document</span>.write(result);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">//  abc::def::123::456</span>
+</code></pre>
+<p>The following example adds the values of an array after they have been rounded. The <strong>reduce</strong> method is called with an initial value of 0.</p>
+<pre><code class="js"><span class="hljs-comment">// Define the callback function.</span>
+ <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addRounded</span> (<span class="hljs-params">previousValue, currentValue</span>) </span>{
+     <span class="hljs-keyword">return</span> previousValue + <span class="hljs-built_in">Math</span>.round(currentValue);
+     }
+
+ <span class="hljs-comment">// Create an array.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">10.9</span>, <span class="hljs-number">15.4</span>, <span class="hljs-number">0.5</span>];
+
+ <span class="hljs-comment">// Call the reduce method, starting with an initial value of 0.</span>
+ <span class="hljs-keyword">var</span> result = numbers.reduce(addRounded, <span class="hljs-number">0</span>);
+
+ <span class="hljs-built_in">document</span>.write (result);
+ <span class="hljs-comment">// Output: 27</span>
+</code></pre>
+<p>The following example adds the values in an array. The currentIndex and array1 parameters are used in the callback function.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addDigitValue</span>(<span class="hljs-params">previousValue, currentDigit, currentIndex, array</span>) </span>{
+     <span class="hljs-keyword">var</span> exponent = (array.length - <span class="hljs-number">1</span>) - currentIndex;
+     <span class="hljs-keyword">var</span> digitValue = currentDigit * <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">10</span>, exponent);
+     <span class="hljs-keyword">return</span> previousValue + digitValue;
+     }
+
+ <span class="hljs-keyword">var</span> digits = [<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>];
+
+ <span class="hljs-comment">// Determine an integer that is computed from values in the array.</span>
+ <span class="hljs-keyword">var</span> result = digits.reduce(addDigitValue, <span class="hljs-number">0</span>);
+
+ <span class="hljs-built_in">document</span>.write (result);
+ <span class="hljs-comment">// Output: 4125</span>
+</code></pre>
+<p>The following example gets an array that contains only those values that are between 1 and 10 in another array. The initial value provided to the <strong>reduce</strong> method is an empty array.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Process</span>(<span class="hljs-params">previousArray, currentValue</span>) </span>{
+     <span class="hljs-comment">// If currentValue is between 1 and 10,</span>
+     <span class="hljs-comment">// append currentValue to the array.</span>
+     <span class="hljs-keyword">var</span> nextArray;
+     <span class="hljs-keyword">if</span> (currentValue &gt;= <span class="hljs-number">1</span> &amp;&amp; currentValue &lt;= <span class="hljs-number">10</span>)
+         nextArray = previousArray.concat(currentValue);
+     <span class="hljs-keyword">else</span>
+         nextArray = previousArray;
+
+     <span class="hljs-comment">// If this is not the last call by the reduce method,</span>
+     <span class="hljs-comment">// the returned array is previousArray on the next call.</span>
+     <span class="hljs-comment">// If this is the last call by the reduce method, the</span>
+     <span class="hljs-comment">// returned array is the return value of the reduce method.</span>
+     <span class="hljs-keyword">return</span> nextArray;
+ }
+
+ <span class="hljs-comment">// Create an array.</span>
+ <span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">20</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">50</span>, <span class="hljs-number">3</span>];
+
+ <span class="hljs-comment">// Call the reduce method, starting with an initial empty array.</span>
+ <span class="hljs-keyword">var</span> emptyArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>();
+ <span class="hljs-keyword">var</span> resultArray = numbers.reduce(Process, emptyArray);
+
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"result array="</span> + resultArray);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// result array=1,6,3</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>If an initialValue is provided, the <strong>reduce</strong> method calls the callbackfn function one time for each element present in the array, in ascending index order. If an initialValue is not provided, the <strong>reduce</strong> method calls the callbackfn function on each element, starting with the second element.</p>
+<p>The return value of the callback function is provided as the previousValue argument on the next call to the callback function. The return value of the last call to the callback function is the return value of the <strong>reduce</strong> method.</p>
+<p>The callback function is not called for missing elements of the array.</p>
+<p><strong>Note</strong> – The <a href="/docs/javascript/Array/reduceRight">reduceRight Method (Array)</a> processes the elements in descending index order.</p>
+<p>The syntax of the callback function is as follows:</p>
+<p><code>function callbackfn(previousValue, currentValue, currentIndex, array1)</code></p>
+<p>You can declare the callback function by using up to four parameters.</p>
+<p>The following table lists the callback function parameters.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Callback argument</th><th style="text-align:left">Definition</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">previousValue</td><td style="text-align:left">The value from the previous call to the callback function. If an initialValue is provided to the <strong>reduce</strong> method, the previousValue is initialValue the first time the function is called.</td></tr>
+<tr><td style="text-align:left">currentValue</td><td style="text-align:left">The value of the current array element.</td></tr>
+<tr><td style="text-align:left">currentIndex</td><td style="text-align:left">The numeric index of the current array element.</td></tr>
+<tr><td style="text-align:left">array1</td><td style="text-align:left">The array object that contains the element.</td></tr>
+</tbody>
+</table>
+<p>The first time the callback function is called, the values provided as arguments depend on whether the <strong>reduce</strong> method has an initialValue argument.</p>
+<p>If an initialValue is provided to the reduce method:</p>
+<ul>
+<li>The previousValue argument is initialValue.</li>
+<li>The currentValue argument is the value of the first element present in the array.</li>
+</ul>
+<p>If an initialValue is not provided:</p>
+<ul>
+<li>The previousValue argument is the value of the first element present in the array.</li>
+<li>The currentValue argument is the value of the second element present in the array.</li>
+</ul>
+<p>The array object can be modified by the callback function.</p>
+<p>The following table describes the results of modifying the array object after the <strong>reduce</strong> method starts.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Condition after the <strong>reduce</strong> method starts</th><th style="text-align:left">Element passed to callback function?</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Element is added beyond the original length of the array.</td><td style="text-align:left">No.</td></tr>
+<tr><td style="text-align:left">Element is added to fill in a missing element of the array.</td><td style="text-align:left">Yes, if that index has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is changed.</td><td style="text-align:left">Yes, if that element has not yet been passed to the callback function.</td></tr>
+<tr><td style="text-align:left">Element is deleted from the array.</td><td style="text-align:left">No, unless that element has already been passed to the callback function.</td></tr>
+</tbody>
+</table>
+<h2>Exceptions</h2>
+<p>A <strong>TypeError</strong> exception is thrown when either of the following conditions is true:</p>
+<ul>
+<li>The callbackfn argument is not a function object.</li>
+<li>The array contains no elements and initialValue is not provided.</li>
+</ul>
+<h2>See also</h2>
+<h3>Specification</h3>
+<p>[15.4.4.21 Array.prototype.reduce ( callbackfn <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.21"> , initialValue</a> )] ECMAScript® Language Specification Standard ECMA-262 5.1 Edition / June 2011</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff679975(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

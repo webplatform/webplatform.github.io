@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>1...9 Properties · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Return the nine most-recently memorized portions found during pattern matching. Read-only." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/RegExp/">RegExp</a></li><li><a href="/docs/javascript/RegExp/1_9 Properties/">1 9 Properties</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>1...9 Properties</h1>
+<h2>Summary</h2>
+<p>Return the nine most-recently memorized portions found during pattern matching. Read-only.</p>
+<h2>Syntax</h2>
+<pre><code>RegExp.$ n
+</code></pre>
+<dl>
+<dt>'<strong><em>RegExp’</em></strong></dt>
+<dd>Always the global <strong>RegExp</strong> object.
+</dd>
+<dt><strong>n</strong></dt>
+<dd>Any integer from 1 through 9.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example performs a regular expression search. It displays matches and submatches from the global <strong>RegExp</strong> object. The submatches are successful parenthesized matches that are contained in the <strong>…</strong> properties. The example also displays matches and submatches from the array that is returned by the <strong>exec</strong> method.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> newLine = <span class="hljs-string">"&lt;br /&gt;"</span>;
+
+ <span class="hljs-keyword">var</span> re = <span class="hljs-regexp">/(\w+)@(\w+)\.(\w+)/g</span>
+ <span class="hljs-keyword">var</span> src = <span class="hljs-string">"Please send mail to george@contoso.com and someone@example.com. Thanks!"</span>
+
+ <span class="hljs-keyword">var</span> result;
+ <span class="hljs-keyword">var</span> s = <span class="hljs-string">""</span>;
+
+ <span class="hljs-comment">// Get the first match.</span>
+ result = re.exec(src);
+
+ <span class="hljs-keyword">while</span> (result != <span class="hljs-literal">null</span>) {
+     <span class="hljs-comment">// Show the entire match.</span>
+     s += newLine;
+
+     <span class="hljs-comment">// Show the match and submatches from the RegExp global object.</span>
+     s += <span class="hljs-string">"RegExp.lastMatch: "</span> + <span class="hljs-built_in">RegExp</span>.lastMatch + newLine;
+     s += <span class="hljs-string">"RegExp.: "</span> + <span class="hljs-built_in">RegExp</span>. + newLine;
+     s += <span class="hljs-string">"RegExp.: "</span> + <span class="hljs-built_in">RegExp</span>. + newLine;
+     s += <span class="hljs-string">"RegExp.: "</span> + <span class="hljs-built_in">RegExp</span>. + newLine;
+
+     <span class="hljs-comment">// Show the match and submatches from the array that is returned</span>
+     <span class="hljs-comment">// by the exec method.</span>
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>; index &lt; result.length; index++) {
+         s +=  index + <span class="hljs-string">": "</span>;
+         s += result[index];
+         s += newLine;
+     }
+
+     <span class="hljs-comment">// Get the next match.</span>
+     result = re.exec(src);
+ }
+ <span class="hljs-built_in">document</span>.write(s);
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">//  RegExp.lastMatch: george@contoso.com</span>
+ <span class="hljs-comment">//  RegExp.: george</span>
+ <span class="hljs-comment">//  RegExp.: contoso</span>
+ <span class="hljs-comment">//  RegExp.: com</span>
+ <span class="hljs-comment">//  0: george@contoso.com</span>
+ <span class="hljs-comment">//  1: george</span>
+ <span class="hljs-comment">//  2: contoso</span>
+ <span class="hljs-comment">//  3: com</span>
+
+ <span class="hljs-comment">//  RegExp.lastMatch: someone@example.com</span>
+ <span class="hljs-comment">//  RegExp.: someone</span>
+ <span class="hljs-comment">//  RegExp.: example</span>
+ <span class="hljs-comment">//  RegExp.: com</span>
+ <span class="hljs-comment">//  0: someone@example.com</span>
+ <span class="hljs-comment">//  1: someone</span>
+ <span class="hljs-comment">//  2: example</span>
+ <span class="hljs-comment">//  3: com</span>
+</code></pre>
+<h2>Remarks</h2>
+<p>The values of the <strong>$1…$9</strong> properties are modified whenever a successful parenthesized match is made. Any number of parenthesized substrings may be specified in a regular expression pattern, but only the nine most recent can be stored.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/24th3sah(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

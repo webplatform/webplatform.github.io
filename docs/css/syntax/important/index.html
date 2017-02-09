@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>!important · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="Declarations with !important override similar declarations that are not marked as !important. This can be used in both author and user style sheets." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/syntax/">syntax</a></li><li><a href="/docs/css/syntax/!important/">!important</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>!important</h1>
+<h2>Summary</h2>
+<p>Declarations with !important override similar declarations that are not marked as !important. This can be used in both author and user style sheets.</p>
+<h2>Description</h2>
+<p>CSS attempts to create a “balance of power” between author and user style sheets. By default, rules in an author’s style sheet override those in a user’s style sheet. However, for balance, an <strong>!important</strong> declaration takes precedence over a normal declaration. Both author and user style sheets may contain <strong>!important</strong> declarations, and user <strong>!important</strong> rules override author <strong>!important</strong> rules. Declaring a shorthand property (for instance, the <a href="/docs/css/properties/background"><strong>background</strong></a> property) to be <strong>!important</strong> is equivalent to declaring all of its sub-properties to be <strong>!important</strong>.</p>
+<h2>Syntax</h2>
+<p><code>{ declaration !important }</code></p>
+<h2>Values</h2>
+<dl>
+<dt>declaration</dt>
+<dd>A CSS property and value declaration within a rule set.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The first rule in the user’s style sheet in the following example contains an <strong>!important</strong> declaration, which overrides the corresponding declaration in the author’s style sheet. The second declaration will also take precedence due to being marked <strong>!important</strong>. However, the third rule in the user’s style sheet is not <strong>!important</strong>, and will therefore lose to the second rule in the author’s style sheet (which happens to set style on a shorthand property). Also, the third author rule will lose to the second author rule since the second rule is <strong>!important</strong>. This shows that <strong>!important</strong> declarations also have a function within author style sheets.</p>
+<pre><code class="css"><span class="hljs-comment">/* From the user's style sheet */</span>
+<span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">text-indent</span>:<span class="hljs-value"> <span class="hljs-number">1em</span> <span class="hljs-important">!important</span> </span></span></span>}
+<span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-style</span>:<span class="hljs-value"> italic <span class="hljs-important">!important</span> </span></span></span>}
+<span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">18pt</span> </span></span></span>}
+<span class="hljs-comment">/* From the author's style sheet */</span>
+<span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">text-indent</span>:<span class="hljs-value"> <span class="hljs-number">1.5em</span> <span class="hljs-important">!important</span> </span></span></span>}
+<span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> normal <span class="hljs-number">12pt</span> sans-serif <span class="hljs-important">!important</span> </span></span></span>}
+<span class="hljs-tag">p</span> <span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">24pt</span> </span></span></span>}
+</code></pre>
+<p><a href="http://code.webplatform.org/gist/a246da0a53497ae9d832">View live example</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/CSS2/cascade.html#important-rules">Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a></dt>
+<dd>Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Syntax</h4>
+<ul>
+<li><p><a href="/docs/css/atrules/@charset">@charset</a></p></li>
+<li><p><a href="/docs/css/atrules/@font-face">@font-face</a></p></li>
+<li><p><a href="/docs/css/atrules/@import">@import</a></p></li>
+<li><p><a href="/docs/css/atrules/@keyframes">@keyframes</a></p></li>
+<li><p><a href="/docs/css/atrules/@namespace">@namespace</a></p></li>
+<li><p><a href="/docs/css/atrules/@page">@page</a></p></li>
+<li><p><a href="/docs/css/atrules/@supports">@supports</a></p></li>
+<li><p><a href="/docs/css/reference">CSS reference</a></p></li>
+<li><p><a href="/docs/css/reference/alphabetical">Alphabetical list of CSS reference</a></p></li>
+<li><p><strong>!important</strong></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

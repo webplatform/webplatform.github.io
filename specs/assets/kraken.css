@@ -1,0 +1,937 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("robotoslab-regular-webfont.eot");
+    src: url("robotoslab-regular-webfont.eot?#iefix") format("embedded-opentype"),
+         url("robotoslab-regular-webfont.woff2") format("woff2"),
+         url("robotoslab-regular-webfont.woff") format("woff"),
+         url("robotoslab-regular-webfont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("robotoslab-bold-webfont.eot");
+    src: url("robotoslab-bold-webfont.eot?#iefix") format("embedded-opentype"),
+         url("robotoslab-bold-webfont.woff2") format("woff2"),
+         url("robotoslab-bold-webfont.woff") format("woff"),
+         url("robotoslab-bold-webfont.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Structure */
+body {
+    font-family:    sans-serif;
+    color: black;
+    counter-reset: exampleno figure issue;
+    line-height: 1.5;
+    max-width: 50em;
+    margin: 1em auto;
+    padding:    0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family:    Roboto, serif;
+}
+html {
+    margin: 0;
+    padding:    0;
+}
+body > section {
+    padding-bottom:    3em;
+}
+
+/* Top boilerplate */
+header {
+    display:    block;
+    background: #fff;
+    background: url("header-lines.svg") repeat-x 0 30px;
+    border-bottom:  1px solid #7fdbff;
+}
+#logo {
+    display:    block;
+    width:  200px;
+    background:    #fff;
+    text-align: center;
+    font-variant: small-caps;
+    font-family:    Georgia, serif;
+    font-size:  0.7em;
+    color:  #999;
+    margin: 0 auto;
+}
+h1 {
+    margin: 1em 0 1.6em 0;
+    text-align: center;
+    font-size:  4em;
+    font-weight:    normal;
+    color:  #666;
+    text-shadow:    1px 1px 1px #aaa;
+}
+h1, h2, h3, h4, h5, h6, dt {
+    page-break-after: avoid;
+}
+h2, h3 { color: #0074d9; }
+h1 { font: 170%; }
+h2 { font: 140%; }
+h3 { font: 120%; }
+h4 { font: bold 100%; }
+h5 { font: italic 100%; }
+h6 { font: small-caps 100%; }
+h1 + h2,
+#subtitle + h2 {
+    /* #subtitle is a subtitle in an H2 under the H1 */
+    margin-top: 0;
+}
+h2 + h3, h3 + h4, h4 + h5, h5 + h6 {
+    margin-top: 1.2em; /* = 1 x line-height */
+}
+#meta {
+    font-family:    Roboto, sans-serif;
+    font-size:  0.8em;
+    text-align: center;
+    margin: auto;
+    margin-bottom:  -10px;
+    max-width:  400px;
+    background: #fff;
+    color:  #666;
+}
+#meta button.linkalike, button.linkalike.tool {
+    background: none;
+    color:  #0074d9;
+    font-size:   inherit;
+    font-family:   inherit;
+    border: none;
+    padding:    0;
+    margin: 0;
+    cursor: pointer;
+}
+#meta a {
+    border-bottom: none;
+}
+header + .contributors {
+    padding:    1em 0;
+}
+header + .contributors a {
+    display:    inline-block;
+    text-align: center;
+    border: 1px solid #7fdbff;
+    background: #fafaff;
+    padding:    5px;
+    margin-right:   5px;
+    line-height: 0.8;
+    border-radius:  2px;
+}
+header + .contributors a img {
+    margin-bottom: 0.6em;
+}
+.contributions {
+    font-size:  0.7em;
+    color:  #aaa;
+}
+ul.toc, ol.toc {
+    list-style: none;
+}
+/* ToC not indented, but font style shows hierarchy */
+ul.toc           { margin: 1em 0;     font-weight: bold; /*text-transform: uppercase;*/ }
+ul.toc ul        { margin: 0;        font-weight: normal; text-transform: none; }
+ul.toc ul ul     { margin: 0 0 0 2em; font-style: italic; }
+ul.toc ul ul ul  { margin: 0; }
+ul.toc > li      { margin: 1.5em 0; }
+ul.toc ul.toc li { margin: 0.3em 0 0 0; }
+
+ul.toc, ul.toc ul, ul.toc li { padding: 0; line-height: 1.3; }
+ul.toc a { color: #333; text-decoration: none; border-bottom-style: none; }
+ul.toc a:hover, ul.toc a:focus  { border-bottom-style: solid; }
+@supports (text-decoration-style: solid) {
+    ul.toc a:hover, ul.toc a:focus  {
+        border-bottom-style: none;
+        text-decoration-style: solid;
+    }
+}
+/* Section numbers in a column of their own */
+ul.toc {
+    margin-left: 5em
+}
+ul.toc span.secno {
+    float: left;
+    width: 4em;
+    margin-left: -5em;
+}
+ul.toc ul ul span.secno {
+    margin-left: -7em;
+}
+/*ul.toc span.secno {text-align: right}*/
+ul.toc li {
+    clear: both;
+}
+/* If we had 'tab', floats would not be needed here:
+     ul.toc span.secno {tab: 5em right; margin-right: 1em}
+     ul.toc li {text-indent: 5em hanging}
+ The second line in case items wrap
+*/
+
+/********** Structure **************/
+dt {
+    font-weight: bold;
+}
+/* <hr> used to separate TMI into the second half of a section              */
+  hr:not([title]) {
+      font-size: 1.5em;
+      text-align: center;
+      margin: 1em auto;
+      height: auto;
+      border: transparent solid 0;
+      background: transparent;
+  }
+  hr:not([title])::before {
+      content: "\1F411\2003\2003\1F411\2003\2003\1F411";
+  }
+/* note: <hr> with title separates document header from contents */
+p {
+    margin: 1em 0;
+}
+dd     > p:first-child,
+li     > p:first-child {
+    margin-top: 0;
+}
+
+ul, ol {
+    margin-left: 0;
+    padding-left: 2em;
+}
+li {
+    margin: 0.25em 2em 0.5em 0;
+    padding-left: 0;
+}
+
+dl dd {
+    margin: 0 0 1em 2em;
+}
+
+/* Style for algorithms */
+ol.algorithm ol {
+    border-left: 1px solid #90b8de;
+    margin-left: 1em;
+}
+ol.algorithm ol.algorithm {
+    border-left: none;
+    margin-left: 0;
+}
+
+/* Style for switch/case <dl>s */
+dl.switch > dd > ol.only {
+    margin-left: 0;
+}
+dl.switch > dd > ol.algorithm {
+    margin-left: -2em;
+}
+dl.switch {
+    padding-left: 2em;
+}
+dl.switch > dt {
+    text-indent: -1.5em;
+    margin-top: 1em;
+}
+dl.switch > dt + dt {
+    margin-top: 0;
+}
+dl.switch > dt:before {
+    content: '\21AA';
+    padding: 0 0.5em 0 0;
+    display: inline-block;
+    width: 1em;
+    text-align: right;
+    line-height: 0.5em;
+}
+/* Style for paragraphs I know are in MD-genned lists */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+ol.inline, ol.inline li {
+    display: inline;
+    padding: 0; margin: 0;
+}
+ol.inline {
+    counter-reset: list-item;
+}
+ol.inline li {
+    counter-increment: list-item;
+}
+ol.inline li:before {
+    content: "(" counter(list-item) ") ";
+    font-weight: bold;
+}
+
+
+/********** Inlines  **************/
+a:link, a:visited {
+    border-bottom: 1px solid silver;
+    color: #0063B8;
+    text-decoration:    none;
+}
+a[href] img {
+    border-style: none;
+}
+button.linkalike {
+    background: none;
+    color:  #0074d9;
+    font-size:   inherit;
+    font-family:   inherit;
+    border: none;
+    border-bottom: 1px solid silver;
+    padding:    0;
+    margin: 0;
+    cursor: pointer;
+}
+code {
+    font-weight:    normal;
+}
+span.id {float: right; font-weight: bold}
+dfn   { /* Defining instance */
+    font-weight: bolder;
+}
+a > i { /* Instance of term */
+    font-style: normal;
+}
+dt dfn code, code.idl {
+    font-size: inherit;
+}
+dfn var {
+    font-style: normal;
+}
+del { color: red;  text-decoration: line-through; }
+ins { color: #080; text-decoration: underline;    }
+sup {
+    vertical-align: super;
+    font-size: 80%
+}
+/* We hyperlink a lot, so make it less intrusive */
+@supports (text-decoration-color: silver) {
+    a:link, a:visited {
+        border-bottom: none;
+        text-decoration: underline;
+        text-decoration-color: silver;
+    }
+    a:visited {
+        text-decoration-style: dotted;
+    }
+}
+
+a#logo:link, a#logo:visited { /* backout above styling for W3C logo */
+    padding: 0;
+    border: none;
+    text-decoration: none;
+}
+
+/* Auto-generated links from an element to its own anchor, for usability */
+
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: -2.5em;
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+li > a.self-link {
+    left: -3.5em;
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: gray;
+    color: white;
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: black;
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+
+/** Autolinks produced using Bikeshed *****************************************/
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element]         { font-family: monospace; }
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}
+
+
+/*************** Code *********************/
+pre, code {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+    page-break-inside: avoid;
+}
+pre {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    overflow: auto;
+}
+div.html, div.xml,
+pre.html, pre.xml {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+    color: #600;
+}
+pre.example,
+pre.html,
+pre.xml {
+    padding-top: 1.5em;
+}
+
+pre.illegal, .illegal pre
+pre.deprecated, .deprecated pre {
+    color: red;
+}
+
+.example pre, pre.example, pre.html, pre.xml {
+    background: #eee;
+    padding:    1em;
+}
+
+/** IDL fragments *************************************************************/
+pre.idl {
+    /* Match blue propdef boxes */
+    padding: .5em 1em;
+    background: #def;
+    margin: 1.2em 0;
+    border-left: 0.5em solid #8ccbf2;
+}
+pre.idl :link, pre.idl :visited {
+    color:inherit;
+    background:transparent;
+}
+
+/** Inline CSS fragments ******************************************************/
+.css.css, .property.property, .descriptor.descriptor {
+    color: #005a9c; font: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+font-style: italic;
+}
+
+/** Inline markup fragments ***************************************************/
+code.html, code.xml {
+    color: #660000;
+}
+
+/*************** Images ***************/
+img {
+    border-style: none;
+    color: white;
+}
+
+figure, div.figure, div.sidefigure {
+    page-break-inside: avoid;
+}
+
+div.figure, p.figure, div.sidefigure, figure {
+    text-align: center;
+    margin: 2.5em 0;
+}
+div.figure pre, div.sidefigure pre, figure pre {
+    text-align: left;
+    display: table;
+    margin: 1em auto;
+}
+.figure table, figure table {
+    margin: auto;
+}
+div.sidefigure, figure.sidefigure {
+    float: right;
+    width: 50%;
+    margin: 0 0 0.5em 0.5em
+}
+div.figure img, div.sidefigure img, figure img,
+div.figure object, div.sidefigure object, figure object {
+    display: block;
+    margin: auto;
+    max-width: 100%
+}
+p.caption, figcaption, caption {
+    text-align: center;
+    font-style: italic;
+    font-size: 90%;
+}
+p.caption:before, figcaption:before {
+    content: "Figure " counter(figure) ". ";
+    font-weight: bold;
+}
+p.caption, figcaption {
+    counter-increment: figure;
+}
+
+/* DL list is indented 2em, but figure inside it is not */
+dd > div.figure, dd > figure { margin-left: -2em }
+
+pre.ascii-art {
+    display: table; /* shrinkwrap */
+    margin: 1em auto;
+}
+
+/* Displaying the output of text layout, particularly when
+   line-breaking is being invoked, and thus having a
+   visible width is good. */
+pre.output {
+    margin: 1em;
+    border: solid thin silver;
+    padding: 0.25em;
+    display: table;
+}
+
+/************* Colored Boxes ***************/
+.issue, .note, .example, .why, .advisement, blockquote {
+    padding: .5em;
+    border: .5em;
+    border-left-style: solid;
+    page-break-inside: avoid;
+}
+span.issue, span.note {
+    padding: .1em .5em .15em;
+    border-right-style: solid;
+}
+
+div.issue,
+div.note,
+div.example,
+details.why,
+blockquote {
+    margin: 1em auto;
+}
+.note  > p:first-child,
+.issue > p:first-child,
+blockquote > :first-child {
+    margin-top: 0;
+}
+blockquote > :last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-color: silver;
+}
+
+/** Open issue ****************************************************************/
+.issue {
+    background: url("issue-icon.svg") no-repeat;
+    padding-left:   50px;
+    border: none;
+    overflow: auto;
+    min-height: 50px;
+    counter-increment: issue;
+}
+.issue:before {
+    content: "Issue " counter(issue);
+    padding-right: 1em;
+    text-transform: uppercase;
+    color: #ff4136;
+    display: block;
+}
+
+/** Example *******************************************************************/
+.example {
+    border: none;
+/*    background: #FCFAEE;*/
+    background: url("unicorn.svg") no-repeat;
+    counter-increment: exampleno;
+    overflow: auto;
+    clear: both;
+    padding-left:   45px;
+}
+.example:before {
+    color: #EF0000;
+    font-family: sans-serif;
+}
+.example:before {
+    content: "Example";
+    content: "Example " counter(exampleno);
+    min-width: 7.5em;
+    text-transform: uppercase;
+    display: block;
+}
+.illegal.example:before,
+.illegal.example:before {
+    content: "Invalid Example";
+    content: "Invalid Example" counter(exampleno);
+    color: red;
+}
+
+/** Non-normative Note ********************************************************/
+.note, .why {
+    background: url("note-icon.svg") no-repeat;
+    padding-left:   50px;
+    border: none;
+    overflow: auto;
+    min-height: 50px;
+}
+
+/** Advisement Box ************************************************************/
+/*  for attention-grabbing normative statements */
+.advisement {
+    border-color: orange;
+    border-style: none solid;
+    background: #FFEECC;
+    text-align: left;
+}
+strong.advisement {
+    display: block;
+}
+/*.advisement:before { color: #FF8800; } */
+
+/** Property/Descriptor Definition Tables *************************************/
+table.propdef, table.propdef-extra,
+table.descdef, table.definition-table {
+    page-break-inside: avoid;
+    width: 100%;
+    margin: 1.2em 0;
+    background: url("defs-lines.svg") repeat-y;
+    padding: 0.5em 1em;
+    border-spacing: 0;
+}
+
+table.propdef td, table.propdef-extra td,
+table.descdef td, table.definition-table td,
+table.propdef th, table.propdef-extra th,
+table.descdef th, table.definition-table th {
+    padding: 0.5em;
+    vertical-align: baseline;
+    border-bottom: 1px solid #bbd7e9;
+}
+table.propdef > tbody > tr:last-child th,
+table.propdef-extra > tbody > tr:last-child th,
+table.descdef > tbody > tr:last-child th,
+table.definition-table > tbody > tr:last-child th,
+table.propdef > tbody > tr:last-child td,
+table.propdef-extra > tbody > tr:last-child td,
+table.descdef > tbody > tr:last-child td,
+table.definition-table > tbody > tr:last-child td {
+    border-bottom: 0;
+}
+
+table.propdef th,
+table.propdef-extra th,
+table.descdef th,
+table.definition-table th {
+    font-style: italic;
+    font-weight: normal;
+    width: 8.3em;
+    padding-left: 1em;
+}
+
+/* For when values are extra-complex and need formatting for readability */
+table td.pre {
+    white-space: pre-wrap;
+}
+
+/* A footnote at the bottom of a propdef */
+table.propdef td.footnote,
+table.propdef-extra td.footnote,
+table.descdef td.footnote,
+table.definition-table td.footnote {
+    padding-top: 0.6em;
+}
+table.propdef td.footnote:before,
+table.propdef-extra td.footnote:before,
+table.descdef td.footnote:before,
+table.definition-table td.footnote:before {
+    content: " ";
+    display: block;
+    height: 0.6em;
+    width: 4em;
+    border-top: thin solid;
+}
+
+/** Data tables (and properly marked-up proptables) ***************************/
+  /*
+     <table class="data"> highlights structural relationships in a table
+     when correct markup is used (e.g. thead/tbody, th vs. td, scope attribute)
+
+     Use class="complex data" for particularly complicated tables --
+     (This will draw more lines: busier, but clearer.)
+
+     Use class="long" on table cells with paragraph-like contents
+     (This will adjust text alignment accordingly.)
+  */
+.data, .proptable {
+    margin: 1em auto;
+    border-collapse: collapse;
+    width: 100%;
+    border: hidden;
+}
+.data {
+    text-align: center;
+    width: auto;
+}
+.data caption {
+    width: 100%;
+}
+
+.data td, .data th,
+.proptable td, .proptable th {
+    padding: 0.5em;
+    border-width: 1px;
+    border-color: silver;
+    border-top-style: solid;
+}
+
+.data thead td:empty {
+    padding: 0;
+    border: 0;
+}
+
+.data thead th[scope="row"],
+.proptable thead th[scope="row"] {
+    text-align: right;
+    color: inherit;
+}
+
+.data thead,
+.proptable thead,
+.data tbody,
+.proptable tbody {
+    color: inherit;
+    border-bottom: 2px solid;
+}
+
+.data colgroup {
+    border-left: 2px solid;
+}
+
+.data tbody th:first-child,
+.proptable tbody th:first-child ,
+.data tbody td[scope="row"]:first-child,
+.proptable tbody td[scope="row"]:first-child {
+    text-align: right;
+    color: inherit;
+    border-right: 2px solid;
+    border-top: 1px solid silver;
+    padding-right: 1em;
+}
+.data.define td:last-child {
+    text-align: left;
+}
+
+.data tbody th[rowspan],
+.proptable tbody th[rowspan],
+.data tbody td[rowspan],
+.proptable tbody td[rowspan]{
+    border-left: 1px solid silver;
+}
+
+.data tbody th[rowspan]:first-child,
+.proptable tbody th[rowspan]:first-child,
+.data tbody td[rowspan]:first-child,
+.proptable tbody td[rowspan]:first-child{
+    border-left: 0;
+    border-right: 1px solid silver;
+}
+
+.complex.data th,
+.complex.data td {
+    border: 1px solid silver;
+}
+
+.data td.long {
+ vertical-align: baseline;
+ text-align: left;
+}
+
+.data img {
+    vertical-align: middle;
+}
+
+
+/** Index *********************************************************************/
+/* Index Lists: Layout */
+ul.indexlist       { margin-left: 0; columns: 13em; }
+ul.indexlist li    { margin-left: 0; list-style: none }
+ul.indexlist li li { margin-left: 1em }
+ul.indexlist dl    { margin-top: 0; }
+ul.indexlist dt    { margin: .2em 0 .2em 20px;}
+ul.indexlist dd    { margin: .2em 0 .2em 40px;}
+/* Index Lists: Typography */
+ul.indexlist ul,
+ul.indexlist dl { font-size: smaller; }
+ul.indexlist a  { font-weight: bold; }
+
+/** Property Index Tables *****************************************************/
+table.proptable {
+    font-size: small;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
+    margin: 1em 0;
+}
+
+table.proptable td,
+table.proptable th {
+    padding: 0.4em;
+    text-align: center;
+}
+
+table.proptable tr:hover td {
+    background: #DEF;
+}
+.propdef th {
+    font-style: italic;
+    font-weight: normal;
+    text-align: left;
+    width: 3em;
+}
+/* The link in the first column in the property table (formerly a TD) */
+table.proptable td .property,
+table.proptable th .property {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+}
+
+
+/** Utils ***************************************************/
+.hide { display: none }
+
+/* Print */
+@media print {
+    a {
+        color:  #666;
+    }
+    html {
+        margin: 0 !important; }
+    body {
+        font-family: serif; }
+    th, td {
+        font-family: inherit; }
+    a {
+        color: inherit !important; }
+    a:link, a:visited {
+        text-decoration: none !important }
+    a:link:after, a:visited:after { /* create a cross-ref "see..." */ }
+    .example:before {
+        font-family: serif !important; }
+}
+@page {
+    margin: 1.5cm 1.1cm;
+}
+
+@media (max-width: 55em) {
+    body {
+        max-width:  100%;
+        padding:    0 2em;
+    }
+    h1 {
+        font-size:  3em;
+        margin: 0 0 0.5em 0;
+    }
+    a.self-link {
+        left: -1.5em;
+    }
+    li > a.self-link {
+        /* XXX make sure this is correct */
+        left: -1em;
+    }
+}
+@media (max-width: 30em) {
+    h1 {
+        font-size:  2em;
+    }
+    #logo {
+        width:  40px;
+    }
+    #logo img {
+        width:  20px;
+        height: 20px;
+    }
+    #logo span {
+        display:    none;
+    }
+    header {
+        background-position:    0 5px;
+    }
+    h2, h3, h5, h6 {
+        margin-top: 1em;
+    }
+}
+
+/* table pretty */
+
+tr:nth-child(2n+1) {
+	background-color: #EBEBEB;
+}
+
+td {padding: 2px
+}
+
+caption {text-align:left;
+}
+
+/* details/summary polyfil */
+
+details, summary {display: block;}
+details {padding: 0.5em;}
+summary {padding: 0.25em;background: #fff url("rightArrow.png") no-repeat 0.5em center; padding: 0.25em 0.25em 0.25em 2em;}
+summary::-webkit-details-marker {display: none;}
+.open summary, details[open] summary {background-color: #f5f5f5; background-image: url("downArrow.png");}
+summary .el-context {display: inline;}
+summary:hover, summary:focus, details[open] summary:hover, details[open] summary:focus {background-color: #eee;}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Improvements roadmap · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/Improvements_roadmap/">Improvements roadmap</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Improvements roadmap</h1>
+<p>The steps described in <a href="/docs/WPD/Projects/SSO/How_we_implemented_it">WPD/Projects/SSO/How we implemented it</a> can be improved, this page describes some proposals.</p>
+<h2>Recovering session data</h2>
+<p>This change proposal is about making sure the exchanged information is encoded in ways that only the intended audience can use.</p>
+<h3>Problem in the original steps</h3>
+<p>ANYBODY who got access to a sessionToken, could become that user. And that is as long as the victim keeps his session opened on the accounts server. Because there is no way to validate if the request is made from the legitimate user.</p>
+<p>This security issue is no different than any web application that doesn’t use SSL. After all, the way a web server has to differentiate a visitor from another is basically a set of cookies, one of them serves as a session token.</p>
+<p>One obvious solution is to have SSL across the whole site, but its not always possible. We cannot force the user to go back and forth from SSL if they are OK without it. But we cannot leave such powerful data without encoding it either.</p>
+<h3>Proposed solution steps</h3>
+<p>To solve the possible exploit, let’s revisit the original steps described in <a href="/docs/WPD/Projects/SSO/Login_Workflows#Starting_a_session_by_communicating_with_accounts_server">WPD/Projects/SSO/Login Workflows#Starting a session by communicating with accounts server</a>. Differences are shown in <strong>bold</strong>, removed steps has been <del>crossed out</del>.</p>
+<ul>
+<li>In the accounts server:
+<ul>
+<li><strong>Add a wrapper within FxA server node processes (i.e. not possible to call from the browser), make sure the wrapper module isn’t going to be publicly available (e.g. in a secret project in Gerrit), to manage the encoding</strong> (#TODO)</li>
+<li><strong>Encode the sessionToken in some way with a shared secret key (e.g. using AES)</strong></li>
+<li><strong>Save the encoded sessionToken in a LocalStorage variable &quot;<code>recoveryPayload</code>&quot;, but instead of a 64 characters long HEX string, <code>recoveryPayload</code> will a JSON object (e.g. <code>{recoveryPayload: {packet: &quot;...&quot;, cipherId: 1}}</code>)</strong></li>
+<li>Accept framing (i.e. accept to create iframe from other domain names that we control) through appropriate CSP policies.</li>
+<li><del>Create an event handler that replies with a JSON object that reads the sessionToken in current localStorage. (Note that in the returned object, we rename the key <em>sessionToken</em> to <em>recoveryPayload</em>) (e.g. <code>{recoveryPayload: &quot;e73f75c00115f45416b121e274fd77b60376ce4084267ed76ce3ec7c0a9f4f1f&quot;, hasSession: true}</code>)</del></li>
+<li><strong>Create an event handler that replies with a JSON object that reads the current <code>recoveryPayload</code> value in localStorage.</strong></li>
+</ul></li>
+<li>Through JavaScript, on a web application relying on the SSO (details in <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#JavaScript_shared_module:_Detect_and_start_automatically_a_session">WPD/Projects/SSO/How we implemented it#JavaScript shared module: Detect and start automatically a session</a>):
+<ul>
+<li>Check if web application has a session locally, if not, continue</li>
+<li>Create a communication channel as an hidden iframe, if the accounts server doesn’t forbid due to CSP policy, continue.</li>
+<li>Use <code>postMessage</code> to communicate through the iframe opened to the accounts server</li>
+<li>Handle response from <code>postMessage</code>, use the returned data (i.e. <del><code>sessionToken</code></del> <strong><code>recoveryPayload</code></strong> value) into a POST body member called “recoveryPayload”</li>
+<li>Make a <code>POST</code> request to the current web app callback (e.g. <code>/wiki/Special:AccountsHandler/callback</code>) with “recoveryPayload” <strong>that has to get url encoded</strong></li>
+</ul></li>
+<li>In the backend code (details in <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#Initialize_local_web_application_session">WPD/Projects/SSO/How we implemented it#Initialize local web application session</a>):
+<ul>
+<li>Accept <code>POST</code> requests with a “recoveryPayload” parameter<del>, make sure it’s 64 hexadecimal characters</del></li>
+<li><del>Rename the “recoveryPayload” as “sessionToken”</del></li>
+<li><strong>Decode the urlencoded “recoveryPayload” blob, then unpack the data using the shared secret key. If the payload makes any sense, has a property called &quot;sessionToken&quot;, continue</strong></li>
+<li><strong>If the sessionToken property is 64 hexadecimal characters, use it for the next step</strong></li>
+<li>Make an off-the-band call over SSL to the profile server</li>
+<li>Read a JSON object with the user data</li>
+<li>Create a session without further validation</li>
+<li>Return an HTTP status code: <code>204</code> if it worked, <code>4xx</code> if it didn’t, <code>5xx</code> if an unexpected backend error happened. (see <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#1.2.4_Return_an_HTTP_response">WPD/Projects/SSO/How we implemented it#1.2.4 Return an HTTP response</a>)</li>
+</ul></li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>Only the encoded packet will be communicated across frames</li>
+<li>If a relying party doesn’t use SSL, the data will need to be decoded to be useful</li>
+<li>Whether or not the session had a &quot;man in the middle&quot;, the attacker will
+<ul>
+<li>The used crypto cipher is not explicitly communicated in the process, only a “cypherId” number</li>
+<li>Still need to get the secret key —that is NEVER communicated in the process— to unpack the encoded “recoveryPayload” contents.</li>
+<li>not get a chance to get anything useful from the JavaScript call to the call back GET parameters</li>
+</ul></li>
+<li>Each backend application will have to unpack the recoveryPayload, validate if it makes sense BEFORE communicating with the profile.accounts.webplatform.org endpoint.</li>
+</ul>
+<p><strong>What we could add on top of it</strong>:</p>
+<ul>
+<li>Sign the response from the profile server using JWT format, see <a href="https://github.com/mozilla/jwcrypto">jwcrypto</a></li>
+<li>Validate on the backend whether the response from the profile server is valid</li>
+<li>Have SSL everywhere</li>
+</ul>
+<h2>Leveraging completely OAuth2</h2>
+<p>The current implementation described at <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#SSO_and_remembering">WPD/Projects/SSO/How we implemented it#SSO and remembering</a> doesn’t use OAuth2 token in all communications. While the original design of Firefox Accounts OAuth server was to remember if a user previously authenticated, that functionality is not implemented yet.</p>
+<p>The issue is known and documented <a href="https://github.com/mozilla/fxa-content-server/issues/1195">in their GitHub issue tracker #1195</a>.</p>
+<p>In the eventuality of the Firefox Accounts OAuth server changes its behavior, we still need a non-blocking <a href="/docs/WPD/Projects/SSO/How_we_implemented_it#JavaScript_shared_module:_Detect_and_start_automatically_a_session">WPD/Projects/SSO/How we implemented it#JavaScript shared module: Detect and start automatically a session</a> to check whether a session is already opened.</p>
+<h3>Proposed solution</h3>
+<p>TBD</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About closures · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Not Ready" />
+    
+    <meta name="description" content="Closures are often considered an advanced feature in JavaScript, but understanding them is essential to mastering the language." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Not_Ready"><p>This page is <a>Not Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/closures/">closures</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>About closures</h1>
+<h2>Summary</h2>
+<p>Closures are often considered an advanced feature in JavaScript, but understanding them is essential to mastering the language.</p>
+<p>Consider the following function:</p>
+<pre><code>function init() {
+  var name = &quot;Hello world!&quot;;
+  function displayName() {
+    alert(name);
+  }
+  displayName();
+}
+init();
+</code></pre>
+<p>The <code>init()</code> function creates a local variable called <code>name</code>, and then defines a function called <code>displayName()</code>. <code>displayName()</code> is an inner function — it is defined inside <code>init()</code>, and is only available within the body of that function. <code>displayName()</code> has no local variables of its own, but reuses the <code>name</code> variable declared in the outer function.</p>
+<p>This works just fine — try running the code to see what happens. This is an example of <em>functional</em> <em>scoping</em>: in JavaScript, the scope of a variable is defined by its location within the source code, and nested functions have access to variables declared in their outer scope.</p>
+<p>Now consider the following example:</p>
+<pre><code>function makeFunc() {
+  var name = &quot;Hello world!&quot;;
+  function displayName() {
+    alert(name);
+  }
+  return displayName;
+}
+
+var myFunc = makeFunc();
+myFunc();
+</code></pre>
+<p>If you run this code it will have exactly the same effect as the previous <code>init()</code> example: the string “Hello world!” will be displayed in a JavaScript alert box. What’s different — and interesting — is that the <code>displayName()</code> inner function was returned from the outer function before being executed.</p>
+<p>That the code still works may seem unintuitive. Normally, the local variables within a function only exist for the duration of that function’s execution. Once <code>makeFunc()</code> has finished executing, it is reasonable to expect that the name variable will no longer be necessary. Since the code still works as expected, this is obviously not the case.</p>
+<p>The solution to this puzzle is that <code>myFunc</code> has become a <em>closure</em>. A closure is a special kind of object that combines two things: a function, and the environment in which that function was created. The environment consists of any local variables that were in-scope at the time that the closure was created. In this case, <code>myFunc</code> is a closure that incorporates both the <code>displayName</code> function and the “Hello world!” string that existed when the closure was created.</p>
+<p>Here’s a slightly more interesting example — a <code>makeAdder</code> function:</p>
+<pre><code>function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+print(add5(2));  // 7
+print(add10(2)); // 12
+</code></pre>
+<p>In this example, we have defined a function <code>makeAdder(x)</code> which takes a single argument <code>x</code> and returns a new function. The function it returns takes a single argument <code>y</code>, and returns the sum of <code>x</code> and <code>y</code>.</p>
+<p>In essence, <code>makeAdder</code> is a function factory — it creates functions which can add a specific value to their argument. In the above example we use our function factory to create two new functions — one that adds 5 to its argument, and one that adds 10.</p>
+<p><code>add5</code> and <code>add10</code> are both closures. They share the same function body definition, but store different environments. In <code>add5</code>'s environment, <code>x</code> is 5. As far as <code>add10</code> is concerned, <code>x</code> is 10.</p>
+<h2>Practical closures</h2>
+<p>That’s the theory out of the way — but are closures actually useful? Let’s consider their practical implications. A closure lets you associate some data (the environment) with a function that operates on that data. This has obvious parallels to object oriented programming, where objects allow us to associate some data (the object’s properties) with one or more methods.</p>
+<p>Consequently, you can use a closure anywhere that you might normally use an object with only a single method.</p>
+<p>Situations where you might want to do this are particularly common on the web. Much of the code we write in web JavaScript is event-based — we define some behavior, then attach it to an event that is triggered by the user (such as a click or a keypress). Our code is generally attached as a callback: a single function which is executed in response to the event.</p>
+<p>Here’s a practical example: suppose we wish to add some buttons to a page that adjust the text-size. One way of doing this is to specify the font-size of the body element in pixels, then set the size of the other elements on the page (such as headers) using the relative em unit:</p>
+<pre><code>body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+h2 {
+  font-size: 1.2em;
+}
+</code></pre>
+<p>Our interactive text size buttons can change the font-size property of the body element, and the adjustments will be picked up by other elements on the page thanks to the relative units.</p>
+<p>Here’s the JavaScript:</p>
+<pre><code>function makeSizer(size) {
+  return function() {
+    document.body.style.fontSize = size + 'px';
+  };
+}
+
+var size12 = makeSizer(12);
+var size14 = makeSizer(14);
+var size16 = makeSizer(16);
+</code></pre>
+<p><code>size12</code>, <code>size14</code> and <code>size16</code> are now functions which will resize the body text to 12, 14, and 16 pixels, respectively. We can attach them to buttons (in this case links) as follows:</p>
+<pre><code>document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;
+
+&lt;a href=&quot;#&quot; id=&quot;size-12&quot;&gt;12&lt;/a&gt;
+&lt;a href=&quot;#&quot; id=&quot;size-14&quot;&gt;14&lt;/a&gt;
+&lt;a href=&quot;#&quot; id=&quot;size-16&quot;&gt;16&lt;/a&gt;
+</code></pre>
+<p><a href="http://jsfiddle.net/vnkuZ">View on jsFiddle</a></p>
+<h2>Emulating private methods with closures</h2>
+<p>Languages such as Java provide the ability to declare methods private, meaning that they can only be called by other methods in the same class.</p>
+<p>JavaScript does not provide a native way of doing this, but it is possible to emulate private methods using closures. Private methods aren’t just useful for restricting access to code: they also provide a powerful way of managing your global namespace, keeping non-essential methods from cluttering up the public interface to your code.</p>
+<p>Here’s how to define some public functions that can access private functions and variables, using closures which is also known as the <a href="http://www.google.com/search?q=javascript+module+pattern">module pattern</a>:</p>
+<pre><code>var Counter = (function() {
+  var privateCounter = 0;
+  function changeBy(val) {
+    privateCounter += val;
+  }
+  return {
+    increment: function() {
+      changeBy(1);
+    },
+    decrement: function() {
+      changeBy(-1);
+    },
+    value: function() {
+      return privateCounter;
+    }
+  }
+})();
+
+alert(Counter.value()); /* Alerts 0 */
+Counter.increment();
+Counter.increment();
+alert(Counter.value()); /* Alerts 2 */
+Counter.decrement();
+alert(Counter.value()); /* Alerts 1 */
+</code></pre>
+<p>There’s a lot going on here. In previous examples each closure has had its own environment; here we create a single environment which is shared by three functions: <code>Counter.increment</code>, <code>Counter.decrement</code> and <code>Counter.value</code>.</p>
+<p>The shared environment is created in the body of an anonymous function, which is executed as soon as it has been defined. The environment contains two private items: a variable called <code>privateCounter</code> and a function called <code>changeBy</code>. Neither of these private items can be accessed directly from outside the anonymous function. Instead, they must be accessed by the three public functions that are returned from the anonymous wrapper.</p>
+<p>Those three public functions are closures that share the same environment. Thanks to JavaScript’s lexical scoping, they each have access to the <code>privateCounter</code> variable and <code>changeBy</code> function.</p>
+<p>You’ll notice we’re defining an anonymous function that creates a counter, and then we call it immediately and assign the result to the <code>Counter</code> variable. We could store this function into a separate variable and use it to create several counters.</p>
+<pre><code>var makeCounter = function() {
+  var privateCounter = 0;
+  function changeBy(val) {
+    privateCounter += val;
+  }
+  return {
+    increment: function() {
+      changeBy(1);
+    },
+    decrement: function() {
+      changeBy(-1);
+    },
+    value: function() {
+      return privateCounter;
+    }
+  }
+};
+
+var Counter1 = makeCounter();
+var Counter2 = makeCounter();
+alert(Counter1.value()); /* Alerts 0 */
+Counter1.increment();
+Counter1.increment();
+alert(Counter1.value()); /* Alerts 2 */
+Counter1.decrement();
+alert(Counter1.value()); /* Alerts 1 */
+alert(Counter2.value()); /* Alerts 0 */
+</code></pre>
+<p>Notice how each of the two counters maintains its independence from the other. Its environment during the call of the <code>makeCounter()</code> function is different each time. The closure variable <code>privateCounter</code>contains a different instance each time.</p>
+<p>Using closures in this way provides a number of benefits that are normally associated with object oriented programming, in particular data hiding and encapsulation.</p>
+<h2>Creating closures in loops: A common mistake</h2>
+<p>Prior to the introduction of the <a href="/w/index.php?title=concepts/programming/javascript/closures/js/reference/statements/let&amp;action=edit&amp;redlink=1"><code>let</code> keyword</a> in JavaScript 1.7, a common problem with closures occurred when they were created inside a loop. Consider the following example:</p>
+<pre><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"help"</span>&gt;</span>Helpful notes will appear here<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>E-mail: <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"email"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"email"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Name: <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"name"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Age: <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"age"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"age"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<pre><code>function showHelp(help) {
+  document.getElementById('help').innerHTML = help;
+}
+
+function setupHelp() {
+  var helpText = [
+      {'id': 'email', 'help': 'Your e-mail address'},
+      {'id': 'name', 'help': 'Your full name'},
+      {'id': 'age', 'help': 'Your age (you must be over 16)'}
+    ];
+
+  for (var i = 0; i &lt; helpText.length; i++) {
+    var item = helpText[i];
+    document.getElementById(item.id).onfocus = function() {
+      showHelp(item.help);
+    }
+  }
+}
+
+setupHelp();
+</code></pre>
+<p><a href="http://jsfiddle.net/v7gjv">View on jsFiddle</a></p>
+<p>The <code>helpText</code> array defines three helpful hints, each associated with the ID of an input field in the document. The loop cycles through these definitions, hooking up an onfocus event to each one that shows the associated help method.</p>
+<p>If you try this code out, you’ll see that it doesn’t work as expected. No matter what field you focus on, the message about your age will be displayed.</p>
+<p>The reason for this is that the functions assigned to onfocus are closures; they consist of the function definition and the captured environment from the <code>setupHelp</code> function’s scope. Three closures have been created, but each one shares the same single environment. By the time the onfocus callbacks are executed, the loop has run its course and the item variable (shared by all three closures) has been left pointing to the last entry in the <code>helpText</code> list.</p>
+<p>One solution in this case is to use more closures: in particular, to use a function factory as described earlier on:</p>
+<pre><code>function showHelp(help) {
+  document.getElementById('help').innerHTML = help;
+}
+
+function makeHelpCallback(help) {
+  return function() {
+    showHelp(help);
+  };
+}
+
+function setupHelp() {
+  var helpText = [
+      {'id': 'email', 'help': 'Your e-mail address'},
+      {'id': 'name', 'help': 'Your full name'},
+      {'id': 'age', 'help': 'Your age (you must be over 16)'}
+    ];
+
+  for (var i = 0; i &lt; helpText.length; i++) {
+    var item = helpText[i];
+    document.getElementById(item.id).onfocus = makeHelpCallback(item.help);
+  }
+}
+
+setupHelp();
+</code></pre>
+<p><a href="http://jsfiddle.net/v7gjv/1">View on jsFiddle</a></p>
+<p>This works as expected. Rather than the callbacks all sharing a single environment, the <code>makeHelpCallback</code> function creates a new environment for each one in which <code>help</code> refers to the corresponding string from the <code>helpText</code> array.</p>
+<h2>Performance considerations</h2>
+<p>It is unwise to unnecessarily create functions within other functions if closures are not needed for a particular task as it will negatively affect script performance both in terms of processing speed and memory consumption.</p>
+<p>For instance, when creating a new object/class, methods should normally be associated to the object’s prototype rather than defined into the object constructor. The reason is that whenever the constructor is called the methods would get reassigned (that is, for every object creation).</p>
+<p>Consider the following impractical but demonstrative case:</p>
+<pre><code>function MyObject(name, message) {
+  this.name = name.toString();
+  this.message = message.toString();
+  this.getName = function() {
+    return this.name;
+  };
+
+  this.getMessage = function() {
+    return this.message;
+  };
+}
+</code></pre>
+<p>The previous code does not take advantage of the benefits of closures and thus should instead be formulated:</p>
+<pre><code>function MyObject(name, message) {
+  this.name = name.toString();
+  this.message = message.toString();
+}
+MyObject.prototype = {
+  getName: function() {
+    return this.name;
+  },
+  getMessage: function() {
+    return this.message;
+  }
+};
+</code></pre>
+<p>Or as follows:</p>
+<pre><code>function MyObject(name, message) {
+  this.name = name.toString();
+  this.message = message.toString();
+}
+MyObject.prototype.getName = function() {
+  return this.name;
+};
+MyObject.prototype.getMessage = function() {
+  return this.message;
+};
+</code></pre>
+<p>In the two previous examples, the inherited prototype can be shared by all objects and the method definitions need not occur at every object creation. See <a href="/w/index.php?title=guides/JavaScript/objects&amp;action=edit&amp;redlink=1">Details of the Object Model</a> for more details.</p>
+<p><span style="float: left"><a href="/w/index.php?title=concepts/programming/javascript/closures/guides/JavaScript/iterators&amp;action=edit&amp;redlink=1">« Previous</a></span><a href="/w/index.php?title=guides/JavaScript/LiveConnect&amp;action=edit&amp;redlink=1">Next »</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Closures">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

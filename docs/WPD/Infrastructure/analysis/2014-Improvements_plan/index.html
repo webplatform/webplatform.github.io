@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sept.-Dec. 2014 Improvement plans · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/analysis/">analysis</a></li><li><a href="/docs/WPD/Infrastructure/analysis/2014-Improvements_plan/">2014-Improvements plan</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Sept.-Dec. 2014 Improvement plans</h1>
+<p>This sprint is about refactoring the server infrastructure to ease the maintenance work and automate what’s possible.</p>
+<p>For the project summary, refer to <a href="/docs/WPD/Infrastructure/reports/201410">the 201410 report</a></p>
+<h2>Tasks</h2>
+<h3>Done</h3>
+<p>What has been done and is deployable on staging at this moment.</p>
+<ul>
+<li><p>Decommissioned global system features (will improve system and refactor after the rest is ready):</p>
+<ul>
+<li>Disabled centralized log</li>
+<li>Disabled Ganglia graphs</li>
+</ul></li>
+<li><p>Decommissioned VM types:</p>
+<ul>
+<li>storage (we rely on DreamObjects instead of our own)</li>
+<li>monitor (we will refactor the monitoring and log management in the next steps)</li>
+</ul></li>
+<li><p>Homepage:</p>
+<ul>
+<li>Can be configured (switch <code>@site.tld</code> in <em>docpad.js</em>) to specify which top level domain to use. Allowing local or staging deployments to keep consistent links without hardcoding.</li>
+<li>Supports SSL</li>
+<li>Fastly forces SSL</li>
+<li>Upgraded version (DocPad)</li>
+</ul></li>
+<li><p>Wiki web app:</p>
+<ul>
+<li>Enabled back planned for deprecation extension <a href="http://www.mediawiki.org/wiki/Extension:SocialProfile">SocialProfile Extension</a>, see <a href="https://github.com/webplatform/mediawiki/issues/19">issue #19</a>. Disabled explicitly uploads, serve an empty 1x1 gif.</li>
+<li>Ability to disable completely Piwik tracking</li>
+<li>Upgraded version</li>
+<li>Supports SSL</li>
+<li>Fastly forces SSL</li>
+<li>Improved deployment using git</li>
+<li>Deployment to exclusively use git submodules (until composer is supported)</li>
+<li>Can be configured (switch <code>siteTopLevelDomain</code>, in <em>LocalSettings.php</em>) to specify which top level domain to use. Allowing local or staging deployments to keep consistent links without hardcoding</li>
+<li>Improved configuration system to use Salt stack provided values (no manual edition anymore)</li>
+<li>Made an extension that contains all copy-pasted micro-extensions, and theme</li>
+<li>Migrated all images and fonts to use www.webplatform.org instead (eventually CSS/JS will also be removed)</li>
+<li>Have Salt Stack generate config automatically: database, sessions</li>
+</ul></li>
+<li><p>Wiki Compatibility tables extension:</p>
+<ul>
+<li>When access <code>Special:Compatables?topic=css...&amp;action=purge</code> it also purges keystore copy</li>
+<li>Big memory usage was caused by <em>data.json</em> being called more than once at EVERY requests (MW arch problem, error somewhere?) — fixed by saving generated HTML AND <em>data.json</em> in configurable Keystore</li>
+</ul></li>
+<li><p>Blog web app:</p>
+<ul>
+<li>Upgraded version (WordPress)</li>
+<li>Improved deployment using git</li>
+<li>Reworked skin (see <a href="https://github.com/webplatform/webplatform-wordpress-theme">WebPlatform WordPress theme repo</a>) to manage theme and plugin configuration through Git. See article: <a href="http://blog.g-design.net/post/60019471157/managing-and-deploying-wordpress-with-git">Managing and deploying WordPress with Git</a>.</li>
+<li>Skin can be configured (switch <code>siteTopLevelDomain</code>) to specify which top level domain to use. Allowing local or staging deployments to keep consistent links without hardcoding</li>
+<li>Have Salt Stack generate config automatically: database, sessions</li>
+</ul></li>
+<li><p>Stats web app:</p>
+<ul>
+<li>Upgraded version (Piwik)</li>
+<li>Improved deployment using git</li>
+<li>Reworked skin, forked project and changed theme to match our site theme (there are no real template system nor theme support)</li>
+<li>Support SSL</li>
+<li>Fastly to force SSL</li>
+<li>Config to use database table for sessions (the only one supported off-the-shelf by Piwik so far)</li>
+<li>Config points automatically to database and Memcached/Redis IPs</li>
+</ul></li>
+<li><p>Project web app:</p>
+<ul>
+<li>Upgraded BugGenie version (BugGenie branch-32)</li>
+<li>Skin can be configured (switch <code>siteTopLevelDomain</code>) to specify which top level domain to use. Allowing local or staging deployments to keep consistent links without hardcoding</li>
+<li>Support SSL</li>
+<li>Fastly to force SSL</li>
+<li>Config points automatically to database and Memcached IPs</li>
+</ul></li>
+<li><p>Improve error pages:</p>
+<ul>
+<li>When backend server crash, before Fastly marks the backend &quot;unhealthy&quot;, send link to status page (see <a href="http://www.webplatformstaging.org/errors/503.html">static version</a>)</li>
+</ul></li>
+<li><p><strong>Upgrade to latest Ubuntu 14.04 LTS version</strong>, and their configured services for each VM types;</p>
+<ul>
+<li>notes</li>
+<li>bots</li>
+<li>db</li>
+<li>app</li>
+<li>blog</li>
+<li>project</li>
+<li>memcache</li>
+<li>backup</li>
+<li>elasticsearch</li>
+<li>piwik</li>
+<li>source</li>
+<li>account</li>
+<li>mail</li>
+</ul></li>
+<li><p>Ways to define role of a VM type</p>
+<ul>
+<li>Use of Salt mine to store static data such as internal IP addresse for automatic configuration generation</li>
+<li>Parse the VM name and make it as a role (e.g. <em>memcache-jobs1</em>, has roles: [memcache, jobs]) so we can target secondary service allocation based on the role and not exclusively on the hostname</li>
+</ul></li>
+<li><p>Change Salt stack behavior:</p>
+<ul>
+<li>Create a grain to learn in which deployment level (e.g. “staging”) we are in</li>
+<li>Create a grain to learn what are the roles the VM has (e.g. [salt])</li>
+</ul></li>
+<li><p>Service resiliency subsystem “Monit” XXX:</p>
+<ul>
+<li><strong>Purpose</strong>: Ensure critical services are up</li>
+<li>Ensure common service is running: salt-minion, ssh</li>
+<li><strong>Purpose</strong>: Ensure critical services are up</li>
+<li>ensure MySQL servers are up on db VM types</li>
+<li>ensure Apache HTTP server up on app*, project*, blog*, notes*, piwik*, webat* VM types</li>
+<li>ensure Nutcracker is running on app*, project*, blog*, piwik* VM types</li>
+<li>ensure NGINX HTTP server is up on accounts* VM types</li>
+<li>ensure ElasticSearch is up on elastic* VM types</li>
+<li>ensure Memcached is up on memcache* VM types</li>
+<li>ensure alert email config and destination is configured depending of staging/production</li>
+<li>ensure disk usage alerts are in place</li>
+</ul></li>
+<li><p>Key store clusters (Memcached, Redis):</p>
+<ul>
+<li><strong>Purpose:</strong> Each cluster fills a role, depending of the life expectancy of the stored data (e.g. sessions should not be cleared, page cache might)</li>
+<li>Ensure only local network can connect</li>
+<li>Each web app runtime origin VM types should have a <strong>Keystore broker client</strong> (e.g. Nutcracker)</li>
+</ul></li>
+<li><p>Configure <strong>Key store broker client</strong> (Nutcracker):</p>
+<ul>
+<li><strong>Purpose:</strong> Have everything locally is much quicker, this component keeps a local cache, see <a href="https://code.facebook.com/posts/296442737213493/introducing-mcrouter-a-memcached-protocol-router-for-scaling-memcached-deployments/">MCRouter introduction</a></li>
+<li>Separate port number per use-case, most popular (i.e. will be used most) will use default port number</li>
+<li>Use-case 1: Session storage (most popular)</li>
+<li>Use-case 2: Keystore (e.g. various components in MediaWiki, etc)</li>
+<li>Set <code>session.save_handler</code> correctly and consistently</li>
+</ul></li>
+<li><p>NGINX:</p>
+<ul>
+<li>Make sure that every vhosts has error page; see <code>/srv/webplatform/errors</code></li>
+</ul></li>
+<li><ul>
+<li><em>Setup logrotate for non typical logs</em>: \[mw-logs, fastly, remote logs\]</li>
+</ul></li>
+<li><p><strong>Upgrade to latest Ubuntu 14.04 LTS version</strong>, and their configured services:</p></li>
+<li><p>Blog web app:</p>
+<ul>
+<li>Support SSL</li>
+<li>Fastly to force SSL</li>
+<li>Config W3TotalCache to use local Nutcracker port</li>
+<li>Config points automatically to database IP</li>
+</ul></li>
+<li><p>Database cluster, VM types [db]:</p>
+<ul>
+<li>Migrate all databases into new cluster using MariaDB 10.1</li>
+<li>Ensure every components gets the list of IP addresses of the database servers through Salt stack</li>
+<li>Setup replication</li>
+<li>Automatic backups, sends to DreamObjects bucket</li>
+</ul></li>
+<li><p>Apache:</p>
+<ul>
+<li>Make sure that every vhosts has error page; see <code>/srv/webplatform/errors</code></li>
+</ul></li>
+<li><p>On elastic VM type:</p>
+<ul>
+<li>Automatic backups, sends to DreamObjects bucket</li>
+</ul></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

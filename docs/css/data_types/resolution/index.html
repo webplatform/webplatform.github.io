@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>&lt;resolution&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="The &amp;lt;resolution&amp;gt; CSS data type, used in media queries, denotes the granularity or possible fineness of detail of an output device. It is expressed as a &amp;lt;number&amp;gt; immediately followed by a unit of resolution (dpi, dpcm, ...). Like for any CSS dimension, there is no space between the number and the unit abbreviation." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/data_types/">data types</a></li><li><a href="/docs/css/data_types/resolution/">resolution</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>&lt;resolution&gt;</h1>
+<h2>Summary</h2>
+<p>The &lt;resolution&gt; CSS data type, used in media queries, denotes the granularity or possible fineness of detail of an output device. It is expressed as a &lt;number&gt; immediately followed by a unit of resolution (dpi, dpcm, …). Like for any CSS dimension, there is no space between the number and the unit abbreviation.</p>
+<p>The resolution value specifies the display or print dot density per unit of distance. A “dot” is the finest level of detail that the device can display, such as a physical screen pixel or a dot of printed ink.</p>
+<p>On screens, the resolution is calculated relative to CSS inches, centimeters or pixels, not to physical values. For media queries, if the resolution is different in the horizontal and vertical directions <em>both</em> values must match the media query.</p>
+<p>Unlike the CSS <a href="/docs/css/data_types/length"><strong>&lt;length&gt;</strong> data type</a>, the unit may not be omitted for the value <strong>0</strong>: specifying a resolution of <strong>0</strong> is invalid and does not represent <strong>0dpi</strong>, <strong>0dpcm</strong>, nor <strong>0dppx</strong>.</p>
+<h2>Units</h2>
+<dl>
+<dt><strong>dpi</strong></dt>
+<dd>This unit represents the number of dots per inch. A screen typically contains 72 or 96 dpi; a printed document usually reach much greater dpi. As 1 inch is 2.54 cm, <strong>1dpi ≈ 2.54dpcm</strong>.<br>
+<strong>dpcm</strong>
+</dd>
+<dd>This unit represents the number of dots per centimeter. As 1 inch is 2.54 cm, <strong>1dpcm ≈ 0.39dpi</strong>.<br>
+<strong>dppx</strong>
+</dd>
+<dd>This unit represents the number of dots per px unit. Due to the 1:96 fixed ratio of CSS <strong>in</strong> to CSS <strong>px</strong>, <strong>1dppx</strong> is equivalent to <strong>96dpi</strong>, that corresponds to the default resolution of images displayed in CSS as defined by the <a href="/w/index.php?title=css/property/image_resolution&amp;action=edit&amp;redlink=1">image-resolution</a> property.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>Here are some correct uses of &lt;resolution&gt; values:</p>
+<pre><code class="css"><span class="hljs-comment">/* Correct use: a &lt;number&gt; (here an &lt;integer&gt;) followed by the unit. */</span>
+96<span class="hljs-tag">dpi</span>
+
+<span class="hljs-comment">/* Correct use in the context of a media query. */</span>
+<span class="hljs-at_rule">@<span class="hljs-keyword">media</span> print and (min-resolution: <span class="hljs-number">300dpi</span>) </span>{ ... }
+</code></pre>
+<p>Here are some incorrect uses:</p>
+<pre><code class="css"><span class="hljs-comment">/* Incorrect: no spaces allowed between the &lt;number&gt; and the unit. */</span>
+72 <span class="hljs-tag">dpi</span>
+
+<span class="hljs-comment">/* Incorrect: only digits must be used. */</span>
+<span class="hljs-tag">ten</span> <span class="hljs-tag">dpi</span>
+
+<span class="hljs-comment">/* Incorrect: the unit can be omitted for 0 values only for &lt;length&gt;. */</span>
+0
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-values/">CSS Values and Units Module Level 3</a></dt>
+<dd>Candidate Recommendation
+</dd>
+<dt><a href="http://dev.w3.org/csswg/css3-images/#resolution-units">CSS Image Values and Replaced Content Module Level 3</a></dt>
+<dd>Candidate Recommendation
+</dd>
+<dt><a href="http://dev.w3.org/csswg/css3-mediaqueries/#resolution">Media Queries</a></dt>
+<dd>Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Media Queries</h4>
+<ul>
+<li><p><a href="/docs/concepts/mobile_web/responsive_design">Responsive Web Design</a></p></li>
+<li><p><strong>&lt;resolution&gt;</strong></p></li>
+<li><p><a href="/docs/css/media_queries/accelerator">accelerator</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/MediaQueryList">MediaQueryList</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/MediaQueryListListener">MediaQueryListListener</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/StyleMedia">StyleMedia</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/addListener">addListener</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/handleChange">handleChange</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matchMedia">matchMedia</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matchMedium">matchMedium</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/matches">matches</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/media">media</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/properties/type">type</a></p></li>
+<li><p><a href="/docs/css/media_queries/apis/removeListener">removeListener</a></p></li>
+<li><p><a href="/docs/css/media_queries/colors_by">Colors by</a></p></li>
+<li><p><a href="/docs/css/media_queries/device-height">device-height</a></p></li>
+<li><p><a href="/docs/css/media_queries/filter">filter</a></p></li>
+<li><p><a href="/docs/css/media_queries/ms-interpolation-mode">ms-interpolation-mode</a></p></li>
+<li><p><a href="/docs/css/properties/behavior">behavior</a></p></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/resolution">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

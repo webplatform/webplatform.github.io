@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lists · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Style_Guide/">WPD/Style Guide</a></li><li><a href="/docs/WPD/Style_Guide/Lists/">Lists</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Lists</h1>
+<h2>Syntax</h2>
+<p>For consistency and compatibility of lists, please use the following list syntax styles. These rules are required to ensure that tables print correctly in all contexts, including when they are part of a form field.</p>
+<p>Lists start each line with a token character, with additional tokens indicating the level of nesting of a list item.</p>
+<ul>
+<li>The token for <a href="#Unordered_list">unordered lists</a> is the asterisk: <strong>*</strong></li>
+<li>The token for <a href="#ordered_list">ordered lists</a> is the hash (or number sign): <strong>#</strong></li>
+<li>The token for <a href="#definition_list">definition lists</a> <strong>terms</strong> is the semicolon: <strong>;</strong>
+<ul>
+<li>The token for definition list <strong>definitions</strong> is the colon: <strong>:</strong></li>
+</ul></li>
+</ul>
+<p>There cannot be a space before the token, or it will not be converted to a list item. There cannot be a space between tokens.</p>
+<p>There cannot be a line break between list items, or it will start a new list.</p>
+<p>MediaWiki supports other list styles, but these are not allowed on Web Platform Docs, because of inadequate accessibility.</p>
+<h3>Unordered list</h3>
+<p>Unordered lists (bulleted lists) start each line with an asterisk (*), with additional asterisks indicating the level of nesting of a list item (e.g., ** is a nested list item, *** is a double-nested list item).</p>
+<pre><code>* This is a top-level item
+* This is another top-level item
+** This is a nested item
+** This is another nested item
+*** This is a nested item at the third level
+* Line breaks&lt;br/&gt;don't break levels.
+*** But jumping levels creates empty space.
+
+* A blank line ends the list. This is the first bullet in a new list.
+Any other start also ends the list.
+* This is the first bullet in a new list.
+ * This is not a list item, because there was a space before the token
+</code></pre>
+<p>This results in the following list:</p>
+<ul>
+<li><p>This is a top-level item</p></li>
+<li><p>This is another top-level item</p>
+<ul>
+<li>This is a nested item</li>
+<li>This is another nested item
+<ul>
+<li>This is a nested item at the third level</li>
+</ul></li>
+</ul></li>
+<li><p>Line breaks<br>
+don’t break levels.</p>
+<ul>
+<li><ul>
+<li>But jumping levels creates empty space.</li>
+</ul></li>
+</ul></li>
+<li><p>A blank line ends the list. This is the first bullet in a new list.</p></li>
+</ul>
+<p>Any other start also ends the list.</p>
+<ul>
+<li>This is the first bullet in a new list.</li>
+</ul>
+<!-- -->
+<pre><code>* This is not a list item, because there was a space before the token
+</code></pre>
+<h3>Ordered list</h3>
+<p>Ordered lists (numbered lists) start each line with an asterisk (#), with additional asterisks indicating the level of nesting of a list item (e.g., ## is a nested list item, ### is a double-nested list item).</p>
+<pre><code># This is a top-level item
+# This is another top-level item
+## This is a nested item
+## This is another nested item
+### This is a nested item at the third level
+# Line breaks&lt;br/&gt;don't break levels.
+### But jumping levels creates empty space.
+
+# A blank line ends the list. This is the first bullet in a new list.
+Any other start also ends the list.
+# This is the first bullet in a new list.
+ # This is not a list item, because there was a space before the token
+</code></pre>
+<p>This results in the following list:</p>
+<ol>
+<li><p>This is a top-level item</p></li>
+<li><p>This is another top-level item</p>
+<ol>
+<li>This is a nested item</li>
+<li>This is another nested item
+<ol>
+<li>This is a nested item at the third level</li>
+</ol></li>
+</ol></li>
+<li><p>Line breaks<br>
+don’t break levels.</p>
+<ol>
+<li><ol>
+<li>But jumping levels creates empty space.</li>
+</ol></li>
+</ol></li>
+<li><p>A blank line ends the list. This is the first bullet in a new list.</p></li>
+</ol>
+<p>Any other start also ends the list.</p>
+<ol>
+<li>This is the first bullet in a new list.</li>
+</ol>
+<!-- -->
+<pre><code># This is not a list item, because there was a space before the token
+</code></pre>
+<h3>Definition list</h3>
+<p>Definition lists use slightly different sytnax:</p>
+<ul>
+<li>The token for indicating the term to be defined is the semicolon: <strong>;</strong></li>
+<li>The token for indicating the definition for that is the colon: <strong>:</strong></li>
+</ul>
+<p>Each term may have multiple definitions.</p>
+<pre><code>; term 1
+: definition for term 1
+; term 2
+: definition 1 for term 2
+: definition 2 for term 2
+</code></pre>
+<p>This results in the following list:</p>
+<dl>
+<dt>term 1</dt>
+<dd>definition for term 1<br>
+term 2
+</dd>
+<dd>definition 1 for term 2
+</dd>
+<dd>definition 2 for term 2
+</dd>
+</dl>
+<h3>Mixed list</h3>
+<p>Mixing tokens results in a mixed list</p>
+<pre><code># This is an ordered top-level item
+#* This is a nested unordered item
+#* This is another nested unordered item
+# This is another ordered top-level item
+#; This is a nested definition term item
+#: This is a nested definition item
+</code></pre>
+<p>This results in the following list:</p>
+<ol>
+<li><p>This is an ordered top-level item</p>
+<ul>
+<li>This is a nested unordered item</li>
+<li>This is another nested unordered item</li>
+</ul></li>
+<li><p>This is another ordered top-level item<br>
+This is a nested definition term item<br>
+:   This is a nested definition item</p></li>
+</ol>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

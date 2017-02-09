@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The HTML &lt;head&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article covers the &amp;lt;head&amp;gt; section of HTML documents and some of its most common components. Making sure that all of these are correct will result in your document being fast, and easy to find and understand." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/the_html head/">the html head</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>The HTML &lt;head&gt;</h1>
+<h2>Summary</h2>
+<p>This article covers the &lt;head&gt; section of HTML documents and some of its most common components. Making sure that all of these are correct will result in your document being fast, and easy to find and understand.</p>
+<h2>Introduction</h2>
+<p>This article deals with a part of the HTML document that does not get the attention it deserves: the markup that goes inside the <code>head</code> element. By the end of this tutorial you will have learned about the different parts of this section and what they do, including the <code>title</code> element, keywords and description (which are handled by <code>meta</code> elements), and more. You’ll also learn about JavaScript and CSS styles (both internal and external) and about what not to leave in the <code>head</code>. Make sure you go through the full tutorial from start to finish, as it builds up a series of best practices to follow when dealing with the HTML <code>head</code>.</p>
+<h2>Head? What head are we talking about?</h2>
+<p>The <code>body</code> (the <code>&lt;body&gt;&lt;/body&gt;</code> tags and everything in between) is where you’ll spend most of your time as a web designer or developer, as this is where all the visible content of the document goes. The <code>head</code> (the <code>&lt;head&gt;&lt;/head&gt;</code> tags and everything in between) plays a seemingly less important role because, with the exception of the <code>title</code> element, nothing you put in this part of the document is directly visible to your site’s visitors. Instead, the <code>head</code> is the place where most of the instructions for the browser are located and where you store extra information, called <code>metadata</code>, about the document.</p>
+<h2>Setting the document’s primary language</h2>
+<p>One piece of information about the document actually goes on the parent of the <code>head</code>, the <code>html</code> element. It is here that we define the primary natural language of the document. By natural language, we mean <em>human</em> language, such as French, Thai, or English. This helps screen readers (software that reads out web pages to users with visual impairments); for example, the word “six” exists in both English and French, but is pronounced very differently. It’s a good idea to define the primary language of a document, especially when writing pages for an international audience. It is also becoming increasingly important for correct styling of your page, and it can help with spellchecking and other things. You set it as follows:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+  ...
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you don’t set the language, Google and other search engines might find it difficult to crawl your site, or might take longer than anticipated.</p>
+<p>Note that you can also set the language of subsections of your document by using the <code>lang</code> attribute on other elements, for example <code>&lt;span lang=&quot;fr&quot;&gt;Bonjour&lt;/span&gt;</code>.</p>
+<p>The attributes you use to set the language depend on the <code>doctype</code> of your document. For HTML use the <code>lang</code> attribute only, for XHTML 1.0 served as text/html or HTML5 polyglot documents use the <code>lang</code> and <code>xml:lang</code> attributes, and for XHTML served as XML use the <code>xml:lang</code> attribute only.</p>
+<p>The simplest language tag value is a two-letter code such as <code>en</code> for English, but you can also combine multiple subtags with hyphens to give more detail where needed. For example, <code>en-GB</code> signals British English, and <code>zh-hans</code> signals Simplified Chinese. The language tags are defined in <a href="http://www.iana.org/assignments/language-subtag-registry">the IANA subtag registry</a>. You can also search for subtags and check language tags using Richard Ishida’s <a href="http://rishida.net/utils/subtags/">Language Subtag Lookup</a> tool, and find more information in the W3C article <a href="http://www.w3.org/International/questions/qa-choosing-language-tags">Choosing a Language Tag</a>.</p>
+<h2>Setting your document’s character encoding</h2>
+<p>One feature HTML includes is an element for identifying the character encoding of your documents, which indicates the range of different characters you want to use. In HTML5 it looks like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+</code></pre>
+<p>Don’t worry too much about this for now. <code>utf-8</code> is the universal character encoding which includes pretty much any character that you might want to use on a web page, from any common human language, so it is a good idea to declare this to make sure your HTML has full international capabilities. In addition, HTML5 will only recognize your character encoding declaration if you include it in the first 1024 bytes of the page. So putting it just below the <code>&lt;head&gt;</code> tag is fine. This is what all the examples in this article do.</p>
+<p>It is, however, important to understand that just putting <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code> in your title element doesn’t magically convert your page to UTF-8 encoding, it just helps browsers know what to do with it. You need to actually save your document as UTF-8 as well, which most code editors will allow you to do these days.</p>
+<p>For a gentle introduction to this concept, see the article <a href="http://www.w3.org/International/getting-started/characters">Introducing Character Sets and Encodings</a>.</p>
+<h2>Judging a document by its title</h2>
+<p>One of the most important elements in the <code>head</code> is the <code>title</code>. The text contained within the <code>title</code> is displayed by virtually all user agents/browsers in the browser application title bar (the bar bordering the top of the browser window). It is the first piece of content that web users see when they visit your site, and therefore very important. In addition, assistive technologies like screen readers give this as a first hint of what visitors can expect from the document, and a lot of search engines work similarly too, so your chances to get found on the web increase drastically when you use a good title that is both human-readable and contains the right keywords. Let’s take the following HTML document and open it in a browser.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>I am a title example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>You’ll see that the text in the <code>title</code> is displayed in the bar above the browser navigation, as shown in Figure 1.</p>
+<p><img src="//static.webplatform.org/4/4d/Head-fig.gif" alt="The title is displayed in the title bar of the web browser"></p>
+<p><em>Figure 1: Displaying a title in a browser.</em></p>
+<p>There are many tutorials on the Web about how to write good document titles, most of which are related to search engine optimization (SEO). Don’t go overboard and try to trick the search engines into showing an inflated number of search results. Just write a concise description of what the document is. “Breeding Dogs — Tips about Alsatians” is a lot more human digestible than &quot;Dogs, Alsatian, Breeding, Dog, Tips, Free, Pet&quot;.</p>
+<h2>Adding keywords and a description</h2>
+<p>The next thing you should do might seem superfluous at first, as it is not directly visible to your visitors: adding a description and keywords. Both of these get added to the <code>head</code> inside <code>meta</code> elements, as shown in the following example taken from the Yahoo! Eurosport site.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Yahoo! UK &amp; Ireland Eurosport - Sports News - Live Scores - Sport<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"description"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"Latest sports news and live scores from Yahoo! Eurosport UK. Complete sport coverage with Football results, Cricket scores, F1, Golf, Rugby, Tennis and more."</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"keywords"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"eurosport,sports,sport,sports news,live scores,football,cricket,f1,golf,rugby,tennis,uk,yahoo"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you open this document in a browser you’ll not see anything in the <code>body</code> of the document; however, if you put the document online and search engines index it, the description will be displayed as the text below the link in search engine results, as shown in Figure 2.</p>
+<p><img src="//static.webplatform.org/d/d5/head-fih.gif" alt="descriptions showing in a search engine results page"></p>
+<p><em>Figure 2: Descriptions show up in search engine result pages.</em></p>
+<p>This could be the crucial bit of information a potential visitor of your site is looking for and a good reason for him or her to click the link. Descriptions have another use too — some browsers show the description as extra information when you add the document to your favourites, as shown in Figure 3:</p>
+<p><img src="//static.webplatform.org/6/60/head-fii.gif" alt="Some browsers use the description as a bookmark description"></p>
+<p><em>Figure 3: Descriptions show up in some browsers when you add the document as a favourite.</em></p>
+<p>So although there is no obvious immediate benefit to adding meta descriptions, they do play an important role in the success of your document. The same, to a smaller degree, applies to the keywords you added.</p>
+<p>Although years of abuse by spammers have made search engines not take keywords very seriously any more, they can still be a good tool to use if you want to quickly index a lot of documents without having to scan and analyze the content. You could use the <code>meta</code> keywords, for example, in a content management system by writing a script that indexes them and makes your search engine a lot faster. It doesn’t hurt to provide a way of finding documents without having to analyze their content. By adding some keywords in a <code>meta</code> element you leave yourself the option to have a clever and fast search for your sites should you want to create something like this in the future. Think of keywords as small bookmarks you leave in a massive book to make it easier for yourself to find a certain section immediately without having to read through whole chapters.</p>
+<h2>What about the looks? Adding styles</h2>
+<p>The next thing you can add to the <code>head</code> of a document is style rules, defined in the Cascading Style Sheets (CSS) specification. You can embed those directly in the <code>head</code> using a <code>style</code> element, like this.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Breeding Dogs—Tips about Alsatians<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"description"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"How to breed Alsatians, tips on proper breeding and information about common issues with this breed."</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"keywords"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"Dogs,Alsatian,Breeding,Dog,Tips,Free,Pet"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span>&gt;</span><span class="css">
+    <span class="hljs-tag">body</span><span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-hexcolor">#000</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#ccc</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+    }</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Test!<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you open this document in a browser it will show the “Test!” text in grey on a black background, and the font will be Helvetica or Arial, depending on what fonts your system has installed. The <code>style</code> element can also contain another attribute called <code>media</code>, which defines what kind of media will use these styles. For example, do you want these styles used when viewing the document on a computer screen, or on a handheld device, or when printed on paper? There are several media types to choose from, the most useful being:</p>
+<ul>
+<li><code>screen</code> — for displaying on monitors.</li>
+<li><code>print</code> — to define what a printout of the document should look like.</li>
+<li><code>handheld</code> — to define the look and feel of the document on mobile devices and other handheld devices.</li>
+<li><code>projection</code> — for presentations done in HTML, as those supported by the <a href="http://people.opera.com/howcome/2004/operashow/tutorial.html">Opera Show feature</a>.</li>
+</ul>
+<p>For example, if you want to override the colours used on the screen and use a larger font size to make the page better for printing, you can add another style block below the first one, with a <code>media</code> attribute of <code>print</code>, as seen below.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"print"</span>&gt;</span><span class="css">
+  <span class="hljs-tag">body</span><span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-hexcolor">#fff</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#000</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"><span class="hljs-number">300%</span></span></span>;
+  }</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+</code></pre>
+<p>Now when you print this web page, the browser knows to use the print stylesheet for printing the document, and not the screen stylesheet. You might verify this by displaying the code in a browser and selecting print preview, as shown in Figure 4.</p>
+<p><img src="//static.webplatform.org/2/20/head-fij.gif" alt="The same page with print and screen style sheets applied"></p>
+<p><em>Figure 4: A print style sheet preview.</em></p>
+<h2>Adding dynamic features using JavaScript</h2>
+<p>Another thing you can add to the <code>head</code> is scripts that are executed by the browser, called “client side scripts” because they are executed on the user’s machine, not the web server. As you can see in <a href="http://www.w3.org/wiki/The_web_standards_model_-_HTML_CSS_and_JavaScript">this W3C article</a>, JavaScript adds dynamic behavior to a static HTML document, such as animation effects, or form data validation, or other things that are triggered when the user performs certain actions.</p>
+<p>You add JavaScript to a document using the <code>script</code> element. When a browser encounters one of these, it will drop everything, even pause parsing of the rest of the document, while it tries to execute the code inside it. This means that if you want to make sure that your JavaScript is available before the main document loads (which you nearly always do), you must add it to the <code>head</code>. For example, you can give the visitor a warning that a certain link will take them to another server with the following script.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Breeding Dogs—Tips about Alsatians<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"description"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"How to breed Alsatians, tips on proper breeding and information about common issues with this breed."</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"keywords"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"Dogs,Alsatian,Breeding,Dog,Tips,Free,Pet"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"screen"</span>&gt;</span><span class="css">
+    <span class="hljs-tag">body</span><span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-hexcolor">#000</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#ccc</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+    }</span>
+    <span class="hljs-tag">a</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#fff</span></span></span></span>}
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"print"</span>&gt;</span><span class="css">
+    <span class="hljs-tag">body</span><span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-hexcolor">#fff</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#000</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"><span class="hljs-number">300%</span></span></span>;
+    }</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/javascript"</span>&gt;</span><span class="actionscript">
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">leave</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">return</span> confirm(<span class="hljs-string">"This will take you to another site,\n are you sure you want to go?"</span>)
+    }
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+Test!
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://dailypuppy.com"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"return leave()"</span>&gt;</span>The Daily Puppy<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you open this example in a web browser and click the link, you’ll be asked to confirm your action. This is just a quick example of scripting and is far from best practice, but simply illustrates the functionality. Other tutorials will deal with JavaScript best practices and teach you JavaScript techniques in depth, but don’t worry about that for now.</p>
+<h2>Stop right there! Using inline CSS and JavaScript is not too clever!</h2>
+<p>Strong words, yes, but there is one thing you must remember when you build web sites: you should re-use your code as much as possible. Adding site-wide styles and scripts into each and every one of your pages doesn’t make much sense — on the contrary, it makes it harder to maintain a complete site and bloats the individual documents unnecessarily.</p>
+<p>It is much better to put your styles and scripts in external files, and import them into your HTML files where needed, so you only need to update them in one place if changes need to be made. For JavaScript, you do this using <code>script</code> elements that have no script inside them, but instead link to an external file using a <code>src</code> attribute, as seen in the code below.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Breeding Dogs—Tips about Alsatians<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"description"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"How to breed Alsatians, tips on proper breeding and information about common issues with this breed."</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"keywords"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"Dogs,Alsatian,Breeding,Dog,Tips,Free,Pet"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"screen"</span>&gt;</span><span class="css">
+    <span class="hljs-tag">body</span><span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-hexcolor">#000</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#ccc</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+    }</span>
+    <span class="hljs-tag">a</span> <span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#fff</span></span></span></span>}
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">style</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"print"</span>&gt;</span><span class="css">
+    <span class="hljs-tag">body</span><span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"><span class="hljs-hexcolor">#fff</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"><span class="hljs-hexcolor">#000</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> helvetica, arial, sans-serif</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"><span class="hljs-number">300%</span></span></span>;
+    }</span>
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"leaving.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+Test!
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://dailypuppy.com"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"return leave()"</span>&gt;</span>The Daily Puppy<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>It is not quite as simple with CSS, but is still fairly straightforward. Unlike the <code>script</code> element, the <code>style</code> element does not have a <code>src</code> attribute to point to your external file. Instead, external stylesheets are loaded using the <code>link</code> element — it has an <code>href</code> attribute that specifies an external CSS file to import, a <code>rel</code> attribute to specify the external file’s relationship to the current page (in this case, a <code>stylesheet</code>), and a <code>media</code> attribute to define if these styles should be used for screen, print, etc., similar to that described earlier. By putting both CSS and JavaScript into their own files, you can significantly reduce the size of the <code>head</code>, as shown below.</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Breeding Dogs—Tips about Alsatians<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"description"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"How to breed Alsatians, tips on proper breeding and information about common issues with this breed."</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"keywords"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"Dogs,Alsatian,Breeding,Dog,Tips,Free,Pet"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"screen"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"styles.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"print"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"printstyles.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/javascript"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"leaving.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+Test!
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://dailypuppy.com"</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"return leave()"</span>&gt;</span>The Daily Puppy<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Other benefits of keeping styles and scripts in their own files are:</p>
+<ol>
+<li>You make it both faster and easier for your site visitors, because although a few extra files are downloaded, the style and script information doesn’t need to be repeated in each web page file (it is just downloaded once, in the external script and style files), so each page file downloaded will be smaller. In addition, the CSS and JavaScript files will be cached (stored temporarily on your local machine), so that the next time you access the site, the files will be on your computer already, meaning they don’t need to be downloaded again.</li>
+<li>You greatly improve your ease of maintenance. The style and script for the whole site — which could be thousands of documents — are in one single location, so if you need to change something you only need to change one file, and not thousands.</li>
+</ol>
+<h2>Conclusion</h2>
+<p>In this article, we introduced the <code>head</code> element and some of its possible content. We will examine this important web page section further in the next tutorial, <a href="/docs/guides/more_about_the_html_head">More about the HTML head</a>.</p>
+<h2>See also</h2>
+<h3>Exercise questions</h3>
+<ul>
+<li>Why does it make sense to add a description in a <code>meta</code> element if it doesn’t get displayed on the screen?</li>
+<li>What is the benefit of adding JavaScript to the <code>head</code> of a document and not in the <code>body</code>?</li>
+<li>How can you benefit from your browser’s caching and what do you need to do to make it work for you?</li>
+<li>As search engines give the title of a document much love, wouldn’t it be useful to cram it full of relevant keywords? What are the downsides of this practice?</li>
+<li>As the title display can be a bit boring, wouldn’t it make sense to bold some words with a <code>b</code> element? Is that possible?</li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This content was originally published on <a href="http://dev.opera.com">DevOpera</a>, Opera's Developer Network. .</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

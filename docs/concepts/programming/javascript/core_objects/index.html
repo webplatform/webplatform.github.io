@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>core objects · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="This chapter describes the predefined objects in core JavaScript: Array, Boolean, Date, Function, Math, Number, RegExp, and String." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/programming/">programming</a></li><li><a href="/concepts/programming/javascript/">javascript</a></li><li><a href="/concepts/programming/javascript/core_objects/">core objects</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>core objects</h1>
+<h2>Summary</h2>
+<p>This chapter describes the predefined objects in core JavaScript: Array, Boolean, Date, Function, Math, Number, RegExp, and String.</p>
+<h2>Array Object</h2>
+<p>JavaScript does not have an explicit array data type. However, you can use the predefined <code>Array</code> object and its methods to work with arrays in your applications. The <code>Array</code> object has methods for manipulating arrays in various ways, such as joining, reversing, and sorting them. It has a property for determining the array length and other properties for use with regular expressions.</p>
+<p>An <em>array</em> is an ordered set of values that you refer to with a name and an index. For example, you could have an array called <code>emp</code> that contains employees’ names indexed by their employee number. So <code>emp[1]</code> would be employee number one, <code>emp[2]</code> employee number two, and so on.</p>
+<h3>Creating an Array</h3>
+<p>To create an <code>Array</code> object, the following three statements are equivalent:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(element0, element1, ..., elementN);
+<span class="hljs-keyword">var</span> arr = <span class="hljs-built_in">Array</span>(element0, element1, ..., elementN);
+<span class="hljs-keyword">var</span> arr = [element0, element1, ..., elementN];
+</code></pre>
+<p><code>element0, element1, ..., elementN</code> is a list of values for the array’s elements. When this form is specified, the array is initialized with the specified values as its elements, and the array’s <code>length</code> property is set to the number of arguments.</p>
+<p>The bracket syntax is called “array literal” or &quot;array initializer&quot;. It is shorter and so is generally preferred. See <a href="/w/index.php?title=concepts/programming/javascript/core_objects/guides/js/Values&amp;action=edit&amp;redlink=1">Array Literals</a> for details on array literals.</p>
+<p>To create an Array with non-zero length, but without any items, either of the following can be used:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(arrayLength);
+<span class="hljs-keyword">var</span> arr = <span class="hljs-built_in">Array</span>(arrayLength);
+
+ <span class="hljs-comment">// This has exactly the same effect</span>
+<span class="hljs-keyword">var</span> arr = [];
+arr.length = arrayLength;
+</code></pre>
+<p>Note: in the above code, <code>arrayLength</code> must be a <code>Number</code>. Otherwise, an array with a single element (the provided value) will be created. Calling <code>arr.length</code> will return <code>arrayLength</code>, but the array actually contains empty (undefined) elements. Running a for…in loop on the array will return none of the array’s elements.</p>
+<p>In addition to a newly defined variable as shown above, Arrays can also be assigned as a property of a new or an existing object:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> obj = {};
+<span class="hljs-comment">// ...</span>
+obj.prop = [element0, element1, ..., elementN];
+
+<span class="hljs-comment">// OR</span>
+<span class="hljs-keyword">var</span> obj = {prop: [element0, element1, ...., elementN]}
+</code></pre>
+<p>If you wish to initialize an array with a single element, and the element happens to be a <code>Number</code>, you must use the bracket syntax. When a single <code>Number</code> value is passed to the Array() constructor or function, it is interpreted as an <code>arrayLength</code>, not as a single element.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = [<span class="hljs-number">42</span>];
+<span class="hljs-keyword">var</span> arr = <span class="hljs-built_in">Array</span>(<span class="hljs-number">42</span>); <span class="hljs-comment">// Creates an array with no element, but with arr.length set to 42</span>
+
+<span class="hljs-comment">// The above code is equivalent to</span>
+<span class="hljs-keyword">var</span> arr = [];
+arr.length = <span class="hljs-number">42</span>;
+</code></pre>
+<p>Furthermore, if you are creating an array with a single element, and the element happens to be a non-whole <code>Number</code> (a number with a non-trivial floating part), a <code>RangeError</code> is thrown. If there is a possibility that your code will be creating arrays with single elements, with arbitrary data type, it is safer to use array literals, or create an empty array first and then fill it up.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = <span class="hljs-built_in">Array</span>(<span class="hljs-number">9.3</span>);  <span class="hljs-comment">// RangeError: Invalid array length</span>
+</code></pre>
+<h3>Populating an Array</h3>
+<p>You can populate an array by assigning values to its elements. For example:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> emp = [];
+emp[<span class="hljs-number">0</span>] = <span class="hljs-string">"Casey Jones"</span>;
+emp[<span class="hljs-number">1</span>] = <span class="hljs-string">"Phil Lesh"</span>;
+emp[<span class="hljs-number">2</span>] = <span class="hljs-string">"August West"</span>;
+</code></pre>
+<p><strong>Note:</strong> if you supply a non-integer value to the array operator in the code above, a property will be created in the object representing the array, instead of an array element.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = [];
+arr[<span class="hljs-number">3.4</span>] = <span class="hljs-string">"Oranges"</span>;
+<span class="hljs-built_in">console</span>.log(arr.length);                <span class="hljs-comment">// 0</span>
+<span class="hljs-built_in">console</span>.log(arr.hasOwnProperty[<span class="hljs-number">3.4</span>]);   <span class="hljs-comment">// true</span>
+</code></pre>
+<p>You can also populate an array when you create it:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"Hello"</span>, myVar, <span class="hljs-number">3.14159</span>);
+<span class="hljs-keyword">var</span> myArray = [<span class="hljs-string">"Mango"</span>, <span class="hljs-string">"Apple"</span>, <span class="hljs-string">"Orange"</span>];
+</code></pre>
+<h3>Referring to Array Elements</h3>
+<p>You refer to an array’s elements by using the element’s ordinal number. For example, suppose you define the following array:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = [<span class="hljs-string">"Wind"</span>, <span class="hljs-string">"Rain"</span>, <span class="hljs-string">"Fire"</span>];
+</code></pre>
+<p>You then refer to the first element of the array as <code>myArray[0]</code> and the second element of the array as <code>myArray[1]</code>. The index of the elements begins with zero.</p>
+<p><strong>Note</strong>: The array operator (square brackets) is also used for accessing the array’s properties (arrays are also objects in JavaScript). For example,</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> arr = [<span class="hljs-string">"one"</span>, <span class="hljs-string">"two"</span>, <span class="hljs-string">"three"</span>];
+arr[<span class="hljs-number">2</span>];  <span class="hljs-comment">// three</span>
+arr[<span class="hljs-string">"length"</span>];  <span class="hljs-comment">// 3</span>
+</code></pre>
+<h3>Understanding length</h3>
+<p>At the implementation level, JavaScript’s arrays actually store their elements as standard object properties, using the array index as the property name. The <code>length</code> property is special; it always returns the index of the last element. Remember, Javascript Array indexes are 0-based: they start at 0, not 1. This means that the <code>length</code> property will be one more than the highest index stored in the array:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> cats = [];
+cats[<span class="hljs-number">30</span>] = [<span class="hljs-string">'Dusty'</span>];
+print(cats.length); <span class="hljs-comment">// 31</span>
+</code></pre>
+<p>You can also assign to the <code>length</code> property. Writing a value that is shorter than the number of stored items truncates the array; writing 0 empties it entirely:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> cats = [<span class="hljs-string">'Dusty'</span>, <span class="hljs-string">'Misty'</span>, <span class="hljs-string">'Twiggy'</span>];
+<span class="hljs-built_in">console</span>.log(cats.length); <span class="hljs-comment">// 3</span>
+
+cats.length = <span class="hljs-number">2</span>;
+<span class="hljs-built_in">console</span>.log(cats); <span class="hljs-comment">// prints "Dusty,Misty" - Twiggy has been removed</span>
+
+cats.length = <span class="hljs-number">0</span>;
+<span class="hljs-built_in">console</span>.log(cats); <span class="hljs-comment">// prints nothing; the cats array is empty</span>
+
+cats.length = <span class="hljs-number">3</span>;
+<span class="hljs-built_in">console</span>.log(cats);  <span class="hljs-comment">// [undefined, undefined, undefined]</span>
+</code></pre>
+<h3>Iterating over arrays</h3>
+<p>A common operation is to iterate over the values of an array, processing each one in some way. The simplest way to do this is as follows:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> colors = [<span class="hljs-string">'red'</span>, <span class="hljs-string">'green'</span>, <span class="hljs-string">'blue'</span>];
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; colors.length; i++) {
+  <span class="hljs-built_in">console</span>.log(colors[i]);
+}
+</code></pre>
+<p>If you know that none of the elements in your array evaluate to <code>false</code> in a boolean context — if your array consists only of <a href="/w/index.php?title=concepts/programming/javascript/core_objects/dom&amp;action=edit&amp;redlink=1">DOM</a> nodes for example, you can use a more efficient idiom:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> divs = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">'div'</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, div; div = divs[i]; i++) {
+  <span class="hljs-comment">/* Process div in some way */</span>
+}
+</code></pre>
+<p>This avoids the overhead of checking the length of the array, and ensures that the <code>div</code> variable is reassigned to the current item each time around the loop for added convenience.</p>
+<p><strong>Note</strong>: Introduced in JavaScript 1.6</p>
+<p>The <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/forEach&amp;action=edit&amp;redlink=1"><code>forEach()</code></a> method, introduced in JavaScript 1.6, provides another way of iterating over an array:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> colors = [<span class="hljs-string">'red'</span>, <span class="hljs-string">'green'</span>, <span class="hljs-string">'blue'</span>];
+colors.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">color</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(color);
+});
+</code></pre>
+<p>The function passed to <code>forEach</code> is executed once for every item in the array, with the array item passed as the argument to the function. Unassigned values are not iterated in a <code>forEach</code> loop.</p>
+<p>Since JavaScript elements are saved as standard object properties, it is not advisable to iterate through JavaScript arrays using for…in loops because normal elements and all enumerable properties will be listed.</p>
+<h3>Array Methods</h3>
+<p>The <code>Array</code> object has the following methods:</p>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/concat&amp;action=edit&amp;redlink=1"><code>concat()</code></a> joins two arrays and returns a new array.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>);
+myArray = myArray.concat(<span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>); <span class="hljs-comment">// myArray is now ["1", "2", "3", "a", "b", "c"]</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/join&amp;action=edit&amp;redlink=1"><code>join(deliminator = &quot;,&quot;)</code></a> joins all elements of an array into a string.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"Wind"</span>, <span class="hljs-string">"Rain"</span>, <span class="hljs-string">"Fire"</span>);
+<span class="hljs-keyword">var</span> list = myArray.join(<span class="hljs-string">" - "</span>); <span class="hljs-comment">// list is "Wind - Rain - Fire"</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/push&amp;action=edit&amp;redlink=1"><code>push()</code></a> adds one or more elements to the end of an array and returns the resulting length of the array.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>);
+ myArray.push(<span class="hljs-string">"3"</span>); <span class="hljs-comment">// MyArray is now ["1", "2", "3"]</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/pop&amp;action=edit&amp;redlink=1"><code>pop()</code></a> removes the last element from an array and returns that element.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>);
+<span class="hljs-keyword">var</span> last = myArray.pop(); <span class="hljs-comment">// MyArray is now ["1", "2"], last = "3"</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/shift&amp;action=edit&amp;redlink=1"><code>shift()</code></a> removes the first element from an array and returns that element</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span> (<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>);
+<span class="hljs-keyword">var</span> first = myArray.shift(); <span class="hljs-comment">// MyArray is now ["2", "3"], first is "1"</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/unshift&amp;action=edit&amp;redlink=1"><code>unshift()</code></a> adds one or more elements to the front of an array and returns the new length of the array.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span> (<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>);
+myArray.unshift(<span class="hljs-string">"4"</span>, <span class="hljs-string">"5"</span>); <span class="hljs-comment">// myArray becomes ["4", "5", "1", "2", "3"]</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/slice&amp;action=edit&amp;redlink=1"><code>slice(start_index, upto_index)</code></a> extracts a section of an array and returns a new array.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span> (<span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>, <span class="hljs-string">"d"</span>, <span class="hljs-string">"e"</span>);
+myArray = myArray.slice(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>); <span class="hljs-comment">/* starts at index 1 and extracts all elements
+  until index 3, returning [ "b", "c", "d"] */</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/splice&amp;action=edit&amp;redlink=1"><code>splice(index, count_to_remove, addelement1, addelement2, ...)</code></a> removes elements from an array and (optionally) replaces them.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span> (<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>, <span class="hljs-string">"4"</span>, <span class="hljs-string">"5"</span>);
+myArray.splice(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>, <span class="hljs-string">"d"</span>); <span class="hljs-comment">// MyArray is now ["1", "a", "b", "c", "d", "5"]</span>
+  <span class="hljs-comment">// This code started at index one (or where the "2" was), removed 3 elements there,</span>
+  <span class="hljs-comment">// and then inserted all consecutive elements in its place.</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/reverse&amp;action=edit&amp;redlink=1"><code>reverse()</code></a> transposes the elements of an array: the first array element becomes the last and the last becomes the first.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span> (<span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>);
+myArray.reverse(); <span class="hljs-comment">// transposes the array so that myArray = [ "3", "2", "1" ]</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/sort&amp;action=edit&amp;redlink=1"><code>sort()</code></a> sorts the elements of an array.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">"Wind"</span>, <span class="hljs-string">"Rain"</span>, <span class="hljs-string">"Fire"</span>);
+myArray.sort(); <span class="hljs-comment">// sorts the array so that myArrray = [ "Fire", "Rain", "Wind" ]</span>
+</code></pre>
+<p><code>sort()</code>, however by default assumes the elements are strings. If given an array of numbers, sort may return incorrect results.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">12</span>, <span class="hljs-number">16</span>, <span class="hljs-number">20</span>, <span class="hljs-number">24</span>);
+myArray.sort(); <span class="hljs-comment">// returns myArrray = [ 12, 16, 20, 24, 4, 8]</span>
+</code></pre>
+<p>The above is obviously incorrect. Fortunately <code>sort()</code> can also take a callback function to determine how array elements are compared. The function compares two values and returns one of three values:</p>
+<ul>
+<li>if <code>a</code> is less than <code>b</code> by the sorting system, return -1 (or any negative number)</li>
+<li>if <code>a</code> is greater than <code>b</code> by the sorting system, return 1 (or any positive number)</li>
+<li>if <code>a</code> and <code>b</code> are considered equivalent, return 0. For, instance, the following will sort by the last letter of an array:</li>
+</ul>
+<p>The above problem number sorting problem can then be easily handled like so.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> myArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">12</span>, <span class="hljs-number">16</span>, <span class="hljs-number">20</span>, <span class="hljs-number">24</span>);
+<span class="hljs-keyword">var</span> sortFn = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>)</span>{
+   <span class="hljs-keyword">return</span> a-b;
+ }
+myArray.sort(sortFn); <span class="hljs-comment">// returns myArrray = [4, 8, 12, 16, 20, 24] like it should</span>
+</code></pre>
+<p>The sorting function thus provides a way to sort arrays any way the user likes. For example say we want to sort the first string array in reverse alphabetical order.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> sortFn = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>)</span>{
+   <span class="hljs-keyword">if</span> (a[a.length - <span class="hljs-number">1</span>] &lt; b[b.length - <span class="hljs-number">1</span>]) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+   <span class="hljs-keyword">if</span> (a[a.length - <span class="hljs-number">1</span>] &gt; b[b.length - <span class="hljs-number">1</span>]) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+   <span class="hljs-keyword">if</span> (a[a.length - <span class="hljs-number">1</span>] == b[b.length - <span class="hljs-number">1</span>]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+ }
+ myArray.sort(sortFn); <span class="hljs-comment">// sorts the array so that myArray = ["Wind","Fire","Rain"]</span>
+</code></pre>
+<p><strong>Note</strong>: Introduced in JavaScript 1.6</p>
+<p>Compatibility code for older browsers can be found for each of these functions on the individual pages. Native browser support for these features in various browsers can be found <a href="http://www.robertnyman.com/javascript/">here.</a></p>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/indexOf&amp;action=edit&amp;redlink=1"><code>indexOf(searchElement[, fromIndex])</code></a> searches the array for <code>searchElement</code> and returns the index of the first match.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>];
+alert(a.indexOf(<span class="hljs-string">'b'</span>)); <span class="hljs-comment">// Alerts 1</span>
+<span class="hljs-comment">// Now try again, starting from after the last match</span>
+alert(a.indexOf(<span class="hljs-string">'b'</span>, <span class="hljs-number">2</span>)); <span class="hljs-comment">// Alerts 3</span>
+alert(a.indexOf(<span class="hljs-string">'z'</span>)); <span class="hljs-comment">// Alerts -1, because 'z' was not found</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/lastIndexOf&amp;action=edit&amp;redlink=1"><code>lastIndexOf(searchElement[, fromIndex])</code></a> works like <code>indexOf</code>, but starts at the end and searches backwards.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>];
+alert(a.lastIndexOf(<span class="hljs-string">'b'</span>)); <span class="hljs-comment">// Alerts 5</span>
+<span class="hljs-comment">// Now try again, starting from before the last match</span>
+alert(a.lastIndexOf(<span class="hljs-string">'b'</span>, <span class="hljs-number">4</span>)); <span class="hljs-comment">// Alerts 1</span>
+alert(a.lastIndexOf(<span class="hljs-string">'z'</span>)); <span class="hljs-comment">// Alerts -1</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/forEach&amp;action=edit&amp;redlink=1"><code>forEach(callback[, thisObject])</code></a> execute <code>callback</code> on every array item.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>];
+a.forEach(alert); <span class="hljs-comment">// Alerts each item in turn</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/map&amp;action=edit&amp;redlink=1"><code>map(callback[, thisObject])</code></a> returns a new array of the return value from executing <code>callback</code> on every array item.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a1 = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>];
+<span class="hljs-keyword">var</span> a2 = a1.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>) </span>{ <span class="hljs-keyword">return</span> item.toUpperCase(); });
+alert(a2); <span class="hljs-comment">// Alerts A,B,C</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/filter&amp;action=edit&amp;redlink=1"><code>filter(callback[, thisObject])</code></a> returns a new array containing the items for which callback returned true.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a1 = [<span class="hljs-string">'a'</span>, <span class="hljs-number">10</span>, <span class="hljs-string">'b'</span>, <span class="hljs-number">20</span>, <span class="hljs-string">'c'</span>, <span class="hljs-number">30</span>];
+<span class="hljs-keyword">var</span> a2 = a1.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> item == <span class="hljs-string">'number'</span>; });
+alert(a2); <span class="hljs-comment">// Alerts 10,20,30</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/every&amp;action=edit&amp;redlink=1"><code>every(callback[, thisObject])</code></a> returns true if <code>callback</code> returns true for every item in the array.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNumber</span>(<span class="hljs-params">value</span>)</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">'number'</span>;
+}
+<span class="hljs-keyword">var</span> a1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
+alert(a1.every(isNumber)); <span class="hljs-comment">// Alerts true</span>
+<span class="hljs-keyword">var</span> a2 = [<span class="hljs-number">1</span>, <span class="hljs-string">'2'</span>, <span class="hljs-number">3</span>];
+alert(a2.every(isNumber)); <span class="hljs-comment">// Alerts false</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/some&amp;action=edit&amp;redlink=1"><code>some(callback[, thisObject])</code></a> returns true if <code>callback</code> returns true for at least one item in the array.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNumber</span>(<span class="hljs-params">value</span>)</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value == <span class="hljs-string">'number'</span>;
+}
+<span class="hljs-keyword">var</span> a1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
+alert(a1.some(isNumber)); <span class="hljs-comment">// Alerts true</span>
+<span class="hljs-keyword">var</span> a2 = [<span class="hljs-number">1</span>, <span class="hljs-string">'2'</span>, <span class="hljs-number">3</span>];
+alert(a2.some(isNumber)); <span class="hljs-comment">// Alerts true</span>
+<span class="hljs-keyword">var</span> a3 = [<span class="hljs-string">'1'</span>, <span class="hljs-string">'2'</span>, <span class="hljs-string">'3'</span>];
+alert(a3.some(isNumber)); <span class="hljs-comment">// Alerts false</span>
+</code></pre>
+<p>The methods above that take a callback are known as <em>iterative methods</em>, because they iterate over the entire array in some fashion. Each one takes an optional second argument called <code>thisObject</code>. If provided, <code>thisObject</code> becomes the value of the <code>this</code> keyword inside the body of the callback function. If not provided, as with other cases where a function is invoked outside of an explicit object context, <code>this</code> will refer to the global object (<a href="/docs/en-US/docs/DOM/window"><code>window</code></a>).</p>
+<p>The callback function is actually called with three arguments. The first is the value of the current item, the second is its array index and the third is a reference to the array itself. JavaScript functions ignore any arguments that are not named in the parameter list so it is safe to provide a callback function that only takes a single argument, such as <code>alert</code>.</p>
+<p><strong>Note</strong>: Introduced in JavaScript 1.8</p>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/Reduce&amp;action=edit&amp;redlink=1"><code>reduce(callback[, initialValue])</code></a> applies <code>callback(firstValue, secondValue)</code> to reduce the list of items down to a single value.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>];
+<span class="hljs-keyword">var</span> total = a.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">first, second</span>) </span>{ <span class="hljs-keyword">return</span> first + second; }, <span class="hljs-number">0</span>);
+alert(total) <span class="hljs-comment">// Alerts 60</span>
+</code></pre>
+<p><a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/ReduceRight&amp;action=edit&amp;redlink=1"><code>reduceRight(callback[, initialValue])</code></a> works like <code>reduce()</code>, but starts with the last element.</p>
+<p><code>reduce</code> and <code>reduceRight</code> are the least obvious of the iterative array methods. They should be used for algorithms that combine two values recursively in order to reduce a sequence down to a single value.</p>
+<h3>Multi-Dimensional Arrays</h3>
+<p>Arrays can be nested, meaning that an array can contian another array as an element. Using this characteristic of JavaScript arrays, multi-dimensional arrays can be created.</p>
+<p>The following code creates a two-dimensional array:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">4</span>);
+<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+  a[i] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">4</span>);
+  <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">4</span>; j++) {
+    a[i][j] = <span class="hljs-string">"["</span> + i + <span class="hljs-string">","</span> + j + <span class="hljs-string">"]"</span>;
+  }
+}
+</code></pre>
+<p>This example creates an array with the following rows:</p>
+<pre><code>Row 0: [0,0] [0,1] [0,2] [0,3]
+Row 1: [1,0] [1,1] [1,2] [1,3]
+Row 2: [2,0] [2,1] [2,2] [2,3]
+Row 3: [3,0] [3,1] [3,2] [3,3]
+</code></pre>
+<h3>Arrays and Regular Expressions</h3>
+<p>When an array is the result of a match between a regular expression and a string, the array returns properties and elements that provide information about the match. An array is the return value of <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/RegExp/exec&amp;action=edit&amp;redlink=1"><code>RegExp.exec()</code></a>, <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/String/match&amp;action=edit&amp;redlink=1"><code>String.match()</code></a>, and <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/String/split&amp;action=edit&amp;redlink=1"><code>String.split()</code></a>. For information on using arrays with regular expressions, see <a href="/docs/concepts/programming/javascript/regex">Regular Expressions</a>.</p>
+<h3>Working with Array-like objects</h3>
+<p><strong>Note</strong>: Introduced in JavaScript 1.6</p>
+<p>Some JavaScript objects, such as the <a href="/w/index.php?title=concepts/programming/javascript/core_objects/dom/NodeList&amp;action=edit&amp;redlink=1"><code>NodeList</code></a> returned by <a href="/w/index.php?title=concepts/programming/javascript/core_objects/dom/document.getElementsByTagName&amp;action=edit&amp;redlink=1"><code>document.getElementsByTagName()</code></a> or the <a href="/w/index.php?title=concepts/programming/javascript/core_objects/sj/functions/arguments&amp;action=edit&amp;redlink=1"><code>arguments</code></a> object made available within the body of a function, look and behave like arrays on the surface but do not share all of their methods. The <code>arguments</code> object provides a <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/functions/arguments/length&amp;action=edit&amp;redlink=1"><code>length</code></a> attribute but does not implement the <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/Array/forEach&amp;action=edit&amp;redlink=1"><code>forEach()</code></a> method, for example.</p>
+<p>Array generics, introduced in JavaScript 1.6, provide a way of running <code>Array</code> methods against other array-like objects. Each standard array method has a corresponding method on the <code>Array</code> object itself; for example:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alertArguments</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">Array</span>.forEach(<span class="hljs-built_in">arguments</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>) </span>{
+    alert(item);
+  });
+}
+</code></pre>
+<p>These generic methods can be emulated more verbosely in older versions of JavaScript using the call method provided by JavaScript function objects:</p>
+<pre><code class="js"><span class="hljs-built_in">Array</span>.prototype.forEach.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">item</span>) </span>{
+  alert(item);
+});
+</code></pre>
+<p>Array generic methods can be used on strings as well, since they provide sequential access to their characters in a similar way to arrays:</p>
+<pre><code class="js"><span class="hljs-built_in">Array</span>.forEach(<span class="hljs-string">"a string"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">chr</span>) </span>{
+  alert(chr);
+});
+</code></pre>
+<p>Here are some further examples of applying array methods to strings, also taking advantage of expression closures:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> str = <span class="hljs-string">'abcdef'</span>;
+<span class="hljs-keyword">var</span> consonantsOnlyStr = <span class="hljs-built_in">Array</span>.filter(str, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">c</span>) !(<span class="hljs-params">/[aeiou]/i</span>).<span class="hljs-title">test</span>(<span class="hljs-params">c</span>)).<span class="hljs-title">join</span>(<span class="hljs-params">''</span>); // '<span class="hljs-title">bcdf</span>'
+<span class="hljs-title">var</span> <span class="hljs-title">vowelsPresent</span> = <span class="hljs-title">Array</span>.<span class="hljs-title">some</span>(<span class="hljs-params">str, function (c</span>) (<span class="hljs-params">/[aeiou]/i</span>).<span class="hljs-title">test</span>(<span class="hljs-params">c</span>)); // <span class="hljs-title">true</span>
+<span class="hljs-title">var</span> <span class="hljs-title">allVowels</span> = <span class="hljs-title">Array</span>.<span class="hljs-title">every</span>(<span class="hljs-params">str, function (c</span>) (<span class="hljs-params">/[aeiou]/i</span>).<span class="hljs-title">test</span>(<span class="hljs-params">c</span>)); // <span class="hljs-title">false</span>
+<span class="hljs-title">var</span> <span class="hljs-title">interpolatedZeros</span> = <span class="hljs-title">Array</span>.<span class="hljs-title">map</span>(<span class="hljs-params">str, function (c</span>) <span class="hljs-title">c</span>+'0').<span class="hljs-title">join</span>(<span class="hljs-params">''</span>); // '<span class="hljs-title">a0b0c0d0e0f0</span>'
+<span class="hljs-title">var</span> <span class="hljs-title">numerologicalValue</span> = <span class="hljs-title">Array</span>.<span class="hljs-title">reduce</span>(<span class="hljs-params">str, function (c, c2</span>) <span class="hljs-title">c</span>+<span class="hljs-title">c2</span>.<span class="hljs-title">toLowerCase</span>(<span class="hljs-params"></span>).<span class="hljs-title">charCodeAt</span>(<span class="hljs-params"></span>)-96, 0);
+// 21 (<span class="hljs-params">reduce(</span>) <span class="hljs-title">since</span> <span class="hljs-title">JS</span> <span class="hljs-title">v1</span>.8)
+</span></code></pre>
+<p>Note that <code>filter</code> and <code>map</code> do not automatically return the characters back into being members of a string in the return result; an array is returned, so we must use <code>join</code> to return back to a string.</p>
+<h3>Array comprehensions</h3>
+<p><strong>Note</strong>: Introduced in JavaScript 1.7</p>
+<p>Introduced in JavaScript 1.7, array comprehensions provide a useful shortcut for constructing a new array based on the contents of another. Comprehensions can often be used in place of calls to <code>map()</code> and <code>filter()</code>, or as a way of combining the two.</p>
+<p>The following comprehension takes an array of numbers and creates a new array of the double of each of those numbers.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];
+<span class="hljs-keyword">var</span> doubled = [i * <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> each (i <span class="hljs-keyword">in</span> numbers)];
+alert(doubled); <span class="hljs-comment">// Alerts 2,4,6,8</span>
+</code></pre>
+<p>This is equivalent to the following <code>map()</code> operation:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> doubled = numbers.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i</span>) </span>{ <span class="hljs-keyword">return</span> i * <span class="hljs-number">2</span>; });
+</code></pre>
+<p>Comprehensions can also be used to select items that match a particular expression. Here is a comprehension which selects only even numbers:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">21</span>, <span class="hljs-number">22</span>, <span class="hljs-number">30</span>];
+<span class="hljs-keyword">var</span> evens = [i <span class="hljs-keyword">for</span> each (i <span class="hljs-keyword">in</span> numbers) <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)];
+alert(evens); <span class="hljs-comment">// Alerts 2,22,30</span>
+</code></pre>
+<p><code>filter()</code> can be used for the same purpose:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> evens = numbers.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i</span>) </span>{ <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>; });
+</code></pre>
+<p><code>map()</code> and <code>filter()</code> style operations can be combined into a single array comprehension. Here is one that filters just the even numbers, then creates an array containing their doubles:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">21</span>, <span class="hljs-number">22</span>, <span class="hljs-number">30</span>];
+<span class="hljs-keyword">var</span> doubledEvens = [i * <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> each (i <span class="hljs-keyword">in</span> numbers) <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)];
+alert(doubledEvens); <span class="hljs-comment">// Alerts 4,44,60</span>
+</code></pre>
+<p>The square brackets of an array comprehension introduce an implicit block for scoping purposes. New variables (such as i in the example) are treated as if they had been declared using <code>let</code>. This means that they will not be available outside of the comprehension.</p>
+<p>The input to an array comprehension does not itself need to be an array; <a href="/w/index.php?title=concepts/programming/javascript/core_objects/guides/JavaScript/Iterators&amp;action=edit&amp;redlink=1">iterators and generators</a> can also be used.</p>
+<p>Even strings may be used as input; to achieve the filter and map actions (under Array-like objects) above:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> str = <span class="hljs-string">'abcdef'</span>;
+<span class="hljs-keyword">var</span> consonantsOnlyStr = [c <span class="hljs-keyword">for</span> each (c <span class="hljs-keyword">in</span> str) <span class="hljs-keyword">if</span> (!(<span class="hljs-regexp">/[aeiouAEIOU]/</span>).test(c))  ].join(<span class="hljs-string">''</span>); <span class="hljs-comment">// 'bcdf'</span>
+<span class="hljs-keyword">var</span> interpolatedZeros = [c+<span class="hljs-string">'0'</span> <span class="hljs-keyword">for</span> each (c <span class="hljs-keyword">in</span> str) ].join(<span class="hljs-string">''</span>); <span class="hljs-comment">// 'a0b0c0d0e0f0'</span>
+</code></pre>
+<p>Again, the input form is not preserved, so we have to use <code>join()</code> to revert back to a string.</p>
+<h2>Boolean Object</h2>
+<p>The <code>Boolean</code> object is a wrapper around the primitive Boolean data type. Use the following syntax to create a <code>Boolean</code> object:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> booleanObjectName = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>(value);
+</code></pre>
+<p>Do not confuse the primitive Boolean values <code>true</code> and <code>false</code> with the true and false values of the <code>Boolean</code> object. Any object whose value is not <code>undefined</code>, <code>null</code>, <code>0</code>, <code>NaN</code>, or the empty string , including a <code>Boolean</code> object whose value is false, evaluates to true when passed to a conditional statement. See <a href="/w/index.php?title=guides/JavaScript/Statements&amp;action=edit&amp;redlink=1">if…else Statement</a> for more information.</p>
+<h2>Date Object</h2>
+<p>JavaScript does not have a date data type. However, you can use the <code>Date</code> object and its methods to work with dates and times in your applications. The <code>Date</code> object has a large number of methods for setting, getting, and manipulating dates. It does not have any properties.</p>
+<p>JavaScript handles dates similarly to Java. The two languages have many of the same date methods, and both languages store dates as the number of milliseconds since January 1, 1970, 00:00:00.</p>
+<p>The <code>Date</code> object range is -100,000,000 days to 100,000,000 days relative to 01 January, 1970 UTC.</p>
+<p>To create a <code>Date</code> object:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> dateObjectName = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>([parameters]);
+</code></pre>
+<p>where <code>dateObjectName</code> is the name of the <code>Date</code> object being created; it can be a new object or a property of an existing object.</p>
+<p>Calling Date without the new keyword simply converts the provided date to a string representation.</p>
+<p>The <code>parameters</code> in the preceding syntax can be any of the following:</p>
+<ul>
+<li>Nothing: creates today’s date and time. For example, <code>today = new Date();</code>.</li>
+<li>A string representing a date in the following form: “Month day, year hours:minutes:seconds.” For example, <code>var Xmas95 = new Date(&quot;December 25, 1995 13:30:00&quot;)</code>. If you omit hours, minutes, or seconds, the value will be set to zero.</li>
+<li>A set of integer values for year, month, and day. For example, <code>var Xmas95 = new Date(1995, 11, 25)</code>.</li>
+<li>A set of integer values for year, month, day, hour, minute, and seconds. For example, <code>var Xmas95 = new Date(1995, 11, 25, 9, 30, 0);</code>.</li>
+</ul>
+<p><strong>JavaScript 1.2 and earlier</strong><br>
+The <code>Date</code> object behaves as follows:</p>
+<ul>
+<li>Dates prior to 1970 are not allowed.</li>
+<li>JavaScript depends on platform-specific date facilities and behavior; the behavior of the <code>Date</code> object varies from platform to platform.</li>
+</ul>
+<h3>Methods of the Date Object</h3>
+<p>The <code>Date</code> object methods for handling dates and times fall into these broad categories:</p>
+<ul>
+<li>“set” methods, for setting date and time values in <code>Date</code> objects.</li>
+<li>“get” methods, for getting date and time values from <code>Date</code> objects.</li>
+<li>“to” methods, for returning string values from <code>Date</code> objects.</li>
+<li>parse and UTC methods, for parsing <code>Date</code> strings.</li>
+</ul>
+<p>With the “get” and “set” methods you can get and set seconds, minutes, hours, day of the month, day of the week, months, and years separately. There is a <code>getDay</code> method that returns the day of the week, but no corresponding <code>setDay</code> method, because the day of the week is set automatically. These methods use integers to represent these values as follows:</p>
+<ul>
+<li>Seconds and minutes: 0 to 59</li>
+<li>Hours: 0 to 23</li>
+<li>Day: 0 (Sunday) to 6 (Saturday)</li>
+<li>Date: 1 to 31 (day of the month)</li>
+<li>Months: 0 (January) to 11 (December)</li>
+<li>Year: years since 1900</li>
+</ul>
+<p>For example, suppose you define the following date:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> Xmas95 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">"December 25, 1995"</span>);
+</code></pre>
+<p>Then <code>Xmas95.getMonth()</code> returns 11, and <code>Xmas95.getFullYear()</code> returns 1995.</p>
+<p>The <code>getTime</code> and <code>setTime</code> methods are useful for comparing dates. The <code>getTime</code> method returns the number of milliseconds since January 1, 1970, 00:00:00 for a <code>Date</code> object.</p>
+<p>For example, the following code displays the number of days left in the current year:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> today = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+<span class="hljs-keyword">var</span> endYear = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">1995</span>, <span class="hljs-number">11</span>, <span class="hljs-number">31</span>, <span class="hljs-number">23</span>, <span class="hljs-number">59</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999</span>); <span class="hljs-comment">// Set day and month</span>
+endYear.setFullYear(today.getFullYear()); <span class="hljs-comment">// Set year to this year</span>
+<span class="hljs-keyword">var</span> msPerDay = <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>; <span class="hljs-comment">// Number of milliseconds per day</span>
+<span class="hljs-keyword">var</span> daysLeft = (endYear.getTime() - today.getTime()) / msPerDay;
+<span class="hljs-keyword">var</span> daysLeft = <span class="hljs-built_in">Math</span>.round(daysLeft); <span class="hljs-comment">//returns days left in the year</span>
+</code></pre>
+<p>This example creates a <code>Date</code> object named <code>today</code> that contains today’s date. It then creates a <code>Date</code> object named <code>endYear</code> and sets the year to the current year. Then, using the number of milliseconds per day, it computes the number of days between <code>today</code> and <code>endYear</code>, using <code>getTime</code> and rounding to a whole number of days.</p>
+<p>The <code>parse</code> method is useful for assigning values from date strings to existing <code>Date</code> objects. For example, the following code uses <code>parse</code> and <code>setTime</code> to assign a date value to the <code>IPOdate</code> object:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> IPOdate = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+IPOdate.setTime(<span class="hljs-built_in">Date</span>.parse(<span class="hljs-string">"Aug 9, 1995"</span>));
+</code></pre>
+<h3>Using the Date Object: an Example</h3>
+<p>In the following example, the function <code>JSClock()</code> returns the time in the format of a digital clock.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">JSClock</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> time = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+  <span class="hljs-keyword">var</span> hour = time.getHours();
+  <span class="hljs-keyword">var</span> minute = time.getMinutes();
+  <span class="hljs-keyword">var</span> second = time.getSeconds();
+  <span class="hljs-keyword">var</span> temp = <span class="hljs-string">""</span> + ((hour &gt; <span class="hljs-number">12</span>) ? hour - <span class="hljs-number">12</span> : hour);
+  <span class="hljs-keyword">if</span> (hour == <span class="hljs-number">0</span>)
+    temp = <span class="hljs-string">"12"</span>;
+  temp += ((minute &lt; <span class="hljs-number">10</span>) ? <span class="hljs-string">":0"</span> : <span class="hljs-string">":"</span>) + minute;
+  temp += ((second &lt; <span class="hljs-number">10</span>) ? <span class="hljs-string">":0"</span> : <span class="hljs-string">":"</span>) + second;
+  temp += (hour &gt;= <span class="hljs-number">12</span>) ? <span class="hljs-string">" P.M."</span> : <span class="hljs-string">" A.M."</span>;
+  <span class="hljs-keyword">return</span> temp;
+ }
+</code></pre>
+<p>The <code>JSClock</code> function first creates a new <code>Date</code> object called <code>time</code>; since no arguments are given, time is created with the current date and time. Then calls to the <code>getHours</code>, <code>getMinutes</code>, and <code>getSeconds</code> methods assign the value of the current hour, minute and seconds to <code>hour</code>, <code>minute</code>, and <code>second</code>.</p>
+<p>The next four statements build a string value based on the time. The first statement creates a variable <code>temp</code>, assigning it a value using a conditional expression; if <code>hour</code> is greater than 12, (<code>hour - 12</code>), otherwise simply hour, unless hour is 0, in which case it becomes 12.</p>
+<p>The next statement appends a <code>minute</code> value to <code>temp</code>. If the value of <code>minute</code> is less than 10, the conditional expression adds a string with a preceding zero; otherwise it adds a string with a demarcating colon. Then a statement appends a seconds value to <code>temp</code> in the same way.</p>
+<p>Finally, a conditional expression appends “PM” to <code>temp</code> if <code>hour</code> is 12 or greater; otherwise, it appends “AM” to <code>temp</code>.</p>
+<h2>Function Object</h2>
+<p>The predefined <code>Function</code> object specifies a string of JavaScript code to be compiled as a function.</p>
+<p>To create a <code>Function</code> object:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> functionObjectName = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span> ([arg1, arg2, ... argn], functionBody);
+</code></pre>
+<p><code>functionObjectName</code> is the name of a variable or a property of an existing object. It can also be an object followed by a lowercase event handler name, such as <code>window.onerror</code>.</p>
+<p><code>arg1</code>, <code>arg2</code>, … <code>argn</code> are arguments to be used by the function as formal argument names. Each must be a string that corresponds to a valid JavaScript identifier; for example “x” or &quot;theForm&quot;.</p>
+<p><code>functionBody</code> is a string specifying the JavaScript code to be compiled as the function body.</p>
+<p><code>Function</code> objects are evaluated each time they are used. This is less efficient than declaring a function and calling it within your code, because declared functions are compiled.</p>
+<p>In addition to defining functions as described here, you can also use the <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/statements/function&amp;action=edit&amp;redlink=1"><code>function</code> statement</a> and the function expression. See the <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js&amp;action=edit&amp;redlink=1">JavaScript Reference</a> for more information.</p>
+<p>The following code assigns a function to the variable <code>setBGColor</code>. This function sets the current document’s background color.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> setBGColor = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">"document.bgColor = 'antiquewhite'"</span>);
+</code></pre>
+<p>To call the <code>Function</code> object, you can specify the variable name as if it were a function. The following code executes the function specified by the <code>setBGColor</code> variable:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> colorChoice=<span class="hljs-string">"antiquewhite"</span>;
+<span class="hljs-keyword">if</span> (colorChoice==<span class="hljs-string">"antiquewhite"</span>) {setBGColor()}
+</code></pre>
+<p>You can assign the function to an event handler in either of the following ways:</p>
+<pre><code class="js"><span class="hljs-built_in">document</span>.form1.colorButton.onclick = setBGColor;
+</code></pre>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">INPUT</span> <span class="hljs-attribute">NAME</span>=<span class="hljs-value">"colorButton"</span> <span class="hljs-attribute">TYPE</span>=<span class="hljs-value">"button"</span>
+   <span class="hljs-attribute">VALUE</span>=<span class="hljs-value">"Change background color"</span>
+   <span class="hljs-attribute">onClick</span>=<span class="hljs-value">"setBGColor()"</span>&gt;</span>
+</code></pre>
+<p>Creating the variable <code>setBGColor</code> shown above is similar to declaring the following function:</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setBGColor</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">document</span>.bgColor = <span class="hljs-string">'antiquewhite'</span>;
+}
+</code></pre>
+<p>Assigning a function to a variable is similar to declaring a function, but there are differences:</p>
+<ul>
+<li>When you assign a function to a variable using <code>var setBGColor = new Function(&quot;...&quot;)</code>, <code>setBGColor</code> is a variable for which the current value is a reference to the function created with <code>new Function()</code>.</li>
+<li>When you create a function using <code>function setBGColor() {...}</code>, <code>setBGColor</code> is not a variable, it is the name of a function.</li>
+</ul>
+<p>You can nest a function within a function. The nested (inner) function is private to its containing (outer) function:</p>
+<ul>
+<li>The inner function can be accessed only from statements in the outer function.</li>
+<li>The inner function can use the arguments and variables of the outer function. The outer function cannot use the arguments and variables of the inner function.</li>
+</ul>
+<h2>Math Object</h2>
+<p>The predefined <code>Math</code> object has properties and methods for mathematical constants and functions. For example, the <code>Math</code> object’s <code>PI</code> property has the value of pi (3.141…), which you would use in an application as</p>
+<pre><code>Math.PI
+</code></pre>
+<p>Similarly, standard mathematical functions are methods of <code>Math</code>. These include trigonometric, logarithmic, exponential, and other functions. For example, if you want to use the trigonometric function sine, you would write</p>
+<pre><code>Math.sin(1.56)
+</code></pre>
+<p>Note that all trigonometric methods of <code>Math</code> take arguments in radians.</p>
+<p>The following table summarizes the <code>Math</code> object’s methods.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>abs</code></td><td style="text-align:left">Absolute value</td></tr>
+<tr><td style="text-align:left"><code>sin</code>, <code>cos</code>, <code>tan</code></td><td style="text-align:left">Standard trigonometric functions; argument in radians</td></tr>
+<tr><td style="text-align:left"><code>acos</code>, <code>asin</code>, <code>atan</code>, <code>atan2</code></td><td style="text-align:left">Inverse trigonometric functions; return values in radians</td></tr>
+<tr><td style="text-align:left"><code>exp</code>, <code>log</code></td><td style="text-align:left">Exponential and natural logarithm, base <code>e</code></td></tr>
+<tr><td style="text-align:left"><code>ceil</code></td><td style="text-align:left">Returns least integer greater than or equal to argument</td></tr>
+<tr><td style="text-align:left"><code>floor</code></td><td style="text-align:left">Returns greatest integer less than or equal to argument</td></tr>
+<tr><td style="text-align:left"><code>min</code>, <code>max</code></td><td style="text-align:left">Returns greater or lesser (respectively) of two arguments</td></tr>
+<tr><td style="text-align:left"><code>pow</code></td><td style="text-align:left">Exponential; first argument is base, second is exponent</td></tr>
+<tr><td style="text-align:left"><code>random</code></td><td style="text-align:left">Returns a random number between 0 and 1.</td></tr>
+<tr><td style="text-align:left"><code>round</code></td><td style="text-align:left">Rounds argument to nearest integer</td></tr>
+<tr><td style="text-align:left"><code>sqrt</code></td><td style="text-align:left">Square root</td></tr>
+</tbody>
+</table>
+<p>Unlike many other objects, you never create a <code>Math</code> object of your own. You always use the predefined <code>Math</code> object.</p>
+<h2>Number Object</h2>
+<p>The <code>Number</code> object has properties for numerical constants, such as maximum value, not-a-number, and infinity. You cannot change the values of these properties and you use them as follows:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> biggestNum = <span class="hljs-built_in">Number</span>.MAX_VALUE;
+<span class="hljs-keyword">var</span> smallestNum = <span class="hljs-built_in">Number</span>.MIN_VALUE;
+<span class="hljs-keyword">var</span> infiniteNum = <span class="hljs-built_in">Number</span>.POSITIVE_INFINITY;
+<span class="hljs-keyword">var</span> negInfiniteNum = <span class="hljs-built_in">Number</span>.NEGATIVE_INFINITY;
+<span class="hljs-keyword">var</span> notANum = <span class="hljs-built_in">Number</span>.NaN;
+</code></pre>
+<p>You always refer to a property of the predefined <code>Number</code> object as shown above, and not as a property of a <code>Number</code> object you create yourself.</p>
+<p>The following table summarizes the <code>Number</code> object’s properties.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>MAX_VALUE</code></td><td style="text-align:left">The largest representable number</td></tr>
+<tr><td style="text-align:left"><code>MIN_VALUE</code></td><td style="text-align:left">The smallest representable number</td></tr>
+<tr><td style="text-align:left"><code>NaN</code></td><td style="text-align:left">Special “not a number” value</td></tr>
+<tr><td style="text-align:left"><code>NEGATIVE_INFINITY</code></td><td style="text-align:left">Special negative infinite value; returned on overflow</td></tr>
+<tr><td style="text-align:left"><code>POSITIVE_INFINITY</code></td><td style="text-align:left">Special positive infinite value; returned on overflow</td></tr>
+</tbody>
+</table>
+<p>The Number prototype provides methods for retrieving information from Number objects in various formats. The following table summarizes the methods of <code>Number.prototype</code>.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>toExponential</code></td><td style="text-align:left">Returns a string representing the number in exponential notation.</td></tr>
+<tr><td style="text-align:left"><code>toFixed</code></td><td style="text-align:left">Returns a string representing the number in fixed-point notation.</td></tr>
+<tr><td style="text-align:left"><code>toPrecision</code></td><td style="text-align:left">Returns a string representing the number to a specified precision in fixed-point notation.</td></tr>
+<tr><td style="text-align:left"><code>toSource</code></td><td style="text-align:left">Returns an object literal representing the specified <code>Number</code> object; you can use this value to create a new object. Overrides the <code>Object.toSource</code> method.</td></tr>
+<tr><td style="text-align:left"><code>toString</code></td><td style="text-align:left">Returns a string representing the specified object. Overrides the <code>Object.toString</code>method.</td></tr>
+<tr><td style="text-align:left"><code>valueOf</code></td><td style="text-align:left">Returns the primitive value of the specified object. Overrides the <code>Object.valueOf</code>method.</td></tr>
+</tbody>
+</table>
+<h2>RegExp Object</h2>
+<p>The <code>RegExp</code> object lets you work with regular expressions. It is described in <a href="/docs/concepts/programming/javascript/regex">RegExp</a>.</p>
+<h2>String Object</h2>
+<p>The <code>String</code> object is a wrapper around the string primitive data type. Do not confuse a string literal with the <code>String</code> object. For example, the following code creates the string literal <code>s1</code> and also the <code>String</code> object <code>s2</code>:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> s1 = <span class="hljs-string">"foo"</span>; <span class="hljs-comment">//creates a string literal value</span>
+<span class="hljs-keyword">var</span> s2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"foo"</span>); <span class="hljs-comment">//creates a String object</span>
+</code></pre>
+<p>You can call any of the methods of the <code>String</code> object on a string literal value—JavaScript automatically converts the string literal to a temporary <code>String</code> object, calls the method, then discards the temporary <code>String</code> object. You can also use the <code>String.length</code> property with a string literal.</p>
+<p>You should use string literals unless you specifically need to use a <code>String</code> object, because <code>String</code> objects can have counterintuitive behavior. For example:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> s1 = <span class="hljs-string">"2 + 2"</span>; <span class="hljs-comment">//creates a string literal value</span>
+<span class="hljs-keyword">var</span> s2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"2 + 2"</span>); <span class="hljs-comment">//creates a String object</span>
+<span class="hljs-built_in">eval</span>(s1); <span class="hljs-comment">//returns the number 4</span>
+<span class="hljs-built_in">eval</span>(s2); <span class="hljs-comment">//returns the string "2 + 2"</span>
+</code></pre>
+<p>A <code>String</code> object has one property, <code>length</code>, that indicates the number of characters in the string. For example, the following code assigns <code>x</code> the value 13, because “Hello, World!” has 13 characters:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> mystring = <span class="hljs-string">"Hello, World!"</span>;
+<span class="hljs-keyword">var</span> x = mystring.length;
+</code></pre>
+<p>A <code>String</code> object has two types of methods: those that return a variation on the string itself, such as <code>substring</code> and <code>toUpperCase</code>, and those that return an HTML-formatted version of the string, such as <code>bold</code> and <code>link</code>.</p>
+<p>For example, using the previous example, both <code>mystring.toUpperCase()</code> and <code>&quot;hello, world!&quot;.toUpperCase()</code> return the string “HELLO, WORLD!”</p>
+<p>The <code>substring</code> method takes two arguments and returns a subset of the string between the two arguments. Using the previous example, <code>mystring.substring(4, 9)</code> returns the string &quot;o, Wo&quot;. See the <a href="/w/index.php?title=concepts/programming/javascript/core_objects/js/objects/String/substring&amp;action=edit&amp;redlink=1"><code>substring</code></a> method of the <code>String</code> object in the JavaScript Reference for more information.</p>
+<p>The <code>String</code> object also has a number of methods for automatic HTML formatting, such as <code>bold</code> to create boldface text and <code>link</code> to create a hyperlink. For example, you could create a hyperlink to a hypothetical URL with the <code>link</code> method as follows:</p>
+<pre><code class="js">mystring.link(<span class="hljs-string">"http://www.helloworld.com"</span>);
+</code></pre>
+<p>The following table summarizes the methods of <code>String</code> objects.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>anchor</code></td><td style="text-align:left">Creates HTML named anchor.</td></tr>
+<tr><td style="text-align:left"><code>big</code>, <code>blink</code>, <code>bold</code>, <code>fixed</code>, <code>italics</code>, <code>small</code>, <code>strike</code>, <code>sub</code>, <code>sup</code></td><td style="text-align:left">Create HTML formatted string.</td></tr>
+<tr><td style="text-align:left"><code>charAt</code>, <code>charCodeAt</code></td><td style="text-align:left">Return the character or character code at the specified position in string.</td></tr>
+<tr><td style="text-align:left"><code>indexOf</code>, <code>lastIndexOf</code></td><td style="text-align:left">Return the position of specified substring in the string or last position of specified substring, respectively.</td></tr>
+<tr><td style="text-align:left"><code>link</code></td><td style="text-align:left">Creates HTML hyperlink.</td></tr>
+<tr><td style="text-align:left"><code>concat</code></td><td style="text-align:left">Combines the text of two strings and returns a new string.</td></tr>
+<tr><td style="text-align:left"><code>fromCharCode</code></td><td style="text-align:left">Constructs a string from the specified sequence of Unicode values. This is a method of the String class, not a String instance.</td></tr>
+<tr><td style="text-align:left"><code>split</code></td><td style="text-align:left">Splits a <code>String</code> object into an array of strings by separating the string into substrings.</td></tr>
+<tr><td style="text-align:left"><code>slice</code></td><td style="text-align:left">Extracts a section of an string and returns a new string.</td></tr>
+<tr><td style="text-align:left"><code>substring</code>, <code>substr</code></td><td style="text-align:left">Return the specified subset of the string, either by specifying the start and end indexes or the start index and a length.</td></tr>
+<tr><td style="text-align:left"><code>match</code>, <code>replace</code>, <code>search</code></td><td style="text-align:left">Work with regular expressions.</td></tr>
+<tr><td style="text-align:left"><code>toLowerCase</code>, <code>toUpperCase</code></td><td style="text-align:left">Return the string in all lowercase or all uppercase, respectively.</td></tr>
+</tbody>
+</table>
+<p><span style="float: left"><a href="/w/index.php?title=concepts/programming/javascript/core_objects/guides/JavaScript/Working_with_Objects&amp;action=edit&amp;redlink=1">« Previous</a></span><a href="/w/index.php?title=concepts/programming/javascript/core_objects/guides/JavaScript/Details_of_the_Object_Model&amp;action=edit&amp;redlink=1">Next »</a></p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>This article contains content originally from external sources, including ones licensed under the CC-BY-SA license. <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/public/c/c8/cc-by-sa-small-wpd.png" alt="cc-by-sa-small-wpd.png"></a></p>
+</li>
+	<li><p>Portions of this content copyright 2012 Mozilla Contributors. This article contains work licensed under the Creative Commons Attribution-Sharealike License v2.5 or later. The original work is available at Mozilla Developer Network: <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Predefined_Core_Objects">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

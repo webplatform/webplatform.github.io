@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exploring the FileSystem APIs · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An introduction to the HTML5 FileSystem API." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/file_filesystem/">file filesystem</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Exploring the FileSystem APIs</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#ericbidelman">Eric Bidelman</a></strong><br>
+Originally published Jan. 4, 2011, updated Jan. 27, 2012</p>
+<h2>Summary</h2>
+<p>An introduction to the HTML5 FileSystem API.</p>
+<h2>Introduction</h2>
+<p>I’ve always thought it would be handy if web applications could read and write files and directories. As we move from offline to online, applications are becoming more complex and the lack of file system APIs has been a hindrance for moving the web forward. Storing or interacting with binary data shouldn’t be limited to the desktop. Thankfully, it no longer is, thanks to the <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/">FileSystem API</a>. With the FileSystem API, a web app can safely create, read, navigate, and write to a sandboxed section of the user’s local file system.</p>
+<p>The API is broken up into various themes:</p>
+<ul>
+<li>Reading and manipulating files: <code>File</code>/<code>Blob</code>, <code>FileList</code>, <code>FileReader</code></li>
+<li>Creating and writing files: <code>Blob()</code>, <code>FileWriter</code></li>
+<li>Directories and file system access: <code>DirectoryReader</code>, <code>FileEntry</code>/<code>DirectoryEntry</code>, <code>LocalFileSystem</code></li>
+</ul>
+<h3>Browser support &amp; storage limitations</h3>
+<p>At the time of this writing, Google Chrome has the only working implementation of the FileSystem API. A dedicated browser UI does not yet exist for file/quota management. Storing data on the user’s system may require your app to [#toc-requesting-quota request quota]. However, for testing, Chrome can be run with the <code>--unlimited-quota-for-files</code> flag. Furthermore, if you’re building an app or extension for the Chrome Web Store, the <code>unlimitedStorage</code> <a href="http://code.google.com/chrome/extensions/manifest.html">manifest file</a> permission can be used in place of requesting quota. Eventually, users will receive a permission dialog to grant, deny, or increase storage for an app.</p>
+<p>You may need the <code>--allow-file-access-from-files</code> flag if you’re debugging your app from <code>file://</code>. Not using these flags will result in a <code>SECURITY_ERR</code> or <code>QUOTA_EXCEEDED_ERR</code> FileError.</p>
+<h2>Requesting a file system</h2>
+<p>A web app can request access to a sandboxed file system by calling <code>window.requestFileSystem()</code>:</p>
+<pre><code> // Note: The file system is prefixed in Google Chrome:
+ window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+
+ window.requestFileSystem(type, size, successCallback, opt_errorCallback);
+</code></pre>
+<p>The passed parameters are:</p>
+<dl>
+<dt><code>type</code></dt>
+<dd>Whether the file storage should be persistent. Possible values are <code>window.TEMPORARY</code> or <code>window.PERSISTENT</code>. Data stored using <code>TEMPORARY</code> can be removed at the browser’s discretion (for example if more space is needed). <code>PERSISTENT</code> storage cannot be cleared unless explicitly authorized by the user or the app and requires the user to grant quota to your app. See [#toc-requesting-quota requesting quota].<br>
+<code>size</code>
+</dd>
+<dd>Size (in bytes) the app will require for storage.<br>
+<code>successCallback</code>
+</dd>
+<dd>Callback that is invoked on successful request of a file system. Its argument is a <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/#idl-def-FileSystem"><code>FileSystem</code></a> object.<br>
+<code>opt_errorCallback</code>
+</dd>
+<dd>Optional callback for handling errors or when the request to obtain the file system is denied. Its argument is a <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/#idl-def-FileError"><code>FileError</code></a> object.
+</dd>
+</dl>
+<p>If you’re calling <code>requestFileSystem()</code> for the first time, new storage is created for your app. It’s important to remember that this file system is sandboxed, meaning one web app cannot access another app’s files. This also means you cannot read/write files to an arbitrary folder on the user’s hard drive (for example My Pictures, My Documents, etc.).</p>
+<p>Example usage:</p>
+<pre><code> function onInitFs(fs) {
+   console.log('Opened file system: ' + fs.name);
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 5*1024*1024 /*5MB*/, onInitFs, errorHandler);
+</code></pre>
+<p>The FileSystem specification also defines a synchronous API <code>LocalFileSystemSync</code> interface that is intended to be used in Web Workers. However, this tutorial will not cover the synchronous API.</p>
+<p>Throughout this article, we’ll use the same handler for processing errors from the asynchronous calls:</p>
+<pre><code> function errorHandler(e) {
+   var msg = '';
+
+   switch (e.code) {
+     case FileError.QUOTA_EXCEEDED_ERR:
+       msg = 'QUOTA_EXCEEDED_ERR';
+       break;
+     case FileError.NOT_FOUND_ERR:
+       msg = 'NOT_FOUND_ERR';
+       break;
+     case FileError.SECURITY_ERR:
+       msg = 'SECURITY_ERR';
+       break;
+     case FileError.INVALID_MODIFICATION_ERR:
+       msg = 'INVALID_MODIFICATION_ERR';
+       break;
+     case FileError.INVALID_STATE_ERR:
+       msg = 'INVALID_STATE_ERR';
+       break;
+     default:
+       msg = 'Unknown Error';
+       break;
+   };
+
+   console.log('Error: ' + msg);
+ }
+</code></pre>
+<p>Granted, this error callback is very generic, but you get the idea. You’ll want to provide human-readable messages to users instead.</p>
+<h3>Requesting storage quota</h3>
+<p>To use <code>PERSISTENT</code> storage, you must obtain permission from the user to store peristent data. The same restriction doesn’t apply to <code>TEMPORARY</code> storage because the browser may choose to evict temporarily stored data at its discretion.</p>
+<p>To use <code>PERSISTENT</code> storage with the FileSystem API, Chrome exposes a new API under <code>window.webkitStorageInfo</code> to request storage:</p>
+<pre><code> window.webkitStorageInfo.requestQuota(PERSISTENT, 1024*1024, function(grantedBytes) {
+   window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
+ }, function(e) {
+   console.log('Error', e);
+ });
+</code></pre>
+<p>Once the user has granted permission, there’s no need to call <code>requestQuota()</code> in the future unless you wish to increase your app’s quota. Subsequent calls for equal or lesser quota are a no-op.</p>
+<p>There is also <a href="https://groups.google.com/a/chromium.org/group/chromium-html5/browse_thread/thread/9be7a2dc04d9af67">an API</a> to query an origin’s current quota usage and allocation: <code>window.webkitStorageInfo.queryUsageAndQuota()</code>.</p>
+<h2>Working with files</h2>
+<p>Files in the sandboxed environment are represented by the <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/#the-fileentry-interface"><code>FileEntry</code></a> interface. A FileEntry contains the types of properties (<code>name</code>, <code>isFile</code>, etc.) and methods (<code>remove</code>, <code>moveTo</code>, <code>copyTo</code>, etc.) that you’d expect from a standard file system.</p>
+<p>Properties and methods of <code>FileEntry</code>:</p>
+<pre><code> fileEntry.isFile === true
+ fileEntry.isDirectory === false
+ fileEntry.name
+ fileEntry.fullPath
+ ...
+
+ fileEntry.getMetadata(successCallback, opt_errorCallback);
+ fileEntry.remove(successCallback, opt_errorCallback);
+ fileEntry.moveTo(dirEntry, opt_newName, opt_successCallback, opt_errorCallback);
+ fileEntry.copyTo(dirEntry, opt_newName, opt_successCallback, opt_errorCallback);
+ fileEntry.getParent(successCallback, opt_errorCallback);
+ fileEntry.toURL(opt_mimeType);
+
+ fileEntry.file(successCallback, opt_errorCallback);
+ fileEntry.createWriter(successCallback, opt_errorCallback);
+ ...
+</code></pre>
+<p>To better understand <code>FileEntry</code>, the rest of this section contains a bunch of recipes for performing common tasks.</p>
+<h3>Creating a file</h3>
+<p>You can look up or create a file with the file system’s <code>getFile()</code> method, a method of the DirectoryEntry interface. After requesting a file system, the success callback is passed a <code>FileSystem</code> object that contains a <code>DirectoryEntry</code> (<code>fs.root</code>) pointing to the root of the app’s file system.</p>
+<p>The following code creates an empty file called “log.txt” in the root of the app’s file system:</p>
+<pre><code> function onInitFs(fs) {
+
+   fs.root.getFile('log.txt', {create: true, exclusive: true}, function(fileEntry) {
+
+     // fileEntry.isFile === true
+     // fileEntry.name == 'log.txt'
+     // fileEntry.fullPath == '/log.txt'
+
+   }, errorHandler);
+
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+</code></pre>
+<p>Once the file system has been requested, the success handler is passed a <code>FileSystem</code> object. Inside the callback, we can call <code>fs.root.getFile()</code> with the name of the file to create. You can pass an absolute or relative path, but it must be valid. For instance, it is an error to attempt to create a file whose immediate parent does not exist.</p>
+<p>The second argument to <code>getFile()</code> is an object literal describing the function’s behavior if the file does not exist. In this example, <code>create: true</code> creates the file if it doesn’t exist and throws an error if it does (<code>exclusive: true</code>). Otherwise (if <code>create: false</code>), the file is simply fetched and returned. In either case, the file contents are not overwritten because we’re just obtaining a reference entry to the file in question.</p>
+<h3>Reading a file by name</h3>
+<p>The following code retrieves the file called &quot;log.txt&quot;, its contents are read using the <code>FileReader</code> API and appended to a new &lt;textarea&gt; on the page. If log.txt doesn’t exist, an error is thrown.</p>
+<pre><code> function onInitFs(fs) {
+
+   fs.root.getFile('log.txt', {}, function(fileEntry) {
+
+     // Get a File object representing the file,
+     // then use FileReader to read its contents.
+     fileEntry.file(function(file) {
+        var reader = new FileReader();
+
+        reader.onloadend = function(e) {
+          var txtArea = document.createElement('textarea');
+          txtArea.value = this.result;
+          document.body.appendChild(txtArea);
+        };
+
+        reader.readAsText(file);
+     }, errorHandler);
+
+   }, errorHandler);
+
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+</code></pre>
+<h3>Writing to a file</h3>
+<p>The following code creates an empty file called “log.txt” (if it doesn’t exist) and fills it with the text 'Lorem Ipsum’.</p>
+<pre><code> function onInitFs(fs) {
+
+   fs.root.getFile('log.txt', {create: true}, function(fileEntry) {
+
+     // Create a FileWriter object for our FileEntry (log.txt).
+     fileEntry.createWriter(function(fileWriter) {
+
+       fileWriter.onwriteend = function(e) {
+         console.log('Write completed.');
+       };
+
+       fileWriter.onerror = function(e) {
+         console.log('Write failed: ' + e.toString());
+       };
+
+       // Create a new Blob and write it to log.txt.
+       var blob = new Blob(['Lorem Ipsum'], {type: 'text/plain'});
+
+       fileWriter.write(blob);
+
+     }, errorHandler);
+
+   }, errorHandler);
+
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+</code></pre>
+<p>This time, we call the FileEntry’s <code>createWriter()</code> method to obtain a <code>FileWriter</code> object. Inside the success callback, event handlers are set up for <code>error</code> and <code>writeend</code> events. The text data is written to the file by creating a blob, appending text to it, and passing the blob to <code>FileWriter.write()</code>.</p>
+<h3>Appending data to a file</h3>
+<p>The following code appends the text “Hello World” to the end of our log file. An error is thrown if the file does not exist.</p>
+<pre><code> function onInitFs(fs) {
+
+   fs.root.getFile('log.txt', {create: false}, function(fileEntry) {
+
+     // Create a FileWriter object for our FileEntry (log.txt).
+     fileEntry.createWriter(function(fileWriter) {
+
+       fileWriter.seek(fileWriter.length); // Start write position at EOF.
+
+       // Create a new Blob and write it to log.txt.
+       var blob = new Blob(['Hello World'], {type: 'text/plain'});
+
+       fileWriter.write(blob);
+
+     }, errorHandler);
+
+   }, errorHandler);
+
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+</code></pre>
+<h3>Duplicating user-selected files</h3>
+<p>The following code allows a user to select multiple files using <code>&lt;input type=&quot;file&quot; multiple /&gt;</code> and creates copies of those files in the app’s sandboxed file system.</p>
+<pre><code> &lt;input type=&quot;file&quot; id=&quot;myfile&quot; multiple /&gt;
+
+ document.querySelector('#myfile').onchange = function(e) {
+   var files = this.files;
+
+   window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+     // Duplicate each file the user selected to the app's fs.
+     for (var i = 0, file; file = files[i]; ++i) {
+
+       // Capture current iteration's file in local scope for the getFile() callback.
+       (function(f) {
+         fs.root.getFile(f.name, {create: true, exclusive: true}, function(fileEntry) {
+           fileEntry.createWriter(function(fileWriter) {
+             fileWriter.write(f); // Note: write() can take a File or Blob object.
+           }, errorHandler);
+         }, errorHandler);
+       })(file);
+
+     }
+   }, errorHandler);
+
+ };
+</code></pre>
+<p>Although we’ve used an input for the file import, one could easily leverage HTML5 Drag and Drop to achieve the same objective.</p>
+<p>As noted in the comment, <code>FileWriter.write()</code> can accept a <code>Blob</code> or <code>File</code>. This is because <code>File</code> inherits from <code>Blob</code>. Therefore, all file objects are blobs.</p>
+<h3>Removing a file</h3>
+<p>The following code deletes the file 'log.txt’.</p>
+<pre><code> window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   fs.root.getFile('log.txt', {create: false}, function(fileEntry) {
+
+     fileEntry.remove(function() { console.log('File removed.'); }, errorHandler);
+
+   }, errorHandler);
+ }, errorHandler);
+</code></pre>
+<h2>Working with directories</h2>
+<p>Directories in the sandbox are represented by the <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/#the-directoryentry-interface"><code>DirectoryEntry</code></a> interface, which shares most of FileEntry’s properties (they inherit from a common <code>Entry</code> interface). However, <code>DirectoryEntry</code> has additional methods for manipulating directories.</p>
+<p>Properties and methods of <code>DirectoryEntry</code>:</p>
+<pre><code> dirEntry.isDirectory === true
+ // See the section on FileEntry for other inherited properties/methods.
+ ...
+
+ var dirReader = dirEntry.createReader();
+ dirEntry.getFile(path, opt_flags, opt_successCallback, opt_errorCallback);
+ dirEntry.getDirectory(path, opt_flags, opt_successCallback, opt_errorCallback);
+ dirEntry.removeRecursively(successCallback, opt_errorCallback);
+ ...
+</code></pre>
+<h3>Creating directories</h3>
+<p>Use the <code>getDirectory()</code> method of <code>DirectoryEntry</code> to read or create directories. You can pass either a name or path as the directory to look up or create.</p>
+<p>For example, the following code creates a directory named “MyPictures” in the root directory:</p>
+<pre><code> window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   fs.root.getDirectory('MyPictures', {create: true}, function(dirEntry) {
+     ...
+   }, errorHandler);
+ }, errorHandler);
+</code></pre>
+<h3>Subdirectories</h3>
+<p>Creating a subdirectory is exactly the same as creating any other directory. However, the API throws an error if you attempt to create a directory whose immediate parent does not exist. The solution is to create each directory sequentially, which is rather tricky to do with an asynchronous API.</p>
+<p>The following code creates a new hierarchy (“music/genres/jazz”) in the root of the app’s FileSystem by recursively adding each subdirectory after its parent folder has been created.</p>
+<pre><code> var path = 'music/genres/jazz/';
+
+ function createDir(rootDirEntry, folders) {
+   // Throw out './' or '/' and move on to prevent something like '/foo/.//bar'.
+   if (folders[0] == '.' || folders[0] == '') {
+     folders = folders.slice(1);
+   }
+   rootDirEntry.getDirectory(folders[0], {create: true}, function(dirEntry) {
+     // Recursively add the new subfolder (if we still have another to create).
+     if (folders.length) {
+       createDir(dirEntry, folders.slice(1));
+     }
+   }, errorHandler);
+ };
+
+ function onInitFs(fs) {
+   createDir(fs.root, path.split('/')); // fs.root is a DirectoryEntry.
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+</code></pre>
+<p>Now that “music/genres/jazz” is in place, we can pass its full path to <code>getDirectory()</code> and create new subfolders or files under it. For example:</p>
+<pre><code> window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   fs.root.getFile('/music/genres/jazz/song.mp3', {create: true}, function(fileEntry) {
+     ...
+   }, errorHandler);
+ }, errorHandler);
+</code></pre>
+<h3>Reading a directory’s contents</h3>
+<p>To read the contents of a directory, create a <code>DirectoryReader</code> and call its <code>readEntries()</code> method. Note that there is no guarantee that all of a directory’s entries will be returned in a single call to <code>readEntries()</code>. That means you need to keep calling <code>DirectoryReader.readEntries()</code> until no more results are returned. The following code demonstrates this:</p>
+<pre><code> &lt;ul id=&quot;filelist&quot;&gt;&lt;/ul&gt;
+
+ function toArray(list) {
+   return Array.prototype.slice.call(list || [], 0);
+ }
+
+ function listResults(entries) {
+   // Document fragments can improve performance since they're only appended
+   // to the DOM once. Only one browser reflow occurs.
+   var fragment = document.createDocumentFragment();
+
+   entries.forEach(function(entry, i) {
+     var img = entry.isDirectory ? '&lt;img src=&quot;folder-icon.gif&quot;&gt;' :
+                                   '&lt;img src=&quot;file-icon.gif&quot;&gt;';
+     var li = document.createElement('li');
+     li.innerHTML = [img, '', entry.name, ''].join('');
+     fragment.appendChild(li);
+   });
+
+   document.querySelector('#filelist').appendChild(fragment);
+ }
+
+ function onInitFs(fs) {
+
+   var dirReader = fs.root.createReader();
+   var entries = [];
+
+   // Call the reader.readEntries() until no more results are returned.
+   var readEntries = function() {
+      dirReader.readEntries (function(results) {
+       if (!results.length) {
+         listResults(entries.sort());
+       } else {
+         entries = entries.concat(toArray(results));
+         readEntries();
+       }
+     }, errorHandler);
+   };
+
+   readEntries(); // Start reading dirs.
+
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+</code></pre>
+<h3>Removing a directory</h3>
+<p>The <code>DirectoryEntry.remove()</code> method behaves just like [#toc-file-removing <code>FileEntry</code>]'s. The difference: attempting to delete a non-empty directory results in an error.</p>
+<p>The following code removes the empty directory “jazz” from &quot;/music/genres/&quot;:</p>
+<pre><code> window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   fs.root.getDirectory('music/genres/jazz', {}, function(dirEntry) {
+
+     dirEntry.remove(function() { console.log('Directory removed.'); }, errorHandler);
+
+   }, errorHandler);
+ }, errorHandler);
+</code></pre>
+<h4>Recursively removing a directory</h4>
+<p>If you have a pesky directory that contains entries, <code>removeRecursively()</code> is your friend. It deletes the directory and its contents, recursively.</p>
+<p>The following code recursively removes the directory “music” and all the files and directories that it contains:</p>
+<pre><code> window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   fs.root.getDirectory('/misc/../music', {}, function(dirEntry) {
+
+     dirEntry.removeRecursively(function() { console.log('Directory removed.'); }, errorHandler);
+
+   }, errorHandler);
+ }, errorHandler);
+</code></pre>
+<h2>Copying, renaming, and moving</h2>
+<p><code>FileEntry</code> and <code>DirectoryEntry</code> share common operations.</p>
+<h3>Copying an entry</h3>
+<p>Both <code>FileEntry</code> and <code>DirectoryEntry</code> have a <code>copyTo()</code> method for duplicating existing entries. This method automatically does a recursive copy on folders.</p>
+<p>The following code example copies the file “me.png” from one directory to another:</p>
+<pre><code> function copy(cwd, src, dest) {
+   cwd.getFile(src, {}, function(fileEntry) {
+
+     cwd.getDirectory(dest, {}, function(dirEntry) {
+       fileEntry.copyTo(dirEntry);
+     }, errorHandler);
+
+   }, errorHandler);
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   copy(fs.root, '/folder1/me.png', 'folder2/mypics/');
+ }, errorHandler);
+</code></pre>
+<h3>Moving or renaming an entry</h3>
+<p>The <code>moveTo()</code> method present in <code>FileEntry</code> and <code>DirectoryEntry</code> allows you to move or rename a file or directory. Its first argument is the parent directory to move the file under, and its second is an optional new name for the file. If a new name isn’t provided, the file’s original name is used.</p>
+<p>The following example renames “me.png” to &quot;you.png&quot;, but does not move the file:</p>
+<pre><code> function rename(cwd, src, newName) {
+   cwd.getFile(src, {}, function(fileEntry) {
+     fileEntry.moveTo(cwd, newName);
+   }, errorHandler);
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   rename(fs.root, 'me.png', 'you.png');
+ }, errorHandler);
+</code></pre>
+<p>The following example moves “me.png” (located in the root directory) to a folder named &quot;newfolder&quot;.</p>
+<pre><code> function move(src, dirName) {
+   fs.root.getFile(src, {}, function(fileEntry) {
+
+     fs.root.getDirectory(dirName, {}, function(dirEntry) {
+       fileEntry.moveTo(dirEntry);
+     }, errorHandler);
+
+   }, errorHandler);
+ }
+
+ window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+   move('/me.png', 'newfolder/');
+ }, errorHandler);
+</code></pre>
+<h2>filesystem: URLs</h2>
+<p>The FileSystem API exposes a new URL scheme, <code>filesystem:</code>, that can be used to fill <code>src</code> or <code>href</code> attributes. For example, if you wanted to display an image and have its <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/#the-fileentry-interface"><code>fileEntry</code></a>, calling <code>toURL()</code> would give you the file’s <code>filesystem:</code> URL:</p>
+<pre><code> var img = document.createElement('img');
+ img.src = fileEntry.toURL(); // filesystem:http://example.com/temporary/myfile.png
+ document.body.appendChild(img);
+</code></pre>
+<p>Alternatively, if you already have a <code>filesystem:</code> URL, <code>resolveLocalFileSystemURL()</code> will get you back the <a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/#the-fileentry-interface"><code>fileEntry</code></a>:</p>
+<pre><code> window.resolveLocalFileSystemURL = window.resolveLocalFileSystemURL ||
+                                    window.webkitResolveLocalFileSystemURL;
+
+ var url = 'filesystem:http://example.com/temporary/myfile.png';
+ window.resolveLocalFileSystemURL(url, function(fileEntry) {
+   ...
+ });
+</code></pre>
+<h2>Putting it all together</h2>
+<h3>Basic example</h3>
+<p>The demo in <a href="http://www.html5rocks.com/en/tutorials/file/filesystem/">this article</a> will list the files/folders in the filesystem.</p>
+<h3>HTML5 Terminal</h3>
+<p>The HTML5 Terminal shell replicates some of the common operations in a UNIX filesystem (such as <code>cd</code>, <code>mkdir</code>, <code>rm</code>, <code>open</code>, and <code>cat</code>) by abstracting the FileSystem API. To add content, open the app, then drag and drop files from your desktop onto the terminal window. (Click the image caption to open the terminal.)</p>
+<p><a href="http://www.htmlfivewow.com/demos/terminal/terminal.html"><em>Click here to open the HTML5 Terminal</em></a> <img src="//static.webplatform.org/5/5b/xterminal2b.jpg" alt="xterminal2b.jpg"></p>
+<h2>Use Cases</h2>
+<p>There are several <a href="http://www.html5rocks.com/tutorials#offline,storage">storage options</a> available in HTML5, but the FileSystem is different in that it aims to satisfy client-side storage use cases not well served by databases. Generally, these are applications that deal with large binary blobs and/or share data with applications outside of the context of the browser.</p>
+<p>The specification lists several use cases:</p>
+<ol>
+<li><p>Persistent uploader</p>
+<ul>
+<li>When a file or directory is selected for upload, it copies the files into a local sandbox and uploads a chunk at a time.</li>
+<li>Uploads can be restarted after browser crashes, network interruptions, etc.</li>
+</ul></li>
+<li><p>Video game, music, or other app with lots of media assets</p>
+<ul>
+<li>It downloads one or several large tarballs, and expands them locally into a directory structure.</li>
+<li>The same download works on any operating system.</li>
+<li>It can manage prefetching just the next-to-be-needed assets in the background, so going to the next game level or activating a new feature doesn’t require waiting for a download.</li>
+<li>It uses those assets directly from its local cache, by direct file reads or by handing local URIs to image or video tags, WebGL asset loaders, etc.</li>
+<li>The files may be of arbitrary binary format.</li>
+<li>On the server side, a compressed tarball will often be much smaller than a collection of separately-compressed files. Also, 1 tarball instead of 1000 little files will involve fewer seeks, all else being equal.</li>
+</ul></li>
+<li><p>Audio/Photo editor with offline access or local cache for speed</p>
+<ul>
+<li>The data blobs are potentially quite large, and are read-write.</li>
+<li>It may want to do partial writes to files (ovewriting just the ID3/EXIF tags, for example).</li>
+<li>The ability to organize project files by creating directories would be useful.</li>
+<li>Edited files should be accessable by client-side applications [iTunes, Picasa].</li>
+</ul></li>
+<li><p>Offline video viewer</p>
+<ul>
+<li>It downloads large files (&gt;1GB) for later viewing.</li>
+<li>It needs efficient seek + streaming.</li>
+<li>It must be able to hand a URI to the video tag.</li>
+<li>It should enable access to partly-downloaded files e.g. to let you watch the first episode of the DVD even if your download didn’t complete before you got on the plane.</li>
+<li>It should be able to pull a single episode out of the middle of a download and give just that to the video tag.</li>
+</ul></li>
+<li><p>Offline Web Mail Client</p>
+<ul>
+<li>Downloads attachments and stores them locally.</li>
+<li>Caches user-selected attachments for later upload.</li>
+<li>Needs to be able to refer to cached attachments and image thumbnails for display and upload.</li>
+<li>Should be able to trigger the UA’s download manager just as if talking to a server.</li>
+<li>Should be able to upload an email with attachments as a multipart post, rather than sending a file at a time in an XHR.</li>
+</ul></li>
+</ol>
+<h2>Reference specifications</h2>
+<ul>
+<li><a href="http://dev.w3.org/2009/dap/file-system/pub/FileSystem/">FileSystem</a></li>
+<li><a href="http://dev.w3.org/2009/dap/file-system/file-writer.html">FileWriter</a></li>
+<li><a href="http://dev.w3.org/2006/webapi/FileAPI/#dfn-filereader">FileReader</a></li>
+<li><a href="http://dev.w3.org/2006/webapi/FileAPI/">File</a></li>
+<li><a href="http://dev.w3.org/2006/webapi/FileAPI/#dfn-Blob">Blob</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/tutorials/file/filesystem/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>offsetHeight · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/HTMLElement/">HTMLElement</a></li><li><a href="/dom/HTMLElement/offsetHeight/">offsetHeight</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>offsetHeight</h1>
+<p>Property of <a href="/docs/dom/HTMLElement">dom/HTMLElement</a><a href="/docs/dom/HTMLElement">dom/HTMLElement</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> result = element.offsetHeight;
+element.offsetHeight = value;
+</code></pre>
+<h2>Examples</h2>
+<p>This example adjusts the size of a clock’s readout to fit the current width and height of the document body.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">HTML</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">TITLE</span>&gt;</span>A Simple Clock<span class="hljs-tag">&lt;/<span class="hljs-title">TITLE</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span> <span class="hljs-attribute">LANGUAGE</span>=<span class="hljs-value">"JScript"</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">startClock</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-built_in">window</span>.setInterval(<span class="hljs-string">"Clock_Tick()"</span>, <span class="hljs-number">1000</span>);
+    Clock_Tick();
+}
+
+<span class="hljs-keyword">var</span> iRatio = <span class="hljs-number">4</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Clock_Tick</span>(<span class="hljs-params"></span>)
+</span>{
+    <span class="hljs-keyword">var</span> dToday = <span class="hljs-built_in">Date</span>();
+    <span class="hljs-keyword">var</span> sTime = dToday.substring(<span class="hljs-number">11</span>,<span class="hljs-number">19</span>);
+    <span class="hljs-keyword">var</span> iDocHeight = <span class="hljs-built_in">document</span>.body.offsetHeight;
+    <span class="hljs-keyword">var</span> iDocWidth = <span class="hljs-built_in">document</span>.body.offsetWidth;
+
+    <span class="hljs-keyword">if</span> ((iDocHeight*iRatio)&gt;iDocWidth)
+        iDocHeight = iDocWidth / iRatio;
+    <span class="hljs-built_in">document</span>.all.MyTime.innerText = sTime;
+    <span class="hljs-built_in">document</span>.all.MyTime.style.fontSize = iDocHeight;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"startClock()"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">P</span> <span class="hljs-attribute">ID</span>=<span class="hljs-value">"MyTime"</span>&gt;</span>&amp;nbsp;<span class="hljs-tag">&lt;/<span class="hljs-title">P</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HTML</span>&gt;</span>
+</code></pre>
+<p>This example uses the <strong>offsetHeight</strong> property and the <a href="/docs/dom/HTMLElement/clientHeight"><strong>clientHeight</strong></a> property to show different ways of measuring the object size.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">DIV</span> <span class="hljs-attribute">ID</span>=<span class="hljs-value">oDiv</span> <span class="hljs-attribute">STYLE</span>=<span class="hljs-value">"overflow:scroll; width:200; height:100"</span>&gt;</span> . . . <span class="hljs-tag">&lt;/<span class="hljs-title">DIV</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BUTTON</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"alert(oDiv.clientHeight)"</span>&gt;</span>client height<span class="hljs-tag">&lt;/<span class="hljs-title">BUTTON</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BUTTON</span> <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"alert(oDiv.offsetHeight)"</span>&gt;</span>offset height<span class="hljs-tag">&lt;/<span class="hljs-title">BUTTON</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/offsetHeight.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>You can determine the location, width, and height of an object by using a combination of the <a href="/docs/dom/HTMLElement/offsetLeft"><strong>offsetLeft</strong></a>, <a href="/docs/dom/HTMLElement/offsetTop"><strong>offsetTop</strong></a>, <strong>offsetHeight</strong>, and <a href="/dom/HTMLElement/offsetWidth"><strong>offsetWidth</strong></a> properties. These numeric properties specify the physical coordinates and dimensions of the object relative to the object’s offset parent. For more information about how to access the dimension and location of elements on the page through the Dynamic HTML (DHTML) Document Object Model (DOM), see Measuring Element Dimension and Location with CSSOM in Internet Explorer 9. To comply with the <a href="http://go.microsoft.com/fwlink/p/?linkid=203774">Cascading Style Sheets, Level 1 (CSS1)</a> box model, Microsoft Internet Explorer 6 and later calculate the height of objects differently when you use the <a href="/docs/html/elements/!DOCTYPE">!DOCTYPE</a> declaration in your document to switch on standards-compliant mode. This difference may affect the value of the <strong>offsetHeight</strong> property. When standards-compliant mode is switched on, the <a href="/docs/css/properties/height"><strong>height</strong></a> property specifies the distance between the top and bottom edges of the bounding box that surrounds the object’s content. When standards-compliant mode is not switched on, and with earlier versions of Windows Internet Explorer, the <strong>height</strong> property also includes the <a href="/docs/css/properties/border"><strong>border</strong></a> and <a href="/docs/css/properties/padding"><strong>padding</strong></a> belts that surround the object’s bounding box. For more information, see CSS Enhancements in Internet Explorer 6.</p>
+<h3>Syntax</h3>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

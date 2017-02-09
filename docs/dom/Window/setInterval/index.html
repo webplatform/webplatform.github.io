@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>setInterval · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Evaluates an expression each time a specified number of milliseconds has elapsed." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Window/">Window</a></li><li><a href="/dom/Window/setInterval/">setInterval</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>setInterval</h1>
+<h2>Summary</h2>
+<p>Evaluates an expression each time a specified number of milliseconds has elapsed.</p>
+<p>Method of <a href="/docs/dom/Window">dom/Window</a><a href="/docs/dom/Window">dom/Window</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> object = object.setInterval(<span class="hljs-comment">/* see parameter list */</span>);
+</code></pre>
+<h2>Parameters</h2>
+<h3>expression</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>Variant</strong> that specifies a function pointer or string indicating the code to be executed when the specified interval has elapsed.</p>
+<p>Passing a string as a parameter suffers the same hazards as <a href="/w/index.php?title=tutorials/JavaScript_gotchas/Why_eval()_is_evil&amp;action=edit&amp;redlink=1">eval()</a>, so it is generally recommended to pass a function pointer instead.</p>
+<h3>msec</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>Integer</strong> that specifies the number of milliseconds.</p>
+<p>Note that there may be a minimum interval for this function. See <a href="/docs/dom/Window/setTimeout">setTimeout</a>.</p>
+<h3>language</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>String
+</dd>
+</dl>
+<p><strong>String</strong> that specifies any one of the possible values for the <a href="/docs/html/attributes/language"><strong>LANGUAGE</strong></a> attribute.</p>
+<h2>Return Value</h2>
+<p>Returns an object of type DOM NodeDOM Node</p>
+<p><strong>Integer</strong></p>
+<p>Integer. Returns an identifier that cancels the timer with the <a href="/docs/dom/Window/clearInterval"><strong>clearInterval</strong></a> method.</p>
+<h2>Examples</h2>
+<p>This example uses the <strong>setInterval</strong> method to create a DHTML clock. A variable is assigned to the interval, and can be used as a reference to stop the interval by using the <a href="/docs/dom/Window/clearInterval"><strong>clearInterval</strong></a> method.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> oInterval = <span class="hljs-string">""</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnStartClock</span>(<span class="hljs-params"></span>)</span>{
+   oInterval = setInterval(fnDoClock,<span class="hljs-number">200</span>);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnDoClock</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-comment">// Code to display hours, minutes, and seconds.</span>
+}
+<span class="hljs-built_in">window</span>.onload = fnStartClock;
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/setInterval.htm">View live example</a></p>
+<p>The next example demonstrates how to pass arguments to a function with <a href="/docs/dom/Window/setTimeout"><strong>setTimeout</strong></a> or <strong>setInterval</strong>. To do this, create an inner anonymous function to wrap the real callback function. In the new function scope, you can refer to variables declared prior to the call to <strong>setTimeout</strong> (such as <code>div</code>). This structure is referred to as a “closure” in JScript</p>
+<pre><code class="js"><span class="hljs-comment">// The first example of a closure passes the variable to a named function.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">startTimer</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> div = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'currentTime'</span>);
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{doClock(div)},<span class="hljs-number">200</span>);
+}
+<span class="hljs-comment">// The second example also uses a closure, by referring to an argument passed to the function.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doClock</span>(<span class="hljs-params">obj</span>) </span>{
+    setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{obj.innerHTML=(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()).toLocaleString()},<span class="hljs-number">200</span>);
+}
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/setInterval2.htm">View live example</a></p>
+<p>This example demonstrates that more than one closure can refer to the same variable. Here, the callback function that displays the value of <code>count</code> is called at a different interval than the function that updates its value.</p>
+<pre><code class="js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">startCounter</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> div = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'counter'</span>);
+    <span class="hljs-keyword">var</span> count = <span class="hljs-number">0</span>;
+    setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{count++},<span class="hljs-number">143</span>);
+    setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{div.innerHTML=count},<span class="hljs-number">667</span>);
+}
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>The <strong>setInterval</strong> method continuously evaluates the specified expression until the timer is removed with the <a href="/docs/dom/Window/clearInterval"><strong>clearInterval</strong></a> method. To pass a function as a string, be sure to append the function name with parentheses.</p>
+<pre><code>window.setInterval(&quot;someFunction()&quot;, 5000);
+</code></pre>
+<p>When passing a function pointer, do not include the parentheses.</p>
+<pre><code>window.setInterval(someFunction, 5000);
+</code></pre>
+<p>When you use the <strong>setInterval</strong> method with Introduction to DHTML Behaviors, the value of <em>expression</em> should be a function pointer to call a function within the HTML Component (HTC) file or a string to call a function in the primary document.</p>
+<p><strong>Note</strong>  In Windows Internet Explorer, you cannot pass arguments to the callback function directly; however, you can simulate passing arguments by creating an anonymous closure function that references variables within scope of the call to <strong>setInterval</strong> or <a href="/docs/dom/Window/setTimeout"><strong>setTimeout</strong></a>. For more information, see Examples. In versions earlier than Microsoft Internet Explorer 5, the first argument of <strong>setInterval</strong> must be a string. Evaluation of the string is deferred until the specified interval elapses. As of Internet Explorer 5, the first argument of <strong>setInterval</strong> can be passed as a string or as a function pointer.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: [<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.setInterval">setInterval</a> Article]</p>
+</li>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/ms536749(v=vs.85).aspx">setInterval Method</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

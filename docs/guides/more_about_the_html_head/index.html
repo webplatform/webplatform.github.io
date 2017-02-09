@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>More about the HTML &lt;head&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article delves deeper into the possibilities the HTML &amp;lt;head&amp;gt; has to offer, looking at some additional features." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/more_about the html head/">more about the html head</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>More about the HTML &lt;head&gt;</h1>
+<h2>Summary</h2>
+<p>This article delves deeper into the possibilities the HTML &lt;head&gt; has to offer, looking at some additional features.</p>
+<h2>Introduction</h2>
+<p>In <a href="/docs/guides/the_html_head">the previous article</a> you learned about the essential items that go inside the <code>head</code> of an HTML document. In this article we’ll expand on that information and talk about some lesser used items that you can add to the <code>head</code>. By the end of this tutorial you’ll know how to collate several HTML documents into a larger multi-part collection, what RSS is all about, and what a <em>favicon</em> is and how to use it.</p>
+<h2>Document relationships: collating several HTML documents into a collection</h2>
+<p>Document relationships are a feature of HTML that stems from the origins of the web as a document repository and, as the name says, define how one document relates to another. For example, a relationship can define if a referenced document is the previous or next document in a logical chain, if it is the index to a whole series of documents, and more.</p>
+<p>In a sense, you’ve already done this in the previous article when you applied a style sheet to a document to give it a different look and feel with the <code>link</code> element. Referencing a style sheet establishes a relationship between it and the current document, and defines the type of relationship.</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Breeding Dogs - Tips about Alsatians<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"screen"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"styles.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/css"</span> <span class="hljs-attribute">media</span>=<span class="hljs-value">"print"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"printstyles.css"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The relationship of the current document to others is defined in much the same way using the <code>link</code> element and the <code>rel</code> or <code>rev</code> attributes. The <code>rel</code> (<em>relationship</em>) attribute defines the relationship that the linked document has to the current one, and the <code>rev</code> (<em>reverse relationship</em>) attribute defines the relationship the current document has to the linked one. Don’t worry about the <code>rev</code> attribute now; it is a bit confusing, and you will use it rarely, if at all.</p>
+<p>There are no mandatory predefined values for the <code>rel</code> and <code>rev</code> attributes, but there is a taxonomy for <code>rel</code> supported by browsers and indexing tools that you should follow under normal circumstances:</p>
+<ul>
+<li>home: The home document of the current collection</li>
+<li>index: The index of the current collection</li>
+<li>contents: The contents list of the current collection</li>
+<li>search: The search page of the current collection</li>
+<li>glossary: The glossary of the current collection</li>
+<li>help: The help page of the current collection</li>
+<li>first: The first document in current collection</li>
+<li>previous: The previous document from this one in the logical order of the collection</li>
+<li>next: The document following this one in the logical order of the collection</li>
+<li>last: The last document of the current collection</li>
+<li>up: The document one level up in the hierarchy of the current collection</li>
+<li>copyright: The copyright information of the current collection</li>
+<li>author: The information page about the author of the current collection</li>
+</ul>
+<p>Frankly, most browsers don’t do anything with this information, although some will follow the link and load the document in the background so that it is displayed faster when requested. The notable exception is Opera, which has an extra navigation toolbar you can turn on by selecting <code>View &gt; Toolbars &gt; Navigation bar</code> from the menu. When the toolbar is enabled you see the link relationships defined in the document as an extra toolbar. Figure 1 shows the W3C HTML standards document in Opera.</p>
+<p><img src="//static.webplatformstaging.org/w/public/2/2e/Morehead.png" alt="Screenshot of the Opera browser showing the navigation bar"></p>
+<p><em>Figure 1: Opera shows the link relationships of the current document in a special navigation toolbar.</em></p>
+<p>Even though they may not be visibly displayed, it is a good idea to provide a human-readable explanation of what the linked documents are about in a <code>title</code> attribute, as the file names alone are not necessarily enough.</p>
+<p>Now let’s have a look at how link relationships can be used to collate several documents into a collection. The start page of an online course spanning several documents could look like this:</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Link relationship example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"contents"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"table of contents"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"toc.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"next"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"next: chapter one"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Course example<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This would be the cover page of an article series or course<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"next"</span>&gt;</span>Let's start with Chapter One<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The first chapter document would be the following:</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Chapter One - Link relationship example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"contents"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Table of Contents"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"toc.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"home"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Home Page"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"start.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"prev"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"previous: Home Page"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"start.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"next"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"next: Second Chapter"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter2.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Chapter One<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This would be the chapter one page of an article series or course<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"start.html"</span> <span class="hljs-attribute">rev</span>=<span class="hljs-value">"prev"</span>&gt;</span>Back to Start<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"toc.html"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"contents"</span>&gt;</span>Table of contents<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter2.html"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"next"</span>&gt;</span>Go on to Chapter Two<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>The second chapter would be:</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Link relationship example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"contents"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Table of Contents"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"toc.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"home"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Home page"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"start.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"prev"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"previous: first chapter"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Chapter Two<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This would be the second chapter page of an article series or course<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span> <span class="hljs-attribute">rev</span>=<span class="hljs-value">"prev"</span>&gt;</span>Back to chapter 1<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"toc.html"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"contents"</span>&gt;</span>Table of contents<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>And finally the table of contents:</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Table of contents - Link relationship example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"home"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"home page"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"start.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Table of contents<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span>&gt;</span>Chapter One - about stuff<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter2.html"</span>&gt;</span>Chapter Two - about other stuff<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"start.html"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"home"</span>&gt;</span>Back to home<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>You can use the <code>rel</code> and <code>rev</code> attributes on links in the document to tell browsers and assistive technology that these anchors correspond with the link relationships. Also, <code>rel</code> and <code>rev</code> are sometimes used for other purposes such as Microformats, but that is beyond the scope of this article.</p>
+<h2>Linking to alternative versions of the document</h2>
+<p>The option to link to other documents that have a certain relationship to the current document also includes different language versions of the same document, or different formats. You can do both by providing a link with a <code>rel</code> attribute value of <code>alternate</code>.</p>
+<h3>Translations</h3>
+<p>Translations are a great candidate for document interlinking. It might be that the English language version of a document is very successful, and you would like to provide other language versions to potential international visitors. By linking from the original to the alternate language version, you make it easier for non-English readers to access and promote your content. The following example shows how you can define the other language versions; note the straightforward syntax.</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Multiple Languages example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"contents"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"table of contents"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"toc.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"next"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"next: chapter one"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"alternate"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"The course in Dutch"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/html"</span> <span class="hljs-attribute">hreflang</span>=<span class="hljs-value">"nl"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"../nl/start.html"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"alternate"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"The course in German"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/html"</span> <span class="hljs-attribute">hreflang</span>=<span class="hljs-value">"de"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"../de/start.html"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Course example<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>This would be the cover page of an article series or course<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"chapter1.html"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"next"</span>&gt;</span>Let's start with Chapter One<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>Other languages:
+      <span class="hljs-tag">&lt;<span class="hljs-title">ul</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"../de/start.html"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"de"</span> <span class="hljs-attribute">hreflang</span>=<span class="hljs-value">"de"</span>&gt;</span>Deutsch<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"../de/start.html"</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"nl"</span> <span class="hljs-attribute">hreflang</span>=<span class="hljs-value">"nl"</span>&gt;</span>Nederlands<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>To recap, the <code>hreflang</code> attribute on links and anchors defines the human language of the linked document, and the <code>lang</code> attribute defines the language of the text inside the element that has this attribute. This is very important for accessibility as text-to-speech software (screen readers) must switch the pronounciation voice from language to language.</p>
+<h3>Feeds</h3>
+<p>There is another type of alternative web page that you’ll see a lot as you trawl the web, called <em>RSS feeds</em>. These are very popular, especially for documents that change constantly, such as news sites. RSS actually stands for &quot;Rich Site Summary&quot;, but is most often characterized today as &quot;Really Simple Syndication&quot;.</p>
+<p>A feed is a document containing condensed information detailing new additions to your site in chronological order. Users can subscribe to the feed and see what has changed on your site recently without having to visit it. They do this by using feed readers like <a href="http://feedly.com/index.html#welcome">Feedly</a>, <a href="http://www.netvibes.com/">Netvibes</a>, or <a href="http://www.bloglines.com/">Bloglines</a>. Some modern browsers such as Opera and Firefox, and e-mail clients such as Mac Mail or Windows Outlook can also process and display feeds. You can identify web sites that offer feeds by the RSS icon next to the URL, as shown in Figure 2:</p>
+<p><img src="//static.webplatformstaging.org/w/public/d/d7/rss-feed-available.gif" alt="Screenshot of the Opera browser showing a RSS icon in the navigation bar"></p>
+<p><em>Figure 2: Opera shows an orange RSS icon next to the location of websites that offer a feed.</em></p>
+<p>Feed pages are structured using either HTML or an XML format like RSS or Atom, and they are hardly ever generated by hand. Personal publishing systems will usually do that work for you, so all that’s required to offer the world a feed of your site is link to the XML document with the correct meta element in the <code>head</code> of your document. The following is an excerpt from a blog at <a href="http://wait-till-i.com/">http://wait-till-i.com</a>, and points to the RSS feed.</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"alternate"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"application/rss+xml"</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Wait till I come! RSS Feed"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"http://www.wait-till-i.com/feed/"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Wait till I come!<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Example of an RSS feed<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Supplying a feed makes sense for content-heavy websites that change often, like blogs or photo sites, and by using a feed reading tool and subscribing to feeds you can significantly reduce your web surfing and research time.</p>
+<h2>Making bookmarking more fun — using favicons</h2>
+<p>If you don’t update your site very often, but you have a lot of content and want people to have a visual reminder of your site, you might want to consider using a shortcut icon. Shortcut icons or <em>favicons</em> are small images with a file format of <code>.ico</code>; if you place one on your web server, you can use it to help your site stand out in users’ bookmark lists, as shown in Figure 3:</p>
+<p><img src="//static.webplatformstaging.org/w/public/4/42/bookmarks.gif" alt="Screenshot of bookmark list with icons next to the entries"></p>
+<p><em>Figure 3: Favicons next to a bookmark make it easier to remember the site. You can add one using a shortcut-icon meta element.</em></p>
+<p>Note that most browsers support various image formats for favicons, but if you want to support Internet Explorer you should stick with <code>.ico</code> as that is the only format recognized by IE.</p>
+<p>The biggest obstacle to adding a shortcut icon is actually creating it in the right format, as not all graphics editors support the <code>.ico</code> format. One option is to use the free online tool <a href="http://www.genfavicon.com/">genfavicon</a>. Once you have created a favicon, assigning it to your document is as easy as adding a meta element with a <code>rel</code> value of &quot;Shortcut Icon&quot;, as shown in the following example:</p>
+<pre><code><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en-GB"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Shortcut Icon example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"Shortcut Icon"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"favicon.ico"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"image/x-icon"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Example of a shortcut icon<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>If you open this document in a browser it should show the Opera icon next to the address in the location toolbar. If you bookmark it, the same icon will appear next to the bookmark.</p>
+<h2>Conclusion</h2>
+<p>In this article, we expanded on the HTML <code>head</code> section and explored some additional features that can be added to it. If you have not already done so, please see the previous article in this tutorial pair, <a href="/docs/guides/the_html_head">The HTML head</a>.</p>
+<h2>See also</h2>
+<h3>Exercise questions</h3>
+<ul>
+<li>Why does it make sense to define link relationships when they are not displayed?</li>
+<li>How would you link to a search page?</li>
+<li>What use is offering a feed to your visitors? What <code>rel</code> value do you use to link to one?</li>
+<li>What do you need to make sure of when you link to documents in other languages?</li>
+<li>If you open the example documents in a text editor you’ll find another <code>meta</code> element we haven’t discussed here with an attribute of <code>content-type</code>, and something called <code>utf-8</code>. What is <code>utf-8</code>?</li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

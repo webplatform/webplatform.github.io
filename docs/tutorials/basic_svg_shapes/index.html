@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Basic shapes · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Almost Ready" />
+    
+    <meta name="description" content="This article provides a guide to the basic primitives you can draw with SVG." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Almost_Ready"><p>This page is <a>Almost Ready</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/basic_svg shapes/">basic svg shapes</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Basic shapes</h1>
+<h2>Summary</h2>
+<p>This article provides a guide to the basic primitives you can draw with SVG.</p>
+<p>There are several basic shapes used for most SVG drawing. The purpose of these shapes is fairly obvious from their names. Some of the attributes that determine their position and size are given, but an element reference would probably contain more accurate and complete descriptions along with other properties that won’t be covered in here. However, since they’re used in most SVG documents, it’s necessary to give them some sort of introduction.</p>
+<h2>Basic shapes</h2>
+<p>To insert a shape, you create an element in the document. Different elements correspond to different shapes and take different attributes to describe the size and position of those shapes. Some are slightly redundant in that they can be created by other shapes, but they’re all there for your convenience and to keep your SVG documents as short and as readable as possible. All the basic shapes are shown in the image to the right. The code to generate that looks something like:</p>
+<p><a href="/w/index.php?title=Shapes.png&amp;action=edit&amp;redlink=1">=Shapes.png</a></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;200&quot; height=&quot;250&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+
+  &lt;rect x=&quot;10&quot; y=&quot;10&quot; width=&quot;30&quot; height=&quot;30&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+  &lt;rect x=&quot;60&quot; y=&quot;10&quot; rx=&quot;10&quot; ry=&quot;10&quot; width=&quot;30&quot; height=&quot;30&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+
+  &lt;circle cx=&quot;25&quot; cy=&quot;75&quot; r=&quot;20&quot; stroke=&quot;red&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+  &lt;ellipse cx=&quot;75&quot; cy=&quot;75&quot; rx=&quot;20&quot; ry=&quot;5&quot; stroke=&quot;red&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+
+  &lt;line x1=&quot;10&quot; x2=&quot;50&quot; y1=&quot;110&quot; y2=&quot;150&quot; stroke=&quot;orange&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+  &lt;polyline points=&quot;60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145&quot;
+      stroke=&quot;orange&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+
+  &lt;polygon points=&quot;50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180&quot;
+      stroke=&quot;green&quot; fill=&quot;transparent&quot; stroke-width=&quot;5&quot;/&gt;
+
+  &lt;path d=&quot;M20,230 Q40,205 50,230 T90,230&quot; fill=&quot;none&quot; stroke=&quot;blue&quot; stroke-width=&quot;5&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p><strong>Note:</strong> The <code>stroke</code>, <code>stroke-width</code> and <code>fill</code> attributes are explained later in the tutorial.</p>
+<h3>Rectangles</h3>
+<p>The <a href="/w/index.php?title=rect&amp;action=edit&amp;redlink=1">rect</a> element does exactly what you would expect and draws a rectangle on the screen. There are really only 6 basic attributes that control the position and shape of the rectangle on screen here. The image shown earlier shows two rect elements, which I admit is a bit redundant. The one on the right has its rx and ry attributes set, giving it rounded corners. If they’re not set, they default to 0.</p>
+<pre><code>&lt;rect x=&quot;10&quot; y=&quot;10&quot; width=&quot;30&quot; height=&quot;30&quot;/&gt;
+&lt;rect x=&quot;60&quot; y=&quot;10&quot; rx=&quot;10&quot; ry=&quot;10&quot; width=&quot;30&quot; height=&quot;30&quot;/&gt;
+</code></pre>
+<ul>
+<li>x: The x position of the top left corner of the rectangle.</li>
+<li>y: The y position of the top left corner of the rectangle.</li>
+<li>width: The width of the rectangle</li>
+<li>height: The height of the rectangle</li>
+<li>rx: The x radius of the corners of the rectangle</li>
+<li>ry: The y radius of the corners of the rectangle</li>
+</ul>
+<h3>Circle</h3>
+<p>As you would have guessed, the <a href="/w/index.php?title=circle&amp;action=edit&amp;redlink=1">circle</a> element draws a circle on the screen. There are really only 3 attributes that are applicable here.</p>
+<pre><code>&lt;circle cx=&quot;25&quot; cy=&quot;75&quot; r=&quot;20&quot;/&gt;
+</code></pre>
+<ul>
+<li>r: The radius of the circle.</li>
+<li>cx: The x position of the center of the circle.</li>
+<li>cy: The y position of the center of the circle.</li>
+</ul>
+<h3>Ellipse</h3>
+<p><a href="/w/index.php?title=Ellipse&amp;action=edit&amp;redlink=1">Ellipses</a> are actually just a more general form of the circle element, where you can scale the x and y radius (commonly called the semimajor and semiminor axis by math people) of the circle separately.</p>
+<pre><code>&lt;ellipse cx=&quot;75&quot; cy=&quot;75&quot; rx=&quot;20&quot; ry=&quot;5&quot;/&gt;
+</code></pre>
+<ul>
+<li>rx: The x radius of the ellipse.</li>
+<li>ry: The y radius of the ellipse.</li>
+<li>cx: The x position of the center of the ellipse.</li>
+<li>cy: The y position of the center of the ellipse.</li>
+</ul>
+<h3>Line</h3>
+<p><a href="/w/index.php?title=Line&amp;action=edit&amp;redlink=1">Lines</a> are again, just straight lines. They take as attributes two points which specify the start and end point of the line.</p>
+<pre><code>&lt;line x1=&quot;10&quot; x2=&quot;50&quot; y1=&quot;110&quot; y2=&quot;150&quot;/&gt;
+</code></pre>
+<ul>
+<li>x1: The x position of point 1.</li>
+<li>y1: The y position of point 1.</li>
+<li>x2: The x position of point 2.</li>
+<li>y2: The y position of point 2.</li>
+</ul>
+<h3>Polyline</h3>
+<p><a href="/w/index.php?title=Polyline&amp;action=edit&amp;redlink=1">Polylines</a> are groups of connected straight lines. Since that list can get quite long, all the points are included in one attribute:</p>
+<pre><code>&lt;polyline points=&quot;60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145&quot;/&gt;
+</code></pre>
+<ul>
+<li>points: A list of points, each number separated by a space, comma, EOL, or a line feed character. Each point must contain two numbers, an x coordinate and a y coordinate. So the list (0,0), (1,1) and (2,2) could be written: &quot;0 0, 1 1, 2 2&quot;.</li>
+</ul>
+<h3>Polygon</h3>
+<p><a href="/w/index.php?title=Polygon&amp;action=edit&amp;redlink=1">Polygons</a> are a lot like polylines in that they’re composed of straight line segments connecting a list a points. For polygons though, the path automatically returns to the first point for you at the end, creating a closed shape. Note that a rectangle is a type of polygon, so a polygon can be used to create a <code>&lt;rect/&gt;</code> element in cases where you need a little more flexibility.</p>
+<pre><code>&lt;polygon points=&quot;50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180&quot;/&gt;
+
+   points
+   A list of points, each number separated by a space, comma, EOL, or a line feed character. Each point must contain two numbers, an x coordinate and a y coordinate. So the list (0,0), (1,1) and (2,2) could be written: &quot;0 0, 1 1, 2 2&quot;. The drawing then closes the path, so a final straight line would be drawn from (2,2) to (0,0).
+</code></pre>
+<h3>Path</h3>
+<p><a href="/w/index.php?title=Path&amp;action=edit&amp;redlink=1">Path</a> is probably the most general shape that can be used in SVG. Using a path element you can draw rectangles (with or without rounded corners), circles, ellipses, polylines, and polygons. Basically any of the other types of shapes, bezier curves, quadratic curves, and many more. For that reason, paths alone will be <a href="/w/index.php?title=the_next_section&amp;action=edit&amp;redlink=1">the next section</a> in this tutorial, but for now I will just point out that there is a single attribute used to control its shape.</p>
+<pre><code>&lt;path d=&quot;M 20 230 Q 40 205, 50 230 T 90230&quot;/&gt;
+</code></pre>
+<p>A list of points and other information about how to draw the path. See the <a href="/w/index.php?title=Paths&amp;action=edit&amp;redlink=1">Paths</a> section for more information.</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/SVG/Tutorial/Basic_Shapes">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

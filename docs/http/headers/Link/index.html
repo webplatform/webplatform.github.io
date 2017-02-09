@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Link · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="Specifies a link between resources, at the HTTP header level.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/http/">http</a></li><li><a href="/docs/http/headers/">headers</a></li><li><a href="/http/headers/Link/">Link</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Link</h1>
+<h2>Summary</h2>
+<p>Specifies a link between resources, at the HTTP header level.</p>
+<p>Carries same semantics as the &lt;link/&gt; and &lt;a/&gt; tags in HTML.</p>
+<h2>Overview table</h2>
+<dl>
+<dt>Direction</dt>
+<dd>Request and Response
+</dd>
+</dl>
+<p>Features<br>
+:</p>
+<h2>Syntax</h2>
+<pre><code>Link           = &quot;Link&quot; &quot;:&quot; #link-value
+link-value     = &quot;&lt;&quot; URI-Reference &quot;&gt;&quot; *( &quot;;&quot; link-param )
+link-param     = ( ( &quot;rel&quot; &quot;=&quot; relation-types )
+               | ( &quot;anchor&quot; &quot;=&quot; &lt;&quot;&gt; URI-Reference &lt;&quot;&gt; )
+               | ( &quot;rev&quot; &quot;=&quot; relation-types )
+               | ( &quot;hreflang&quot; &quot;=&quot; Language-Tag )
+               | ( &quot;media&quot; &quot;=&quot; ( MediaDesc | ( &lt;&quot;&gt; MediaDesc &lt;&quot;&gt; ) ) )
+               | ( &quot;title&quot; &quot;=&quot; quoted-string )
+               | ( &quot;title*&quot; &quot;=&quot; ext-value )
+               | ( &quot;type&quot; &quot;=&quot; ( media-type | quoted-mt ) )
+               | ( link-extension ) )
+link-extension = ( parmname [ &quot;=&quot; ( ptoken | quoted-string ) ] )
+               | ( ext-name-star &quot;=&quot; ext-value )
+ext-name-star  = parmname &quot;*&quot; ; reserved for RFC2231-profiled
+                              ; extensions.  Whitespace NOT
+                              ; allowed in between.
+ptoken         = 1*ptokenchar
+ptokenchar     = &quot;!&quot; | &quot;#&quot; | &quot;$&quot; | &quot;%&quot; | &quot;&amp;&quot; | &quot;'&quot; | &quot;(&quot;
+               | &quot;)&quot; | &quot;*&quot; | &quot;+&quot; | &quot;-&quot; | &quot;.&quot; | &quot;/&quot; | DIGIT
+               | &quot;:&quot; | &quot;&lt;&quot; | &quot;=&quot; | &quot;&gt;&quot; | &quot;?&quot; | &quot;@&quot; | ALPHA
+               | &quot;[&quot; | &quot;]&quot; | &quot;^&quot; | &quot;_&quot; | &quot;`&quot; | &quot;{&quot; | &quot;|&quot;
+               | &quot;}&quot; | &quot;~&quot;
+media-type     = type-name &quot;/&quot; subtype-name
+quoted-mt      = &lt;&quot;&gt; media-type &lt;&quot;&gt;
+relation-types = relation-type
+               | &lt;&quot;&gt; relation-type *( 1*SP relation-type ) &lt;&quot;&gt;
+relation-type  = reg-rel-type | ext-rel-type
+reg-rel-type   = LOALPHA *( LOALPHA | DIGIT | &quot;.&quot; | &quot;-&quot; )
+ext-rel-type   = URI
+</code></pre>
+<h2>Examples</h2>
+<pre><code class="html">Link: <span class="hljs-tag">&lt;<span class="hljs-title">http:</span>//<span class="hljs-attribute">example.com</span>/<span class="hljs-attribute">TheBook</span>/<span class="hljs-attribute">chapter2</span>&gt;</span>; rel="previous"; title="previous chapter"
+</code></pre>
+<p>The Link header carries the same semantics, and many Web browsers recognize this:</p>
+<pre><code class="html">Link: <span class="hljs-tag">&lt;/<span class="hljs-title">style</span>/<span class="hljs-attribute">main.css</span>&gt;</span>;rel="stylesheet";type="text/css"
+</code></pre>
+<h2>Related specifications</h2>
+<p><a href="http://tools.ietf.org/html/rfc5988">RFC5988: Web Linking</a><br>
+:</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>path · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="The path element is the generic element to define a shape." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/svg/">svg</a></li><li><a href="/docs/svg/elements/">elements</a></li><li><a href="/svg/elements/path/">path</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>path</h1>
+<h2>Summary</h2>
+<p>The path element is the generic element to define a shape.</p>
+<h2>Overview Table</h2>
+<dl>
+<dt><a href="/docs/dom/interface">DOM Interface</a></dt>
+<dd><a href="/docs/svg/objects/SVGElement">SVGElement</a>
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>In the following code example, the path element is used to create a red curved path.</p>
+<pre><code class="html">
+
+<span class="hljs-tag">&lt;<span class="hljs-title">svg</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"400"</span> <span class="hljs-attribute">height</span>=<span class="hljs-value">"400"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">path</span> <span class="hljs-attribute">d</span>=<span class="hljs-value">"M 50,100 Q 150,50 250,100"</span> <span class="hljs-attribute">stroke</span>=<span class="hljs-value">"red"</span> <span class="hljs-attribute">stroke-width</span>=<span class="hljs-value">"10"</span> <span class="hljs-attribute">fill</span>=<span class="hljs-value">"white"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">svg</span>&gt;</span>
+</code></pre>
+</pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p><strong>Note:</strong> In addition to the attributes, properties, events, methods, and styles listed above, SVG elements also inherent core HTML attributes, properties, events, methods, and styles.</p>
+<p>Path data can contain newline characters and thus can be broken up into multiple lines to improve readability. Because of line-length limitations with certain related tools, it is recommended to split long path data strings across multiple lines, with each line not exceeding 255 characters. Also note that newline characters are allowed only at certain places within path data.</p>
+<p>The syntax of path data is concise in order to allow for minimal file size and efficient downloads, because many SVG files will be dominated by their path data. Some of the ways that SVG attempts to minimize the size of path data are as follows:</p>
+<ul>
+<li><p>All instructions are expressed as one character (for example, a <em>moveto</em> is expressed as an <strong>M</strong>).</p></li>
+<li><p>Superfluous white space and separators such as commas can be eliminated (for example, “M 100 100 L 200 200” contains unnecessary spaces and could be expressed more compactly as “M100 100L200 200”).</p></li>
+<li><p>The command letter can be eliminated on subsequent commands if the same command is used multiple times in a row (for example, you can drop the second <strong>L</strong> in “M 100 200 L 200 100 <strong>L</strong> -100 -200” and use “M 100 200 L 200 100 -100 -200” instead).</p></li>
+<li><p>Relative versions of all commands are available (uppercase means absolute coordinates, lowercase means relative coordinates).</p></li>
+<li><p>Alternate forms of <em>lineto</em> are available to optimize the special cases of horizontal and vertical lines (absolute and relative).</p></li>
+<li><p>Alternate forms of <em>curve</em> are available to optimize the special cases where some of the control points on the current segment can be determined automatically from the control points on the previous segment.</p></li>
+</ul>
+<p>The path-data syntax is a prefix notation (that is, commands followed by parameters). The only allowable decimal point is a Unicode U+0046 FULL STOP (“.”) character (also referred to in Unicode as PERIOD, dot, and decimal point) and no other delimiter characters are allowed. (For example, the following is an invalid numeric value in a path data stream: &quot;13,000.56&quot;. Instead, say: &quot;13000.56&quot;.)</p>
+<p>For the relative versions of the commands, all coordinate values are relative to the current point at the start of the command. For example, the absolute version of <em>moveto</em> is <strong>M</strong> whereas its relative form is indicated with a lowercase <strong>m</strong>. Absolute versus relative path commands are discussed in the following table.</p>
+<p><strong>Note:</strong> In the Path Command Table below, the following notation is used.</p>
+<p>{</p>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://www.w3.org/TR/SVG11/paths.html">Scalable Vector Graphics: Paths</a>, Section 8.5.23</li>
+</ul>
+<h3>Members</h3>
+<p>The <strong>SVGPathElement</strong> object has these events:</p>
+<ul>
+<li><a href="/docs/svg/events/load"><strong>onload</strong></a>: Occurs when the browser has fully parsed the element and all of its descendants.</li>
+</ul>
+<p>The <strong>SVGPathElement</strong> object has these methods:</p>
+<ul>
+<li><a href="/docs/svg/methods/createSVGPathSegArcAbs"><strong>createSVGPathSegArcAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegArcAbs"><strong>SVGPathSegArcAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegArcRel"><strong>createSVGPathSegArcRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegArcRel"><strong>SVGPathSegArcRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegClosePath"><strong>createSVGPathSegClosePath</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegClosePath"><strong>SVGPathSegClosePath</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoCubicAbs"><strong>createSVGPathSegCurvetoCubicAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoCubicAbs"><strong>SVGPathSegCurvetoCubicAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoCubicRel"><strong>createSVGPathSegCurvetoCubicRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoCubicRel"><strong>SVGPathSegCurvetoCubicRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoCubicSmoothAbs"><strong>createSVGPathSegCurvetoCubicSmoothAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoCubicSmoothAbs"><strong>SVGPathSegCurvetoCubicSmoothAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoCubicSmoothRel"><strong>createSVGPathSegCurvetoCubicSmoothRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoCubicSmoothRel"><strong>SVGPathSegCurvetoCubicSmoothRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoQuadraticAbs"><strong>createSVGPathSegCurvetoQuadraticAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoQuadraticAbs"><strong>SVGPathSegCurvetoQuadraticAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoQuadraticRel"><strong>createSVGPathSegCurvetoQuadraticRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoQuadraticRel"><strong>SVGPathSegCurvetoQuadraticRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoQuadraticSmoothAbs"><strong>createSVGPathSegCurvetoQuadraticSmoothAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoQuadraticSmoothAbs"><strong>SVGPathSegCurvetoQuadraticSmoothAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegCurvetoQuadraticSmoothRel"><strong>createSVGPathSegCurvetoQuadraticSmoothRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegCurvetoQuadraticSmoothRel"><strong>SVGPathSegCurvetoQuadraticSmoothRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegLinetoAbs"><strong>createSVGPathSegLinetoAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegLinetoAbs"><strong>SVGPathSegLinetoAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegLinetoHorizontalAbs"><strong>createSVGPathSegLinetoHorizontalAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegLinetoHorizontalAbs"><strong>SVGPathSegLinetoHorizontalAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegLinetoHorizontalRel"><strong>createSVGPathSegLinetoHorizontalRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegLinetoHorizontalRel"><strong>SVGPathSegLinetoHorizontalRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegLinetoRel"><strong>createSVGPathSegLinetoRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegLinetoRel"><strong>SVGPathSegLinetoRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegLinetoVerticalAbs"><strong>createSVGPathSegLinetoVerticalAbs</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegLinetoVerticalAbs"><strong>SVGPathSegLinetoVerticalAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegLinetoVerticalRel"><strong>createSVGPathSegLinetoVerticalRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegLinetoVerticalRel"><strong>SVGPathSegLinetoVerticalRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegMovetoAbs"><strong>createSVGPathSegMovetoAbs</strong></a>: Returns a standalone parentless <a href="/docs/svg/objects/SVGPathSegMovetoAbs"><strong>SVGPathSegMovetoAbs</strong></a> object.</li>
+<li><a href="/docs/svg/methods/createSVGPathSegMovetoRel"><strong>createSVGPathSegMovetoRel</strong></a>: Returns a stand-alone, parentless <a href="/docs/svg/objects/SVGPathSegMovetoRel"><strong>SVGPathSegMovetoRel</strong></a> object.</li>
+<li><a href="/docs/svg/methods/getBBox"><strong>getBBox</strong></a>: Gets the bounding box, in current user space, of the geometry of all contained graphics elements.</li>
+<li><a href="/docs/svg/methods/getCTM"><strong>getCTM</strong></a>: Gets the transformation matrix that transforms from the current user units to the viewport coordinate system for the <a href="/docs/svg/properties/nearestViewportElement"><strong>nearestViewportElement</strong></a> object.</li>
+<li><a href="/docs/svg/methods/getPathSegAtLength"><strong>getPathSegAtLength</strong></a>: Gets the index of <a href="/docs/svg/properties/pathSegList"><strong>pathSegList</strong></a> by using the specified distance along the path.</li>
+<li><a href="/docs/svg/methods/getPointAtLength"><strong>getPointAtLength</strong></a>: Gets the (x,y) coordinate in user space that is the specified distance along the path.</li>
+<li><a href="/docs/svg/methods/getScreenCTM"><strong>getScreenCTM</strong></a>: Gets the transformation matrix from the current user units to the screen coordinate system.</li>
+<li><a href="/docs/svg/methods/getTotalLength"><strong>getTotalLength</strong></a>: Gets the total length of the path, as a distance in the current user coordinate system.</li>
+<li><a href="/docs/svg/methods/getTransformToElement"><strong>getTransformToElement</strong></a>: Gets the transformation matrix that transforms from the user coordinate system on the current element to the user coordinate system on the specified target element.</li>
+<li><a href="/docs/svg/methods/hasExtension"><strong>hasExtension</strong></a>: Determines if the specified extension is supported.</li>
+</ul>
+<p>The <strong>SVGPathElement</strong> object has these properties:</p>
+<ul>
+<li><a href="/docs/svg/properties/animatedNormalizedPathSegList"><strong>animatedNormalizedPathSegList</strong></a>: Gets or sets the normalized animated contents of</li>
+</ul>
+<p>the <a href="/docs/svg/properties/d"><strong>d</strong></a> attribute.</p>
+<ul>
+<li><a href="/docs/svg/properties/animatedPathSegList"><strong>animatedPathSegList</strong></a>: Gets or sets the animated contents of the <a href="/docs/svg/properties/d"><strong>d</strong></a> attribute in a form that matches the SVG syntax.</li>
+<li><a href="/docs/svg/properties/className"><strong>className</strong></a>: Gets the names of the classes that are assigned to this object.</li>
+<li><a href="/docs/svg/properties/clipPath"><strong>clipPath</strong></a>: Sets or retrieves a reference to the SVG graphical object that will be used as the clipping path.</li>
+<li><a href="/docs/svg/properties/externalResourcesRequired"><strong>externalResourcesRequired</strong></a>: Gets a value that indicates whether referenced resources that are not in the current document are required to correctly render a given element.</li>
+<li><a href="/docs/svg/properties/farthestViewportElement"><strong>farthestViewportElement</strong></a>: Gets a value that represents the farthest ancestor <a href="/docs/svg/elements/svg"><strong>svg</strong></a> element.</li>
+<li><a href="/docs/svg/attributes/fill"><strong>fill</strong></a>: Sets or retrieves a value that indicates the color to paint the interior of the given graphical element.</li>
+<li><a href="/docs/svg/attributes/fill-opacity"><strong>fillOpacity</strong></a>: Sets or retrieves a value that specifies the opacity of the painting operation that is used to paint the interior of the current object.</li>
+<li><a href="/docs/svg/attributes/fill-rule"><strong>fillRule</strong></a>: Sets or retrieves a value that indicates the algorithm that is to be used to determine what parts of the canvas are included inside the shape.</li>
+<li><a href="/docs/svg/properties/focusable"><strong>focusable</strong></a>: Determines if an element can acquire keyboard focus (that is, receive keyboard events) and be a target for field-to-field navigation actions (such as when a user presses the Tab key).</li>
+<li><a href="/docs/svg/attributes/marker"><strong>marker</strong></a>: Sets or retrieves a value that specifies the marker symbol that is used for all vertices on the given <strong>path</strong> element or basic shape.</li>
+<li><a href="/docs/svg/attributes/marker-end"><strong>markerEnd</strong></a>: Sets or retrieves a value that defines the arrowhead or polymarker that is drawn at the final vertex of a given <strong>path</strong> element or basic shape.</li>
+<li><a href="/docs/svg/attributes/marker-mid"><strong>markerMid</strong></a>: Sets or retrieves a value that defines the arrowhead or polymarker that is drawn at every other vertex (that is, every vertex except the first and last) of a given <strong>path</strong> element or basic shape.</li>
+<li><a href="/docs/svg/attributes/marker-start"><strong>markerStart</strong></a>: Sets or retrieves a value that defines the arrowhead or polymarker that is drawn at the first vertex of a given <strong>path</strong> element or basic shape.</li>
+<li><a href="/docs/svg/attributes/mask"><strong>mask</strong></a>: Sets or retrieves a value that indicates a SVG mask.</li>
+<li><a href="/docs/svg/properties/nearestViewportElement"><strong>nearestViewportElement</strong></a>: Gets a value that indicates which element established the current viewport.</li>
+<li><a href="/docs/svg/properties/normalizedPathSegList"><strong>normalizedPathSegList</strong></a>: Gets or sets the normalized static contents of the <a href="/docs/svg/properties/d"><strong>d</strong></a> attribute.</li>
+<li><a href="/docs/svg/properties/ownerSVGElement"><strong>ownerSVGElement</strong></a>: Gets the nearest ancestor <a href="/docs/svg/objects/SVGElement"><strong>svg</strong></a> element.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/SVG11/paths.html">SVG 1.1</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

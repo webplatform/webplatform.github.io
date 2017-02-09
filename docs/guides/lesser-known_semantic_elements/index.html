@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lesser known semantic elements · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This article discusses some of the lesser known and more
+    infrequently used semantic elements available in HTML.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/guides/">guides</a></li><li><a href="/docs/guides/lesser-known_semantic elements/">lesser-known semantic elements</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Lesser known semantic elements</h1>
+<h2>Summary</h2>
+<p>This article discusses some of the lesser known and more infrequently used semantic elements available in HTML.</p>
+<h2>Introduction</h2>
+<p>In this article we look at some of the and less well-known and used semantic elements in HTML. We’ll look at marking up programming code, interaction with computers, citations and abbreviations, showing changes made to documents, and more.</p>
+<h2>Highlighting contact information</h2>
+<p>The <code>&lt;address&gt;</code> element is probably the most poorly named and misunderstood element in HTML. At first glance, with a name like &quot;address&quot;, it would appear that it is used to encapsulate addresses, email, postal, or otherwise. This is only partially the case.</p>
+<p>The actual meaning of <code>&lt;address&gt;</code> is to supply contact information <em>for the author or authors</em> of the page, or for the major section of the page, that it appears within. This can take the form of a name, an email address, a postal address, or a link to another page with more contact information. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">address</span>&gt;</span>
+  Mark Norman Francis,
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"tel"</span>&gt;</span>1-800-555-4865<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">address</span>&gt;</span>
+</code></pre>
+<p>In the following example, the address is contained within the footer paragraph and simply links to another page on the site. The extended contact information on the page that this link targets could then have more detailed contact information, to save repeating it endlessly across the entire site.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">footer</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>© Copyright 2011<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">address</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"/contact/"</span>&gt;</span>Mark Norman Francis<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">address</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">footer</span>&gt;</span>
+</code></pre>
+<p>Of course, if the site had more than one author, the same pattern could be used, just linking to different contact pages for the different authors.</p>
+<p>It is <strong>incorrect</strong> to use the <code>&lt;address&gt;</code> element to indicate any other type of addresses, such as this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span> Our company address: <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">address</span>&gt;</span>
+  Opera Software ASA,
+  Waldemar Thranes gate 98,
+  NO-0175 OSLO,
+  NORWAY
+<span class="hljs-tag">&lt;/<span class="hljs-title">address</span>&gt;</span>
+</code></pre>
+<p>(Unless, of course, Opera was taking collective responsibility for the content as the “author” of the article.)</p>
+<p>For any general address, you can use something called a “microformat” to indicate that a paragraph contains an address.</p>
+<h2>Programming languages and code</h2>
+<p>The <code>&lt;code&gt;</code> element is used to indicate computer code or programming languages, such as PHP, JavaScript, CSS, or XML. For short samples within a sentence, you would simply wrap the element around the code snippet, like so:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>It is bad form to use event handlers like
+<span class="hljs-tag">&lt;<span class="hljs-title">code</span>&gt;</span>onclick<span class="hljs-tag">&lt;/<span class="hljs-title">code</span>&gt;</span> directly in the HTML.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>For larger samples of code which span multiple lines, you can use a preformatted block <code>&lt;pre&gt;...&lt;/pre&gt;</code> as shown in the <a href="/docs/guides/html_text">HTML Text</a> article.</p>
+<p>Although there is no defined method for indicating which programming language or code is shown within the <code>&lt;code&gt;</code> element, you can use the <code>class</code> attribute. A common practice (mentioned in the HTML 5 specification) is to use the prefix <code>&lt;language-&gt;</code> and then append the language name. So the above example would become:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>It is bad form to use event handlers like
+<span class="hljs-tag">&lt;<span class="hljs-title">code</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"language-javascript"</span>&gt;</span>onclick<span class="hljs-tag">&lt;/<span class="hljs-title">code</span>&gt;</span>
+directly in the HTML.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Some programming languages have names that cannot be easily represented in classes, such as C# (C-Sharp). The correct way of writing this would be &quot;<code>&lt;class='language-c\#'&gt;</code>&quot;, where the “\” indicates &quot;treat the next character literally&quot;. This, of course, could be confusing and could easily be mis-typed. We recommend using a class consisting of only letters and hyphens, and spelling it out completely. So in this case, use &quot;<code>&lt;class='language-csharp'&gt;</code>&quot; instead.</p>
+<h2>Displaying computer interaction</h2>
+<p>The two elements <code>&lt;samp&gt;</code> and <code>&lt;kbd&gt;</code> can be used to indicate the input and output of interaction with a computer program. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>One common method of determining if a computer is connected
+to the internet is to use the computer program <span class="hljs-tag">&lt;<span class="hljs-title">code</span>&gt;</span>ping<span class="hljs-tag">&lt;/<span class="hljs-title">code</span>&gt;</span>
+to see if a computer likely to be running is reachable.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">samp</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"prompt"</span>&gt;</span>kittaghy%<span class="hljs-tag">&lt;/<span class="hljs-title">samp</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">kbd</span>&gt;</span>ping -o google.com<span class="hljs-tag">&lt;/<span class="hljs-title">kbd</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">samp</span>&gt;</span>PING google.com (64.233.187.99): 56 data bytes
+  64 bytes from 64.233.187.99: icmp_seq=0 ttl=242 time=108.995 ms
+
+  --- google.com ping statistics ---
+  1 packets transmitted, 1 packets received, 0% packet loss
+  round-trip min/avg/max/stddev = 108.995/108.995/108.995/0.000 ms
+<span class="hljs-tag">&lt;/<span class="hljs-title">samp</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">pre</span>&gt;</span>
+</code></pre>
+<p>The <code>&lt;samp&gt;</code> element indicates sample output from a computer program. As shown in the example, different types of output can be indicated using the <code>class</code> attribute. There are no widely adopted conventions for which kind of classes to use, however.</p>
+<p>The <code>&lt;kbd&gt;</code> element indicates input from the user interacting with the computer. Although this is traditionally keyboard input (hence the “kbd” contraction) it should also be used to indicate other types of input, such as spoken voice.</p>
+<h2>Variables</h2>
+<p>The <code>&lt;var&gt;</code> element is used to indicate variables in textual content. This can include variables in algebraic mathematical expressions or within programming code. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The value of <span class="hljs-tag">&lt;<span class="hljs-title">var</span>&gt;</span>x<span class="hljs-tag">&lt;/<span class="hljs-title">var</span>&gt;</span> in
+ 3<span class="hljs-tag">&lt;<span class="hljs-title">var</span>&gt;</span>x<span class="hljs-tag">&lt;/<span class="hljs-title">var</span>&gt;</span>+2=14 is 4.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">code</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"language-perl"</span>&gt;</span>
+my <span class="hljs-tag">&lt;<span class="hljs-title">var</span>&gt;</span>$welcome<span class="hljs-tag">&lt;/<span class="hljs-title">var</span>&gt;</span> = "Hello world!";
+<span class="hljs-tag">&lt;/<span class="hljs-title">code</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">pre</span>&gt;</span>
+</code></pre>
+<h2>Citations</h2>
+<p>The <code>&lt;cite&gt;</code> element is used to indicate where the nearby content comes from. When quoting a person, a book or other publication, or generally referring people to another source, that source should be wrapped in a <code>&lt;cite&gt;</code> element. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The saying <span class="hljs-tag">&lt;<span class="hljs-title">q</span>&gt;</span>Everything should be made as simple as possible,
+but not simpler<span class="hljs-tag">&lt;/<span class="hljs-title">q</span>&gt;</span> is often attributed to <span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span>Albert
+Einstein<span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>, but it is actually a paraphrasing of a quote which
+is much less easy to understand.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<h2>Abbreviations</h2>
+<p>The <code>&lt;abbr&gt;</code> element is used to indicate where abbreviations occur, and to provide a method for expanding them without unnecessarily interrupting the flow of the document.</p>
+<p>The text that is the abbreviation gets wrapped in the <code>&lt;abbr&gt;</code> element, and the full expansion is placed in the <code>title</code> attribute, like this:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Styling is added to
+<span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Hypertext Markup Language"</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span> documents
+using <span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"Cascading Style Sheets"</span>&gt;</span>CSS<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Note that in the HTML4 specification there is also an element called <code>&lt;acronym&gt;</code>, which had a similar function to <code>&lt;abbr&gt;</code>, but for acronyms. This was dropped in HTML5 because the functional difference between an acronym and an abbreviation isn’t distinct enough to require different elements.</p>
+<p>One problem with this is Internet Explorer support: Internet Explorer (before version 7, and 7 doesn’t provide the dotted underline underneath abbreviations that other browsers do) doesn’t recognise the <code>&lt;abbr&gt;</code> element, but does recognise <code>&lt;acronym&gt;</code>. But this is easy enough to get around. To ensure that <code>&lt;abbr&gt;</code> will be stylable in Internet Explorer, just create the element with JavaScript. Put this code in your document <code>&lt;head&gt;</code>:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="javascript"><span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'abbr'</span>);</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>To find out more about why this works, see the <a href="/docs/guides/html_structural_elements">HTML Structural Elements</a> article. Of course, you could just stick to using <code>&lt;acronym&gt;</code> for now, until you decide to make a complete move toward HTML5.</p>
+<h2>Defining instances</h2>
+<p>There is some confusion over the proper use of <code>&lt;dfn&gt;</code>, which is described in the HTML specification as &quot;the defining instance of the enclosed term&quot;. This is remarkably close to the idea of the <code>&lt;dt&gt;</code> element (definition term) used in definition lists.</p>
+<p>The difference is that the term used in <code>&lt;dfn&gt;</code> does not have to be a part of a list of terms and descriptions and can instead be used as part of the normal flow of text, even in conversational style prose. So, let’s look at an example of using <code>&lt;dfn&gt;</code>:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">dfn</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">dfn</span>&gt;</span>: HTML stands for "HyperText Markup Language". This is
+the language used to describe the contents of web documents.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>The term HTML appears in the text, and is followed immediately by a definition of what it is; therefore, this is an ideal place for the <code>&lt;dfn&gt;</code> element to be used. You should really only use it once on a page, where a term is first defined, but terms should only really be defined once on a page anyway, so this is not too troubling.</p>
+<p>This is all well and good, but an isolated example is not very practical — the use of <code>&lt;dfn&gt;</code> is recommended when an abbreviation is used more than once on a page. For example, in any article about HTML, the abbreviation “HTML” could appear dozens of times. To use the code &quot;<code>&lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt;</code>&quot; each and every time it is seen would be a waste of bandwidth, visually distracting, and for screen reader users probably quite tiresome as HTML is expanded over and over, even though they would already have been told what it stands for. Instead, the code could be inserted only at the point where it is first defined for the readers:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">dfn</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">abbr</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">dfn</span>&gt;</span> ("HyperText Markup Language") is
+a language to describe the contents of web documents.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Then later, whenever “HTML” is used, it can be marked up simply as &quot;<code>&lt;abbr&gt;HTML&lt;/abbr&gt;</code>&quot;. A user agent could then make available to the user some method of retrieving the defining instance of that abbreviation. Unfortunately, no user agent currently does this, including screen readers. It would be better, then, to use the <code>title</code> attribute as well to provide this information:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">dfn</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"HyperText Markup Language"</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">dfn</span>&gt;</span> ("HyperText Markup Language") is a language
+to describe the contents of web documents.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Unfortunately, we have now doubled up on the expanded term for &quot;HTML&quot;, which can be a problem for screen reader users. However, leaving out the visible expansion makes the document less useful for sighted users, which will be the greater proportion of users in almost every case.</p>
+<p>We suggest that this is an acceptable trade-off when there are only one or two items requiring a definition. In pages that require a larger number of definitions, it might be better to create a glossary section or page where the more rigourous definition list markup can be used. If you are very concerned about this, the code could instead appear as:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">abbr</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"HyperText Markup Language"</span>&gt;</span>HTML<span class="hljs-tag">&lt;/<span class="hljs-title">abbr</span>&gt;</span>
+(<span class="hljs-tag">&lt;<span class="hljs-title">dfn</span>&gt;</span>HyperText Markup Language<span class="hljs-tag">&lt;/<span class="hljs-title">dfn</span>&gt;</span>) is a language to
+describe the contents of web documents.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>However, the user agent would still need some method of connecting the definition with all the instances of the defined term. No browser currently does anything useful with <code>&lt;dfn&gt;</code>, although it is still a useful hook for CSS to style. The solution suggested above is currently the best we’ve got.</p>
+<p>This is an unfortunate instance where the specification has been created without clear guidelines on how an element is supposed to be used, and probably was not based upon any real-world usage of that element; otherwise, there would be a method of combining the term with its full description or definition. The HTML5 specification goes into [<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-dfn-element">more detail</a>] about how dfn is used, but this is still in draft and not suitable for use on the web yet.</p>
+<h2>Superscript and subscript</h2>
+<p>To mark up a part of some text as being super- or subscripted (slightly raised or lowered compared to the rest of the text) you use the <code>&lt;sup&gt;</code> and <code>&lt;sub&gt;</code> elements.</p>
+<p>Some languages require these elements for correct rendering of abbreviations, and it can be used when a small amount of mathematical content is being marked up, without resorting to using MathML (a specific, rather heavyweight mathematical markup language, created for the sole purpose of marking up complex mathematical formulas).</p>
+<p>An example of both types:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The chemical formula for water is H<span class="hljs-tag">&lt;<span class="hljs-title">sub</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-title">sub</span>&gt;</span>O, and it
+is also known as hydrogen hydroxide.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The famous formula for mass-energy equivalence as derived
+by Albert Einstein is E=mc<span class="hljs-tag">&lt;<span class="hljs-title">sup</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-title">sup</span>&gt;</span> — energy
+is equal to the mass multiplied by the speed of light
+squared.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<h2>Line breaks</h2>
+<p>Because of the way HTML defines white space, it is not possible to control where lines of text break (such as marking up a postal address as a paragraph, but wanting the visual appearance to have each part of the address appear on a separate line) by simply pressing the Return key whilst writing the text.</p>
+<p>A line break can be introduced into the document using the <code>&lt;br&gt;</code> element. However, this should only be used to force line breaks where they are required, and never to apply more vertical spacing between paragraphs or such in a document; that is of course more properly done with CSS.</p>
+<p>Sometimes it might be easier to use the preformatted text block rather than inserting <code>&lt;br&gt;</code> elements. Or, if one particular part of some text is desired to be on a line by itself, but this is just a styling issue, it can be surrounded by a <code>&lt;span&gt;</code> element and set to display as a block level element.</p>
+<p>For example, you could write the Opera contact address seen earlier in this article like this instead:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Our company address: <span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">address</span>&gt;</span>
+Opera Software ASA,<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>Waldemar Thranes gate 98,<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+NO-0175 OSLO,<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>NORWAY
+<span class="hljs-tag">&lt;/<span class="hljs-title">address</span>&gt;</span>
+</code></pre>
+<p>Of course, if you are writing XHTML style syntax rather than HTML, the element should be self-closing: <code>&lt;br /&gt;</code>.</p>
+<h2>Horizontal rules</h2>
+<p>A horizontal rule is created in HTML with the <code>&lt;hr&gt;</code> element. It inserts into the document a line, which is described to represent a boundary between different sections of a document.</p>
+<p>Whilst some argue that this is inherently non-semantic and purely a visual, presentational effect, there is actually some precedent in literature for such an element to exist. Within a chapter (which could be described as a section within a book), a horizontal rule may appear between scenes that occur in different times and/or places. Also, poetry can use decorative breaks to separate different stanzas of the poem.</p>
+<p>Neither use would justify the existence of a new header element, which is the accepted way of marking the boundaries between document sections.</p>
+<p>The <code>&lt;hr&gt;</code> element has no uncommon attributes and should be styled using CSS if the default appearance is unsatisfactory.</p>
+<p>Also, like the line break, if you are writing XHTML style syntax and not HTML, use the self-closing form: <code>&lt;hr /&gt;</code>.</p>
+<h2>Changes to documents (inserting, deleting and outdated content)</h2>
+<p>If a document has been changed since the first time it was available, you can mark these changes so that return visitors or automated processes can tell what has changed, and when.</p>
+<p>New text (insertions) should be surrounded by the <code>&lt;ins&gt;</code> element. Text that has been removed (deletions) should be surrounded by the <code>&lt;del&gt;</code> element. If a deletion and insertion have been made at the same point in the document, good form suggests having the deleted text first, followed by the insertion.</p>
+<p>Both elements can take two attributes that give more meaning to the edits.</p>
+<p>If the reason for the change is stated in the page or elsewhere on the web, you should link to that document or fragment in the <code>cite</code> attribute. This effectively says “This change happened for this reason.”</p>
+<p>You can also indicate the time at which the change was made by using a <code>datetime</code> attribute. The value should be an ISO-standard timestamp, which is generally of the form &quot;YYYY-MM-DD HH:MM:SS ±HH:MM&quot;. See <a href="http://en.wikipedia.org/wiki/ISO_8601">this Wikipedia article</a> for more information.</p>
+<p>An example using both attributes:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>We should only solve problems that actually arise. As
+<span class="hljs-tag">&lt;<span class="hljs-title">cite</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">del</span> <span class="hljs-attribute">datetime</span>=<span class="hljs-value">"2008-03-25 18:26:55 Z"</span>
+<span class="hljs-attribute">cite</span>=<span class="hljs-value">"/changes.html#revision-4"</span>&gt;</span>Donald Knuth<span class="hljs-tag">&lt;/<span class="hljs-title">del</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ins</span>
+<span class="hljs-attribute">datetime</span>=<span class="hljs-value">"2008-03-25 18:26:55 Z"</span>
+<span class="hljs-attribute">cite</span>=<span class="hljs-value">"/changes.html#revision-4"</span>&gt;</span>C. A. R. Hoare<span class="hljs-tag">&lt;/<span class="hljs-title">ins</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">cite</span>&gt;</span>
+said: <span class="hljs-tag">&lt;<span class="hljs-title">q</span>&gt;</span>premature optimization is the root of all
+evil<span class="hljs-tag">&lt;/<span class="hljs-title">q</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>We can also use the <code>&lt;s&gt;</code> element to markup content that is outdated, perhaps if you want to mark it for future updating or deletion. For example:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">s</span>&gt;</span>The president of the USA is currently Barack Obama<span class="hljs-tag">&lt;/<span class="hljs-title">s</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<h2>Conclusion</h2>
+<p>Although the elements in this article are less well known than some of their fellows, they are no less useful. You should of course use whichever elements are appropriate to the content they mark up, regardless of popularity. Usage promotes familiarity, and familiarity promotes usage!</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>create · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Creates an object that has the specified prototype, and that optionally contains specified properties." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/Object/">Object</a></li><li><a href="/docs/javascript/Object/create/">create</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>create</h1>
+<h2>Summary</h2>
+<p>Creates an object that has the specified prototype, and that optionally contains specified properties.</p>
+<h2>Syntax</h2>
+<pre><code>Object.create( prototype , descriptors )
+</code></pre>
+<dl>
+<dt><strong>prototype</strong></dt>
+<dd>Required. The object to use as a prototype. May be null.
+</dd>
+<dt><strong>descriptors</strong></dt>
+<dd>Optional. A JavaScript object that contains one or more property descriptors.A data property is a property that can get and set a value. A data property descriptor contains a value attribute, plus writable , enumerable , and configurable attributes. If the last three attributes are not specified, they default to false. An accessor property calls a user-provided function every time the value is retrieved or set. An accessor property descriptor contains a set attribute, a get attribute, or both. For more information, see <a href="/docs/javascript/Object/defineProperty">Object.defineProperty Function</a>.
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>A new object that has the specified internal prototype and contains the specified properties, if any.</p>
+<h2>Examples</h2>
+<p>The following example creates an object using a null prototype and adds two enumerable properties.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> newObj = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>, {
+             size: {
+                 value: <span class="hljs-string">"large"</span>,
+                 enumerable: <span class="hljs-literal">true</span>
+             },
+             shape: {
+                 value: <span class="hljs-string">"round"</span>,
+                 enumerable: <span class="hljs-literal">true</span>
+             }
+         });
+
+ <span class="hljs-built_in">document</span>.write(newObj.size + <span class="hljs-string">"&lt;br/&gt;"</span>);
+ <span class="hljs-built_in">document</span>.write(newObj.shape + <span class="hljs-string">"&lt;br/&gt;"</span>);
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-built_in">Object</span>.getPrototypeOf(newObj));
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// large</span>
+ <span class="hljs-comment">// round</span>
+ <span class="hljs-comment">// null</span>
+</code></pre>
+<p>The following example creates an object that has the same internal prototype as the Object object. You can see that it has the same prototype as an object created by using an object literal. The <a href="/docs/javascript/Object/getPrototypeOf">Object.getPrototypeOf</a> function gets the prototype of the original object. To get the object’s property descriptor, you can use <a href="/docs/javascript/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor Function</a>.</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> firstLine = { x: <span class="hljs-literal">undefined</span>, y: <span class="hljs-literal">undefined</span> };
+
+ <span class="hljs-keyword">var</span> secondLine = <span class="hljs-built_in">Object</span>.create(<span class="hljs-built_in">Object</span>.prototype, {
+         x: {
+                 value: <span class="hljs-literal">undefined</span>,
+                 writable: <span class="hljs-literal">true</span>,
+                 configurable: <span class="hljs-literal">true</span>,
+                 enumerable: <span class="hljs-literal">true</span>
+             },
+             y: {
+                 value: <span class="hljs-literal">undefined</span>,
+                 writable: <span class="hljs-literal">true</span>,
+                 configurable: <span class="hljs-literal">true</span>,
+                 enumerable: <span class="hljs-literal">true</span>
+             }
+ });
+
+ <span class="hljs-keyword">var</span> firstLine = { x: <span class="hljs-literal">undefined</span>, y: <span class="hljs-literal">undefined</span> };
+
+ <span class="hljs-keyword">var</span> secondLine = <span class="hljs-built_in">Object</span>.create(<span class="hljs-built_in">Object</span>.prototype, {
+         x: {
+                 value: <span class="hljs-literal">undefined</span>,
+                 writable: <span class="hljs-literal">true</span>,
+                 configurable: <span class="hljs-literal">true</span>,
+                 enumerable: <span class="hljs-literal">true</span>
+             },
+             y: {
+                 value: <span class="hljs-literal">undefined</span>,
+                 writable: <span class="hljs-literal">true</span>,
+                 configurable: <span class="hljs-literal">true</span>,
+                 enumerable: <span class="hljs-literal">true</span>
+             }
+ });
+
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"first line prototype = "</span> + <span class="hljs-built_in">Object</span>.getPrototypeOf(firstLine));
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"&lt;br/&gt;"</span>);
+ <span class="hljs-built_in">document</span>.write(<span class="hljs-string">"second line prototype = "</span> + <span class="hljs-built_in">Object</span>.getPrototypeOf(secondLine));
+
+ <span class="hljs-comment">// Output:</span>
+ <span class="hljs-comment">// first line prototype = [object Object]</span>
+ <span class="hljs-comment">// second line prototype = [object Object]</span>
+</code></pre>
+<p>The following example creates an object that has the same internal prototype as the Shape object.</p>
+<pre><code class="js"><span class="hljs-comment">// Create the shape object.</span>
+ <span class="hljs-keyword">var</span> Shape = { twoDimensional: <span class="hljs-literal">true</span>, color: <span class="hljs-literal">undefined</span>, hasLineSegments: <span class="hljs-literal">undefined</span> };
+
+ <span class="hljs-keyword">var</span> Square = <span class="hljs-built_in">Object</span>.create(<span class="hljs-built_in">Object</span>.getPrototypeOf(Shape));
+</code></pre>
+<h2>Remarks</h2>
+<p>You can use this function using a null prototype parameter in order to stop the prototype chain. The object created will have no prototype.</p>
+<h2>Exceptions</h2>
+<p>A TypeError exception is thrown if any of the following conditions is true:</p>
+<ul>
+<li>The prototype argument is not an object and is not null.</li>
+<li>A descriptor in the descriptors argument has a value or writable attribute, and has a get or set attribute.</li>
+<li>A descriptor in the descriptors argument has a get or set attribute that is not a function.</li>
+</ul>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/Object/getPrototypeOf">Object.getPrototypeOf Function</a></li>
+<li><a href="/docs/javascript/Object/isPrototypeOf">isPrototypeOf Method (Object)</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/ff925952(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Internationalization and Localization · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Introduction to internationalization, best practices" />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/internationalization/">internationalization</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Internationalization and Localization</h1>
+<h2>Summary</h2>
+<p>Introduction to internationalization, best practices</p>
+<h2>Internationalization and localization</h2>
+<p><strong>Internationalization</strong> (abbreviated <strong>i18n</strong>, where 18 is the number of left out characters) is the design and development of a product, application or document content that enables easy localization for target audiences that vary in culture, region, or language.</p>
+<p><strong>Localization</strong> (abbreviated <strong>l10n</strong>, where 10 is the number of left out characters) is the adaptation of a product, application or document content for a specific target audience. This includes language related aspects (translations, different characters and scripts), cultural aspects (different units, currencies, time and date formats, meaning of colors and symbols, suitability of images), and legal requirements.</p>
+<p>Example: Internationalization is <em>constructing</em> a car in a way to make it possible to build in the steering wheel on either side. Localization is <em>building</em> cars with steering wheels on the right-hand side for a market with right-hand traffic.</p>
+<p>Further reading: <a href="http://www.w3.org/International/questions/qa-i18n">Localization vs. Internationalization</a></p>
+<h2>Characters, fonts</h2>
+<p>Use UTF-8 as character encoding—in each part of your system (web pages, form submission, data base). This allows you and the users of your site to use each Unicode character <a href="http://www.w3.org/International/questions/qa-escapes#not">without escaping</a>.</p>
+<p>Declare the character encoding in your pages using a meta element with a <a href="/docs/html/attributes/charset">charset attribute</a> in HTML5. Because the encoding declaration must be fit within the first 1024 bytes of your HTML file it should be at the top of the head element:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"…"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>…<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    …
+</code></pre>
+<p>Be sure to save your documents in UTF-8. Use <a href="http://www.w3.org/International/questions/qa-html-css-normalization">normalization form NFC</a>.</p>
+<p>Since vintage browsers used to have problems with a leading <a href="http://www.w3.org/International/questions/qa-byte-order-mark">byte-order mark (BOM)</a> consider saving your files as UTF-8 without BOM. Do not use a BOM in includes because the BOM must not appear in the middle of a document.</p>
+<h2>Language</h2>
+<p>Declare the language of your page content with the <a href="/docs/html/attributes/lang">lang attribute</a> on the html element. Indicate languages changes inside the document using lang attributes on elements containing the foreign phrases. For XHTML served as XML, use the xml:lang attribute. For XHTML1.x and polyglot HTML5, use both attributes with the same value.</p>
+<p>As values, use language tags from the <a href="http://www.iana.org/assignments/language-subtag-registry">IANA Language Subtag Registry</a>.</p>
+<p>Language information is useful for assistive technologies like screen readers, for spell checkers etc. It is mandatory for automatic hyphenation using the CSS property <a href="/docs/css/properties/hyphens">hyphens</a>. <a href="http://www.w3.org/International/questions/qa-lang-why">Why use the language attribute?</a></p>
+<p>Use the <a href="/docs/html/attributes/translate">translate attribute</a> to indicate whether content and attribute values should be translated or not.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>The national motto of France is
+<span class="hljs-tag">&lt;<span class="hljs-title">i</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"fr"</span> <span class="hljs-attribute">translate</span>=<span class="hljs-value">"no"</span>&gt;</span>Liberté, Egalité, Fraternité<span class="hljs-tag">&lt;/<span class="hljs-title">i</span>&gt;</span>
+(freedom, equality, brotherhood).<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+</code></pre>
+<p>Use language negotiation on multilingual Web sites. <a href="http://www.w3.org/International/questions/qa-when-lang-neg">When to use language negotiation</a></p>
+<p>Further reading: <a href="http://www.w3.org/International/quicktips/Overview">Internationalization Quick Tips for the Web</a></p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

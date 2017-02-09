@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>インターネットはどうなっている? · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    <meta name="description" content="時々舞台裏に回って、動作の陰に隠れた歯車やファンベルト見るようにうながされることがありませんか。今日あなたはラッキーです。この文書は、あなたがよくご存じのホットなテクノロジーの舞台裏に案内します。それは World Wide Web! ミュージック、スタート!
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/Internet_and Web/">Internet and Web</a></li><li><a href="/concepts/Internet_and Web/How_does the Internet Work/">How does the Internet Work</a></li><li><a href="/concepts/Internet_and Web/How_does the Internet Work/ja/">ja</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>インターネットはどうなっている?</h1>
+<h2>Summary</h2>
+<p>時々舞台裏に回って、動作の陰に隠れた歯車やファンベルト見るようにうながされることがありませんか。今日あなたはラッキーです。この文書は、あなたがよくご存じのホットなテクノロジーの舞台裏に案内します。それは World Wide Web! ミュージック、スタート!</p>
+<p>この文書は World Wide Webを動かしている基盤となるテクノロジーをカバーしています。それは、</p>
+<ul>
+<li>ハイパーテキスト・マークアップ言語(HTML)</li>
+<li>ハイパーテキスト・トランスファー・プロトコル(HTTP)</li>
+<li>ドメインネームシステム(DNS)</li>
+<li>WebサーバとWebブラウザ</li>
+<li>動的・静的コンテンツ</li>
+</ul>
+<p>です。</p>
+<p>ここに書いてあることが、webサイトをうまく構築するのに役立つ訳ではありません。それでも、お得意先など他の人と、きちんとWebについて話せるようになります。映画のサウンド・オブ・ミュージックで修道女から家庭教師になった賢い登場人物が次のように言いました。「文字を読むには、まずABCから始めますね。歌うのなら、ドレミから始めましょう」 この文書では実際にコンピュータがどのようにコミュニケーションをしているのかをざっとみてから、Webを構成するページを協調して作りあげている、色々な言語を見ていくことにします。</p>
+<h2>コンピュータはどうやってインターネットでコミュニケーションをとっているのか?</h2>
+<p>コンピュータにとって、物事が複雑にならなかったのは幸いでした。World Wide Webが世に出た時、ほとんどのページは同じ言語で書かれました。それがHTMLです。HTMLはHTTPという共通のプロトコルを介してやりとりされました。HTTPは共通のインターネット言語(いくつかあり)で、例えば、Windowsマシンも最新の素晴らしいLinux(これこそドレミ!)が動作するマシンとハーモニーを奏でられます。HTTPを解釈しHTMLを描画するのに固有なソフトウェアであるwebブラウザを使えば、電話やPDA、ゲーム機といった色々なコンピュータを使って、どこでもHTMLで書かれたwebページを読めます。</p>
+<p>コンピュータは同じ言語を話していますが、webにアクセスする様々なデバイス同士が話し合えるようになるには、ルールが必要になります。それは、教室で質問するために手を挙げるのと似ています。HTTPはインターネットに基本ルールをもたらしました。HTTPによって、クライアントマシン(皆さんのコンピュータのような)は、webページを見るためにリクエストを最初に出すものとみなされました。「サーバ」に対してまずリクエストを送ります。サーバとは、webサイト側にあるコンピュータです。webアドレスをブラウザに入力すると、サーバはそのリクエストを受け取り、望みのwebページを見つけます。そして皆さんのコンピュータへそのページを送り返し、webブラウザが表示します。</p>
+<h3>リクエストとレスポンスのやりとりを分析する</h3>
+<p>それでは、コンピュータがインターネット越しに通信を行う全容を見ていきます。HTTPのリクエストとレスポンスのやりとりをさらに詳しく見ていくことにしましょう。良く理解できるように、いくつかのステップに分け、コンセプトのいくつかは、デモをして解りやすくします。</p>
+<ol>
+<li>リクエストとレスポンスは、URL(通常webアドレスとされています)をwebブラウザのアドレスバーに入力することで始まります。<a href="http://www.apple.com">http://www.apple.com</a> という感じです。さあここでブラウザを開いてください。そして、このURLを入力してエンターもしくはリターンすると(もしくは上記リンクをたどってください)、Appleのホームページに行きます。実はwebブラウザは、実際にはサーバに対してのリクエストにURLを使っていないことを皆さんは知らないかもしれません。ブラウザは「インターネット・プロトコル」もしくは「IPアドレス」を使っています(電話番号や宛名のように機能しますが、電話や住所よりもサーバを特定します。例えば、<a href="http://www.apple.com">http://www.apple.com</a> のIPアドレスは17.149.160.49です。</li>
+<li>ブラウザで新しいタブやウインドを開いて、<a href="http://17.149.160.49/">http://17.149.160.49/</a> とアドレスバーに入力してからエンターを押してみてください。ステップ１で見たのと同じページが見られるでしょう。</li>
+</ol>
+<p>つまり、<a href="http://www.apple.com">http://www.apple.com</a> は <a href="http://17.149.160.49/">http://17.149.160.49/</a> のエイリアスとして機能しています。どうしてこうしているのでしょうか？ 理由は、長い数字を覚えるよりも単語を覚えた方が楽だからです。これを実現しているシステムをDNSと言い、インターネットにつながっている全てのマシンを自動で台帳化しています。<a href="http://www.apple.com">http://www.apple.com</a> とアドレスバーに入力すると、そのアドレスがDNSサーバに送られてマシンとIPアドレスを紐付けようとします。インターネットには、文字通り何百万ものマシンが接続されていますので、DNSサーバ毎にオンラインのマシン全ての一覧を保持している訳ではありません。リクエストを完了させるために他のDNSサーバで探すというシステムが整っているのです。最初のDNSサーバが分からなくても、これでリクエストが完了できます。DNSシステムはAppleのwebサイトを検索し、それが17.149.160.49であることを見つけ出して、webブラウザにIPアドレスを送ってきます。こうしてマシンはリクエストを指定されたIPアドレスに送り、返答が返ってくるのを待ちます。 全てがうまく行けば、サーバは全てOK、という短いメッセージ(Figure 1参照)をwebページの内容とともにクライアントに戻してきます。この種のメッセージは「HTTPヘッダー」に入ってます。</p>
+<p><img src="//static.webplatform.org/6/62/article3.gif" alt="リクエストとレスポンスの成功例"></p>
+<p>Figure 1: このケースでは、全てがうまく行ってサーバは正しいwebページを返してきます。もし間違ったURLを入力してしまった、というような何か不都合があると、「HTTP error」がブラウザに返されてきます。悪名高き404 &quot;page not found&quot;エラーは、最もよく出会う例の一つです。</p>
+<ol>
+<li><a href="http://www.joniscool.co.uk/jonlane/">http://www.joniscool.co.uk/jonlane/</a> と入力してみてください。ページはありませんので、404エラーを受け取るはずです。ダミーのページをいくつか試してみて下さい。そうすると、違ったページが返ってくるのが見られます。これはwebの開発者がwebサーバに自分たちのデフォルトのエラーページを返すようにしているからです。存在しないページが返ってくると独自のエラーページが出るようにしている所もあります。これはさらに高度なテクニックなのでこのコースでは扱いませんが、Stuart Colville氏が素晴らしい文書を<a href="http://dev.opera.com/articles/view/adding-meaning-to-http-error-pages/">Adding meaning to your HTTP error pages!</a> として公開しています。最後にURLについて。サイトを訪れる時の最初のURLには、実際のファイル名を最後に入れないのが普通です(例えば、 <a href="http://www.mysite.com/">http://www.mysite.com/</a> )。その続きのページもそうなっている場合もあれば、なっていない場合もあります。実際のファイルに必ずアクセスしているのですが、webの開発者はwebサーバにURLにファイル名が表示されないように設定している場合があります。これはURLを覚えるのに簡単で効果的な方法で、webサイトの利用者にとって好ましいことです。このコースではどうやってこうするのかは触れません。繰り返しますが、これはかなり高度なテクニックだからです。サーバにファイルをアップロードして、ファイルやフォルダーを構成するやり方は <a href="http://www.w3.org/community/webed/wiki/Getting_your_content_online">Getting your content online</a>でCraig Grannell氏が触れています。</li>
+</ol>
+<h2>コンテンツの種類</h2>
+<p>インターネットで出会うことになるコンテンツを見ていくことにしましょう。コンテンツは4つの種類に分けられます。それは、プレインテキストとweb標準、サーバサイド言語、アプリケーションやプラグインが必要とするフォーマットです。</p>
+<h3>プレインテキスト</h3>
+<p>インターネットの黎明期、つまりweb標準もプラグインもまだないころは、画像とプレインテキストが大部分を占めていました。拡張子が.txtのようなファイルです。インターネットでプレインテキストに出会うと、ブラウザはそのまま表示します。そこには何の処理もありません。大学のサイトにはいまでもプレインテキストなファイルがよくあります。</p>
+<h3>Web標準</h3>
+<p>World Wide Webの基本的な構成要素で頻繁に使われるweb標準は3つあります。それは、HTMLとCSS、JavaScriptです。</p>
+<p>ハイパーテキスト・マークアップ言語は、コミュニケーションを目的としている限りは、なかなか評価が高いです。HTMLは、ドキュメントを分割してコンテンツと構造を規定し、それぞれの部分の意味を定義します(見出しやパラグラフ、箇条書き等)。エレメントを使ってページにある色々なコンポーネントを扱います。</p>
+<p>カスケーディング・スタイル・シートを使えば、エレメントをどのようにデザインして配置するのかを全てコントロールできます。スタイル宣言を使えば、パラグラフ全てを変更して1行おきにしたり(<code>line-height: 2em;</code>)、レベル2の見出しをグリーンにしたり(<code>color: green;</code>)するのは簡単です。スタイルと構造を分離することはとてもメリットがありますので、[<a href="http://dev.opera.com/articles/view/4-the-web-standards-model-html-css-a/">in the next article</a>]でもう少し細かく見ていきます。HTMLとCSSをいっしょに使って色々とできることを示すために、Figure 2では左側に全く整形していないシンプルなHTMLを表示し、一方右側にはCSSスタイルをきっちり適用したHTMLを示してあります。</p>
+<p><img src="//static.webplatform.org/6/6e/article4.gif" alt="CSSを使用・未使用したHTMLのイメージ"></p>
+<p>Figure 2: 左はシンプルなHTMLで右はCSSを適用したHTML</p>
+<p>最後になりますが、Javascriptはwebサイトやwebアプリケーションに動的な機能をもたらします。webブラウザで動くJavascriptプログラムを書くのに、特別なソフトウェアをインストールする必要はありません。Javascriptを使えば、強力な双方向性と動的な機能をwebサイトに導入できます。しかし制限がありますので、サーバサイド・プログラミング言語と動的webページが必要になります。</p>
+<h3>サーバサイド言語</h3>
+<p>インターネットをブラウジングすると、.html拡張子ではなく.php,や.asp、.aspx、.jspといった見知らぬ拡張子を持ったwebページに出会う時があるでしょう。これらがサーバサイドのwebテクノロジーで、セクションがあるwebページを作る際に、webブラウザに表示するページを送る前に、変数の値によってページを変えています。例えば、動画リストのページは、データベースから動画の情報を取得して、日別・週別・月別といった動画の情報を表示したりできます。このタイプのwebページについては、下記の静的vs動的ページのセクションで扱います。</p>
+<p>=== 他のアプリケーションやプラグインが必要なフォーマット</p>
+<p>webブラウザは、web標準のような特定のテクノロジーを解釈して表示する機能をだけを持っています。ブラウザが解釈できないファイル・フォーマットやプラグインが必要なwebページを示すURLをリクエストすると、コンピュータにダウンロードするか、もしブラウザが既にプラグインを持っていれば、それを使って開きます。 例えば、</p>
+<ol>
+<li>WordやExcel、PDF、圧縮ファイル(ZIPやRAR)、Photoshop PSDのような複雑な画像ファイルといったブラウザが理解できないファイルに遭遇すると、ダウンロードするのかファイルを開くのか問い合わせてくるでしょう。どちらも結果は同じようになりますが、ファイルを開く方はファイルをダウンロードしてから、そのファイルを処理できるアプリケーションをインストールしてあれば、それで開く点が異なります。</li>
+<li>FlashムービーやJavaアプレット、処理できないミュージックビデオがあるページに出会うと、ブラウザはインストールされてあるプラグインがあれば、それを使って再生します。インストールしていなければ、必要になるプラグインをインストールするリンクが表示されるのが普通です。でなければ、ファイルがダウンロードされて、そのファイルを起動できるデスクトップアプリケーションを検索します。</li>
+</ol>
+<p>はっきりしないところがあるのも事実です。例えば、ブラウザの中にはプレインストールされたプラグインが入っているものもあり、表示されたコンテンツがプラグインによるものなのかブラウザの元々のものなのか分からないものもあります。</p>
+<h2>静的vs動的ページ</h2>
+<p>静的と動的なwebサイトとはなんでしょうか。そしてその違いは? それはチョコレートを詰めた箱と似たようなもので、中に詰められています。</p>
+<p>静的なwebサイトはコンテンツ(例えば、HTMLと画像コンテンツ)はいつも同じです。どの訪問者にも同じものを提供し、webサイトを作った人がサーバ上のコピーを自分で変更しようと決めない限り変わりません。これはまさに、これまで読んできたこの文書に当てはまります。</p>
+<p>動的なwebサイトでは、サーバ上のコンテンツは似たようなものですが、HTMLに代わって動的なコードも入っています。動的なコードは、時刻やログインしたユーザ、日付、捜し物を見つけるために検索する言葉といった情報によって、違うデータを表示します。例を見てみましょう。webブラウザでwww.amazon.comに行き、別々の5つの製品を検索してください。Amazonは別々の5つのページは表示しません。ほとんど同じページを5回表示します。しかし毎回その中の情報は変化しています。データベースに異なる情報が記録されていて、リクエストが来ると関連する情報を持ってきます。それをwebサーバに渡して、動的なページに入れ込みます。</p>
+<p>もう一つ注目したいことがあります。それは、特殊なソフトウェアがサーバにインストールされていて動的なwebサイトが作られているということです。普通の静的なHTMLはファイル拡張子を.htmlとして保存してあり、ブラウザは追加で他の助けを借りることなく処理できます。しかし、動的なページはHTMLに特別な動的コードを追加してあります。加えて、特定の拡張子をつけて保存し、クライアントに送る前にさらに処理が必要であることをwebサーバに伝えます(例えば、データベースから挿入されたデータがあるとか)。PHPファイルは通常は.phpという拡張子を持っています。</p>
+<p>動的なwebサイトを動かしているサーバは、特別な動的コードを処理していますが、クライエントにはHTMLを送っています。クライエントは、特定のファイル拡張子のためのプラグインを用意する必要はありません。クライエントはHTMLファイルと似たようなものを受け取るからです。</p>
+<p>私たちが選べる動的な言語とフレームワークは、たくさんあります。すでに紹介したPHPの他にもPythonやRuby on Rails、ASP.NET、Coldfusion等があります。 最後になりますが、これらのテクノロジーはほとんど同じ機能を持っています。例えば、データベースとのやり取りやフォームに入力された情報の検証等です。しかし少々異なる方法で実行し、それぞれ長所・短所があります。結局、自分に合ったものをということです。</p>
+<p>このコースでは、動的言語についてはこれ以上触れません。でも、さらに詳しく知りたい方のために資料の一覧を用意しました。</p>
+<ul>
+<li>Rails: Fernandez, Obie. (2007), The Rails Way. Addison-Wesley Professional Ruby Series.</li>
+<li><a href="http://www.rubyonrails.org/screencasts">Rails screencasts</a></li>
+<li>PHP: Powers, David (2006), PHP Solutions: Dynamic web development made easy, friends of ED.</li>
+<li><a href="http://www.php.net/docs.php">PHP Online documentation</a></li>
+<li><a href="http://www.phptherightway.com/">PHP The Right Way</a></li>
+<li><a href="http://thephpleague.com/">The PHP League, a set of tested PHP packages using modern coding standards</a></li>
+<li>ASP.NET: Lorenz, Patrick. (2003). ASP.NET 2.0 Revealed. Apress.</li>
+<li>ASP.NET: [<a href="http://asp.net">online ASP.NET documentation and tutorials.</a>]</li>
+<li><a href="http://addyosmani.github.io/backbone-fundamentals">Backbone fundamentals</a></li>
+</ul>
+<h2>サマリー</h2>
+<p>インターネットがどのようになっているのか、舞台裏を見ていくのが目的です。この文書ではたくさんのトピックをカバーしていますが、ほんの少しかじるだけです。しかし、もやもやをとるのに役にたち、色々なテクノロジーが連携して動いているのが分かります。HTMLやCSS、Javascriptといった実際の言語のシンタックスについては、まだたくさん学ぶべきことがあります。それが次のステップになります。次の文書では、webの開発の「web標準」モデルであるHTMLやCSS、Javascriptに焦点を当て、webページのコードを見ていくことになります。</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

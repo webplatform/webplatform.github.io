@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding pixels and other CSS units · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="This guide looks into the relationship between CSS pixels and other units, as well as between CSS and device pixels." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/understanding-css-units/">understanding-css-units</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Understanding pixels and other CSS units</h1>
+<p><strong>By <a href="http://blogs.adobe.com/digitalmedia/author/vhardy/">Vincent Hardy, Sylvain Galineau</a></strong></p>
+<h2>Summary</h2>
+<p>This guide looks into the relationship between CSS pixels and other units, as well as between CSS and device pixels.</p>
+<h2>Introduction</h2>
+<p>A growing number of CSS length units have provided new flexibility to web authors (see the <a href="http://www.w3.org/TR/css3-values/">CSS Values and Units specification</a>). For example, the ‘rem’ (root ‘em’) unit permits the font size of the root element to be used for sizing throughout the document.</p>
+<p>They help developers lay out content independently of display size and resolution.</p>
+<h2>Display Independence: Adapting Layout</h2>
+<p>Modern content needs to be ready for a variety of viewing environments: smart phones, tablets, large monitors or even TV screens cover a huge range of sizes, aspect ratios, pixel densities and viewing distances. A number of tools are available to help developers optimize their layout for the best experience e.g. to avoid or minimize awkward scrolling.</p>
+<h3>Media queries and viewport settings</h3>
+<p>Most developers are now familiar with the use of <a href="http://www.w3.org/TR/css3-mediaqueries/">media queries</a>. They enable the application of CSS rules depending on display media factors such as size or aspect ratio. They can be used to specify separate stylesheets for each target environments, or they can refine and adapt a primary stylesheet.</p>
+<p>Understanding and setting up the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag?redirectlocale=en-US&amp;redirectslug=Mobile%2FViewport_meta_tag">display viewport</a> is especially important for mobile clients as it allows your content to fit to the display of the user’s device.</p>
+<h3>Percentage units</h3>
+<p>Available since CSS1, percentages allow the sizing of elements relative to their containing block. For example, we can set up the body of a document like so:</p>
+<pre><code class="html">body {
+       width: 80%;
+       max-width: 900px;
+       margin-left: auto;
+       margin-right: auto;
+}
+</code></pre>
+<p>…to ensure the body is at most 900px and take 80% of the width of the viewport otherwise. (Note that CSS pixels are not device pixels; this will be discussed at length later)</p>
+<h3>Other useful relative units</h3>
+<p>Several other CSS unit types support layout adaptation. The following table enumerates a number of them:</p>
+<table>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr class="header">
+<th align="left">Unit</th>
+<th align="left">Description</th>
+<th align="left">Example use case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">em</td>
+<td align="left">1 em is the computed value of the font-size on the element on which it is used.</td>
+<td align="left">For example, the font size &lt;h1&gt; heading elements may be set to 3em and the body kept at 1em, making sure that under all display conditions heading text will be 3 times as large as the body’s. It must be noted that when used as a font-size property value, the em unit refers to the font size of the parent element. Thus, in our example, a &lt;span&gt; element inside an &lt;h1&gt; with font-size: 2 em would end up with text 6 times larger than in the body.</td>
+</tr>
+<tr class="even">
+<td align="left">ex</td>
+<td align="left">1 ex is the current font’s x-height. The x-height is usually (but not always, e.g., if there is no ‘x’ in the font) equal to the height of a lowercase ‘x’</td>
+<td align="left">Rarely used in practice. May be used to size inline images to fit the x-height of the current font for visual harmony.</td>
+</tr>
+<tr class="odd">
+<td align="left">ch</td>
+<td align="left">1 ch is the advance of the ‘0’ (zero) glyph in the current font. ‘ch’ stands for character.</td>
+<td align="left">Can be used to <a href="http://lists.w3.org/Archives/Public/www-style/1999Dec/0048.html">style monospace text or braille</a>.</td>
+</tr>
+<tr class="even">
+<td align="left">rem</td>
+<td align="left">1 rem is the computed value of the font-size property for the document’s root element.
+<p>This unit is often easier to use than the ‘em’ unit because it is not affected by inheritance as ‘em’ units are.</p></td>
+<td align="left">For example, given a root element font-size of 20px, setting a 0.5em font-size on &lt;li&gt; elements would resolve to 10px for first-level &lt;li&gt; but second-level &lt;li&gt; would have a 5px font-size. Setting the font-size to 0.5rem would result in 10px &lt;li&gt; elements no matter their nesting level.</td>
+</tr>
+<tr class="odd">
+<td align="left">vw</td>
+<td align="left">1vw is 1% of the width of the viewport. ‘vw’ stands for ‘viewport width’.</td>
+<td align="left">Useful to size boxes that adapt to different viewport widths.</td>
+</tr>
+<tr class="even">
+<td align="left">vh</td>
+<td align="left">1vh is 1% of the height of the viewport. ‘vh’ stands for ‘viewport height’.</td>
+<td align="left">Useful to size boxes that adapt to different viewport heights. For example, may be used to set a maximum height on an image so that it does not exceed the viewport dimensions.</td>
+</tr>
+<tr class="odd">
+<td align="left">vmin</td>
+<td align="left">Equal to the smaller of ‘vw’ or ‘vh’</td>
+<td align="left">See vh/vw</td>
+</tr>
+<tr class="even">
+<td align="left">vmax</td>
+<td align="left">Equal to the larger of ‘vw’ or ‘vh’</td>
+<td align="left">See vh/vw</td>
+</tr>
+</tbody>
+</table>
+<h3>What about canvas and ‘full pixel control’ use-cases?</h3>
+<p>We have thus far focused on the styling of document elements using CSS. Some use-cases, however, require full application control over each drawn pixel e.g. in a video game.</p>
+<p>Both the <a href="http://www.w3.org/html/wg/drafts/2dcontext/html5_canvas/">Canvas 2D context</a> and <a href="/docs/svg">Scalable Vector Graphics</a> can be used to address such requirements, as well as <a href="http://www.khronos.org/registry/webgl/specs/latest/">WebGL</a>. It is also possible to use absolutely positioned content to get <a href="http://www.tricedesigns.com/2013/03/22/phonegap-legends-a-sample-game-app/">faster performance</a> under very specific circumstance (like gaming).</p>
+<p>While developers should not casually implement their own layout, there are use-cases where this is still a better option than moving to native application development.</p>
+<h2>Resolution-independent rendering</h2>
+<p>But let’s go back to the basics: what is resolution independence and why does it matter?</p>
+<h3>Resolution independence defined</h3>
+<p>When content is drawn to to an output medium such as a printer or a screen, software converts the description of what needs to be drawn into actual pixels. For example, a line of text is first converted to a set of geometric outlines defined by font data; these outlines are then ‘rasterized’, or turned into pixels. The same process occurs for simpler shapes such as a rectangle drawn at a particular location (x/y coordinate) and with a particular size (width and height).</p>
+<p>As a rendering approach, resolution independence requires objects to be described in a way that is independent of the output medium’s exact characteristics. The goal is to be able to specify what needs to be drawn and let the underlying software figure how do so for a particular output device at runtime.</p>
+<p>This is especially important when the size and pixel density of output devices varies as widely as it does across modern browsing devices. For example, on a 96dppi screen (dppi = device pixel per inch) resolution, a millimeter would be about 4 device pixels long so a rectangle positioned at (x=10mm, y=20mm) would get positioned at x=40 device pixel and y=80 device pixels. While on a 300dppi display, a millimeter would be about 12 device pixel long, and the rectangle should be positioned at x=120 device pixels and y=240 device pixels. However, and this is the important part, the rectangle would show at the same physical position on the display modulo rounding i.e. at approximately 10mm on the x-axis and 20mm on the y-axis.</p>
+<h3>Scalable Content</h3>
+<p>To be resolution independent, a system must able to scale content based on rendering conditions. Postscript and PDF are examples of technologies based on the concept of units that can then be scaled as needed to accommodate the available display resolution. Both use the ‘point’ unit and define it as being 1/72nd of an inch.</p>
+<p>Scalable Vector Graphics (SVG) does the same and has a concept of <a href="http://www.w3.org/TR/SVG/coords.html#SVGInitialUserCoordinateSystem">user unit</a> that all other units ultimately derive from; CSS defines CSS pixels, the unit all others resolve to (an SVG user unit is the same as a CSS ‘px’).</p>
+<p>In all these cases, objects’ positions and dimensions eventually resolve to a single unit which can then be mapped to a number of device pixels and scaled as desired e.g. when the user zooms the content.</p>
+<p>Before we dive deeper into CSS ‘px’ unit, we will note that scalable formats such as SVG are very effective way to achieve resolution independence, or responsiveness, for your image assets.</p>
+<p><strong>Note :</strong> Icon fonts are another recent popular practice as of 2013 e.g. see <a href="http://css-tricks.com/html-for-icon-font-usage/">http://css-tricks.com/html-for-icon-font-usage/</a>, or <a href="http://nimbupani.com/markup-free-icon-fonts-with-unicode-range.html">http://nimbupani.com/markup-free-icon-fonts-with-unicode-range.html</a>. And then there are very clever OpenType hacks like <a href="https://www.scribbletone.com/typefaces/ff-chartwell">Chartwell</a> or <a href="http://symbolset.com/">Symbolset</a>. These are part of the scalable arsenal today.</p>
+<h2>On CSS pixels, physical units and scalability</h2>
+<p>Though the <a href="http://www.w3.org/TR/css3-values/">CSS Values and Units specification</a> defines all the CSS units in one single document, it can take some work to wrap one’s head around the way CSS relates its units to real-world measures, or physical units. All the specification says can be stated as:</p>
+<p><strong>96px = 1in</strong></p>
+<p>Simple math guides the two possible behaviors allowed by the specification:</p>
+<ul>
+<li>On a high-resolution device - laser printers today, screens in the future - CSS rendering should map an inch to its physical dimension (this is what the specification calls “relating the physical units to their physical measurements”). As a result, a CSS ‘px’ unit (because it is 1/96 of an inch) may resolve to a fractional number of device pixels. For example, on a 300dppi (device pixel per inch) screen the ratio of device pixels to CSS pixels pixels is 300/96 = 3.125. As a consequence, if you styled an element with:</li>
+</ul>
+<!-- -->
+<pre><code>border: 1px solid blue;
+</code></pre>
+<p>…its border should be 3.125 device pixel wide. Depending on the rasterizer - the part of the software that converts basic shapes to pixels - you could get blue covering 3 pixels fully and then partial coverage of the 4th pixel using anti-aliasing to blend with the background.</p>
+<ul>
+<li>On a low-resolution device, the specification recommends to “relate the pixel unit to the <a href="http://www.w3.org/TR/css3-values/#reference-pixel">reference pixel</a> and further advises “that the pixel unit refer to the whole number of device pixels that best approximates the reference pixel”. In our earlier example, the blue border could be a full device pixel.</li>
+</ul>
+<p>Until a few years ago, a CSS pixel was generally mapped to a single screen pixel. As a consequence, a CSS inch did not always map to an actual physical inch; if a laptop’s true resolution was 120dppi, a 96px-long inch would end up being 96/120 = 0.8 physical inch!</p>
+<p>With the advent of higher density screens, we are seeing devices with 2 device pixels per CSS pixel (the Apple Retina, for instance) as well as displays with fractional pixel ratios (see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag?redirectlocale=en-US&amp;redirectslug=Mobile%2FViewport_meta_tag">this MDN article</a>). Note that fractional pixel ratios may introduce additional anti-aliasing in the rendering, as with high-resolution rendering.</p>
+<h2>Simple Example</h2>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"X-UA-Compatible"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"IE=edge,chrome=1"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>CSS Units px/in test<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"description"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">""</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"viewport"</span>
+              <span class="hljs-attribute">content</span>=<span class="hljs-value">"width=device-width, initial-scale=1, maximum-scale=1"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+    <span class="hljs-tag">body</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#404040</span></span></span>;
+    }</span>
+
+    <span class="hljs-class">.css-box</span> &gt; <span class="hljs-tag">span</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+       <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">1em</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border-right</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> solid black</span></span>;
+    }</span>
+
+    <span class="hljs-class">.css-box</span><span class="hljs-class">.px</span> &gt; <span class="hljs-tag">span</span> <span class="hljs-rules">{
+       <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">96px</span></span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fefefe</span></span></span>;
+    }</span>
+
+    <span class="hljs-class">.css-box</span><span class="hljs-class">.in</span> &gt; <span class="hljs-tag">span</span> <span class="hljs-rules">{
+       <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">1in</span></span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#4166B5</span></span></span>;
+    }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"css-box px"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"css-box in"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><img src="//static.webplatform.org/1/18/css-units-px-and-inch.png" alt="Screenshot of a testcase showing that 96px wide blocks are the same visual size as one-inch wide blocks"></p>
+<p><em>Figure 1: Rendering in OSX Safari</em></p>
+<p>When we try render this document across different devices we see that:</p>
+<ul>
+<li>In all cases, the light and blue boxes are exactly the same size. This is because 1 CSS inch is always as long as 96 CSS pixels; the white boxes are 96px wide and the blue boxes are 1 inch wide. So as expected, their widths match.</li>
+<li>On a MacBook Pro 15 inch display with a resolution of <a href="http://en.wikipedia.org/wiki/List_of_displays_by_pixel_density#Apple">110dpi</a>, the physical width of a box is: 96 * 1 / 110 = 0.872 inch. This is because the CSSpx/device pixel ratio is 1. Using a ruler on my screen I measured 0.88 inch and the difference is my rudimentary ruler and approximate vision :-). So a CSS inch is off by 22.8% from the physical inch.</li>
+<li>On an iPhone 5 with a <a href="http://en.wikipedia.org/wiki/List_of_displays_by_pixel_density#Apple">326dpi</a> resolution, the physical width of a box is 96 * 2 / 326 = 0.589 inch. This is because on this platform, the CSS px to device ratio is 2. Again using a ruler, I got 1.592inch. Again, measurement error. Here, a CSS inch is off by 41.1%</li>
+<li>On a printer (I used a Canon Pixma MP600), the physical inch of a box is … 1.05 inch!! So that is a 5% error on this particular printer.</li>
+</ul>
+<h2>So… a pixel is not a pixel and an inch is not an inch?</h2>
+<p>Well, that is almost like that but it is not as bad as it seems. Here is why:</p>
+<ul>
+<li><strong>The CSS pixel is a ‘reference’ pixel, not a device pixel</strong>. This is misleading and, personally, I prefer the notion of ‘user unit’ that SVG uses because I think it is easier to then explain the mapping to physical units and device pixels. But once one understands that a ‘px’ is actually a reference, not a device pixel, things make more sense. The thing to remember is that a CSS px is an abstract unit and there is a ratio controlling how it a) maps to actual device pixels and b) maps to physical units (in a fixed way, the ratio is always 96 CSS px to an inch).</li>
+<li><strong>A CSS inch is exactly or ‘close’ to an inch</strong>. On high resolution devices, and if no other parameters interfere (like user zoom or CSS transforms), an inch will be a physical inch as expected. On low resolution devices, there will be a margin of error, as explained above.</li>
+<li><strong>Scalability and adaptability is what matters most</strong>. The most important aspect for most developers is that content layout can reflow and adapt as units scale in a predictable and reasonable way. While the concept of keeping the exact aspect ratio on all devices might seem appealing, it has consequences that are not desirable on low resolution devices (such as unwanted antialiasing causing blurry rendering).</li>
+</ul>
+<h2>Final thoughts</h2>
+<p>So what should keep in mind as web developers to have our content render nicely on various display sizes, form factors and pixel densities? Here are a few take-aways:</p>
+<ol>
+<li>Use <a href="http://alistapart.com/article/responsive-web-design">media queries</a> to use the desired layout depending on the rendering conditions (e.g., small device screen, tablet type, desktop, large display).</li>
+<li>Set up your <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag">viewport for mobile display in a meta tag</a>.</li>
+<li>Use CSS units and CSS layout to make your content flow and size as desired. Leverage latest units such as ‘rem’, <a href="http://snook.ca/archives/html_and_css/vm-vh-units">‘vh’ and ‘vw’</a> (check their <a href="http://caniuse.com/viewport-units">implementation status</a>) or older but still as useful ones such as ‘percentages’, ‘em’ or ‘pt’.</li>
+<li><a href="http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html">Understand</a> that CSS pixels reference an abstract <a href="http://www.w3.org/TR/css3-values/#reference-pixel">reference pixel</a> and that the key rule to remember is that <strong>96 CSS pixels are always the same length as 1 CSS inch</strong>.</li>
+<li>Use <a href="/docs/svg">SVG</a> (or <a href="http://css-tricks.com/examples/IconFont/">icon fonts</a>, more limited but more widely supported) wherever you can (depending on the image type and/or your target browsers) to have content that naturally scales up to higher pixel densities or sizes.</li>
+</ol>
+<h2>See Also</h2>
+<ul>
+<li><a href="http://learn.shayhowe.com/advanced-html-css/responsive-web-design">An Advanced Guide to HTML &amp; CSS - Responsive Web Design</a></li>
+<li><a href="http://www.html5rocks.com/en/tutorials/canvas/hidpi/">High DPI Canvas (html5rocks)</a></li>
+<li><a href="http://phoboslab.org/log/2012/09/drawing-pixels-is-hard">Drawing pixels is hard</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

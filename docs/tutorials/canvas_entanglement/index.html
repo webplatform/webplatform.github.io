@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Getting entangled with HTML5 canvas · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="An exploration of the canvas feature as used in an HTML5 puzzle game." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/tutorials/">tutorials</a></li><li><a href="/docs/tutorials/canvas_entanglement/">canvas entanglement</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Getting entangled with HTML5 canvas</h1>
+<p><strong>By <a href="http://www.html5rocks.com/profiles/#derekdetweiler">Derek Detweiler</a></strong></p>
+<h2>Summary</h2>
+<p>An exploration of the canvas feature as used in an HTML5 puzzle game.</p>
+<h2>Introduction</h2>
+<p>In the spring of 2010 I took interest in the rapidly increasing support for HTML5 and related technologies. At the time, a friend and I had been challenging each other in two-week game development competitions to hone our programming and development skills as well as bring to life the game ideas we were constantly tossing at each other. So, I naturally began incorporating HTML5 elements into my competition entries to gain a better understanding for how they worked and be able to do things that were nearly impossible using earlier HTML specs.</p>
+<p>Of the many new features in HTML5, the increasing support for the <code>&lt;canvas&gt;</code> tag, offered me an exciting opportunity to implement interactive art using JavaScript, which led me to try implementing a puzzle game now called <a href="https://chrome.google.com/webstore/detail/aciahcmjmecflokailenpkdchphgkefd">Entanglement</a>. I had already created a prototype using the back of Settlers of Catan tiles, so using this as a blueprint of sorts, there are three essential parts to fashioning the hexagonal tile on the HTML5 canvas for web play: drawing the hexagon, drawing the paths, and rotating the tile. The following goes into detail outlining how I accomplished each of these in their current form.</p>
+<h2>Drawing the Hexagon</h2>
+<p>In the original version of Entanglement, I used several canvas draw methods to draw the hexagon, but the current form of the game uses drawImage() to draw textures clipped from a sprite sheet.</p>
+<p><em>Tiles sprite sheet</em> <img src="//static.webplatform.org/3/32/en01.png" alt="Tiles sprite sheet"></p>
+<p>I combined the images together into a single file so it’s only one request to the server instead of, in this case, ten. To draw a chosen hexagon to the canvas, we first must gather our tools together: canvas, context, and the image.</p>
+<p>To create a canvas, all we need is the canvas tag in our html document like so:</p>
+<pre><code>&lt;canvas id=&quot;myCanvas&quot;&gt;&lt;/canvas&gt;
+</code></pre>
+<p>I gave it an id so we can pull it into our script:</p>
+<pre><code>var cvs = document.getElementById('myCanvas');
+</code></pre>
+<p>Secondly, we need to grab the 2d context for the canvas so we can begin drawing:</p>
+<pre><code>var ctx = cvs.getContext('2d');
+</code></pre>
+<p>Lastly, we need the image. If it’s named “tiles.png” in the same folder as our web page, we can get it by:</p>
+<pre><code>var img = new Image();
+img.src = 'tiles.png';
+</code></pre>
+<p>Now that we have the three components, we can use ctx.drawImage() to draw the single hexagon we want from the sprite sheet to the canvas:</p>
+<pre><code>ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight,
+              destinationX, destinationY, destinationWidth, destinationHeight);
+</code></pre>
+<p>In this case, we’re using the fourth hexagon from the left on the top row. Also, we will draw it to the canvas in the top left corner, keeping it the same size as the original. Assuming the hexagons are 400 pixels wide and 346 pixels high, altogether it will look something like this:</p>
+<pre><code>var cvs = document.getElementById('myCanvas');
+var ctx = cvs.getContext('2d');
+var img = new Image();
+img.src = 'tiles.png';
+var sourceX = 1200;
+var sourceY = 0;
+var sourceWidth = 400;
+var sourceHeight = 346;
+var destinationX = 0;
+var destinationY = 0;
+var destinationWidth = 400;
+var destinationHeight = 346;
+ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight,
+              destinationX, destinationY, destinationWidth, destinationHeight);
+</code></pre>
+<p>We have successfully copied part of the image to the canvas with this as the result:</p>
+<p><em>Hexagonal tile</em> <img src="//static.webplatform.org/1/1e/en02.jpg" alt="Hexagonal tile"></p>
+<h2>Drawing Paths</h2>
+<p>Now that we have our hexagon drawn to the canvas, we want to draw a few lines on it. First, we will look at some geometry regarding the hexagon tile. We want two line ends per side with each ending 1/4 from the ends along the each edge and 1/2 of the edge apart from one another, like so:</p>
+<p><em>Line endpoints on hexagonal tile</em> <img src="//static.webplatform.org/c/c7/en03.png" alt="Line endpoints on hexagonal tile"></p>
+<p>We also want a nice curve so, using a little trial and error, I found that, if I make a perpendicular line from the edge at each endpoint, the intersection from each pair of endpoints around a given angle of the hexagon makes a nice bezier control point for the given endpoints:</p>
+<p><em>Control points on hexagonal tile</em> <img src="//static.webplatform.org/b/b8/en04.png" alt="Control points on hexagonal tile"></p>
+<p>Now, we map both the endpoints and the control points to a Cartesian plane corresponding with our canvas image and we’re ready to get back to the code. To keep it simple, we will start with one line. We will begin by drawing a path from the top left endpoint to the bottom right endpoint. With our earlier hexagon image being 400x346, that will make our top endpoint 150 pixels across and 0 pixels down, shorthand (150, 0). It’s control point will be (150, 86). The bottom edge endpoint is (250, 346) with a control point of (250, 260):</p>
+<p><em>Coordinates for first bezier curve</em> <img src="//static.webplatform.org/3/3b/en05.png" alt="Coordinates for first bezier curve"></p>
+<p>With our coordinates in hand, we are now prepared to begin drawing. We will start fresh with ctx.beginPath() and then move to the first endpoint using:</p>
+<pre><code>ctx.moveTo(pointX1,pointY1);
+</code></pre>
+<p>We can then draw the line itself using ctx.bezierCurveTo() as follows:</p>
+<pre><code>ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+</code></pre>
+<p>Because we want the line to have a nice border, we will stroke this path twice using a different width and color each time. Color will be set using the ctx.strokeStyle property and width will be set using ctx.lineWidth. Altogether, drawing the first line will look like this:</p>
+<pre><code>var pointX1 = 150;
+var pointY1 = 0;
+var controlX1 = 150;
+var controlY1 = 86;
+var controlX2 = 250;
+var controlY2 = 260;
+var pointX2 = 250;
+var pointY2 = 346;
+ctx.beginPath();
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+</code></pre>
+<p>We now have a hexagonal tile with the first line meandering across:</p>
+<p><em>Solitary line on hexagonal tile</em> <img src="//static.webplatform.org/d/d7/en06.jpg" alt="Solitary line on hexagonal tile"></p>
+<p>Entering coordinates for the other 10 endpoints as well as the corresponding bezier curve control points, we can repeat the steps above and might create a tile something like this:</p>
+<p><em>Completed hexagonal tile</em> <img src="//static.webplatform.org/1/14/en07.png" alt="Completed hexagonal tile"></p>
+<h3>Rotating the Canvas</h3>
+<p>Once we have our tile, we want to be able to turn it so different paths can be taken in the game. To accomplish this using canvas, we use ctx.translate() and ctx.rotate(). We want the tile to rotate about it’s center, so our first step is to move the canvas reference point to the center of the hexagonal tile. To do this we use:</p>
+<pre><code>ctx.translate(originX, originY);
+</code></pre>
+<p>Where originX will be half of the hexagonal tile’s width and originY will be half of the height, giving us:</p>
+<pre><code>var originX = 200;
+var originY = 173;
+ctx.translate(originX, originY);
+</code></pre>
+<p>Now we are able to rotate the tile with our new center point. Because a hexagon has six sides, we will want to rotate it by some multiple of Math.PI divided by 3. We will keep it simple and go with a single turn clockwise using:</p>
+<pre><code>ctx.rotate(Math.PI / 3);
+</code></pre>
+<p>However, because our hexagon and lines are using the old (0,0) coordinates as the origin, once we are finished rotating, we will want to translate back before drawing. So, altogether we now have:</p>
+<pre><code>var originX = 200;
+var originY = 173;
+ctx.translate(originX, originY);
+ctx.rotate(Math.PI / 3);
+ctx.translate(-originX, -originY);
+</code></pre>
+<p>Putting the above translation and rotation before our rendering code causes it to now render the rotated tile:</p>
+<p><em>Rotated hexagonal tile</em> <img src="//static.webplatform.org/0/0b/en08.png" alt="Rotated hexagonal tile"></p>
+<h2>Summary</h2>
+<p>Above I have highlighted a few of the capabilities that HTML5 has to offer using the canvas tag, including rendering images, drawing bezier curves, and rotating the canvas. Using the HTML5 canvas tag and its JavaScript drawing tools for Entanglement proved to be an enjoyable experience, and I look forward to the many new applications and games that others create with this open and emerging technology.</p>
+<h2>Code Reference</h2>
+<p>All code examples provided above are combined below as a reference:</p>
+<pre><code>var cvs = document.getElementById('myCanvas');
+var ctx = cvs.getContext('2d');
+var img = new Image();
+img.src = 'tiles.png';
+
+var originX = 200;
+var originY = 173;
+ctx.translate(originX, originY);
+ctx.rotate(Math.PI / 3);
+ctx.translate(-originX, -originY);
+
+var sourceX = 1200;
+var sourceY = 0;
+var sourceWidth = 400;
+var sourceHeight = 346;
+var destinationX = 0;
+var destinationY = 0;
+var destinationWidth = 400;
+var destinationHeight = 346;
+ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight,
+              destinationX, destinationY, destinationWidth, destinationHeight);
+
+ctx.beginPath();
+var pointX1 = 150;
+var pointY1 = 0;
+var controlX1 = 150;
+var controlY1 = 86;
+var controlX2 = 250;
+var controlY2 = 260;
+var pointX2 = 250;
+var pointY2 = 346;
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+
+ctx.beginPath();
+pointX1 = 250;
+pointY1 = 0;
+controlX1 = 250;
+controlY1 = 86;
+controlX2 = 150;
+controlY2 = 86;
+pointX2 = 75;
+pointY2 = 43;
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+
+ctx.beginPath();
+pointX1 = 150;
+pointY1 = 346;
+controlX1 = 150;
+controlY1 = 260;
+controlX2 = 300;
+controlY2 = 173;
+pointX2 = 375;
+pointY2 = 213;
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+
+ctx.beginPath();
+pointX1 = 325;
+pointY1 = 43;
+controlX1 = 250;
+controlY1 = 86;
+controlX2 = 300;
+controlY2 = 173;
+pointX2 = 375;
+pointY2 = 130;
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+
+ctx.beginPath();
+pointX1 = 25;
+pointY1 = 130;
+controlX1 = 100;
+controlY1 = 173;
+controlX2 = 100;
+controlY2 = 173;
+pointX2 = 25;
+pointY2 = 213;
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+
+ctx.beginPath();
+pointX1 = 325;
+pointY1 = 303;
+controlX1 = 250;
+controlY1 = 260;
+controlX2 = 150;
+controlY2 = 260;
+pointX2 = 75;
+pointY2 = 303;
+ctx.moveTo(pointX1, pointY1);
+ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, pointX2, pointY2);
+ctx.lineWidth = 15;
+ctx.strokeStyle = '#ffffff';
+ctx.stroke();
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#786c44';
+ctx.stroke();
+</code></pre>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://www.html5rocks.com/en/tutorials/casestudies/entanglement/">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

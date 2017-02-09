@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DataView · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="You can use a DataView object to read and write the different kinds of binary data to any location in the ArrayBuffer." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/DataView/">DataView</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>DataView</h1>
+<h2>Summary</h2>
+<p>You can use a DataView object to read and write the different kinds of binary data to any location in the ArrayBuffer.</p>
+<h2>Syntax</h2>
+<pre><code>dataView = new DataView( DataView( buffer , byteOffset , byteLength ));
+</code></pre>
+<dl>
+<dt><strong>dataView</strong></dt>
+<dd>Required. The variable name to which the <strong>DataView</strong> object is assigned.
+</dd>
+<dt><strong>buffer</strong></dt>
+<dd>The ArrayBuffer that the DataView represents.
+</dd>
+<dt><strong>byteOffset</strong></dt>
+<dd>Optional. Specifies the offset in bytes from the start of the buffer at which the DataView should begin.
+</dd>
+<dt><strong>byteLength</strong></dt>
+<dd>Optional. Specifies the length (in bytes) of the section of the buffer that the DataView should represent.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The following example shows how to use a DataView object to process the binary data acquired from an XmlHttpRequest:</p>
+<pre><code class="js"><span class="hljs-keyword">var</span> req = <span class="hljs-keyword">new</span> XMLHttpRequest();
+     req.open(<span class="hljs-string">'GET'</span>, <span class="hljs-string">"http://www.example.com"</span>);
+     req.responseType = <span class="hljs-string">"arraybuffer"</span>;
+     req.send();
+
+     req.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+         <span class="hljs-keyword">if</span> (req.readyState === <span class="hljs-number">4</span>) {
+             <span class="hljs-keyword">var</span> buffer = req.response;
+             <span class="hljs-keyword">var</span> dataView = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DataView</span>(buffer);
+             <span class="hljs-keyword">var</span> ints = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>(dataView.byteLength / <span class="hljs-number">4</span>);
+             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; ints.length; i++) {
+                 ints[i] = dataview.getInt32(i * <span class="hljs-number">4</span>);
+             }
+         alert(ints[<span class="hljs-number">10</span>]);
+         }
+     }
+</code></pre>
+<h2>Remarks</h2>
+<p>If both byteOffset and byteLength are omitted, the DataView spans the entire ArrayBuffer range. If the byteLength is omitted, the DataView extends from the given byteOffset until the end of the ArrayBuffer. If the given byteOffset and byteLength references an area beyond the end of the ArrayBuffer, an exception is raised.</p>
+<h2>Properties</h2>
+<p>The following table lists the properties of the <strong>DataView</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Property</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/buffer">buffer Property</a></td><td style="text-align:left">Read-only. Gets the ArrayBuffer that is referenced by this view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/byteLength">byteLength Property</a></td><td style="text-align:left">Read-only. The length of this view from the start of its ArrayBuffer, in bytes, as fixed at construction time.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/byteOffset">byteOffset Property</a></td><td style="text-align:left">Read-only. The offset of this view from the start of its ArrayBuffer, in bytes, as fixed at construction time.</td></tr>
+</tbody>
+</table>
+<h2>Methods</h2>
+<p>The following table lists the methods of the <strong>DataView</strong> object.</p>
+<table>
+<thead>
+<tr><th style="text-align:left">Method</th><th style="text-align:left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getInt8">getInt8 Method</a></td><td style="text-align:left">Gets the Int8 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getUint8">getUint8 Method (DataView)</a></td><td style="text-align:left">Gets the Uint8 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getInt16">getInt16 Method (DataView)</a></td><td style="text-align:left">Gets the Int16 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getUint16">getUint16 Method (DataView)</a></td><td style="text-align:left">Gets the Uint16 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getInt32">getInt32 Method (DataView)</a></td><td style="text-align:left">Gets the Int32 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getUint32">getUint32 Method (DataView)</a></td><td style="text-align:left">Gets the Uint32 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getFloat32">getFloat32 Method (DataView)</a></td><td style="text-align:left">Gets the Float32 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/getFloat64">getFloat64 Method (DataView)</a></td><td style="text-align:left">Gets the Float64 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setInt8">setInt8 Method (DataView)</a></td><td style="text-align:left">Stores a Int8 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setUint8">setUint8 Method (DataView)</a></td><td style="text-align:left">Stores a Uint8 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setInt16">setInt16 Method (DataView)</a></td><td style="text-align:left">Stores a Int16 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setUint16">setUint16 Method (DataView)</a></td><td style="text-align:left">Stores a Uint16 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setInt32">setInt32 Method (DataView)</a></td><td style="text-align:left">Stores a Int32 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setUint32">setUint32 Method (DataView)</a></td><td style="text-align:left">Stores a Uint32 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setFloat32">setFloat32 Method (DataView)</a></td><td style="text-align:left">Stores a Float32 value at the specified byte offset from the start of the view.</td></tr>
+<tr><td style="text-align:left"><a href="/docs/javascript/DataView/setFloat64">setFloat64 Method (DataView)</a></td><td style="text-align:left">Stores a Float64 value at the specified byte offset from the start of the view.</td></tr>
+</tbody>
+</table>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/br212463(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

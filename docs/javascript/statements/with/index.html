@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>with · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    
+    <meta name="description" content="Establishes the default object for a statement. Disallowed in strict mode." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/javascript/">javascript</a></li><li><a href="/docs/javascript/statements/">statements</a></li><li><a href="/docs/javascript/statements/with/">with</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>with</h1>
+<h2>Summary</h2>
+<p>Establishes the default object for a statement. Disallowed in strict mode.</p>
+<h2>Syntax</h2>
+<pre><code>with ( object ) {
+     statements
+}
+</code></pre>
+<dl>
+<dt><strong>object</strong></dt>
+<dd>The new default object.
+</dd>
+<dt><strong>statements</strong></dt>
+<dd>One or more statements for which object is the default object.
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>The with statement is commonly used to shorten the amount of code that you have to write in certain situations. In this example, notice the repeated use of Math.</p>
+<p>When you use the <strong>with</strong> statement, your code may become shorter and easier to read (yet with uncommon semantics).</p>
+<pre><code class="js"><span class="hljs-comment">// Not using 'with'.</span>
+<span class="hljs-keyword">var</span> x = <span class="hljs-built_in">Math</span>.cos(<span class="hljs-number">3</span> * <span class="hljs-built_in">Math</span>.PI) + <span class="hljs-built_in">Math</span>.sin(<span class="hljs-built_in">Math</span>.LN10);
+<span class="hljs-keyword">var</span> y = <span class="hljs-built_in">Math</span>.tan(<span class="hljs-number">14</span> * <span class="hljs-built_in">Math</span>.E);
+
+<span class="hljs-comment">// Using 'with'.</span>
+<span class="hljs-keyword">var</span> x, y;
+<span class="hljs-keyword">with</span> (<span class="hljs-built_in">Math</span>) {
+    x = cos(<span class="hljs-number">3</span> * PI) + sin (LN10);
+    y = tan(<span class="hljs-number">14</span> * E);
+}
+</code></pre>
+<p>The following strict mode code will cause a syntax error to be thrown, because <strong>with</strong> statements are disallowed in strict mode.</p>
+<pre><code class="js"><span class="hljs-pi">"use strict"</span>;
+<span class="hljs-keyword">with</span> (<span class="hljs-built_in">Math</span>) {
+    <span class="hljs-built_in">console</span>.log(cos(<span class="hljs-number">3</span>));
+}
+</code></pre>
+<p>This statement changes the default context from a global or a function scope, to one of a given context. Every variable declared within the body of this statement (within the curly brackets) is defined on the given context instead of on the function or global scope.</p>
+<p>This statement is disallowed in <a href="/docs/javascript/directives/use_strict">strict mode</a> and so will generate a syntax error before even running the script.</p>
+<h2>See also</h2>
+<h3>Other articles</h3>
+<ul>
+<li><a href="/docs/javascript/statements/this">this Statement</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/b294afx9(v=vs.94).aspx">Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

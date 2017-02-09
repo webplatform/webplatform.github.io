@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>paste · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Element/">Element</a></li><li><a href="/dom/Element/paste/">paste</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>paste</h1>
+<h2>Overview Table</h2>
+<table class="wikitable">
+<tr>
+<th>
+Synchronous
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Bubbles
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Target
+</th>
+<td>
+dom/Element
+</td>
+</tr>
+<tr>
+<th>
+Cancelable
+</th>
+<td>
+No
+</td>
+</tr>
+<tr>
+<th>
+Default action
+</th>
+<td>
+ ?
+</td>
+</tr>
+</table>
+## Examples
+<p>This example uses the <a href="/docs/dom/ClipboardData"><strong>ClipboardData</strong></a> object to implement custom editing functionality.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SCRIPT</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">var</span> sNewString = <span class="hljs-string">"new content associated with this object"</span>;
+<span class="hljs-keyword">var</span> sSave = <span class="hljs-string">""</span>;
+<span class="hljs-comment">// Selects the text that is to be cut.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnLoad</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> r = <span class="hljs-built_in">document</span>.body.createTextRange();
+    r.findText(oSource.innerText);
+    r.select();
+}
+<span class="hljs-comment">// Stores the text of the SPAN in a variable that is set</span>
+<span class="hljs-comment">// to an empty string in the variable declaration above.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnBeforeCut</span>(<span class="hljs-params"></span>) </span>{
+    sSave = oSource.innerText;
+    event.returnValue = <span class="hljs-literal">false</span>;
+}
+<span class="hljs-comment">// Associates the variable sNewString with the text being cut.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnCut</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">window</span>.clipboardData.setData(<span class="hljs-string">"Text"</span>, sNewString);
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnBeforePaste</span>(<span class="hljs-params"></span>) </span>{
+    event.returnValue = <span class="hljs-literal">false</span>;
+}
+<span class="hljs-comment">// The second parameter set in getData causes sNewString</span>
+<span class="hljs-comment">// to be pasted into the text input. Passing no second</span>
+<span class="hljs-comment">// parameter causes the SPAN text to be pasted instead.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fnPaste</span>(<span class="hljs-params"></span>) </span>{
+    event.returnValue = <span class="hljs-literal">false</span>;
+    oTarget.value = <span class="hljs-built_in">window</span>.clipboardData.getData(<span class="hljs-string">"Text"</span>, sNewString);
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">SCRIPT</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">HEAD</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">BODY</span> <span class="hljs-attribute">onload</span>=<span class="hljs-value">"fnLoad()"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">SPAN</span> <span class="hljs-attribute">ID</span>=<span class="hljs-value">"oSource"</span>
+      <span class="hljs-attribute">onbeforecut</span>=<span class="hljs-value">"fnBeforeCut()"</span>
+      <span class="hljs-attribute">oncut</span>=<span class="hljs-value">"fnCut()"</span>&gt;</span>Cut this Text<span class="hljs-tag">&lt;/<span class="hljs-title">SPAN</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">INPUT</span> <span class="hljs-attribute">ID</span>=<span class="hljs-value">"oTarget"</span> <span class="hljs-attribute">TYPE</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">VALUE</span>=<span class="hljs-value">"Paste the Text Here"</span>
+      <span class="hljs-attribute">onbeforepaste</span>=<span class="hljs-value">"fnBeforePaste()"</span>
+      <span class="hljs-attribute">onpaste</span>=<span class="hljs-value">"fnPaste()"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">BODY</span>&gt;</span>
+</code></pre>
+<p><a href="http://samples.msdn.microsoft.com/workshop/samples/author/dhtml/refs/onbeforecutEX.htm">View live example</a></p>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>Creating custom code to enable the Paste command requires several steps.</p>
+<ol>
+<li>Set the event object <a href="/docs/dom/BeforeUnloadEvent/returnValue"><strong>returnValue</strong></a> to false in the <a href="/docs/dom/Event/beforepaste"><strong>onbeforepaste</strong></a> event to enable the Paste shortcut menu item.</li>
+<li>Cancel the default behavior of the client by setting the event object <strong>returnValue</strong> to false in the <strong>onpaste</strong> event handler. This applies only to objects, such as the <strong>text box</strong>, that have a default behavior defined for them.</li>
+<li>Specify a data format in which to paste the selection through the <a href="/docs/dom/DataTransfer/getData"><strong>getData</strong></a> method.</li>
+<li>Invoke the method in the <strong>onpaste</strong> event to execute custom paste code.</li>
+</ol>
+<p>Inserts the data from the system clipboard into the specified location on the document. To invoke this event, do one of the following:</p>
+<ul>
+<li>Right-click to display the shortcut menu and select Paste.</li>
+<li>Or press CTRL+V.</li>
+</ul>
+<p>The <em>pEvtObj</em> parameter is required for the following interfaces:</p>
+<ul>
+<li><strong>HTMLAnchorEvents2</strong></li>
+<li><strong>HTMLAreaEvents2</strong></li>
+<li><strong>HTMLButtonElementEvents2</strong></li>
+<li><strong>HTMLControlElementEvents2</strong></li>
+<li><strong>HTMLDocumentEvents2</strong></li>
+<li><strong>HTMLElementEvents2</strong></li>
+<li><strong>HTMLFormElementEvents2</strong></li>
+<li><strong>HTMLImgEvents2</strong></li>
+<li><strong>HTMLFrameSiteEvents2</strong></li>
+<li><strong>HTMLInputFileElementEvents2</strong></li>
+<li><strong>HTMLInputImageEvents2</strong></li>
+<li><strong>HTMLInputTextElementEvents2</strong></li>
+<li><strong>HTMLLabelEvents2</strong></li>
+<li><strong>HTMLLinkElementEvents2</strong></li>
+<li><strong>HTMLMapEvents2</strong></li>
+<li><strong>HTMLMarqueeElementEvents2</strong></li>
+<li><strong>HTMLObjectElementEvents2</strong></li>
+<li><strong>HTMLOptionButtonElementEvents2</strong></li>
+<li><strong>HTMLScriptEvents2</strong></li>
+<li><strong>HTMLSelectElementEvents2</strong></li>
+<li><strong>HTMLStyleElementEvents2</strong></li>
+<li><strong>HTMLTableEvents2</strong></li>
+<li><strong>HTMLTextContainerEvents2</strong></li>
+<li><strong>HTMLWindowEvents2</strong></li>
+</ul>
+<h3>Syntax</h3>
+<h3>Standards information</h3>
+<p>There are no standards that apply here.</p>
+<h3>Event handler parameters</h3>
+<dl>
+<dt><em>pEvtObj</em> [in]</dt>
+<dd>Type: ****IHTMLEventObj****
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Proposal · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Projects/">WPD/Projects</a></li><li><a href="/docs/WPD/Projects/SSO/">SSO</a></li><li><a href="/docs/WPD/Projects/SSO/Proposal/">Proposal</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Proposal</h1>
+<h2>Goals</h2>
+<ul>
+<li>Annotation on WPD by signing into MW</li>
+<li>Annotation on specs, using WPD account, without a pop-up</li>
+<li>Use same account on various WPD web applications (i.e. test wiki, issue tracker, blog, etc)</li>
+</ul>
+<h2>Known limitations</h2>
+<ul>
+<li>Users who opt-in to third-party cookie blocking cannot log in from the sidebar if it is served from its own domain
+<ul>
+<li>Safari blocks third-party cookies by default</li>
+</ul></li>
+</ul>
+<p>The hypothes.is Chrome extension requests permissions at install time to modify browser settings. Then it whitelists the Hypothes.is domain as a third-party cookie exception. This option is unavailable for the case of embedding the application directly.</p>
+<h2>Possibilities</h2>
+<h3>WPD</h3>
+<ol>
+<li>No authentication UI in the sidebar. All authentication is done in MW. Hypothesis produces a plugin for the annotation sidebar which sniffs the MW authentication.</li>
+</ol>
+<h3>Specs</h3>
+<ol>
+<li>Authentication in the sidebar against MW API. Requires domain to be www.w3.org</li>
+<li>Authentication in the sidebar against FxA OAuth API*.</li>
+</ol>
+<p>The domain must be www.w3.org or the FxA OAuth server.</p>
+<h2>Questions</h2>
+<p>Can we add reverse proxy routes for /notes on www.w3.org and wpd such that the iframe is always same domain? Our backend has no trouble with being served from two domains at once. This would be the simplest route because it means we can leave authentication in the sidebar for specs.</p>
+<p>Example:</p>
+<ul>
+<li>w3.org/notes</li>
+<li>webplatform.org/notes</li>
+</ul>
+<h2>Proposal</h2>
+<ul>
+<li>Hypothesis develops MW authentication
+<ul>
+<li>Front end: sniff the MW auth (used for WPD)</li>
+<li>Back end: username/password auth against MW API (used for specs)</li>
+</ul></li>
+<li>W3C continues to roll out FxA</li>
+<li>We choose a hard stop date. If FxA is deployed by then, Hypothesis develops a back end which authentications username/password against FxA.</li>
+</ul>
+<p><strong>We will have pop-ups</strong> on spec pages unless we put Hypothesis and MW (or FxA) on the same domain. Switching to FxA/OAuth does not change this.</p>
+<h2>Estimates</h2>
+<ul>
+<li><strong>MediaWiki front-end authentication sniffing:</strong> 1-2 days</li>
+<li><strong>MediaWiki back-end authentication interop:</strong> 1-2 days</li>
+<li><strong>FxA back-end authentication interop:</strong> 2-3 days</li>
+<li><strong>FxA roll-out:</strong> ??? (Renoir?)</li>
+</ul>
+<p>I propose a hard stop for FxA roll-out at Monday, May 26th. That gives Hypothesis the next week to focus intensely on IE11 support and a solid week for authentication work against either FxA or MW, with a few days left over for testing the deployment and time dilation.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

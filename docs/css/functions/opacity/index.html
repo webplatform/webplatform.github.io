@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>opacity() · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="Applies a transparency effect to an element&#x27;s
+    colors, for use by the filter
+    property. A decimal value between 0 and 1 or percentage up to 100%
+    controls the overall opacity, with 0 rendering the element invisible
+    and background elements showing through.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/functions/">functions</a></li><li><a href="/docs/css/functions/opacity/">opacity</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>opacity()</h1>
+<h2>Summary</h2>
+<p>Applies a transparency effect to an element’s colors, for use by the filter property. A decimal value between 0 and 1 or percentage up to 100% controls the overall opacity, with 0 rendering the element invisible and background elements showing through.</p>
+<p>This CSS property value is reflected in the following image:</p>
+<pre><code>filter: opacity(50%);
+filter: opacity(0.5);
+</code></pre>
+<p><img src="//static.webplatform.org/thumb/0/04/f15-splash.jpg/300px-f15-splash.jpg" alt="f15-splash.jpg"><img src="//static.webplatform.org/6/68/f16-splashopacity50.jpg" alt="f16-splashopacity50.jpg"></p>
+<p>When used in isolation, the <strong>opacity()</strong> filter has the same effect as the <a href="/docs/css/properties/opacity"><strong>opacity</strong></a> CSS property, but it produces different effects when used in conjunction with other filters. The second example below produces a shadow that shows through the image, and the third doesn’t when functions execute in reverse order:</p>
+<pre><code>filter: none;
+filter: opacity(0.5) drop-shadow(10px 10px 0px black);
+filter: drop-shadow(10px 10px 0px black) opacity(0.5);
+</code></pre>
+<p><img src="//static.webplatform.org/8/80/opacitySequence.png" alt="opacitySequence.png"></p>
+<p><strong>Note:</strong> As is true for the related <a href="/docs/css/properties/opacity"><strong>opacity</strong></a> CSS property, transparent elements still receive mouse and touch events, but the <a href="/docs/css/properties/pointer-events"><strong>pointer-events</strong></a> property offers a way to override this behavior.</p>
+<h2>Examples</h2>
+<p>The following example shows the difference between two images, where one has an opacity of 50%:</p>
+<p><img src="//static.webplatform.org/thumb/0/09/filter_opacity1.png/400px-filter_opacity1.png" alt="filter opacity1.png"></p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Filter example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+      <span class="hljs-class">.foo</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>;
+      }</span>
+
+      <span class="hljs-class">.bar</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">opacity</span>(<span class="hljs-number">50%</span>)</span></span>;
+      }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/logo/wplogo_transparent_xlg.png"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"foo"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/logo/wplogo_transparent_xlg.png"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"foo bar"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://codepen.io/pverbeek/pen/qhfaD">View live example</a></p>
+<p>This example shows the importance of the order in which filters are applied. In the first image, the opacity is only applied to the image. In the second, the drop-shadow is applied first, so the opacity also applies to it.</p>
+<p><img src="//static.webplatform.org/thumb/c/c4/filter_opacity2.png/400px-filter_opacity2.png" alt="filter opacity2.png"></p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Filter example<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+      <span class="hljs-class">.foo</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">float</span>:<span class="hljs-value"> left</span></span>;
+      }</span>
+
+      <span class="hljs-class">.bar</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">opacity</span>(.<span class="hljs-number">5</span>) <span class="hljs-function">drop-shadow</span>(<span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">20px</span> black)</span></span>;
+      }</span>
+
+      <span class="hljs-class">.baz</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">-webkit-filter</span>:<span class="hljs-value"> <span class="hljs-function">drop-shadow</span>(<span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">20px</span> black) <span class="hljs-function">opacity</span>(.<span class="hljs-number">5</span>)</span></span>;
+      }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/logo/wplogo_transparent_xlg.png"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"foo bar"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"/logo/wplogo_transparent_xlg.png"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"foo baz"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://codepen.io/pverbeek/pen/KzEHw">View live example</a></p>
+<h2>Notes</h2>
+<p>The CSS filter corresponds to this SVG filter definition, based on a variable <em>amount</em> passed to the function:</p>
+<pre><code class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">filter</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"opacity"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">feFuncA</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"table"</span> <span class="hljs-attribute">tableValues</span>=<span class="hljs-value">"0 [amount]"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">feComponentTransfer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">filter</span>&gt;</span>
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="https://dvcs.w3.org/hg/FXTF/raw-file/tip/filters/index.html#">Filter Effects 1.0</a></dt>
+<dd>Editor’s Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/filter-effects/">Filter Effects 1.0</a></dt>
+<dd>Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>Filters</h4>
+<ul>
+<li><p><a href="/docs/css/functions/blur">blur()</a></p></li>
+<li><p><a href="/docs/css/functions/brightness">brightness()</a></p></li>
+<li><p><a href="/docs/css/functions/contrast">contrast()</a></p></li>
+<li><p><a href="/docs/css/functions/custom">custom()</a></p></li>
+<li><p><a href="/docs/css/functions/drop-shadow">drop-shadow()</a></p></li>
+<li><p><a href="/docs/css/functions/grayscale">grayscale()</a></p></li>
+<li><p><a href="/docs/css/functions/hue-rotate">hue-rotate()</a></p></li>
+<li><p><a href="/docs/css/functions/invert">invert()</a></p></li>
+<li><p><strong>opacity()</strong></p></li>
+<li><p><a href="/docs/css/functions/saturate">saturate()</a></p></li>
+<li><p><a href="/docs/css/functions/sepia">sepia()</a></p></li>
+<li><p><a href="/docs/css/properties/filter">filter</a></p></li>
+<li><p><a href="/docs/svg/elements/feBlend">feBlend</a></p></li>
+<li><p><a href="/docs/svg/elements/feColorMatrix">feColorMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feComponentTransfer">feComponentTransfer</a></p></li>
+<li><p><a href="/docs/svg/elements/feComposite">feComposite</a></p></li>
+<li><p><a href="/docs/svg/elements/feConvolveMatrix">feConvolveMatrix</a></p></li>
+<li><p><a href="/docs/svg/elements/feDiffuseLighting">feDiffuseLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feDisplacementMap">feDisplacementMap</a></p></li>
+<li><p><a href="/docs/svg/elements/feDistantLight">feDistantLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feFlood">feFlood</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncA">feFuncA</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncB">feFuncB</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncG">feFuncG</a></p></li>
+<li><p><a href="/docs/svg/elements/feFuncR">feFuncR</a></p></li>
+<li><p><a href="/docs/svg/elements/feGaussianBlur">feGaussianBlur</a></p></li>
+<li><p><a href="/docs/svg/elements/feImage">feImage</a></p></li>
+<li><p><a href="/docs/svg/elements/feMerge">feMerge</a></p></li>
+<li><p><a href="/docs/svg/elements/feMergeNode">feMergeNode</a></p></li>
+<li><p><a href="/docs/svg/elements/feMorphology">feMorphology</a></p></li>
+<li><p><a href="/docs/svg/elements/feOffset">feOffset</a></p></li>
+<li><p><a href="/docs/svg/elements/fePointLight">fePointLight</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpecularLighting">feSpecularLighting</a></p></li>
+<li><p><a href="/docs/svg/elements/feSpotlight">feSpotlight</a></p></li>
+<li><p><a href="/docs/svg/elements/feTile">feTile</a></p></li>
+<li><p><a href="/docs/svg/elements/feTurbulence">feTurbulence</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_deploy">SVG deployment</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_filters">SVG filters</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_graphics">SVG graphic effects</a></p></li>
+<li><p><a href="/docs/svg/tutorials/smarter_svg_overview">SVG grand tour</a></p></li>
+<li><p><a href="/docs/tutorials/svg_filters">SVG filters</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://html.adobe.com/webstandards/csscustomfilters/cssfilterlab/">Adobe CSS FilterLab</a></li>
+<li><a href="http://html5-demos.appspot.com/static/css/filters/index.html">Interactive demonstration</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

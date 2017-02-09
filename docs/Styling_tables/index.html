@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Styling tables · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/Styling_tables/">Styling tables</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Styling tables</h1>
+<h2>Introduction</h2>
+<p>At times it seems that tables are a little misunderstood in modern web development. So much attention is given to “don’t use tables!” that people sometimes forget the issue is actually &quot;don’t use tables <em>for layout</em>&quot;. Tables are excellent for their true purpose—displaying tabular data. So it makes sense to know how to style them properly.</p>
+<p>This article of the <a href="http://www.w3.org/wiki/Web_Standards_Curriculum">Web Standards Curriculum</a> will focus on applying CSS in an efficient manner, to produce clear and readable data table styles. I’ll also cover some common design requests for tables.</p>
+<p>You may find it useful to <a href="http://dev.opera.com/articles/view/33-styling-tables/table-examples.zip">download the code examples for tables shown in this article</a>, so you can follow along with the article as it progresses.</p>
+<h2>Table structure</h2>
+<p>Before we dive into the CSS, let’s consider the key structural elements of tables you will need to style clearly:</p>
+<ul>
+<li>Table headings</li>
+<li>Table data cells</li>
+<li>Table captions</li>
+</ul>
+<p>When your site users read your table, they should be able to easily understand and follow the structure of the table. The most common way to do this is with borders, background colours, or both.</p>
+<p>You do not have to follow these style conventions, however, you should ensure that there is some clear difference between <code>th</code> and <code>td</code> cells; also, the <code>caption</code> should be clearly associated with the table and differentiated from other text on the page.</p>
+<h2>The basics</h2>
+<p>Consider the way this unstyled table is rendered (this is the same example you met in <a href="http://www.w3.org/wiki/HTML_tables">HTML tables</a>):</p>
+<table border="1">
+<caption>
+Recent Major Volcanic Eruptions in the Pacific Northwest
+</caption>
+<tr>
+<th>
+Volcano Name
+</th>
+<th>
+Location
+</th>
+<th>
+Last Major Eruption
+</th>
+<th>
+Type of Eruption
+</th>
+</tr>
+<tr>
+<td>
+Compiled in 2008 by Ms Jen
+</td>
+</tr>
+<tr>
+<th>
+Mt. Lassen
+</th>
+<td>
+California
+</td>
+<td>
+1914-17
+</td>
+<td>
+Explosive Eruption
+</td>
+</tr>
+<tr>
+<th>
+Mt. Hood
+</th>
+<td>
+Oregon
+</td>
+<td>
+1790s
+</td>
+<td>
+Pyroclastic flows and Mudflows
+</td>
+</tr>
+<tr>
+<th>
+Mt. St. Helens
+</th>
+<td>
+Washington
+</td>
+<td>
+1980
+</td>
+<td>
+Explosive Eruption
+</td>
+</tr>
+</table>
+The data is understandable, but it does takes some effort to work out what’s happening. Let’s add some style to make it easier to read.
+<h3>Table and cell width</h3>
+<p>The first decision is how wide to make the table. The browser default is the same as setting <code>table { width: auto; }</code>, which results in the table extending to the width of the content. This generally looks untidy.</p>
+<p>Let’s imagine that our table is going into a content column 600px wide. Let’s set the table to expand to 100% of the available width, to make best use of space. Since there are four columns, let’s also set the width of the table cells to an equal 25% each:</p>
+<pre><code>table {
+  width: 100%;
+}
+
+th, td {
+  width: 25%;
+}
+</code></pre>
+<p>You can actually just set the width on <code>th</code> and it will set the width of all the columns; however, it doesn’t hurt to be thorough. This simple style will produce the result seen in Figure 1:</p>
+<p><img src="//static.webplatform.org/a/a9/styling-.gif" alt="Screenshot showing evenly sized columns"></p>
+<p>Figure 1: The example table with simple width settings.</p>
+<p>The cells are now sitting at an even width. We’ll look at setting uneven widths later, but for now let’s push on.</p>
+<h3>Text alignment</h3>
+<p>The table is still a bit confusing to read, so let’s set up the text alignment to be a little neater—the additional rule below will left-align the headers to match the content (by default, browsers centre table headings):</p>
+<pre><code>table {
+  width: 100%;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+}
+</code></pre>
+<p>This neatens things up a little, as you can see in Figure 2:</p>
+<p><img src="//static.webplatform.org/1/17/styling0.gif" alt="Screenshot showing left-aligned headers"></p>
+<p>Figure 2: Table with left alignment applied.</p>
+<p>Currently all of the cells are vertically aligned to the centre. If you prefer, you can set this to align text to the top or bottom of the cell, or in fact any <a href="http://www.w3.org/TR/REC-CSS2/visudet.html#line-height">vertical-align setting</a> that you like. The new rules below set the text to align to the top:</p>
+<pre><code>table {
+  width: 100%;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+}
+</code></pre>
+<p>The table now looks like Figure 3:</p>
+<p><img src="//static.webplatform.org/a/a6/styling1.gif" alt="Screenshot showing top-aligned cells"></p>
+<p>Figure 3: Table with vertical alignment added.</p>
+<p>Note how the top row of headings all sit at the top, even though “Last Major Eruption” wraps on to two lines.</p>
+<h3>Borders</h3>
+<p>The table is looking a little nicer, however it is still a bit hard to read along each line. It’s time to set some borders to make things easier to read. You need to set borders separately for each part of the table, then decide how those borders should combine.</p>
+<p>To show where the borders will be set, Figure 4 shows different borders for <code>table</code> (<code>solid black</code>), <code>caption</code> (<code>solid grey</code>), <code>th</code> (<code>dashed blue</code>) and <code>td</code> (<code>dotted red</code>):</p>
+<p><img src="//static.webplatform.org/0/0d/border-d.gif" alt="Screenshot showing the border placements"></p>
+<p>Figure 4: illustration of the different element borders within a table.</p>
+<p>Note how the <code>table</code> border runs around the outside of all the heading and data cells, then between the cells and the caption. You can also see that by default, the <code>th</code> and <code>td</code> borders are spaced out from each other.</p>
+<p>Let’s look at a different style of table - you can set up a simple black border for the table and cells, using the <code>border</code> property—this is done via the new rules below:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #000;
+}
+</code></pre>
+<p>Which produces the result seen in Figure 4:</p>
+<p><img src="//static.webplatform.org/3/3c/styling2.gif" alt="Screenshot showing simple black borders"></p>
+<p>Figure 4: Table with simple black borders applied.</p>
+<p>This makes the rows far easier to read, however you may not like the spacing between the cells. There are two ways to change this.</p>
+<p>First, you can simply close the gaps using the <code>border-spacing</code> property, like so:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #000;
+  border-spacing: 0;
+}
+</code></pre>
+<p>This will make the borders touch together instead of sitting apart. This changes the 1px border into a 2px border, as seen in Figure 5:</p>
+<p><img src="//static.webplatform.org/3/33/styling3.gif" alt="Screenshot of cells with the borders adding together"></p>
+<p>Figure 5: Table with border spacing removed, producing a 2px border effect.</p>
+<p>You can also increase the space between cells using <code>border-spacing</code>, although bear in mind that this property doesn’t work in Internet Explorer.</p>
+<p>If you want to retain the 1px border effect, you’ll need to set the table so that the borders “collapse” into each other. You can do this using the <code>border-collapse</code> property instead of the <code>border-spacing</code> property:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  }
+</code></pre>
+<p>This will produce a table with a 1px border, like in Figure 6:</p>
+<p><img src="//static.webplatform.org/5/53/styling4.gif" alt="Screenshot of table with uniform 1px borders and no gaps between cells"></p>
+<p>Figure 6: Table with border-collapse set to collapse, reducing the border to 1px.</p>
+<p>When you set borders to collapse, you need to keep in mind that this can cause issues if you have different border styles applied to adjacent cells. When the different border styles are collapsed into each other, they will “conflict” with each other. This is resolved according to the <a href="http://www.w3.org/TR/REC-CSS2/tables.html#border-conflict-resolution">W3C CSS2 Table border conflict resolution rules</a>, which determine which style “wins” when they are collapsed.</p>
+<h3>Padding</h3>
+<p>Now that you have borders on the cells, you might like to add some whitespace to the caption and table cells. You simply use padding to accomplish this:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  padding: 0.3em;
+}
+
+caption {
+  padding: 0.3em;
+}
+</code></pre>
+<p>This allows the text to “breathe” a little, as seen in Figure 7:</p>
+<p><img src="//static.webplatform.org/5/5e/styling5.gif" alt="Screenshot showing increased padding"></p>
+<p>Figure 7: Table with padding applied to all cells.</p>
+<h3>Caption placement</h3>
+<p>So far the caption has been left sitting at the top of the table. However, you might like to move the caption somewhere else. Unfortunately you cannot do this in IE, but for all other browsers you can change the position of the caption using the <code>caption-side</code> property. The options are top, bottom, left and right. Let’s move the caption to the bottom:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  padding: 0.3em;
+  caption-side: bottom;
+}
+
+caption {
+  padding: 0.3em;
+}
+</code></pre>
+<p>Figure 8 shows the result.</p>
+<p><img src="//static.webplatform.org/f/ff/styling6.gif" alt="Screenshot of the caption at the bottom"></p>
+<p>Figure 8: Table with caption moved to the bottom of the table.</p>
+<p>If you do want move the caption, remember that any side-specific styles will not work in IE. For example if you add three borders to make the caption “join” the bottom of the table, it won’t have the desired effect in IE because the caption will still be at the top. You will need to use <a href="http://dev.opera.com/articles/view/supporting-ie-with-conditional-comments/">conditional comments</a> to re-style your table for IE. See also the <a href="http://www.w3.org/wiki/Styling_tables#Fixing_IE_with_conditional_styles">Fixing IE with conditional styles</a> section later on, for more details.</p>
+<p>For the rest of the examples, I will leave it at the top.</p>
+<h3>Backgrounds</h3>
+<p>Another simple way to style tables is to add background colours and images. This is done with the <code>background</code> property, although you need to be aware that the different parts of the table will “layer” over each other. <a href="http://www.w3.org/TR/REC-CSS2/tables.html#table-layers">The CSS2 specification explains background layering in some detail</a> however the short version is that backgrounds will override each other in the following order:</p>
+<ol>
+<li>table (which sits at the “bottom” or the “back”)</li>
+<li>column groups</li>
+<li>columns</li>
+<li>row groups</li>
+<li>rows</li>
+<li>cells (“top” or &quot;front&quot;, meaning their background overrides all the others)</li>
+</ol>
+<p>So, if you set a background for the table, and a different colour for cells, the cell background will cover up the table background. If you have borders set to <code>collapse</code>, the table background won’t show at all. If you set <code>border-collapse</code> to <code>separate</code>, however, the table background will show through between the borders.</p>
+<p>Note that the concept of different elements sitting on top of one another on the page is controllable; you can control how high or low in the “stack” an element sits in relation to other elements by changing its <code>z-index</code> property. You will <a href="http://dev.opera.com/articles/view/37-css-absolute-and-fixed-positioning/#zindex">learn more about z-index</a> in Article 37.</p>
+<p>Imagine you set the table to have a red background and cells to have a white background. Separated cells will show the red, but the cells stay white, as demonstrated by Figure 9:</p>
+<p><img src="//static.webplatform.org/a/ae/styling7.gif" alt="Screenshot of red background showing through"></p>
+<p>Figure 9: Table demonstrating the red table element background showing between the white backgrounds of the cell elements.</p>
+<p>You can also use a background image. For example, if you wanted to have a gradient showing through between the cells, you could set the <code>th</code> and <code>td</code> cells to white backgrounds, but set the <code>table</code> background to a gradient:</p>
+<pre><code>table {
+  border-collapse: separate;
+  border-spacing: 5px;
+  background: #000 url(&quot;gradient.gif&quot;) bottom left repeat-x;
+  color: #fff;
+}
+
+td, th {
+  background: #fff;
+  color: #000;
+}
+</code></pre>
+<p>Note that the background colour is set to black, which will fill up the space at the top where the gradient graphic finishes (you should always allow for your table being taller than the background image). The foreground colour is set to white, in case these default colours ever show through to the cell content. In general, the cell styles will override the text colour settings from the <code>table {}</code> style, but you should always declare contrasting foreground and background colours at each level.</p>
+<p>These styles produce a table which would look like Figure 10 in most browsers:</p>
+<p><img src="//static.webplatform.org/b/be/styling8.gif" alt="Screenshot showing gradient background"></p>
+<p>Figure 10: Table demonstrating a gradient background image showing through between the cells.</p>
+<p>By default IE won’t show as much of the background, since it doesn’t support <code>border-spacing</code>. However you will still get the same general effect, as indicated by Figure 11.</p>
+<p><img src="//static.webplatform.org/4/46/styling9.gif" alt="Screenshot showing smaller gaps in IE"></p>
+<p>Figure 11: The smaller border-spacing gap rendered by IE.</p>
+<p>Depending on your circumstances, you may be happy to simply accept this different rendering between browsers. Of course that isn’t always an option, for example when a client particularly wants a design to look exactly the same in all browsers.</p>
+<h3>Fixing IE with conditional styles</h3>
+<p>There is a workaround for the IE problems listed above. It requires a hack and an extra stylesheet, but it works. You can use an <code>expression</code> to produce the wider gap, then load that expression using conditional comments. The expression syntax is:</p>
+<pre><code>table {
+  border-collapse: expression(&quot;separate&quot;, cellSpacing = &quot;5px&quot;);
+}
+</code></pre>
+<p>This CSS is only useful to IE, so you only want IE to apply it. The expression will also invalidate your stylesheet, so many developers prefer to isolate IE hacks in a separate stylesheet only loaded by IE.</p>
+<p>To do this, create a new stylesheet named ie-only.css and link it within conditional comments:</p>
+<pre><code>&lt;!--[if lte IE 7]&gt;&lt;link rel=&quot;stylesheet&quot; media=&quot;screen&quot; href=&quot;ie-only.css&quot; /&gt;&lt;![endif]--&gt;
+</code></pre>
+<p>Note the <code>[if lte IE 7]</code> means &quot;if less than or equal to IE version 7&quot;. This reveals the code to IE7 and all earlier versions of IE, while the surrounding HTML comment hides the code from all other browsers. You can adjust this to whichever version of IE you need to target, for example to target IE6 and earlier use <code>[if IE 6]</code>.</p>
+<p>In your main stylesheet, set the normal style:</p>
+<pre><code>table {
+  border: 1px solid #000;
+  border-collapse: separate;
+  border-spacing: 5px;
+  background: #000 url(&quot;gradient.gif&quot;) bottom left repeat-x;
+}
+</code></pre>
+<p>Then set your IE-only style in <code>ie-only.css</code>:</p>
+<pre><code>table {
+  border-collapse: expression(&quot;separate&quot;, cellSpacing = &quot;5px&quot;);
+}
+</code></pre>
+<p>This will get IE to produce a table with wide cell spacing. You just have to remember to maintain the extra width settings—if you update your main stylesheet, you will have to update <code>ie-only.css</code> as well. Obviously conditional comments allow you to do a lot more than just style tables, since the extra stylesheet can contain as much CSS as you need to fix IE bugs.</p>
+<h3>A simple design</h3>
+<p>Most designs use relatively simple combinations of backgrounds. Let’s give the table headers a grey background, and change the caption to be white text on black:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #000;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  padding: 0.3em;
+  caption-side: bottom;
+}
+
+caption {
+  padding: 0.3em;
+  color: #fff;
+  background: #000;
+}
+
+th {
+  background: #eee;
+}
+</code></pre>
+<p>This looks like Figure 12:</p>
+<p><img src="//static.webplatform.org/5/5b/stylingA.gif" alt="Screenshot of table with black and grey backgrounds added"></p>
+<p>Figure 12: Table with reversed white-on-black caption and light grey background applied to the table heading cells.</p>
+<h2>Common variations</h2>
+<p>In this section I will look at some common design archetypes you will see again and again in tables across the Web.</p>
+<h3>Zebra striping</h3>
+<p>A common design request for tables is to create rows with alternating colours. These are commonly referred to as &quot;zebra striping&quot;. Although there is <a href="http://www.alistapart.com/articles/zebrastripingdoesithelp">some conjecture as to whether zebra striping actually helps the reader</a>, they are a popular style. Figure 13 shows an example:</p>
+<p><img src="//static.webplatform.org/e/e5/stylingB.gif" alt="Screenshot of table with alternating row backgrounds"></p>
+<p>Figure 13: A table with &quot;zebra stripes&quot;, alternate rows set to white or light grey.</p>
+<p>The simplest way to accomplish zebra stripes is to add a class to alternate table rows, then use a contextual CSS selector to style the cells in those rows. First, the classes “odd” and “even” are added to the table rows, like so:</p>
+<pre><code>  ...
+
+&lt;tr class=&quot;odd&quot;&gt;
+
+  ...
+
+&lt;tr class=&quot;even&quot;&gt;
+
+  ...
+</code></pre>
+<p>You can skip the heading row as it already has its own style. You then add a contextual class to set the background for all cells inside odd class rows:</p>
+<pre><code>.odd th, .odd td {
+  background: #eee;
+}
+</code></pre>
+<p>This is the simplest way to add zebra striping to an HTML table that will work across all browsers, but it is not perfect—what if you add a row to the table? You’d then need to move all your <code>odd</code> and <code>even</code> class names around to get everything looking right again.</p>
+<p>There are two other options:</p>
+<ul>
+<li>You can add the classes using unobtrusive JavaScript, as demonstrated in <a href="http://www.alistapart.com/articles/zebratables/">A List Apart: Zebra Tables</a>. Most JavaScript frameworks have a suitable method, too: <a href="http://jquery.com/blog/2006/10/18/zebra-table-showdown/">Zebra Table Showdown</a> compares a range of framework implementations.</li>
+<li>You can use the CSS3 <code>:nth-child</code> selector, however, this isn’t supported across all the major browsers yet. Support will improve as time goes on though. You can <a href="http://dev.opera.com/articles/view/zebra-striping-tables-with-css3/">find more out about zebra striping with nth-child in a dedicated dev.opera.com article</a>.</li>
+</ul>
+<h3>Incomplete grids</h3>
+<p>Some designs will respond well to less structured, more open-looking grids. A simple variation is to remove the vertical borders and leave out the background fill on the caption, as seen in Figure 14:</p>
+<p><img src="//static.webplatform.org/6/6b/stylingC.gif" alt="Screenshot of opened grid design"></p>
+<p>Figure 14: A table with lighter grey borders only on the outer edge and bottom of each cell.</p>
+<p>The CSS for this effect is:</p>
+<pre><code>table {
+  width: 100%;
+  border: 1px solid #999;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0 0 1em 0;
+  caption-side: top;
+}
+
+caption, td, th {
+  padding: 0.3em;
+}
+
+th, td {
+  border-bottom: 1px solid #999;
+  width: 25%;
+}
+
+caption {
+  font-weight: bold;
+  font-style: italic;
+}
+</code></pre>
+<p>You can take this a step further and remove all of the borders, except a top and bottom border to give some definition to the table body—see Figure 15:</p>
+<p><img src="//static.webplatform.org/3/3f/stylingD.gif" alt="Screenshot of a table with borders at the top and bottom of the table body"></p>
+<p>Figure 15: A table with borders applied only to the top and bottom of the table body.</p>
+<p>The CSS for this effect is:</p>
+<pre><code>table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0 0 1em 0;
+  caption-side: top;
+}
+
+caption, td, th {
+  padding: 0.3em;
+}
+
+tbody {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+tbody th, tfoot th {
+  border: 0;
+}
+
+th.name {
+  width: 25%;
+}
+
+th.location {
+  width: 20%;
+}
+
+th.lasteruption {
+  width: 30%;
+}
+
+th.eruptiontype {
+  width: 25%;
+}
+
+tfoot {
+  text-align: center;
+  color: #555;
+  font-size: 0.8em;
+}
+</code></pre>
+<h3>Inner grids</h3>
+<p>Sometimes you will want to remove the outer border, but keep the inner grid of borders, like in Figure 16:</p>
+<p><img src="//static.webplatform.org/2/2c/stylingE.gif" alt="Screenshot of table with inner grid design"></p>
+<p>Figure 16: A table with an inner grid design.</p>
+<p>To accomplish this for all current browsers, you need to add a class to the <code>th</code> and <code>td</code> cells that appear last on each row, like this:</p>
+<pre><code>  ...
+
+&lt;tr&gt;
+  &lt;th scope=&quot;col&quot;&gt;Volcano Name&lt;/th&gt;
+  &lt;th scope=&quot;col&quot;&gt;Location&lt;/th&gt;
+  &lt;th scope=&quot;col&quot;&gt;Last Major Eruption&lt;/th&gt;
+  &lt;th scope=&quot;col&quot; class=&quot;last&quot;&gt;Type of Eruption&lt;/th&gt;
+&lt;/tr&gt;
+
+  ...
+</code></pre>
+<p>Then we use that class to remove the right border from those cells. The full CSS is:</p>
+<pre><code>table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0 0 1em 0;
+  caption-side: top;
+}
+
+caption, td, th {
+  padding: 0.3em;
+}
+
+th, td {
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+th.last, td.last {
+  border-right: 0;
+}
+
+tfoot th, tfoot td {
+  border-bottom: 0;
+  text-align: center;
+}
+
+th {
+  width: 25%;
+}
+</code></pre>
+<h4>Inner grids using :last-child</h4>
+<p>When browser support improves, we will be able to use the pseudo selector <code>:last-child</code> to achieve this effect without classes. The CSS would be:</p>
+<pre><code>table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0 0 1em 0;
+  caption-side: top;
+}
+
+caption, td, th {
+  padding: 0.3em;
+}
+
+th, td {
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+th:last-child, td:last-child {
+  border-right: 0;
+}
+
+th {
+  width: 25%;
+}
+</code></pre>
+<p>This currently works in the latest versions of Opera, Firefox and Safari.</p>
+<h2>Two common bugs</h2>
+<p>In this last section I’ll cover two really common bugs, so you’re prepared for when they crop up. They concern borders and captions.</p>
+<h3>border-collapse bug</h3>
+<p>When you set your table to <code>border-collapse: collapse;</code> you will find that Firefox and Safari will incorrectly display the width of table features. For example, if you set a 1px border on the table, cells and caption, Firefox will render the caption 1px too narrow on the left, as seen in Figure 17:</p>
+<p><img src="//static.webplatform.org/5/5e/1px-capt.gif" alt="Screenshot of a 1px shortfall"></p>
+<p>Figure 17: The <code>border-collapse</code> bug affects Firefox and Safari.</p>
+<p>Safari does the same thing, just on the right. This bug is all based on a rounding issue that ultimately comes down to how you display &quot;0.5 of a pixel&quot;. It can be argued that this is not a bug per se, but the browsers don’t agree so it’s effectively a bug.</p>
+<p>So what’s the solution? If you want to use a 1px border and a caption background, there really isn’t a fix other than to &quot;live with it &quot;. It is a very minor difference and a non-fatal problem—that is, the table remains entirely usable. So, many people choose to just live with the differences between browsers. Let the Web be the Web.</p>
+<p>If you are happy to use a larger border, say 2px, then you can simply set a 1px border on table, cells and caption; then set table to separate borders and apply zero spacing between them:</p>
+<pre><code>table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #000;
+}
+
+th, td, caption {
+  border: 1px solid #000;
+}
+</code></pre>
+<p>In Firefox at least, the 1px borders will add up to the desired 2px rendered border, avoiding the rounding problem on the way. Safari still leaves a gap.</p>
+<p>Alternatively, you can hide the problem by not using a border or background colour on your caption. The problem is still there; you just won’t see it. This is probably the simplest and most effective solution.</p>
+<h3>Margin/caption bug</h3>
+<p>If you use a caption and set a margin on <code>table</code>, you need to be aware that Firefox and Safari may place the table margin <em>between</em> the table cells and the caption.</p>
+<p>To combat this in Firefox, you can set the margin on three sides of <code>table</code>, set the <code>caption-side</code> explicitly, then add the fourth margin to the <code>caption</code>. Unfortunately, this solution will invoke the bug in Safari. So, this isn’t really a fix unless you are willing to live with the bug in either Firefox or Safari.</p>
+<p>The only way to avoid a problem in both Firefox <em>and</em> Safari is to set a zero margin on the side with the caption. For example, if your caption is at the top you could just set your margin on the right, bottom and left sides; or just the bottom. This may work if you set all of your margins on the same side of content elements, so the margin isn’t required to space the table from adjacent content.</p>
+<h2>Summary</h2>
+<p>By now you should have a good grasp of the fundamental styling options available for tables. There are some limitations imposed by browser inconsistencies, but in general you should be able to create clear and readable tables without any trouble. Just pay attention to your borders, give the text some breathing room, and be careful with backgrounds.</p>
+<h2>Exercise questions</h2>
+<ul>
+<li>How do you control the space between table and cell borders?</li>
+<li>What happens when <code>table</code> has one background colour, <code>th</code> and <code>td</code> cells have another background colour, and <code>border-collapse</code> is set to <code>collapse</code>?</li>
+<li>How do you set different columns to have different widths?</li>
+</ul>
+<h2>Further reading</h2>
+<ul>
+<li><a href="http://www.w3.org/TR/REC-CSS2/tables.html">W3C: CSS2 Tables</a>, with particular reference to the <a href="http://www.w3.org/TR/REC-CSS2/tables.html#table-layers">CSS2 table background layering</a> section.</li>
+<li><a href="http://www.alistapart.com/articles/dao/">A List Apart: A Dao of Web Design</a>—&quot;let the web be the web&quot;. A timeless article which will explain why a 1px difference between browsers doesn’t truly matter.</li>
+<li><a href="http://www.alistapart.com/articles/zebratables/">A List Apart: Zebra Tables</a>] and <a href="http://www.alistapart.com/articles/zebrastripingdoesithelp/">A List Apart: Zebra Striping: Does it Really Help?</a></li>
+<li><a href="http://dev.opera.com/articles/view/zebra-striping-tables-with-css3/">Zebra striping tables with CSS3</a></li>
+<li><a href="http://dev.opera.com/articles/view/supporting-ie-with-conditional-comments/">Supporting IE with conditional comments</a></li>
+<li><a href="http://veerle.duoh.com/blog/comments/a_css_styled_table/">A CSS styled table</a> &amp; <a href="http://veerle.duoh.com/index.php/blog/comments/a_css_styled_calendar/">A CSS styled calendar</a></li>
+<li><a href="http://icant.co.uk/csstablegallery/index.php">Data Tables and Cascading Style Sheets Gallery</a> shows off a variety of table designs (although be aware many do not meet <a href="http://www.w3.org/TR/AERT#color">W3C colour contrast recommendations</a>).</li>
+</ul>
+<p>Note: This material was originally published as part of the Opera Web Standards Curriculum, available as <a href="http://dev.opera.com/articles/view/33-styling-tables/">33: Styling tables</a>, written by <a href="http://www.w3.org/wiki/User:Bbuchana">Ben Buchanan</a>. Like the original, it is published under the <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution, Non Commercial - Share Alike 2.5</a> license.</p>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

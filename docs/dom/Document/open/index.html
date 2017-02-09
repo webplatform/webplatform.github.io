@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>open · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/dom/">dom</a></li><li><a href="/docs/dom/Document/">Document</a></li><li><a href="/dom/Document/open/">open</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>open</h1>
+<p>Method of <a href="/docs/dom/Document">dom/Document</a><a href="/docs/dom/Document">dom/Document</a></p>
+<h2>Syntax</h2>
+<pre><code class="js"><span class="hljs-keyword">var</span> object = object.open(url, name, features, replace);
+</code></pre>
+<h2>Parameters</h2>
+<h3>url</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<h3>name</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>BSTR
+</dd>
+</dl>
+<p><strong>Note</strong>  The following applies only if this method is used instead of <a href="/docs/dom/Window/open"><strong>window.open</strong></a>.</p>
+<h3>features</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>BSTR
+</dd>
+</dl>
+<p><strong>Note</strong>  The following applies only if this method is used instead of <a href="/docs/dom/Window/open"><strong>window.open</strong></a>.</p>
+<h3>replace</h3>
+<dl>
+<dt>Data-type</dt>
+<dd>any
+</dd>
+</dl>
+<h2>Return Value</h2>
+<p>Returns an object of type DOM NodeDOM Node</p>
+<p>Object</p>
+<p><strong>document</strong></p>
+<h2>Examples</h2>
+<p>The following example shows how to use the <strong>open</strong> method to replace the current document with a new document and display the HTML markup contained in the variable <em>sMarkup</em>.</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>First Document<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">replace</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">var</span> oNewDoc = <span class="hljs-built_in">document</span>.open(<span class="hljs-string">"text/html"</span>, <span class="hljs-string">"replace"</span>);
+    <span class="hljs-keyword">var</span> sMarkup = <span class="hljs-string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;New Document&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Hello, world&lt;/body&gt;&lt;/html&gt;"</span>;
+    oNewDoc.write(sMarkup);
+    oNewDoc.close();
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>I just want to say<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+<span class="hljs-comment">&lt;!--Button will call the replace function and replace the current page with a new one--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span> =<span class="hljs-value">"button"</span> <span class="hljs-attribute">value</span> = "<span class="hljs-attribute">Finish</span> <span class="hljs-attribute">Sentence</span>" <span class="hljs-attribute">onclick</span>=<span class="hljs-value">"replace();"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h2>Notes</h2>
+<h3>Remarks</h3>
+<p>When a function fired by an event on any object calls the <strong>open</strong> method, the <a href="/docs/dom/Window/open"><strong>window.open</strong></a> method is implied.</p>
+<pre><code>&lt;script language=&quot;JScript&quot;&gt;
+function myOpen() {
+    open('about:blank');}
+&lt;/script&gt;
+&lt;body onclick=&quot;myOpen();&quot;&gt;
+Click this page and window.open() is called.
+&lt;/body&gt;
+</code></pre>
+<h3>Syntax</h3>
+<h3>Standards information</h3>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=196991">Document Object Model (DOM) Level 2 HTML Specification</a>, Section 1.5</li>
+<li><a href="http://go.microsoft.com/fwlink/p/?linkid=221374">HTML5 A vocabulary and associated APIs for HTML and XHTML</a>, Section 3.4.1</li>
+</ul>
+<h2>See also</h2>
+<h3>Related pages</h3>
+<ul>
+<li><code>Reference</code></li>
+<li>close<a href="/docs/dom/Window/close">close</a></li>
+<li>open<a href="/docs/dom/Window/open">open</a></li>
+<li>write<a href="/docs/dom/Document/write">write</a></li>
+<li>writeln<a href="/docs/dom/Document/writeln">writeln</a></li>
+</ul>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: [<a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference</a> Article]</p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

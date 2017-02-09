@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebSocket Object API Details · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Candidate Recommendation" />
+    <meta name="description" content="Object for creating and managing a WebSocket connection to a server, as well as for sending and receiving data on the connection." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/websocket/">websocket</a></li><li><a href="/apis/websocket/WebSocket/">WebSocket</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>WebSocket Object API Details</h1>
+<h2>Summary</h2>
+<p>Object for creating and managing a WebSocket connection to a server, as well as for sending and receiving data on the connection.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/websocket/WebSocket/binaryType">binaryType</a></dt>
+<dd>Indicates the type of binary data being transmitted by the connection.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/bufferedAmount">bufferedAmount</a></dt>
+<dd>The number of bytes of data that have been queued using calls to send() but not yet transmitted to the network.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/extensions">extensions</a></dt>
+<dd>The extensions selected by the server.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/onclose">onclose</a></dt>
+<dd>An event listener to be called when the WebSocket connection’s readyState changes to CLOSED. Receives a <a href="/docs/apis/websocket/CloseEvent">CloseEvent</a> named &quot;close&quot;.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/onerror">onerror</a></dt>
+<dd>An event listener to be called when an error occurs. Receives an event named &quot;error&quot;.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/onmessage">onmessage</a></dt>
+<dd>An event listener to be called when a message is received from the server. Receives a MessageEvent named &quot;message&quot;.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/onopen">onopen</a></dt>
+<dd>An event listener to be called when the WebSocket connection’s readyState changes to OPEN. Receives an event named &quot;open&quot;.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/protocol">protocol</a></dt>
+<dd>Indicates the name of the sub-protocol the server selected.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/readyState">readyState</a></dt>
+<dd>The current state of the connection, represented as a numeric constant.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/url">url</a></dt>
+<dd>The absolute URL as resolved by the constructor.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/websocket/WebSocket/close">close</a></dt>
+<dd>Closes the WebSocket connection or connection attempt, if any.
+</dd>
+<dt><a href="/docs/apis/websocket/WebSocket/send">send</a></dt>
+<dd>Transmits data to the server over the WebSocket connection.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Examples</h2>
+<p>The following function can be used to detect WebSocket support.</p>
+<pre><code class="js">
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">webSocketSupported</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"WebSocket"</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span>;
+}
+</code></pre>
+</pre>
+<p>WebSockets are created via the WebSocket() constructor function.</p>
+<pre><code class="js">
+
+WebSocket( url[, protocols] )
+</code></pre>
+</pre>
+<p>Complete example</p>
+<pre><code class="js">
+
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>[<span class="hljs-string">"WebSocket"</span>]) {
+        conn = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">"ws://localhost:12345/wsendpoint"</span>, <span class="hljs-string">"myProtocol"</span>);
+        conn.onclose = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">evt</span>) </span>{
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Connection closed."</span>);
+        }
+        conn.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">evt</span>) </span>{
+            <span class="hljs-built_in">console</span>.log(evt.data);
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Your browser does not support WebSockets"</span>);
+    }
+});
+</code></pre>
+</pre>
+<h2>Usage</h2>
+<pre><code> Use the WebSocket API to interface with the WebSocket protocol (RFC 6455). When you create a WebSocket connection, you upgrade the HTTP protocol to the WebSocket protocol during the initial handshake between the client and the server. You can use the WebSocket API to program your client to initiate the WebSocket handshake.
+</code></pre>
+<p>The first argument in the WebSocket constructor is the URL of the server to which you want to connect your client; the second argument is an optional argument where you can specify a subprotocol you want your client to use over WebSocket, when communicating with the server. The server must be WebSocket-enabled. When the client sends the WebSocket connection request to the server, the server acknowledges that it can speak WebSocket, and chooses the one (and only one) subprotocol to use on top of WebSocket. For example, a chat client might use XMPP over WebSocket, and therefore choose XMPP as the subprotocol.</p>
+<pre><code>When a WebSocket is constructed, it immediately attempts to connect to the given URL. There is no way to prevent or postpone the connection attempt. After construction, the WebSocket’s URL is accessible via its url property.
+</code></pre>
+<h2>Notes</h2>
+<p>The WebSocket API specification defines two URI schemes, ws:// and wss://, foWebSocket Object r unencrypted and encrypted connections, respectively. For example, you could create a new WebSocket connection with the string &quot;ws://example.com:1234/resource&quot;. The URL specifies the host to connect to, the port, and (optionally) the protocols you want to use.</p>
+<p><strong>Note</strong>  Secure connections (wss://) use WebSocket with TLS, and are recommended in most cases because they are more likely to work with proxy servers, which can buffer unencrypted traffic and close long-lived WebSocket connections without warning. WebSocket connections are bidirectional; communication can flow in either direction without specific requests and responses. Data can be text or binary.</p>
+<p>To open a use a WebSocket connection, you must follow this procedure:</p>
+<ul>
+<li>Create a WebSocket connection with a specific URL and one or more optional subprotocols, such as &quot;chat&quot;. You can use the <em>url</em> property to see how the URL was parsed.</li>
+<li>Determine the state of the connection with the <em>readyState</em> property. This state will change as the communication proceeds.</li>
+<li>Check the type of data that will be sent using the <em>binaryType</em>, <em>protocol</em>, and <em>extensions</em> properties.</li>
+<li>Set up event handlers for the connection. Event handlers include <strong>onopen</strong>, <strong>onmessage</strong>, <strong>onerror</strong>, and <strong>onclose</strong>. Use <strong>addEventListener</strong> to listen for events and <strong>removeEventListener</strong> when you no longer want to listen.</li>
+<li>Send data to the host using the <strong>send</strong> method.</li>
+<li>Determine the rate at which your data is moving with the <em>bufferedAmount</em> property.</li>
+<li>Check to see whether data was sent to you.</li>
+<li>Close the connection when you are finished with the <strong>close</strong> method.</li>
+</ul>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/websockets/">W3C WebSocket Specification</a></dt>
+<dd>W3C Candidate Recommendation
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://cjihrig.com/blog/how-to-use-websockets/">How to Use WebSockets by Colin Ihrig</a></li>
+</ul>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}}}</p>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Mozilla Developer Network <a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="/assets/thumb/8/8c/cc-by-sa-small-wpd.svg/120px-cc-by-sa-small-wpd.svg.png" alt="cc-by-sa-small-wpd.svg"></a>: <a href="https://developer.mozilla.org/en-US/docs/WebSockets/WebSockets_reference/WebSocket">Article</a></p>
+</li>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

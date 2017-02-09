@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Storage · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Editor&#x27;s Draft" />
+    <meta name="description" content="Provides access to a list of key/value pairs, sometimes called &amp;quot;items&amp;quot;. The amount of storage space is limited by browsers. Changes fire &#x27;storage&#x27; event on dom/Window." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/apis/">apis</a></li><li><a href="/docs/apis/web-storage/">web-storage</a></li><li><a href="/apis/web-storage/Storage/">Storage</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Storage</h1>
+<h2>Summary</h2>
+<p>Provides access to a list of key/value pairs, sometimes called &quot;items&quot;. The amount of storage space is limited by browsers. Changes fire ‘storage’ event on dom/Window.</p>
+<h2>Properties</h2>
+<dl>
+<dt><a href="/docs/apis/web-storage/Storage/length">length</a></dt>
+<dd>Returns the number of key/value pairs currently present in the list associated with the object.
+</dd>
+<dt><a href="/docs/apis/web-storage/Storage/localStorage">localStorage</a></dt>
+<dd>Provides a Storage object for an origin, that remains persistent even after restarting the browser. The storage can be cleared by the user with browser functionalities. If you need a temporary storage, use <a href="/docs/apis/web-storage/Storage/sessionStorage">apis/web-storage/Storage/sessionStorage</a>
+</dd>
+<dt><a href="/docs/apis/web-storage/Storage/sessionStorage">sessionStorage</a></dt>
+<dd>Provides a Storage object specific to the current top-level browsing context. The storage will be cleared after a browser restart. If you need a persistent storage, use <a href="/docs/apis/web-storage/Storage/localStorage">apis/web-storage/Storage/localStorage</a>.
+</dd>
+</dl>
+<h2>Methods</h2>
+<dl>
+<dt><a href="/docs/apis/web-storage/Storage/clear">clear</a></dt>
+<dd>Causes the list associated with the object to be emptied of all key/value pairs, if there are any.
+</dd>
+<dt><a href="/docs/apis/web-storage/Storage/getItem">getItem</a></dt>
+<dd>Returns the current value associated with the given key.
+</dd>
+<dt><a href="/docs/apis/web-storage/Storage/key">key</a></dt>
+<dd>Returns the name of the <em>n</em>th key in the list.
+</dd>
+<dt><a href="/docs/apis/web-storage/Storage/removeItem">removeItem</a></dt>
+<dd>Removes the key/value pair with the given key from the list associated with the object, if it exists.
+</dd>
+<dt><a href="/docs/apis/web-storage/Storage/setItem">setItem</a></dt>
+<dd>Adds or replaces a value for the given key.
+</dd>
+</dl>
+<h2>Events</h2>
+<p><em>No events.</em></p>
+<h2>Examples</h2>
+<p>Key names are exposed as properties on this object. For example, the following statements are equivalent:</p>
+<pre><code class="js">sessionStorage.setItem(<span class="hljs-string">'myKey'</span>, <span class="hljs-string">'...'</span>);
+
+sessionStorage[<span class="hljs-string">'myKey'</span>] = <span class="hljs-string">'...'</span>;
+
+sessionStorage.myKey = <span class="hljs-string">'...'</span>;
+</code></pre>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"example-excerpt"</span>&gt;</span>
+      This sample saves some text on the localStorage object
+      and retrieves the value on load time.
+      Use your browser developer tools to debug the
+      values of the localStorage object.
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"example-content"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"log"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- Javscript --&gt;</span>
+
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p><a href="http://playground.html5rocks.com/#localstorage">View live example</a></p>
+<pre><code class="css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">font</span>:<span class="hljs-value"> <span class="hljs-number">100%</span> <span class="hljs-string">"Lucida Grande"</span>, <span class="hljs-string">"Trebuchet MS"</span>, Verdana, sans-serif</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    }</span>
+
+    <span class="hljs-id">#log</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background-color</span>:<span class="hljs-value"> gray</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> white</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">10px</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">margin-left</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+    }</span>
+
+    <span class="hljs-tag">header</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FFCC99</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> white</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">-moz-box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">8px</span> -<span class="hljs-number">3px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">5</span>), <span class="hljs-number">0</span> <span class="hljs-number">1.4em</span> <span class="hljs-number">2em</span> -<span class="hljs-number">0.7em</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, .<span class="hljs-number">2</span>) inset</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">8px</span> -<span class="hljs-number">3px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">5</span>), <span class="hljs-number">0</span> <span class="hljs-number">1.4em</span> <span class="hljs-number">2em</span> -<span class="hljs-number">0.7em</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, .<span class="hljs-number">2</span>) inset</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">8px</span> -<span class="hljs-number">3px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,.<span class="hljs-number">5</span>), <span class="hljs-number">0</span> <span class="hljs-number">1.4em</span> <span class="hljs-number">2em</span> -<span class="hljs-number">0.7em</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, .<span class="hljs-number">2</span>) inset</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">text-shadow</span>:<span class="hljs-value"> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-hexcolor">#444</span></span></span>;
+    }</span>
+
+    <span class="hljs-tag">header</span> <span class="hljs-tag">h1</span>, <span class="hljs-tag">header</span> <span class="hljs-tag">h2</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">12px</span> <span class="hljs-number">15px</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">105%</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">line-height</span>:<span class="hljs-value"> <span class="hljs-number">1</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+    }</span>
+
+    <span class="hljs-tag">header</span> <span class="hljs-tag">h1</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#FF9966</span></span></span>;
+    }</span>
+
+    <span class="hljs-id">#excerpt</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fcfaea</span></span></span>;
+    }</span>
+
+    <span class="hljs-class">.arrow-right</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> inline-block</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">border-top</span>:<span class="hljs-value"> <span class="hljs-number">18px</span> solid transparent</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">border-bottom</span>:<span class="hljs-value"> <span class="hljs-number">18px</span> solid transparent</span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">border-left</span>:<span class="hljs-value"> <span class="hljs-number">18px</span> solid <span class="hljs-hexcolor">#FF9966</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">margin-bottom</span>:<span class="hljs-value"> -<span class="hljs-number">11px</span></span></span>;
+    }</span>
+
+    <span class="hljs-id">#content</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">20px</span></span></span>;
+      <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#333</span></span></span>;
+    }</span>
+
+    <span class="hljs-tag">input</span>, <span class="hljs-tag">textarea</span> <span class="hljs-rules">{
+      <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+    }</span>
+</code></pre>
+<pre><code class="js">// Generate the little markup from javascript
+
+document.querySelector('#content').innerHTML =
+          '&lt;p&gt;&lt;em&gt;Save text locally (it will still be available
+          after restarting your browser)&lt;/em&gt;&lt;/p&gt;';
+
+var area = document.createElement('textarea');
+    area.style.width = '300px';
+    area.style.height = '150px';
+      document.querySelector('#content').appendChild(area);
+
+      // place content from previous edit
+      if (!area.value) {
+        area.value = window.localStorage.getItem('value');
+      }
+
+      // your content will be saved locally
+      area.addEventListener('keyup', function () {
+        window.localStorage.setItem('value', area.value);
+        window.localStorage.setItem('timestamp', (new Date()).getTime());
+      }, false);
+
+      updateLog();
+      setInterval(updateLog, 5000); // show time every 5 seconds
+
+      function updateLog() {
+        var delta = 0;
+        if (window.localStorage.getItem('value')) {
+          delta = ((new Date()).getTime() -
+            (new Date()).setTime(window.localStorage.getItem
+            ('timestamp'))) / 1000;
+          document.querySelector("#log").innerHTML = 'last saved: ' + delta + 's ago';
+        }
+        else {
+          area.value = 'Type your text here...';
+        }
+      }
+</code></pre>
+<p>An example on how to listen to changes in the localStorage. The example can be applied to sessionStorage as well. A full example is in the fiddle.</p>
+<pre><code class="js"><span class="hljs-comment">// this event is only fired in browser windows, that did not initiated the change. Thus the fiddle uses two iframes to show how the event is fired.</span>
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'storage'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+    <span class="hljs-comment">// logs the key that has changed and the old and the new value in the storage</span>
+    <span class="hljs-built_in">console</span>.log(event.key, event.oldValue, event.newValue);
+});
+</code></pre>
+<p><a href="http://jsfiddle.net/A6tuM/1/">View live example</a></p>
+<h2>Notes</h2>
+<p>Each <strong>Storage</strong> object provides access to a list of key/value pairs, which are sometimes called items. Keys are strings, and any string (including the empty string) is a valid key. Items contain values (which are also strings) and associated metadata.</p>
+<p>Each <strong>Storage</strong> object is associated with a list of key/value pairs when it is created. Multiple <strong>Storage</strong> objects, such as two instances of <strong>localStorage</strong>, can be associated with the same list of key/value pairs simultaneously.</p>
+<p>The <strong>amount of storage</strong> is <strong>limited</strong> by the browser (quota). An error is thrown, when the quota is exceeded. An example, that intentionally exceeds the quota and throws and error may be found here: <a href="http://jsfiddle.net/wkDc6/1/">http://jsfiddle.net/wkDc6/1/</a></p>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/webstorage/">W3C Web Storage Specification</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<h2>Attributions</h2>
+<ul>
+	<li><p>Microsoft Developer Network: <a href="http://msdn.microsoft.com/en-us/library/ie/hh828809%28v=vs.85%29.aspx">Windows Internet Explorer API reference Article</a></p>
+</li>
+	<li><p>Portions of this content come from HTML5Rocks! <a href="http://playground.html5rocks.com/#localstorage">article</a></p>
+</li>
+</ul>
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Proprietary Internet Explorer Techniques · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    
+    <meta name="description" content="Back at the times of the browser wars between Microsoft and Netscape both vendors built all sorts of proprietary technology into their browsers. This had different reasons:
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/concepts/">concepts</a></li><li><a href="/docs/concepts/proprietary_internet explorer techniques/">proprietary internet explorer techniques</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>Proprietary Internet Explorer Techniques</h1>
+<h2>Summary</h2>
+<p>Back at the times of the browser wars between Microsoft and Netscape both vendors built all sorts of proprietary technology into their browsers. This had different reasons:</p>
+<ul>
+<li>W3C was in its infancy, so this was how new features were “proposed” back then</li>
+<li>Each of the two wanted to have the technological edge</li>
+<li>Other business divisions of the same vendor requested certain features (e.g. the Microsoft Outlook Web Access team)</li>
+</ul>
+<p>So came that Microsoft’s Internet Explorers learned a lot of techniques that admittedly were non-standard but that could still be very helpful in certain situations. Here we’ll have a look at them.</p>
+<h1>Conditional Comments</h1>
+<p>Conditional comments come along as a HTML comments with a special syntax. They allow you to hide certain parts of your document from all browsers but from Internet Explorers. E.g.:</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!--[if IE]&gt;
+IE can see this whereas other browsers think this is an inline comment
+&lt;![endif]--&gt;</span>
+</code></pre>
+<p>You can even limit visibility certain versions of IE, like IE 8 for example:</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!--[if IE 8]&gt;
+Only IE 8 can see this
+&lt;![endif]--&gt;</span>
+</code></pre>
+<p>or to version ranges:</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!--[if lte IE 8]&gt;
+All IEs up to version 8 can see this (lte = lower than, or equal)
+&lt;![endif]--&gt;</span>
+
+<span class="hljs-comment">&lt;!--[if gt IE 8]&gt;
+IEs higher than version 8 can see this (gt = greater than)
+&lt;![endif]--&gt;</span>
+</code></pre>
+<p>Also, if you need to hide sections from IE but want to make them visible to other browsers, you can to do the following:</p>
+<pre><code class="html"><span class="hljs-comment">&lt;!--[if !IE]&gt; --&gt;</span>
+This is visible to every browser except IE
+<span class="hljs-comment">&lt;!-- &lt;![endif]--&gt;</span>
+</code></pre>
+<p>(the main difference here is that you need to prevent creating a HTML comment this time)</p>
+<p>Conditional comments are supported from IE 5 - 9 and were removed from IE 10. This means that IE 10 acts as if it were not belonging to the IE family.</p>
+<h1>Conditional Compilation</h1>
+<p>Conditional compilation is similar to what conditional comments are, but for JavaScript. The following is JavaScript code marked as such an will appear as comment to non-IE browsers and will only be executed by IE:</p>
+<pre><code class="js"><span class="hljs-comment">/*@cc_on @*/</span>
+ <span class="hljs-comment">/*@if (@_jscript_version &gt;= 5.8)
+     // executed by IEs with JavaScript (aka JScript) engine &gt;= v5.8 or higher (equals IE 8)
+     // See: http://de.wikipedia.org/wiki/JScript
+ @else @*/</span>
+     <span class="hljs-comment">// executed by IEs older than IE 8</span>
+ <span class="hljs-comment">/*@end @*/</span>
+</code></pre>
+<p>Beware that some JavaScript minifiers don’t recognize conditional compilation markup and will break your code.</p>
+<p>Conditional compilation is supported from IE 4 - 9.</p>
+<h1>Filters</h1>
+<p>Filters present a way to apply certain visual effects either to page elements or to the page as a whole. They have nothing to do with the recently specified CSS Filter Effects although they both aim into the same direction. IE Filters are a lot older.</p>
+<p>A filter affecting the whole page might be a page or site enter or exit transition effect:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"Page-Enter"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"blendTrans(Duration=0.3)"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">http-equiv</span>=<span class="hljs-value">"Page-Exit"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"blendTrans(Duration=0.3)"</span>&gt;</span>
+</code></pre>
+<p>Effects for page elements could be for example a blur:</p>
+<pre><code class="css">filter: Blur(direction=235,strength=6);
+</code></pre>
+<p>A handful of these filters are not just statically applied, but they also need to be initialized via JavaScript afterwards, e.g. the Light filter:</p>
+<pre><code class="html"><span class="hljs-doctype">&lt;!DOCTYPE HTML&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Light Filter<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">style</span>&gt;</span><span class="css">
+    <span class="hljs-id">#filtered</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">filter</span>:<span class="hljs-value"> <span class="hljs-function">light</span>()</span></span>;
+    }</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-title">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"filtered"</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"picture.jpg"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+            <span class="hljs-comment">/*****************************************************
+            At first, without assigning a light, element is black.
+
+            Now Lighten the element with an ambient type of light,
+            in a red color RGB(255,0,0),
+            with medium brightness (100)
+            *****************************************************/</span>
+            <span class="hljs-built_in">document</span>
+            .getElementById(<span class="hljs-string">'filtered'</span>)
+            .filters
+            .item(<span class="hljs-string">'light'</span>)
+            .addAmbient(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>);
+        </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Multiple filters can be chained into one property by separating them with spaces:</p>
+<pre><code class="css">/* Gray and blur filters applied at the same time */
+filter: Gray() Blur(direction=235,strength=6);
+</code></pre>
+<p>To make element filters work on Internet Explorers lower than IE 8 there was one further measure to take: You had to trigger the so called “hasLayout” mode on the filtered element. “hasLayout” is an internal concept of the older IE render engines and it got activated on an element when that had one of the following properties assigned:</p>
+<ul>
+<li>position: absolute</li>
+<li>float</li>
+<li>display: inline-block</li>
+<li>width: any value other than ‘auto’</li>
+<li>height: any value other than ‘auto’</li>
+<li>zoom: any value other than ‘normal’ (e.g. zoom: 1)</li>
+</ul>
+<p>Best practice is to assign <code>zoom: 1</code> since that does not have any side effects apart from triggering hasLAyout. So this means that in most cases when you wanted to apply a filter to IE &lt; 8 you would do this:</p>
+<pre><code class="css">filter: Blur(direction=235,strength=6);
+zoom: 1;
+</code></pre>
+<p>With the release of IE 5.5 Microsoft introduced a second generation of filters with a new value syntax. Whereas old filters were declared like this:</p>
+<pre><code class="css"><span class="hljs-comment">/* IE 4+ filters */</span>
+<span class="hljs-tag">filter</span>: <span class="hljs-tag">filtername</span>(<span class="hljs-tag">properties</span>)
+</code></pre>
+<p>the new generation is declared this way:</p>
+<pre><code class="css"><span class="hljs-comment">/* IE 5.5+ filters */</span>
+<span class="hljs-tag">filter</span>: <span class="hljs-tag">progid</span><span class="hljs-pseudo">:DXImageTransform</span><span class="hljs-class">.Microsoft</span><span class="hljs-class">.filtername</span>(<span class="hljs-tag">properties</span>)
+</code></pre>
+<p>Most of the old filters got translated over into a new generation filter, but almost all got a little modified along the way. Take the old “Blur” filter for example. Since it always blurred into a certain direction it got renamed into &quot;MotionBlur&quot;:</p>
+<pre><code class="css">filter: progid:DXImageTransform.Microsoft.MotionBlur(strength=13, direction=310);
+</code></pre>
+<p>And a new “Blur” filter was installed that did a blurring in place:</p>
+<pre><code class="css">filter: progid:DXImageTransform.Microsoft.Blur(pixelradius=2);
+</code></pre>
+<p>For compatibility reasons, both generations and syntaxes are still supported by the later IEs.</p>
+<p>With IE 8 came another modification to the syntax. Microsoft introduced the vendor prefixed <code>-ms-filter</code> property which apart from its name was identical to the former <code>filter</code> property. On top of that the value needed to be put into a string. The following two declarations are identical:</p>
+<pre><code class="css">/* IE &lt; 8 syntax */
+filter: progid:DXImageTransform.Microsoft.Blur(pixelradius=2);
+
+/* IE 8+ syntax */
+-ms-filter: "progid:DXImageTransform.Microsoft.Blur(pixelradius=2)";
+</code></pre>
+<p>The reason for this change was that W3C’s CSS validator was flagging the former filter snytax as invalid whereas it accepted the new one without moaning. If validation is not your top concern you shoulkd still stay with the old syntax since it doesn’t break anything and can also be understood by IE 7 or less (whatever advantage that might be).</p>
+<p>One thing to note is that up until IE 8, font antialiasing is being disabled for all text inside a filtered element that is smaller than 18px. IE 9 does not face this problem as font rendering has been improved there. For IE 8 there is a trick for restoring font antialiasing: Wrap your text into another container which has <code>position: relative</code>, like so:</p>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#26ffffff,endColorstr=#26ffffff)"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"position: relative"</span>&gt;</span>Lorem ipsum dolor sit amet.<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Filters are supported from IE 4 - 9 and were removed from IE 10. They were also removed from all legacy modes inside IE 10.</p>
+<h1>DHTML Behaviors</h1>
+<p>In IE you can attach so-called “behaviors” to elements via CSS. Behaviors are scripts that can watch and modify the element. One handy advantage over using traditional page scripting is that when you attach new elements to the document tree those will automatically get a script treatment, too. A good use case is the dynamic light filter that we talked about. Assigning the filter property on its own is not enough - you always need to have a script run afterwards. Instead of doing this manually, you could put the script into a behavior file and attach that along with the filter in CSS:</p>
+<pre><code class="css">filter: progid:DXImageTransform.Microsoft.Light();
+behavior: url(/scripts/redcoloredlight.htc);
+</code></pre>
+<p>It is important to know that the path referenced in <code>url()</code> is not relative to the CSS file as one would think. Instead it is relative to the HTML file. The best solution to counter any problems is to use an absolute URL as shown above.</p>
+<p>That said, this is how the referenced <code>redcoloredlight.htc</code> would look like:</p>
+<pre><code class="js">&lt;component&gt;
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text/javascript"</span>&gt;</span><span class="actionscript">
+element.filters.item(<span class="hljs-string">'DXImageTransform.Microsoft.Light'</span>).addAmbient(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>);
+</span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">component</span>&gt;</span>
+</span></code></pre>
+<p>Within a behavior script the HTML element it is attached to can be accessed via <code>element</code>. And if you want to access <code>document</code> you need to address <code>element.document</code>.</p>
+<p>Notice: Sometimes IE refuses to run a behavior script if the correct MIME type is not set. The correct type would be <code>text/x-component</code>. If you are on Apache you can set the MIME type yourself by adding this line to your <code>.htaccess</code>:</p>
+<pre><code class="html">AddType text/x-component .htc
+</code></pre>
+<p>Behaviors are supported from IE 4 - 9 and were removed from IE 10. They were also removed from all legacy modes inside IE 10.</p>
+<h1>Expressions</h1>
+<p>Expressions allow you to dynamically calculate the value of a property. So for example you could do the following to teach older IEs to inherit the parent’s color:</p>
+<pre><code class="css"><span class="hljs-tag">color</span>: <span class="hljs-tag">expression</span>(<span class="hljs-tag">this</span><span class="hljs-class">.parentNode</span><span class="hljs-class">.currentStyle</span><span class="hljs-class">.color</span>);
+</code></pre>
+<p>The main caveat with expressions is that they get evaluated very often, like after every event or change of the document. Since mousemove is such an event, too, expressions get evaluated a gazillion times when the user moves the mouse.</p>
+<p>But this only applies for when expressions are done wrong. A better way is to write an expression that replaces itself with a static value at its first run. This can be achieved be assigning a static value to <code>this.runtimeStyle.property</code> - <code>property</code> being the one where the expression is assigned to initially. Taking the example from above that’s how you can do it better:</p>
+<pre><code class="css">color: expression(this.runtimeStyle.color = this.parentNode.currentStyle.color);
+</code></pre>
+<p>The only drawback now is that if you change the parent’s color at a later point in time, this will not be reflected on the child anymore.</p>
+<p>Expressions are supported from IE 4 - 7 and were removed from IE 8.</p>
+<h2>See also</h2>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://www.satzansatz.de/cssd/onhavinglayout.html">www.satzansatz.de - On Having Layout</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

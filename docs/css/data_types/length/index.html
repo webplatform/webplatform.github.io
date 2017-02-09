@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>&lt;length&gt; · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="Ready to Use" />
+    <meta property="standardization" content="W3C Recommendation" />
+    <meta name="description" content="A &amp;lt;length&amp;gt; is a CSS data type that is used to specify distance measurements using relative or absolute units.  It consists of an integer or decimal number followed (without whitespace) by a unit abbreviation; the unit may be omitted if the number is zero (0)." />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state Ready_to_Use"><p>This page is <a>Ready to Use</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/data_types/">data types</a></li><li><a href="/docs/css/data_types/length/">length</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>&lt;length&gt;</h1>
+<h2>Summary</h2>
+<p>A &lt;length&gt; is a CSS data type that is used to specify distance measurements using relative or absolute units. It consists of an integer or decimal number followed (without whitespace) by a unit abbreviation; the unit may be omitted if the number is zero (0).</p>
+<p>In CSS, there are many properties that can take a length as a value — such as <a href="/docs/css/properties/width">width</a>, <a href="/docs/css/properties/height">height</a>, <a href="/docs/css/properties/top">top</a> and <a href="/docs/css/properties/bottom">bottom</a> — or at least part of their value, for example <a href="/docs/css/properties/box-shadow">box-shadow</a>, <a href="/docs/css/properties/border">border</a>, <a href="/docs/css/properties/background-image">background-image</a> and <a href="/docs/css/properties/flex">flex</a>.</p>
+<p>Length units specify a distance on the display screen or printed output. Pairs of length units are typically used to specify <code>x</code>/<code>y</code> screen coordinates or offsets. Several different kinds of length units are available:</p>
+<ul>
+<li><em>Absolute</em> lengths:</li>
+<li><em>Relative font</em> lengths:</li>
+<li><em>Relative viewport</em> lengths:</li>
+</ul>
+<h2><em>Absolute</em> lengths</h2>
+<ul>
+<li><strong>cm</strong> and <strong>mm</strong> specify centimeters and millimeters.</li>
+<li><strong>in</strong> units specify inches.</li>
+<li><strong>pc</strong> units specify picas, 6 per inch.</li>
+<li><strong>pt</strong> units specify points, 72 per inch.</li>
+<li><strong>px</strong> units specify pixels, 96 per inch. These are often referred to as <em>CSS pixels</em>, and do not necessarily correspond to the device’s resolution.</li>
+</ul>
+<p>Absolute does not mean that these units will be treated the same on every device, only that they do not depend on other style properties and that they have fixed conversion factors between them. In particular, the <strong>in</strong> and <strong>cm</strong> units will not always correspond to the “real-world” definitions of an inch or a centimeter. For devices which are usually viewed at a distance (TVs and projectors), the specifications define a <a href="http://www.w3.org/TR/css3-values/#reference-pixel">reference pixel</a> based on the expected angle it would cover in the user’s field of view; the other units should be mapped relative to this reference. The reference pixel (and therefore other units) of a screen device may also be affected by user settings. For print media, it is recommended (but not required) that normal physical inches or centimeters be used as the reference value.</p>
+<h2><em>Relative font</em> lengths</h2>
+<ul>
+<li><strong>em</strong> units equal the point size (nominal height) of the current font. This is historically based on the mechanical typeset width of the (square) letter &quot;M&quot;.</li>
+<li><strong>rem</strong> units equal the <em>em</em> size for the document root (usually <strong>html</strong>)</li>
+<li><strong>ex</strong> units specify the height of the letter “x” in the current font, the general height of lowercase letters without ascenders.</li>
+<li><strong>ch</strong> units specify the width of the numeral “0” in the current font, which is roughly the average for most text characters.</li>
+</ul>
+<h2><em>Relative viewport</em> lengths</h2>
+<ul>
+<li><strong>vw</strong> units specify a percentage of the width of the current viewport, e.g., the window.</li>
+<li><strong>vh</strong> units specify a percentage of current viewport’s height.</li>
+<li><strong>vmax</strong> and <strong>vmin</strong> units specify the maximum or minimum of the viewport’s width or height.</li>
+</ul>
+<p>Note that <a href="/docs/css/data_types/percentage">percentages</a> may refer to various length units, but for length specifies the height and width of an element, or the overall document window.</p>
+<p>Also bear in mind that some properties accept negative values, while some don’t. So for example, you can’t specify negative <a href="/docs/css/properties/padding">padding</a>, but you could use a negative <a href="/docs/css/properties/margin">margin</a> to move a block in the direction of the negative margin’s side, and you can use negative units in <a href="/docs/css/properties/box-shadow">box-shadow</a> to move the box left and up rather than right and down.</p>
+<h2>Examples</h2>
+<pre><code class="css"><span class="hljs-class">.info</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> fixed</span></span>;
+    <span class="hljs-comment">/* use various units to position element */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0.5in</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">right</span>:<span class="hljs-value"> <span class="hljs-number">2em</span></span></span>;
+    <span class="hljs-comment">/* provide fallback value for more recent viewport units */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">25%</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">25vw</span></span></span>;
+}</span>
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://www.w3.org/TR/css3-values/">CSS Values and Units Module Level 3</a></dt>
+<dd>Candidate Recommendation
+</dd>
+<dt><a href="http://www.w3.org/TR/CSS21/syndata.html#length-units">CSS 2.1</a></dt>
+<dd>W3C Recommendation
+</dd>
+</dl>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

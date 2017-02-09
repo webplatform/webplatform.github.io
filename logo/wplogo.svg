@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 260 260" onload="init()">
+     
+  <title>WebPlatform.org Logo</title>
+  
+  <style type="text/css">
+    svg.default #strut-1, #top-1 {
+      fill: #F99D1C;
+    }
+
+      svg.default #join-1 {
+        fill: #D02E27;
+      }
+
+      svg.default #strut-2 {
+        fill: #DC4E3E;
+      }
+
+      svg.default #join-2 {
+        fill: #58152A;
+      }
+
+      svg.default #strut-3 {
+        fill: #694D9F;
+      }
+
+      svg.default #join-3 {
+        fill: #263C82;
+      }
+
+      svg.default #strut-4, #top-2 {
+        fill: #30B4C5;
+      }
+      
+    /* Orange Analogous */
+    svg.orange #strut-1, #top-1 {
+      fill: #FFC621;
+    }
+
+      svg.orange #join-1 {
+        fill: #DE6525;
+      }
+
+      svg.orange #strut-2 {
+        fill: #F99D1C;
+      }
+
+      svg.orange #join-2 {
+        fill: #DE6525;
+      }
+
+      svg.orange #strut-3 {
+        fill: #FFC621;
+      }
+
+      svg.orange #join-3 {
+        fill: #DE6525;
+      }
+
+      svg.orange #strut-4, #top-2 {
+        fill: #F99D1C;
+      }
+    
+    
+    /* Red Analogous */
+    svg.red #strut-1, #top-1 {
+      fill: #EE677E;
+    }
+
+      svg.red #join-1 {
+        fill: #D02E27;
+      }
+
+      svg.red #strut-2 {
+        fill: #DC4E3E;
+      }
+
+      svg.red #join-2 {
+        fill: #D02E27;
+      }
+
+      svg.red #strut-3 {
+        fill: #EE677E;
+      }
+
+      svg.red #join-3 {
+        fill: #D02E27;
+      }
+
+      svg.red #strut-4, #top-2 {
+        fill: #DC4E3E;
+      }
+    
+    
+    /* Purple Analogous */
+    svg.purple #strut-1, #top-1 {
+      fill: #88609D;
+    }
+
+      svg.purple #join-1 {
+        fill: #263C82;
+      }
+
+      svg.purple #strut-2 {
+        fill: #694D9F;
+      }
+
+      svg.purple #join-2 {
+        fill: #263C82;
+      }
+
+      svg.purple #strut-3 {
+        fill: #88609D;
+      }
+
+      svg.purple #join-3 {
+        fill: #263C82;
+      }
+
+      svg.purple #strut-4, #top-2 {
+        fill: #694D9F;
+      }
+    
+    
+    /* Green Analogous */
+    svg.green #strut-1, #top-1 {
+      fill: #75C9B3;
+    }
+
+      svg.green #join-1 {
+        fill: #356A84;
+      }
+
+      svg.green #strut-2 {
+        fill: #30B4C5;
+      }
+
+      svg.green #join-2 {
+        fill: #356A84;
+      }
+
+      svg.green #strut-3 {
+        fill: #75C9B3;
+      }
+
+      svg.green #join-3 {
+        fill: #356A84;
+      }
+
+      svg.green #strut-4, #top-2 {
+        fill: #30B4C5;
+      }
+      
+    
+    /* Gray Analogous */
+    svg.gray #strut-1, #top-1 {
+      fill: #A7A9AC;
+    }
+
+      svg.gray #join-1 {
+        fill: #58595B;
+      }
+
+      svg.gray #strut-2 {
+        fill: #808285;
+      }
+
+      svg.gray #join-2 {
+        fill: #58595B;
+      }
+
+      svg.gray #strut-3 {
+        fill: #A7A9AC;
+      }
+
+      svg.gray #join-3 {
+        fill: #58595B;
+      }
+
+      svg.gray #strut-4, #top-2 {
+        fill: #808285;
+      }
+
+    
+    #outline {
+      fill: #F1ECD7;
+      stroke: #F1ECD7;
+      stroke-width: 10px; 
+    }
+  </style>
+  
+  <script type="text/ecmascript"><![CDATA[  
+    var pairs = [];
+    var colorA = ["default","orange","red","purple","green","gray","alt"];
+    var bgA = ["black","white","#dedfde","#f1ecd7"];
+    var outlineA = ["none","inline"];
+    var sizeA = ["10","35","75","130","200","100%"];
+
+    function init() {
+      // alert("init")
+      var params = window.location.href.split("?")[1];
+      if (params.length) {
+        var allpairs = params.split("&");
+        //alert("allpairs: " + allpairs.length)
+        for (var p = 0; allpairs.length > p; p++) {
+          var eachP = allpairs[p].split("=");
+          pairs[ eachP[0] ] = eachP[1];
+
+          switch (eachP[0] ) {
+            case "c":
+              colors( eachP[1] );
+              break;
+            case "b":
+              changeBG( eachP[1] );
+              break;
+            case "o":
+              toggleOutline( eachP[1] );
+              break;
+            case "s":
+              resize( eachP[1] );
+              break;
+          }
+        }
+      }
+    }
+
+    function setLocation() {
+      if(window.history.pushState) {
+        var params = ""; 
+        for (var i in pairs) {
+          //alert("setLocation\n" + i);
+          var eachP = i + "=" + pairs[i];
+          params += eachP + "&";
+        }
+        params = params.slice(0, -1);
+        var baseURI = window.location.href.split("?")[0];
+        //window.location.href = baseURI + "?" + params;
+        window.history.pushState("parameters", "Title", baseURI + "?" + params);
+      }
+    }
+
+    function colors( cindex ) {
+      var color = colorA[ cindex ];
+      var logo = document.getElementById("logo");
+      logo.setAttribute("class", color);
+      pairs["c"] = cindex;
+      setLocation();
+    }
+
+    function changeBG( bindex ) {
+      var color = bgA[ bindex ];
+      var b = document.getElementById("background");
+      b.setAttribute("fill", color);
+      pairs["b"] = bindex;
+      setLocation();
+    }
+
+    function toggleOutline( oindex ) {
+      var o = document.getElementById("outline");
+      var d;
+      if (null != oindex) {
+        d = outlineA[ oindex ];
+      } else {
+        if ("none" != o.getAttribute("display")) {
+          d = "none";
+          oindex = 0;
+        } else {
+          d = "inline";
+          oindex = 1;
+        }
+      }
+
+      o.setAttribute("display", d);
+      pairs["o"] = oindex;
+      setLocation();
+    }
+
+    function resize( sindex ) {
+      var size = sizeA[ sindex ];
+      var logo = document.getElementById("logo");
+      logo.setAttribute("width", size);
+      logo.setAttribute("height", size);
+      pairs["s"] = sindex;
+      setLocation();
+    }
+  ]]></script>
+  
+  <defs>
+    <linearGradient id="default-lg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#F99D1C"/>
+      <stop offset="0.167" stop-color="#D02E27"/>
+      <stop offset="0.34" stop-color="#DC4E3E"/>
+      <stop offset="0.5" stop-color="#58152A"/>
+      <stop offset="0.67" stop-color="#694D9F"/>
+      <stop offset="0.83" stop-color="#263C82"/>
+      <stop offset="1" stop-color="#30B4C5"/>
+    </linearGradient>
+  </defs>
+  
+  
+  <rect id="background" x="-500" y="-500" width="2000" height="2000" fill="black"/>
+  
+
+  <svg id="logo" x="8" y="8" width="260" height="260" viewBox="-5 -5 265 265" overflow="visible" class="default">
+    <path id="outline" d="M66,33 V131.5 L98.76,98.57 A33,33 0 0,1 145.33,98.67 L178,131.5 V33 A33,33 0 1,1 244,33 V211 A33,33 45 0,1 187.67,234.43 L122,168.67 L56.33,234.43 A33,33 45 0,1 0,211 V33 A33,33 45 1,1 66,33 Z"/>
+    
+    <path id="strut-1" d="M66,33 V211 A33,33 0 1,1 0,211 V33 A33,33 45 1,1 66,33 Z M33,19 A14,14 0 1,0 33,47 A14,14 0 1,0 33,19 Z M33,197 A14,14 0 1,0 33,225 A14,14 0 1,0 33,197 Z"/>
+    <path id="strut-2" d="M9.67,187.67 L98.76,98.57 A33,33 0 1,1 145.43,145.24 L56.33,234.43 A33,33 45 1,1 9.67,187.67 Z M33,197 A14,14 0 1,0 33,225 A14,14 0 1,0 33,197 Z  M122,108 A14,14 0 1,0 122,136 A14,14 0 1,0 122,108 Z"/>
+    <path id="strut-3" d="M145.33,98.67 L234.43,187.76 A33,33 0 1,1 187.67,234.43 L98.67,145.43 A33,33 45 1,1 145.33,98.67 Z  M122,108 A14,14 0 1,0 122,136 A14,14 0 1,0 122,108 Z  M211,197 A14,14 0 1,0 211,225 A14,14 0 1,0 211,197 Z"/>
+    <path id="strut-4" d="M178,211 V33 A33,33 0 1,1 244,33 V211 A33,33 45 1,1 178,211 Z M211,19 A14,14 0 1,0 211,47 A14,14 0 1,0 211,19 Z M211,197 A14,14 0 1,0 211,225 A14,14 0 1,0 211,197 Z"/>
+
+    <path id="join-1" d="M66,131.5 V211 A33,33 45 1,1 9.67,187.67 Z M33,197 A14,14 0 1,0 33,225 A14,14 0 1,0 33,197 Z "/>
+    <path id="join-2" d="M122,168.67 L98.67,145.33 A33,33 45 1,1 145.43,145.33 Z M122,108 A14,14 0 1,0 122,136 A14,14 0 1,0 122,108 Z"/>
+    <path id="join-3" d="M178,131.5 V211 A33,33 45 1,0 234.43,187.67 Z M211,197 A14,14 0 1,1 211,225 A14,14 0 1,1 211,197 Z"/> 
+  </svg>
+  
+  <g id="options" transform="translate(-80, 0)">
+    <g id="color-control">
+      <rect x="10" y="26" width="8" height="8" fill="url(#default-lg)" onclick="colors(0)"/>
+      <rect x="22" y="26" width="8" height="8" fill="#F99D1C" onclick="colors(1)"/>
+      <rect x="10" y="38" width="8" height="8" fill="#DC4E3E" onclick="colors(2)"/>
+      <rect x="22" y="38" width="8" height="8" fill="#694D9F" onclick="colors(3)"/>
+      <rect x="10" y="50" width="8" height="8" fill="#30B4C5" onclick="colors(4)"/>
+      <rect x="22" y="50" width="8" height="8" fill="#808285" onclick="colors(5)"/>
+      <rect x="-2" y="32" width="8" height="8" fill="url(#alt-lg)" onclick="colors(6)"/>
+    </g>
+    
+    <g id="bg-control">
+      <rect x="10" y="65" width="20" height="20" fill="black" stroke="gray"/>
+      <polygon points="10.5,65.5 29.5,65.5 20,75" stroke="none" fill="black" onclick="changeBG(0)"/>
+      <polygon points="29.5,65.5 29.5,84.5 20,75" stroke="none" fill="white" onclick="changeBG(1)"/>
+      <polygon points="29.5,84.5 10.5,84.5 20,75" stroke="none" fill="#dedfde" onclick="changeBG(2)"/>
+      <polygon points="10.5,84.5 10.5,65.5 20,75" stroke="none" fill="#f1ecd7" onclick="changeBG(3)"/>
+    </g>
+    
+    <g id="outline-control">
+      <rect x="10" y="90" width="20" height="20" fill="none" pointer-events="all" stroke="#F1ECD7" stroke-width="1" onclick="toggleOutline()"/>
+    </g>
+    
+    <g id="size-control">
+      <rect x="25" y="120" width="5" height="5" fill="dimgray" onclick="resize(0)"/>
+      <rect x="20" y="130" width="10" height="10" fill="dimgray" onclick="resize(1)"/>  
+      <rect x="15" y="145" width="15" height="15" fill="dimgray" onclick="resize(2)"/>
+      <rect x="10" y="165" width="20" height="20" fill="dimgray" onclick="resize(3)"/>
+      <rect x="5" y="190" width="25" height="25" fill="dimgray" onclick="resize(4)"/>
+      <rect x="0" y="220" width="30" height="30" fill="dimgray" onclick="resize(5)"/>
+    </g>      
+  </g>
+</svg>

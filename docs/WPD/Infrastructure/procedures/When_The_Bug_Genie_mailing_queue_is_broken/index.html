@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>When The Bug Genie mailing queue is broken · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    
+    
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/WPD/Infrastructure/">WPD/Infrastructure</a></li><li><a href="/docs/WPD/Infrastructure/procedures/">procedures</a></li><li><a href="/docs/WPD/Infrastructure/procedures/When_The Bug Genie mailing queue is broken/">When The Bug Genie mailing queue is broken</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>When The Bug Genie mailing queue is broken</h1>
+<h2>Issue 1: When message arent sent due to unserialize()</h2>
+<h3>Finding the issue</h3>
+<p>The mailing queue from TheBugGenie happened to be broken. The issue was not noticed until a maintenance check made me run the cronjob and to see an error message such as.</p>
+<pre><code> renoirb@project5:~$ php /srv/webplatform/buggenie/tbg_cli mailing:process_mail_queue --limit=20
+ Processing mail queue ...
+ The following notice has stopped further execution:
+
+ unserialize(): Error at offset 1931 of 1938 bytes
+ occured in
+ /srv/webplatform/buggenie/modules/mailing/classes/B2DB/TBGMailQueueTable.class.php, line 61
+
+ Backtrace:
+ unserialize() /srv/webplatform/buggenie/modules/mailing/classes/B2DB/TBGMailQueueTable.class.php, line 61
+ TBGMailQueueTable-&gt;getQueuedMessages()
+ /srv/webplatform/buggenie/modules/mailing/classes/cli/CliMailingProcessMailQueue.class.php, line 50
+ CliMailingProcessMailQueue-&gt;do_execute()
+ /srv/webplatform/buggenie/core/classes/TBGCliCommand.class.php, line 52
+ TBGCliCommand-&gt;execute()
+ /srv/webplatform/buggenie/tbg_cli, line 102
+
+ SQL queries:
+ (1) [1.6ms] from /srv/webplatform/buggenie/core/classes/B2DB/TBGScopesTable.class.php, line 100:
+</code></pre>
+<p>The error lies in:</p>
+<pre><code> unserialize(): Error at offset 1931 of 1938 bytes
+</code></pre>
+<p>The code in <code>/srv/webplatform/buggenie/modules/mailing/classes/B2DB/TBGMailQueueTable.class.php</code> at line 61 says is within a <code>while</code> loop:</p>
+<pre><code> if($res)
+ {
+   while ($row = $res-&gt;getNextRow())
+   {
+       $message = $row-&gt;get(self::MESSAGE);
+       $messages[$row-&gt;get(self::ID)] = unserialize($message);  // &lt;-- HERE
+   }
+ }
+</code></pre>
+<p>After checking the database server and reading queries, I could see the serialization from the database column in question:</p>
+<p><code>O:11:&quot;TBGMimemail&quot;:24:{s:10:&quot; * charset&quot;;s:5:&quot;utf-8&quot;;s:18:&quot; * default_message&quot;;s:138:&quot;&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;&lt;html&gt;&lt;title&gt;The Bug Genie email&lt;/title&gt;&lt;body&gt;Empty message...&lt;/body&gt;&lt;/html&gt;&quot;;s:7:&quot; * from&quot;;a:2 {s:4:&quot;name&quot;;s:32:&quot;WebPlatform Docs Project manager&quot;;s:7:&quot;address&quot;;s:31:&quot;aaaaaaaaaaaaaaaaaaaaaaa@aa.org&quot;;}s:5:&quot; * to&quot;;a:1:{i:0;a:2 {s:4:&quot;name&quot;;s:5:&quot;Aaaaa&quot;;s:7:&quot;address&quot;;s:15:&quot;jjjjj@bbbbb.jjj&quot;;}}s:5:&quot; * cc&quot;;a:0:{}s:6:&quot; * bcc&quot;;a:0:{}s:15:&quot; * replacements&quot;;a:5 {s:17:&quot;%thebuggenie_url%&quot;;s:30:&quot;http://project.webplatform.org&quot;;s:24:&quot;%link_to_reset_password%&quot;;s:0:&quot;&quot;;s:18:&quot;%link_to_activate%&quot;;s:0:&quot;&quot;;s:16:&quot;%user_buddyname%&quot;;s:5:&quot;Aaaaa&quot;;s:15:&quot;%user_username%&quot;;s:5:&quot;Aaaaa&quot;;}s:7:&quot; * sep1&quot;;s:23:&quot;_1_3233387863387136356c&quot;;s:7:&quot; * sep2&quot;;s:23:&quot;_2_75617135695636503979&quot;;s:10:&quot; * headers&quot;;a:8:{s:8:&quot;X-Mailer&quot;;s:3:&quot;TBG&quot;;s:7:&quot;Subject&quot;;s:73:&quot;Re: [dabblet] Bug report #8 - Cannot save nor save-as gists (500s &amp; 422s)&quot;;s:4:&quot;Date&quot;;s:31:&quot;Wed, 02 Oct 2013 19:25:15 +0000&quot;;s:12:&quot;MIME-Version&quot;;s:3:&quot;1.0&quot;;s:10:&quot;Message-ID&quot;;s:49:&quot;&lt;_1_3233387863387136356c@project.webplatform.org&gt;&quot;;s:4:&quot;From&quot;;s:66:&quot;WebPlatform Docs Project manager &lt;aaaaaaaaaaaaaaaaaaaaaaa@aa.org&gt;&quot;;s:11:&quot;Return-Path&quot;;s:33:&quot;&lt;aaaaaaaaaaaaaaaaaaaaaaa@aa.org&gt;&quot;;s:2:&quot;To&quot;;s:25:&quot;&quot;Aaaaa&quot; &lt;jjjjj@bbbbb.jjj&gt;&quot;;}s:10:&quot; * subject&quot;;s:73:&quot;Re: [dabblet] Bug report #8 - Cannot save nor save-as gists (500s &amp; 422s)&quot;;s:21:&quot; * subject_translated&quot;;N;s:11:&quot; * template&quot;;s:11:&quot;issueupdate&quot;;s:22:&quot; * template_parameters&quot;;a:3:{s:5:&quot;issue&quot;;O:8:&quot;TBGIssue&quot;:72:{s:9:&quot; * _title&quot;;s:43:&quot;Cannot save nor save-as gists (500s &amp; 422s)&quot;;s:9:&quot; * _links&quot;;N;s:9:&quot; * _files&quot;;a:1:{i:14;O:7:&quot;TBGFile&quot;:10:{s:16:&quot; * _content_type&quot;;s:9:&quot;image/png&quot;;s:15:&quot; * _uploa ded_by&quot;;N;s:15:&quot; * _uploaded_at&quot;;s:10:&quot;1380741825&quot;;s:17:&quot; * _real_filename&quot;;s:55:&quot;116_1380741825_Screen Shot 2013-10-02 at 3.28.14 PM.png&quot;;s:8:&quot; * _name&quot;;s:40:&quot;Screen Shot 2013-10-02 at 3.28.14 PM.png&quot;;s:11:&quot; * _content&quot;;s:77032:&quot;</code></p>
+<p><strong>NOTE</strong>: The data shown here has been anonymized. But the length of the values were kept intact.</p>
+<p>While trying to use PHP unserialize the field we get the same error we had in the previous stack trace:</p>
+<pre><code> unserialize(): Error at offset 1931 of 1938 bytes
+</code></pre>
+<p>This means that the class <code>TBGMimemail</code> will be unserialized with this data but the unserialized data seems to have something broken.</p>
+<h3>To fix the issue</h3>
+<ol>
+<li><p>Ensure no cron job will be running on server running The Bug Genie</p></li>
+<li><p>Run manually the <code>mailing:process_mail_queue</code> command until you are sure the next message is the broken one</p>
+<p>php /srv/webplatform/buggenie/tbg_cli mailing:process_mail_queue --limit=20</p></li>
+<li><p>When you are at <code>--limit=1</code> and it breaks, it means its the broken one</p></li>
+<li><p>Add those lines before the loop, before <code>if($res){</code>:</p>
+<p>$hack = TBGMimemail::createNewFromMessage('Borken message hack’, 'passing around, sorry for that’, null, array(‘my_own@gmail.com’));<br>
+$hack-&gt;setFrom(‘renoirb@project1.dho.wpdn’);</p></li>
+<li><p>Replace the part <code>unserialize($message);</code> with <code>$hack</code></p>
+<p>// Put the hack like so:<br>
+$hack = TBGMimemail::createNewFromMessage('Borken message hack’, 'passing around, sorry for that’, null, array(‘my_own@gmail.com’));<br>
+$hack-&gt;setFrom(‘renoirb@project1.dho.wpdn’);<br>
+if($res)<br>
+{<br>
+while ($row = $res-&gt;getNextRow())<br>
+{<br>
+$message = $row-&gt;get(self::MESSAGE);<br>
+$messages[$row-&gt;get(self::ID)] = $hack;<br>
+//$messages[$row-&gt;get(self::ID)] = unserialize($message);<br>
+}<br>
+}</p></li>
+<li><p>Run the <code>mailing:process_mail_queue</code> manually, the email should pass</p></li>
+<li><p>Comment the <code>$hack</code> and uncomment the real code.</p></li>
+<li><p>Make sure all the queue is processed</p></li>
+</ol>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs with-toc">
+  <head>
+    <meta charset="UTF-8" />
+    <title>grid-definition-rows · WebPlatform Docs</title>
+    <link rel="stylesheet" href="/assets/css/docs.css" />
+    <link rel="stylesheet" href="/assets/css/highlight.css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 7]><script src="/bower_components/ie7-js/lib/IE7.js"></script><![endif]-->
+    <!--[if lt IE 8]><script src="/bower_components/ie7-js/lib/IE8.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="/bower_components/ie7-js/lib/IE9.js"></script><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/assets/css/ie7.css"><![endif]-->
+    <meta property="readiness" content="In Progress" />
+    <meta property="standardization" content="W3C Working Draft" />
+    <meta name="description" content="This property can specify the length, a percentage of the grid container’s size, a measurement of the contents occupying the row, or a fraction of the free space in the grid. You can also specify a range using minmax(), which combines any of these measurements to define a min and max size for the row.
+    " />
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+  </head>
+  <body class="mediawiki ltr sitedir-ltr skin-webplatform action-view">
+    <div class="readiness-state In_Progress"><p>This page is <a>In Progress</a></p></div>
+    <header id="mw-head" class="noprint">
+      <div class="container">
+        <div id="p-logo">
+            <a href="/"  title="Visit the home page"></a>
+        </div>
+      </div>
+    </header>
+    <nav id="sitenav">
+    <div class="container">
+      <ul class="links">
+          <li><a href="/" class="active">THE DOCS</a></li>
+          <li><a href="/docs/Community">CONNECT</a></li>
+          <li><a href="/docs/WPD/Contributors_Guide/">CONTRIBUTE</a></li>
+          <li><a href="/blog/">BLOG</a></li>
+      </ul>
+    </div>
+    </nav>
+
+    <div id="siteNotice">
+      <div id="localNotice" dir="ltr" lang="en">
+    
+        <div class="notice" style="margin:10px auto; position: relative; width: 90%; max-width: 950px;">
+          <div style="padding: 10px; border-radius: 4px; background-color: rgb(249, 247, 243); box-shadow: 0px 0px 1px rgb(167, 169, 172);">
+            <strong>Notice:</strong>&nbsp;The WebPlatform project, supported by various stewards between 2012 and 2015, has been <b>discontinued</b>. This site is now available on <a href="https://github.com/webplatform/webplatform.github.io/">github</a>.
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <div id="content" class="mw-body">
+      <div class="container">
+        <a id="top"></a>
+        <div class="tool-area">
+              <div id="hierarchy-menu">
+                  <ol id="breadcrumb-info" class="breadcrumbs">
+                    <li><a href="/">DOCS</a></li>
+                  	<li><a href="/docs/css/">css</a></li><li><a href="/docs/css/properties/">properties</a></li><li><a href="/docs/css/properties/grid-definition-rows/">grid-definition-rows</a></li>
+                  </ol>
+              </div>
+        </div>
+        <div id="page">
+          <div id="page-content">
+            <div id="main-content">
+
+<h1>grid-definition-rows</h1>
+<h2>Summary</h2>
+<p>This property can specify the length, a percentage of the grid container’s size, a measurement of the contents occupying the row, or a fraction of the free space in the grid. You can also specify a range using minmax(), which combines any of these measurements to define a min and max size for the row.</p>
+<p>As well as referring to grid lines by their numerical index, you can also name lines. Names can make the grid-placement properties easier to understand and maintain. Lines can have multiple names, such as ‘first’ and 'header’.</p>
+<h2>Overview table</h2>
+<dl>
+<dt><a href="/docs/css/concepts/initial_value">Initial value</a></dt>
+<dd><code>none</code>
+</dd>
+<dt>Applies to</dt>
+<dd>grid container
+</dd>
+<dt><a href="/docs/css/concepts/inherited">Inherited</a></dt>
+<dd>No
+</dd>
+<dt>Media</dt>
+<dd>visual
+</dd>
+<dt><a href="/docs/css/concepts/computed_value">Computed value</a></dt>
+<dd>As specified, except for ‘auto’ (see prose)
+</dd>
+<dt>Animatable</dt>
+<dd>No
+</dd>
+<dt><a href="/docs/css/concepts/cssom">CSS Object Model Property</a></dt>
+<dd><code>gridDefinitionRows</code>
+</dd>
+<dt>Percentages</dt>
+<dd>n/a
+</dd>
+</dl>
+<h2>Syntax</h2>
+<ul>
+<li><code>grid-definition-rows: &lt;track-list&gt;</code></li>
+<li><code>grid-definition-rows: none</code></li>
+</ul>
+<h2>Values</h2>
+<dl>
+<dt>none</dt>
+<dd>No initial grid; any rows are implicitly generated with their size determined by the ‘grid-auto-rows’ property.
+</dd>
+<dt>&lt;track-list&gt;</dt>
+<dd>The track-list syntax is:
+</dd>
+</dl>
+<p>&lt;track-list&gt; = [ &lt;string&gt;* [ &lt;track-size&gt; | &lt;repeat-function&gt; ] ]+ &lt;string&gt;*</p>
+<p>&lt;track-size&gt; = minmax( &lt;track-breadth&gt; , &lt;track-breadth&gt; ) | auto | &lt;track-breadth&gt;</p>
+<p>&lt;track-breadth&gt; = &lt;length&gt; | &lt;percentage&gt; | &lt;flex&gt; | min-content | max-content</p>
+<p>Where the values are described as:</p>
+<ul>
+<li>&lt;length&gt;</li>
+<li>&lt;percentage&gt;: Percentage values are relative to the extent (logical height) of the grid container in grid row tracks. If the extent of the grid container is an indefinite size, &lt;percentage&gt; values relative to that size are treated as ‘auto’.</li>
+<li>&lt;flex&gt;: A non-negative dimension with the unit &quot;fr&quot;. Each &lt;flex&gt; value takes a share of the remaining space in proportion to its value. See Flexible Lengths for more details.</li>
+<li>max-content: Largest max size contribution of the grid items occupying the grid track.</li>
+<li>min-content: Largest min size contribution of the grid items occupying the grid track.</li>
+<li>minmax(min, max): Defines a size range greater than or equal to min and less than or equal to max. If max &lt; min, then max is ignored and ‘minmax(min,max)’ is treated as min.</li>
+<li>auto: Computes to ‘minmax(min-content, max-content)’.</li>
+</ul>
+<h2>Examples</h2>
+<p>We define four values corresponding to each row of our grid. First row will be exactly 100 pixels, second row will use flex units and will take one ‘fr’ of the remaining space but because of the third row which takes up two 'fr’. That means the remaining space will divide on three, and second row will take 1/3 of this, and third row will take 2/3.</p>
+<pre><code class="css"><span class="hljs-id">#myGrid</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> grid</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">grid-definitions-rows</span>:<span class="hljs-value"> <span class="hljs-number">100px</span> <span class="hljs-number">1</span>fr <span class="hljs-number">2</span>fr</span></span>;
+}</span>
+</code></pre>
+<p>We define three rows where the first one will adapt to its content, the second will take 250 pixels of the screen and third one will take 50% of its container.</p>
+<pre><code class="css"><span class="hljs-id">#myGrid</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> grid</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">grid-definitions-rows</span>:<span class="hljs-value"> auto <span class="hljs-number">250px</span> <span class="hljs-number">50%</span>
+</span></span></span>}
+</code></pre>
+<p>We can also make use of the min/max values. We define two rows where first one take one 'fr’, and the second can use either the minimum content of its size, or the maximum value of 1fr. Notice that we gave names on right lines of each rows. That way we can refer to those lines when we define how space will take their contents.</p>
+<pre><code class="css"><span class="hljs-id">#myGrid</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> grid</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">grid-definition-rows</span>:<span class="hljs-value"> <span class="hljs-number">1</span>fr <span class="hljs-string">"aside"</span> <span class="hljs-function">minmax</span>(min-content, <span class="hljs-number">1</span>fr) <span class="hljs-string">"main"</span></span></span>;
+}</span>
+</code></pre>
+<p>At last, `repeat` function can be used to create a repeating sequence.</p>
+<pre><code class="css">#myGrid {
+  display: grid;
+  grid-definition-rows: repeat(3, 100px 1fr); // which equals to
+  grid-definition-rows: 100px, 1fr, 100px, 1fr, 100px, 1fr;
+}
+</code></pre>
+<h2>Related specifications</h2>
+<dl>
+<dt><a href="http://dev.w3.org/csswg/css-grid/#track-sizing">CSS Grid Layout, Track Sizing: the ‘grid-definition-rows’ and ‘grid-definition-columns’ properties</a></dt>
+<dd>W3C Editor’s Draft
+</dd>
+<dt><a href="http://www.w3.org/TR/css3-grid-layout/#track-sizing">CSS Grid Layout, Track Sizing: the ‘grid-definition-rows’ and ‘grid-definition-columns’ properties</a></dt>
+<dd>W3C Working Draft
+</dd>
+</dl>
+<h2>See also</h2>
+<h3>Related articles</h3>
+<h4>CSS Layout</h4>
+<ul>
+<li><p><a href="/docs/concepts/mobile_web/responsive_design">Responsive Web Design</a></p></li>
+<li><p><a href="/docs/css/atrules/@import">@import</a></p></li>
+<li><p><a href="/docs/css/properties/align-self">align-self</a></p></li>
+<li><p><a href="/docs/css/properties/background">background</a></p></li>
+<li><p><a href="/docs/css/properties/box-decoration-break">box-decoration-break</a></p></li>
+<li><p><a href="/docs/css/properties/box-flex">box-flex</a></p></li>
+<li><p><a href="/docs/css/properties/box-lines">box-lines</a></p></li>
+<li><p><a href="/docs/css/properties/box-orient">box-orient</a></p></li>
+<li><p><a href="/docs/css/properties/box-pack">box-pack</a></p></li>
+<li><p><a href="/docs/css/properties/box-shadow">box-shadow</a></p></li>
+<li><p><a href="/docs/css/properties/break-before">break-before</a></p></li>
+<li><p><a href="/docs/css/properties/flex-align">flex-align</a></p></li>
+<li><p><a href="/docs/css/properties/flex-item-align">flex-item-align</a></p></li>
+<li><p><a href="/docs/css/properties/flex-line-pack">flex-line-pack</a></p></li>
+<li><p><a href="/docs/css/properties/grid-auto-rows">grid-auto-rows</a></p></li>
+<li><p><a href="/docs/css/properties/grid-definition-columns">grid-definition-columns</a></p></li>
+<li><p><strong>grid-definition-rows</strong></p></li>
+<li><p><a href="/docs/css/properties/height">height</a></p></li>
+<li><p><a href="/docs/css/properties/max-width">max-width</a></p></li>
+<li><p><a href="/docs/css/properties/user-modify">user-modify</a></p></li>
+<li><p><a href="/docs/svg/attributes/baseline-shift">baseline-shift</a></p></li>
+</ul>
+<h4>Grid Layout</h4>
+<ul>
+<li><p><a href="/docs/concepts/mobile_web/responsive_design">Responsive Web Design</a></p></li>
+<li><p><a href="/docs/css/properties/grid-auto-rows">grid-auto-rows</a></p></li>
+<li><p><a href="/docs/css/properties/grid-column-position">grid-column-position</a></p></li>
+<li><p><a href="/docs/css/properties/grid-column-span">grid-column-span</a></p></li>
+<li><p><a href="/docs/css/properties/grid-definition-columns">grid-definition-columns</a></p></li>
+<li><p><strong>grid-definition-rows</strong></p></li>
+<li><p><a href="/docs/css/properties/grid-row-position">grid-row-position</a></p></li>
+<li><p><a href="/docs/css/properties/height">height</a></p></li>
+</ul>
+<h3>External resources</h3>
+<ul>
+<li><a href="http://css-tricks.com/almanac/properties/g/grid/">http://css-tricks.com/almanac/properties/g/grid/</a></li>
+</ul>
+
+<!-- Attributions: None declared for this document. -->
+            </div>
+            <div class="topics-nav">
+              <ul>
+                <li><a href="/docs/Beginners">Beginners</a></li>
+                <li><a href="/docs/concepts">Concepts</a></li>
+                <li><a href="/docs/html">HTML</a></li>
+                <li><a href="/docs/css">CSS</a></li>
+                <li><a href="/docs/concepts/accessibility">Accessibility</a></li>
+                <li><a href="/docs/javascript">JavaScript</a></li>
+                <li><a href="/docs/dom">DOM</a></li>
+                <li><a href="/docs/svg">SVG</a></li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="mw-footer">
+      <div class="container">
+        <div id="footer-wordmark">
+          <a href="https://github.com/webplatform/docs/blob/master/LICENSE.md" class="license">
+            <img src="/assets/cc-by-black.svg" width="120" height="42" alt="Content available under CC-BY, except where otherwise noted.">
+          </a>
+          <a href="/"><span id="footer-title">WebPlatform<span id="footer-title-light">.org</span></span></a>
+        </div>
+        <!-- ul class="stewards">
+          <li class="steward-w3c"><a href="/stewards/w3c">W3C</a></li>
+        </ul -->
+      </div>
+    </footer>
+    <script src="/assets/js/docs.js"></script>
+  </body>
+</html>
